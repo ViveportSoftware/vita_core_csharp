@@ -20,7 +20,6 @@ namespace Htc.Vita.Core.Tests
         {
             Assert.NotNull(Registry.GetStringValue32(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}", null));
             Assert.NotNull(Registry.GetStringValue32(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
-            Assert.Null(Registry.GetStringValue32(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID", null));
             Assert.Null(Registry.GetStringValue32(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
         }
 
@@ -56,7 +55,6 @@ namespace Htc.Vita.Core.Tests
         {
             Assert.NotNull(Registry.GetStringValue(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}", null));
             Assert.NotNull(Registry.GetStringValue(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
-            Assert.Null(Registry.GetStringValue(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID", null));
             Assert.Null(Registry.GetStringValue(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
         }
 
