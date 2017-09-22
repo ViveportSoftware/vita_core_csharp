@@ -4,7 +4,7 @@ source/.vs/
 source/generated/
 source/packages/
 temp/
-tools/
+tools/*
 
 # files
 *.log
