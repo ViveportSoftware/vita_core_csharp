@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <authors>HTC</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Copyright 2016-2017</copyright>
+    <tags>htc</tags>
+  </metadata>
+</package>

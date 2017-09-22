@@ -1,0 +1,264 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using Htc.Vita.Core.Log;
+
+namespace Htc.Vita.Core.Crypto
+{
+    public abstract class Sha1
+    {
+        private static Dictionary<string, Sha1> Instances { get; } = new Dictionary<string, Sha1>();
+        private static Type _defaultType = typeof(DefaultSha1);
+
+        private const int Base64Length = 28; // "2jmj7l5rSw0yVb/vlWAYkK/YBwk="
+        private const int HexLength = 40;    // "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+
+        public static void Register<T>() where T : Sha1
+        {
+            _defaultType = typeof(T);
+            Logger.GetInstance().Info("Registered default sha1 type to " + _defaultType);
+        }
+
+        public static Sha1 GetInstance()
+        {
+            Sha1 instance;
+            try
+            {
+                instance = DoGetInstance(_defaultType);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance().Fatal("Instance initialization error: " + e);
+                Logger.GetInstance().Info("Initializing " + typeof(DefaultSha1).FullName + "...");
+                instance = new DefaultSha1();
+            }
+            return instance;
+        }
+
+        private static Sha1 DoGetInstance(Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentException("Invalid arguments to get md5 instance");
+            }
+
+            var key = type.FullName;
+            Sha1 instance = null;
+            if (Instances.ContainsKey(key))
+            {
+                instance = Instances[key];
+            }
+            if (instance == null)
+            {
+                Logger.GetInstance().Info("Initializing " + key + "...");
+                var constructor = type.GetConstructor(new Type[] { });
+                if (constructor != null)
+                {
+                    instance = (Sha1)constructor.Invoke(new object[] { });
+                }
+            }
+            if (instance == null)
+            {
+                Logger.GetInstance().Info("Initializing " + typeof(DefaultSha1).FullName + "...");
+                instance = new DefaultSha1();
+            }
+            if (!Instances.ContainsKey(key))
+            {
+                Instances.Add(key, instance);
+            }
+            return instance;
+        }
+
+        public string GenerateInBase64(FileInfo file)
+        {
+            if (file == null || !file.Exists)
+            {
+                return string.Empty;
+            }
+
+            var result = string.Empty;
+            try
+            {
+                result = OnGenerateInBase64(file);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance().Fatal("Generating checksum in base64 error: " + e);
+            }
+            return result;
+        }
+
+        public string GenerateInBase64(string content)
+        {
+            if (content == null)
+            {
+                return string.Empty;
+            }
+
+            var result = string.Empty;
+            try
+            {
+                result = OnGenerateInBase64(content);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance().Fatal("Generating checksum in base64 error: " + e);
+            }
+            return result;
+        }
+
+        public string GenerateInHex(FileInfo file)
+        {
+            if (file == null || !file.Exists)
+            {
+                return string.Empty;
+            }
+
+            var result = string.Empty;
+            try
+            {
+                result = OnGenerateInHex(file);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance().Fatal("Generating checksum in hex error: " + e);
+            }
+            return result;
+        }
+
+        public string GenerateInHex(string content)
+        {
+            if (content == null)
+            {
+                return string.Empty;
+            }
+
+            var result = string.Empty;
+            try
+            {
+                result = OnGenerateInHex(content);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance().Fatal("Generating checksum in hex error: " + e);
+            }
+            return result;
+        }
+
+        public bool ValidateInAll(FileInfo file, string checksum)
+        {
+            if (string.IsNullOrWhiteSpace(checksum))
+            {
+                return false;
+            }
+
+            switch (checksum.Length)
+            {
+                case Base64Length:
+                    {
+                        return ValidateInBase64(file, checksum);
+                    }
+                case HexLength:
+                    {
+                        return ValidateInHex(file, checksum);
+                    }
+            }
+            return false;
+        }
+
+        public bool ValidateInAll(string content, string checksum)
+        {
+            if (string.IsNullOrWhiteSpace(checksum))
+            {
+                return false;
+            }
+
+            if (checksum.Length == HexLength)
+            {
+                return ValidateInHex(content, checksum);
+            }
+            return ValidateInBase64(content, checksum);
+        }
+
+        public bool ValidateInBase64(FileInfo file, string checksum)
+        {
+            if (file == null || !file.Exists || string.IsNullOrWhiteSpace(checksum))
+            {
+                return false;
+            }
+
+            var result = false;
+            try
+            {
+                result = checksum.Equals(OnGenerateInBase64(file));
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance().Fatal("Validating checksum in base64 error: " + e);
+            }
+            return result;
+        }
+
+        public bool ValidateInBase64(string content, string checksum)
+        {
+            if (content == null || string.IsNullOrWhiteSpace(checksum))
+            {
+                return false;
+            }
+
+            var result = false;
+            try
+            {
+                result = checksum.Equals(OnGenerateInBase64(content));
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance().Fatal("Validating checksum in base64 error: " + e);
+            }
+            return result;
+        }
+
+        public bool ValidateInHex(FileInfo file, string checksum)
+        {
+            if (file == null || !file.Exists || string.IsNullOrWhiteSpace(checksum))
+            {
+                return false;
+            }
+
+            var result = false;
+            try
+            {
+                result = checksum.ToLower().Equals(OnGenerateInHex(file));
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance().Fatal("Validating checksum in hex error: " + e);
+            }
+            return result;
+        }
+
+        public bool ValidateInHex(string content, string checksum)
+        {
+            if (content == null || string.IsNullOrWhiteSpace(checksum))
+            {
+                return false;
+            }
+
+            var result = false;
+            try
+            {
+                result = checksum.ToLower().Equals(OnGenerateInHex(content));
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance().Fatal("Validating checksum in hex error: " + e);
+            }
+            return result;
+        }
+
+        protected abstract string OnGenerateInBase64(FileInfo file);
+        protected abstract string OnGenerateInBase64(string content);
+        protected abstract string OnGenerateInHex(FileInfo file);
+        protected abstract string OnGenerateInHex(string content);
+    }
+}
