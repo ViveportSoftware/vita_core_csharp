@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace Htc.Vita.Core.Interop
 {
@@ -12,10 +11,10 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa376402.aspx
              */
             [DllImport(Libraries.Windows_advapi32,
-                CallingConvention = CallingConvention.Winapi,
-                CharSet = CharSet.Unicode,
-                ExactSpelling = true,
-                SetLastError = true)]
+                    CallingConvention = CallingConvention.Winapi,
+                    CharSet = CharSet.Unicode,
+                    ExactSpelling = true,
+                    SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool ConvertStringSidToSidW(
                     string sid,

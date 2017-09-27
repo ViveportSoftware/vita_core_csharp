@@ -13,14 +13,14 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388208.aspx
              */
             [DllImport(Libraries.Windows_wintrust,
-                CallingConvention = CallingConvention.Winapi,
-                CharSet = CharSet.Unicode,
-                ExactSpelling = true,
-                SetLastError = true)]
+                    CallingConvention = CallingConvention.Winapi,
+                    CharSet = CharSet.Unicode,
+                    ExactSpelling = true,
+                    SetLastError = true)]
             public static extern long WinVerifyTrust(
-                [In] IntPtr hWnd,
-                [In] [MarshalAs(UnmanagedType.LPStruct)] Guid pgActionId,
-                [In] IntPtr pWinTrustData
+                    [In] IntPtr hWnd,
+                    [In] [MarshalAs(UnmanagedType.LPStruct)] Guid pgActionId,
+                    [In] IntPtr pWinTrustData
             );
         }
     }
