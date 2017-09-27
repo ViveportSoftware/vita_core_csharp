@@ -26,6 +26,12 @@ namespace Htc.Vita.Core.Util
                 return false;
             }
 
+            var targetPathDir = toIcon.Directory;
+            if (!targetPathDir.Exists)
+            {
+                targetPathDir.Create();
+            }
+
             Icon icon = null;
             var filePath = fromFile.FullName;
             try
