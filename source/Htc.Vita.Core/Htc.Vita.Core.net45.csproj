@@ -57,6 +57,7 @@
     <Compile Include="Interop\Windows.Advapi32.ConvertStringSidToSid.cs" />
     <Compile Include="Interop\Windows.Advapi32.LookupAccountSid.cs" />
     <Compile Include="Interop\Windows.Advapi32.SidNameUse.cs" />
+    <Compile Include="Interop\Windows.cs" />
     <Compile Include="Interop\Windows.Kernel32.FreeLibrary.cs" />
     <Compile Include="Interop\Windows.Kernel32.GetDiskFreeSpaceEx.cs" />
     <Compile Include="Interop\Windows.Kernel32.IsWow64Process.cs" />

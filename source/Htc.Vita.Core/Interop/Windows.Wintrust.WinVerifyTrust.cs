@@ -7,8 +7,6 @@ namespace Htc.Vita.Core.Interop
     {
         public static partial class Wintrust
         {
-            public static IntPtr INVALID_HANDLE_VALUE = new IntPtr(-1);
-
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388208.aspx
              */
