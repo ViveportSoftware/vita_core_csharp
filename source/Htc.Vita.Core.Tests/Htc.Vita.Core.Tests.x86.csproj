@@ -59,6 +59,7 @@
     <Compile Include="TestCase.Config.cs" />
     <Compile Include="TestCase.Convert.cs" />
     <Compile Include="TestCase.Dns.cs" />
+    <Compile Include="TestCase.Extract.cs" />
     <Compile Include="TestCase.FileSignatureInfo.cs" />
     <Compile Include="TestCase.FileSystemManager.cs" />
     <Compile Include="TestCase.JsonFactory.cs" />
