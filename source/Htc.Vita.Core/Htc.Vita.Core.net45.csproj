@@ -114,6 +114,7 @@
     <Compile Include="Runtime\ProcessManager.cs" />
     <Compile Include="Runtime\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shell\ShellLink.cs" />
     <Compile Include="Util\Convert.cs" />
     <Compile Include="Util\Extract.cs" />
     <Compile Include="Util\Registry.cs" />

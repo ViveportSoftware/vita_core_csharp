@@ -70,6 +70,7 @@
     <Compile Include="TestCase.ProcessManager.cs" />
     <Compile Include="TestCase.Registry.cs" />
     <Compile Include="TestCase.Sha1.cs" />
+    <Compile Include="TestCase.ShellLink.cs" />
     <Compile Include="TestCase.UserManager.cs" />
     <Compile Include="TestCase.WebProxyFactory.cs" />
     <Compile Include="TestCase.WebRequestFactory.cs" />
