@@ -49,7 +49,7 @@ var reportXUnitDirAnyCPU = Directory("./dist") + Directory(configuration) + Dire
 var reportXUnitDirX86 = Directory("./dist") + Directory(configuration) + Directory("report/xUnit/x86");
 
 // Define signing key, password and timestamp server
-var signKey = EnvironmentVariable("SIGNKEY") ?? "NOTSET";
+var signKeyEnc = EnvironmentVariable("SIGNKEYENC") ?? "NOTSET";
 var signPass = EnvironmentVariable("SIGNPASS") ?? "NOTSET";
 var signSha1Uri = new Uri("http://timestamp.verisign.com/scripts/timstamp.dll");
 var signSha256Uri = new Uri("http://sha256timestamp.ws.symantec.com/sha256/timestamp");
@@ -218,7 +218,7 @@ Task("Run-Unit-Tests-Under-X86")
 });
 
 Task("Sign-Assemblies")
-    .WithCriteria(() => "Release".Equals(configuration) && !"NOTSET".Equals(signPass) && FileExists(signKey))
+    .WithCriteria(() => "Release".Equals(configuration) && !"NOTSET".Equals(signPass) && !"NOTSET".Equals(signKeyEnc))
     .IsDependentOn("Run-Unit-Tests-Under-X86")
     .Does(() =>
 {
@@ -226,6 +226,9 @@ Task("Sign-Assemblies")
     Information("Last timestamp:    " + lastSignTimestamp);
     Information("Current timestamp: " + currentSignTimestamp);
     var totalTimeInMilli = (DateTime.Now - lastSignTimestamp).TotalMilliseconds;
+
+    var signKey = "./temp/key.pfx";
+    System.IO.File.WriteAllBytes(signKey, Convert.FromBase64String(signKeyEnc));
 
     var file = string.Format("./temp/{0}/{1}/bin/net45/{1}.dll", configuration, product);
 
