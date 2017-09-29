@@ -8,6 +8,7 @@ tools/*
 
 # files
 *.log
+.DS_Store
 
 # kept files
 !tools/packages.config
