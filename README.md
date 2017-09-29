@@ -1,5 +1,7 @@
 # HTC Vita Core Libraries for .NET platform (Htc.Vita.Core)
 
+[![Build status](https://ci.appveyor.com/api/projects/status/sqj5n0sk42l861w5/branch/master?svg=true)](https://ci.appveyor.com/project/kenelin/vita-core-csharp/branch/master)
+
 ## Dependency
 
 Compile-time dependencies: none
