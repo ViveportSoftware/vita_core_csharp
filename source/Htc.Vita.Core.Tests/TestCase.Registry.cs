@@ -1,4 +1,5 @@
 ﻿using System;
+using Htc.Vita.Core.Runtime;
 using Htc.Vita.Core.Util;
 using Xunit;
 
@@ -9,53 +10,71 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void Registry_0_GetStringValue32_UnderHKCR()
         {
-            Assert.NotNull(Registry.GetStringValue32(Registry.Hive.ClassesRoot, ".bat", null));
-            Assert.NotNull(Registry.GetStringValue32(Registry.Hive.ClassesRoot, "CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
-            Assert.Null(Registry.GetStringValue32(Registry.Hive.ClassesRoot, "textfile\\shell\\open", null));
-            Assert.Null(Registry.GetStringValue32(Registry.Hive.ClassesRoot, "CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
+            if (Platform.IsWindows)
+            {
+                Assert.NotNull(Registry.GetStringValue32(Registry.Hive.ClassesRoot, ".bat", null));
+                Assert.NotNull(Registry.GetStringValue32(Registry.Hive.ClassesRoot, "CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
+                Assert.Null(Registry.GetStringValue32(Registry.Hive.ClassesRoot, "textfile\\shell\\open", null));
+                Assert.Null(Registry.GetStringValue32(Registry.Hive.ClassesRoot, "CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
+            }
         }
 
         [Fact]
         public void Registry_0_GetStringValue32_UnderHKLM()
         {
-            Assert.NotNull(Registry.GetStringValue32(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}", null));
-            Assert.NotNull(Registry.GetStringValue32(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
-            Assert.Null(Registry.GetStringValue32(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
+            if (Platform.IsWindows)
+            {
+                Assert.NotNull(Registry.GetStringValue32(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}", null));
+                Assert.NotNull(Registry.GetStringValue32(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
+                Assert.Null(Registry.GetStringValue32(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
+            }
         }
 
         [Fact]
         public void Registry_0_GetStringValue64_UnderHKCR()
         {
-            Assert.NotNull(Registry.GetStringValue64(Registry.Hive.ClassesRoot, ".bat", null));
-            Assert.NotNull(Registry.GetStringValue64(Registry.Hive.ClassesRoot, "CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
-            Assert.Null(Registry.GetStringValue64(Registry.Hive.ClassesRoot, "textfile\\shell\\open", null));
-            Assert.Null(Registry.GetStringValue64(Registry.Hive.ClassesRoot, "CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
+            if (Platform.IsWindows)
+            {
+                Assert.NotNull(Registry.GetStringValue64(Registry.Hive.ClassesRoot, ".bat", null));
+                Assert.NotNull(Registry.GetStringValue64(Registry.Hive.ClassesRoot, "CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
+                Assert.Null(Registry.GetStringValue64(Registry.Hive.ClassesRoot, "textfile\\shell\\open", null));
+                Assert.Null(Registry.GetStringValue64(Registry.Hive.ClassesRoot, "CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
+            }
         }
 
         [Fact]
         public void Registry_0_GetStringValue64_UnderHKLM()
         {
-            Assert.NotNull(Registry.GetStringValue64(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}", null));
-            Assert.NotNull(Registry.GetStringValue64(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
-            Assert.Null(Registry.GetStringValue64(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID", null));
-            Assert.Null(Registry.GetStringValue64(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
+            if (Platform.IsWindows)
+            {
+                Assert.NotNull(Registry.GetStringValue64(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}", null));
+                Assert.NotNull(Registry.GetStringValue64(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
+                Assert.Null(Registry.GetStringValue64(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID", null));
+                Assert.Null(Registry.GetStringValue64(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
+            }
         }
 
         [Fact]
         public void Registry_0_GetStringValue_UnderHKCR()
         {
-            Assert.NotNull(Registry.GetStringValue(Registry.Hive.ClassesRoot, ".bat", null));
-            Assert.NotNull(Registry.GetStringValue(Registry.Hive.ClassesRoot, "CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
-            Assert.Null(Registry.GetStringValue(Registry.Hive.ClassesRoot, "textfile\\shell\\open", null));
-            Assert.Null(Registry.GetStringValue(Registry.Hive.ClassesRoot, "CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
+            if (Platform.IsWindows)
+            {
+                Assert.NotNull(Registry.GetStringValue(Registry.Hive.ClassesRoot, ".bat", null));
+                Assert.NotNull(Registry.GetStringValue(Registry.Hive.ClassesRoot, "CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
+                Assert.Null(Registry.GetStringValue(Registry.Hive.ClassesRoot, "textfile\\shell\\open", null));
+                Assert.Null(Registry.GetStringValue(Registry.Hive.ClassesRoot, "CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
+            }
         }
 
         [Fact]
         public void Registry_0_GetStringValue_UnderHKLM()
         {
-            Assert.NotNull(Registry.GetStringValue(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}", null));
-            Assert.NotNull(Registry.GetStringValue(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
-            Assert.Null(Registry.GetStringValue(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
+            if (Platform.IsWindows)
+            {
+                Assert.NotNull(Registry.GetStringValue(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}", null));
+                Assert.NotNull(Registry.GetStringValue(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
+                Assert.Null(Registry.GetStringValue(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
+            }
         }
 
         [Fact]
@@ -142,22 +161,31 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void Registry_4_GetIntValue32_UnderHKCR()
         {
-            Assert.True(Registry.GetDwordValue32(Registry.Hive.ClassesRoot, "textfile", "EditFlags") != 0);
-            Assert.True(Registry.GetDwordValue32(Registry.Hive.ClassesRoot, "textfile", "EditFlags1") == 0);
+            if (Platform.IsWindows)
+            {
+                Assert.True(Registry.GetDwordValue32(Registry.Hive.ClassesRoot, "textfile", "EditFlags") != 0);
+                Assert.True(Registry.GetDwordValue32(Registry.Hive.ClassesRoot, "textfile", "EditFlags1") == 0);
+            }
         }
 
         [Fact]
         public void Registry_4_GetIntValue64_UnderHKCR()
         {
-            Assert.True(Registry.GetDwordValue64(Registry.Hive.ClassesRoot, "textfile", "EditFlags") != 0);
-            Assert.True(Registry.GetDwordValue64(Registry.Hive.ClassesRoot, "textfile", "EditFlags1") == 0);
+            if (Platform.IsWindows)
+            {
+                Assert.True(Registry.GetDwordValue64(Registry.Hive.ClassesRoot, "textfile", "EditFlags") != 0);
+                Assert.True(Registry.GetDwordValue64(Registry.Hive.ClassesRoot, "textfile", "EditFlags1") == 0);
+            }
         }
 
         [Fact]
         public void Registry_4_GetIntValue_UnderHKCR()
         {
-            Assert.True(Registry.GetIntValue(Registry.Hive.ClassesRoot, "textfile", "EditFlags") != 0);
-            Assert.True(Registry.GetIntValue(Registry.Hive.ClassesRoot, "textfile", "EditFlags1") == 0);
+            if (Platform.IsWindows)
+            {
+                Assert.True(Registry.GetIntValue(Registry.Hive.ClassesRoot, "textfile", "EditFlags") != 0);
+                Assert.True(Registry.GetIntValue(Registry.Hive.ClassesRoot, "textfile", "EditFlags1") == 0);
+            }
         }
 
         [Fact]
