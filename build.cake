@@ -43,6 +43,7 @@ var tempDir = Directory("./temp");
 var generatedDir = Directory("./source/generated");
 var packagesDir = Directory("./source/packages");
 var nugetDir = Directory("./dist") + Directory(configuration) + Directory("nuget");
+var homeDir = Directory(EnvironmentVariable("USERPROFILE") ?? EnvironmentVariable("HOME"));
 var reportDotCoverDirAnyCPU = Directory("./dist") + Directory(configuration) + Directory("report/DotCover/AnyCPU");
 var reportDotCoverDirX86 = Directory("./dist") + Directory(configuration) + Directory("report/DotCover/x86");
 var reportXUnitDirAnyCPU = Directory("./dist") + Directory(configuration) + Directory("report/xUnit/AnyCPU");
@@ -156,13 +157,13 @@ Task("Prepare-Unit-Test-Data")
     .IsDependentOn("Build-Assemblies")
     .Does(() =>
 {
-    if (!FileExists(EnvironmentVariable("USERPROFILE") + "/" + "TestData.Md5.txt"))
+    if (!FileExists(homeDir + File("TestData.Md5.txt")))
     {
-        CopyFileToDirectory("source/" + product + ".Tests/TestData.Md5.txt", EnvironmentVariable("USERPROFILE"));
+        CopyFileToDirectory("source/" + product + ".Tests/TestData.Md5.txt", homeDir);
     }
-    if (!FileExists(EnvironmentVariable("USERPROFILE") + "/" + "TestData.Sha1.txt"))
+    if (!FileExists(homeDir + File("TestData.Sha1.txt")))
     {
-        CopyFileToDirectory("source/" + product + ".Tests/TestData.Sha1.txt", EnvironmentVariable("USERPROFILE"));
+        CopyFileToDirectory("source/" + product + ".Tests/TestData.Sha1.txt", homeDir);
     }
 });
 
