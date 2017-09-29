@@ -48,7 +48,7 @@ namespace Htc.Vita.Core.Tests
             var host2 = "www.google.com";
             var entry2 = dns.GetHostEntry(host2);
             Assert.NotNull(entry2);
-            Assert.Equal(host2, entry2.HostName);
+            Assert.Equal(host2, entry2.HostName.ToLowerInvariant());
         }
 
         [Fact]
