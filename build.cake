@@ -172,24 +172,39 @@ Task("Run-Unit-Tests-Under-AnyCPU")
     .Does(() =>
 {
     CreateDirectory(reportXUnitDirAnyCPU);
-    DotCoverAnalyse(
-            tool =>
-            {
-                    tool.XUnit2(
-                            "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/*.Tests.dll",
-                            new XUnit2Settings {
-                                    Parallelism = ParallelismOption.All,
-                                    HtmlReport = true,
-                                    NUnitReport = true,
-                                    OutputDirectory = reportXUnitDirAnyCPU
-                            }
-                    );
-            },
-            new FilePath(reportDotCoverDirAnyCPU.ToString() + "/" + product + ".html"),
-            new DotCoverAnalyseSettings {
-                    ReportType = DotCoverReportType.HTML
-            }
-    );
+    if(IsRunningOnWindows())
+    {
+        DotCoverAnalyse(
+                tool =>
+                {
+                        tool.XUnit2(
+                                "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/*.Tests.dll",
+                                new XUnit2Settings {
+                                        Parallelism = ParallelismOption.All,
+                                        HtmlReport = true,
+                                        NUnitReport = true,
+                                        OutputDirectory = reportXUnitDirAnyCPU
+                                }
+                        );
+                },
+                new FilePath(reportDotCoverDirAnyCPU.ToString() + "/" + product + ".html"),
+                new DotCoverAnalyseSettings {
+                        ReportType = DotCoverReportType.HTML
+                }
+        );
+    }
+    else
+    {
+        XUnit2(
+                "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/*.Tests.dll",
+                new XUnit2Settings {
+                        Parallelism = ParallelismOption.All,
+                        HtmlReport = true,
+                        NUnitReport = true,
+                        OutputDirectory = reportXUnitDirAnyCPU
+                }
+        );
+    }
 });
 
 Task("Run-Unit-Tests-Under-X86")
@@ -197,25 +212,41 @@ Task("Run-Unit-Tests-Under-X86")
     .Does(() =>
 {
     CreateDirectory(reportXUnitDirX86);
-    DotCoverAnalyse(
-            tool =>
-            {
-                    tool.XUnit2(
-                            "./temp/" + configuration + "/" + product + ".Tests/bin/x86/*.Tests.dll",
-                            new XUnit2Settings {
-                                    Parallelism = ParallelismOption.All,
-                                    HtmlReport = true,
-                                    NUnitReport = true,
-                                    UseX86 = true,
-                                    OutputDirectory = reportXUnitDirX86
-                            }
-                    );
-            },
-            new FilePath(reportDotCoverDirX86.ToString() + "/" + product + ".html"),
-            new DotCoverAnalyseSettings {
-                    ReportType = DotCoverReportType.HTML
-            }
-    );
+    if(IsRunningOnWindows())
+    {
+        DotCoverAnalyse(
+                tool =>
+                {
+                        tool.XUnit2(
+                                "./temp/" + configuration + "/" + product + ".Tests/bin/x86/*.Tests.dll",
+                                new XUnit2Settings {
+                                        Parallelism = ParallelismOption.All,
+                                        HtmlReport = true,
+                                        NUnitReport = true,
+                                        UseX86 = true,
+                                        OutputDirectory = reportXUnitDirX86
+                                }
+                        );
+                },
+                new FilePath(reportDotCoverDirX86.ToString() + "/" + product + ".html"),
+                new DotCoverAnalyseSettings {
+                        ReportType = DotCoverReportType.HTML
+                }
+        );
+    }
+    else
+    {
+        XUnit2(
+                "./temp/" + configuration + "/" + product + ".Tests/bin/x86/*.Tests.dll",
+                new XUnit2Settings {
+                        Parallelism = ParallelismOption.All,
+                        HtmlReport = true,
+                        NUnitReport = true,
+                        UseX86 = true,
+                        OutputDirectory = reportXUnitDirX86
+                }
+        );
+    }
 });
 
 Task("Sign-Assemblies")
