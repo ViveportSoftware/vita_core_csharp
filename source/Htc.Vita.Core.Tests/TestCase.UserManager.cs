@@ -9,6 +9,10 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void UserManager_Default_0_GetActiveUser()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
             var username = UserManager.GetFirstActiveUser();
             Console.WriteLine("username: " + username);
             Assert.True(username != null && username.Length >= 3);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Htc.Vita.Core.IO;
+using Htc.Vita.Core.Runtime;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
@@ -10,6 +11,10 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void FileSystemManager_Default_0_GetDiskSpaceFor()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
             var directoryInfo = new DirectoryInfo("C:\\");
             Assert.True(directoryInfo.Exists);
             var diskSpaceInfo = FileSystemManager.GetDiskSpaceFor(directoryInfo);
@@ -27,6 +32,10 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void FileSystemManager_Default_0_GetDiskSpaceFor_WithNonExistPath()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
             var directoryInfo = new DirectoryInfo("R:\\");
             Assert.False(directoryInfo.Exists);
             var diskSpaceInfo = FileSystemManager.GetDiskSpaceFor(directoryInfo);

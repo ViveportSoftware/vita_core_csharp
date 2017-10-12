@@ -8,6 +8,10 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void Platform_Default_0_GetMachineId()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
             var machineId = Platform.GetMachineId();
             Assert.True(machineId != null && machineId.Length == 36);
         }

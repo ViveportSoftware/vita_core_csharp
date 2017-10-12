@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Htc.Vita.Core.Runtime;
 using Htc.Vita.Core.Util;
 using Xunit;
 
@@ -10,6 +11,10 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void Extract_0_FromFileToIconInWindows()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
             var sourceFileInfo = new FileInfo("C:\\Windows\\System32\\shell32.dll");
             Assert.True(sourceFileInfo.Exists);
             var target = Environment.GetEnvironmentVariable("Temp");

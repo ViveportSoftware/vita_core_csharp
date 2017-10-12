@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Htc.Vita.Core.Diagnosis;
+using Htc.Vita.Core.Runtime;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
@@ -9,6 +10,10 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void FileSignatureInfo_Default_0_GetSignatureInfo()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
             var fileInfo = new FileInfo("C:\\Windows\\System32\\svchost.exe");
             Assert.True(fileInfo.Exists);
             var fileSignatureInfo = FileSignatureInfo.GetSignatureInfo(fileInfo);
@@ -26,6 +31,10 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void FileSignatureInfo_Default_0_GetSignatureInfo_WithNotepad()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
             var fileInfo = new FileInfo("C:\\Windows\\System32\\notepad.exe");
             Assert.True(fileInfo.Exists);
             var fileSignatureInfo = FileSignatureInfo.GetSignatureInfo(fileInfo);

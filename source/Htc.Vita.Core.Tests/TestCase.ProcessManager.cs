@@ -11,6 +11,10 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void ProcessManager_Default_0_GetProcesses()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
             var processInfos = ProcessManager.GetProcesses();
             Assert.NotNull(processInfos);
             foreach (var processInfo in processInfos)
@@ -25,6 +29,10 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void ProcessManager_Default_1_GetProcessesByFirstActiveUser()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
             var processInfos = ProcessManager.GetProcessesByFirstActiveUser();
             foreach (var processInfo in processInfos)
             {
@@ -38,6 +46,10 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void ProcessManager_Default_2_KillProcessById()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
             var fileInfo = new FileInfo("C:\\Windows\\System32\\notepad.exe");
             Assert.True(fileInfo.Exists);
             var process = Process.Start(fileInfo.FullName);
