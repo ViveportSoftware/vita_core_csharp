@@ -8,6 +8,7 @@ tools/*
 
 # files
 *.log
+*.userprefs
 .DS_Store
 
 # kept files
