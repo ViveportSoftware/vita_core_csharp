@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Htc.Vita.Core.Crypto;
+using Htc.Vita.Core.Runtime;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
@@ -30,7 +31,11 @@ namespace Htc.Vita.Core.Tests
         {
             var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
-            const string path = @"%USERPROFILE%\TestData.Md5.txt";
+            string path = @"%USERPROFILE%\TestData.Md5.txt";
+            if (!Platform.IsWindows)
+            {
+                path = @"%HOME%/TestData.Md5.txt";
+            }
             var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
             Assert.Equal("pq/Xu7jVnluxLJ28xOws/w==", md5.GenerateInBase64(file));
         }
@@ -49,7 +54,11 @@ namespace Htc.Vita.Core.Tests
         {
             var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
-            const string path = @"%USERPROFILE%\TestData.Md5.txt";
+            string path = @"%USERPROFILE%\TestData.Md5.txt";
+            if (!Platform.IsWindows)
+            {
+                path = @"%HOME%/TestData.Md5.txt";
+            }
             var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
             Assert.True(md5.ValidateInBase64(file, "pq/Xu7jVnluxLJ28xOws/w=="));
         }
@@ -70,7 +79,11 @@ namespace Htc.Vita.Core.Tests
         {
             var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
-            const string path = @"%USERPROFILE%\TestData.Md5.txt";
+            string path = @"%USERPROFILE%\TestData.Md5.txt";
+            if (!Platform.IsWindows)
+            {
+                path = @"%HOME%/TestData.Md5.txt";
+            }
             var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
             Assert.Equal("a6afd7bbb8d59e5bb12c9dbcc4ec2cff", md5.GenerateInHex(file));
         }
@@ -89,7 +102,11 @@ namespace Htc.Vita.Core.Tests
         {
             var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
-            const string path = @"%USERPROFILE%\TestData.Md5.txt";
+            string path = @"%USERPROFILE%\TestData.Md5.txt";
+            if (!Platform.IsWindows)
+            {
+                path = @"%HOME%/TestData.Md5.txt";
+            }
             var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
             Assert.True(md5.ValidateInHex(file, "a6afd7bbb8d59e5bb12c9dbcc4ec2cff"));
         }
@@ -110,7 +127,11 @@ namespace Htc.Vita.Core.Tests
         {
             var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
-            const string path = @"%USERPROFILE%\TestData.Md5.txt";
+            string path = @"%USERPROFILE%\TestData.Md5.txt";
+            if (!Platform.IsWindows)
+            {
+                path = @"%HOME%/TestData.Md5.txt";
+            }
             var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
             Assert.True(md5.ValidateInAll(file, "pq/Xu7jVnluxLJ28xOws/w=="));
             Assert.True(md5.ValidateInAll(file, "a6afd7bbb8d59e5bb12c9dbcc4ec2cff"));

@@ -152,6 +152,9 @@ namespace Htc.Vita.Core.Preference
                     category = !string.IsNullOrWhiteSpace(category) ? category : "Vita";
                     label = !string.IsNullOrWhiteSpace(label) ? label : "default";
                     _path = GetWindowsFilePath(category, label);
+                    if (string.IsNullOrWhiteSpace(_path)){
+                        _path = GetUnixFilePath(category, label);
+                    }
                 }
 
                 public Dictionary<string, string> LoadFromFile()
@@ -246,6 +249,20 @@ namespace Htc.Vita.Core.Preference
                         return "";
                     }
                     return Path.Combine(path, "HTC", category, label + ".pref");
+                }
+
+                public static string GetUnixFilePath(string category, string label)
+                {
+                    if (string.IsNullOrWhiteSpace(category) || string.IsNullOrWhiteSpace(label))
+                    {
+                        return "";
+                    }
+                    var path = Environment.GetEnvironmentVariable("HOME");
+                    if (string.IsNullOrWhiteSpace(path))
+                    {
+                        return "";
+                    }
+                    return Path.Combine(path, ".htc", category, label + ".pref");
                 }
             }
         }
