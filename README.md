@@ -17,6 +17,10 @@ Test-time dependencies:
 * .NET Framework 4.5.2
 * [xUnit.net](https://xunit.github.io/)
 
+Build-time Prerequisite (macOS):
+
+* Microsoft Visual Studio 2017 for Mac
+
 Build-time Prerequisite (Windows):
 
 * Microsoft Visual Studio 2015
