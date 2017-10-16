@@ -3,7 +3,9 @@
     internal static class Libraries
     {
         public const string Windows_advapi32 = "advapi32.dll";
+        public const string Windows_hid = "hid.dll";
         public const string Windows_kernel32 = "kernel32.dll";
+        public const string Windows_setupapi = "setupapi.dll";
         public const string Windows_wintrust = "wintrust.dll";
         public const string Windows_wtsapi32 = "wtsapi32.dll";
     }

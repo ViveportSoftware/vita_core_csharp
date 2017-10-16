@@ -8,7 +8,7 @@ namespace Htc.Vita.Core.Interop
         public static partial class Wtsapi32
         {
             /**
-             * https://msdn.microsoft.com/zh-tw/library/aa383862.aspx
+             * https://msdn.microsoft.com/en-us/library/aa383862.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
             public struct WTS_PROCESS_INFO
