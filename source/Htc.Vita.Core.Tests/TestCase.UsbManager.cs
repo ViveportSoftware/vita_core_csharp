@@ -18,11 +18,23 @@ namespace Htc.Vita.Core.Tests
             foreach (var deviceInfo in deviceInfos) {
                 Console.WriteLine("deviceInfo.Path: " + deviceInfo.Path);
                 Assert.False(string.IsNullOrWhiteSpace(deviceInfo.Path));
-                Assert.True(string.IsNullOrEmpty(deviceInfo.ProductId) || deviceInfo.ProductId.Length == 4);
-                Assert.True(string.IsNullOrEmpty(deviceInfo.VendorId) || deviceInfo.VendorId.Length == 4);
+                var productId = deviceInfo.ProductId;
+                if (!string.IsNullOrEmpty(productId))
+                {
+                    Assert.True(productId.Length == 4);
+                }
+                var vendorId = deviceInfo.VendorId;
+                if (!string.IsNullOrEmpty(vendorId))
+                {
+                    Assert.True(vendorId.Length == 4);
+                }
                 Assert.False(string.IsNullOrWhiteSpace(deviceInfo.Description));
                 Assert.False(string.IsNullOrWhiteSpace(deviceInfo.Manufecturer));
-                Assert.False(string.IsNullOrWhiteSpace(deviceInfo.Optional["type"]));
+                var optional = deviceInfo.Optional;
+                if (optional.ContainsKey("type"))
+                {
+                    Assert.False(string.IsNullOrWhiteSpace(optional["type"]));
+                }
             }
         }
     }
