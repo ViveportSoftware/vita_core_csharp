@@ -14,7 +14,15 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            var fileInfo = new FileInfo("C:\\Windows\\System32\\svchost.exe");
+            var fileInfo = new FileInfo("C:\\Windows\\SysWOW64\\msvcp120.dll");
+            if (!fileInfo.Exists)
+            {
+                fileInfo = new FileInfo("C:\\Windows\\System32\\msvcp120.dll");
+            }
+            if (!fileInfo.Exists)
+            {
+                fileInfo = new FileInfo("C:\\Windows\\System32\\svchost.exe");
+            }
             Assert.True(fileInfo.Exists);
             var fileSignatureInfo = FileSignatureInfo.GetSignatureInfo(fileInfo);
             Assert.NotNull(fileSignatureInfo);

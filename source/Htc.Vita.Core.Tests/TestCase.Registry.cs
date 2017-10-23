@@ -54,7 +54,7 @@ namespace Htc.Vita.Core.Tests
             }
             Assert.NotNull(Registry.GetStringValue64(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}", null));
             Assert.NotNull(Registry.GetStringValue64(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
-            Assert.Null(Registry.GetStringValue64(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID", null));
+            Assert.Null(Registry.GetStringValue64(Registry.Hive.LocalMachine, "SOFTWARE\\Classes", null));
             Assert.Null(Registry.GetStringValue64(Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
         }
 
@@ -171,8 +171,8 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            Assert.True(Registry.GetDwordValue32(Registry.Hive.ClassesRoot, "textfile", "EditFlags") != 0);
-            Assert.True(Registry.GetDwordValue32(Registry.Hive.ClassesRoot, "textfile", "EditFlags1") == 0);
+            Assert.True(Registry.GetDwordValue32(Registry.Hive.ClassesRoot, "telnet", "EditFlags") != 0);
+            Assert.True(Registry.GetDwordValue32(Registry.Hive.ClassesRoot, "telnet", "EditFlags1") == 0);
         }
 
         [Fact]
@@ -182,8 +182,8 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            Assert.True(Registry.GetDwordValue64(Registry.Hive.ClassesRoot, "textfile", "EditFlags") != 0);
-            Assert.True(Registry.GetDwordValue64(Registry.Hive.ClassesRoot, "textfile", "EditFlags1") == 0);
+            Assert.True(Registry.GetDwordValue64(Registry.Hive.ClassesRoot, "telnet", "EditFlags") != 0);
+            Assert.True(Registry.GetDwordValue64(Registry.Hive.ClassesRoot, "telnet", "EditFlags1") == 0);
         }
 
         [Fact]
@@ -193,8 +193,8 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            Assert.True(Registry.GetIntValue(Registry.Hive.ClassesRoot, "textfile", "EditFlags") != 0);
-            Assert.True(Registry.GetIntValue(Registry.Hive.ClassesRoot, "textfile", "EditFlags1") == 0);
+            Assert.True(Registry.GetIntValue(Registry.Hive.ClassesRoot, "telnet", "EditFlags") != 0);
+            Assert.True(Registry.GetIntValue(Registry.Hive.ClassesRoot, "telnet", "EditFlags1") == 0);
         }
 
         [Fact]

@@ -8,13 +8,14 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void UsbManager_Default_0_GetDevices()
+        public void UsbManager_Default_0_GetHidDevices()
         {
             if (!Platform.IsWindows)
             {
                 return;
             }
             var deviceInfos = UsbManager.GetHidDevices();
+            Assert.NotNull(deviceInfos);
             foreach (var deviceInfo in deviceInfos) {
                 Console.WriteLine("deviceInfo.Path: " + deviceInfo.Path);
                 Assert.False(string.IsNullOrWhiteSpace(deviceInfo.Path));
