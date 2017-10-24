@@ -254,37 +254,43 @@ Task("Run-DupFinder")
     .IsDependentOn("Run-Unit-Tests-Under-X86")
     .Does(() =>
 {
-    DupFinder(
-            string.Format("./source/{0}.sln", product),
-            new DupFinderSettings() {
-                    ShowStats = true,
-                    ShowText = true,
-                    OutputFile = new FilePath(reportReSharperDupFinder.ToString() + "/" + product + ".xml"),
-                    ThrowExceptionOnFindingDuplicates = false
-            }
-    );
-    ReSharperReports(
-            new FilePath(reportReSharperDupFinder.ToString() + "/" + product + ".xml"),
-            new FilePath(reportReSharperDupFinder.ToString() + "/" + product + ".html")
-    );
+    if(IsRunningOnWindows())
+    {
+        DupFinder(
+                string.Format("./source/{0}.sln", product),
+                new DupFinderSettings() {
+                        ShowStats = true,
+                        ShowText = true,
+                        OutputFile = new FilePath(reportReSharperDupFinder.ToString() + "/" + product + ".xml"),
+                        ThrowExceptionOnFindingDuplicates = false
+                }
+        );
+        ReSharperReports(
+                new FilePath(reportReSharperDupFinder.ToString() + "/" + product + ".xml"),
+                new FilePath(reportReSharperDupFinder.ToString() + "/" + product + ".html")
+        );
+    }
 });
 
 Task("Run-InspectCode")
     .IsDependentOn("Run-DupFinder")
     .Does(() =>
 {
-    InspectCode(
-            string.Format("./source/{0}.sln", product),
-            new InspectCodeSettings() {
-                    SolutionWideAnalysis = true,
-                    OutputFile = new FilePath(reportReSharperInspectCode.ToString() + "/" + product + ".xml"),
-                    ThrowExceptionOnFindingViolations = false
-            }
-    );
-    ReSharperReports(
-            new FilePath(reportReSharperInspectCode.ToString() + "/" + product + ".xml"),
-            new FilePath(reportReSharperInspectCode.ToString() + "/" + product + ".html")
-    );
+    if(IsRunningOnWindows())
+    {
+        InspectCode(
+                string.Format("./source/{0}.sln", product),
+                new InspectCodeSettings() {
+                        SolutionWideAnalysis = true,
+                        OutputFile = new FilePath(reportReSharperInspectCode.ToString() + "/" + product + ".xml"),
+                        ThrowExceptionOnFindingViolations = false
+                }
+        );
+        ReSharperReports(
+                new FilePath(reportReSharperInspectCode.ToString() + "/" + product + ".xml"),
+                new FilePath(reportReSharperInspectCode.ToString() + "/" + product + ".html")
+        );
+    }
 });
 
 Task("Sign-Assemblies")
