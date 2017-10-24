@@ -1,4 +1,4 @@
-#tool "nuget:?package=xunit.runner.console&version=2.2.0"
+#tool "nuget:?package=xunit.runner.console&version=2.3.0"
 #tool "nuget:?package=JetBrains.dotCover.CommandLineTools&version=2017.2.20171006.131508"
 #addin "nuget:?package=Cake.Git&version=0.16.0"
 
