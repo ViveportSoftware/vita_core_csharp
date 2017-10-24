@@ -17,7 +17,8 @@ namespace Htc.Vita.Core.Tests
             var deviceInfos = UsbManager.GetHidDevices();
             Assert.NotNull(deviceInfos);
             foreach (var deviceInfo in deviceInfos) {
-                Console.WriteLine("deviceInfo.Path: " + deviceInfo.Path);
+                Console.WriteLine("deviceInfo.Path: \"" + deviceInfo.Path + "\"");
+                Console.WriteLine("deviceInfo.SerialNumber: \"" + deviceInfo.SerialNumber + "\"");
                 Assert.False(string.IsNullOrWhiteSpace(deviceInfo.Path));
                 var productId = deviceInfo.ProductId;
                 if (!string.IsNullOrEmpty(productId))

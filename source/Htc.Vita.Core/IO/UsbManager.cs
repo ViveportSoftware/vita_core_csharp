@@ -19,29 +19,30 @@ namespace Htc.Vita.Core.IO
 
         private static List<DeviceInfo> GetHidDevicesInWindows()
         {
+            var deviceInfos = new List<DeviceInfo>();
             var classGuid = GetHidGuidInWindows();
-            var deviceInfoSetPtr = Windows.Setupapi.SetupDiGetClassDevsW(
+            var deviceInfoSet = Windows.Setupapi.SetupDiGetClassDevsW(
                     ref classGuid,
                     null,
                     IntPtr.Zero,
                     Windows.Setupapi.DIGCF.DIGCF_PRESENT | Windows.Setupapi.DIGCF.DIGCF_DEVICEINTERFACE
             );
-            if (deviceInfoSetPtr == Windows.INVALID_HANDLE_VALUE)
+            if (deviceInfoSet == Windows.INVALID_HANDLE_VALUE)
             {
-                Log.Error("Can not find HID devices: " + Marshal.GetLastWin32Error());
+                Log.Error("Can not find USB HID devices, error code: " + Marshal.GetLastWin32Error());
+                return deviceInfos;
             }
 
-            var deviceInfos = new List<DeviceInfo>();
-            var memberIndex = 0;
+            var deviceIndex = 0;
             while (true)
             {
                 var deviceInterfaceData = new Windows.Setupapi.SP_DEVICE_INTERFACE_DATA();
                 deviceInterfaceData.cbSize = Marshal.SizeOf(deviceInterfaceData);
                 var success = Windows.Setupapi.SetupDiEnumDeviceInterfaces(
-                        deviceInfoSetPtr,
+                        deviceInfoSet,
                         IntPtr.Zero,
                         ref classGuid,
-                        memberIndex,
+                        deviceIndex,
                         ref deviceInterfaceData
                 );
                 if (!success)
@@ -49,14 +50,14 @@ namespace Htc.Vita.Core.IO
                     var win32Error = Marshal.GetLastWin32Error();
                     if (win32Error != Windows.ERROR_NO_MORE_ITEMS)
                     {
-                        Log.Error("Can not enumerate HID device index: " + memberIndex + ", error code: " + win32Error);
+                        Log.Error("Can not enumerate USB HID device on index: " + deviceIndex + ", error code: " + win32Error);
                     }
                     break;
                 }
 
                 var bufferSize = 0;
                 success = Windows.Setupapi.SetupDiGetDeviceInterfaceDetailW(
-                        deviceInfoSetPtr,
+                        deviceInfoSet,
                         ref deviceInterfaceData,
                         IntPtr.Zero, 
                         0,
@@ -68,19 +69,19 @@ namespace Htc.Vita.Core.IO
                     var win32Error = Marshal.GetLastWin32Error();
                     if (win32Error != Windows.ERROR_INSUFFICIENT_BUFFER)
                     {
-                        Log.Error("Can not query HID device interface detail on index: " + memberIndex + ", error code: " + win32Error);
+                        Log.Error("Can not query USB HID device interface detail on index: " + deviceIndex + ", error code: " + win32Error);
                         break;
                     }
                 }
 
-                var deviceInterfaceDetailDataPtr = Marshal.AllocHGlobal(bufferSize);
-                Marshal.WriteInt32(deviceInterfaceDetailDataPtr, IntPtr.Size == 8 ? 8 : 6);
+                var deviceInterfaceDetailData = Marshal.AllocHGlobal(bufferSize);
+                Marshal.WriteInt32(deviceInterfaceDetailData, IntPtr.Size == 8 ? 8 : 6);
                 var devinfoData = new Windows.Setupapi.SP_DEVINFO_DATA();
                 devinfoData.cbSize = Marshal.SizeOf(devinfoData);
                 success = Windows.Setupapi.SetupDiGetDeviceInterfaceDetailW(
-                        deviceInfoSetPtr,
+                        deviceInfoSet,
                         ref deviceInterfaceData,
-                        deviceInterfaceDetailDataPtr,
+                        deviceInterfaceDetailData,
                         bufferSize,
                         ref bufferSize,
                         ref devinfoData
@@ -88,26 +89,30 @@ namespace Htc.Vita.Core.IO
                 if (!success)
                 {
                     var win32Error = Marshal.GetLastWin32Error();
-                    Log.Error("Can not get HID device interface detail on index: " + memberIndex + ", error code: " + win32Error);
+                    Log.Error("Can not get USB HID device interface detail on index: " + deviceIndex + ", error code: " + win32Error);
                     break;
                 }
 
+                var devicePath = Marshal.PtrToStringUni(deviceInterfaceDetailData + 4);
+                Marshal.FreeHGlobal(deviceInterfaceDetailData);
+
                 var deviceInfo = new DeviceInfo
                 {
-                        Path = Marshal.PtrToStringUni(deviceInterfaceDetailDataPtr + 4),
-                        Description = GetDeviceStringPropertyInWindows(
-                            deviceInfoSetPtr,
-                            ref devinfoData,
-                            Windows.Setupapi.SPDRP.SPDRP_DEVICEDESC
+                        Path = devicePath,
+                        Description = GetUsbDeviceStringPropertyInWindows(
+                                deviceInfoSet,
+                                ref devinfoData,
+                                Windows.Setupapi.SPDRP.SPDRP_DEVICEDESC
                         ),
-                        Manufecturer = GetDeviceStringPropertyInWindows(
-                            deviceInfoSetPtr,
-                            ref devinfoData,
-                            Windows.Setupapi.SPDRP.SPDRP_MFG
-                        )
+                        Manufecturer = GetUsbDeviceStringPropertyInWindows(
+                                deviceInfoSet,
+                                ref devinfoData,
+                                Windows.Setupapi.SPDRP.SPDRP_MFG
+                        ),
+                        SerialNumber = GetHidDeviceSerialNumberInWindows(devicePath)
                 };
-                var hardwareIds = GetDeviceMultiStringPropertyInWindows(
-                        deviceInfoSetPtr,
+                var hardwareIds = GetUsbDeviceMultiStringPropertyInWindows(
+                        deviceInfoSet,
                         ref devinfoData,
                         Windows.Setupapi.SPDRP.SPDRP_HARDWAREID
                 );
@@ -124,11 +129,12 @@ namespace Htc.Vita.Core.IO
                     deviceInfo.ProductId = match.Groups[3].Value;
                     break;
                 }
+
                 deviceInfos.Add(deviceInfo);
 
-                Marshal.FreeHGlobal(deviceInterfaceDetailDataPtr);
-                memberIndex++;
+                deviceIndex++;
             }
+            Windows.Setupapi.SetupDiDestroyDeviceInfoList(deviceInfoSet);
             return deviceInfos;
         }
 
@@ -144,7 +150,7 @@ namespace Htc.Vita.Core.IO
             return new Guid("4d1e55b2-f16f-11cf-88cb-001111000030"); // default HID GUID
         }
 
-        private static byte[] GetDevicePropertyInWindows(
+        private static byte[] GetUsbDevicePropertyInWindows(
                 IntPtr deviceInfoSetPtr,
                 ref Windows.Setupapi.SP_DEVINFO_DATA devinfoData,
                 Windows.Setupapi.SPDRP property,
@@ -165,7 +171,7 @@ namespace Htc.Vita.Core.IO
                 var win32Error = Marshal.GetLastWin32Error();
                 if (win32Error != Windows.ERROR_INSUFFICIENT_BUFFER)
                 {
-                    Log.Error("Can not query device registry property, error code: " + win32Error);
+                    Log.Error("Can not query USB device registry property, error code: " + win32Error);
                     regType = 0;
                     return null;
                 }
@@ -184,19 +190,19 @@ namespace Htc.Vita.Core.IO
             if (!success)
             {
                 var win32Error = Marshal.GetLastWin32Error();
-                Log.Error("Can not get device registry property, error code: " + win32Error);
+                Log.Error("Can not get USB device registry property, error code: " + win32Error);
                 return null;
             }
             return propertyBuffer;
         }
 
-        private static string GetDeviceStringPropertyInWindows(
+        private static string GetUsbDeviceStringPropertyInWindows(
                 IntPtr deviceInfoSetPtr,
                 ref Windows.Setupapi.SP_DEVINFO_DATA devinfoData,
                 Windows.Setupapi.SPDRP property)
         {
             int regType;
-            var bytes = GetDevicePropertyInWindows(deviceInfoSetPtr, ref devinfoData, property, out regType);
+            var bytes = GetUsbDevicePropertyInWindows(deviceInfoSetPtr, ref devinfoData, property, out regType);
             if (bytes == null || bytes.Length == 0 || regType != Windows.REG_SZ)
             {
                 return string.Empty;
@@ -204,13 +210,13 @@ namespace Htc.Vita.Core.IO
             return Encoding.Unicode.GetString(bytes, 0, bytes.Length - sizeof(char)).Trim();
         }
 
-        private static string[] GetDeviceMultiStringPropertyInWindows(
+        private static string[] GetUsbDeviceMultiStringPropertyInWindows(
                 IntPtr deviceInfoSetPtr,
                 ref Windows.Setupapi.SP_DEVINFO_DATA devinfoData,
                 Windows.Setupapi.SPDRP property)
         {
             int regType;
-            var bytes = GetDevicePropertyInWindows(deviceInfoSetPtr, ref devinfoData, property, out regType);
+            var bytes = GetUsbDevicePropertyInWindows(deviceInfoSetPtr, ref devinfoData, property, out regType);
             if (bytes == null || bytes.Length == 0 || regType != Windows.REG_MULTI_SZ)
             {
                 return new string[] {};
@@ -221,13 +227,55 @@ namespace Htc.Vita.Core.IO
             );
         }
 
+        private static string GetHidDeviceSerialNumberInWindows(string devicePath)
+        {
+            if (string.IsNullOrWhiteSpace(devicePath))
+            {
+                return string.Empty;
+            }
+
+            var result = string.Empty;
+            var deviceHandle = Windows.Kernel32.CreateFileW(
+                    devicePath,
+                    Windows.Kernel32.GENERIC.GENERIC_READ | Windows.Kernel32.GENERIC.GENERIC_WRITE,
+                    Windows.Kernel32.FILE_SHARE.FILE_SHARE_READ | Windows.Kernel32.FILE_SHARE.FILE_SHARE_WRITE,
+                    IntPtr.Zero,
+                    Windows.Kernel32.CREATION_DISPOSITION.OPEN_EXISTING,
+                    Windows.Kernel32.FILE_ATTRIBUTE_FLAG.FILE_FLAG_OVERLAPPED,
+                    IntPtr.Zero
+            );
+            if (deviceHandle == Windows.INVALID_HANDLE_VALUE)
+            {
+                return result;
+            }
+
+            var buffer = new StringBuilder(126);
+            var success = Windows.Hid.HidD_GetSerialNumberString(
+                    deviceHandle,
+                    buffer,
+                    buffer.Capacity
+            );
+            if (success)
+            {
+                result = buffer.ToString();
+            }
+            else
+            {
+                var win32Error = Marshal.GetLastWin32Error();
+                Log.Error("Can not get USB HID serial number, error code: " + win32Error);
+            }
+            Windows.Kernel32.CloseHandle(deviceHandle);
+            return result;
+        }
+
         public class DeviceInfo
         {
-            public string VendorId { get; set; } = "";
-            public string ProductId { get; set; } = "";
-            public string Path { get; set; } = "";
             public string Description { get; set; } = "";
             public string Manufecturer { get; set; } = "";
+            public string Path { get; set; } = "";
+            public string ProductId { get; set; } = "";
+            public string SerialNumber { get; set; } = "";
+            public string VendorId { get; set; } = "";
             public Dictionary<string, string> Optional { get; set; } = new Dictionary<string, string>();
         }
     }
