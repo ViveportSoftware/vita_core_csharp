@@ -1,6 +1,7 @@
 #tool "nuget:?package=xunit.runner.console&version=2.3.0"
 #tool "nuget:?package=JetBrains.dotCover.CommandLineTools&version=2017.2.20171006.131508"
 #addin "nuget:?package=Cake.Git&version=0.16.0"
+#addin "nuget:?package=Cake.ReSharperReports&version=0.8.0"
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -48,6 +49,8 @@ var reportDotCoverDirAnyCPU = Directory("./dist") + Directory(configuration) + D
 var reportDotCoverDirX86 = Directory("./dist") + Directory(configuration) + Directory("report/DotCover/x86");
 var reportXUnitDirAnyCPU = Directory("./dist") + Directory(configuration) + Directory("report/xUnit/AnyCPU");
 var reportXUnitDirX86 = Directory("./dist") + Directory(configuration) + Directory("report/xUnit/x86");
+var reportReSharperDupFinder = Directory("./dist") + Directory(configuration) + Directory("report/ReSharper/DupFinder");
+var reportReSharperInspectCode = Directory("./dist") + Directory(configuration) + Directory("report/ReSharper/InspectCode");
 
 // Define signing key, password and timestamp server
 var signKeyEnc = EnvironmentVariable("SIGNKEYENC") ?? "NOTSET";
@@ -249,9 +252,46 @@ Task("Run-Unit-Tests-Under-X86")
     }
 });
 
+Task("Run-DupFinder")
+    .IsDependentOn("Run-Unit-Tests-Under-X86")
+    .Does(() =>
+{
+    DupFinder(
+            string.Format("./source/{0}.sln", product),
+            new DupFinderSettings() {
+                    ShowStats = true,
+                    ShowText = true,
+                    OutputFile = new FilePath(reportReSharperDupFinder.ToString() + "/" + product + ".xml"),
+                    ThrowExceptionOnFindingDuplicates = false
+            }
+    );
+    ReSharperReports(
+            new FilePath(reportReSharperDupFinder.ToString() + "/" + product + ".xml"),
+            new FilePath(reportReSharperDupFinder.ToString() + "/" + product + ".html")
+    );
+});
+
+Task("Run-InspectCode")
+    .IsDependentOn("Run-DupFinder")
+    .Does(() =>
+{
+    InspectCode(
+            string.Format("./source/{0}.sln", product),
+            new InspectCodeSettings() {
+                    SolutionWideAnalysis = true,
+                    OutputFile = new FilePath(reportReSharperInspectCode.ToString() + "/" + product + ".xml"),
+                    ThrowExceptionOnFindingViolations = false
+            }
+    );
+    ReSharperReports(
+            new FilePath(reportReSharperInspectCode.ToString() + "/" + product + ".xml"),
+            new FilePath(reportReSharperInspectCode.ToString() + "/" + product + ".html")
+    );
+});
+
 Task("Sign-Assemblies")
     .WithCriteria(() => "Release".Equals(configuration) && !"NOTSET".Equals(signPass) && !"NOTSET".Equals(signKeyEnc))
-    .IsDependentOn("Run-Unit-Tests-Under-X86")
+    .IsDependentOn("Run-InspectCode")
     .Does(() =>
 {
     var currentSignTimestamp = DateTime.Now;
