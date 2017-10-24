@@ -1,5 +1,3 @@
-#tool "nuget:?package=xunit.runner.console&version=2.3.0"
-#tool "nuget:?package=JetBrains.dotCover.CommandLineTools&version=2017.2.20171006.131508"
 #addin "nuget:?package=Cake.Git&version=0.16.0"
 #addin "nuget:?package=Cake.ReSharperReports&version=0.8.0"
 
@@ -45,8 +43,8 @@ var generatedDir = Directory("./source/generated");
 var packagesDir = Directory("./source/packages");
 var nugetDir = Directory("./dist") + Directory(configuration) + Directory("nuget");
 var homeDir = Directory(EnvironmentVariable("USERPROFILE") ?? EnvironmentVariable("HOME"));
-var reportDotCoverDirAnyCPU = Directory("./dist") + Directory(configuration) + Directory("report/DotCover/AnyCPU");
-var reportDotCoverDirX86 = Directory("./dist") + Directory(configuration) + Directory("report/DotCover/x86");
+var reportDotCoverDirAnyCPU = Directory("./dist") + Directory(configuration) + Directory("report/dotCover/AnyCPU");
+var reportDotCoverDirX86 = Directory("./dist") + Directory(configuration) + Directory("report/dotCover/x86");
 var reportXUnitDirAnyCPU = Directory("./dist") + Directory(configuration) + Directory("report/xUnit/AnyCPU");
 var reportXUnitDirX86 = Directory("./dist") + Directory(configuration) + Directory("report/xUnit/x86");
 var reportReSharperDupFinder = Directory("./dist") + Directory(configuration) + Directory("report/ReSharper/DupFinder");
