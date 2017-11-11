@@ -15,7 +15,8 @@ namespace Htc.Vita.Core.Interop
                     CharSet = CharSet.Unicode,
                     ExactSpelling = true,
                     SetLastError = true)]
-            public static extern long WinVerifyTrust(
+            [return: MarshalAs(UnmanagedType.U4)]
+            public static extern uint WinVerifyTrust(
                     [In] IntPtr hWnd,
                     [In] [MarshalAs(UnmanagedType.LPStruct)] Guid pgActionId,
                     [In] IntPtr pWinTrustData

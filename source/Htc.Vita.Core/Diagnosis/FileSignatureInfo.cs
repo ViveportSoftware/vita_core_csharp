@@ -104,12 +104,37 @@ namespace Htc.Vita.Core.Diagnosis
                         winTrustDataPtr
                 );
 
+                var success = result == 0;
+                if (!success)
+                {
+                    if (result == Windows.TRUST_E_PROVIDER_UNKNOWN)
+                    {
+                        Log.Error("WinVerifyTrust result: TRUST_E_PROVIDER_UNKNOWN");
+                    }
+                    else if (result == Windows.TRUST_E_ACTION_UNKNOWN)
+                    {
+                        Log.Error("WinVerifyTrust result: TRUST_E_ACTION_UNKNOWN");
+                    }
+                    else if (result == Windows.TRUST_E_SUBJECT_FORM_UNKNOWN)
+                    {
+                        Log.Error("WinVerifyTrust result: TRUST_E_SUBJECT_FORM_UNKNOWN");
+                    }
+                    else if (result == Windows.TRUST_E_SUBJECT_NOT_TRUSTED)
+                    {
+                        Log.Warn("Can not trust " + fileInfo.FullName);
+                    }
+                    else
+                    {
+                        Log.Error("WinVerifyTrust result: 0x" + result.ToString("X"));
+                    }
+                }
+
                 Marshal.DestroyStructure(winTrustDataPtr, typeof(Windows.Wintrust.WINTRUST_DATA));
                 Marshal.FreeHGlobal(winTrustDataPtr);
                 Marshal.DestroyStructure(winTrustFileInfoPtr, typeof(Windows.Wintrust.WINTRUST_FILE_INFO));
                 Marshal.FreeHGlobal(winTrustFileInfoPtr);
 
-                return result == 0;
+                return success;
             }
         }
 

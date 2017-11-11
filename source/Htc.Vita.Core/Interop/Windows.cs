@@ -23,5 +23,10 @@ namespace Htc.Vita.Core.Interop
         public static int REG_RESOURCE_REQUIREMENTS_LIST = 10;
         public static int REG_QWORD = 11;
         public static int REG_QWORD_LITTLE_ENDIAN = REG_QWORD;
+
+        public static uint TRUST_E_PROVIDER_UNKNOWN = 0x800B0001;
+        public static uint TRUST_E_ACTION_UNKNOWN = 0x800B0002;
+        public static uint TRUST_E_SUBJECT_FORM_UNKNOWN = 0x800B0003;
+        public static uint TRUST_E_SUBJECT_NOT_TRUSTED = 0x800B0004;
     }
 }
