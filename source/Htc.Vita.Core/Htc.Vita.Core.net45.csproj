@@ -53,9 +53,19 @@
     <Compile Include="Crypto\Sha1.cs" />
     <Compile Include="Diagnosis\FileSignatureInfo.cs" />
     <Compile Include="Interop\Libraries.cs" />
+    <Compile Include="Interop\Windows.Advapi32.ChangeServiceConfig.cs" />
+    <Compile Include="Interop\Windows.Advapi32.CloseServiceHandle.cs" />
     <Compile Include="Interop\Windows.Advapi32.ConvertSidToStringSid.cs" />
     <Compile Include="Interop\Windows.Advapi32.ConvertStringSidToSid.cs" />
     <Compile Include="Interop\Windows.Advapi32.LookupAccountSid.cs" />
+    <Compile Include="Interop\Windows.Advapi32.OpenSCManager.cs" />
+    <Compile Include="Interop\Windows.Advapi32.OpenService.cs" />
+    <Compile Include="Interop\Windows.Advapi32.ErrorControlType.cs" />
+    <Compile Include="Interop\Windows.Advapi32.QueryServiceConfig.cs" />
+    <Compile Include="Interop\Windows.Advapi32.SCMAccessRight.cs" />
+    <Compile Include="Interop\Windows.Advapi32.ServiceAccessRight.cs" />
+    <Compile Include="Interop\Windows.Advapi32.StartType.cs" />
+    <Compile Include="Interop\Windows.Advapi32.ServiceType.cs" />
     <Compile Include="Interop\Windows.Advapi32.SidNameUse.cs" />
     <Compile Include="Interop\Windows.cs" />
     <Compile Include="Interop\Windows.Hid.HidD_GetHidGuid.cs" />
@@ -131,6 +141,7 @@
     <Compile Include="Preference\PreferenceFactory.cs" />
     <Compile Include="Runtime\Platform.cs" />
     <Compile Include="Runtime\ProcessManager.cs" />
+    <Compile Include="Runtime\ServiceManager.cs" />
     <Compile Include="Runtime\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shell\ShellLink.cs" />

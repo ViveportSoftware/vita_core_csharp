@@ -69,6 +69,7 @@
     <Compile Include="TestCase.PreferenceFactory.cs" />
     <Compile Include="TestCase.ProcessManager.cs" />
     <Compile Include="TestCase.Registry.cs" />
+    <Compile Include="TestCase.ServiceManager.cs" />
     <Compile Include="TestCase.Sha1.cs" />
     <Compile Include="TestCase.ShellLink.cs" />
     <Compile Include="TestCase.UsbManager.cs" />

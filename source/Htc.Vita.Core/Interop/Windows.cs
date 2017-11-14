@@ -7,6 +7,7 @@ namespace Htc.Vita.Core.Interop
         public static IntPtr INVALID_HANDLE_VALUE = new IntPtr(-1);
 
         public static int ERROR_INSUFFICIENT_BUFFER = 0x7a; // 122
+        public static int ERROR_INVALID_NAME = 0x7b; // 123
         public static int ERROR_NO_MORE_ITEMS = 0x103; // 259
 
         public static int REG_NONE = 0;
