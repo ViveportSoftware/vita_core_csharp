@@ -30,11 +30,11 @@ namespace Htc.Vita.Core.Interop
             [StructLayout(LayoutKind.Sequential)]
             public struct QUERY_SERVICE_CONFIG
             {
-                public uint dwServiceType;
+                public SERVICE_TYPE dwServiceType;
 
-                public uint dwStartType;
+                public START_TYPE dwStartType;
 
-                public uint dwErrorControl;
+                public ERROR_CONTROL_TYPE dwErrorControl;
 
                 public string lpBinaryPathName;
 
@@ -48,7 +48,6 @@ namespace Htc.Vita.Core.Interop
 
                 public string lpDisplayName;
             }
-
         }
     }
 }

@@ -29,15 +29,14 @@ namespace Htc.Vita.Core.Tests
             var exists = ServiceManager.CheckIfExists("Winmgmt");
             Assert.True(exists);
             var serviceInfo = ServiceManager.QueryStartType("Winmgmt");
-            Console.WriteLine("serviceInfo.ServiceName: " + serviceInfo.ServiceName);
-            Console.WriteLine("serviceInfo.CurrentState: " + serviceInfo.CurrentState);
-            Console.WriteLine("serviceInfo.StartType: " + serviceInfo.StartType);
-            Console.WriteLine("serviceInfo.ErrorCode: " + serviceInfo.ErrorCode);
-            Console.WriteLine("serviceInfo.ErrorMessage: " + serviceInfo.ErrorMessage);
-            Assert.True(serviceInfo.ErrorCode == 0);
+            Assert.False(string.IsNullOrWhiteSpace(serviceInfo.ServiceName));
+            Assert.NotEqual(serviceInfo.CurrentState, ServiceManager.CurrentState.Unknown);
+            Assert.NotEqual(serviceInfo.StartType, ServiceManager.StartType.Unknown);
+            Assert.Equal(serviceInfo.ErrorCode, 0);
+            Assert.True(string.IsNullOrWhiteSpace(serviceInfo.ErrorMessage));
         }
 
-        [Fact(Skip = "AdministratorPermissionNeeded")]
+        [Fact]
         public void ServiceManager_Default_2_ChangeStartType()
         {
             if (!Platform.IsWindows)
@@ -46,16 +45,22 @@ namespace Htc.Vita.Core.Tests
             }
             var exists = ServiceManager.CheckIfExists("Winmgmt");
             Assert.True(exists);
-            var serviceInfo = ServiceManager.ChangeStartType("Winmgmt", ServiceManager.StartType.Automatic);
-            Console.WriteLine("serviceInfo.ServiceName: " + serviceInfo.ServiceName);
-            Console.WriteLine("serviceInfo.CurrentState: " + serviceInfo.CurrentState);
-            Console.WriteLine("serviceInfo.StartType: " + serviceInfo.StartType);
-            Console.WriteLine("serviceInfo.ErrorCode: " + serviceInfo.ErrorCode);
-            Console.WriteLine("serviceInfo.ErrorMessage: " + serviceInfo.ErrorMessage);
-            Assert.True(serviceInfo.ErrorCode == 0);
+            var serviceInfo = ServiceManager.QueryStartType("Winmgmt");
+            Assert.NotNull(serviceInfo);
+
+            if (serviceInfo.StartType != ServiceManager.StartType.Disabled)
+            {
+                return;
+            }
+            serviceInfo = ServiceManager.ChangeStartType("Winmgmt", ServiceManager.StartType.Automatic);
+            Assert.False(string.IsNullOrWhiteSpace(serviceInfo.ServiceName));
+            Assert.NotEqual(serviceInfo.CurrentState, ServiceManager.CurrentState.Unknown);
+            Assert.Equal(serviceInfo.StartType, ServiceManager.StartType.Automatic);
+            Assert.Equal(serviceInfo.ErrorCode, 0);
+            Assert.True(string.IsNullOrWhiteSpace(serviceInfo.ErrorMessage));
         }
 
-        [Fact(Skip = "AdministratorPermissionNeeded")]
+        [Fact]
         public void ServiceManager_Default_3_Start()
         {
             if (!Platform.IsWindows)
@@ -64,13 +69,26 @@ namespace Htc.Vita.Core.Tests
             }
             var exists = ServiceManager.CheckIfExists("Winmgmt");
             Assert.True(exists);
-            var serviceInfo = ServiceManager.Start("Winmgmt");
-            Console.WriteLine("serviceInfo.ServiceName: " + serviceInfo.ServiceName);
-            Console.WriteLine("serviceInfo.CurrentState: " + serviceInfo.CurrentState);
-            Console.WriteLine("serviceInfo.StartType: " + serviceInfo.StartType);
-            Console.WriteLine("serviceInfo.ErrorCode: " + serviceInfo.ErrorCode);
-            Console.WriteLine("serviceInfo.ErrorMessage: " + serviceInfo.ErrorMessage);
-            Assert.True(serviceInfo.ErrorCode == 0);
+            var serviceInfo = ServiceManager.QueryStartType("Winmgmt");
+            Assert.NotNull(serviceInfo);
+
+            if (serviceInfo.StartType != ServiceManager.StartType.Disabled)
+            {
+                return;
+            }
+            serviceInfo = ServiceManager.ChangeStartType("Winmgmt", ServiceManager.StartType.Automatic);
+            Assert.False(string.IsNullOrWhiteSpace(serviceInfo.ServiceName));
+            Assert.NotEqual(serviceInfo.CurrentState, ServiceManager.CurrentState.Unknown);
+            Assert.Equal(serviceInfo.StartType, ServiceManager.StartType.Automatic);
+            Assert.Equal(serviceInfo.ErrorCode, 0);
+            Assert.True(string.IsNullOrWhiteSpace(serviceInfo.ErrorMessage));
+
+            serviceInfo = ServiceManager.Start("Winmgmt");
+            Assert.False(string.IsNullOrWhiteSpace(serviceInfo.ServiceName));
+            Assert.Equal(serviceInfo.CurrentState, ServiceManager.CurrentState.Running);
+            Assert.Equal(serviceInfo.StartType, ServiceManager.StartType.Automatic);
+            Assert.Equal(serviceInfo.ErrorCode, 0);
+            Assert.True(string.IsNullOrWhiteSpace(serviceInfo.ErrorMessage));
         }
     }
 }

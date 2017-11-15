@@ -67,7 +67,9 @@ namespace Htc.Vita.Core.Runtime
             var serviceHandle = Windows.Advapi32.OpenServiceW(
                     managerHandle,
                     serviceName,
-                    Windows.Advapi32.ServiceAccessRight.SERVICE_CHANGE_CONFIG | Windows.Advapi32.ServiceAccessRight.SERVICE_QUERY_CONFIG
+                    Windows.Advapi32.ServiceAccessRight.SERVICE_CHANGE_CONFIG |
+                            Windows.Advapi32.ServiceAccessRight.SERVICE_QUERY_CONFIG |
+                            Windows.Advapi32.ServiceAccessRight.SERVICE_QUERY_STATUS
             );
             if (serviceHandle == IntPtr.Zero)
             {
@@ -97,6 +99,8 @@ namespace Htc.Vita.Core.Runtime
                     serviceInfo.ErrorMessage = "Can not change Windows service \"" + serviceName + "\" config, error code: " + errorCode;
                 }
 
+                serviceInfo = UpdateCurrentStateInWindows(serviceHandle, serviceInfo);
+
                 Windows.Advapi32.CloseServiceHandle(serviceHandle);
             }
 
@@ -112,9 +116,9 @@ namespace Htc.Vita.Core.Runtime
             }
 
             var managerHandle = Windows.Advapi32.OpenSCManagerW(
-                null,
-                null,
-                Windows.Advapi32.SCMAccessRight.SC_MANAGER_CONNECT
+                    null,
+                    null,
+                    Windows.Advapi32.SCMAccessRight.SC_MANAGER_CONNECT
             );
             if (managerHandle == IntPtr.Zero)
             {
@@ -124,9 +128,9 @@ namespace Htc.Vita.Core.Runtime
             }
 
             var serviceHandle = Windows.Advapi32.OpenServiceW(
-                managerHandle,
-                serviceName,
-                Windows.Advapi32.ServiceAccessRight.SERVICE_QUERY_CONFIG
+                    managerHandle,
+                    serviceName,
+                    Windows.Advapi32.ServiceAccessRight.SERVICE_QUERY_CONFIG
             );
             if (serviceHandle == IntPtr.Zero)
             {
@@ -177,7 +181,7 @@ namespace Htc.Vita.Core.Runtime
             var serviceHandle = Windows.Advapi32.OpenServiceW(
                     managerHandle,
                     serviceName,
-                    Windows.Advapi32.ServiceAccessRight.SERVICE_QUERY_CONFIG
+                    Windows.Advapi32.ServiceAccessRight.SERVICE_QUERY_CONFIG | Windows.Advapi32.ServiceAccessRight.SERVICE_QUERY_STATUS
             );
             if (serviceHandle == IntPtr.Zero)
             {
@@ -204,7 +208,7 @@ namespace Htc.Vita.Core.Runtime
                                 serviceConfigPtr,
                                 typeof(Windows.Advapi32.QUERY_SERVICE_CONFIG)
                         );
-                        serviceInfo.StartType = ConvertFromWindows((Windows.Advapi32.START_TYPE) serviceConfig.dwStartType);
+                        serviceInfo.StartType = ConvertFromWindows(serviceConfig.dwStartType);
                     }
                     else
                     {
@@ -221,6 +225,8 @@ namespace Htc.Vita.Core.Runtime
                 {
                     Marshal.FreeHGlobal(serviceConfigPtr);
                 }
+
+                serviceInfo = UpdateCurrentStateInWindows(serviceHandle, serviceInfo);
 
                 Windows.Advapi32.CloseServiceHandle(serviceHandle);
             }
@@ -262,9 +268,9 @@ namespace Htc.Vita.Core.Runtime
                 ServiceName = serviceName
             };
             var serviceHandle = Windows.Advapi32.OpenServiceW(
-                managerHandle,
-                serviceName,
-                Windows.Advapi32.ServiceAccessRight.SERVICE_START
+                    managerHandle,
+                    serviceName,
+                    Windows.Advapi32.ServiceAccessRight.SERVICE_START | Windows.Advapi32.ServiceAccessRight.SERVICE_QUERY_STATUS
             );
             if (serviceHandle == IntPtr.Zero)
             {
@@ -290,10 +296,40 @@ namespace Htc.Vita.Core.Runtime
                     serviceInfo.ErrorMessage = "Can not start Windows service \"" + serviceName + "\", error code: " + errorCode;
                 }
 
+                serviceInfo = UpdateCurrentStateInWindows(serviceHandle, serviceInfo);
+
                 Windows.Advapi32.CloseServiceHandle(serviceHandle);
             }
 
             Windows.Advapi32.CloseServiceHandle(managerHandle);
+            return serviceInfo;
+        }
+
+        private static ServiceInfo UpdateCurrentStateInWindows(
+                IntPtr serviceHandle,
+                ServiceInfo serviceInfo)
+        {
+            if (serviceHandle == IntPtr.Zero || serviceInfo == null)
+            {
+                return serviceInfo;
+            }
+
+            var status = new Windows.Advapi32.SERVICE_STATUS();
+            var success = Windows.Advapi32.QueryServiceStatus(
+                    serviceHandle,
+                    ref status
+            );
+            if (success)
+            {
+                serviceInfo.CurrentState = ConvertFromWindows(status.dwCurrentState);
+            }
+            else if (serviceInfo.ErrorCode != 0)
+            {
+                var errorCode = Marshal.GetLastWin32Error();
+                serviceInfo.ErrorCode = errorCode;
+                serviceInfo.ErrorMessage = "Can not query Windows service \"" + serviceInfo.ServiceName + "\" status, error code: " + errorCode;
+            }
+
             return serviceInfo;
         }
 
@@ -331,6 +367,40 @@ namespace Htc.Vita.Core.Runtime
             }
             Log.Error("Can not convert Windows service start type " + startType + ". Use Automatic as fallback type");
             return StartType.Automatic;
+        }
+
+        private static CurrentState ConvertFromWindows(Windows.Advapi32.CURRENT_STATE currentState)
+        {
+            if (currentState == Windows.Advapi32.CURRENT_STATE.SERVICE_CONTINUE_PENDING)
+            {
+                return CurrentState.ContinuePending;
+            }
+            if (currentState == Windows.Advapi32.CURRENT_STATE.SERVICE_PAUSED)
+            {
+                return CurrentState.Paused;
+            }
+            if (currentState == Windows.Advapi32.CURRENT_STATE.SERVICE_PAUSE_PENDING)
+            {
+                return CurrentState.PausePending;
+            }
+            if (currentState == Windows.Advapi32.CURRENT_STATE.SERVICE_RUNNING)
+            {
+                return CurrentState.Running;
+            }
+            if (currentState == Windows.Advapi32.CURRENT_STATE.SERVICE_START_PENDING)
+            {
+                return CurrentState.StartPending;
+            }
+            if (currentState == Windows.Advapi32.CURRENT_STATE.SERVICE_STOPPED)
+            {
+                return CurrentState.Stopped;
+            }
+            if (currentState == Windows.Advapi32.CURRENT_STATE.SERVICE_STOP_PENDING)
+            {
+                return CurrentState.StopPending;
+            }
+            Log.Error("Can not convert Windows service current state " + currentState + ". Use Unknown as fallback state");
+            return CurrentState.Unknown;
         }
 
         public enum StartType
