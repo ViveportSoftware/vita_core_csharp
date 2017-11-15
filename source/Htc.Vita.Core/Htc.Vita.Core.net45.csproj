@@ -64,6 +64,7 @@
     <Compile Include="Interop\Windows.Advapi32.QueryServiceConfig.cs" />
     <Compile Include="Interop\Windows.Advapi32.SCMAccessRight.cs" />
     <Compile Include="Interop\Windows.Advapi32.ServiceAccessRight.cs" />
+    <Compile Include="Interop\Windows.Advapi32.StartService.cs" />
     <Compile Include="Interop\Windows.Advapi32.StartType.cs" />
     <Compile Include="Interop\Windows.Advapi32.ServiceType.cs" />
     <Compile Include="Interop\Windows.Advapi32.SidNameUse.cs" />

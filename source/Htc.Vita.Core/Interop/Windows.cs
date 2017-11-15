@@ -9,6 +9,7 @@ namespace Htc.Vita.Core.Interop
         public static int ERROR_INSUFFICIENT_BUFFER = 0x7a; // 122
         public static int ERROR_INVALID_NAME = 0x7b; // 123
         public static int ERROR_NO_MORE_ITEMS = 0x103; // 259
+        public static int ERROR_SERVICE_DOES_NOT_EXIST = 0x424; // 1060
 
         public static int REG_NONE = 0;
         public static int REG_SZ = 1;

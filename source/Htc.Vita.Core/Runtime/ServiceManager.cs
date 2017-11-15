@@ -14,9 +14,19 @@ namespace Htc.Vita.Core.Runtime
             return ChangeStartTypeInWindows(serviceName, startType);
         }
 
+        public static bool CheckIfExists(string serviceName)
+        {
+            return CheckIfExistsInWindows(serviceName);
+        }
+
         public static ServiceInfo QueryStartType(string serviceName)
         {
             return QueryStartTypeInWindows(serviceName);
+        }
+
+        public static ServiceInfo Start(string serviceName)
+        {
+            return StartInWindows(serviceName);
         }
 
         private static ServiceInfo ChangeStartTypeInWindows(
@@ -92,6 +102,44 @@ namespace Htc.Vita.Core.Runtime
 
             Windows.Advapi32.CloseServiceHandle(managerHandle);
             return serviceInfo;
+        }
+
+        private static bool CheckIfExistsInWindows(string serviceName)
+        {
+            if (string.IsNullOrWhiteSpace(serviceName))
+            {
+                return false;
+            }
+
+            var managerHandle = Windows.Advapi32.OpenSCManagerW(
+                null,
+                null,
+                Windows.Advapi32.SCMAccessRight.SC_MANAGER_CONNECT
+            );
+            if (managerHandle == IntPtr.Zero)
+            {
+                var errorCode = Marshal.GetLastWin32Error();
+                Log.Error("Can not open Windows service controller manager, error code: " + errorCode);
+                return false;
+            }
+
+            var serviceHandle = Windows.Advapi32.OpenServiceW(
+                managerHandle,
+                serviceName,
+                Windows.Advapi32.ServiceAccessRight.SERVICE_QUERY_CONFIG
+            );
+            if (serviceHandle == IntPtr.Zero)
+            {
+                var errorCode = Marshal.GetLastWin32Error();
+                if (errorCode != Windows.ERROR_SERVICE_DOES_NOT_EXIST)
+                {
+                    Log.Error("Can not open Windows service \"" + serviceName + "\", error code: " + errorCode);
+                }
+                return false;
+            }
+
+            Windows.Advapi32.CloseServiceHandle(serviceHandle);
+            return true;
         }
 
         private static ServiceInfo QueryStartTypeInWindows(string serviceName)
@@ -181,6 +229,74 @@ namespace Htc.Vita.Core.Runtime
             return serviceInfo;
         }
 
+        private static ServiceInfo StartInWindows(string serviceName)
+        {
+            if (string.IsNullOrWhiteSpace(serviceName))
+            {
+                return new ServiceInfo
+                {
+                    ServiceName = serviceName,
+                    ErrorCode = Windows.ERROR_INVALID_NAME,
+                    ErrorMessage = "Service name \"" + serviceName + "\" is invalid"
+                };
+            }
+
+            var managerHandle = Windows.Advapi32.OpenSCManagerW(
+                null,
+                null,
+                Windows.Advapi32.SCMAccessRight.SC_MANAGER_CONNECT
+            );
+            if (managerHandle == IntPtr.Zero)
+            {
+                var errorCode = Marshal.GetLastWin32Error();
+                return new ServiceInfo
+                {
+                    ServiceName = serviceName,
+                    ErrorCode = errorCode,
+                    ErrorMessage = "Can not open Windows service controller manager, error code: " + errorCode
+                };
+            }
+
+            var serviceInfo = new ServiceInfo
+            {
+                ServiceName = serviceName
+            };
+            var serviceHandle = Windows.Advapi32.OpenServiceW(
+                managerHandle,
+                serviceName,
+                Windows.Advapi32.ServiceAccessRight.SERVICE_START
+            );
+            if (serviceHandle == IntPtr.Zero)
+            {
+                var errorCode = Marshal.GetLastWin32Error();
+                serviceInfo.ErrorCode = errorCode;
+                serviceInfo.ErrorMessage = "Can not open Windows service \"" + serviceName + "\", error code: " + errorCode;
+            }
+            else
+            {
+                var success = Windows.Advapi32.StartServiceW(
+                        serviceHandle,
+                        0,
+                        null
+                );
+                if (success)
+                {
+                    serviceInfo.CurrentState = CurrentState.Running;
+                }
+                else
+                {
+                    var errorCode = Marshal.GetLastWin32Error();
+                    serviceInfo.ErrorCode = errorCode;
+                    serviceInfo.ErrorMessage = "Can not start Windows service \"" + serviceName + "\", error code: " + errorCode;
+                }
+
+                Windows.Advapi32.CloseServiceHandle(serviceHandle);
+            }
+
+            Windows.Advapi32.CloseServiceHandle(managerHandle);
+            return serviceInfo;
+        }
+
         private static Windows.Advapi32.START_TYPE ConvertToWindows(StartType startType)
         {
             if (startType == StartType.Disabled)
@@ -226,11 +342,25 @@ namespace Htc.Vita.Core.Runtime
             Automatic = 4,
             DelayedAutomatic = 5
         }
+
+        public enum CurrentState
+        {
+            Unknown = 0,
+            NotAvailable = 1,
+            Stopped = 2,
+            StartPending = 3,
+            StopPending = 4,
+            Running = 5,
+            ContinuePending = 6,
+            PausePending = 7,
+            Paused = 8
+        }
     }
 
     public class ServiceInfo
     {
         public string ServiceName { get; set; }
+        public ServiceManager.CurrentState CurrentState { get; set; } = ServiceManager.CurrentState.Unknown;
         public ServiceManager.StartType StartType { get; set; } = ServiceManager.StartType.Unknown;
         public int ErrorCode { get; set; }
         public string ErrorMessage { get; set; }
