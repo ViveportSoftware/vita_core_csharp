@@ -138,6 +138,20 @@ namespace Htc.Vita.Core.Interop
                     [MarshalAs(UnmanagedType.U4)] ref int cchReferencedDomainName,
                     out SID_NAME_USE peUse
             );
+
+            /**
+             * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684323.aspx
+             */
+            [DllImport(Libraries.Windows_advapi32,
+                    CallingConvention = CallingConvention.Winapi,
+                    CharSet = CharSet.Unicode,
+                    ExactSpelling = true,
+                    SetLastError = true)]
+            public static extern IntPtr OpenSCManagerW(
+                    [In] string machineName,
+                    [In] string databaseName,
+                    SCMAccessRight desiredAccess
+            );
         }
     }
 }
