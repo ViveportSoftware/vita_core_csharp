@@ -57,7 +57,6 @@
     <Compile Include="Interop\Windows.Advapi32.LookupAccountSid.cs" />
     <Compile Include="Interop\Windows.Advapi32.OpenSCManager.cs" />
     <Compile Include="Interop\Windows.Advapi32.OpenService.cs" />
-    <Compile Include="Interop\Windows.Advapi32.ErrorControlType.cs" />
     <Compile Include="Interop\Windows.Advapi32.QueryServiceConfig.cs" />
     <Compile Include="Interop\Windows.Advapi32.QueryServiceStatus.cs" />
     <Compile Include="Interop\Windows.Advapi32.SCMAccessRight.cs" />
