@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Htc.Vita.Core.Interop
+﻿namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {

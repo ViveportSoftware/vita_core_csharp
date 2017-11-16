@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Htc.Vita.Core.Interop
+﻿namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
