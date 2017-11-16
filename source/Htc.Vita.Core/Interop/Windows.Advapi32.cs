@@ -134,6 +134,27 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685996.aspx
+             */
+            [StructLayout(LayoutKind.Sequential)]
+            public struct SERVICE_STATUS
+            {
+                public SERVICE_TYPE dwServiceType;
+
+                public CURRENT_STATE dwCurrentState;
+
+                public CONTROL_ACCEPTED dwControlAccepted;
+
+                uint dwWin32ExitCode;
+
+                uint dwServiceSpecificExitCode;
+
+                uint dwCheckPoint;
+
+                uint dwWaitHint;
+            }
+
+            /**
              * https://msdn.microsoft.com/en-us/library/ms681987.aspx
              */
             [DllImport(Libraries.Windows_advapi32,
