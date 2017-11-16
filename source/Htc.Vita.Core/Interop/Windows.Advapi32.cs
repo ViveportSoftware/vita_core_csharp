@@ -347,6 +347,21 @@ namespace Htc.Vita.Core.Interop
                     [In] IntPtr hService,
                     ref SERVICE_STATUS lpServiceStatus
             );
+
+            /**
+             * https://msdn.microsoft.com/en-us/library/windows/desktop/ms686321.aspx
+             */
+            [DllImport(Libraries.Windows_advapi32,
+                    CallingConvention = CallingConvention.Winapi,
+                    CharSet = CharSet.Unicode,
+                    ExactSpelling = true,
+                    SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool StartServiceW(
+                    IntPtr hService,
+                    uint dwNumServiceArgs,
+                    string[] lpServiceArgVectors
+            );
         }
     }
 }
