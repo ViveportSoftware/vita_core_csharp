@@ -54,7 +54,6 @@
     <Compile Include="Diagnosis\FileSignatureInfo.cs" />
     <Compile Include="Interop\Libraries.cs" />
     <Compile Include="Interop\Windows.Advapi32.cs" />
-    <Compile Include="Interop\Windows.Advapi32.StartType.cs" />
     <Compile Include="Interop\Windows.cs" />
     <Compile Include="Interop\Windows.Hid.HidD_GetHidGuid.cs" />
     <Compile Include="Interop\Windows.Hid.HidD_GetSerialNumberString.cs" />
