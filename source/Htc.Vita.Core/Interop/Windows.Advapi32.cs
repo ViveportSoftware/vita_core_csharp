@@ -57,6 +57,31 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684950.aspx
+             */
+            [StructLayout(LayoutKind.Sequential)]
+            public struct QUERY_SERVICE_CONFIG
+            {
+                public SERVICE_TYPE dwServiceType;
+
+                public START_TYPE dwStartType;
+
+                public ERROR_CONTROL_TYPE dwErrorControl;
+
+                public string lpBinaryPathName;
+
+                public string lpLoadOrderGroup;
+
+                public uint dwTagId;
+
+                public string lpDependencies;
+
+                public string lpServiceStartName;
+
+                public string lpDisplayName;
+            }
+
+            /**
              * https://msdn.microsoft.com/en-us/library/ms681987.aspx
              */
             [DllImport(Libraries.Windows_advapi32,
@@ -165,6 +190,22 @@ namespace Htc.Vita.Core.Interop
                     IntPtr hSCManager,
                     [In] string serviceName,
                     ServiceAccessRight desiredAccess
+            );
+
+            /**
+             * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684932.aspx
+             */
+            [DllImport(Libraries.Windows_advapi32,
+                    CallingConvention = CallingConvention.Winapi,
+                    CharSet = CharSet.Unicode,
+                    ExactSpelling = true,
+                    SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool QueryServiceConfigW(
+                    [In] IntPtr hService,
+                    IntPtr lpServiceConfig,
+                    uint cbBufSize,
+                    out uint pcbBytesNeeded
             );
         }
     }
