@@ -53,7 +53,6 @@
     <Compile Include="Crypto\Sha1.cs" />
     <Compile Include="Diagnosis\FileSignatureInfo.cs" />
     <Compile Include="Interop\Libraries.cs" />
-    <Compile Include="Interop\Windows.Advapi32.ControlAccepted.cs" />
     <Compile Include="Interop\Windows.Advapi32.cs" />
     <Compile Include="Interop\Windows.Advapi32.CurrentState.cs" />
     <Compile Include="Interop\Windows.Advapi32.LookupAccountSid.cs" />
