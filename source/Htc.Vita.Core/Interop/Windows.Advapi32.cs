@@ -42,6 +42,20 @@ namespace Htc.Vita.Core.Interop
             public static extern bool CloseServiceHandle(
                     IntPtr hSCObject
             );
+
+            /**
+             * https://msdn.microsoft.com/en-us/library/windows/desktop/aa376399.aspx
+             */
+            [DllImport(Libraries.Windows_advapi32,
+                    CallingConvention = CallingConvention.Winapi,
+                    CharSet = CharSet.Unicode,
+                    ExactSpelling = true,
+                    SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool ConvertSidToStringSidW(
+                    [In] IntPtr pSid,
+                    [MarshalAs(UnmanagedType.LPTStr)] ref string sid
+            );
         }
     }
 }
