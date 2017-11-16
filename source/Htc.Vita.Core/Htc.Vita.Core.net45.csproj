@@ -54,7 +54,6 @@
     <Compile Include="Diagnosis\FileSignatureInfo.cs" />
     <Compile Include="Interop\Libraries.cs" />
     <Compile Include="Interop\Windows.Advapi32.ControlAccepted.cs" />
-    <Compile Include="Interop\Windows.Advapi32.CloseServiceHandle.cs" />
     <Compile Include="Interop\Windows.Advapi32.ConvertSidToStringSid.cs" />
     <Compile Include="Interop\Windows.Advapi32.ConvertStringSidToSid.cs" />
     <Compile Include="Interop\Windows.Advapi32.cs" />
