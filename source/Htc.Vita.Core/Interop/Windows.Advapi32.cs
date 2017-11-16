@@ -145,6 +145,23 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * https://msdn.microsoft.com/en-us/library/windows/desktop/aa379601.aspx
+             */
+            public enum SID_NAME_USE
+            {
+                SidTypeUser = 1,
+                SidTypeGroup,
+                SidTypeDomain,
+                SidTypeAlias,
+                SidTypeWellKnownGroup,
+                SidTypeDeletedAccount,
+                SidTypeInvalid,
+                SidTypeUnknown,
+                SidTypeComputer,
+                SidTypeLabel
+            }
+
+            /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684950.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
