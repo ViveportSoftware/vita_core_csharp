@@ -60,7 +60,6 @@
     <Compile Include="Interop\Windows.Setupapi.cs" />
     <Compile Include="Interop\Windows.Wintrust.cs" />
     <Compile Include="Interop\Windows.Wtsapi32.cs" />
-    <Compile Include="Interop\Windows.Wtsapi32.WTSQuerySessionInformation.cs" />
     <Compile Include="Interop\Windows.Wtsapi32.WTSSessionInfo.cs" />
     <Compile Include="Interop\Windows.Wtsapi32.WTSTerminateProcess.cs" />
     <Compile Include="IO\FileSystemManager.cs" />
