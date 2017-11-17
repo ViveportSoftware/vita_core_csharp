@@ -36,6 +36,21 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * https://msdn.microsoft.com/en-us/library/windows/hardware/ff552344.aspx
+             */
+            [StructLayout(LayoutKind.Sequential)]
+            public struct SP_DEVINFO_DATA
+            {
+                public int cbSize;
+
+                public Guid classGuid;
+
+                public int devInst;
+
+                public IntPtr reserved;
+            }
+
+            /**
              * https://msdn.microsoft.com/en-us/library/windows/hardware/ff550996.aspx
              */
             [DllImport(Libraries.Windows_setupapi,
