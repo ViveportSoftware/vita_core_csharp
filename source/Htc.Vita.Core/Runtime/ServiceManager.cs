@@ -204,9 +204,9 @@ namespace Htc.Vita.Core.Runtime
                     );
                     if (success)
                     {
-                        var serviceConfig = (Windows.Advapi32.QUERY_SERVICE_CONFIG) Marshal.PtrToStructure(
+                        var serviceConfig = (Windows.Advapi32.QueryServiceConfig) Marshal.PtrToStructure(
                                 serviceConfigPtr,
-                                typeof(Windows.Advapi32.QUERY_SERVICE_CONFIG)
+                                typeof(Windows.Advapi32.QueryServiceConfig)
                         );
                         serviceInfo.StartType = ConvertFromWindows(serviceConfig.dwStartType);
                     }

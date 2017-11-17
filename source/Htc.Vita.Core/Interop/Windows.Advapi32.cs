@@ -175,34 +175,44 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * QUERY_SERVICE_CONFIG structure
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684950.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
-            internal struct QUERY_SERVICE_CONFIG
+            internal struct QueryServiceConfig
             {
+                /* DWORD */
                 public SERVICE_TYPE dwServiceType;
 
+                /* DWORD */
                 public START_TYPE dwStartType;
 
+                /* DWORD */
                 public ERROR_CONTROL_TYPE dwErrorControl;
 
+                /* LPTSTR */
                 public string lpBinaryPathName;
 
+                /* LPTSTR */
                 public string lpLoadOrderGroup;
 
+                /* DWORD */
                 public uint dwTagId;
 
+                /* LPTSTR */
                 public string lpDependencies;
 
+                /* LPTSTR */
                 public string lpServiceStartName;
 
+                /* LPTSTR */
                 public string lpDisplayName;
             }
 
             /**
+             * SERVICE_STATUS structure
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685996.aspx
              */
-            /* SERVICE_STATUS */
             [StructLayout(LayoutKind.Sequential)]
             internal struct ServiceStatus
             {
