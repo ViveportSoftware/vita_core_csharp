@@ -60,7 +60,6 @@
     <Compile Include="Interop\Windows.Setupapi.cs" />
     <Compile Include="Interop\Windows.Wintrust.cs" />
     <Compile Include="Interop\Windows.Wtsapi32.cs" />
-    <Compile Include="Interop\Windows.Wtsapi32.WTSEnumerateProcesses.cs" />
     <Compile Include="Interop\Windows.Wtsapi32.WTSEnumerateSessions.cs" />
     <Compile Include="Interop\Windows.Wtsapi32.WTSFreeMemory.cs" />
     <Compile Include="Interop\Windows.Wtsapi32.WTSInfoClass.cs" />
