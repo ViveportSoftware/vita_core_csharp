@@ -56,7 +56,7 @@
     <Compile Include="Interop\Windows.Advapi32.cs" />
     <Compile Include="Interop\Windows.cs" />
     <Compile Include="Interop\Windows.Hid.cs" />
-    <Compile Include="Interop\Windows.Kernel32.CloseHandle.cs" />
+    <Compile Include="Interop\Windows.Kernel32.cs" />
     <Compile Include="Interop\Windows.Kernel32.CreateFile.cs" />
     <Compile Include="Interop\Windows.Kernel32.CreationDisposition.cs" />
     <Compile Include="Interop\Windows.Kernel32.FileAttributeFlag.cs" />
