@@ -32,9 +32,9 @@ namespace Htc.Vita.Core.Runtime
             string result = null;
             var userSidPtr = IntPtr.Zero;
             var username = new StringBuilder();
-            var usernameLength = 0;
+            uint usernameLength = 0;
             var domain = new StringBuilder();
-            var domainLength = 0;
+            uint domainLength = 0;
             try
             {
                 var success = Windows.Advapi32.ConvertStringSidToSidW(
@@ -44,7 +44,7 @@ namespace Htc.Vita.Core.Runtime
 
                 if (success)
                 {
-                    Windows.Advapi32.SidType sidType;
+                    var sidType = Windows.Advapi32.SidType.Unknown;
                     success = Windows.Advapi32.LookupAccountSidW(
                         serverName,
                         userSidPtr,
@@ -52,7 +52,7 @@ namespace Htc.Vita.Core.Runtime
                         ref usernameLength,
                         domain,
                         ref domainLength,
-                        out sidType
+                        ref sidType
                     );
 
                     if (success)

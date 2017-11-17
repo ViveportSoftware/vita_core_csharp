@@ -15,20 +15,20 @@ namespace Htc.Vita.Core.Interop
             [Flags]
             internal enum AcceptedControl : uint
             {
-                /* SERVICE_ACCEPT_STOP */ Stop = 0x00000001,
-                /* SERVICE_ACCEPT_PAUSE_CONTINUE */ PauseContinue = 0x00000002,
-                /* SERVICE_ACCEPT_SHUTDOWN */ Shutdown = 0x00000004,
-                /* SERVICE_ACCEPT_PARAMCHANGE */ ParamChange = 0x00000008,
-                /* SERVICE_ACCEPT_NETBINDCHANGE */ NetBindChange = 0x00000010,
+                /* SERVICE_ACCEPT_STOP                  */ Stop = 0x00000001,
+                /* SERVICE_ACCEPT_PAUSE_CONTINUE        */ PauseContinue = 0x00000002,
+                /* SERVICE_ACCEPT_SHUTDOWN              */ Shutdown = 0x00000004,
+                /* SERVICE_ACCEPT_PARAMCHANGE           */ ParamChange = 0x00000008,
+                /* SERVICE_ACCEPT_NETBINDCHANGE         */ NetBindChange = 0x00000010,
                 /* SERVICE_ACCEPT_HARDWAREPROFILECHANGE */ HardwareProfileChange = 0x00000020,
-                /* SERVICE_ACCEPT_POWEREVENT */ PowerEvent = 0x00000040,
-                /* SERVICE_ACCEPT_SESSIONCHANGE */ SessionChange = 0x00000080,
-                /* SERVICE_ACCEPT_PRESHUTDOWN */ PreShutdown = 0x00000100,
-                /* SERVICE_ACCEPT_TIMECHANGE */ TimeChange = 0x00000200,
-                /* SERVICE_ACCEPT_TRIGGEREVENT */ TriggerEvent = 0x00000400,
-                /* SERVICE_ACCEPT_USER_LOGOFF */ UserLogoff = 0x00000800,
-                /* SERVICE_ACCEPT_LOWRESOURCES */ LowResources = 0x00002000,
-                /* SERVICE_ACCEPT_SYSTEMLOWRESOURCES */ SystemLowResources = 0x00004000
+                /* SERVICE_ACCEPT_POWEREVENT            */ PowerEvent = 0x00000040,
+                /* SERVICE_ACCEPT_SESSIONCHANGE         */ SessionChange = 0x00000080,
+                /* SERVICE_ACCEPT_PRESHUTDOWN           */ PreShutdown = 0x00000100,
+                /* SERVICE_ACCEPT_TIMECHANGE            */ TimeChange = 0x00000200,
+                /* SERVICE_ACCEPT_TRIGGEREVENT          */ TriggerEvent = 0x00000400,
+                /* SERVICE_ACCEPT_USER_LOGOFF           */ UserLogoff = 0x00000800,
+                /* SERVICE_ACCEPT_LOWRESOURCES          */ LowResources = 0x00002000,
+                /* SERVICE_ACCEPT_SYSTEMLOWRESOURCES    */ SystemLowResources = 0x00004000
             }
 
             /**
@@ -37,13 +37,13 @@ namespace Htc.Vita.Core.Interop
              */
             internal enum CurrentState : uint
             {
-                /* SERVICE_STOPPED */ Stopped = 0x00000001,
-                /* SERVICE_START_PENDING */ StartPending = 0x00000002,
-                /* SERVICE_STOP_PENDING */ StopPending = 0x00000003,
-                /* SERVICE_RUNNING */ Running = 0x00000004,
+                /* SERVICE_STOPPED          */ Stopped = 0x00000001,
+                /* SERVICE_START_PENDING    */ StartPending = 0x00000002,
+                /* SERVICE_STOP_PENDING     */ StopPending = 0x00000003,
+                /* SERVICE_RUNNING          */ Running = 0x00000004,
                 /* SERVICE_CONTINUE_PENDING */ ContinuePending = 0x00000005,
-                /* SERVICE_PAUSE_PENDING */ PausePending = 0x00000006,
-                /* SERVICE_PAUSED */ Paused = 0x00000007
+                /* SERVICE_PAUSE_PENDING    */ PausePending = 0x00000006,
+                /* SERVICE_PAUSED           */ Paused = 0x00000007
             }
 
             /**
@@ -52,11 +52,11 @@ namespace Htc.Vita.Core.Interop
              */
             internal enum ErrorControlType : uint
             {
-                /* SERVICE_ERROR_IGNORE */ Ignore = 0x00000000,
-                /* SERVICE_ERROR_NORMAL */ Normal = 0x00000001,
-                /* SERVICE_ERROR_SEVERE */ Severe = 0x00000002,
+                /* SERVICE_ERROR_IGNORE   */ Ignore = 0x00000000,
+                /* SERVICE_ERROR_NORMAL   */ Normal = 0x00000001,
+                /* SERVICE_ERROR_SEVERE   */ Severe = 0x00000002,
                 /* SERVICE_ERROR_CRITICAL */ Critical = 0x00000003,
-                /* SERVICE_NO_CHANGE */ NoChange = 0xffffffff
+                /* SERVICE_NO_CHANGE      */ NoChange = 0xffffffff
             }
 
             /**
@@ -67,20 +67,20 @@ namespace Htc.Vita.Core.Interop
             [Flags]
             internal enum ServiceControlManagerAccessRight : uint
             {
-                /* STANDARD_RIGHTS_REQUIRED */ StandardRightsRequired = 0xF0000,
-                /* SC_MANAGER_CONNECT */ Connect = 0x0001,
-                /* SC_MANAGER_CREATE_SERVICE */ CreateService = 0x0002,
-                /* SC_MANAGER_ENUMERATE_SERVICE */ EnumerateService = 0x0004,
-                /* SC_MANAGER_LOCK */ Lock = 0x0008,
-                /* SC_MANAGER_QUERY_LOCK_STATUS */ QueryLockStatus = 0x0010,
+                /* STANDARD_RIGHTS_REQUIRED      */ StandardRightsRequired = 0xF0000,
+                /* SC_MANAGER_CONNECT            */ Connect = 0x0001,
+                /* SC_MANAGER_CREATE_SERVICE     */ CreateService = 0x0002,
+                /* SC_MANAGER_ENUMERATE_SERVICE  */ EnumerateService = 0x0004,
+                /* SC_MANAGER_LOCK               */ Lock = 0x0008,
+                /* SC_MANAGER_QUERY_LOCK_STATUS  */ QueryLockStatus = 0x0010,
                 /* SC_MANAGER_MODIFY_BOOT_CONFIG */ ModifyBootConfig = 0x0020,
-                /* SC_MANAGER_ALL_ACCESS */ AllAccess = StandardRightsRequired
-                                                      | Connect
-                                                      | CreateService
-                                                      | EnumerateService
-                                                      | Lock
-                                                      | QueryLockStatus
-                                                      | ModifyBootConfig
+                /* SC_MANAGER_ALL_ACCESS         */ AllAccess = StandardRightsRequired
+                                                              | Connect
+                                                              | CreateService
+                                                              | EnumerateService
+                                                              | Lock
+                                                              | QueryLockStatus
+                                                              | ModifyBootConfig
             }
 
             /**
@@ -91,26 +91,26 @@ namespace Htc.Vita.Core.Interop
             [Flags]
             internal enum ServiceAccessRight : uint
             {
-                /* STANDARD_RIGHTS_REQUIRED */ StandardRightsRequired = 0xF0000,
-                /* SERVICE_QUERY_CONFIG */ QueryConfig = 0x0001,
-                /* SERVICE_CHANGE_CONFIG */ ChangeConfig = 0x0002,
-                /* SERVICE_QUERY_STATUS */ QueryStatus = 0x0004,
+                /* STANDARD_RIGHTS_REQUIRED     */ StandardRightsRequired = 0xF0000,
+                /* SERVICE_QUERY_CONFIG         */ QueryConfig = 0x0001,
+                /* SERVICE_CHANGE_CONFIG        */ ChangeConfig = 0x0002,
+                /* SERVICE_QUERY_STATUS         */ QueryStatus = 0x0004,
                 /* SERVICE_ENUMERATE_DEPENDENTS */ EnumerateDependents = 0x0008,
-                /* SERVICE_START */ Start = 0x0010,
-                /* SERVICE_STOP */ Stop = 0x0020,
-                /* SERVICE_PAUSE_CONTINUE */ PauseContinue = 0x0040,
-                /* SERVICE_INTERROGATE */ Interrogate = 0x0080,
+                /* SERVICE_START                */ Start = 0x0010,
+                /* SERVICE_STOP                 */ Stop = 0x0020,
+                /* SERVICE_PAUSE_CONTINUE       */ PauseContinue = 0x0040,
+                /* SERVICE_INTERROGATE          */ Interrogate = 0x0080,
                 /* SERVICE_USER_DEFINED_CONTROL */ UserDefinedControl = 0x0100,
-                /* SERVICE_ALL_ACCESS */ AllAccess = StandardRightsRequired
-                                                     | QueryConfig
-                                                     | ChangeConfig
-                                                     | QueryStatus
-                                                     | EnumerateDependents
-                                                     | Start
-                                                     | Stop
-                                                     | PauseContinue
-                                                     | Interrogate
-                                                     | UserDefinedControl
+                /* SERVICE_ALL_ACCESS           */ AllAccess = StandardRightsRequired
+                                                             | QueryConfig
+                                                             | ChangeConfig
+                                                             | QueryStatus
+                                                             | EnumerateDependents
+                                                             | Start
+                                                             | Stop
+                                                             | PauseContinue
+                                                             | Interrogate
+                                                             | UserDefinedControl
             }
 
             /**
@@ -121,33 +121,33 @@ namespace Htc.Vita.Core.Interop
             [Flags]
             internal enum ServiceType : uint
             {
-                /* SERVICE_KERNEL_DRIVER */ KernelDriver = 0x00000001,
-                /* SERVICE_FILE_SYSTEM_DRIVER */ FileSystemDriver = 0x00000002,
-                /* SERVICE_ADAPTER */ Adapter = 0x00000004,
-                /* SERVICE_RECOGNIZER_DRIVER */ RecognizerDriver = 0x00000008,
-                /* SERVICE_DRIVER */ Driver = KernelDriver
-                                              | FileSystemDriver
-                                              | RecognizerDriver,
-                /* SERVICE_WIN32_OWN_PROCESS */ Win32OwnProcess = 0x00000010,
-                /* SERVICE_WIN32_SHARE_PROCESS */ Win32ShareProcess = 0x00000020,
-                /* SERVICE_WIN32 */ Win32 = Win32OwnProcess
-                                            | Win32ShareProcess,
-                /* SERVICE_USER_SERVICE */ UserService = 0x00000040,
+                /* SERVICE_KERNEL_DRIVER        */ KernelDriver = 0x00000001,
+                /* SERVICE_FILE_SYSTEM_DRIVER   */ FileSystemDriver = 0x00000002,
+                /* SERVICE_ADAPTER              */ Adapter = 0x00000004,
+                /* SERVICE_RECOGNIZER_DRIVER    */ RecognizerDriver = 0x00000008,
+                /* SERVICE_DRIVER               */ Driver = KernelDriver
+                                                          | FileSystemDriver
+                                                          | RecognizerDriver,
+                /* SERVICE_WIN32_OWN_PROCESS    */ Win32OwnProcess = 0x00000010,
+                /* SERVICE_WIN32_SHARE_PROCESS  */ Win32ShareProcess = 0x00000020,
+                /* SERVICE_WIN32                */ Win32 = Win32OwnProcess
+                                                         | Win32ShareProcess,
+                /* SERVICE_USER_SERVICE         */ UserService = 0x00000040,
                 /* SERVICE_USERSERVICE_INSTANCE */ UserServiceInstance = 0x00000080,
-                /* SERVICE_USER_SHARE_PROCESS */ UserShareProcess = UserService
+                /* SERVICE_USER_SHARE_PROCESS   */ UserShareProcess = UserService
                                                                     | Win32ShareProcess,
-                /* SERVICE_USER_OWN_PROCESS */ UserOwnProcess = UserService
-                                                                | Win32OwnProcess,
-                /* SERVICE_INTERACTIVE_PROCESS */ InteractiveProcess = 0x00000100,
-                /* SERVICE_PKG_SERVICE */ PkgService = 0x00000200,
-                /* SERVICE_TYPE_ALL */ All = Win32
-                                             | Adapter
-                                             | Driver
-                                             | InteractiveProcess
-                                             | UserService
-                                             | UserServiceInstance
-                                             | PkgService,
-                /* SERVICE_NO_CHANGE */ NoChange = 0xffffffff
+                /* SERVICE_USER_OWN_PROCESS     */ UserOwnProcess = UserService
+                                                                  | Win32OwnProcess,
+                /* SERVICE_INTERACTIVE_PROCESS  */ InteractiveProcess = 0x00000100,
+                /* SERVICE_PKG_SERVICE          */ PkgService = 0x00000200,
+                /* SERVICE_TYPE_ALL             */ All = Win32
+                                                       | Adapter
+                                                       | Driver
+                                                       | InteractiveProcess
+                                                       | UserService
+                                                       | UserServiceInstance
+                                                       | PkgService,
+                /* SERVICE_NO_CHANGE            */ NoChange = 0xffffffff
             }
 
             /**
@@ -156,16 +156,16 @@ namespace Htc.Vita.Core.Interop
              */
             internal enum SidType
             {
-                /* SidTypeUser */ User = 1,
-                /* SidTypeGroup */ Group,
-                /* SidTypeDomain */ Domain,
-                /* SidTypeAlias */ Alias,
+                /* SidTypeUser           */ User = 1,
+                /* SidTypeGroup          */ Group,
+                /* SidTypeDomain         */ Domain,
+                /* SidTypeAlias          */ Alias,
                 /* SidTypeWellKnownGroup */ WellKnownGroup,
                 /* SidTypeDeletedAccount */ DeletedAccount,
-                /* SidTypeInvalid */ Invalid,
-                /* SidTypeUnknown */ Unknown,
-                /* SidTypeComputer */ Computer,
-                /* SidTypeLabel */ Label
+                /* SidTypeInvalid        */ Invalid,
+                /* SidTypeUnknown        */ Unknown,
+                /* SidTypeComputer       */ Computer,
+                /* SidTypeLabel          */ Label
             }
 
             /**
@@ -174,12 +174,12 @@ namespace Htc.Vita.Core.Interop
              */
             internal enum StartType : uint
             {
-                /* SERVICE_BOOT_START */ BootStart = 0x00000000,
+                /* SERVICE_BOOT_START   */ BootStart = 0x00000000,
                 /* SERVICE_SYSTEM_START */ SystemStart = 0x00000001,
-                /* SERVICE_AUTO_START */ AutoStart = 0x00000002,
+                /* SERVICE_AUTO_START   */ AutoStart = 0x00000002,
                 /* SERVICE_DEMAND_START */ DemandStart = 0x00000003,
-                /* SERVICE_DISABLED */ Disabled = 0x00000004,
-                /* SERVICE_NO_CHANGE */ NoChange = 0xffffffff
+                /* SERVICE_DISABLED     */ Disabled = 0x00000004,
+                /* SERVICE_NO_CHANGE    */ NoChange = 0xffffffff
             }
 
             /**
@@ -189,32 +189,15 @@ namespace Htc.Vita.Core.Interop
             [StructLayout(LayoutKind.Sequential)]
             internal struct QueryServiceConfig
             {
-                /* DWORD */
-                public ServiceType dwServiceType;
-
-                /* DWORD */
-                public StartType dwStartType;
-
-                /* DWORD */
-                public ErrorControlType dwErrorControl;
-
-                /* LPTSTR */
-                public string lpBinaryPathName;
-
-                /* LPTSTR */
-                public string lpLoadOrderGroup;
-
-                /* DWORD */
-                public uint dwTagId;
-
-                /* LPTSTR */
-                public string lpDependencies;
-
-                /* LPTSTR */
-                public string lpServiceStartName;
-
-                /* LPTSTR */
-                public string lpDisplayName;
+                public /* DWORD  */ ServiceType dwServiceType;
+                public /* DWORD  */ StartType dwStartType;
+                public /* DWORD  */ ErrorControlType dwErrorControl;
+                public /* LPTSTR */ string lpBinaryPathName;
+                public /* LPTSTR */ string lpLoadOrderGroup;
+                public /* DWORD  */ uint dwTagId;
+                public /* LPTSTR */ string lpDependencies;
+                public /* LPTSTR */ string lpServiceStartName;
+                public /* LPTSTR */ string lpDisplayName;
             }
 
             /**
@@ -224,26 +207,13 @@ namespace Htc.Vita.Core.Interop
             [StructLayout(LayoutKind.Sequential)]
             internal struct ServiceStatus
             {
-                /* DWORD */
-                public ServiceType dwServiceType;
-
-                /* DWORD */
-                public CurrentState dwCurrentState;
-
-                /* DWORD */
-                public AcceptedControl dwControlAccepted;
-
-                /* DWORD */
-                public uint dwWin32ExitCode;
-
-                /* DWORD */
-                public uint dwServiceSpecificExitCode;
-
-                /* DWORD */
-                public uint dwCheckPoint;
-
-                /* DWORD */
-                public uint dwWaitHint;
+                public /* DWORD */ ServiceType dwServiceType;
+                public /* DWORD */ CurrentState dwCurrentState;
+                public /* DWORD */ AcceptedControl dwControlAccepted;
+                public /* DWORD */ uint dwWin32ExitCode;
+                public /* DWORD */ uint dwServiceSpecificExitCode;
+                public /* DWORD */ uint dwCheckPoint;
+                public /* DWORD */ uint dwWaitHint;
             }
 
             /**
@@ -256,17 +226,17 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool ChangeServiceConfigW(
-                    IntPtr hService,
-                    ServiceType serviceType,
-                    StartType startType,
-                    ErrorControlType errorControl,
-                    string binaryPathName,
-                    string loadOrderGroup,
-                    IntPtr lpTagId,
-                    string dependencies,
-                    string serviceStartName,
-                    string password,
-                    string displayName
+                    /* _In_      SC_HANDLE */ [In] IntPtr hService,
+                    /* _In_      DWORD     */ [In] ServiceType dwServiceType,
+                    /* _In_      DWORD     */ [In] StartType dwStartType,
+                    /* _In_      DWORD     */ [In] ErrorControlType dwErrorControl,
+                    /* _In_opt_  LPCTSTR   */ [In] string lpBinaryPathName,
+                    /* _In_opt_  LPCTSTR   */ [In] string lpLoadOrderGroup,
+                    /* _Out_opt_ LPDWORD   */ [In][Out] IntPtr lpdwTagId,
+                    /* _In_opt_  LPCTSTR   */ [In] string lpDependencies,
+                    /* _In_opt_  LPCTSTR   */ [In] string lpServiceStartName,
+                    /* _In_opt_  LPCTSTR   */ [In] string lpPassword,
+                    /* _In_opt_  LPCTSTR   */ [In] string lpDisplayName
             );
 
             /**
@@ -279,7 +249,7 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool CloseServiceHandle(
-                    IntPtr hSCObject
+                    /* _In_ SC_HANDLE */ [In] IntPtr hScObject
             );
 
             /**
@@ -292,8 +262,8 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool ConvertSidToStringSidW(
-                    [In] IntPtr pSid,
-                    [MarshalAs(UnmanagedType.LPTStr)] ref string sid
+                    /* _In_  PSID    */ [In] IntPtr pSid,
+                    /* _Out_ LPTSTR* */ [In][Out] ref string sid
             );
 
             /**
@@ -306,8 +276,8 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool ConvertStringSidToSidW(
-                    string sid,
-                    IntPtr pSid
+                    /* _In_  LPCTSTR */ [In] string sid,
+                    /* _Out_ PSID*   */ [In][Out] IntPtr pSid
             );
 
             /**
@@ -320,13 +290,13 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool LookupAccountSidW(
-                    [In] string pSystemName,
-                    IntPtr pSid,
-                    StringBuilder name,
-                    [MarshalAs(UnmanagedType.U4)] ref int cchName,
-                    StringBuilder referencedDomainName,
-                    [MarshalAs(UnmanagedType.U4)] ref int cchReferencedDomainName,
-                    out SidType peUse
+                    /* _In_opt_  LPCTSTR       */ [In] string lpSystemName,
+                    /* _In_      PSID          */ [In] IntPtr lpSid,
+                    /* _Out_opt_ LPTSTR        */ [In][Out] StringBuilder lpName,
+                    /* _Inout_   LPDWORD       */ [In][Out] ref uint cchName,
+                    /* _Out_opt_ LPTSTR        */ [In][Out] StringBuilder lpReferencedDomainName,
+                    /* _Inout_   LPDWORD       */ [In][Out] ref uint cchReferencedDomainName,
+                    /* _Out_     PSID_NAME_USE */ [In][Out] ref SidType peUse
             );
 
             /**
@@ -338,9 +308,9 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             internal static extern IntPtr OpenSCManagerW(
-                    [In] string machineName,
-                    [In] string databaseName,
-                    ServiceControlManagerAccessRight desiredAccess
+                    /* _In_opt_ LPCTSTR */ [In] string lpMachineName,
+                    /* _In_opt_ LPCTSTR */ [In] string lpDatabaseName,
+                    /* _In_     DWORD   */ [In] ServiceControlManagerAccessRight dwDesiredAccess
             );
 
             /**
@@ -352,9 +322,9 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             internal static extern IntPtr OpenServiceW(
-                    IntPtr hSCManager,
-                    [In] string serviceName,
-                    ServiceAccessRight desiredAccess
+                    /* _In_ SC_HANDLE */ [In] IntPtr hScManager,
+                    /* _In_ LPCTSTR   */ [In] string lpServiceName,
+                    /* _In_ DWORD     */ [In] ServiceAccessRight dwDesiredAccess
             );
 
             /**
@@ -367,10 +337,10 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool QueryServiceConfigW(
-                    [In] IntPtr hService,
-                    IntPtr lpServiceConfig,
-                    uint cbBufSize,
-                    out uint pcbBytesNeeded
+                    /* _In_      SC_HANDLE              */ [In] IntPtr hService,
+                    /* _Out_opt_ LPQUERY_SERVICE_CONFIG */ [In][Out] IntPtr lpServiceConfig,
+                    /* _In_      DWORD                  */ [In] uint cbBufSize,
+                    /* _Out_     LPDWORD                */ [In][Out] ref uint pcbBytesNeeded
             );
 
             /**
@@ -383,8 +353,8 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool QueryServiceStatus(
-                    [In] IntPtr hService,
-                    ref ServiceStatus lpServiceStatus
+                    /* _In_  SC_HANDLE        */ [In] IntPtr hService,
+                    /* _Out_ LPSERVICE_STATUS */ [In][Out] ref ServiceStatus lpServiceStatus
             );
 
             /**
@@ -397,9 +367,9 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool StartServiceW(
-                    IntPtr hService,
-                    uint dwNumServiceArgs,
-                    string[] lpServiceArgVectors
+                    /* _In_     SC_HANDLE */ [In] IntPtr hService,
+                    /* _In_     DWORD     */ [In] uint dwNumServiceArgs,
+                    /* _In_opt_ LPCTSTR*  */ [In] string[] lpServiceArgVectors
             );
         }
     }

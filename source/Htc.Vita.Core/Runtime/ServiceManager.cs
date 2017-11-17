@@ -195,12 +195,12 @@ namespace Htc.Vita.Core.Runtime
                 var serviceConfigPtr = Marshal.AllocHGlobal((int)bytesAllocated);
                 try
                 {
-                    uint bytes;
+                    uint bytes = 0;
                     var success = Windows.Advapi32.QueryServiceConfigW(
                             serviceHandle,
                             serviceConfigPtr,
                             bytesAllocated,
-                            out bytes
+                            ref bytes
                     );
                     if (success)
                     {
