@@ -314,7 +314,7 @@ namespace Htc.Vita.Core.Runtime
                 return serviceInfo;
             }
 
-            var status = new Windows.Advapi32.SERVICE_STATUS();
+            var status = new Windows.Advapi32.ServiceStatus();
             var success = Windows.Advapi32.QueryServiceStatus(
                     serviceHandle,
                     ref status

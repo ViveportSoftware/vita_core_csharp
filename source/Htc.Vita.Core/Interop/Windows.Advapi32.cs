@@ -202,21 +202,29 @@ namespace Htc.Vita.Core.Interop
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685996.aspx
              */
+            /* SERVICE_STATUS */
             [StructLayout(LayoutKind.Sequential)]
-            internal struct SERVICE_STATUS
+            internal struct ServiceStatus
             {
+                /* DWORD */
                 public SERVICE_TYPE dwServiceType;
 
+                /* DWORD */
                 public CURRENT_STATE dwCurrentState;
 
+                /* DWORD */
                 public CONTROL_ACCEPTED dwControlAccepted;
 
+                /* DWORD */
                 public uint dwWin32ExitCode;
 
+                /* DWORD */
                 public uint dwServiceSpecificExitCode;
 
+                /* DWORD */
                 public uint dwCheckPoint;
 
+                /* DWORD */
                 public uint dwWaitHint;
             }
 
@@ -358,7 +366,7 @@ namespace Htc.Vita.Core.Interop
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool QueryServiceStatus(
                     [In] IntPtr hService,
-                    ref SERVICE_STATUS lpServiceStatus
+                    ref ServiceStatus lpServiceStatus
             );
 
             /**
