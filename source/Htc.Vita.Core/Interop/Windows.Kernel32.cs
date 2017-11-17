@@ -5,12 +5,12 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        public static class Kernel32
+        internal static class Kernel32
         {
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx
              */
-            public enum CREATION_DISPOSITION
+            internal enum CREATION_DISPOSITION
             {
                 CREATE_NEW = 1,
                 CREATE_ALWAYS = 2,
@@ -24,7 +24,7 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/desktop/gg258117.aspx
              */
             [Flags]
-            public enum FILE_ATTRIBUTE_FLAG : uint
+            internal enum FILE_ATTRIBUTE_FLAG : uint
             {
                 FILE_ATTRIBUTE_READONLY = 0x00000001,
                 FILE_ATTRIBUTE_HIDDEN = 0x00000002,
@@ -62,7 +62,7 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx
              */
             [Flags]
-            public enum FILE_SHARE
+            internal enum FILE_SHARE
             {
                 FILE_SHARE_NONE = 0x00000000,
                 FILE_SHARE_READ = 0x00000001,
@@ -74,7 +74,7 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx
              */
             [Flags]
-            public enum GENERIC : uint
+            internal enum GENERIC : uint
             {
                 GENERIC_ALL = 0x10000000,
                 GENERIC_EXECUTE = 0x20000000,
@@ -91,7 +91,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool CloseHandle(
+            internal static extern bool CloseHandle(
                     [In] IntPtr hObject
             );
 
@@ -103,7 +103,7 @@ namespace Htc.Vita.Core.Interop
                     CharSet = CharSet.Unicode,
                     ExactSpelling = true,
                     SetLastError = true)]
-            public static extern IntPtr CreateFileW(
+            internal static extern IntPtr CreateFileW(
                     [In] string fileName,
                     [In] [MarshalAs(UnmanagedType.U4)] GENERIC desiredAccess,
                     [In] [MarshalAs(UnmanagedType.U4)] FILE_SHARE shareMode,
@@ -122,7 +122,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool FreeLibrary(
+            internal static extern bool FreeLibrary(
                     [In] IntPtr hModule
             );
 
@@ -135,7 +135,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool GetDiskFreeSpaceExW(
+            internal static extern bool GetDiskFreeSpaceExW(
                     [In] string directoryName,
                     out ulong freeBytesAvailable,
                     out ulong totalNumberOfBytes,
@@ -151,7 +151,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool IsWow64Process(
+            internal static extern bool IsWow64Process(
                     [In] IntPtr hProcess,
                     out bool wow64Process
             );
@@ -164,7 +164,7 @@ namespace Htc.Vita.Core.Interop
                     CharSet = CharSet.Unicode,
                     ExactSpelling = true,
                     SetLastError = true)]
-            public static extern IntPtr LoadLibraryW(
+            internal static extern IntPtr LoadLibraryW(
                     [In] string fileName
             );
         }

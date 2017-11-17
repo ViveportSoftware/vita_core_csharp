@@ -5,13 +5,13 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        public static class Setupapi
+        internal static class Setupapi
         {
             /**
              * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551069.aspx
              */
             [Flags]
-            public enum DIGCF
+            internal enum DIGCF
             {
                 DIGCF_DEFAULT = 0x00000001,
                 DIGCF_PRESENT = 0x00000002,
@@ -23,7 +23,7 @@ namespace Htc.Vita.Core.Interop
             /**
              * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551967.aspx
              */
-            public enum SPDRP
+            internal enum SPDRP
             {
                 SPDRP_DEVICEDESC = 0,
                 SPDRP_HARDWAREID = 1,
@@ -68,7 +68,7 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/hardware/ff552342.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
-            public struct SP_DEVICE_INTERFACE_DATA
+            internal struct SP_DEVICE_INTERFACE_DATA
             {
                 public int cbSize;
 
@@ -83,7 +83,7 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/hardware/ff552344.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
-            public struct SP_DEVINFO_DATA
+            internal struct SP_DEVINFO_DATA
             {
                 public int cbSize;
 
@@ -103,7 +103,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool SetupDiDestroyDeviceInfoList(
+            internal static extern bool SetupDiDestroyDeviceInfoList(
                     IntPtr deviceInfoSet
             );
 
@@ -116,7 +116,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool SetupDiEnumDeviceInterfaces(
+            internal static extern bool SetupDiEnumDeviceInterfaces(
                     IntPtr deviceInfoSet,
                     IntPtr deviceInfoData,
                     ref Guid interfaceClassGuid,
@@ -132,7 +132,7 @@ namespace Htc.Vita.Core.Interop
                     CharSet = CharSet.Unicode,
                     ExactSpelling = true,
                     SetLastError = true)]
-            public static extern IntPtr SetupDiGetClassDevsW(
+            internal static extern IntPtr SetupDiGetClassDevsW(
                     ref Guid classGuid,
                     [MarshalAs(UnmanagedType.LPTStr)] string enumerator,
                     IntPtr hwndParent,
@@ -148,7 +148,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool SetupDiGetDeviceInterfaceDetailW(
+            internal static extern bool SetupDiGetDeviceInterfaceDetailW(
                     IntPtr hDevInfo,
                     ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData,
                     IntPtr deviceInterfaceDetailData,
@@ -166,7 +166,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool SetupDiGetDeviceInterfaceDetailW(
+            internal static extern bool SetupDiGetDeviceInterfaceDetailW(
                     IntPtr hDevInfo,
                     ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData,
                     IntPtr deviceInterfaceDetailData,
@@ -184,7 +184,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool SetupDiGetDeviceRegistryPropertyW(
+            internal static extern bool SetupDiGetDeviceRegistryPropertyW(
                     IntPtr deviceInfoSet,
                     ref SP_DEVINFO_DATA deviceInfoData,
                     SPDRP property,
@@ -203,7 +203,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool SetupDiGetDeviceRegistryPropertyW(
+            internal static extern bool SetupDiGetDeviceRegistryPropertyW(
                     IntPtr deviceInfoSet,
                     ref SP_DEVINFO_DATA deviceInfoData,
                     SPDRP property,

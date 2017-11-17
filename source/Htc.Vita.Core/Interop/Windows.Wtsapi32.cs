@@ -5,14 +5,14 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        public static class Wtsapi32
+        internal static class Wtsapi32
         {
-            public static IntPtr WTS_CURRENT_SERVER_HANDLE = IntPtr.Zero;
+            internal static IntPtr WTS_CURRENT_SERVER_HANDLE = IntPtr.Zero;
 
             /**
              * https://msdn.microsoft.com/en-us/library/aa383860.aspx
              */
-            public enum WTS_CONNECTSTATE_CLASS
+            internal enum WTS_CONNECTSTATE_CLASS
             {
                 WTSActive,
                 WTSConnected,
@@ -29,7 +29,7 @@ namespace Htc.Vita.Core.Interop
             /**
              * https://msdn.microsoft.com/en-us/library/aa383861.aspx
              */
-            public enum WTS_INFO_CLASS
+            internal enum WTS_INFO_CLASS
             {
                 WTSInitialProgram,
                 WTSApplicationName,
@@ -67,7 +67,7 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/aa383862.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
-            public struct WTS_PROCESS_INFO
+            internal struct WTS_PROCESS_INFO
             {
                 public int SessionID;
 
@@ -82,7 +82,7 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/aa383864.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
-            public struct WTS_SESSION_INFO
+            internal struct WTS_SESSION_INFO
             {
                 public int SessionID;
 
@@ -99,7 +99,7 @@ namespace Htc.Vita.Core.Interop
                     CharSet = CharSet.Unicode,
                     ExactSpelling = true,
                     SetLastError = true)]
-            public static extern void WTSCloseServer(
+            internal static extern void WTSCloseServer(
                     [In] IntPtr hServer
             );
 
@@ -112,7 +112,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool WTSEnumerateProcessesW(
+            internal static extern bool WTSEnumerateProcessesW(
                     [In] IntPtr hServer,
                     [In] [MarshalAs(UnmanagedType.U4)] int reserved,
                     [In] [MarshalAs(UnmanagedType.U4)] int version,
@@ -129,7 +129,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool WTSEnumerateSessionsW(
+            internal static extern bool WTSEnumerateSessionsW(
                     [In] IntPtr hServer,
                     [In] [MarshalAs(UnmanagedType.U4)] int reserved,
                     [In] [MarshalAs(UnmanagedType.U4)] int version,
@@ -145,7 +145,7 @@ namespace Htc.Vita.Core.Interop
                     CharSet = CharSet.Unicode,
                     ExactSpelling = true,
                     SetLastError = true)]
-            public static extern void WTSFreeMemory(
+            internal static extern void WTSFreeMemory(
                     [In] IntPtr pMemory
             );
 
@@ -157,7 +157,7 @@ namespace Htc.Vita.Core.Interop
                     CharSet = CharSet.Unicode,
                     ExactSpelling = true,
                     SetLastError = true)]
-            public static extern IntPtr WTSOpenServerW(
+            internal static extern IntPtr WTSOpenServerW(
                     [In] [MarshalAs(UnmanagedType.LPTStr)] string pServerName
             );
 
@@ -170,7 +170,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool WTSQuerySessionInformationW(
+            internal static extern bool WTSQuerySessionInformationW(
                     [In] IntPtr hServer,
                     [In] int sessionId,
                     [In] WTS_INFO_CLASS wtsInfoClass,
@@ -187,7 +187,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool WTSTerminateProcess(
+            internal static extern bool WTSTerminateProcess(
                     [In] IntPtr hServer,
                     [In] [MarshalAs(UnmanagedType.U4)] int processId,
                     [In] int exitCode

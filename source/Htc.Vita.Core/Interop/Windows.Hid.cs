@@ -6,7 +6,7 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        public static class Hid
+        internal static class Hid
         {
             /**
              * https://msdn.microsoft.com/en-us/library/windows/hardware/ff538924.aspx
@@ -16,7 +16,7 @@ namespace Htc.Vita.Core.Interop
                     CharSet = CharSet.Unicode,
                     ExactSpelling = true,
                     SetLastError = true)]
-            public static extern void HidD_GetHidGuid(
+            internal static extern void HidD_GetHidGuid(
                     out Guid guid
             );
 
@@ -29,7 +29,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool HidD_GetSerialNumberString(
+            internal static extern bool HidD_GetSerialNumberString(
                     IntPtr hidDeviceObject,
                     [MarshalAs(UnmanagedType.LPWStr)] StringBuilder buffer,
                     [MarshalAs(UnmanagedType.U4)] int bufferLength

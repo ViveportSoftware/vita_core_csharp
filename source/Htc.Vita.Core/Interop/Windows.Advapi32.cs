@@ -6,13 +6,13 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        public static class Advapi32
+        internal static class Advapi32
         {
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685996.aspx
              */
             [Flags]
-            public enum CONTROL_ACCEPTED : uint
+            internal enum CONTROL_ACCEPTED : uint
             {
                 SERVICE_ACCEPT_STOP = 0x00000001,
                 SERVICE_ACCEPT_PAUSE_CONTINUE = 0x00000002,
@@ -33,7 +33,7 @@ namespace Htc.Vita.Core.Interop
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685996.aspx
              */
-            public enum CURRENT_STATE : uint
+            internal enum CURRENT_STATE : uint
             {
                 SERVICE_STOPPED = 0x00000001,
                 SERVICE_START_PENDING = 0x00000002,
@@ -47,7 +47,7 @@ namespace Htc.Vita.Core.Interop
             /**
              * https://msdn.microsoft.com/en-us/library/ms681987.aspx
              */
-            public enum ERROR_CONTROL_TYPE : uint
+            internal enum ERROR_CONTROL_TYPE : uint
             {
                 SERVICE_ERROR_IGNORE = 0x00000000,
                 SERVICE_ERROR_NORMAL = 0x00000001,
@@ -61,7 +61,7 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685981.aspx
              */
             [Flags]
-            public enum SCMAccessRight : uint
+            internal enum SCMAccessRight : uint
             {
                 STANDARD_RIGHTS_REQUIRED = 0xF0000,
                 SC_MANAGER_CONNECT = 0x0001,
@@ -84,7 +84,7 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685981.aspx
              */
             [Flags]
-            public enum ServiceAccessRight : uint
+            internal enum ServiceAccessRight : uint
             {
                 STANDARD_RIGHTS_REQUIRED = 0xF0000,
                 SERVICE_QUERY_CONFIG = 0x0001,
@@ -113,7 +113,7 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685996.aspx
              */
             [Flags]
-            public enum SERVICE_TYPE : uint
+            internal enum SERVICE_TYPE : uint
             {
                 SERVICE_KERNEL_DRIVER = 0x00000001,
                 SERVICE_FILE_SYSTEM_DRIVER = 0x00000002,
@@ -147,7 +147,7 @@ namespace Htc.Vita.Core.Interop
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa379601.aspx
              */
-            public enum SID_NAME_USE
+            internal enum SID_NAME_USE
             {
                 SidTypeUser = 1,
                 SidTypeGroup,
@@ -164,7 +164,7 @@ namespace Htc.Vita.Core.Interop
             /**
              * https://msdn.microsoft.com/en-us/library/ms681987.aspx
              */
-            public enum START_TYPE : uint
+            internal enum START_TYPE : uint
             {
                 SERVICE_BOOT_START = 0x00000000,
                 SERVICE_SYSTEM_START = 0x00000001,
@@ -178,7 +178,7 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684950.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
-            public struct QUERY_SERVICE_CONFIG
+            internal struct QUERY_SERVICE_CONFIG
             {
                 public SERVICE_TYPE dwServiceType;
 
@@ -203,7 +203,7 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685996.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
-            public struct SERVICE_STATUS
+            internal struct SERVICE_STATUS
             {
                 public SERVICE_TYPE dwServiceType;
 
@@ -211,13 +211,13 @@ namespace Htc.Vita.Core.Interop
 
                 public CONTROL_ACCEPTED dwControlAccepted;
 
-                uint dwWin32ExitCode;
+                public uint dwWin32ExitCode;
 
-                uint dwServiceSpecificExitCode;
+                public uint dwServiceSpecificExitCode;
 
-                uint dwCheckPoint;
+                public uint dwCheckPoint;
 
-                uint dwWaitHint;
+                public uint dwWaitHint;
             }
 
             /**
@@ -229,7 +229,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ChangeServiceConfigW(
+            internal static extern bool ChangeServiceConfigW(
                     IntPtr hService,
                     SERVICE_TYPE serviceType,
                     START_TYPE startType,
@@ -252,7 +252,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool CloseServiceHandle(
+            internal static extern bool CloseServiceHandle(
                     IntPtr hSCObject
             );
 
@@ -265,7 +265,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ConvertSidToStringSidW(
+            internal static extern bool ConvertSidToStringSidW(
                     [In] IntPtr pSid,
                     [MarshalAs(UnmanagedType.LPTStr)] ref string sid
             );
@@ -279,7 +279,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ConvertStringSidToSidW(
+            internal static extern bool ConvertStringSidToSidW(
                     string sid,
                     IntPtr pSid
             );
@@ -293,7 +293,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool LookupAccountSidW(
+            internal static extern bool LookupAccountSidW(
                     [In] string pSystemName,
                     IntPtr pSid,
                     StringBuilder name,
@@ -311,7 +311,7 @@ namespace Htc.Vita.Core.Interop
                     CharSet = CharSet.Unicode,
                     ExactSpelling = true,
                     SetLastError = true)]
-            public static extern IntPtr OpenSCManagerW(
+            internal static extern IntPtr OpenSCManagerW(
                     [In] string machineName,
                     [In] string databaseName,
                     SCMAccessRight desiredAccess
@@ -325,7 +325,7 @@ namespace Htc.Vita.Core.Interop
                     CharSet = CharSet.Unicode,
                     ExactSpelling = true,
                     SetLastError = true)]
-            public static extern IntPtr OpenServiceW(
+            internal static extern IntPtr OpenServiceW(
                     IntPtr hSCManager,
                     [In] string serviceName,
                     ServiceAccessRight desiredAccess
@@ -340,7 +340,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool QueryServiceConfigW(
+            internal static extern bool QueryServiceConfigW(
                     [In] IntPtr hService,
                     IntPtr lpServiceConfig,
                     uint cbBufSize,
@@ -356,7 +356,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool QueryServiceStatus(
+            internal static extern bool QueryServiceStatus(
                     [In] IntPtr hService,
                     ref SERVICE_STATUS lpServiceStatus
             );
@@ -370,7 +370,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool StartServiceW(
+            internal static extern bool StartServiceW(
                     IntPtr hService,
                     uint dwNumServiceArgs,
                     string[] lpServiceArgVectors

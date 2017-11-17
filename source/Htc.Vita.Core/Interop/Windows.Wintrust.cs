@@ -5,19 +5,19 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        public static class Wintrust
+        internal static class Wintrust
         {
-            public static Guid DRIVER_ACTION_VERIFY = new Guid("{F750E6C3-38EE-11d1-85E5-00C04FC295EE}");
-            public static Guid HTTPSPROV_ACTION = new Guid("{573E31F8-AABA-11d0-8CCB-00C04FC295EE}");
-            public static Guid OFFICESIGN_ACTION_VERIFY = new Guid("{5555C2CD-17FB-11d1-85C4-00C04FC295EE}");
-            public static Guid WINTRUST_ACTION_GENERIC_CHAIN_VERIFY = new Guid("{FC451C16-AC75-11D1-B4B8-00C04FB66EA0}");
-            public static Guid WINTRUST_ACTION_GENERIC_VERIFY_V2 = new Guid("{00AAC56B-CD44-11d0-8CC2-00C04FC295EE}");
-            public static Guid WINTRUST_ACTION_TRUSTPROVIDER_TEST = new Guid("{573E31F8-DDBA-11d0-8CCB-00C04FC295EE}");
+            internal static Guid DRIVER_ACTION_VERIFY = new Guid("{F750E6C3-38EE-11d1-85E5-00C04FC295EE}");
+            internal static Guid HTTPSPROV_ACTION = new Guid("{573E31F8-AABA-11d0-8CCB-00C04FC295EE}");
+            internal static Guid OFFICESIGN_ACTION_VERIFY = new Guid("{5555C2CD-17FB-11d1-85C4-00C04FC295EE}");
+            internal static Guid WINTRUST_ACTION_GENERIC_CHAIN_VERIFY = new Guid("{FC451C16-AC75-11D1-B4B8-00C04FB66EA0}");
+            internal static Guid WINTRUST_ACTION_GENERIC_VERIFY_V2 = new Guid("{00AAC56B-CD44-11d0-8CC2-00C04FC295EE}");
+            internal static Guid WINTRUST_ACTION_TRUSTPROVIDER_TEST = new Guid("{573E31F8-DDBA-11d0-8CCB-00C04FC295EE}");
 
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
-            public enum WTD_CHOICE
+            internal enum WTD_CHOICE
             {
                 WTD_CHOICE_FILE = 1,
                 WTD_CHOICE_CATALOG,
@@ -30,7 +30,7 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
             [Flags]
-            public enum WTD_PROVIDERFLAG
+            internal enum WTD_PROVIDERFLAG
             {
                 WTD_USE_IE4_TRUST_FLAG = 1,
                 WTD_NO_IE4_CHAIN_FLAG = 2,
@@ -51,7 +51,7 @@ namespace Htc.Vita.Core.Interop
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
-            public enum WTD_REVOKE
+            internal enum WTD_REVOKE
             {
                 WTD_REVOKE_NONE,
                 WTD_REVOKE_WHOLECHAIN
@@ -60,7 +60,7 @@ namespace Htc.Vita.Core.Interop
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
-            public enum WTD_STATEACTION
+            internal enum WTD_STATEACTION
             {
                 WTD_STATEACTION_IGNORE,
                 WTD_STATEACTION_VERIFY,
@@ -72,7 +72,7 @@ namespace Htc.Vita.Core.Interop
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
-            public enum WTD_UI
+            internal enum WTD_UI
             {
                 WTD_UI_ALL = 1,
                 WTD_UI_NONE,
@@ -83,7 +83,7 @@ namespace Htc.Vita.Core.Interop
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
-            public enum WTD_UICONTEXT
+            internal enum WTD_UICONTEXT
             {
                 WTD_UICONTEXT_EXECUTE,
                 WTD_UICONTEXT_INSTALL
@@ -93,7 +93,7 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
-            public struct WINTRUST_DATA
+            internal struct WINTRUST_DATA
             {
                 public uint cbStruct;
 
@@ -127,7 +127,7 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388206.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
-            public struct WINTRUST_FILE_INFO
+            internal struct WINTRUST_FILE_INFO
             {
                 public uint cbStruct;
 
@@ -142,7 +142,7 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
             [StructLayout(LayoutKind.Explicit)]
-            public struct WTD_UNION_CHOICE
+            internal struct WTD_UNION_CHOICE
             {
                 [FieldOffset(0)]
                 public IntPtr pFile;
@@ -169,7 +169,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.U4)]
-            public static extern uint WinVerifyTrust(
+            internal static extern uint WinVerifyTrust(
                     [In] IntPtr hWnd,
                     [In] [MarshalAs(UnmanagedType.LPStruct)] Guid pgActionId,
                     [In] IntPtr pWinTrustData
