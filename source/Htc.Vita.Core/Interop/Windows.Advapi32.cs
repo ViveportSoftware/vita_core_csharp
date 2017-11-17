@@ -9,25 +9,26 @@ namespace Htc.Vita.Core.Interop
         internal static class Advapi32
         {
             /**
+             * CONTROL_ACCEPTED enumeration
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685996.aspx
              */
             [Flags]
-            internal enum CONTROL_ACCEPTED : uint
+            internal enum AcceptedControl : uint
             {
-                SERVICE_ACCEPT_STOP = 0x00000001,
-                SERVICE_ACCEPT_PAUSE_CONTINUE = 0x00000002,
-                SERVICE_ACCEPT_SHUTDOWN = 0x00000004,
-                SERVICE_ACCEPT_PARAMCHANGE = 0x00000008,
-                SERVICE_ACCEPT_NETBINDCHANGE = 0x00000010,
-                SERVICE_ACCEPT_HARDWAREPROFILECHANGE = 0x00000020,
-                SERVICE_ACCEPT_POWEREVENT = 0x00000040,
-                SERVICE_ACCEPT_SESSIONCHANGE = 0x00000080,
-                SERVICE_ACCEPT_PRESHUTDOWN = 0x00000100,
-                SERVICE_ACCEPT_TIMECHANGE = 0x00000200,
-                SERVICE_ACCEPT_TRIGGEREVENT = 0x00000400,
-                SERVICE_ACCEPT_USER_LOGOFF = 0x00000800,
-                SERVICE_ACCEPT_LOWRESOURCES = 0x00002000,
-                SERVICE_ACCEPT_SYSTEMLOWRESOURCES = 0x00004000
+                /* SERVICE_ACCEPT_STOP */ Stop = 0x00000001,
+                /* SERVICE_ACCEPT_PAUSE_CONTINUE */ PauseContinue = 0x00000002,
+                /* SERVICE_ACCEPT_SHUTDOWN */ Shutdown = 0x00000004,
+                /* SERVICE_ACCEPT_PARAMCHANGE */ ParamChange = 0x00000008,
+                /* SERVICE_ACCEPT_NETBINDCHANGE */ NetBindChange = 0x00000010,
+                /* SERVICE_ACCEPT_HARDWAREPROFILECHANGE */ HardwareProfileChange = 0x00000020,
+                /* SERVICE_ACCEPT_POWEREVENT */ PowerEvent = 0x00000040,
+                /* SERVICE_ACCEPT_SESSIONCHANGE */ SessionChange = 0x00000080,
+                /* SERVICE_ACCEPT_PRESHUTDOWN */ PreShutdown = 0x00000100,
+                /* SERVICE_ACCEPT_TIMECHANGE */ TimeChange = 0x00000200,
+                /* SERVICE_ACCEPT_TRIGGEREVENT */ TriggerEvent = 0x00000400,
+                /* SERVICE_ACCEPT_USER_LOGOFF */ UserLogoff = 0x00000800,
+                /* SERVICE_ACCEPT_LOWRESOURCES */ LowResources = 0x00002000,
+                /* SERVICE_ACCEPT_SYSTEMLOWRESOURCES */ SystemLowResources = 0x00004000
             }
 
             /**
@@ -230,7 +231,7 @@ namespace Htc.Vita.Core.Interop
                 public CurrentState dwCurrentState;
 
                 /* DWORD */
-                public CONTROL_ACCEPTED dwControlAccepted;
+                public AcceptedControl dwControlAccepted;
 
                 /* DWORD */
                 public uint dwWin32ExitCode;
