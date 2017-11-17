@@ -155,6 +155,18 @@ namespace Htc.Vita.Core.Interop
                     [In] IntPtr hProcess,
                     out bool wow64Process
             );
+
+            /**
+             * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684175.aspx
+             */
+            [DllImport(Libraries.Windows_kernel32,
+                    CallingConvention = CallingConvention.Winapi,
+                    CharSet = CharSet.Unicode,
+                    ExactSpelling = true,
+                    SetLastError = true)]
+            public static extern IntPtr LoadLibraryW(
+                    [In] string fileName
+            );
         }
     }
 }
