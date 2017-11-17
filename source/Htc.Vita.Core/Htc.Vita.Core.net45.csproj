@@ -59,7 +59,6 @@
     <Compile Include="Interop\Windows.Kernel32.cs" />
     <Compile Include="Interop\Windows.Setupapi.cs" />
     <Compile Include="Interop\Windows.Wintrust.cs" />
-    <Compile Include="Interop\Windows.Wintrust.WinVerifyTrust.cs" />
     <Compile Include="Interop\Windows.Wintrust.WTDChoice.cs" />
     <Compile Include="Interop\Windows.Wintrust.WTDProviderFlag.cs" />
     <Compile Include="Interop\Windows.Wintrust.WTDRevoke.cs" />
