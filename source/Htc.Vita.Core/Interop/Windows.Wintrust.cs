@@ -83,6 +83,15 @@ namespace Htc.Vita.Core.Interop
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
+            public enum WTD_UICONTEXT
+            {
+                WTD_UICONTEXT_EXECUTE,
+                WTD_UICONTEXT_INSTALL
+            }
+
+            /**
+             * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
+             */
             [StructLayout(LayoutKind.Sequential)]
             public struct WINTRUST_DATA
             {
