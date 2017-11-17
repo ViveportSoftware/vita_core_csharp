@@ -81,7 +81,7 @@ namespace Htc.Vita.Core.Runtime
             {
                 var success = Windows.Advapi32.ChangeServiceConfigW(
                         serviceHandle,
-                        Windows.Advapi32.SERVICE_TYPE.SERVICE_NO_CHANGE,
+                        Windows.Advapi32.ServiceType.NoChange,
                         ConvertToWindows(startType),
                         Windows.Advapi32.ERROR_CONTROL_TYPE.SERVICE_NO_CHANGE,
                         null,

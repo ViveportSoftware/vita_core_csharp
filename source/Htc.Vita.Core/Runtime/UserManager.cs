@@ -57,7 +57,7 @@ namespace Htc.Vita.Core.Runtime
 
                     if (success)
                     {
-                        if (sidType == Windows.Advapi32.SidType.SidTypeUser)
+                        if (sidType == Windows.Advapi32.SidType.User)
                         {
                             result = string.Format($"{domain}\\{username}");
                         }
