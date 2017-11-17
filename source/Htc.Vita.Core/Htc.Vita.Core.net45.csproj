@@ -60,7 +60,6 @@
     <Compile Include="Interop\Windows.Setupapi.cs" />
     <Compile Include="Interop\Windows.Wintrust.cs" />
     <Compile Include="Interop\Windows.Wtsapi32.cs" />
-    <Compile Include="Interop\Windows.Wtsapi32.WTSInfoClass.cs" />
     <Compile Include="Interop\Windows.Wtsapi32.WTSOpenServer.cs" />
     <Compile Include="Interop\Windows.Wtsapi32.WTSProcessInfo.cs" />
     <Compile Include="Interop\Windows.Wtsapi32.WTSQuerySessionInformation.cs" />
