@@ -47,6 +47,22 @@ namespace Htc.Vita.Core.Interop
                 // TODO
                 // WINTRUST_SIGNATURE_SETTINGS *pSignatureSettings;
             }
+
+            /**
+             * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388206.aspx
+             */
+            [StructLayout(LayoutKind.Sequential)]
+            public struct WINTRUST_FILE_INFO
+            {
+                public uint cbStruct;
+
+                [MarshalAs(UnmanagedType.LPTStr)]
+                public string filePath;
+
+                public IntPtr hFile;
+
+                public IntPtr pgKnownSubject;
+            }
         }
     }
 }
