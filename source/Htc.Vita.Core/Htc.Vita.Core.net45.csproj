@@ -58,7 +58,7 @@
     <Compile Include="Interop\Windows.Hid.cs" />
     <Compile Include="Interop\Windows.Kernel32.cs" />
     <Compile Include="Interop\Windows.Setupapi.cs" />
-    <Compile Include="Interop\Windows.Wintrust.Guid.cs" />
+    <Compile Include="Interop\Windows.Wintrust.cs" />
     <Compile Include="Interop\Windows.Wintrust.WinTrustData.cs" />
     <Compile Include="Interop\Windows.Wintrust.WinTrustFileInfo.cs" />
     <Compile Include="Interop\Windows.Wintrust.WinVerifyTrust.cs" />
