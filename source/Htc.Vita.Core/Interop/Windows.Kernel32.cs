@@ -5,7 +5,7 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        public static partial class Kernel32
+        public static class Kernel32
         {
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx

@@ -5,7 +5,7 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        public static partial class Wintrust
+        public static class Wintrust
         {
             public static Guid DRIVER_ACTION_VERIFY = new Guid("{F750E6C3-38EE-11d1-85E5-00C04FC295EE}");
             public static Guid HTTPSPROV_ACTION = new Guid("{573E31F8-AABA-11d0-8CCB-00C04FC295EE}");

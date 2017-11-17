@@ -6,7 +6,7 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        public static partial class Advapi32
+        public static class Advapi32
         {
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685996.aspx

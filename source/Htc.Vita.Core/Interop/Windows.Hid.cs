@@ -6,7 +6,7 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        public static partial class Hid
+        public static class Hid
         {
             /**
              * https://msdn.microsoft.com/en-us/library/windows/hardware/ff538924.aspx
