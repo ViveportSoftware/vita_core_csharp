@@ -71,6 +71,18 @@ namespace Htc.Vita.Core.Interop
                     ref IntPtr ppSessionInfo,
                     [MarshalAs(UnmanagedType.U4)] ref int pCount
             );
+
+            /**
+             * https://msdn.microsoft.com/en-us/library/aa383834.aspx
+             */
+            [DllImport(Libraries.Windows_wtsapi32,
+                    CallingConvention = CallingConvention.Winapi,
+                    CharSet = CharSet.Unicode,
+                    ExactSpelling = true,
+                    SetLastError = true)]
+            public static extern void WTSFreeMemory(
+                    [In] IntPtr pMemory
+            );
         }
     }
 }
