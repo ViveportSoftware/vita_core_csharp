@@ -59,7 +59,6 @@
     <Compile Include="Interop\Windows.Kernel32.cs" />
     <Compile Include="Interop\Windows.Setupapi.cs" />
     <Compile Include="Interop\Windows.Wintrust.cs" />
-    <Compile Include="Interop\Windows.Wintrust.WTDStateAction.cs" />
     <Compile Include="Interop\Windows.Wintrust.WTDUI.cs" />
     <Compile Include="Interop\Windows.Wintrust.WTDUIContext.cs" />
     <Compile Include="Interop\Windows.Wintrust.WTDUnionChoice.cs" />
