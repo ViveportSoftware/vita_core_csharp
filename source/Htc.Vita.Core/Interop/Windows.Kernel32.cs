@@ -100,6 +100,19 @@ namespace Htc.Vita.Core.Interop
                     [In] [MarshalAs(UnmanagedType.U4)] FILE_ATTRIBUTE_FLAG flagsAndAttributes,
                     IntPtr hTemplateFile
             );
+
+            /**
+             * https://msdn.microsoft.com/en-us/library/windows/desktop/ms683152.aspx
+             */
+            [DllImport(Libraries.Windows_kernel32,
+                    CallingConvention = CallingConvention.Winapi,
+                    CharSet = CharSet.Unicode,
+                    ExactSpelling = true,
+                    SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool FreeLibrary(
+                    [In] IntPtr hModule
+            );
         }
     }
 }
