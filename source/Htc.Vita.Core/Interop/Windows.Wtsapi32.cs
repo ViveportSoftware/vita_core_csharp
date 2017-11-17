@@ -79,6 +79,19 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * https://msdn.microsoft.com/en-us/library/aa383864.aspx
+             */
+            [StructLayout(LayoutKind.Sequential)]
+            public struct WTS_SESSION_INFO
+            {
+                public int SessionID;
+
+                [MarshalAs(UnmanagedType.LPTStr)] public string pWinStationName;
+
+                public WTS_CONNECTSTATE_CLASS State;
+            }
+
+            /**
              * https://msdn.microsoft.com/en-us/library/aa383829.aspx
              */
             [DllImport(Libraries.Windows_wtsapi32,
