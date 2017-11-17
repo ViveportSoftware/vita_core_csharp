@@ -145,24 +145,25 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * SID_NAME_USE enumeration
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa379601.aspx
              */
-            internal enum SID_NAME_USE
+            internal enum SidType
             {
-                SidTypeUser = 1,
-                SidTypeGroup,
-                SidTypeDomain,
-                SidTypeAlias,
-                SidTypeWellKnownGroup,
-                SidTypeDeletedAccount,
-                SidTypeInvalid,
-                SidTypeUnknown,
-                SidTypeComputer,
-                SidTypeLabel
+                /* SidTypeUser */ User = 1,
+                /* SidTypeGroup */ Group,
+                /* SidTypeDomain */ Domain,
+                /* SidTypeAlias */ Alias,
+                /* SidTypeWellKnownGroup */ WellKnownGroup,
+                /* SidTypeDeletedAccount */ DeletedAccount,
+                /* SidTypeInvalid */ Invalid,
+                /* SidTypeUnknown */ Unknown,
+                /* SidTypeComputer */ Computer,
+                /* SidTypeLabel */ Label
             }
 
             /**
-             * START_TYPE enum
+             * START_TYPE enumeration
              * https://msdn.microsoft.com/en-us/library/ms681987.aspx
              */
             internal enum StartType : uint
@@ -319,7 +320,7 @@ namespace Htc.Vita.Core.Interop
                     [MarshalAs(UnmanagedType.U4)] ref int cchName,
                     StringBuilder referencedDomainName,
                     [MarshalAs(UnmanagedType.U4)] ref int cchReferencedDomainName,
-                    out SID_NAME_USE peUse
+                    out SidType peUse
             );
 
             /**

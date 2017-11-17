@@ -44,7 +44,7 @@ namespace Htc.Vita.Core.Runtime
 
                 if (success)
                 {
-                    Windows.Advapi32.SID_NAME_USE sidType;
+                    Windows.Advapi32.SidType sidType;
                     success = Windows.Advapi32.LookupAccountSidW(
                         serverName,
                         userSidPtr,
@@ -57,7 +57,7 @@ namespace Htc.Vita.Core.Runtime
 
                     if (success)
                     {
-                        if (sidType == Windows.Advapi32.SID_NAME_USE.SidTypeUser)
+                        if (sidType == Windows.Advapi32.SidType.SidTypeUser)
                         {
                             result = string.Format($"{domain}\\{username}");
                         }
