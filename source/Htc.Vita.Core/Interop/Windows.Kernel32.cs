@@ -59,6 +59,18 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx
+             */
+            [Flags]
+            public enum FILE_SHARE
+            {
+                FILE_SHARE_NONE = 0x00000000,
+                FILE_SHARE_READ = 0x00000001,
+                FILE_SHARE_WRITE = 0x00000002,
+                FILE_SHARE_DELETE = 0x00000004
+            }
+
+            /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms724211.aspx
              */
             [DllImport(Libraries.Windows_kernel32,
