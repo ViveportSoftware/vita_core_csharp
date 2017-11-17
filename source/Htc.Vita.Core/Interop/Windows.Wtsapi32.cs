@@ -7,6 +7,8 @@ namespace Htc.Vita.Core.Interop
     {
         public static partial class Wtsapi32
         {
+            public static IntPtr WTS_CURRENT_SERVER_HANDLE = IntPtr.Zero;
+
             /**
              * https://msdn.microsoft.com/en-us/library/aa383860.aspx
              */
