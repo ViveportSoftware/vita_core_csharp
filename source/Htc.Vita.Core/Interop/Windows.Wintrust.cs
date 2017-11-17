@@ -72,6 +72,17 @@ namespace Htc.Vita.Core.Interop
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
+            public enum WTD_UI
+            {
+                WTD_UI_ALL = 1,
+                WTD_UI_NONE,
+                WTD_UI_NOBAD,
+                WTD_UI_NOGOOD
+            }
+
+            /**
+             * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
+             */
             [StructLayout(LayoutKind.Sequential)]
             public struct WINTRUST_DATA
             {
