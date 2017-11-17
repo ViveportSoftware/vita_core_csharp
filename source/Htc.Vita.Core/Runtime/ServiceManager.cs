@@ -67,9 +67,9 @@ namespace Htc.Vita.Core.Runtime
             var serviceHandle = Windows.Advapi32.OpenServiceW(
                     managerHandle,
                     serviceName,
-                    Windows.Advapi32.ServiceAccessRight.SERVICE_CHANGE_CONFIG |
-                            Windows.Advapi32.ServiceAccessRight.SERVICE_QUERY_CONFIG |
-                            Windows.Advapi32.ServiceAccessRight.SERVICE_QUERY_STATUS
+                    Windows.Advapi32.ServiceAccessRight.ChangeConfig |
+                            Windows.Advapi32.ServiceAccessRight.QueryConfig |
+                            Windows.Advapi32.ServiceAccessRight.QueryStatus
             );
             if (serviceHandle == IntPtr.Zero)
             {
@@ -130,7 +130,7 @@ namespace Htc.Vita.Core.Runtime
             var serviceHandle = Windows.Advapi32.OpenServiceW(
                     managerHandle,
                     serviceName,
-                    Windows.Advapi32.ServiceAccessRight.SERVICE_QUERY_CONFIG
+                    Windows.Advapi32.ServiceAccessRight.QueryConfig
             );
             if (serviceHandle == IntPtr.Zero)
             {
@@ -181,7 +181,7 @@ namespace Htc.Vita.Core.Runtime
             var serviceHandle = Windows.Advapi32.OpenServiceW(
                     managerHandle,
                     serviceName,
-                    Windows.Advapi32.ServiceAccessRight.SERVICE_QUERY_CONFIG | Windows.Advapi32.ServiceAccessRight.SERVICE_QUERY_STATUS
+                    Windows.Advapi32.ServiceAccessRight.QueryConfig | Windows.Advapi32.ServiceAccessRight.QueryStatus
             );
             if (serviceHandle == IntPtr.Zero)
             {
@@ -270,7 +270,7 @@ namespace Htc.Vita.Core.Runtime
             var serviceHandle = Windows.Advapi32.OpenServiceW(
                     managerHandle,
                     serviceName,
-                    Windows.Advapi32.ServiceAccessRight.SERVICE_START | Windows.Advapi32.ServiceAccessRight.SERVICE_QUERY_STATUS
+                    Windows.Advapi32.ServiceAccessRight.Start | Windows.Advapi32.ServiceAccessRight.QueryStatus
             );
             if (serviceHandle == IntPtr.Zero)
             {
