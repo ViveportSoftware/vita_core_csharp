@@ -46,7 +46,7 @@ namespace Htc.Vita.Core.Runtime
             var managerHandle = Windows.Advapi32.OpenSCManagerW(
                     null,
                     null,
-                    Windows.Advapi32.SCMAccessRight.SC_MANAGER_CONNECT
+                    Windows.Advapi32.ServiceControlManagerAccessRight.Connect
             );
             if (managerHandle == IntPtr.Zero)
             {
@@ -118,7 +118,7 @@ namespace Htc.Vita.Core.Runtime
             var managerHandle = Windows.Advapi32.OpenSCManagerW(
                     null,
                     null,
-                    Windows.Advapi32.SCMAccessRight.SC_MANAGER_CONNECT
+                    Windows.Advapi32.ServiceControlManagerAccessRight.Connect
             );
             if (managerHandle == IntPtr.Zero)
             {
@@ -161,7 +161,7 @@ namespace Htc.Vita.Core.Runtime
             var managerHandle = Windows.Advapi32.OpenSCManagerW(
                     null,
                     null,
-                    Windows.Advapi32.SCMAccessRight.SC_MANAGER_CONNECT
+                    Windows.Advapi32.ServiceControlManagerAccessRight.Connect
             );
             if (managerHandle == IntPtr.Zero)
             {
@@ -250,7 +250,7 @@ namespace Htc.Vita.Core.Runtime
             var managerHandle = Windows.Advapi32.OpenSCManagerW(
                 null,
                 null,
-                Windows.Advapi32.SCMAccessRight.SC_MANAGER_CONNECT
+                Windows.Advapi32.ServiceControlManagerAccessRight.Connect
             );
             if (managerHandle == IntPtr.Zero)
             {

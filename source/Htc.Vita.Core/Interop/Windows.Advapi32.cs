@@ -57,26 +57,27 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * SC_MANAGER_ACCESS_RIGHT enumeration
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684323.aspx
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685981.aspx
              */
             [Flags]
-            internal enum SCMAccessRight : uint
+            internal enum ServiceControlManagerAccessRight : uint
             {
-                STANDARD_RIGHTS_REQUIRED = 0xF0000,
-                SC_MANAGER_CONNECT = 0x0001,
-                SC_MANAGER_CREATE_SERVICE = 0x0002,
-                SC_MANAGER_ENUMERATE_SERVICE = 0x0004,
-                SC_MANAGER_LOCK = 0x0008,
-                SC_MANAGER_QUERY_LOCK_STATUS = 0x0010,
-                SC_MANAGER_MODIFY_BOOT_CONFIG = 0x0020,
-                SC_MANAGER_ALL_ACCESS = STANDARD_RIGHTS_REQUIRED
-                                        | SC_MANAGER_CONNECT
-                                        | SC_MANAGER_CREATE_SERVICE
-                                        | SC_MANAGER_ENUMERATE_SERVICE
-                                        | SC_MANAGER_LOCK
-                                        | SC_MANAGER_QUERY_LOCK_STATUS
-                                        | SC_MANAGER_MODIFY_BOOT_CONFIG
+                /* STANDARD_RIGHTS_REQUIRED */ StandardRightsRequired = 0xF0000,
+                /* SC_MANAGER_CONNECT */ Connect = 0x0001,
+                /* SC_MANAGER_CREATE_SERVICE */ CreateService = 0x0002,
+                /* SC_MANAGER_ENUMERATE_SERVICE */ EnumerateService = 0x0004,
+                /* SC_MANAGER_LOCK */ Lock = 0x0008,
+                /* SC_MANAGER_QUERY_LOCK_STATUS */ QueryLockStatus = 0x0010,
+                /* SC_MANAGER_MODIFY_BOOT_CONFIG */ ModifyBootConfig = 0x0020,
+                /* SC_MANAGER_ALL_ACCESS */ AllAccess = StandardRightsRequired
+                                                      | Connect
+                                                      | CreateService
+                                                      | EnumerateService
+                                                      | Lock
+                                                      | QueryLockStatus
+                                                      | ModifyBootConfig
             }
 
             /**
@@ -336,7 +337,7 @@ namespace Htc.Vita.Core.Interop
             internal static extern IntPtr OpenSCManagerW(
                     [In] string machineName,
                     [In] string databaseName,
-                    SCMAccessRight desiredAccess
+                    ServiceControlManagerAccessRight desiredAccess
             );
 
             /**
