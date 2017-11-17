@@ -64,6 +64,21 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * https://msdn.microsoft.com/en-us/library/aa383862.aspx
+             */
+            [StructLayout(LayoutKind.Sequential)]
+            public struct WTS_PROCESS_INFO
+            {
+                public int SessionID;
+
+                public int ProcessID;
+
+                [MarshalAs(UnmanagedType.LPTStr)] public string pProcessName;
+
+                public IntPtr pUserSid;
+            }
+
+            /**
              * https://msdn.microsoft.com/en-us/library/aa383829.aspx
              */
             [DllImport(Libraries.Windows_wtsapi32,
