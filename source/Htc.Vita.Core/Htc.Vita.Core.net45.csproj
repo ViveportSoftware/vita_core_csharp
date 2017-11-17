@@ -58,7 +58,6 @@
     <Compile Include="Interop\Windows.Hid.cs" />
     <Compile Include="Interop\Windows.Kernel32.cs" />
     <Compile Include="Interop\Windows.Setupapi.cs" />
-    <Compile Include="Interop\Windows.Setupapi.SetupDiGetClassDevs.cs" />
     <Compile Include="Interop\Windows.Setupapi.SetupDiGetDeviceInterfaceDetail.cs" />
     <Compile Include="Interop\Windows.Setupapi.SetupDiGetDeviceRegistryProperty.cs" />
     <Compile Include="Interop\Windows.Setupapi.SPDeviceInterfaceData.cs" />
