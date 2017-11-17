@@ -369,33 +369,33 @@ namespace Htc.Vita.Core.Runtime
             return StartType.Automatic;
         }
 
-        private static CurrentState ConvertFromWindows(Windows.Advapi32.CURRENT_STATE currentState)
+        private static CurrentState ConvertFromWindows(Windows.Advapi32.CurrentState currentState)
         {
-            if (currentState == Windows.Advapi32.CURRENT_STATE.SERVICE_CONTINUE_PENDING)
+            if (currentState == Windows.Advapi32.CurrentState.ContinuePending)
             {
                 return CurrentState.ContinuePending;
             }
-            if (currentState == Windows.Advapi32.CURRENT_STATE.SERVICE_PAUSED)
+            if (currentState == Windows.Advapi32.CurrentState.Paused)
             {
                 return CurrentState.Paused;
             }
-            if (currentState == Windows.Advapi32.CURRENT_STATE.SERVICE_PAUSE_PENDING)
+            if (currentState == Windows.Advapi32.CurrentState.PausePending)
             {
                 return CurrentState.PausePending;
             }
-            if (currentState == Windows.Advapi32.CURRENT_STATE.SERVICE_RUNNING)
+            if (currentState == Windows.Advapi32.CurrentState.Running)
             {
                 return CurrentState.Running;
             }
-            if (currentState == Windows.Advapi32.CURRENT_STATE.SERVICE_START_PENDING)
+            if (currentState == Windows.Advapi32.CurrentState.StartPending)
             {
                 return CurrentState.StartPending;
             }
-            if (currentState == Windows.Advapi32.CURRENT_STATE.SERVICE_STOPPED)
+            if (currentState == Windows.Advapi32.CurrentState.Stopped)
             {
                 return CurrentState.Stopped;
             }
-            if (currentState == Windows.Advapi32.CURRENT_STATE.SERVICE_STOP_PENDING)
+            if (currentState == Windows.Advapi32.CurrentState.StopPending)
             {
                 return CurrentState.StopPending;
             }

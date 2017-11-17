@@ -31,17 +31,18 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * CURRENT_STATE enumeration
              * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685996.aspx
              */
-            internal enum CURRENT_STATE : uint
+            internal enum CurrentState : uint
             {
-                SERVICE_STOPPED = 0x00000001,
-                SERVICE_START_PENDING = 0x00000002,
-                SERVICE_STOP_PENDING = 0x00000003,
-                SERVICE_RUNNING = 0x00000004,
-                SERVICE_CONTINUE_PENDING = 0x00000005,
-                SERVICE_PAUSE_PENDING = 0x00000006,
-                SERVICE_PAUSED = 0x00000007
+                /* SERVICE_STOPPED */ Stopped = 0x00000001,
+                /* SERVICE_START_PENDING */ StartPending = 0x00000002,
+                /* SERVICE_STOP_PENDING */ StopPending = 0x00000003,
+                /* SERVICE_RUNNING */ Running = 0x00000004,
+                /* SERVICE_CONTINUE_PENDING */ ContinuePending = 0x00000005,
+                /* SERVICE_PAUSE_PENDING */ PausePending = 0x00000006,
+                /* SERVICE_PAUSED */ Paused = 0x00000007
             }
 
             /**
@@ -226,7 +227,7 @@ namespace Htc.Vita.Core.Interop
                 public ServiceType dwServiceType;
 
                 /* DWORD */
-                public CURRENT_STATE dwCurrentState;
+                public CurrentState dwCurrentState;
 
                 /* DWORD */
                 public CONTROL_ACCEPTED dwControlAccepted;
