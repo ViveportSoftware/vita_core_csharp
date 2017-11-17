@@ -32,6 +32,23 @@ namespace Htc.Vita.Core.Interop
             public static extern bool SetupDiDestroyDeviceInfoList(
                     IntPtr deviceInfoSet
             );
+
+            /**
+             * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551015.aspx
+             */
+            [DllImport(Libraries.Windows_setupapi,
+                    CallingConvention = CallingConvention.Winapi,
+                    CharSet = CharSet.Unicode,
+                    ExactSpelling = true,
+                    SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool SetupDiEnumDeviceInterfaces(
+                    IntPtr deviceInfoSet,
+                    IntPtr deviceInfoData,
+                    ref Guid interfaceClassGuid,
+                    int memberIndex,
+                    ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData
+            );
         }
     }
 }
