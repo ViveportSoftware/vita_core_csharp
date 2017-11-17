@@ -45,15 +45,16 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * ERROR_CONTROL_TYPE enumeration
              * https://msdn.microsoft.com/en-us/library/ms681987.aspx
              */
-            internal enum ERROR_CONTROL_TYPE : uint
+            internal enum ErrorControlType : uint
             {
-                SERVICE_ERROR_IGNORE = 0x00000000,
-                SERVICE_ERROR_NORMAL = 0x00000001,
-                SERVICE_ERROR_SEVERE = 0x00000002,
-                SERVICE_ERROR_CRITICAL = 0x00000003,
-                SERVICE_NO_CHANGE = 0xffffffff
+                /* SERVICE_ERROR_IGNORE */ Ignore = 0x00000000,
+                /* SERVICE_ERROR_NORMAL */ Normal = 0x00000001,
+                /* SERVICE_ERROR_SEVERE */ Severe = 0x00000002,
+                /* SERVICE_ERROR_CRITICAL */ Critical = 0x00000003,
+                /* SERVICE_NO_CHANGE */ NoChange = 0xffffffff
             }
 
             /**
@@ -193,7 +194,7 @@ namespace Htc.Vita.Core.Interop
                 public StartType dwStartType;
 
                 /* DWORD */
-                public ERROR_CONTROL_TYPE dwErrorControl;
+                public ErrorControlType dwErrorControl;
 
                 /* LPTSTR */
                 public string lpBinaryPathName;
@@ -256,7 +257,7 @@ namespace Htc.Vita.Core.Interop
                     IntPtr hService,
                     ServiceType serviceType,
                     StartType startType,
-                    ERROR_CONTROL_TYPE errorControl,
+                    ErrorControlType errorControl,
                     string binaryPathName,
                     string loadOrderGroup,
                     IntPtr lpTagId,

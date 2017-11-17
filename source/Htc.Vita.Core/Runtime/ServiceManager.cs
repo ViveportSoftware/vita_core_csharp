@@ -83,7 +83,7 @@ namespace Htc.Vita.Core.Runtime
                         serviceHandle,
                         Windows.Advapi32.ServiceType.NoChange,
                         ConvertToWindows(startType),
-                        Windows.Advapi32.ERROR_CONTROL_TYPE.SERVICE_NO_CHANGE,
+                        Windows.Advapi32.ErrorControlType.NoChange,
                         null,
                         null,
                         IntPtr.Zero,
