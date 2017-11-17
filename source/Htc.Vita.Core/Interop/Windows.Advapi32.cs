@@ -162,16 +162,17 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * START_TYPE enum
              * https://msdn.microsoft.com/en-us/library/ms681987.aspx
              */
-            internal enum START_TYPE : uint
+            internal enum StartType : uint
             {
-                SERVICE_BOOT_START = 0x00000000,
-                SERVICE_SYSTEM_START = 0x00000001,
-                SERVICE_AUTO_START = 0x00000002,
-                SERVICE_DEMAND_START = 0x00000003,
-                SERVICE_DISABLED = 0x00000004,
-                SERVICE_NO_CHANGE = 0xffffffff
+                /* SERVICE_BOOT_START */ BootStart = 0x00000000,
+                /* SERVICE_SYSTEM_START */ SystemStart = 0x00000001,
+                /* SERVICE_AUTO_START */ AutoStart = 0x00000002,
+                /* SERVICE_DEMAND_START */ DemandStart = 0x00000003,
+                /* SERVICE_DISABLED */ Disabled = 0x00000004,
+                /* SERVICE_NO_CHANGE */ NoChange = 0xffffffff
             }
 
             /**
@@ -185,7 +186,7 @@ namespace Htc.Vita.Core.Interop
                 public SERVICE_TYPE dwServiceType;
 
                 /* DWORD */
-                public START_TYPE dwStartType;
+                public StartType dwStartType;
 
                 /* DWORD */
                 public ERROR_CONTROL_TYPE dwErrorControl;
@@ -250,7 +251,7 @@ namespace Htc.Vita.Core.Interop
             internal static extern bool ChangeServiceConfigW(
                     IntPtr hService,
                     SERVICE_TYPE serviceType,
-                    START_TYPE startType,
+                    StartType startType,
                     ERROR_CONTROL_TYPE errorControl,
                     string binaryPathName,
                     string loadOrderGroup,

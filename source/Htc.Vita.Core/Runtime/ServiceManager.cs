@@ -333,35 +333,35 @@ namespace Htc.Vita.Core.Runtime
             return serviceInfo;
         }
 
-        private static Windows.Advapi32.START_TYPE ConvertToWindows(StartType startType)
+        private static Windows.Advapi32.StartType ConvertToWindows(StartType startType)
         {
             if (startType == StartType.Disabled)
             {
-                return Windows.Advapi32.START_TYPE.SERVICE_DISABLED;
+                return Windows.Advapi32.StartType.Disabled;
             }
             if (startType == StartType.Manual)
             {
-                return Windows.Advapi32.START_TYPE.SERVICE_DEMAND_START;
+                return Windows.Advapi32.StartType.DemandStart;
             }
             if (startType == StartType.Automatic)
             {
-                return Windows.Advapi32.START_TYPE.SERVICE_AUTO_START;
+                return Windows.Advapi32.StartType.AutoStart;
             }
-            Log.Error("Can not convert service start type " + startType + " in Windows. Use SERVICE_AUTO_START as fallback type");
-            return Windows.Advapi32.START_TYPE.SERVICE_AUTO_START;
+            Log.Error("Can not convert service start type " + startType + " in Windows. Use Windows.Advapi32.StartType.AutoStart as fallback type");
+            return Windows.Advapi32.StartType.AutoStart;
         }
 
-        private static StartType ConvertFromWindows(Windows.Advapi32.START_TYPE startType)
+        private static StartType ConvertFromWindows(Windows.Advapi32.StartType startType)
         {
-            if (startType == Windows.Advapi32.START_TYPE.SERVICE_AUTO_START)
+            if (startType == Windows.Advapi32.StartType.AutoStart)
             {
                 return StartType.Automatic;
             }
-            if (startType == Windows.Advapi32.START_TYPE.SERVICE_DEMAND_START)
+            if (startType == Windows.Advapi32.StartType.DemandStart)
             {
                 return StartType.Manual;
             }
-            if (startType == Windows.Advapi32.START_TYPE.SERVICE_DISABLED)
+            if (startType == Windows.Advapi32.StartType.Disabled)
             {
                 return StartType.Disabled;
             }
