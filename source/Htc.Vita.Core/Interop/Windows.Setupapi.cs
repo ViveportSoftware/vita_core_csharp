@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace Htc.Vita.Core.Interop
 {
@@ -18,6 +19,19 @@ namespace Htc.Vita.Core.Interop
                 DIGCF_PROFILE = 0x00000008,
                 DIGCF_DEVICEINTERFACE = 0x00000010
             }
+
+            /**
+             * https://msdn.microsoft.com/en-us/library/windows/hardware/ff550996.aspx
+             */
+            [DllImport(Libraries.Windows_setupapi,
+                    CallingConvention = CallingConvention.Winapi,
+                    CharSet = CharSet.Unicode,
+                    ExactSpelling = true,
+                    SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool SetupDiDestroyDeviceInfoList(
+                    IntPtr deviceInfoSet
+            );
         }
     }
 }
