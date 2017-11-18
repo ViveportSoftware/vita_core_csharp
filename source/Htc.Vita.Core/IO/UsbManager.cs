@@ -241,7 +241,7 @@ namespace Htc.Vita.Core.IO
                     Windows.Kernel32.FILE_SHARE.FILE_SHARE_READ | Windows.Kernel32.FILE_SHARE.FILE_SHARE_WRITE,
                     IntPtr.Zero,
                     Windows.Kernel32.CreationDisposition.OpenExisting,
-                    Windows.Kernel32.FILE_ATTRIBUTE_FLAG.FILE_FLAG_OVERLAPPED,
+                    Windows.Kernel32.FileAttributeFlag.FlagOverlapped,
                     IntPtr.Zero
             );
             if (deviceHandle == Windows.INVALID_HANDLE_VALUE)
