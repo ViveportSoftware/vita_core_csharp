@@ -68,7 +68,7 @@ namespace Htc.Vita.Core.Diagnosis
                 var winTrustFileInfo = new Windows.Wintrust.WINTRUST_FILE_INFO
                 {
                         cbStruct = (uint)Marshal.SizeOf(typeof(Windows.Wintrust.WINTRUST_FILE_INFO)),
-                        filePath = fileInfo.FullName,
+                        pcwszFilePath = fileInfo.FullName,
                         hFile = IntPtr.Zero,
                         pgKnownSubject = IntPtr.Zero
                 };
@@ -100,7 +100,7 @@ namespace Htc.Vita.Core.Diagnosis
 
                 var result = Windows.Wintrust.WinVerifyTrust(
                         IntPtr.Zero,
-                        Windows.Wintrust.WINTRUST_ACTION_GENERIC_VERIFY_V2,
+                        ref Windows.Wintrust.WINTRUST_ACTION_GENERIC_VERIFY_V2,
                         winTrustDataPtr
                 );
 

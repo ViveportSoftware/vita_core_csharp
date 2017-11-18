@@ -29,15 +29,15 @@ namespace Htc.Vita.Core.IO
             try
             {
                 var path = directoryInfo.FullName;
-                ulong freeBytesAvailable;
-                ulong totalNumberOfBytes;
-                ulong totalNumberOfFreeBytes;
+                var freeBytesAvailable = 0UL;
+                var totalNumberOfBytes = 0UL;
+                var totalNumberOfFreeBytes = 0UL;
 
                 var success = Interop.Windows.Kernel32.GetDiskFreeSpaceExW(
-                    path,
-                    out freeBytesAvailable,
-                    out totalNumberOfBytes,
-                    out totalNumberOfFreeBytes
+                        path,
+                        ref freeBytesAvailable,
+                        ref totalNumberOfBytes,
+                        ref totalNumberOfFreeBytes
                 );
 
                 result.Path = path;

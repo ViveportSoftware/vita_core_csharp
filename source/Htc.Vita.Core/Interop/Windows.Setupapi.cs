@@ -11,57 +11,57 @@ namespace Htc.Vita.Core.Interop
              * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551069.aspx
              */
             [Flags]
-            internal enum DIGCF
+            internal enum DIGCF : uint
             {
-                DIGCF_DEFAULT = 0x00000001,
-                DIGCF_PRESENT = 0x00000002,
-                DIGCF_ALLCLASSES = 0x00000004,
-                DIGCF_PROFILE = 0x00000008,
-                DIGCF_DEVICEINTERFACE = 0x00000010
+                /* DIGCF_DEFAULT         */ DIGCF_DEFAULT = 0x00000001,
+                /* DIGCF_PRESENT         */ DIGCF_PRESENT = 0x00000002,
+                /* DIGCF_ALLCLASSES      */ DIGCF_ALLCLASSES = 0x00000004,
+                /* DIGCF_PROFILE         */ DIGCF_PROFILE = 0x00000008,
+                /* DIGCF_DEVICEINTERFACE */ DIGCF_DEVICEINTERFACE = 0x00000010
             }
 
             /**
              * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551967.aspx
              */
-            internal enum SPDRP
+            internal enum SPDRP : uint
             {
-                SPDRP_DEVICEDESC = 0,
-                SPDRP_HARDWAREID = 1,
-                SPDRP_COMPATIBLEIDS = 2,
-                SPDRP_UNUSED0 = 3,
-                SPDRP_SERVICE = 4,
-                SPDRP_UNUSED1 = 5,
-                SPDRP_UNUSED2 = 6,
-                SPDRP_CLASS = 7,
-                SPDRP_CLASSGUID = 8,
-                SPDRP_DRIVER = 9,
-                SPDRP_CONFIGFLAGS = 10,
-                SPDRP_MFG = 11,
-                SPDRP_FRIENDLYNAME = 12,
-                SPDRP_LOCATION_INFORMATION = 13,
-                SPDRP_PHYSICAL_DEVICE_OBJECT_NAME = 14,
-                SPDRP_CAPABILITIES = 15,
-                SPDRP_UI_NUMBER = 16,
-                SPDRP_UPPERFILTERS = 17,
-                SPDRP_LOWERFILTERS = 18,
-                SPDRP_BUSTYPEGUID = 19,
-                SPDRP_LEGACYBUSTYPE = 20,
-                SPDRP_BUSNUMBER = 21,
-                SPDRP_ENUMERATOR_NAME = 22,
-                SPDRP_SECURITY = 23,
-                SPDRP_SECURITY_SDS = 24,
-                SPDRP_DEVTYPE = 25,
-                SPDRP_EXCLUSIVE = 26,
-                SPDRP_CHARACTERISTICS = 27,
-                SPDRP_ADDRESS = 28,
-                SPDRP_UI_NUMBER_DESC_FORMAT = 29,
-                SPDRP_DEVICE_POWER_DATA = 30,
-                SPDRP_REMOVAL_POLICY = 31,
-                SPDRP_REMOVAL_POLICY_HW_DEFAULT = 32,
-                SPDRP_REMOVAL_POLICY_OVERRIDE = 33,
-                SPDRP_INSTALL_STATE = 34,
-                SPDRP_LOCATION_PATHS = 35,
-                SPDRP_BASE_CONTAINERID = 36
+                /* SPDRP_DEVICEDESC                  */ SPDRP_DEVICEDESC = 0,
+                /* SPDRP_HARDWAREID                  */ SPDRP_HARDWAREID = 1,
+                /* SPDRP_COMPATIBLEIDS               */ SPDRP_COMPATIBLEIDS = 2,
+                /* SPDRP_UNUSED0                     */ SPDRP_UNUSED0 = 3,
+                /* SPDRP_SERVICE                     */ SPDRP_SERVICE = 4,
+                /* SPDRP_UNUSED1                     */ SPDRP_UNUSED1 = 5,
+                /* SPDRP_UNUSED2                     */ SPDRP_UNUSED2 = 6,
+                /* SPDRP_CLASS                       */ SPDRP_CLASS = 7,
+                /* SPDRP_CLASSGUID                   */ SPDRP_CLASSGUID = 8,
+                /* SPDRP_DRIVER                      */ SPDRP_DRIVER = 9,
+                /* SPDRP_CONFIGFLAGS                 */ SPDRP_CONFIGFLAGS = 10,
+                /* SPDRP_MFG                         */ SPDRP_MFG = 11,
+                /* SPDRP_FRIENDLYNAME                */ SPDRP_FRIENDLYNAME = 12,
+                /* SPDRP_LOCATION_INFORMATION        */ SPDRP_LOCATION_INFORMATION = 13,
+                /* SPDRP_PHYSICAL_DEVICE_OBJECT_NAME */ SPDRP_PHYSICAL_DEVICE_OBJECT_NAME = 14,
+                /* SPDRP_CAPABILITIES                */ SPDRP_CAPABILITIES = 15,
+                /* SPDRP_UI_NUMBER                   */ SPDRP_UI_NUMBER = 16,
+                /* SPDRP_UPPERFILTERS                */ SPDRP_UPPERFILTERS = 17,
+                /* SPDRP_LOWERFILTERS                */ SPDRP_LOWERFILTERS = 18,
+                /* SPDRP_BUSTYPEGUID                 */ SPDRP_BUSTYPEGUID = 19,
+                /* SPDRP_LEGACYBUSTYPE               */ SPDRP_LEGACYBUSTYPE = 20,
+                /* SPDRP_BUSNUMBER                   */ SPDRP_BUSNUMBER = 21,
+                /* SPDRP_ENUMERATOR_NAME             */ SPDRP_ENUMERATOR_NAME = 22,
+                /* SPDRP_SECURITY                    */ SPDRP_SECURITY = 23,
+                /* SPDRP_SECURITY_SDS                */ SPDRP_SECURITY_SDS = 24,
+                /* SPDRP_DEVTYPE                     */ SPDRP_DEVTYPE = 25,
+                /* SPDRP_EXCLUSIVE                   */ SPDRP_EXCLUSIVE = 26,
+                /* SPDRP_CHARACTERISTICS             */ SPDRP_CHARACTERISTICS = 27,
+                /* SPDRP_ADDRESS                     */ SPDRP_ADDRESS = 28,
+                /* SPDRP_UI_NUMBER_DESC_FORMAT       */ SPDRP_UI_NUMBER_DESC_FORMAT = 29,
+                /* SPDRP_DEVICE_POWER_DATA           */ SPDRP_DEVICE_POWER_DATA = 30,
+                /* SPDRP_REMOVAL_POLICY              */ SPDRP_REMOVAL_POLICY = 31,
+                /* SPDRP_REMOVAL_POLICY_HW_DEFAULT   */ SPDRP_REMOVAL_POLICY_HW_DEFAULT = 32,
+                /* SPDRP_REMOVAL_POLICY_OVERRIDE     */ SPDRP_REMOVAL_POLICY_OVERRIDE = 33,
+                /* SPDRP_INSTALL_STATE               */ SPDRP_INSTALL_STATE = 34,
+                /* SPDRP_LOCATION_PATHS              */ SPDRP_LOCATION_PATHS = 35,
+                /* SPDRP_BASE_CONTAINERID            */ SPDRP_BASE_CONTAINERID = 36
             }
 
             /**
@@ -70,13 +70,10 @@ namespace Htc.Vita.Core.Interop
             [StructLayout(LayoutKind.Sequential)]
             internal struct SP_DEVICE_INTERFACE_DATA
             {
-                public int cbSize;
-
-                public Guid interfaceClassGuid;
-
-                public int flags;
-
-                public IntPtr reserved;
+                public /* DWORD     */ uint cbSize;
+                public /* GUID      */ Guid interfaceClassGuid;
+                public /* DWORD     */ uint flags;
+                public /* ULONG_PTR */ IntPtr reserved;
             }
 
             /**
@@ -85,13 +82,10 @@ namespace Htc.Vita.Core.Interop
             [StructLayout(LayoutKind.Sequential)]
             internal struct SP_DEVINFO_DATA
             {
-                public int cbSize;
-
-                public Guid classGuid;
-
-                public int devInst;
-
-                public IntPtr reserved;
+                public /* DWORD     */ uint cbSize;
+                public /* GUID      */ Guid classGuid;
+                public /* DWORD     */ uint devInst;
+                public /* ULONG_PTR */ IntPtr reserved;
             }
 
             /**
@@ -104,7 +98,7 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool SetupDiDestroyDeviceInfoList(
-                    IntPtr deviceInfoSet
+                    /* _In_ HDEVINFO */ [In] IntPtr deviceInfoSet
             );
 
             /**
@@ -117,11 +111,11 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool SetupDiEnumDeviceInterfaces(
-                    IntPtr deviceInfoSet,
-                    IntPtr deviceInfoData,
-                    ref Guid interfaceClassGuid,
-                    int memberIndex,
-                    ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData
+                    /* _In_           HDEVINFO                  */ [In] IntPtr deviceInfoSet,
+                    /* _In_opt_       PSP_DEVINFO_DATA          */ [In] IntPtr deviceInfoData,
+                    /* _In_     const GUID*                     */ [In] ref Guid interfaceClassGuid,
+                    /* _In_           DWORD                     */ [In] uint memberIndex,
+                    /* _Out_          PSP_DEVICE_INTERFACE_DATA */ [In][Out] ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData
             );
 
             /**
@@ -133,10 +127,10 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             internal static extern IntPtr SetupDiGetClassDevsW(
-                    ref Guid classGuid,
-                    [MarshalAs(UnmanagedType.LPTStr)] string enumerator,
-                    IntPtr hwndParent,
-                    DIGCF flags
+                    /* _In_opt_ const GUID   */ [In] ref Guid classGuid,
+                    /* _In_opt_       PCTSTR */ [In] string enumerator,
+                    /* _In_opt_       HWND   */ [In] IntPtr hwndParent,
+                    /* _In_           DWORD  */ [In] DIGCF flags
             );
 
             /**
@@ -149,12 +143,12 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool SetupDiGetDeviceInterfaceDetailW(
-                    IntPtr hDevInfo,
-                    ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData,
-                    IntPtr deviceInterfaceDetailData,
-                    int deviceInterfaceDetailDataSize,
-                    ref int requiredSize,
-                    IntPtr deviceInfoData
+                    /* _In_      HDEVINFO                         */ [In] IntPtr hDevInfo,
+                    /* _In_      PSP_DEVICE_INTERFACE_DATA        */ [In] ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData,
+                    /* _Out_opt_ PSP_DEVICE_INTERFACE_DETAIL_DATA */ [In][Out] IntPtr deviceInterfaceDetailData,
+                    /* _In_      DWORD                            */ [In] int deviceInterfaceDetailDataSize,
+                    /* _Out_opt_ PDWORD                           */ [In][Out] ref int requiredSize,
+                    /* _Out_opt_ PSP_DEVINFO_DATA                 */ [In][Out] IntPtr deviceInfoData
             );
 
             /**
@@ -167,12 +161,12 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool SetupDiGetDeviceInterfaceDetailW(
-                    IntPtr hDevInfo,
-                    ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData,
-                    IntPtr deviceInterfaceDetailData,
-                    int deviceInterfaceDetailDataSize,
-                    ref int requiredSize,
-                    ref SP_DEVINFO_DATA deviceInfoData
+                    /* _In_      HDEVINFO                         */ [In] IntPtr hDevInfo,
+                    /* _In_      PSP_DEVICE_INTERFACE_DATA        */ [In] ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData,
+                    /* _Out_opt_ PSP_DEVICE_INTERFACE_DETAIL_DATA */ [In][Out] IntPtr deviceInterfaceDetailData,
+                    /* _In_      DWORD                            */ [In] int deviceInterfaceDetailDataSize,
+                    /* _Out_opt_ PDWORD                           */ [In][Out] ref int requiredSize,
+                    /* _Out_opt_ PSP_DEVINFO_DATA                 */ [In][Out] ref SP_DEVINFO_DATA deviceInfoData
             );
 
             /**
@@ -185,13 +179,13 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool SetupDiGetDeviceRegistryPropertyW(
-                    IntPtr deviceInfoSet,
-                    ref SP_DEVINFO_DATA deviceInfoData,
-                    SPDRP property,
-                    IntPtr propertyRegDataType,
-                    IntPtr propertyBuffer,
-                    int propertyBufferSize,
-                    out int requiredSize
+                    /* _In_      HDEVINFO         */ [In] IntPtr deviceInfoSet,
+                    /* _In_      PSP_DEVINFO_DATA */ [In] ref SP_DEVINFO_DATA deviceInfoData,
+                    /* _In_      DWORD            */ [In] SPDRP property,
+                    /* _Out_opt_ PDWORD           */ [In][Out] IntPtr propertyRegDataType,
+                    /* _Out_opt_ PBYTE            */ [In][Out] IntPtr propertyBuffer,
+                    /* _In_      DWORD            */ [In] uint propertyBufferSize,
+                    /* _Out_opt_ PDWORD           */ [In][Out] ref uint requiredSize
             );
 
             /**
@@ -204,13 +198,13 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool SetupDiGetDeviceRegistryPropertyW(
-                    IntPtr deviceInfoSet,
-                    ref SP_DEVINFO_DATA deviceInfoData,
-                    SPDRP property,
-                    out int propertyRegDataType,
-                    byte[] propertyBuffer,
-                    int propertyBufferSize,
-                    out int requiredSize
+                    /* _In_      HDEVINFO         */ [In] IntPtr deviceInfoSet,
+                    /* _In_      PSP_DEVINFO_DATA */ [In] ref SP_DEVINFO_DATA deviceInfoData,
+                    /* _In_      DWORD            */ [In] SPDRP property,
+                    /* _Out_opt_ PDWORD           */ [In][Out] ref uint propertyRegDataType,
+                    /* _Out_opt_ PBYTE            */ [In][Out] byte[] propertyBuffer,
+                    /* _In_      DWORD            */ [In] uint propertyBufferSize,
+                    /* _Out_opt_ PDWORD           */ [In][Out] ref uint requiredSize
             );
         }
     }

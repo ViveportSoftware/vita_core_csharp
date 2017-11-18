@@ -17,76 +17,76 @@ namespace Htc.Vita.Core.Interop
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
-            internal enum WTD_CHOICE
+            internal enum WTD_CHOICE : uint
             {
-                WTD_CHOICE_FILE = 1,
-                WTD_CHOICE_CATALOG,
-                WTD_CHOICE_BLOB,
-                WTD_CHOICE_SIGNER,
-                WTD_CHOICE_CERT
+                /* WTD_CHOICE_FILE    */ WTD_CHOICE_FILE = 1,
+                /* WTD_CHOICE_CATALOG */ WTD_CHOICE_CATALOG,
+                /* WTD_CHOICE_BLOB    */ WTD_CHOICE_BLOB,
+                /* WTD_CHOICE_SIGNER  */ WTD_CHOICE_SIGNER,
+                /* WTD_CHOICE_CERT    */ WTD_CHOICE_CERT
             }
 
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
             [Flags]
-            internal enum WTD_PROVIDERFLAG
+            internal enum WTD_PROVIDERFLAG : uint
             {
-                WTD_USE_IE4_TRUST_FLAG = 1,
-                WTD_NO_IE4_CHAIN_FLAG = 2,
-                WTD_NO_POLICY_USAGE_FLAG = 4,
-                WTD_REVOCATION_CHECK_NONE = 16,
-                WTD_REVOCATION_CHECK_END_CERT = 32,
-                WTD_REVOCATION_CHECK_CHAIN = 64,
-                WTD_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT = 128,
-                WTD_SAFER_FLAG = 256,
-                WTD_HASH_ONLY_FLAG = 512,
-                WTD_USE_DEFAULT_OSVER_CHECK = 1024,
-                WTD_LIFETIME_SIGNING_FLAG = 2048,
-                WTD_CACHE_ONLY_URL_RETRIEVAL = 4096,
-                WTD_DISABLE_MD2_MD4 = 8192,
-                WTD_MOTW = 16384
+                /* WTD_USE_IE4_TRUST_FLAG                  */ WTD_USE_IE4_TRUST_FLAG = 1,
+                /* WTD_NO_IE4_CHAIN_FLAG                   */ WTD_NO_IE4_CHAIN_FLAG = 2,
+                /* WTD_NO_POLICY_USAGE_FLAG                */ WTD_NO_POLICY_USAGE_FLAG = 4,
+                /* WTD_REVOCATION_CHECK_NONE               */ WTD_REVOCATION_CHECK_NONE = 16,
+                /* WTD_REVOCATION_CHECK_END_CERT           */ WTD_REVOCATION_CHECK_END_CERT = 32,
+                /* WTD_REVOCATION_CHECK_CHAIN              */ WTD_REVOCATION_CHECK_CHAIN = 64,
+                /* WTD_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT */ WTD_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT = 128,
+                /* WTD_SAFER_FLAG                          */ WTD_SAFER_FLAG = 256,
+                /* WTD_HASH_ONLY_FLAG                      */ WTD_HASH_ONLY_FLAG = 512,
+                /* WTD_USE_DEFAULT_OSVER_CHECK             */ WTD_USE_DEFAULT_OSVER_CHECK = 1024,
+                /* WTD_LIFETIME_SIGNING_FLAG               */ WTD_LIFETIME_SIGNING_FLAG = 2048,
+                /* WTD_CACHE_ONLY_URL_RETRIEVAL            */ WTD_CACHE_ONLY_URL_RETRIEVAL = 4096,
+                /* WTD_DISABLE_MD2_MD4                     */ WTD_DISABLE_MD2_MD4 = 8192,
+                /* WTD_MOTW                                */ WTD_MOTW = 16384
             }
 
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
-            internal enum WTD_REVOKE
+            internal enum WTD_REVOKE : uint
             {
-                WTD_REVOKE_NONE,
-                WTD_REVOKE_WHOLECHAIN
+                /* WTD_REVOKE_NONE       */ WTD_REVOKE_NONE,
+                /* WTD_REVOKE_WHOLECHAIN */ WTD_REVOKE_WHOLECHAIN
             }
 
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
-            internal enum WTD_STATEACTION
+            internal enum WTD_STATEACTION : uint
             {
-                WTD_STATEACTION_IGNORE,
-                WTD_STATEACTION_VERIFY,
-                WTD_STATEACTION_CLOSE,
-                WTD_STATEACTION_AUTO_CACHE,
-                WTD_STATEACTION_AUTO_CACHE_FLUSH
+                /* WTD_STATEACTION_IGNORE           */ WTD_STATEACTION_IGNORE,
+                /* WTD_STATEACTION_VERIFY           */ WTD_STATEACTION_VERIFY,
+                /* WTD_STATEACTION_CLOSE            */ WTD_STATEACTION_CLOSE,
+                /* WTD_STATEACTION_AUTO_CACHE       */ WTD_STATEACTION_AUTO_CACHE,
+                /* WTD_STATEACTION_AUTO_CACHE_FLUSH */ WTD_STATEACTION_AUTO_CACHE_FLUSH
             }
 
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
-            internal enum WTD_UI
+            internal enum WTD_UI : uint
             {
-                WTD_UI_ALL = 1,
-                WTD_UI_NONE,
-                WTD_UI_NOBAD,
-                WTD_UI_NOGOOD
+                /* WTD_UI_ALL    */ WTD_UI_ALL = 1,
+                /* WTD_UI_NONE   */ WTD_UI_NONE,
+                /* WTD_UI_NOBAD  */ WTD_UI_NOBAD,
+                /* WTD_UI_NOGOOD */ WTD_UI_NOGOOD
             }
 
             /**
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
-            internal enum WTD_UICONTEXT
+            internal enum WTD_UICONTEXT : uint
             {
-                WTD_UICONTEXT_EXECUTE,
-                WTD_UICONTEXT_INSTALL
+                /* WTD_UICONTEXT_EXECUTE */ WTD_UICONTEXT_EXECUTE,
+                /* WTD_UICONTEXT_INSTALL */ WTD_UICONTEXT_INSTALL
             }
 
             /**
@@ -95,29 +95,18 @@ namespace Htc.Vita.Core.Interop
             [StructLayout(LayoutKind.Sequential)]
             internal struct WINTRUST_DATA
             {
-                public uint cbStruct;
-
-                public IntPtr pPolicyCallbackData;
-
-                public IntPtr pSIPCallbackData;
-
-                public WTD_UI dwUIChoice;
-
-                public WTD_REVOKE fdwRevocationChecks;
-
-                public WTD_CHOICE dwUnionChoice;
-
-                public WTD_UNION_CHOICE infoUnion;
-
-                public WTD_STATEACTION dwStateAction;
-
-                public IntPtr hWVTStateData;
-
-                public IntPtr pwszURLReference;
-
-                public WTD_PROVIDERFLAG dwProvFlags;
-
-                public WTD_UICONTEXT dwUIContext;
+                public /* DWORD  */ uint cbStruct;
+                public /* LPVOID */ IntPtr pPolicyCallbackData;
+                public /* LPVOID */ IntPtr pSIPCallbackData;
+                public /* DWORD  */ WTD_UI dwUIChoice;
+                public /* DWORD  */ WTD_REVOKE fdwRevocationChecks;
+                public /* DWORD  */ WTD_CHOICE dwUnionChoice;
+                public /* union  */ WTD_UNION_CHOICE infoUnion;
+                public /* DWORD  */ WTD_STATEACTION dwStateAction;
+                public /* HANDLE */ IntPtr hWVTStateData;
+                public /* WCHAR* */ IntPtr pwszURLReference;
+                public /* DWORD  */ WTD_PROVIDERFLAG dwProvFlags;
+                public /* DWORD  */ WTD_UICONTEXT dwUIContext;
 
                 // TODO
                 // WINTRUST_SIGNATURE_SETTINGS *pSignatureSettings;
@@ -129,13 +118,10 @@ namespace Htc.Vita.Core.Interop
             [StructLayout(LayoutKind.Sequential)]
             internal struct WINTRUST_FILE_INFO
             {
-                public uint cbStruct;
-
-                [MarshalAs(UnmanagedType.LPTStr)] public string filePath;
-
-                public IntPtr hFile;
-
-                public IntPtr pgKnownSubject;
+                public /* DWORD  */ uint cbStruct;
+                [MarshalAs(UnmanagedType.LPWStr)] public /* LPCWSTR */ string pcwszFilePath;
+                public /* HANDLE */ IntPtr hFile;
+                public /* GUID*  */ IntPtr pgKnownSubject;
             }
 
             /**
@@ -144,20 +130,11 @@ namespace Htc.Vita.Core.Interop
             [StructLayout(LayoutKind.Explicit)]
             internal struct WTD_UNION_CHOICE
             {
-                [FieldOffset(0)]
-                public IntPtr pFile;
-
-                [FieldOffset(0)]
-                public IntPtr pCatalog;
-
-                [FieldOffset(0)]
-                public IntPtr pBlob;
-
-                [FieldOffset(0)]
-                public IntPtr pSgnr;
-
-                [FieldOffset(0)]
-                public IntPtr pCert;
+                [FieldOffset(0)] public /* struct WINTRUST_FILE_INFO_    */ IntPtr pFile;
+                [FieldOffset(0)] public /* struct WINTRUST_CATALOG_INFO_ */ IntPtr pCatalog;
+                [FieldOffset(0)] public /* struct WINTRUST_BLOB_INFO_    */ IntPtr pBlob;
+                [FieldOffset(0)] public /* struct WINTRUST_SGNR_INFO_    */ IntPtr pSgnr;
+                [FieldOffset(0)] public /* struct WINTRUST_CERT_INFO_    */ IntPtr pCert;
             }
 
             /**
@@ -170,9 +147,9 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.U4)]
             internal static extern uint WinVerifyTrust(
-                    [In] IntPtr hWnd,
-                    [In] [MarshalAs(UnmanagedType.LPStruct)] Guid pgActionId,
-                    [In] IntPtr pWinTrustData
+                    /* _In_ HWND   */ [In] IntPtr hWnd,
+                    /* _In_ GUID*  */ [In] ref Guid pgActionId,
+                    /* _In_ LPVOID */ [In] IntPtr pWvtData
             );
         }
     }

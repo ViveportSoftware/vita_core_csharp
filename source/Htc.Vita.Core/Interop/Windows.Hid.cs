@@ -17,7 +17,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             internal static extern void HidD_GetHidGuid(
-                    out Guid guid
+                    /* _Out_ LPGUID */ [In][Out] ref Guid hidGuid
             );
 
             /**
@@ -30,9 +30,9 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool HidD_GetSerialNumberString(
-                    IntPtr hidDeviceObject,
-                    [MarshalAs(UnmanagedType.LPWStr)] StringBuilder buffer,
-                    [MarshalAs(UnmanagedType.U4)] int bufferLength
+                    /* _In_  HANDLE */ [In] IntPtr hidDeviceObject,
+                    /* _Out_ PVOID  */ [In][Out] StringBuilder buffer,
+                    /* _In_  ULONG  */ [In] uint bufferLength
             );
         }
     }

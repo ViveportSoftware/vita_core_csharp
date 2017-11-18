@@ -14,16 +14,16 @@ namespace Htc.Vita.Core.Interop
              */
             internal enum WTS_CONNECTSTATE_CLASS
             {
-                WTSActive,
-                WTSConnected,
-                WTSConnectQuery,
-                WTSShadow,
-                WTSDisconnected,
-                WTSIdle,
-                WTSListen,
-                WTSReset,
-                WTSDown,
-                WTSInit
+                /* WTSActive       */ WTSActive,
+                /* WTSConnected    */ WTSConnected,
+                /* WTSConnectQuery */ WTSConnectQuery,
+                /* WTSShadow       */ WTSShadow,
+                /* WTSDisconnected */ WTSDisconnected,
+                /* WTSIdle         */ WTSIdle,
+                /* WTSListen       */ WTSListen,
+                /* WTSReset        */ WTSReset,
+                /* WTSDown         */ WTSDown,
+                /* WTSInit         */ WTSInit
             }
 
             /**
@@ -31,36 +31,36 @@ namespace Htc.Vita.Core.Interop
              */
             internal enum WTS_INFO_CLASS
             {
-                WTSInitialProgram,
-                WTSApplicationName,
-                WTSWorkingDirectory,
-                WTSOEMId,
-                WTSSessionId,
-                WTSUserName,
-                WTSWinStationName,
-                WTSDomainName,
-                WTSConnectState,
-                WTSClientBuildNumber,
-                WTSClientName,
-                WTSClientDirectory,
-                WTSClientProductId,
-                WTSClientHardwareId,
-                WTSClientAddress,
-                WTSClientDisplay,
-                WTSClientProtocolType,
-                WTSIdleTime,
-                WTSLogonTime,
-                WTSIncomingBytes,
-                WTSOutgoingBytes,
-                WTSIncomingFrames,
-                WTSOutgoingFrames,
-                WTSClientInfo,
-                WTSSessionInfo,
-                WTSSessionInfoEx,
-                WTSConfigInfo,
-                WTSValidationInfo,
-                WTSSessionAddressV4,
-                WTSIsRemoteSession
+                /* WTSInitialProgram     */ WTSInitialProgram,
+                /* WTSApplicationName    */ WTSApplicationName,
+                /* WTSWorkingDirectory   */ WTSWorkingDirectory,
+                /* WTSOEMId              */ WTSOEMId,
+                /* WTSSessionId          */ WTSSessionId,
+                /* WTSUserName           */ WTSUserName,
+                /* WTSWinStationName     */ WTSWinStationName,
+                /* WTSDomainName         */ WTSDomainName,
+                /* WTSConnectState       */ WTSConnectState,
+                /* WTSClientBuildNumber  */ WTSClientBuildNumber,
+                /* WTSClientName         */ WTSClientName,
+                /* WTSClientDirectory    */ WTSClientDirectory,
+                /* WTSClientProductId    */ WTSClientProductId,
+                /* WTSClientHardwareId   */ WTSClientHardwareId,
+                /* WTSClientAddress      */ WTSClientAddress,
+                /* WTSClientDisplay      */ WTSClientDisplay,
+                /* WTSClientProtocolType */ WTSClientProtocolType,
+                /* WTSIdleTime           */ WTSIdleTime,
+                /* WTSLogonTime          */ WTSLogonTime,
+                /* WTSIncomingBytes      */ WTSIncomingBytes,
+                /* WTSOutgoingBytes      */ WTSOutgoingBytes,
+                /* WTSIncomingFrames     */ WTSIncomingFrames,
+                /* WTSOutgoingFrames     */ WTSOutgoingFrames,
+                /* WTSClientInfo         */ WTSClientInfo,
+                /* WTSSessionInfo        */ WTSSessionInfo,
+                /* WTSSessionInfoEx      */ WTSSessionInfoEx,
+                /* WTSConfigInfo         */ WTSConfigInfo,
+                /* WTSValidationInfo     */ WTSValidationInfo,
+                /* WTSSessionAddressV4   */ WTSSessionAddressV4,
+                /* WTSIsRemoteSession    */ WTSIsRemoteSession
             }
 
             /**
@@ -69,13 +69,10 @@ namespace Htc.Vita.Core.Interop
             [StructLayout(LayoutKind.Sequential)]
             internal struct WTS_PROCESS_INFO
             {
-                public int SessionID;
-
-                public int ProcessID;
-
-                [MarshalAs(UnmanagedType.LPTStr)] public string pProcessName;
-
-                public IntPtr pUserSid;
+                public /* DWORD  */ uint sessionId;
+                public /* DWORD  */ uint processId;
+                public /* LPTSTR */ string pProcessName;
+                public /* PSID   */ IntPtr pUserSid;
             }
 
             /**
@@ -84,11 +81,9 @@ namespace Htc.Vita.Core.Interop
             [StructLayout(LayoutKind.Sequential)]
             internal struct WTS_SESSION_INFO
             {
-                public int SessionID;
-
-                [MarshalAs(UnmanagedType.LPTStr)] public string pWinStationName;
-
-                public WTS_CONNECTSTATE_CLASS State;
+                public /* DWORD                  */ uint sessionId;
+                public /* LPTSTR                 */ string pWinStationName;
+                public /* WTS_CONNECTSTATE_CLASS */ WTS_CONNECTSTATE_CLASS state;
             }
 
             /**
@@ -100,7 +95,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             internal static extern void WTSCloseServer(
-                    [In] IntPtr hServer
+                    /* _In_ HANDLE */ [In] IntPtr hServer
             );
 
             /**
@@ -113,11 +108,11 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool WTSEnumerateProcessesW(
-                    [In] IntPtr hServer,
-                    [In] [MarshalAs(UnmanagedType.U4)] int reserved,
-                    [In] [MarshalAs(UnmanagedType.U4)] int version,
-                    ref IntPtr ppProcessInfo,
-                    [MarshalAs(UnmanagedType.U4)] ref int pCount
+                    /* _In_  HANDLE             */ [In] IntPtr hServer,
+                    /* _In_  DWORD              */ [In] uint reserved,
+                    /* _In_  DWORD              */ [In] uint version,
+                    /* _Out_ PWTS_PROCESS_INFO* */ [In][Out] ref IntPtr ppProcessInfo,
+                    /* _Out_ DWORD*             */ [In][Out] ref uint pCount
             );
 
             /**
@@ -130,11 +125,11 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool WTSEnumerateSessionsW(
-                    [In] IntPtr hServer,
-                    [In] [MarshalAs(UnmanagedType.U4)] int reserved,
-                    [In] [MarshalAs(UnmanagedType.U4)] int version,
-                    ref IntPtr ppSessionInfo,
-                    [MarshalAs(UnmanagedType.U4)] ref int pCount
+                    /* _In_  HANDLE             */ [In] IntPtr hServer,
+                    /* _In_  DWORD              */ [In] uint reserved,
+                    /* _In_  DWORD              */ [In] uint version,
+                    /* _Out_ PWTS_SESSION_INFO* */ [In][Out] ref IntPtr ppSessionInfo,
+                    /* _Out_ DWORD*             */ [In][Out] ref uint pCount
             );
 
             /**
@@ -146,7 +141,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             internal static extern void WTSFreeMemory(
-                    [In] IntPtr pMemory
+                    /* _In_ PVOID */ [In] IntPtr pMemory
             );
 
             /**
@@ -158,7 +153,7 @@ namespace Htc.Vita.Core.Interop
                     ExactSpelling = true,
                     SetLastError = true)]
             internal static extern IntPtr WTSOpenServerW(
-                    [In] [MarshalAs(UnmanagedType.LPTStr)] string pServerName
+                    /* _In_ LPTSTR */ [In] string pServerName
             );
 
             /**
@@ -171,11 +166,11 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool WTSQuerySessionInformationW(
-                    [In] IntPtr hServer,
-                    [In] int sessionId,
-                    [In] WTS_INFO_CLASS wtsInfoClass,
-                    out IntPtr ppBuffer,
-                    out uint pBytesReturned
+                    /* _In_  HANDLE         */ [In] IntPtr hServer,
+                    /* _In_  DWORD          */ [In] uint sessionId,
+                    /* _In_  WTS_INFO_CLASS */ [In] WTS_INFO_CLASS wtsInfoClass,
+                    /* _Out_ LPTSTR*        */ [In][Out] ref IntPtr ppBuffer,
+                    /* _Out_ DWORD*         */ [In][Out] ref uint pBytesReturned
             );
 
             /**
@@ -188,9 +183,9 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool WTSTerminateProcess(
-                    [In] IntPtr hServer,
-                    [In] [MarshalAs(UnmanagedType.U4)] int processId,
-                    [In] int exitCode
+                    /* _In_ HANDLE */ [In] IntPtr hServer,
+                    /* _In_ DWORD  */ [In] uint processId,
+                    /* _In_ DWORD  */ [In] uint exitCode
             );
         }
     }

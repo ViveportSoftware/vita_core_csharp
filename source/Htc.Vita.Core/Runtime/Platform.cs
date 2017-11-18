@@ -132,10 +132,10 @@ namespace Htc.Vita.Core.Runtime
             }
             try
             {
-                bool isWow64;
+                var isWow64 = false;
                 var sucess = Windows.Kernel32.IsWow64Process(
                         Process.GetCurrentProcess().Handle,
-                        out isWow64
+                        ref isWow64
                 );
 
                 if (sucess)

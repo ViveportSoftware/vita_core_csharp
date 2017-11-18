@@ -89,7 +89,7 @@ namespace Htc.Vita.Core.Runtime
             try
             {
                 var sessionInfoPtr = IntPtr.Zero;
-                var sessionCount = 0;
+                var sessionCount = 0U;
                 var success = Windows.Wtsapi32.WTSEnumerateSessionsW(
                         serverHandle,
                         0,
@@ -102,7 +102,7 @@ namespace Htc.Vita.Core.Runtime
 
                 if (success)
                 {
-                    for (var sessionIndex = 0; sessionIndex < sessionCount; sessionIndex++)
+                    for (var sessionIndex = 0U; sessionIndex < sessionCount; sessionIndex++)
                     {
                         var sessionInfo = (Windows.Wtsapi32.WTS_SESSION_INFO)Marshal.PtrToStructure(
                                 currentSessionInfoPtr,
@@ -112,13 +112,13 @@ namespace Htc.Vita.Core.Runtime
 
                         bool ret = false;
                         uint bytes = 0;
-                        IntPtr usernamePtr = IntPtr.Zero;
+                        var usernamePtr = IntPtr.Zero;
                         ret = Windows.Wtsapi32.WTSQuerySessionInformationW(
                                 serverHandle,
-                                sessionInfo.SessionID,
+                                sessionInfo.sessionId,
                                 Windows.Wtsapi32.WTS_INFO_CLASS.WTSUserName,
-                                out usernamePtr,
-                                out bytes
+                                ref usernamePtr,
+                                ref bytes
                         );
                         if (ret == false)
                         {
@@ -128,13 +128,13 @@ namespace Htc.Vita.Core.Runtime
                         string username = Marshal.PtrToStringUni(usernamePtr);
                         Windows.Wtsapi32.WTSFreeMemory(usernamePtr);
 
-                        IntPtr domainPtr = IntPtr.Zero;
+                        var domainPtr = IntPtr.Zero;
                         ret = Windows.Wtsapi32.WTSQuerySessionInformationW(
                                 serverHandle,
-                                sessionInfo.SessionID,
+                                sessionInfo.sessionId,
                                 Windows.Wtsapi32.WTS_INFO_CLASS.WTSDomainName,
-                                out domainPtr,
-                                out bytes
+                                ref domainPtr,
+                                ref bytes
                         );
                         if (ret == false)
                         {
@@ -146,7 +146,7 @@ namespace Htc.Vita.Core.Runtime
 
                         var userInfo = new WindowsUserInfo
                         {
-                            State = sessionInfo.State,
+                            State = sessionInfo.state,
                             Domain = domain,
                             Username = username
                         };

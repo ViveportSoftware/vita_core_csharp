@@ -78,7 +78,7 @@ namespace Htc.Vita.Core.Runtime
             try
             {
                 var processInfoPtr = IntPtr.Zero;
-                var processCount = 0;
+                var processCount = 0U;
                 var success = Windows.Wtsapi32.WTSEnumerateProcessesW(
                         serverHandle,
                         0,
@@ -108,9 +108,9 @@ namespace Htc.Vita.Core.Runtime
 
                         var windowsProcessInfo = new WindowsProcessInfo
                         {
-                            Id = processInfo.ProcessID,
+                            Id = (int) processInfo.processId,
                             Name = processInfo.pProcessName,
-                            SessionId = processInfo.SessionID,
+                            SessionId = (int) processInfo.sessionId,
                             UserSid = userSid
                         };
                         result.Add(windowsProcessInfo);
@@ -144,7 +144,7 @@ namespace Htc.Vita.Core.Runtime
             {
                 result = Windows.Wtsapi32.WTSTerminateProcess(
                         serverHandle,
-                        processId,
+                        (uint) processId,
                         0
                 );
             }

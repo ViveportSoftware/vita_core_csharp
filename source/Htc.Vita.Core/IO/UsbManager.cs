@@ -33,11 +33,11 @@ namespace Htc.Vita.Core.IO
                 return deviceInfos;
             }
 
-            var deviceIndex = 0;
+            var deviceIndex = 0U;
             while (true)
             {
                 var deviceInterfaceData = new Windows.Setupapi.SP_DEVICE_INTERFACE_DATA();
-                deviceInterfaceData.cbSize = Marshal.SizeOf(deviceInterfaceData);
+                deviceInterfaceData.cbSize = (uint) Marshal.SizeOf(deviceInterfaceData);
                 var success = Windows.Setupapi.SetupDiEnumDeviceInterfaces(
                         deviceInfoSet,
                         IntPtr.Zero,
@@ -77,7 +77,7 @@ namespace Htc.Vita.Core.IO
                 var deviceInterfaceDetailData = Marshal.AllocHGlobal(bufferSize);
                 Marshal.WriteInt32(deviceInterfaceDetailData, IntPtr.Size == 8 ? 8 : 6);
                 var devinfoData = new Windows.Setupapi.SP_DEVINFO_DATA();
-                devinfoData.cbSize = Marshal.SizeOf(devinfoData);
+                devinfoData.cbSize = (uint) Marshal.SizeOf(devinfoData);
                 success = Windows.Setupapi.SetupDiGetDeviceInterfaceDetailW(
                         deviceInfoSet,
                         ref deviceInterfaceData,
@@ -140,8 +140,8 @@ namespace Htc.Vita.Core.IO
 
         private static Guid GetHidGuidInWindows()
         {
-            Guid guid;
-            Windows.Hid.HidD_GetHidGuid(out guid);
+            var guid = Guid.Empty;
+            Windows.Hid.HidD_GetHidGuid(ref guid);
             if (!Guid.Empty.ToString().Equals(guid.ToString()))
             {
                 return guid;
@@ -154,9 +154,9 @@ namespace Htc.Vita.Core.IO
                 IntPtr deviceInfoSetPtr,
                 ref Windows.Setupapi.SP_DEVINFO_DATA devinfoData,
                 Windows.Setupapi.SPDRP property,
-                out int regType)
+                ref uint regType)
         {
-            int requiredSize;
+            var requiredSize = 0U;
             var success = Windows.Setupapi.SetupDiGetDeviceRegistryPropertyW(
                     deviceInfoSetPtr,
                     ref devinfoData,
@@ -164,7 +164,7 @@ namespace Htc.Vita.Core.IO
                     IntPtr.Zero,
                     IntPtr.Zero,
                     0,
-                    out requiredSize
+                    ref requiredSize
             );
             if (!success)
             {
@@ -182,10 +182,10 @@ namespace Htc.Vita.Core.IO
                     deviceInfoSetPtr,
                     ref devinfoData,
                     property,
-                    out regType,
+                    ref regType,
                     propertyBuffer,
-                    propertyBuffer.Length,
-                    out requiredSize
+                    (uint) propertyBuffer.Length,
+                    ref requiredSize
             );
             if (!success)
             {
@@ -201,8 +201,8 @@ namespace Htc.Vita.Core.IO
                 ref Windows.Setupapi.SP_DEVINFO_DATA devinfoData,
                 Windows.Setupapi.SPDRP property)
         {
-            int regType;
-            var bytes = GetUsbDevicePropertyInWindows(deviceInfoSetPtr, ref devinfoData, property, out regType);
+            var regType = Windows.REG_NONE;
+            var bytes = GetUsbDevicePropertyInWindows(deviceInfoSetPtr, ref devinfoData, property, ref regType);
             if (bytes == null || bytes.Length == 0 || regType != Windows.REG_SZ)
             {
                 return string.Empty;
@@ -215,8 +215,8 @@ namespace Htc.Vita.Core.IO
                 ref Windows.Setupapi.SP_DEVINFO_DATA devinfoData,
                 Windows.Setupapi.SPDRP property)
         {
-            int regType;
-            var bytes = GetUsbDevicePropertyInWindows(deviceInfoSetPtr, ref devinfoData, property, out regType);
+            var regType = Windows.REG_NONE;
+            var bytes = GetUsbDevicePropertyInWindows(deviceInfoSetPtr, ref devinfoData, property, ref regType);
             if (bytes == null || bytes.Length == 0 || regType != Windows.REG_MULTI_SZ)
             {
                 return new string[] {};
@@ -253,7 +253,7 @@ namespace Htc.Vita.Core.IO
             var success = Windows.Hid.HidD_GetSerialNumberString(
                     deviceHandle,
                     buffer,
-                    buffer.Capacity
+                    (uint) buffer.Capacity
             );
             if (success)
             {
