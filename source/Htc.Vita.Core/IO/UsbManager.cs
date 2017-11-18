@@ -237,7 +237,7 @@ namespace Htc.Vita.Core.IO
             var result = string.Empty;
             var deviceHandle = Windows.Kernel32.CreateFileW(
                     devicePath,
-                    Windows.Kernel32.GENERIC.GENERIC_READ | Windows.Kernel32.GENERIC.GENERIC_WRITE,
+                    Windows.Kernel32.Generic.Read | Windows.Kernel32.Generic.Write,
                     Windows.Kernel32.FileShare.Read | Windows.Kernel32.FileShare.Write,
                     IntPtr.Zero,
                     Windows.Kernel32.CreationDisposition.OpenExisting,

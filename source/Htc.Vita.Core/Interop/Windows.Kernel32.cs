@@ -74,15 +74,16 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * GENERIC enumeration
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx
              */
             [Flags]
-            internal enum GENERIC : uint
+            internal enum Generic : uint
             {
-                /* GENERIC_ALL     */ GENERIC_ALL = 0x10000000,
-                /* GENERIC_EXECUTE */ GENERIC_EXECUTE = 0x20000000,
-                /* GENERIC_WRITE   */ GENERIC_WRITE = 0x40000000,
-                /* GENERIC_READ    */ GENERIC_READ = 0x80000000
+                /* GENERIC_ALL     */ All = 0x10000000,
+                /* GENERIC_EXECUTE */ Execute = 0x20000000,
+                /* GENERIC_WRITE   */ Write = 0x40000000,
+                /* GENERIC_READ    */ Read = 0x80000000
             }
 
             /**
@@ -108,7 +109,7 @@ namespace Htc.Vita.Core.Interop
                     SetLastError = true)]
             internal static extern IntPtr CreateFileW(
                     /* _In_     LPCTSTR               */ [In] string lpFileName,
-                    /* _In_     DWORD                 */ [In] GENERIC dwDesiredAccess,
+                    /* _In_     DWORD                 */ [In] Generic dwDesiredAccess,
                     /* _In_     DWORD                 */ [In] FileShare dwShareMode,
                     /* _In_opt_ LPSECURITY_ATTRIBUTES */ [In] IntPtr lpSecurityAttributes,
                     /* _In_     DWORD                 */ [In] CreationDisposition dwCreationDisposition,
