@@ -61,15 +61,16 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * FILE_SHARE enumeration
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx
              */
             [Flags]
-            internal enum FILE_SHARE : uint
+            internal enum FileShare : uint
             {
-                /* FILE_SHARE_NONE   */ FILE_SHARE_NONE = 0x00000000,
-                /* FILE_SHARE_READ   */ FILE_SHARE_READ = 0x00000001,
-                /* FILE_SHARE_WRITE  */ FILE_SHARE_WRITE = 0x00000002,
-                /* FILE_SHARE_DELETE */ FILE_SHARE_DELETE = 0x00000004
+                /* FILE_SHARE_NONE   */ None = 0x00000000,
+                /* FILE_SHARE_READ   */ Read = 0x00000001,
+                /* FILE_SHARE_WRITE  */ Write = 0x00000002,
+                /* FILE_SHARE_DELETE */ Delete = 0x00000004
             }
 
             /**
@@ -108,7 +109,7 @@ namespace Htc.Vita.Core.Interop
             internal static extern IntPtr CreateFileW(
                     /* _In_     LPCTSTR               */ [In] string lpFileName,
                     /* _In_     DWORD                 */ [In] GENERIC dwDesiredAccess,
-                    /* _In_     DWORD                 */ [In] FILE_SHARE dwShareMode,
+                    /* _In_     DWORD                 */ [In] FileShare dwShareMode,
                     /* _In_opt_ LPSECURITY_ATTRIBUTES */ [In] IntPtr lpSecurityAttributes,
                     /* _In_     DWORD                 */ [In] CreationDisposition dwCreationDisposition,
                     /* _In_     DWORD                 */ [In] FileAttributeFlag dwFlagsAndAttributes,

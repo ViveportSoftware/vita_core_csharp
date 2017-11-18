@@ -238,7 +238,7 @@ namespace Htc.Vita.Core.IO
             var deviceHandle = Windows.Kernel32.CreateFileW(
                     devicePath,
                     Windows.Kernel32.GENERIC.GENERIC_READ | Windows.Kernel32.GENERIC.GENERIC_WRITE,
-                    Windows.Kernel32.FILE_SHARE.FILE_SHARE_READ | Windows.Kernel32.FILE_SHARE.FILE_SHARE_WRITE,
+                    Windows.Kernel32.FileShare.Read | Windows.Kernel32.FileShare.Write,
                     IntPtr.Zero,
                     Windows.Kernel32.CreationDisposition.OpenExisting,
                     Windows.Kernel32.FileAttributeFlag.FlagOverlapped,
