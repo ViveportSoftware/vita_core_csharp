@@ -30,9 +30,9 @@ namespace Htc.Vita.Core.Tests
             Assert.True(exists);
             var serviceInfo = ServiceManager.QueryStartType("Winmgmt");
             Assert.False(string.IsNullOrWhiteSpace(serviceInfo.ServiceName));
-            Assert.NotEqual(serviceInfo.CurrentState, ServiceManager.CurrentState.Unknown);
-            Assert.NotEqual(serviceInfo.StartType, ServiceManager.StartType.Unknown);
-            Assert.Equal(serviceInfo.ErrorCode, 0);
+            Assert.NotEqual(ServiceManager.CurrentState.Unknown, serviceInfo.CurrentState);
+            Assert.NotEqual(ServiceManager.StartType.Unknown, serviceInfo.StartType);
+            Assert.Equal(0, serviceInfo.ErrorCode);
             Assert.True(string.IsNullOrWhiteSpace(serviceInfo.ErrorMessage));
         }
 
@@ -54,9 +54,9 @@ namespace Htc.Vita.Core.Tests
             }
             serviceInfo = ServiceManager.ChangeStartType("Winmgmt", ServiceManager.StartType.Automatic);
             Assert.False(string.IsNullOrWhiteSpace(serviceInfo.ServiceName));
-            Assert.NotEqual(serviceInfo.CurrentState, ServiceManager.CurrentState.Unknown);
-            Assert.Equal(serviceInfo.StartType, ServiceManager.StartType.Automatic);
-            Assert.Equal(serviceInfo.ErrorCode, 0);
+            Assert.NotEqual(ServiceManager.CurrentState.Unknown, serviceInfo.CurrentState);
+            Assert.Equal(ServiceManager.StartType.Automatic, serviceInfo.StartType);
+            Assert.Equal(0, serviceInfo.ErrorCode);
             Assert.True(string.IsNullOrWhiteSpace(serviceInfo.ErrorMessage));
         }
 
@@ -85,7 +85,7 @@ namespace Htc.Vita.Core.Tests
 
             serviceInfo = ServiceManager.Start("Winmgmt");
             Assert.False(string.IsNullOrWhiteSpace(serviceInfo.ServiceName));
-            Assert.Equal(serviceInfo.CurrentState, ServiceManager.CurrentState.Running);
+            Assert.True(serviceInfo.CurrentState == ServiceManager.CurrentState.Running || serviceInfo.CurrentState == ServiceManager.CurrentState.StartPending);
             Assert.Equal(serviceInfo.StartType, ServiceManager.StartType.Automatic);
             Assert.Equal(serviceInfo.ErrorCode, 0);
             Assert.True(string.IsNullOrWhiteSpace(serviceInfo.ErrorMessage));
