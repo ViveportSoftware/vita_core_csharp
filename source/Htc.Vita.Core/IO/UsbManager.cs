@@ -240,7 +240,7 @@ namespace Htc.Vita.Core.IO
                     Windows.Kernel32.GENERIC.GENERIC_READ | Windows.Kernel32.GENERIC.GENERIC_WRITE,
                     Windows.Kernel32.FILE_SHARE.FILE_SHARE_READ | Windows.Kernel32.FILE_SHARE.FILE_SHARE_WRITE,
                     IntPtr.Zero,
-                    Windows.Kernel32.CREATION_DISPOSITION.OPEN_EXISTING,
+                    Windows.Kernel32.CreationDisposition.OpenExisting,
                     Windows.Kernel32.FILE_ATTRIBUTE_FLAG.FILE_FLAG_OVERLAPPED,
                     IntPtr.Zero
             );

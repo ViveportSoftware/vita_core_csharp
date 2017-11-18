@@ -8,18 +8,20 @@ namespace Htc.Vita.Core.Interop
         internal static class Kernel32
         {
             /**
+             * CREATION_DISPOSITION enumeration
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx
              */
-            internal enum CREATION_DISPOSITION : uint
+            internal enum CreationDisposition : uint
             {
-                /* CREATE_NEW        */ CREATE_NEW = 1,
-                /* CREATE_ALWAYS     */ CREATE_ALWAYS = 2,
-                /* OPEN_EXISTING     */ OPEN_EXISTING = 3,
-                /* OPEN_ALWAYS       */ OPEN_ALWAYS = 4,
-                /* TRUNCATE_EXISTING */ TRUNCATE_EXISTING = 5
+                /* CREATE_NEW        */ CreateNew = 1,
+                /* CREATE_ALWAYS     */ CreateAlways = 2,
+                /* OPEN_EXISTING     */ OpenExisting = 3,
+                /* OPEN_ALWAYS       */ OpenAlways = 4,
+                /* TRUNCATE_EXISTING */ TruncateExisting = 5
             }
 
             /**
+             * FILE_ATTRIBUTE_FLAG enumeration
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx
              * https://msdn.microsoft.com/en-us/library/windows/desktop/gg258117.aspx
              */
@@ -108,7 +110,7 @@ namespace Htc.Vita.Core.Interop
                     /* _In_     DWORD                 */ [In] GENERIC dwDesiredAccess,
                     /* _In_     DWORD                 */ [In] FILE_SHARE dwShareMode,
                     /* _In_opt_ LPSECURITY_ATTRIBUTES */ [In] IntPtr lpSecurityAttributes,
-                    /* _In_     DWORD                 */ [In] CREATION_DISPOSITION dwCreationDisposition,
+                    /* _In_     DWORD                 */ [In] CreationDisposition dwCreationDisposition,
                     /* _In_     DWORD                 */ [In] FILE_ATTRIBUTE_FLAG dwFlagsAndAttributes,
                     /* _In_opt_ HANDLE                */ [In] IntPtr hTemplateFile
             );
