@@ -36,7 +36,7 @@ namespace Htc.Vita.Core.IO
             var deviceIndex = 0U;
             while (true)
             {
-                var deviceInterfaceData = new Windows.Setupapi.SP_DEVICE_INTERFACE_DATA();
+                var deviceInterfaceData = new Windows.Setupapi.SetupDeviceInterfaceData();
                 deviceInterfaceData.cbSize = (uint) Marshal.SizeOf(deviceInterfaceData);
                 var success = Windows.Setupapi.SetupDiEnumDeviceInterfaces(
                         deviceInfoSet,

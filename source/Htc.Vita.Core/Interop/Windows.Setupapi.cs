@@ -67,10 +67,11 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * SP_DEVICE_INTERFACE_DATA
              * https://msdn.microsoft.com/en-us/library/windows/hardware/ff552342.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
-            internal struct SP_DEVICE_INTERFACE_DATA
+            internal struct SetupDeviceInterfaceData
             {
                 public /* DWORD     */ uint cbSize;
                 public /* GUID      */ Guid interfaceClassGuid;
@@ -118,7 +119,7 @@ namespace Htc.Vita.Core.Interop
                     /* _In_opt_       PSP_DEVINFO_DATA          */ [In] IntPtr deviceInfoData,
                     /* _In_     const GUID*                     */ [In] ref Guid interfaceClassGuid,
                     /* _In_           DWORD                     */ [In] uint memberIndex,
-                    /* _Out_          PSP_DEVICE_INTERFACE_DATA */ [In][Out] ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData
+                    /* _Out_          PSP_DEVICE_INTERFACE_DATA */ [In][Out] ref SetupDeviceInterfaceData deviceInterfaceData
             );
 
             /**
@@ -147,7 +148,7 @@ namespace Htc.Vita.Core.Interop
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool SetupDiGetDeviceInterfaceDetailW(
                     /* _In_      HDEVINFO                         */ [In] IntPtr hDevInfo,
-                    /* _In_      PSP_DEVICE_INTERFACE_DATA        */ [In] ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData,
+                    /* _In_      PSP_DEVICE_INTERFACE_DATA        */ [In] ref SetupDeviceInterfaceData deviceInterfaceData,
                     /* _Out_opt_ PSP_DEVICE_INTERFACE_DETAIL_DATA */ [In][Out] IntPtr deviceInterfaceDetailData,
                     /* _In_      DWORD                            */ [In] int deviceInterfaceDetailDataSize,
                     /* _Out_opt_ PDWORD                           */ [In][Out] ref int requiredSize,
@@ -165,7 +166,7 @@ namespace Htc.Vita.Core.Interop
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool SetupDiGetDeviceInterfaceDetailW(
                     /* _In_      HDEVINFO                         */ [In] IntPtr hDevInfo,
-                    /* _In_      PSP_DEVICE_INTERFACE_DATA        */ [In] ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData,
+                    /* _In_      PSP_DEVICE_INTERFACE_DATA        */ [In] ref SetupDeviceInterfaceData deviceInterfaceData,
                     /* _Out_opt_ PSP_DEVICE_INTERFACE_DETAIL_DATA */ [In][Out] IntPtr deviceInterfaceDetailData,
                     /* _In_      DWORD                            */ [In] int deviceInterfaceDetailDataSize,
                     /* _Out_opt_ PDWORD                           */ [In][Out] ref int requiredSize,
