@@ -81,12 +81,13 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * WTD_UICONTEXT enumeration
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
-            internal enum WTD_UICONTEXT : uint
+            internal enum WinTrustDataUiContext : uint
             {
-                /* WTD_UICONTEXT_EXECUTE */ WTD_UICONTEXT_EXECUTE,
-                /* WTD_UICONTEXT_INSTALL */ WTD_UICONTEXT_INSTALL
+                /* WTD_UICONTEXT_EXECUTE */ Execute,
+                /* WTD_UICONTEXT_INSTALL */ Install
             }
 
             /**
@@ -107,7 +108,7 @@ namespace Htc.Vita.Core.Interop
                 public /* HANDLE */ IntPtr hWVTStateData;
                 public /* WCHAR* */ IntPtr pwszURLReference;
                 public /* DWORD  */ WTD_PROVIDERFLAG dwProvFlags;
-                public /* DWORD  */ WTD_UICONTEXT dwUIContext;
+                public /* DWORD  */ WinTrustDataUiContext dwUIContext;
 
                 // TODO
                 // WINTRUST_SIGNATURE_SETTINGS *pSignatureSettings;
