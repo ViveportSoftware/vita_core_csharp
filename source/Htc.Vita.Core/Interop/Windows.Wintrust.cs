@@ -15,15 +15,16 @@ namespace Htc.Vita.Core.Interop
             internal static Guid WINTRUST_ACTION_TRUSTPROVIDER_TEST = new Guid("{573E31F8-DDBA-11d0-8CCB-00C04FC295EE}");
 
             /**
+             * WTD_CHOICE enumeration
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
-            internal enum WTD_CHOICE : uint
+            internal enum WinTrustDataChoice : uint
             {
-                /* WTD_CHOICE_FILE    */ WTD_CHOICE_FILE = 1,
-                /* WTD_CHOICE_CATALOG */ WTD_CHOICE_CATALOG,
-                /* WTD_CHOICE_BLOB    */ WTD_CHOICE_BLOB,
-                /* WTD_CHOICE_SIGNER  */ WTD_CHOICE_SIGNER,
-                /* WTD_CHOICE_CERT    */ WTD_CHOICE_CERT
+                /* WTD_CHOICE_FILE    */ File = 1,
+                /* WTD_CHOICE_CATALOG */ Catalog,
+                /* WTD_CHOICE_BLOB    */ Blob,
+                /* WTD_CHOICE_SIGNER  */ Signer,
+                /* WTD_CHOICE_CERT    */ Cert
             }
 
             /**
@@ -106,7 +107,7 @@ namespace Htc.Vita.Core.Interop
                 public /* LPVOID */ IntPtr pSIPCallbackData;
                 public /* DWORD  */ WinTrustDataUi dwUIChoice;
                 public /* DWORD  */ WinTrustDataRevoke fdwRevocationChecks;
-                public /* DWORD  */ WTD_CHOICE dwUnionChoice;
+                public /* DWORD  */ WinTrustDataChoice dwUnionChoice;
                 public /* union  */ WinTrustDataUnionChoice infoUnion;
                 public /* DWORD  */ WinTrustDataStateAction dwStateAction;
                 public /* HANDLE */ IntPtr hWVTStateData;
