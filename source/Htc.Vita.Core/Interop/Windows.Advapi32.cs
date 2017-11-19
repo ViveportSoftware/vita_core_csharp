@@ -217,7 +217,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/ms681987.aspx
          */
-        [DllImport(Libraries.Windows_advapi32,
+        [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -240,7 +240,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/ms682028.aspx
          */
-        [DllImport(Libraries.Windows_advapi32,
+        [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -253,7 +253,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/aa376399.aspx
          */
-        [DllImport(Libraries.Windows_advapi32,
+        [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -267,7 +267,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/aa376402.aspx
          */
-        [DllImport(Libraries.Windows_advapi32,
+        [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -281,7 +281,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/aa379166.aspx
          */
-        [DllImport(Libraries.Windows_advapi32,
+        [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -300,7 +300,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684323.aspx
          */
-        [DllImport(Libraries.Windows_advapi32,
+        [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -314,7 +314,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684330.aspx
          */
-        [DllImport(Libraries.Windows_advapi32,
+        [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -328,7 +328,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684932.aspx
          */
-        [DllImport(Libraries.Windows_advapi32,
+        [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -344,7 +344,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684939.aspx
          */
-        [DllImport(Libraries.Windows_advapi32,
+        [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -358,7 +358,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/ms686321.aspx
          */
-        [DllImport(Libraries.Windows_advapi32,
+        [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,

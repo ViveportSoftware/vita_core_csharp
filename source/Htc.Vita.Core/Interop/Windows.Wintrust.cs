@@ -147,7 +147,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388208.aspx
          */
-        [DllImport(Libraries.Windows_wintrust,
+        [DllImport(Libraries.WindowsWintrust,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,

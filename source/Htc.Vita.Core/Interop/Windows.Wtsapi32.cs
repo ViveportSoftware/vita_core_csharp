@@ -91,7 +91,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/aa383829.aspx
          */
-        [DllImport(Libraries.Windows_wtsapi32,
+        [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -103,7 +103,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/aa383831.aspx
          */
-        [DllImport(Libraries.Windows_wtsapi32,
+        [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -120,7 +120,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/aa383833.aspx
          */
-        [DllImport(Libraries.Windows_wtsapi32,
+        [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -137,7 +137,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/aa383834.aspx
          */
-        [DllImport(Libraries.Windows_wtsapi32,
+        [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -149,7 +149,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/aa383837.aspx
          */
-        [DllImport(Libraries.Windows_wtsapi32,
+        [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -161,7 +161,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/aa383838.aspx
          */
-        [DllImport(Libraries.Windows_wtsapi32,
+        [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -178,7 +178,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/aa383846.aspx
          */
-        [DllImport(Libraries.Windows_wtsapi32,
+        [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,

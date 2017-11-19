@@ -9,7 +9,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/hardware/ff538924.aspx
          */
-        [DllImport(Libraries.Windows_hid,
+        [DllImport(Libraries.WindowsHid,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -21,7 +21,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/hardware/ff539683.aspx
          */
-        [DllImport(Libraries.Windows_hid,
+        [DllImport(Libraries.WindowsHid,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,

@@ -93,7 +93,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/hardware/ff550996.aspx
          */
-        [DllImport(Libraries.Windows_setupapi,
+        [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -106,7 +106,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551015.aspx
          */
-        [DllImport(Libraries.Windows_setupapi,
+        [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -123,7 +123,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551069.aspx
          */
-        [DllImport(Libraries.Windows_setupapi,
+        [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -138,7 +138,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551120.aspx
          */
-        [DllImport(Libraries.Windows_setupapi,
+        [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -156,7 +156,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551120.aspx
          */
-        [DllImport(Libraries.Windows_setupapi,
+        [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -174,7 +174,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551967.aspx
          */
-        [DllImport(Libraries.Windows_setupapi,
+        [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -193,7 +193,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551967.aspx
          */
-        [DllImport(Libraries.Windows_setupapi,
+        [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,

@@ -87,7 +87,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/ms724211.aspx
          */
-        [DllImport(Libraries.Windows_kernel32,
+        [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -100,7 +100,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx
          */
-        [DllImport(Libraries.Windows_kernel32,
+        [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -118,7 +118,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/ms683152.aspx
          */
-        [DllImport(Libraries.Windows_kernel32,
+        [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -131,7 +131,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/aa364937.aspx
          */
-        [DllImport(Libraries.Windows_kernel32,
+        [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -147,7 +147,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684139.aspx
          */
-        [DllImport(Libraries.Windows_kernel32,
+        [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
@@ -161,7 +161,7 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684175.aspx
          */
-        [DllImport(Libraries.Windows_kernel32,
+        [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
