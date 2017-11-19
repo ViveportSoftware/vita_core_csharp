@@ -17,7 +17,7 @@ namespace Htc.Vita.Core.Runtime
             var windowsUsers = GetWindowsUsers(serverName);
             return (from windowsUser
                     in windowsUsers
-                    where windowsUser.State == Windows.Wtsapi32.WTS_CONNECTSTATE_CLASS.WTSActive
+                    where windowsUser.State == Windows.Wtsapi32.WindowsTerminalServiceConnectStateClass.Active
                     select string.Format($"{windowsUser.Domain}\\{windowsUser.Username}")
             ).FirstOrDefault();
         }
@@ -169,7 +169,7 @@ namespace Htc.Vita.Core.Runtime
 
         internal class WindowsUserInfo
         {
-            public Windows.Wtsapi32.WTS_CONNECTSTATE_CLASS State { get; set; }
+            public Windows.Wtsapi32.WindowsTerminalServiceConnectStateClass State { get; set; }
             public string Domain { get; set; }
             public string Username { get; set; }
         }

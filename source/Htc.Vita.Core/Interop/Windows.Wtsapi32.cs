@@ -10,20 +10,21 @@ namespace Htc.Vita.Core.Interop
             internal static IntPtr WTS_CURRENT_SERVER_HANDLE = IntPtr.Zero;
 
             /**
+             * WTS_CONNECTSTATE_CLASS enumeration
              * https://msdn.microsoft.com/en-us/library/aa383860.aspx
              */
-            internal enum WTS_CONNECTSTATE_CLASS
+            internal enum WindowsTerminalServiceConnectStateClass
             {
-                /* WTSActive       */ WTSActive,
-                /* WTSConnected    */ WTSConnected,
-                /* WTSConnectQuery */ WTSConnectQuery,
-                /* WTSShadow       */ WTSShadow,
-                /* WTSDisconnected */ WTSDisconnected,
-                /* WTSIdle         */ WTSIdle,
-                /* WTSListen       */ WTSListen,
-                /* WTSReset        */ WTSReset,
-                /* WTSDown         */ WTSDown,
-                /* WTSInit         */ WTSInit
+                /* WTSActive       */ Active,
+                /* WTSConnected    */ Connected,
+                /* WTSConnectQuery */ ConnectQuery,
+                /* WTSShadow       */ Shadow,
+                /* WTSDisconnected */ Disconnected,
+                /* WTSIdle         */ Idle,
+                /* WTSListen       */ Listen,
+                /* WTSReset        */ Reset,
+                /* WTSDown         */ Down,
+                /* WTSInit         */ Init
             }
 
             /**
@@ -84,7 +85,7 @@ namespace Htc.Vita.Core.Interop
             {
                 public /* DWORD                  */ uint sessionId;
                 public /* LPTSTR                 */ string pWinStationName;
-                public /* WTS_CONNECTSTATE_CLASS */ WTS_CONNECTSTATE_CLASS state;
+                public /* WTS_CONNECTSTATE_CLASS */ WindowsTerminalServiceConnectStateClass state;
             }
 
             /**
