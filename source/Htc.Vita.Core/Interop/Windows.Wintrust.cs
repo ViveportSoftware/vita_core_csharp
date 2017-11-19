@@ -114,10 +114,11 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * WINTRUST_FILE_INFO structure
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388206.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
-            internal struct WINTRUST_FILE_INFO
+            internal struct WinTrustFileInfo
             {
                 public /* DWORD  */ uint cbStruct;
                 [MarshalAs(UnmanagedType.LPWStr)] public /* LPCWSTR */ string pcwszFilePath;

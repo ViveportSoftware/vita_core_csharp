@@ -65,14 +65,14 @@ namespace Htc.Vita.Core.Diagnosis
                     return false;
                 }
 
-                var winTrustFileInfo = new Windows.Wintrust.WINTRUST_FILE_INFO
+                var winTrustFileInfo = new Windows.Wintrust.WinTrustFileInfo
                 {
-                        cbStruct = (uint)Marshal.SizeOf(typeof(Windows.Wintrust.WINTRUST_FILE_INFO)),
+                        cbStruct = (uint)Marshal.SizeOf(typeof(Windows.Wintrust.WinTrustFileInfo)),
                         pcwszFilePath = fileInfo.FullName,
                         hFile = IntPtr.Zero,
                         pgKnownSubject = IntPtr.Zero
                 };
-                var winTrustFileInfoPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Windows.Wintrust.WINTRUST_FILE_INFO)));
+                var winTrustFileInfoPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Windows.Wintrust.WinTrustFileInfo)));
                 Marshal.StructureToPtr(winTrustFileInfo, winTrustFileInfoPtr, false);
 
                 var infoUnionChoice = new Windows.Wintrust.WinTrustDataUnionChoice
@@ -131,7 +131,7 @@ namespace Htc.Vita.Core.Diagnosis
 
                 Marshal.DestroyStructure(winTrustDataPtr, typeof(Windows.Wintrust.WinTrustData));
                 Marshal.FreeHGlobal(winTrustDataPtr);
-                Marshal.DestroyStructure(winTrustFileInfoPtr, typeof(Windows.Wintrust.WINTRUST_FILE_INFO));
+                Marshal.DestroyStructure(winTrustFileInfoPtr, typeof(Windows.Wintrust.WinTrustFileInfo));
                 Marshal.FreeHGlobal(winTrustFileInfoPtr);
 
                 return success;
