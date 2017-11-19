@@ -86,16 +86,16 @@ namespace Htc.Vita.Core.Runtime
                         ref processInfoPtr,
                         ref processCount
                 );
-                var dataSize = Marshal.SizeOf(typeof(Windows.Wtsapi32.WTS_PROCESS_INFO));
+                var dataSize = Marshal.SizeOf(typeof(Windows.Wtsapi32.WindowsTerminalServiceProcessInfo));
                 var currentProcessInfoPtr = processInfoPtr;
 
                 if (success)
                 {
                     for (var processIndex = 0; processIndex < processCount; processIndex++)
                     {
-                        var processInfo = (Windows.Wtsapi32.WTS_PROCESS_INFO)Marshal.PtrToStructure(
+                        var processInfo = (Windows.Wtsapi32.WindowsTerminalServiceProcessInfo)Marshal.PtrToStructure(
                                 currentProcessInfoPtr,
-                                typeof(Windows.Wtsapi32.WTS_PROCESS_INFO)
+                                typeof(Windows.Wtsapi32.WindowsTerminalServiceProcessInfo)
                         );
                         currentProcessInfoPtr += dataSize;
 

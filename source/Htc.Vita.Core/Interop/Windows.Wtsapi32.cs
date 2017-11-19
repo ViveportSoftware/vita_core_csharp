@@ -66,10 +66,11 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * WTS_PROCESS_INFO structure
              * https://msdn.microsoft.com/en-us/library/aa383862.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
-            internal struct WTS_PROCESS_INFO
+            internal struct WindowsTerminalServiceProcessInfo
             {
                 public /* DWORD  */ uint sessionId;
                 public /* DWORD  */ uint processId;
