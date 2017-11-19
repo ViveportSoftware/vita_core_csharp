@@ -76,7 +76,7 @@ namespace Htc.Vita.Core.IO
 
                 var deviceInterfaceDetailData = Marshal.AllocHGlobal(bufferSize);
                 Marshal.WriteInt32(deviceInterfaceDetailData, IntPtr.Size == 8 ? 8 : 6);
-                var devinfoData = new Windows.Setupapi.SP_DEVINFO_DATA();
+                var devinfoData = new Windows.Setupapi.SetupDeviceInfoData();
                 devinfoData.cbSize = (uint) Marshal.SizeOf(devinfoData);
                 success = Windows.Setupapi.SetupDiGetDeviceInterfaceDetailW(
                         deviceInfoSet,
@@ -152,7 +152,7 @@ namespace Htc.Vita.Core.IO
 
         private static byte[] GetUsbDevicePropertyInWindows(
                 IntPtr deviceInfoSetPtr,
-                ref Windows.Setupapi.SP_DEVINFO_DATA devinfoData,
+                ref Windows.Setupapi.SetupDeviceInfoData devinfoData,
                 Windows.Setupapi.SetupDeviceRegistryProperty property,
                 ref uint regType)
         {
@@ -198,7 +198,7 @@ namespace Htc.Vita.Core.IO
 
         private static string GetUsbDeviceStringPropertyInWindows(
                 IntPtr deviceInfoSetPtr,
-                ref Windows.Setupapi.SP_DEVINFO_DATA devinfoData,
+                ref Windows.Setupapi.SetupDeviceInfoData devinfoData,
                 Windows.Setupapi.SetupDeviceRegistryProperty property)
         {
             var regType = Windows.REG_NONE;
@@ -212,7 +212,7 @@ namespace Htc.Vita.Core.IO
 
         private static string[] GetUsbDeviceMultiStringPropertyInWindows(
                 IntPtr deviceInfoSetPtr,
-                ref Windows.Setupapi.SP_DEVINFO_DATA devinfoData,
+                ref Windows.Setupapi.SetupDeviceInfoData devinfoData,
                 Windows.Setupapi.SetupDeviceRegistryProperty property)
         {
             var regType = Windows.REG_NONE;

@@ -79,10 +79,11 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * SP_DEVINFO_DATA structure
              * https://msdn.microsoft.com/en-us/library/windows/hardware/ff552344.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
-            internal struct SP_DEVINFO_DATA
+            internal struct SetupDeviceInfoData
             {
                 public /* DWORD     */ uint cbSize;
                 public /* GUID      */ Guid classGuid;
@@ -168,7 +169,7 @@ namespace Htc.Vita.Core.Interop
                     /* _Out_opt_ PSP_DEVICE_INTERFACE_DETAIL_DATA */ [In][Out] IntPtr deviceInterfaceDetailData,
                     /* _In_      DWORD                            */ [In] int deviceInterfaceDetailDataSize,
                     /* _Out_opt_ PDWORD                           */ [In][Out] ref int requiredSize,
-                    /* _Out_opt_ PSP_DEVINFO_DATA                 */ [In][Out] ref SP_DEVINFO_DATA deviceInfoData
+                    /* _Out_opt_ PSP_DEVINFO_DATA                 */ [In][Out] ref SetupDeviceInfoData deviceInfoData
             );
 
             /**
@@ -182,7 +183,7 @@ namespace Htc.Vita.Core.Interop
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool SetupDiGetDeviceRegistryPropertyW(
                     /* _In_      HDEVINFO         */ [In] IntPtr deviceInfoSet,
-                    /* _In_      PSP_DEVINFO_DATA */ [In] ref SP_DEVINFO_DATA deviceInfoData,
+                    /* _In_      PSP_DEVINFO_DATA */ [In] ref SetupDeviceInfoData deviceInfoData,
                     /* _In_      DWORD            */ [In] SetupDeviceRegistryProperty property,
                     /* _Out_opt_ PDWORD           */ [In][Out] IntPtr propertyRegDataType,
                     /* _Out_opt_ PBYTE            */ [In][Out] IntPtr propertyBuffer,
@@ -201,7 +202,7 @@ namespace Htc.Vita.Core.Interop
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool SetupDiGetDeviceRegistryPropertyW(
                     /* _In_      HDEVINFO         */ [In] IntPtr deviceInfoSet,
-                    /* _In_      PSP_DEVINFO_DATA */ [In] ref SP_DEVINFO_DATA deviceInfoData,
+                    /* _In_      PSP_DEVINFO_DATA */ [In] ref SetupDeviceInfoData deviceInfoData,
                     /* _In_      DWORD            */ [In] SetupDeviceRegistryProperty property,
                     /* _Out_opt_ PDWORD           */ [In][Out] ref uint propertyRegDataType,
                     /* _Out_opt_ PBYTE            */ [In][Out] byte[] propertyBuffer,
