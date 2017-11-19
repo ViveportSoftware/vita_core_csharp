@@ -67,7 +67,7 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
-             * SP_DEVICE_INTERFACE_DATA
+             * SP_DEVICE_INTERFACE_DATA structure
              * https://msdn.microsoft.com/en-us/library/windows/hardware/ff552342.aspx
              */
             [StructLayout(LayoutKind.Sequential)]

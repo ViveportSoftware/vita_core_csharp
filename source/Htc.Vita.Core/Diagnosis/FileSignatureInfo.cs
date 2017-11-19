@@ -80,9 +80,9 @@ namespace Htc.Vita.Core.Diagnosis
                         pFile = winTrustFileInfoPtr
                 };
 
-                var wintrustData = new Windows.Wintrust.WINTRUST_DATA
+                var wintrustData = new Windows.Wintrust.WinTrustData
                 {
-                        cbStruct = (uint)Marshal.SizeOf(typeof(Windows.Wintrust.WINTRUST_DATA)),
+                        cbStruct = (uint)Marshal.SizeOf(typeof(Windows.Wintrust.WinTrustData)),
                         pPolicyCallbackData = IntPtr.Zero,
                         pSIPCallbackData = IntPtr.Zero,
                         dwUIChoice = Windows.Wintrust.WTD_UI.WTD_UI_NONE,
@@ -95,7 +95,7 @@ namespace Htc.Vita.Core.Diagnosis
                         dwProvFlags = Windows.Wintrust.WTD_PROVIDERFLAG.WTD_SAFER_FLAG,
                         dwUIContext = Windows.Wintrust.WTD_UICONTEXT.WTD_UICONTEXT_EXECUTE
                 };
-                var winTrustDataPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Windows.Wintrust.WINTRUST_DATA)));
+                var winTrustDataPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Windows.Wintrust.WinTrustData)));
                 Marshal.StructureToPtr(wintrustData, winTrustDataPtr, false);
 
                 var result = Windows.Wintrust.WinVerifyTrust(
@@ -129,7 +129,7 @@ namespace Htc.Vita.Core.Diagnosis
                     }
                 }
 
-                Marshal.DestroyStructure(winTrustDataPtr, typeof(Windows.Wintrust.WINTRUST_DATA));
+                Marshal.DestroyStructure(winTrustDataPtr, typeof(Windows.Wintrust.WinTrustData));
                 Marshal.FreeHGlobal(winTrustDataPtr);
                 Marshal.DestroyStructure(winTrustFileInfoPtr, typeof(Windows.Wintrust.WINTRUST_FILE_INFO));
                 Marshal.FreeHGlobal(winTrustFileInfoPtr);

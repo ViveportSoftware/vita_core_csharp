@@ -90,10 +90,11 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * WINTRUST_DATA structure
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
-            internal struct WINTRUST_DATA
+            internal struct WinTrustData
             {
                 public /* DWORD  */ uint cbStruct;
                 public /* LPVOID */ IntPtr pPolicyCallbackData;
