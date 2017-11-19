@@ -100,7 +100,7 @@ namespace Htc.Vita.Core.Diagnosis
 
                 var result = Windows.Wintrust.WinVerifyTrust(
                         IntPtr.Zero,
-                        ref Windows.Wintrust.WINTRUST_ACTION_GENERIC_VERIFY_V2,
+                        ref Windows.Wintrust.WinTrustActionGenericVerifyV2,
                         winTrustDataPtr
                 );
 
