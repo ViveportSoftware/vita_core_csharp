@@ -78,10 +78,11 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * WTS_SESSION_INFO structure
              * https://msdn.microsoft.com/en-us/library/aa383864.aspx
              */
             [StructLayout(LayoutKind.Sequential)]
-            internal struct WTS_SESSION_INFO
+            internal struct WindowsTerminalServiceSessionInfo
             {
                 public /* DWORD                  */ uint sessionId;
                 public /* LPTSTR                 */ string pWinStationName;

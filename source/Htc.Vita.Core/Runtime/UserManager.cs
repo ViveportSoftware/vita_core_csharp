@@ -97,16 +97,16 @@ namespace Htc.Vita.Core.Runtime
                         ref sessionInfoPtr,
                         ref sessionCount
                 );
-                var dataSize = Marshal.SizeOf(typeof(Windows.Wtsapi32.WTS_SESSION_INFO));
+                var dataSize = Marshal.SizeOf(typeof(Windows.Wtsapi32.WindowsTerminalServiceSessionInfo));
                 var currentSessionInfoPtr = sessionInfoPtr;
 
                 if (success)
                 {
                     for (var sessionIndex = 0U; sessionIndex < sessionCount; sessionIndex++)
                     {
-                        var sessionInfo = (Windows.Wtsapi32.WTS_SESSION_INFO)Marshal.PtrToStructure(
+                        var sessionInfo = (Windows.Wtsapi32.WindowsTerminalServiceSessionInfo)Marshal.PtrToStructure(
                                 currentSessionInfoPtr,
-                                typeof(Windows.Wtsapi32.WTS_SESSION_INFO)
+                                typeof(Windows.Wtsapi32.WindowsTerminalServiceSessionInfo)
                         );
                         currentSessionInfoPtr += dataSize;
 
