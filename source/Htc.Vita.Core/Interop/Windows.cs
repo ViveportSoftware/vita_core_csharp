@@ -6,11 +6,6 @@ namespace Htc.Vita.Core.Interop
     {
         internal static IntPtr INVALID_HANDLE_VALUE = new IntPtr(-1);
 
-        internal static int ERROR_INSUFFICIENT_BUFFER = 0x7a; // 122
-        internal static int ERROR_INVALID_NAME = 0x7b; // 123
-        internal static int ERROR_NO_MORE_ITEMS = 0x103; // 259
-        internal static int ERROR_SERVICE_DOES_NOT_EXIST = 0x424; // 1060
-
         internal static uint REG_NONE = 0;
         internal static uint REG_SZ = 1;
         internal static uint REG_EXPAND_SZ = 2;
@@ -30,5 +25,13 @@ namespace Htc.Vita.Core.Interop
         internal static uint TRUST_E_ACTION_UNKNOWN = 0x800B0002;
         internal static uint TRUST_E_SUBJECT_FORM_UNKNOWN = 0x800B0003;
         internal static uint TRUST_E_SUBJECT_NOT_TRUSTED = 0x800B0004;
+
+        internal enum Error
+        {
+            /* ERROR_INSUFFICIENT_BUFFER     (122,  0x7a) */ InsufficientBuffer = 0x7a,
+            /* ERROR_INVALID_NAME            (123,  0x7b) */ InvalidName = 0x7b,
+            /* ERROR_NO_MORE_ITEMS           (259, 0x103) */ NoMoreItems = 0x103,
+            /* ERROR_SERVICE_DOES_NOT_EXIST (1060, 0x424) */ ServiceDoesNotExist = 0x424
+        }
     }
 }

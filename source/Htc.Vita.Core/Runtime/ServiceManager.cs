@@ -38,7 +38,7 @@ namespace Htc.Vita.Core.Runtime
                 return new ServiceInfo
                 {
                         ServiceName = serviceName,
-                        ErrorCode = Windows.ERROR_INVALID_NAME,
+                        ErrorCode = (int) Windows.Error.InvalidName,
                         ErrorMessage = "Service name \"" + serviceName + "\" is invalid"
                 };
             }
@@ -135,7 +135,7 @@ namespace Htc.Vita.Core.Runtime
             if (serviceHandle == IntPtr.Zero)
             {
                 var errorCode = Marshal.GetLastWin32Error();
-                if (errorCode != Windows.ERROR_SERVICE_DOES_NOT_EXIST)
+                if (errorCode != (int) Windows.Error.ServiceDoesNotExist)
                 {
                     Log.Error("Can not open Windows service \"" + serviceName + "\", error code: " + errorCode);
                 }
@@ -153,7 +153,7 @@ namespace Htc.Vita.Core.Runtime
                 return new ServiceInfo
                 {
                         ServiceName = serviceName,
-                        ErrorCode = Windows.ERROR_INVALID_NAME,
+                        ErrorCode = (int) Windows.Error.InvalidName,
                         ErrorMessage = "Service name \"" + serviceName + "\" is invalid"
                 };
             }
@@ -242,7 +242,7 @@ namespace Htc.Vita.Core.Runtime
                 return new ServiceInfo
                 {
                     ServiceName = serviceName,
-                    ErrorCode = Windows.ERROR_INVALID_NAME,
+                    ErrorCode = (int) Windows.Error.InvalidName,
                     ErrorMessage = "Service name \"" + serviceName + "\" is invalid"
                 };
             }

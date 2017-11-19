@@ -48,7 +48,7 @@ namespace Htc.Vita.Core.IO
                 if (!success)
                 {
                     var win32Error = Marshal.GetLastWin32Error();
-                    if (win32Error != Windows.ERROR_NO_MORE_ITEMS)
+                    if (win32Error != (int) Windows.Error.NoMoreItems)
                     {
                         Log.Error("Can not enumerate USB HID device on index: " + deviceIndex + ", error code: " + win32Error);
                     }
@@ -67,7 +67,7 @@ namespace Htc.Vita.Core.IO
                 if (!success)
                 {
                     var win32Error = Marshal.GetLastWin32Error();
-                    if (win32Error != Windows.ERROR_INSUFFICIENT_BUFFER)
+                    if (win32Error != (int) Windows.Error.InsufficientBuffer)
                     {
                         Log.Error("Can not query USB HID device interface detail on index: " + deviceIndex + ", error code: " + win32Error);
                         break;
@@ -169,7 +169,7 @@ namespace Htc.Vita.Core.IO
             if (!success)
             {
                 var win32Error = Marshal.GetLastWin32Error();
-                if (win32Error != Windows.ERROR_INSUFFICIENT_BUFFER)
+                if (win32Error != (int) Windows.Error.InsufficientBuffer)
                 {
                     Log.Error("Can not query USB device registry property, error code: " + win32Error);
                     regType = 0;
