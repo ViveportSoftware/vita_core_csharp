@@ -65,42 +65,42 @@ namespace Htc.Vita.Core.Diagnosis
                     return false;
                 }
 
-                var winTrustFileInfo = new Windows.Wintrust.WinTrustFileInfo
+                var winTrustFileInfo = new Windows.WinTrustFileInfo
                 {
-                        cbStruct = (uint)Marshal.SizeOf(typeof(Windows.Wintrust.WinTrustFileInfo)),
+                        cbStruct = (uint)Marshal.SizeOf(typeof(Windows.WinTrustFileInfo)),
                         pcwszFilePath = fileInfo.FullName,
                         hFile = IntPtr.Zero,
                         pgKnownSubject = IntPtr.Zero
                 };
-                var winTrustFileInfoPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Windows.Wintrust.WinTrustFileInfo)));
+                var winTrustFileInfoPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Windows.WinTrustFileInfo)));
                 Marshal.StructureToPtr(winTrustFileInfo, winTrustFileInfoPtr, false);
 
-                var infoUnionChoice = new Windows.Wintrust.WinTrustDataUnionChoice
+                var infoUnionChoice = new Windows.WinTrustDataUnionChoice
                 {
                         pFile = winTrustFileInfoPtr
                 };
 
-                var wintrustData = new Windows.Wintrust.WinTrustData
+                var wintrustData = new Windows.WinTrustData
                 {
-                        cbStruct = (uint)Marshal.SizeOf(typeof(Windows.Wintrust.WinTrustData)),
+                        cbStruct = (uint)Marshal.SizeOf(typeof(Windows.WinTrustData)),
                         pPolicyCallbackData = IntPtr.Zero,
                         pSIPCallbackData = IntPtr.Zero,
-                        dwUIChoice = Windows.Wintrust.WinTrustDataUi.None,
-                        fdwRevocationChecks = Windows.Wintrust.WinTrustDataRevoke.None,
-                        dwUnionChoice = Windows.Wintrust.WinTrustDataChoice.File,
+                        dwUIChoice = Windows.WinTrustDataUi.None,
+                        fdwRevocationChecks = Windows.WinTrustDataRevoke.None,
+                        dwUnionChoice = Windows.WinTrustDataChoice.File,
                         infoUnion = infoUnionChoice,
-                        dwStateAction = Windows.Wintrust.WinTrustDataStateAction.Ignore,
+                        dwStateAction = Windows.WinTrustDataStateAction.Ignore,
                         hWVTStateData = IntPtr.Zero,
                         pwszURLReference = IntPtr.Zero,
-                        dwProvFlags = Windows.Wintrust.WinTrustDataProviderFlag.SaferFlag,
-                        dwUIContext = Windows.Wintrust.WinTrustDataUiContext.Execute
+                        dwProvFlags = Windows.WinTrustDataProviderFlag.SaferFlag,
+                        dwUIContext = Windows.WinTrustDataUiContext.Execute
                 };
-                var winTrustDataPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Windows.Wintrust.WinTrustData)));
+                var winTrustDataPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Windows.WinTrustData)));
                 Marshal.StructureToPtr(wintrustData, winTrustDataPtr, false);
 
-                var result = Windows.Wintrust.WinVerifyTrust(
+                var result = Windows.WinVerifyTrust(
                         IntPtr.Zero,
-                        ref Windows.Wintrust.WinTrustActionGenericVerifyV2,
+                        ref Windows.WinTrustActionGenericVerifyV2,
                         winTrustDataPtr
                 );
 
@@ -129,9 +129,9 @@ namespace Htc.Vita.Core.Diagnosis
                     }
                 }
 
-                Marshal.DestroyStructure(winTrustDataPtr, typeof(Windows.Wintrust.WinTrustData));
+                Marshal.DestroyStructure(winTrustDataPtr, typeof(Windows.WinTrustData));
                 Marshal.FreeHGlobal(winTrustDataPtr);
-                Marshal.DestroyStructure(winTrustFileInfoPtr, typeof(Windows.Wintrust.WinTrustFileInfo));
+                Marshal.DestroyStructure(winTrustFileInfoPtr, typeof(Windows.WinTrustFileInfo));
                 Marshal.FreeHGlobal(winTrustFileInfoPtr);
 
                 return success;

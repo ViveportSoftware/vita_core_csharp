@@ -133,7 +133,7 @@ namespace Htc.Vita.Core.Runtime
             try
             {
                 var isWow64 = false;
-                var sucess = Windows.Kernel32.IsWow64Process(
+                var sucess = Windows.IsWow64Process(
                         Process.GetCurrentProcess().Handle,
                         ref isWow64
                 );
@@ -161,7 +161,7 @@ namespace Htc.Vita.Core.Runtime
             }
             if (IsWindows)
             {
-                info.Handle = Windows.Kernel32.LoadLibraryW(path);
+                info.Handle = Windows.LoadLibraryW(path);
                 if (info.Handle == IntPtr.Zero)
                 {
                     TraceInternal("Load Windows native library error.");

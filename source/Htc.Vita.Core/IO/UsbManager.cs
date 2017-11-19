@@ -21,11 +21,11 @@ namespace Htc.Vita.Core.IO
         {
             var deviceInfos = new List<DeviceInfo>();
             var classGuid = GetHidGuidInWindows();
-            var deviceInfoSet = Windows.Setupapi.SetupDiGetClassDevsW(
+            var deviceInfoSet = Windows.SetupDiGetClassDevsW(
                     ref classGuid,
                     null,
                     IntPtr.Zero,
-                    Windows.Setupapi.DeviceInfoGetClassFlag.Present | Windows.Setupapi.DeviceInfoGetClassFlag.DeviceInterface
+                    Windows.DeviceInfoGetClassFlag.Present | Windows.DeviceInfoGetClassFlag.DeviceInterface
             );
             if (deviceInfoSet == Windows.INVALID_HANDLE_VALUE)
             {
@@ -36,9 +36,9 @@ namespace Htc.Vita.Core.IO
             var deviceIndex = 0U;
             while (true)
             {
-                var deviceInterfaceData = new Windows.Setupapi.SetupDeviceInterfaceData();
+                var deviceInterfaceData = new Windows.SetupDeviceInterfaceData();
                 deviceInterfaceData.cbSize = (uint) Marshal.SizeOf(deviceInterfaceData);
-                var success = Windows.Setupapi.SetupDiEnumDeviceInterfaces(
+                var success = Windows.SetupDiEnumDeviceInterfaces(
                         deviceInfoSet,
                         IntPtr.Zero,
                         ref classGuid,
@@ -56,7 +56,7 @@ namespace Htc.Vita.Core.IO
                 }
 
                 var bufferSize = 0;
-                success = Windows.Setupapi.SetupDiGetDeviceInterfaceDetailW(
+                success = Windows.SetupDiGetDeviceInterfaceDetailW(
                         deviceInfoSet,
                         ref deviceInterfaceData,
                         IntPtr.Zero, 
@@ -76,9 +76,9 @@ namespace Htc.Vita.Core.IO
 
                 var deviceInterfaceDetailData = Marshal.AllocHGlobal(bufferSize);
                 Marshal.WriteInt32(deviceInterfaceDetailData, IntPtr.Size == 8 ? 8 : 6);
-                var devinfoData = new Windows.Setupapi.SetupDeviceInfoData();
+                var devinfoData = new Windows.SetupDeviceInfoData();
                 devinfoData.cbSize = (uint) Marshal.SizeOf(devinfoData);
-                success = Windows.Setupapi.SetupDiGetDeviceInterfaceDetailW(
+                success = Windows.SetupDiGetDeviceInterfaceDetailW(
                         deviceInfoSet,
                         ref deviceInterfaceData,
                         deviceInterfaceDetailData,
@@ -102,19 +102,19 @@ namespace Htc.Vita.Core.IO
                         Description = GetUsbDeviceStringPropertyInWindows(
                                 deviceInfoSet,
                                 ref devinfoData,
-                                Windows.Setupapi.SetupDeviceRegistryProperty.DeviceDesc
+                                Windows.SetupDeviceRegistryProperty.DeviceDesc
                         ),
                         Manufecturer = GetUsbDeviceStringPropertyInWindows(
                                 deviceInfoSet,
                                 ref devinfoData,
-                                Windows.Setupapi.SetupDeviceRegistryProperty.Mfg
+                                Windows.SetupDeviceRegistryProperty.Mfg
                         ),
                         SerialNumber = GetHidDeviceSerialNumberInWindows(devicePath)
                 };
                 var hardwareIds = GetUsbDeviceMultiStringPropertyInWindows(
                         deviceInfoSet,
                         ref devinfoData,
-                        Windows.Setupapi.SetupDeviceRegistryProperty.HardwareId
+                        Windows.SetupDeviceRegistryProperty.HardwareId
                 );
                 var regex = new Regex("^(\\w{3})\\\\VID_([0-9A-F]{4})&PID_([0-9A-F]{4})", RegexOptions.IgnoreCase);
                 foreach (var hardwareId in hardwareIds)
@@ -134,14 +134,14 @@ namespace Htc.Vita.Core.IO
 
                 deviceIndex++;
             }
-            Windows.Setupapi.SetupDiDestroyDeviceInfoList(deviceInfoSet);
+            Windows.SetupDiDestroyDeviceInfoList(deviceInfoSet);
             return deviceInfos;
         }
 
         private static Guid GetHidGuidInWindows()
         {
             var guid = Guid.Empty;
-            Windows.Hid.HidD_GetHidGuid(ref guid);
+            Windows.HidD_GetHidGuid(ref guid);
             if (!Guid.Empty.ToString().Equals(guid.ToString()))
             {
                 return guid;
@@ -152,12 +152,12 @@ namespace Htc.Vita.Core.IO
 
         private static byte[] GetUsbDevicePropertyInWindows(
                 IntPtr deviceInfoSetPtr,
-                ref Windows.Setupapi.SetupDeviceInfoData devinfoData,
-                Windows.Setupapi.SetupDeviceRegistryProperty property,
+                ref Windows.SetupDeviceInfoData devinfoData,
+                Windows.SetupDeviceRegistryProperty property,
                 ref uint regType)
         {
             var requiredSize = 0U;
-            var success = Windows.Setupapi.SetupDiGetDeviceRegistryPropertyW(
+            var success = Windows.SetupDiGetDeviceRegistryPropertyW(
                     deviceInfoSetPtr,
                     ref devinfoData,
                     property,
@@ -178,7 +178,7 @@ namespace Htc.Vita.Core.IO
             }
 
             var propertyBuffer = new byte[requiredSize];
-            success = Windows.Setupapi.SetupDiGetDeviceRegistryPropertyW(
+            success = Windows.SetupDiGetDeviceRegistryPropertyW(
                     deviceInfoSetPtr,
                     ref devinfoData,
                     property,
@@ -198,8 +198,8 @@ namespace Htc.Vita.Core.IO
 
         private static string GetUsbDeviceStringPropertyInWindows(
                 IntPtr deviceInfoSetPtr,
-                ref Windows.Setupapi.SetupDeviceInfoData devinfoData,
-                Windows.Setupapi.SetupDeviceRegistryProperty property)
+                ref Windows.SetupDeviceInfoData devinfoData,
+                Windows.SetupDeviceRegistryProperty property)
         {
             var regType = Windows.REG_NONE;
             var bytes = GetUsbDevicePropertyInWindows(deviceInfoSetPtr, ref devinfoData, property, ref regType);
@@ -212,8 +212,8 @@ namespace Htc.Vita.Core.IO
 
         private static string[] GetUsbDeviceMultiStringPropertyInWindows(
                 IntPtr deviceInfoSetPtr,
-                ref Windows.Setupapi.SetupDeviceInfoData devinfoData,
-                Windows.Setupapi.SetupDeviceRegistryProperty property)
+                ref Windows.SetupDeviceInfoData devinfoData,
+                Windows.SetupDeviceRegistryProperty property)
         {
             var regType = Windows.REG_NONE;
             var bytes = GetUsbDevicePropertyInWindows(deviceInfoSetPtr, ref devinfoData, property, ref regType);
@@ -235,13 +235,13 @@ namespace Htc.Vita.Core.IO
             }
 
             var result = string.Empty;
-            var deviceHandle = Windows.Kernel32.CreateFileW(
+            var deviceHandle = Windows.CreateFileW(
                     devicePath,
-                    Windows.Kernel32.Generic.Read | Windows.Kernel32.Generic.Write,
-                    Windows.Kernel32.FileShare.Read | Windows.Kernel32.FileShare.Write,
+                    Windows.Generic.Read | Windows.Generic.Write,
+                    Windows.FileShare.Read | Windows.FileShare.Write,
                     IntPtr.Zero,
-                    Windows.Kernel32.CreationDisposition.OpenExisting,
-                    Windows.Kernel32.FileAttributeFlag.FlagOverlapped,
+                    Windows.CreationDisposition.OpenExisting,
+                    Windows.FileAttributeFlag.FlagOverlapped,
                     IntPtr.Zero
             );
             if (deviceHandle == Windows.INVALID_HANDLE_VALUE)
@@ -250,7 +250,7 @@ namespace Htc.Vita.Core.IO
             }
 
             var buffer = new StringBuilder(126);
-            var success = Windows.Hid.HidD_GetSerialNumberString(
+            var success = Windows.HidD_GetSerialNumberString(
                     deviceHandle,
                     buffer,
                     (uint) buffer.Capacity
@@ -264,7 +264,7 @@ namespace Htc.Vita.Core.IO
                 var win32Error = Marshal.GetLastWin32Error();
                 Log.Error("Can not get USB HID serial number, error code: " + win32Error);
             }
-            Windows.Kernel32.CloseHandle(deviceHandle);
+            Windows.CloseHandle(deviceHandle);
             return result;
         }
 

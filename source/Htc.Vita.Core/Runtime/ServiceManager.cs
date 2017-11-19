@@ -43,10 +43,10 @@ namespace Htc.Vita.Core.Runtime
                 };
             }
 
-            var managerHandle = Windows.Advapi32.OpenSCManagerW(
+            var managerHandle = Windows.OpenSCManagerW(
                     null,
                     null,
-                    Windows.Advapi32.ServiceControlManagerAccessRight.Connect
+                    Windows.ServiceControlManagerAccessRight.Connect
             );
             if (managerHandle == IntPtr.Zero)
             {
@@ -64,12 +64,12 @@ namespace Htc.Vita.Core.Runtime
                     ServiceName = serviceName,
                     StartType = startType
             };
-            var serviceHandle = Windows.Advapi32.OpenServiceW(
+            var serviceHandle = Windows.OpenServiceW(
                     managerHandle,
                     serviceName,
-                    Windows.Advapi32.ServiceAccessRight.ChangeConfig |
-                            Windows.Advapi32.ServiceAccessRight.QueryConfig |
-                            Windows.Advapi32.ServiceAccessRight.QueryStatus
+                    Windows.ServiceAccessRight.ChangeConfig |
+                            Windows.ServiceAccessRight.QueryConfig |
+                            Windows.ServiceAccessRight.QueryStatus
             );
             if (serviceHandle == IntPtr.Zero)
             {
@@ -79,11 +79,11 @@ namespace Htc.Vita.Core.Runtime
             }
             else
             {
-                var success = Windows.Advapi32.ChangeServiceConfigW(
+                var success = Windows.ChangeServiceConfigW(
                         serviceHandle,
-                        Windows.Advapi32.ServiceType.NoChange,
+                        Windows.ServiceType.NoChange,
                         ConvertToWindows(startType),
-                        Windows.Advapi32.ErrorControlType.NoChange,
+                        Windows.ErrorControlType.NoChange,
                         null,
                         null,
                         IntPtr.Zero,
@@ -101,10 +101,10 @@ namespace Htc.Vita.Core.Runtime
 
                 serviceInfo = UpdateCurrentStateInWindows(serviceHandle, serviceInfo);
 
-                Windows.Advapi32.CloseServiceHandle(serviceHandle);
+                Windows.CloseServiceHandle(serviceHandle);
             }
 
-            Windows.Advapi32.CloseServiceHandle(managerHandle);
+            Windows.CloseServiceHandle(managerHandle);
             return serviceInfo;
         }
 
@@ -115,10 +115,10 @@ namespace Htc.Vita.Core.Runtime
                 return false;
             }
 
-            var managerHandle = Windows.Advapi32.OpenSCManagerW(
+            var managerHandle = Windows.OpenSCManagerW(
                     null,
                     null,
-                    Windows.Advapi32.ServiceControlManagerAccessRight.Connect
+                    Windows.ServiceControlManagerAccessRight.Connect
             );
             if (managerHandle == IntPtr.Zero)
             {
@@ -127,10 +127,10 @@ namespace Htc.Vita.Core.Runtime
                 return false;
             }
 
-            var serviceHandle = Windows.Advapi32.OpenServiceW(
+            var serviceHandle = Windows.OpenServiceW(
                     managerHandle,
                     serviceName,
-                    Windows.Advapi32.ServiceAccessRight.QueryConfig
+                    Windows.ServiceAccessRight.QueryConfig
             );
             if (serviceHandle == IntPtr.Zero)
             {
@@ -142,7 +142,7 @@ namespace Htc.Vita.Core.Runtime
                 return false;
             }
 
-            Windows.Advapi32.CloseServiceHandle(serviceHandle);
+            Windows.CloseServiceHandle(serviceHandle);
             return true;
         }
 
@@ -158,10 +158,10 @@ namespace Htc.Vita.Core.Runtime
                 };
             }
 
-            var managerHandle = Windows.Advapi32.OpenSCManagerW(
+            var managerHandle = Windows.OpenSCManagerW(
                     null,
                     null,
-                    Windows.Advapi32.ServiceControlManagerAccessRight.Connect
+                    Windows.ServiceControlManagerAccessRight.Connect
             );
             if (managerHandle == IntPtr.Zero)
             {
@@ -178,10 +178,10 @@ namespace Htc.Vita.Core.Runtime
             {
                     ServiceName = serviceName
             };
-            var serviceHandle = Windows.Advapi32.OpenServiceW(
+            var serviceHandle = Windows.OpenServiceW(
                     managerHandle,
                     serviceName,
-                    Windows.Advapi32.ServiceAccessRight.QueryConfig | Windows.Advapi32.ServiceAccessRight.QueryStatus
+                    Windows.ServiceAccessRight.QueryConfig | Windows.ServiceAccessRight.QueryStatus
             );
             if (serviceHandle == IntPtr.Zero)
             {
@@ -196,7 +196,7 @@ namespace Htc.Vita.Core.Runtime
                 try
                 {
                     uint bytes = 0;
-                    var success = Windows.Advapi32.QueryServiceConfigW(
+                    var success = Windows.QueryServiceConfigW(
                             serviceHandle,
                             serviceConfigPtr,
                             bytesAllocated,
@@ -204,9 +204,9 @@ namespace Htc.Vita.Core.Runtime
                     );
                     if (success)
                     {
-                        var serviceConfig = (Windows.Advapi32.QueryServiceConfig) Marshal.PtrToStructure(
+                        var serviceConfig = (Windows.QueryServiceConfig) Marshal.PtrToStructure(
                                 serviceConfigPtr,
-                                typeof(Windows.Advapi32.QueryServiceConfig)
+                                typeof(Windows.QueryServiceConfig)
                         );
                         serviceInfo.StartType = ConvertFromWindows(serviceConfig.dwStartType);
                     }
@@ -228,10 +228,10 @@ namespace Htc.Vita.Core.Runtime
 
                 serviceInfo = UpdateCurrentStateInWindows(serviceHandle, serviceInfo);
 
-                Windows.Advapi32.CloseServiceHandle(serviceHandle);
+                Windows.CloseServiceHandle(serviceHandle);
             }
 
-            Windows.Advapi32.CloseServiceHandle(managerHandle);
+            Windows.CloseServiceHandle(managerHandle);
             return serviceInfo;
         }
 
@@ -247,10 +247,10 @@ namespace Htc.Vita.Core.Runtime
                 };
             }
 
-            var managerHandle = Windows.Advapi32.OpenSCManagerW(
+            var managerHandle = Windows.OpenSCManagerW(
                 null,
                 null,
-                Windows.Advapi32.ServiceControlManagerAccessRight.Connect
+                Windows.ServiceControlManagerAccessRight.Connect
             );
             if (managerHandle == IntPtr.Zero)
             {
@@ -267,10 +267,10 @@ namespace Htc.Vita.Core.Runtime
             {
                 ServiceName = serviceName
             };
-            var serviceHandle = Windows.Advapi32.OpenServiceW(
+            var serviceHandle = Windows.OpenServiceW(
                     managerHandle,
                     serviceName,
-                    Windows.Advapi32.ServiceAccessRight.Start | Windows.Advapi32.ServiceAccessRight.QueryStatus
+                    Windows.ServiceAccessRight.Start | Windows.ServiceAccessRight.QueryStatus
             );
             if (serviceHandle == IntPtr.Zero)
             {
@@ -280,7 +280,7 @@ namespace Htc.Vita.Core.Runtime
             }
             else
             {
-                var success = Windows.Advapi32.StartServiceW(
+                var success = Windows.StartServiceW(
                         serviceHandle,
                         0,
                         null
@@ -298,10 +298,10 @@ namespace Htc.Vita.Core.Runtime
 
                 serviceInfo = UpdateCurrentStateInWindows(serviceHandle, serviceInfo);
 
-                Windows.Advapi32.CloseServiceHandle(serviceHandle);
+                Windows.CloseServiceHandle(serviceHandle);
             }
 
-            Windows.Advapi32.CloseServiceHandle(managerHandle);
+            Windows.CloseServiceHandle(managerHandle);
             return serviceInfo;
         }
 
@@ -314,8 +314,8 @@ namespace Htc.Vita.Core.Runtime
                 return serviceInfo;
             }
 
-            var status = new Windows.Advapi32.ServiceStatus();
-            var success = Windows.Advapi32.QueryServiceStatus(
+            var status = new Windows.ServiceStatus();
+            var success = Windows.QueryServiceStatus(
                     serviceHandle,
                     ref status
             );
@@ -333,35 +333,35 @@ namespace Htc.Vita.Core.Runtime
             return serviceInfo;
         }
 
-        private static Windows.Advapi32.StartType ConvertToWindows(StartType startType)
+        private static Windows.StartType ConvertToWindows(StartType startType)
         {
             if (startType == StartType.Disabled)
             {
-                return Windows.Advapi32.StartType.Disabled;
+                return Windows.StartType.Disabled;
             }
             if (startType == StartType.Manual)
             {
-                return Windows.Advapi32.StartType.DemandStart;
+                return Windows.StartType.DemandStart;
             }
             if (startType == StartType.Automatic)
             {
-                return Windows.Advapi32.StartType.AutoStart;
+                return Windows.StartType.AutoStart;
             }
             Log.Error("Can not convert service start type " + startType + " in Windows. Use Windows.Advapi32.StartType.AutoStart as fallback type");
-            return Windows.Advapi32.StartType.AutoStart;
+            return Windows.StartType.AutoStart;
         }
 
-        private static StartType ConvertFromWindows(Windows.Advapi32.StartType startType)
+        private static StartType ConvertFromWindows(Windows.StartType startType)
         {
-            if (startType == Windows.Advapi32.StartType.AutoStart)
+            if (startType == Windows.StartType.AutoStart)
             {
                 return StartType.Automatic;
             }
-            if (startType == Windows.Advapi32.StartType.DemandStart)
+            if (startType == Windows.StartType.DemandStart)
             {
                 return StartType.Manual;
             }
-            if (startType == Windows.Advapi32.StartType.Disabled)
+            if (startType == Windows.StartType.Disabled)
             {
                 return StartType.Disabled;
             }
@@ -369,33 +369,33 @@ namespace Htc.Vita.Core.Runtime
             return StartType.Automatic;
         }
 
-        private static CurrentState ConvertFromWindows(Windows.Advapi32.CurrentState currentState)
+        private static CurrentState ConvertFromWindows(Windows.CurrentState currentState)
         {
-            if (currentState == Windows.Advapi32.CurrentState.ContinuePending)
+            if (currentState == Windows.CurrentState.ContinuePending)
             {
                 return CurrentState.ContinuePending;
             }
-            if (currentState == Windows.Advapi32.CurrentState.Paused)
+            if (currentState == Windows.CurrentState.Paused)
             {
                 return CurrentState.Paused;
             }
-            if (currentState == Windows.Advapi32.CurrentState.PausePending)
+            if (currentState == Windows.CurrentState.PausePending)
             {
                 return CurrentState.PausePending;
             }
-            if (currentState == Windows.Advapi32.CurrentState.Running)
+            if (currentState == Windows.CurrentState.Running)
             {
                 return CurrentState.Running;
             }
-            if (currentState == Windows.Advapi32.CurrentState.StartPending)
+            if (currentState == Windows.CurrentState.StartPending)
             {
                 return CurrentState.StartPending;
             }
-            if (currentState == Windows.Advapi32.CurrentState.Stopped)
+            if (currentState == Windows.CurrentState.Stopped)
             {
                 return CurrentState.Stopped;
             }
-            if (currentState == Windows.Advapi32.CurrentState.StopPending)
+            if (currentState == Windows.CurrentState.StopPending)
             {
                 return CurrentState.StopPending;
             }

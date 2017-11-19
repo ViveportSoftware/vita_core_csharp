@@ -33,7 +33,7 @@ namespace Htc.Vita.Core.IO
                 var totalNumberOfBytes = 0UL;
                 var totalNumberOfFreeBytes = 0UL;
 
-                var success = Interop.Windows.Kernel32.GetDiskFreeSpaceExW(
+                var success = Interop.Windows.GetDiskFreeSpaceExW(
                         path,
                         ref freeBytesAvailable,
                         ref totalNumberOfBytes,

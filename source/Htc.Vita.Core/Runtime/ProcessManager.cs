@@ -73,34 +73,34 @@ namespace Htc.Vita.Core.Runtime
             }
 
             var result = new List<WindowsProcessInfo>();
-            var serverHandle = Windows.Wtsapi32.WTSOpenServerW(serverName);
+            var serverHandle = Windows.WTSOpenServerW(serverName);
 
             try
             {
                 var processInfoPtr = IntPtr.Zero;
                 var processCount = 0U;
-                var success = Windows.Wtsapi32.WTSEnumerateProcessesW(
+                var success = Windows.WTSEnumerateProcessesW(
                         serverHandle,
                         0,
                         1,
                         ref processInfoPtr,
                         ref processCount
                 );
-                var dataSize = Marshal.SizeOf(typeof(Windows.Wtsapi32.WindowsTerminalServiceProcessInfo));
+                var dataSize = Marshal.SizeOf(typeof(Windows.WindowsTerminalServiceProcessInfo));
                 var currentProcessInfoPtr = processInfoPtr;
 
                 if (success)
                 {
                     for (var processIndex = 0; processIndex < processCount; processIndex++)
                     {
-                        var processInfo = (Windows.Wtsapi32.WindowsTerminalServiceProcessInfo)Marshal.PtrToStructure(
+                        var processInfo = (Windows.WindowsTerminalServiceProcessInfo)Marshal.PtrToStructure(
                                 currentProcessInfoPtr,
-                                typeof(Windows.Wtsapi32.WindowsTerminalServiceProcessInfo)
+                                typeof(Windows.WindowsTerminalServiceProcessInfo)
                         );
                         currentProcessInfoPtr += dataSize;
 
                         var userSid = string.Empty;
-                        success = Windows.Advapi32.ConvertSidToStringSidW(processInfo.pUserSid, ref userSid);
+                        success = Windows.ConvertSidToStringSidW(processInfo.pUserSid, ref userSid);
                         if (!success)
                         {
                             userSid = string.Empty;
@@ -115,7 +115,7 @@ namespace Htc.Vita.Core.Runtime
                         };
                         result.Add(windowsProcessInfo);
                     }
-                    Windows.Wtsapi32.WTSFreeMemory(processInfoPtr);
+                    Windows.WTSFreeMemory(processInfoPtr);
                 }
             }
             catch (Exception e)
@@ -123,9 +123,9 @@ namespace Htc.Vita.Core.Runtime
                 Log.Error("Can not get Windows process list: " + e.Message);
             }
 
-            if (serverHandle != Windows.Wtsapi32.WindowsTerminalServiceCurrentServerHandle)
+            if (serverHandle != Windows.WindowsTerminalServiceCurrentServerHandle)
             {
-                Windows.Wtsapi32.WTSCloseServer(serverHandle);
+                Windows.WTSCloseServer(serverHandle);
             }
             return result;
         }
@@ -138,11 +138,11 @@ namespace Htc.Vita.Core.Runtime
             }
 
             var result = false;
-            var serverHandle = Windows.Wtsapi32.WTSOpenServerW(serverName);
+            var serverHandle = Windows.WTSOpenServerW(serverName);
 
             try
             {
-                result = Windows.Wtsapi32.WTSTerminateProcess(
+                result = Windows.WTSTerminateProcess(
                         serverHandle,
                         (uint) processId,
                         0
@@ -153,9 +153,9 @@ namespace Htc.Vita.Core.Runtime
                 Log.Error("Can not kill Windows process by id: " + processId + ", " + e.Message);
             }
 
-            if (serverHandle != Windows.Wtsapi32.WindowsTerminalServiceCurrentServerHandle)
+            if (serverHandle != Windows.WindowsTerminalServiceCurrentServerHandle)
             {
-                Windows.Wtsapi32.WTSCloseServer(serverHandle);
+                Windows.WTSCloseServer(serverHandle);
             }
             return result;
         }

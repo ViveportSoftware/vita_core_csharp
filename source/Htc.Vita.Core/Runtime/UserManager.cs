@@ -17,7 +17,7 @@ namespace Htc.Vita.Core.Runtime
             var windowsUsers = GetWindowsUsers(serverName);
             return (from windowsUser
                     in windowsUsers
-                    where windowsUser.State == Windows.Wtsapi32.WindowsTerminalServiceConnectStateClass.Active
+                    where windowsUser.State == Windows.WindowsTerminalServiceConnectStateClass.Active
                     select string.Format($"{windowsUser.Domain}\\{windowsUser.Username}")
             ).FirstOrDefault();
         }
@@ -37,15 +37,15 @@ namespace Htc.Vita.Core.Runtime
             uint domainLength = 0;
             try
             {
-                var success = Windows.Advapi32.ConvertStringSidToSidW(
+                var success = Windows.ConvertStringSidToSidW(
                     userSid,
                     userSidPtr
                 );
 
                 if (success)
                 {
-                    var sidType = Windows.Advapi32.SidType.Unknown;
-                    success = Windows.Advapi32.LookupAccountSidW(
+                    var sidType = Windows.SidType.Unknown;
+                    success = Windows.LookupAccountSidW(
                         serverName,
                         userSidPtr,
                         username,
@@ -57,7 +57,7 @@ namespace Htc.Vita.Core.Runtime
 
                     if (success)
                     {
-                        if (sidType == Windows.Advapi32.SidType.User)
+                        if (sidType == Windows.SidType.User)
                         {
                             result = string.Format($"{domain}\\{username}");
                         }
@@ -84,41 +84,40 @@ namespace Htc.Vita.Core.Runtime
             }
 
             var results = new List<WindowsUserInfo>();
-            var serverHandle = Windows.Wtsapi32.WTSOpenServerW(serverName);
+            var serverHandle = Windows.WTSOpenServerW(serverName);
 
             try
             {
                 var sessionInfoPtr = IntPtr.Zero;
                 var sessionCount = 0U;
-                var success = Windows.Wtsapi32.WTSEnumerateSessionsW(
+                var success = Windows.WTSEnumerateSessionsW(
                         serverHandle,
                         0,
                         1,
                         ref sessionInfoPtr,
                         ref sessionCount
                 );
-                var dataSize = Marshal.SizeOf(typeof(Windows.Wtsapi32.WindowsTerminalServiceSessionInfo));
+                var dataSize = Marshal.SizeOf(typeof(Windows.WindowsTerminalServiceSessionInfo));
                 var currentSessionInfoPtr = sessionInfoPtr;
 
                 if (success)
                 {
                     for (var sessionIndex = 0U; sessionIndex < sessionCount; sessionIndex++)
                     {
-                        var sessionInfo = (Windows.Wtsapi32.WindowsTerminalServiceSessionInfo)Marshal.PtrToStructure(
+                        var sessionInfo = (Windows.WindowsTerminalServiceSessionInfo)Marshal.PtrToStructure(
                                 currentSessionInfoPtr,
-                                typeof(Windows.Wtsapi32.WindowsTerminalServiceSessionInfo)
+                                typeof(Windows.WindowsTerminalServiceSessionInfo)
                         );
                         currentSessionInfoPtr += dataSize;
 
-                        bool ret = false;
                         uint bytes = 0;
                         var usernamePtr = IntPtr.Zero;
-                        ret = Windows.Wtsapi32.WTSQuerySessionInformationW(
-                                serverHandle,
-                                sessionInfo.sessionId,
-                                Windows.Wtsapi32.WindowsTerminalServiceInfoClass.UserName,
-                                ref usernamePtr,
-                                ref bytes
+                        var ret = Windows.WTSQuerySessionInformationW(
+                            serverHandle,
+                            sessionInfo.sessionId,
+                            Windows.WindowsTerminalServiceInfoClass.UserName,
+                            ref usernamePtr,
+                            ref bytes
                         );
                         if (ret == false)
                         {
@@ -126,13 +125,13 @@ namespace Htc.Vita.Core.Runtime
                         }
 
                         string username = Marshal.PtrToStringUni(usernamePtr);
-                        Windows.Wtsapi32.WTSFreeMemory(usernamePtr);
+                        Windows.WTSFreeMemory(usernamePtr);
 
                         var domainPtr = IntPtr.Zero;
-                        ret = Windows.Wtsapi32.WTSQuerySessionInformationW(
+                        ret = Windows.WTSQuerySessionInformationW(
                                 serverHandle,
                                 sessionInfo.sessionId,
-                                Windows.Wtsapi32.WindowsTerminalServiceInfoClass.DomainName,
+                                Windows.WindowsTerminalServiceInfoClass.DomainName,
                                 ref domainPtr,
                                 ref bytes
                         );
@@ -142,7 +141,7 @@ namespace Htc.Vita.Core.Runtime
                         }
 
                         string domain = Marshal.PtrToStringUni(domainPtr);
-                        Windows.Wtsapi32.WTSFreeMemory(domainPtr);
+                        Windows.WTSFreeMemory(domainPtr);
 
                         var userInfo = new WindowsUserInfo
                         {
@@ -152,7 +151,7 @@ namespace Htc.Vita.Core.Runtime
                         };
                         results.Add(userInfo);
                     }
-                    Windows.Wtsapi32.WTSFreeMemory(sessionInfoPtr);
+                    Windows.WTSFreeMemory(sessionInfoPtr);
                 }
             }
             catch (Exception e)
@@ -160,16 +159,16 @@ namespace Htc.Vita.Core.Runtime
                 Log.Error("Can not get Windows user list: " + e.Message);
             }
 
-            if (serverHandle != Windows.Wtsapi32.WindowsTerminalServiceCurrentServerHandle)
+            if (serverHandle != Windows.WindowsTerminalServiceCurrentServerHandle)
             {
-                Windows.Wtsapi32.WTSCloseServer(serverHandle);
+                Windows.WTSCloseServer(serverHandle);
             }
             return results;
         }
 
         internal class WindowsUserInfo
         {
-            public Windows.Wtsapi32.WindowsTerminalServiceConnectStateClass State { get; set; }
+            public Windows.WindowsTerminalServiceConnectStateClass State { get; set; }
             public string Domain { get; set; }
             public string Username { get; set; }
         }
