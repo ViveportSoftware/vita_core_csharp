@@ -89,7 +89,7 @@ namespace Htc.Vita.Core.Diagnosis
                         fdwRevocationChecks = Windows.Wintrust.WTD_REVOKE.WTD_REVOKE_NONE,
                         dwUnionChoice = Windows.Wintrust.WTD_CHOICE.WTD_CHOICE_FILE,
                         infoUnion = infoUnionChoice,
-                        dwStateAction = Windows.Wintrust.WTD_STATEACTION.WTD_STATEACTION_IGNORE,
+                        dwStateAction = Windows.Wintrust.WinTrustDataStateAction.Ignore,
                         hWVTStateData = IntPtr.Zero,
                         pwszURLReference = IntPtr.Zero,
                         dwProvFlags = Windows.Wintrust.WTD_PROVIDERFLAG.WTD_SAFER_FLAG,

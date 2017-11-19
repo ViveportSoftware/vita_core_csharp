@@ -58,15 +58,16 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * WTD_STATEACTION enumeration
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
-            internal enum WTD_STATEACTION : uint
+            internal enum WinTrustDataStateAction : uint
             {
-                /* WTD_STATEACTION_IGNORE           */ WTD_STATEACTION_IGNORE,
-                /* WTD_STATEACTION_VERIFY           */ WTD_STATEACTION_VERIFY,
-                /* WTD_STATEACTION_CLOSE            */ WTD_STATEACTION_CLOSE,
-                /* WTD_STATEACTION_AUTO_CACHE       */ WTD_STATEACTION_AUTO_CACHE,
-                /* WTD_STATEACTION_AUTO_CACHE_FLUSH */ WTD_STATEACTION_AUTO_CACHE_FLUSH
+                /* WTD_STATEACTION_IGNORE           */ Ignore,
+                /* WTD_STATEACTION_VERIFY           */ Verify,
+                /* WTD_STATEACTION_CLOSE            */ Close,
+                /* WTD_STATEACTION_AUTO_CACHE       */ AutoCache,
+                /* WTD_STATEACTION_AUTO_CACHE_FLUSH */ AutoCacheFlush
             }
 
             /**
@@ -105,7 +106,7 @@ namespace Htc.Vita.Core.Interop
                 public /* DWORD  */ WTD_REVOKE fdwRevocationChecks;
                 public /* DWORD  */ WTD_CHOICE dwUnionChoice;
                 public /* union  */ WinTrustDataUnionChoice infoUnion;
-                public /* DWORD  */ WTD_STATEACTION dwStateAction;
+                public /* DWORD  */ WinTrustDataStateAction dwStateAction;
                 public /* HANDLE */ IntPtr hWVTStateData;
                 public /* WCHAR* */ IntPtr pwszURLReference;
                 public /* DWORD  */ WTD_PROVIDERFLAG dwProvFlags;
