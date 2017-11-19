@@ -75,7 +75,7 @@ namespace Htc.Vita.Core.Diagnosis
                 var winTrustFileInfoPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Windows.Wintrust.WINTRUST_FILE_INFO)));
                 Marshal.StructureToPtr(winTrustFileInfo, winTrustFileInfoPtr, false);
 
-                var infoUnionChoice = new Windows.Wintrust.WTD_UNION_CHOICE
+                var infoUnionChoice = new Windows.Wintrust.WinTrustDataUnionChoice
                 {
                         pFile = winTrustFileInfoPtr
                 };

@@ -102,7 +102,7 @@ namespace Htc.Vita.Core.Interop
                 public /* DWORD  */ WTD_UI dwUIChoice;
                 public /* DWORD  */ WTD_REVOKE fdwRevocationChecks;
                 public /* DWORD  */ WTD_CHOICE dwUnionChoice;
-                public /* union  */ WTD_UNION_CHOICE infoUnion;
+                public /* union  */ WinTrustDataUnionChoice infoUnion;
                 public /* DWORD  */ WTD_STATEACTION dwStateAction;
                 public /* HANDLE */ IntPtr hWVTStateData;
                 public /* WCHAR* */ IntPtr pwszURLReference;
@@ -126,10 +126,11 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * WTD_UNION_CHOICE union
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
             [StructLayout(LayoutKind.Explicit)]
-            internal struct WTD_UNION_CHOICE
+            internal struct WinTrustDataUnionChoice
             {
                 [FieldOffset(0)] public /* struct WINTRUST_FILE_INFO_    */ IntPtr pFile;
                 [FieldOffset(0)] public /* struct WINTRUST_CATALOG_INFO_ */ IntPtr pCatalog;
