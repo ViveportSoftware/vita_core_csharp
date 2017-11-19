@@ -27,40 +27,41 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * WTS_INFO_CLASS enumeration
              * https://msdn.microsoft.com/en-us/library/aa383861.aspx
              */
-            internal enum WTS_INFO_CLASS
+            internal enum WindowsTerminalServiceInfoClass
             {
-                /* WTSInitialProgram     */ WTSInitialProgram,
-                /* WTSApplicationName    */ WTSApplicationName,
-                /* WTSWorkingDirectory   */ WTSWorkingDirectory,
-                /* WTSOEMId              */ WTSOEMId,
-                /* WTSSessionId          */ WTSSessionId,
-                /* WTSUserName           */ WTSUserName,
-                /* WTSWinStationName     */ WTSWinStationName,
-                /* WTSDomainName         */ WTSDomainName,
-                /* WTSConnectState       */ WTSConnectState,
-                /* WTSClientBuildNumber  */ WTSClientBuildNumber,
-                /* WTSClientName         */ WTSClientName,
-                /* WTSClientDirectory    */ WTSClientDirectory,
-                /* WTSClientProductId    */ WTSClientProductId,
-                /* WTSClientHardwareId   */ WTSClientHardwareId,
-                /* WTSClientAddress      */ WTSClientAddress,
-                /* WTSClientDisplay      */ WTSClientDisplay,
-                /* WTSClientProtocolType */ WTSClientProtocolType,
-                /* WTSIdleTime           */ WTSIdleTime,
-                /* WTSLogonTime          */ WTSLogonTime,
-                /* WTSIncomingBytes      */ WTSIncomingBytes,
-                /* WTSOutgoingBytes      */ WTSOutgoingBytes,
-                /* WTSIncomingFrames     */ WTSIncomingFrames,
-                /* WTSOutgoingFrames     */ WTSOutgoingFrames,
-                /* WTSClientInfo         */ WTSClientInfo,
-                /* WTSSessionInfo        */ WTSSessionInfo,
-                /* WTSSessionInfoEx      */ WTSSessionInfoEx,
-                /* WTSConfigInfo         */ WTSConfigInfo,
-                /* WTSValidationInfo     */ WTSValidationInfo,
-                /* WTSSessionAddressV4   */ WTSSessionAddressV4,
-                /* WTSIsRemoteSession    */ WTSIsRemoteSession
+                /* WTSInitialProgram     */ InitialProgram,
+                /* WTSApplicationName    */ ApplicationName,
+                /* WTSWorkingDirectory   */ WorkingDirectory,
+                /* WTSOEMId              */ OemId,
+                /* WTSSessionId          */ SessionId,
+                /* WTSUserName           */ UserName,
+                /* WTSWinStationName     */ WinStationName,
+                /* WTSDomainName         */ DomainName,
+                /* WTSConnectState       */ ConnectState,
+                /* WTSClientBuildNumber  */ ClientBuildNumber,
+                /* WTSClientName         */ ClientName,
+                /* WTSClientDirectory    */ ClientDirectory,
+                /* WTSClientProductId    */ ClientProductId,
+                /* WTSClientHardwareId   */ ClientHardwareId,
+                /* WTSClientAddress      */ ClientAddress,
+                /* WTSClientDisplay      */ ClientDisplay,
+                /* WTSClientProtocolType */ ClientProtocolType,
+                /* WTSIdleTime           */ IdleTime,
+                /* WTSLogonTime          */ LogonTime,
+                /* WTSIncomingBytes      */ IncomingBytes,
+                /* WTSOutgoingBytes      */ OutgoingBytes,
+                /* WTSIncomingFrames     */ IncomingFrames,
+                /* WTSOutgoingFrames     */ OutgoingFrames,
+                /* WTSClientInfo         */ ClientInfo,
+                /* WTSSessionInfo        */ SessionInfo,
+                /* WTSSessionInfoEx      */ SessionInfoEx,
+                /* WTSConfigInfo         */ ConfigInfo,
+                /* WTSValidationInfo     */ ValidationInfo,
+                /* WTSSessionAddressV4   */ SessionAddressV4,
+                /* WTSIsRemoteSession    */ IsRemoteSession
             }
 
             /**
@@ -168,7 +169,7 @@ namespace Htc.Vita.Core.Interop
             internal static extern bool WTSQuerySessionInformationW(
                     /* _In_  HANDLE         */ [In] IntPtr hServer,
                     /* _In_  DWORD          */ [In] uint sessionId,
-                    /* _In_  WTS_INFO_CLASS */ [In] WTS_INFO_CLASS wtsInfoClass,
+                    /* _In_  WTS_INFO_CLASS */ [In] WindowsTerminalServiceInfoClass wtsInfoClass,
                     /* _Out_ LPTSTR*        */ [In][Out] ref IntPtr ppBuffer,
                     /* _Out_ DWORD*         */ [In][Out] ref uint pBytesReturned
             );

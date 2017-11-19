@@ -116,7 +116,7 @@ namespace Htc.Vita.Core.Runtime
                         ret = Windows.Wtsapi32.WTSQuerySessionInformationW(
                                 serverHandle,
                                 sessionInfo.sessionId,
-                                Windows.Wtsapi32.WTS_INFO_CLASS.WTSUserName,
+                                Windows.Wtsapi32.WindowsTerminalServiceInfoClass.UserName,
                                 ref usernamePtr,
                                 ref bytes
                         );
@@ -132,7 +132,7 @@ namespace Htc.Vita.Core.Runtime
                         ret = Windows.Wtsapi32.WTSQuerySessionInformationW(
                                 serverHandle,
                                 sessionInfo.sessionId,
-                                Windows.Wtsapi32.WTS_INFO_CLASS.WTSDomainName,
+                                Windows.Wtsapi32.WindowsTerminalServiceInfoClass.DomainName,
                                 ref domainPtr,
                                 ref bytes
                         );
