@@ -174,7 +174,6 @@ namespace Htc.Vita.Core.Tests
             };
             var result = jsonFactory.SerializeObject(class1);
             Assert.NotNull(result);
-            // Console.WriteLine("Serialized string: " + result);
             Assert.Equal("{\"TestBool1\":true,\"TestInt1\":3,\"TestString1\":\"test\"}", result);
         }
 
