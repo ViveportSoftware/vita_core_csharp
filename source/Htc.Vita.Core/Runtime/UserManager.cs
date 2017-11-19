@@ -160,7 +160,7 @@ namespace Htc.Vita.Core.Runtime
                 Log.Error("Can not get Windows user list: " + e.Message);
             }
 
-            if (serverHandle != Windows.Wtsapi32.WTS_CURRENT_SERVER_HANDLE)
+            if (serverHandle != Windows.Wtsapi32.WindowsTerminalServiceCurrentServerHandle)
             {
                 Windows.Wtsapi32.WTSCloseServer(serverHandle);
             }

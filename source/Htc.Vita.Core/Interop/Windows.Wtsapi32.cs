@@ -7,7 +7,7 @@ namespace Htc.Vita.Core.Interop
     {
         internal static class Wtsapi32
         {
-            internal static IntPtr WTS_CURRENT_SERVER_HANDLE = IntPtr.Zero;
+            internal static IntPtr /* WTS_CURRENT_SERVER_HANDLE */ WindowsTerminalServiceCurrentServerHandle = IntPtr.Zero;
 
             /**
              * WTS_CONNECTSTATE_CLASS enumeration
