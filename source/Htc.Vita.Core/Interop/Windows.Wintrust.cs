@@ -27,25 +27,26 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * WTD_PROVIDERFLAG enumeration
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
             [Flags]
-            internal enum WTD_PROVIDERFLAG : uint
+            internal enum WinTrustDataProviderFlag : uint
             {
-                /* WTD_USE_IE4_TRUST_FLAG                  */ WTD_USE_IE4_TRUST_FLAG = 1,
-                /* WTD_NO_IE4_CHAIN_FLAG                   */ WTD_NO_IE4_CHAIN_FLAG = 2,
-                /* WTD_NO_POLICY_USAGE_FLAG                */ WTD_NO_POLICY_USAGE_FLAG = 4,
-                /* WTD_REVOCATION_CHECK_NONE               */ WTD_REVOCATION_CHECK_NONE = 16,
-                /* WTD_REVOCATION_CHECK_END_CERT           */ WTD_REVOCATION_CHECK_END_CERT = 32,
-                /* WTD_REVOCATION_CHECK_CHAIN              */ WTD_REVOCATION_CHECK_CHAIN = 64,
-                /* WTD_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT */ WTD_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT = 128,
-                /* WTD_SAFER_FLAG                          */ WTD_SAFER_FLAG = 256,
-                /* WTD_HASH_ONLY_FLAG                      */ WTD_HASH_ONLY_FLAG = 512,
-                /* WTD_USE_DEFAULT_OSVER_CHECK             */ WTD_USE_DEFAULT_OSVER_CHECK = 1024,
-                /* WTD_LIFETIME_SIGNING_FLAG               */ WTD_LIFETIME_SIGNING_FLAG = 2048,
-                /* WTD_CACHE_ONLY_URL_RETRIEVAL            */ WTD_CACHE_ONLY_URL_RETRIEVAL = 4096,
-                /* WTD_DISABLE_MD2_MD4                     */ WTD_DISABLE_MD2_MD4 = 8192,
-                /* WTD_MOTW                                */ WTD_MOTW = 16384
+                /* WTD_USE_IE4_TRUST_FLAG                  */ UseIe4TrustFlag = 1,
+                /* WTD_NO_IE4_CHAIN_FLAG                   */ NoIe4ChainFlag = 2,
+                /* WTD_NO_POLICY_USAGE_FLAG                */ NoPolicyUsageFlag = 4,
+                /* WTD_REVOCATION_CHECK_NONE               */ RevocationCheckNone = 16,
+                /* WTD_REVOCATION_CHECK_END_CERT           */ RevocationCheckEndCert = 32,
+                /* WTD_REVOCATION_CHECK_CHAIN              */ RevocationCheckChain = 64,
+                /* WTD_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT */ RevocationCheckChainExcludeRoot = 128,
+                /* WTD_SAFER_FLAG                          */ SaferFlag = 256,
+                /* WTD_HASH_ONLY_FLAG                      */ HashOnlyFlag = 512,
+                /* WTD_USE_DEFAULT_OSVER_CHECK             */ UseDefaultOsVerCheck = 1024,
+                /* WTD_LIFETIME_SIGNING_FLAG               */ LifetimeSigningFlag = 2048,
+                /* WTD_CACHE_ONLY_URL_RETRIEVAL            */ CacheOnlyUrlRetrieval = 4096,
+                /* WTD_DISABLE_MD2_MD4                     */ DisableMd2Md4 = 8192,
+                /* WTD_MOTW                                */ Motw = 16384
             }
 
             /**
@@ -110,7 +111,7 @@ namespace Htc.Vita.Core.Interop
                 public /* DWORD  */ WinTrustDataStateAction dwStateAction;
                 public /* HANDLE */ IntPtr hWVTStateData;
                 public /* WCHAR* */ IntPtr pwszURLReference;
-                public /* DWORD  */ WTD_PROVIDERFLAG dwProvFlags;
+                public /* DWORD  */ WinTrustDataProviderFlag dwProvFlags;
                 public /* DWORD  */ WinTrustDataUiContext dwUIContext;
 
                 // TODO

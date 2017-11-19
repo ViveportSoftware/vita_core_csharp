@@ -92,7 +92,7 @@ namespace Htc.Vita.Core.Diagnosis
                         dwStateAction = Windows.Wintrust.WinTrustDataStateAction.Ignore,
                         hWVTStateData = IntPtr.Zero,
                         pwszURLReference = IntPtr.Zero,
-                        dwProvFlags = Windows.Wintrust.WTD_PROVIDERFLAG.WTD_SAFER_FLAG,
+                        dwProvFlags = Windows.Wintrust.WinTrustDataProviderFlag.SaferFlag,
                         dwUIContext = Windows.Wintrust.WinTrustDataUiContext.Execute
                 };
                 var winTrustDataPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Windows.Wintrust.WinTrustData)));
