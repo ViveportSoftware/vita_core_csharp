@@ -100,21 +100,19 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct WinTrustData
         {
-            public /* DWORD  */ uint cbStruct;
-            public /* LPVOID */ IntPtr pPolicyCallbackData;
-            public /* LPVOID */ IntPtr pSIPCallbackData;
-            public /* DWORD  */ WinTrustDataUi dwUIChoice;
-            public /* DWORD  */ WinTrustDataRevoke fdwRevocationChecks;
-            public /* DWORD  */ WinTrustDataChoice dwUnionChoice;
-            public /* union  */ WinTrustDataUnionChoice infoUnion;
-            public /* DWORD  */ WinTrustDataStateAction dwStateAction;
-            public /* HANDLE */ IntPtr hWVTStateData;
-            public /* WCHAR* */ IntPtr pwszURLReference;
-            public /* DWORD  */ WinTrustDataProviderFlag dwProvFlags;
-            public /* DWORD  */ WinTrustDataUiContext dwUIContext;
-
-            // TODO
-            // WINTRUST_SIGNATURE_SETTINGS *pSignatureSettings;
+            public /* DWORD                        */ uint cbStruct;
+            public /* LPVOID                       */ IntPtr pPolicyCallbackData;
+            public /* LPVOID                       */ IntPtr pSIPCallbackData;
+            public /* DWORD                        */ WinTrustDataUi dwUIChoice;
+            public /* DWORD                        */ WinTrustDataRevoke fdwRevocationChecks;
+            public /* DWORD                        */ WinTrustDataChoice dwUnionChoice;
+            public /* union                        */ WinTrustDataUnionChoice infoUnion;
+            public /* DWORD                        */ WinTrustDataStateAction dwStateAction;
+            public /* HANDLE                       */ IntPtr hWVTStateData;
+            public /* WCHAR*                       */ IntPtr pwszURLReference;
+            public /* DWORD                        */ WinTrustDataProviderFlag dwProvFlags;
+            public /* DWORD                        */ WinTrustDataUiContext dwUIContext;
+            public /* WINTRUST_SIGNATURE_SETTINGS* */ IntPtr pSignatureSettings;
         }
 
         /**
