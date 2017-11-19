@@ -8,7 +8,7 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void UsbManager_Default_0_GetHidDevices()
+        public static void UsbManager_Default_0_GetHidDevices()
         {
             if (!Platform.IsWindows)
             {

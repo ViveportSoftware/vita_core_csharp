@@ -6,21 +6,21 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void PreferenceFactory_Default_0_GetInstance()
+        public static void PreferenceFactory_Default_0_GetInstance()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
         }
 
         [Fact]
-        public void PreferenceFactory_Default_1_GetInstance_WithType()
+        public static void PreferenceFactory_Default_1_GetInstance_WithType()
         {
             var preferenceFactory = PreferenceFactory.GetInstance<DefaultPreferenceFactory>();
             Assert.NotNull(preferenceFactory);
         }
 
         [Fact]
-        public void PreferenceFactory_Default_2_LoadPreferences()
+        public static void PreferenceFactory_Default_2_LoadPreferences()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -30,7 +30,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_00_PutBool()
+        public static void Preference_Default_00_PutBool()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -41,7 +41,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_01_PutDouble()
+        public static void Preference_Default_01_PutDouble()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -52,7 +52,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_02_PutFloat()
+        public static void Preference_Default_02_PutFloat()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -63,7 +63,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_03_PutInt()
+        public static void Preference_Default_03_PutInt()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -74,7 +74,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_04_PutLong()
+        public static void Preference_Default_04_PutLong()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -85,7 +85,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_05_PutString()
+        public static void Preference_Default_05_PutString()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -96,7 +96,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_06_ParseBool()
+        public static void Preference_Default_06_ParseBool()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -110,7 +110,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_06_ParseBool_WithDefault()
+        public static void Preference_Default_06_ParseBool_WithDefault()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -124,7 +124,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_07_ParseDouble()
+        public static void Preference_Default_07_ParseDouble()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -138,7 +138,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_07_ParseDouble_WithDefault()
+        public static void Preference_Default_07_ParseDouble_WithDefault()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -152,7 +152,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_08_ParseFloat()
+        public static void Preference_Default_08_ParseFloat()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -166,7 +166,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_08_ParseFloat_WithDefault()
+        public static void Preference_Default_08_ParseFloat_WithDefault()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -180,7 +180,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_09_ParseInt()
+        public static void Preference_Default_09_ParseInt()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -194,7 +194,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_09_ParseInt_WithDefault()
+        public static void Preference_Default_09_ParseInt_WithDefault()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -208,7 +208,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_10_ParseLong()
+        public static void Preference_Default_10_ParseLong()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -222,7 +222,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_10_ParseLong_WithDefault()
+        public static void Preference_Default_10_ParseLong_WithDefault()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -236,7 +236,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_11_ParseString()
+        public static void Preference_Default_11_ParseString()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -248,7 +248,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_11_ParseString_WithDefault()
+        public static void Preference_Default_11_ParseString_WithDefault()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -262,7 +262,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_12_Commit()
+        public static void Preference_Default_12_Commit()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);
@@ -284,7 +284,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Preference_Default_13_Clear()
+        public static void Preference_Default_13_Clear()
         {
             var preferenceFactory = PreferenceFactory.GetInstance();
             Assert.NotNull(preferenceFactory);

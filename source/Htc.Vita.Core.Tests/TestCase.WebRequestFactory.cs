@@ -7,14 +7,14 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void WebRequestFactory_Default_0_GetInstance()
+        public static void WebRequestFactory_Default_0_GetInstance()
         {
             var webRequestFactory = WebRequestFactory.GetInstance();
             Assert.NotNull(webRequestFactory);
         }
 
         [Fact]
-        public void WebRequestFactory_Default_1_GetHttpWebRequest()
+        public static void WebRequestFactory_Default_1_GetHttpWebRequest()
         {
             var webRequestFactory = WebRequestFactory.GetInstance();
             Assert.NotNull(webRequestFactory);
@@ -24,7 +24,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void WebRequestFactory_Default_1_GetHttpWebRequest_WithEmptyUri()
+        public static void WebRequestFactory_Default_1_GetHttpWebRequest_WithEmptyUri()
         {
             var webRequestFactory = WebRequestFactory.GetInstance();
             Assert.NotNull(webRequestFactory);

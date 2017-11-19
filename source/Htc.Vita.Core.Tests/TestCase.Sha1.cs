@@ -9,14 +9,14 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void Sha1_Default_0_GetInstance()
+        public static void Sha1_Default_0_GetInstance()
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
         }
 
         [Fact]
-        public void Sha1_Default_1_GenerateInBase64_WithContent()
+        public static void Sha1_Default_1_GenerateInBase64_WithContent()
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
@@ -27,7 +27,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Sha1_Default_1_GenerateInBase64_WithFile()
+        public static void Sha1_Default_1_GenerateInBase64_WithFile()
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
@@ -41,7 +41,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Sha1_Default_2_ValidateInBase64_WithContent()
+        public static void Sha1_Default_2_ValidateInBase64_WithContent()
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
@@ -50,7 +50,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Sha1_Default_2_ValidateInBase64_WithFile()
+        public static void Sha1_Default_2_ValidateInBase64_WithFile()
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
@@ -64,7 +64,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Sha1_Default_3_GenerateInHex_WithContent()
+        public static void Sha1_Default_3_GenerateInHex_WithContent()
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
@@ -75,7 +75,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Sha1_Default_3_GenerateInHex_WithFile()
+        public static void Sha1_Default_3_GenerateInHex_WithFile()
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
@@ -89,7 +89,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Sha1_Default_4_ValidateInHex_WithContent()
+        public static void Sha1_Default_4_ValidateInHex_WithContent()
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
@@ -98,7 +98,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Sha1_Default_4_ValidateInHex_WithFile()
+        public static void Sha1_Default_4_ValidateInHex_WithFile()
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
@@ -112,7 +112,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Sha1_Default_5_ValidateInAll_WithContent()
+        public static void Sha1_Default_5_ValidateInAll_WithContent()
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
@@ -123,7 +123,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Sha1_Default_5_ValidateInAll_WithFile()
+        public static void Sha1_Default_5_ValidateInAll_WithFile()
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);

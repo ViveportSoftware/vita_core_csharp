@@ -7,14 +7,14 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void Logger_Default_0_GetInstance()
+        public static void Logger_Default_0_GetInstance()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
         }
 
         [Fact]
-        public void Logger_Default_0_GetInstance_WithName()
+        public static void Logger_Default_0_GetInstance_WithName()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -24,7 +24,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_0_GetInstance_WithType()
+        public static void Logger_Default_0_GetInstance_WithType()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -34,7 +34,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_1_Debug()
+        public static void Logger_Default_1_Debug()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -43,7 +43,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_1_Debug_WithName()
+        public static void Logger_Default_1_Debug_WithName()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -57,7 +57,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_1_Debug_WithType()
+        public static void Logger_Default_1_Debug_WithType()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -71,7 +71,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_2_Error()
+        public static void Logger_Default_2_Error()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -80,7 +80,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_2_Error_WithName()
+        public static void Logger_Default_2_Error_WithName()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -94,7 +94,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_2_Error_WithType()
+        public static void Logger_Default_2_Error_WithType()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -108,7 +108,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_3_Fatal()
+        public static void Logger_Default_3_Fatal()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -117,7 +117,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_3_Fatal_WithName()
+        public static void Logger_Default_3_Fatal_WithName()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -131,7 +131,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_3_Fatal_WithType()
+        public static void Logger_Default_3_Fatal_WithType()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -145,7 +145,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_4_Info()
+        public static void Logger_Default_4_Info()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -154,7 +154,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_4_Info_WithName()
+        public static void Logger_Default_4_Info_WithName()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -168,7 +168,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_4_Info_WithType()
+        public static void Logger_Default_4_Info_WithType()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -182,7 +182,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_5_Trace()
+        public static void Logger_Default_5_Trace()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -191,7 +191,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_5_Trace_WithName()
+        public static void Logger_Default_5_Trace_WithName()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -205,7 +205,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_5_Trace_WithType()
+        public static void Logger_Default_5_Trace_WithType()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -219,7 +219,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_6_Warn()
+        public static void Logger_Default_6_Warn()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -228,7 +228,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_6_Warn_WithName()
+        public static void Logger_Default_6_Warn_WithName()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -242,7 +242,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_6_Warn_WithType()
+        public static void Logger_Default_6_Warn_WithType()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -256,7 +256,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Default_7_Shutdown()
+        public static void Logger_Default_7_Shutdown()
         {
             var logger = Logger.GetInstance();
             Assert.NotNull(logger);
@@ -264,14 +264,14 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_0_GetInstance()
+        public static void Logger_Console_0_GetInstance()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
         }
 
         [Fact]
-        public void Logger_Console_0_GetInstance_WithName()
+        public static void Logger_Console_0_GetInstance_WithName()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -281,7 +281,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_0_GetInstance_WithType()
+        public static void Logger_Console_0_GetInstance_WithType()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -291,7 +291,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_1_Debug()
+        public static void Logger_Console_1_Debug()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -300,7 +300,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_1_Debug_WithName()
+        public static void Logger_Console_1_Debug_WithName()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -314,7 +314,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_1_Debug_WithType()
+        public static void Logger_Console_1_Debug_WithType()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -328,7 +328,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_2_Error()
+        public static void Logger_Console_2_Error()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -337,7 +337,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_2_Error_WithName()
+        public static void Logger_Console_2_Error_WithName()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -351,7 +351,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_2_Error_WithType()
+        public static void Logger_Console_2_Error_WithType()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -365,7 +365,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_3_Fatal()
+        public static void Logger_Console_3_Fatal()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -374,7 +374,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_3_Fatal_WithName()
+        public static void Logger_Console_3_Fatal_WithName()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -388,7 +388,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_3_Fatal_WithType()
+        public static void Logger_Console_3_Fatal_WithType()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -402,7 +402,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_4_Info()
+        public static void Logger_Console_4_Info()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -411,7 +411,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_4_Info_WithName()
+        public static void Logger_Console_4_Info_WithName()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -425,7 +425,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_4_Info_WithType()
+        public static void Logger_Console_4_Info_WithType()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -439,7 +439,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_5_Trace()
+        public static void Logger_Console_5_Trace()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -448,7 +448,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_5_Trace_WithName()
+        public static void Logger_Console_5_Trace_WithName()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -462,7 +462,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_5_Trace_WithType()
+        public static void Logger_Console_5_Trace_WithType()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -476,7 +476,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_6_Warn()
+        public static void Logger_Console_6_Warn()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -485,7 +485,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_6_Warn_WithName()
+        public static void Logger_Console_6_Warn_WithName()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -499,7 +499,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_6_Warn_WithType()
+        public static void Logger_Console_6_Warn_WithType()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -513,7 +513,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Console_7_Shutdown()
+        public static void Logger_Console_7_Shutdown()
         {
             var logger = Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
@@ -521,14 +521,14 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_0_GetInstance()
+        public static void Logger_Dummy_0_GetInstance()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
         }
 
         [Fact]
-        public void Logger_Dummy_0_GetInstance_WithName()
+        public static void Logger_Dummy_0_GetInstance_WithName()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -538,7 +538,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_1_Debug()
+        public static void Logger_Dummy_1_Debug()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -549,7 +549,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_1_Debug_WithName()
+        public static void Logger_Dummy_1_Debug_WithName()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -567,7 +567,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_1_Debug_WithType()
+        public static void Logger_Dummy_1_Debug_WithType()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -585,7 +585,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_2_Error()
+        public static void Logger_Dummy_2_Error()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -596,7 +596,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_2_Error_WithName()
+        public static void Logger_Dummy_2_Error_WithName()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -614,7 +614,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_2_Error_WithType()
+        public static void Logger_Dummy_2_Error_WithType()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -632,7 +632,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_3_Fatal()
+        public static void Logger_Dummy_3_Fatal()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -643,7 +643,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_3_Fatal_WithName()
+        public static void Logger_Dummy_3_Fatal_WithName()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -661,7 +661,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_3_Fatal_WithType()
+        public static void Logger_Dummy_3_Fatal_WithType()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -679,7 +679,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_4_Info()
+        public static void Logger_Dummy_4_Info()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -690,7 +690,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_4_Info_WithName()
+        public static void Logger_Dummy_4_Info_WithName()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -708,7 +708,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_4_Info_WithType()
+        public static void Logger_Dummy_4_Info_WithType()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -726,7 +726,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_5_Trace()
+        public static void Logger_Dummy_5_Trace()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -737,7 +737,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_5_Trace_WithName()
+        public static void Logger_Dummy_5_Trace_WithName()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -755,7 +755,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_5_Trace_WithType()
+        public static void Logger_Dummy_5_Trace_WithType()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -773,7 +773,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_6_Warn()
+        public static void Logger_Dummy_6_Warn()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -784,7 +784,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_6_Warn_WithName()
+        public static void Logger_Dummy_6_Warn_WithName()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -802,7 +802,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_6_Warn_WithType()
+        public static void Logger_Dummy_6_Warn_WithType()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
@@ -820,7 +820,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Logger_Dummy_7_Shutdown()
+        public static void Logger_Dummy_7_Shutdown()
         {
             var logger = Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);

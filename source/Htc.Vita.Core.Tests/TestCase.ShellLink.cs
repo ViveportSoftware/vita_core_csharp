@@ -9,7 +9,7 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void ShellLink_0_CreateInWindows()
+        public static void ShellLink_0_CreateInWindows()
         {
             if (!Platform.IsWindows)
             {

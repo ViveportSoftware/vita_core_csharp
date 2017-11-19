@@ -8,7 +8,7 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void Registry_0_GetStringValue32_UnderHKCR()
+        public static void Registry_0_GetStringValue32_UnderHKCR()
         {
             if (!Platform.IsWindows)
             {
@@ -21,7 +21,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Registry_0_GetStringValue32_UnderHKLM()
+        public static void Registry_0_GetStringValue32_UnderHKLM()
         {
             if (!Platform.IsWindows)
             {
@@ -33,7 +33,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Registry_0_GetStringValue64_UnderHKCR()
+        public static void Registry_0_GetStringValue64_UnderHKCR()
         {
             if (!Platform.IsWindows)
             {
@@ -46,7 +46,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Registry_0_GetStringValue64_UnderHKLM()
+        public static void Registry_0_GetStringValue64_UnderHKLM()
         {
             if (!Platform.IsWindows)
             {
@@ -59,7 +59,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Registry_0_GetStringValue_UnderHKCR()
+        public static void Registry_0_GetStringValue_UnderHKCR()
         {
             if (!Platform.IsWindows)
             {
@@ -72,7 +72,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Registry_0_GetStringValue_UnderHKLM()
+        public static void Registry_0_GetStringValue_UnderHKLM()
         {
             if (!Platform.IsWindows)
             {
@@ -84,7 +84,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Registry_1_SetStringValue_UnderHKCU()
+        public static void Registry_1_SetStringValue_UnderHKCU()
         {
             var valueName = Guid.NewGuid().ToString();
             var valueData = valueName;
@@ -93,7 +93,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact(Skip = "AdministratorPermissionNeeded")]
-        public void Registry_1_SetStringValue_UnderHKLM()
+        public static void Registry_1_SetStringValue_UnderHKLM()
         {
             var valueName = Guid.NewGuid().ToString();
             var valueData = valueName;
@@ -102,7 +102,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Registry_2_DeleteValue32_UnderHKCU()
+        public static void Registry_2_DeleteValue32_UnderHKCU()
         {
             var valueName = "ffcc27a9-c3bb-463a-8716-3e2e5f2b85a1";
             var valueData = valueName;
@@ -112,7 +112,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Registry_2_DeleteValue64_UnderHKCU()
+        public static void Registry_2_DeleteValue64_UnderHKCU()
         {
             var valueName = "083c3747-6834-4ee7-b9af-e66eb9925c2a";
             var valueData = valueName;
@@ -122,7 +122,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Registry_2_DeleteValue_UnderHKCU()
+        public static void Registry_2_DeleteValue_UnderHKCU()
         {
             var valueName = "2f937f96-aecd-477d-a204-d9ff67bdd8ba";
             var valueData = valueName;
@@ -132,7 +132,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Registry_3_DeleteKey32_UnderHKCU()
+        public static void Registry_3_DeleteKey32_UnderHKCU()
         {
             var keyName = "0a9d53eb-36bb-4859-80d0-0816d47580af";
             var valueName = "valueName";
@@ -143,7 +143,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Registry_3_DeleteKey64_UnderHKCU()
+        public static void Registry_3_DeleteKey64_UnderHKCU()
         {
             var keyName = "20a3c3e3-9feb-4bd8-b451-1e357a6f9d98";
             var valueName = "valueName";
@@ -154,7 +154,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Registry_3_DeleteKey_UnderHKCU()
+        public static void Registry_3_DeleteKey_UnderHKCU()
         {
             var keyName = "7a8dd5f9-9347-40b6-8511-3220af3cd429";
             var valueName = "valueName";
@@ -165,7 +165,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Registry_4_GetIntValue32_UnderHKCR()
+        public static void Registry_4_GetIntValue32_UnderHKCR()
         {
             if (!Platform.IsWindows)
             {
@@ -176,7 +176,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Registry_4_GetIntValue64_UnderHKCR()
+        public static void Registry_4_GetIntValue64_UnderHKCR()
         {
             if (!Platform.IsWindows)
             {
@@ -187,7 +187,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Registry_4_GetIntValue_UnderHKCR()
+        public static void Registry_4_GetIntValue_UnderHKCR()
         {
             if (!Platform.IsWindows)
             {
@@ -198,7 +198,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Registry_5_SetDwordValue_UnderHKCU()
+        public static void Registry_5_SetDwordValue_UnderHKCU()
         {
             var valueData = Guid.NewGuid().GetHashCode();
             var valueName = "" + valueData;

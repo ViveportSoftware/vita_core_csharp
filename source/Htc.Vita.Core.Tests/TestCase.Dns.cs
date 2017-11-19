@@ -7,14 +7,14 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void Dns_Default_0_GetInstance()
+        public static void Dns_Default_0_GetInstance()
         {
             var dns = Net.Dns.GetInstance();
             Assert.NotNull(dns);
         }
 
         [Fact]
-        public void Dns_Default_1_GetHostAddresses()
+        public static void Dns_Default_1_GetHostAddresses()
         {
             var dns = Net.Dns.GetInstance();
             Assert.NotNull(dns);
@@ -37,7 +37,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Dns_Default_2_GetHostEntry()
+        public static void Dns_Default_2_GetHostEntry()
         {
             var dns = Net.Dns.GetInstance();
             Assert.NotNull(dns);
@@ -52,7 +52,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Dns_Default_2_GetHostEntry_WithIPAddress()
+        public static void Dns_Default_2_GetHostEntry_WithIPAddress()
         {
             var dns = Net.Dns.GetInstance();
             Assert.NotNull(dns);

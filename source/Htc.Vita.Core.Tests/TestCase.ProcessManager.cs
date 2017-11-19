@@ -9,7 +9,7 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void ProcessManager_Default_0_GetProcesses()
+        public static void ProcessManager_Default_0_GetProcesses()
         {
             if (!Platform.IsWindows)
             {
@@ -27,7 +27,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void ProcessManager_Default_1_GetProcessesByFirstActiveUser()
+        public static void ProcessManager_Default_1_GetProcessesByFirstActiveUser()
         {
             if (!Platform.IsWindows)
             {
@@ -44,7 +44,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void ProcessManager_Default_2_KillProcessById()
+        public static void ProcessManager_Default_2_KillProcessById()
         {
             if (!Platform.IsWindows)
             {

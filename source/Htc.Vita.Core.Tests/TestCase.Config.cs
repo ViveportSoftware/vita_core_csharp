@@ -6,14 +6,14 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void Config_Default_0_GetInstance()
+        public static void Config_Default_0_GetInstance()
         {
             var config = Config.Config.GetInstance();
             Assert.NotNull(config);
         }
 
         [Fact]
-        public void Config_Default_1_Get()
+        public static void Config_Default_1_Get()
         {
             var config = Config.Config.GetInstance();
             Assert.NotNull(config);
@@ -22,7 +22,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_Default_1_Get_WithDefault()
+        public static void Config_Default_1_Get_WithDefault()
         {
             var config = Config.Config.GetInstance();
             Assert.NotNull(config);
@@ -31,7 +31,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_Default_2_GetBool()
+        public static void Config_Default_2_GetBool()
         {
             var config = Config.Config.GetInstance();
             Assert.NotNull(config);
@@ -42,7 +42,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_Default_2_GetBool_WithDefault()
+        public static void Config_Default_2_GetBool_WithDefault()
         {
             var config = Config.Config.GetInstance();
             Assert.NotNull(config);
@@ -55,7 +55,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_Default_3_GetDouble()
+        public static void Config_Default_3_GetDouble()
         {
             var config = Config.Config.GetInstance();
             Assert.NotNull(config);
@@ -65,7 +65,8 @@ namespace Htc.Vita.Core.Tests
             Assert.Equal(3.3D, value2);
         }
 
-        [Fact] public void Config_Default_3_GetDouble_WithDefault()
+        [Fact]
+        public static void Config_Default_3_GetDouble_WithDefault()
         {
             var config = Config.Config.GetInstance();
             Assert.NotNull(config);
@@ -78,7 +79,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_Default_4_GetInt()
+        public static void Config_Default_4_GetInt()
         {
             var config = Config.Config.GetInstance();
             Assert.NotNull(config);
@@ -89,7 +90,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_Default_4_GetInt_WithDefault()
+        public static void Config_Default_4_GetInt_WithDefault()
         {
             var config = Config.Config.GetInstance();
             Assert.NotNull(config);
@@ -102,7 +103,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_Default_5_GetLong()
+        public static void Config_Default_5_GetLong()
         {
             var config = Config.Config.GetInstance();
             Assert.NotNull(config);
@@ -113,7 +114,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_Default_5_GetLong_WithDefault()
+        public static void Config_Default_5_GetLong_WithDefault()
         {
             var config = Config.Config.GetInstance();
             Assert.NotNull(config);
@@ -126,14 +127,14 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_AppSettings_0_GetInstance()
+        public static void Config_AppSettings_0_GetInstance()
         {
             var config = Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
         }
 
         [Fact]
-        public void Config_AppSettings_1_Get()
+        public static void Config_AppSettings_1_Get()
         {
             var config = Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
@@ -142,7 +143,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_AppSettings_1_Get_WithDefault()
+        public static void Config_AppSettings_1_Get_WithDefault()
         {
             var config = Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
@@ -151,7 +152,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_AppSettings_2_GetBool()
+        public static void Config_AppSettings_2_GetBool()
         {
             var config = Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
@@ -162,7 +163,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_AppSettings_2_GetBool_WithDefault()
+        public static void Config_AppSettings_2_GetBool_WithDefault()
         {
             var config = Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
@@ -175,7 +176,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_AppSettings_3_GetDouble()
+        public static void Config_AppSettings_3_GetDouble()
         {
             var config = Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
@@ -186,7 +187,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_AppSettings_3_GetDouble_WithDefault()
+        public static void Config_AppSettings_3_GetDouble_WithDefault()
         {
             var config = Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
@@ -199,7 +200,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_AppSettings_4_GetInt()
+        public static void Config_AppSettings_4_GetInt()
         {
             var config = Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
@@ -210,7 +211,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_AppSettings_4_GetInt_WithDefault()
+        public static void Config_AppSettings_4_GetInt_WithDefault()
         {
             var config = Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
@@ -223,7 +224,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_AppSettings_5_GetLong()
+        public static void Config_AppSettings_5_GetLong()
         {
             var config = Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
@@ -234,7 +235,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_AppSettings_5_GetLong_WithDefault()
+        public static void Config_AppSettings_5_GetLong_WithDefault()
         {
             var config = Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
@@ -247,14 +248,14 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_Registry_0_GetInstance()
+        public static void Config_Registry_0_GetInstance()
         {
             var config = Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
         }
 
         [Fact(Skip = "PredefinedGlobalDataNeeded")]
-        public void Config_Registry_1_Get()
+        public static void Config_Registry_1_Get()
         {
             var config = Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
@@ -263,7 +264,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_Registry_1_Get_WithDefault()
+        public static void Config_Registry_1_Get_WithDefault()
         {
             var config = Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
@@ -272,7 +273,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact(Skip = "PredefinedGlobalDataNeeded")]
-        public void Config_Registry_2_GetBool()
+        public static void Config_Registry_2_GetBool()
         {
             var config = Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
@@ -283,7 +284,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_Registry_2_GetBool_WithDefault()
+        public static void Config_Registry_2_GetBool_WithDefault()
         {
             var config = Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
@@ -296,7 +297,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact(Skip = "PredefinedGlobalDataNeeded")]
-        public void Config_Registry_3_GetDouble()
+        public static void Config_Registry_3_GetDouble()
         {
             var config = Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
@@ -307,7 +308,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_Registry_3_GetDouble_WithDefault()
+        public static void Config_Registry_3_GetDouble_WithDefault()
         {
             var config = Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
@@ -320,7 +321,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact(Skip = "PredefinedGlobalDataNeeded")]
-        public void Config_Registry_4_GetInt()
+        public static void Config_Registry_4_GetInt()
         {
             var config = Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
@@ -331,7 +332,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_Registry_4_GetInt_WithDefault()
+        public static void Config_Registry_4_GetInt_WithDefault()
         {
             var config = Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
@@ -344,7 +345,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact(Skip = "PredefinedGlobalDataNeeded")]
-        public void Config_Registry_5_GetLong()
+        public static void Config_Registry_5_GetLong()
         {
             var config = Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
@@ -355,7 +356,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Config_Registry_5_GetLong_WithDefault()
+        public static void Config_Registry_5_GetLong_WithDefault()
         {
             var config = Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);

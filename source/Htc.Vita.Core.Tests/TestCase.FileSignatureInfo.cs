@@ -8,7 +8,7 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void FileSignatureInfo_Default_0_GetSignatureInfo()
+        public static void FileSignatureInfo_Default_0_GetSignatureInfo()
         {
             if (!Platform.IsWindows)
             {
@@ -37,7 +37,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void FileSignatureInfo_Default_0_GetSignatureInfo_WithNotepad()
+        public static void FileSignatureInfo_Default_0_GetSignatureInfo_WithNotepad()
         {
             if (!Platform.IsWindows)
             {

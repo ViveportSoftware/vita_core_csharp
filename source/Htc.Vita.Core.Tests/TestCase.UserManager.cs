@@ -7,7 +7,7 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void UserManager_Default_0_GetActiveUser()
+        public static void UserManager_Default_0_GetActiveUser()
         {
             if (!Platform.IsWindows)
             {

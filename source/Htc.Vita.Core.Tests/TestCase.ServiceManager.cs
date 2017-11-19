@@ -7,7 +7,7 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void ServiceManager_Default_0_CheckIfExists()
+        public static void ServiceManager_Default_0_CheckIfExists()
         {
             if (!Platform.IsWindows)
             {
@@ -20,7 +20,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void ServiceManager_Default_1_QueryStartType()
+        public static void ServiceManager_Default_1_QueryStartType()
         {
             if (!Platform.IsWindows)
             {
@@ -37,7 +37,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void ServiceManager_Default_2_ChangeStartType()
+        public static void ServiceManager_Default_2_ChangeStartType()
         {
             if (!Platform.IsWindows)
             {
@@ -61,7 +61,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void ServiceManager_Default_3_Start()
+        public static void ServiceManager_Default_3_Start()
         {
             if (!Platform.IsWindows)
             {

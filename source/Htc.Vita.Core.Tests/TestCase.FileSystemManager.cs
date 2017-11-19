@@ -9,7 +9,7 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void FileSystemManager_Default_0_GetDiskSpaceFor()
+        public static void FileSystemManager_Default_0_GetDiskSpaceFor()
         {
             if (!Platform.IsWindows)
             {
@@ -30,7 +30,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void FileSystemManager_Default_0_GetDiskSpaceFor_WithNonExistPath()
+        public static void FileSystemManager_Default_0_GetDiskSpaceFor_WithNonExistPath()
         {
             if (!Platform.IsWindows)
             {

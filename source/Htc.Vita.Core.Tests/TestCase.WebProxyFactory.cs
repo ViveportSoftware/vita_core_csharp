@@ -6,14 +6,14 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void WebProxyFactory_Default_0_GetInstance()
+        public static void WebProxyFactory_Default_0_GetInstance()
         {
             var webProxyFactory = WebProxyFactory.GetInstance();
             Assert.NotNull(webProxyFactory);
         }
 
         [Fact]
-        public void WebProxyFactory_Default_1_GetWebProxy()
+        public static void WebProxyFactory_Default_1_GetWebProxy()
         {
             var webProxyFactory = WebProxyFactory.GetInstance();
             Assert.NotNull(webProxyFactory);

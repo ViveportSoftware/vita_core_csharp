@@ -6,7 +6,7 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void Platform_Default_0_GetMachineId()
+        public static void Platform_Default_0_GetMachineId()
         {
             if (!Platform.IsWindows)
             {
@@ -17,7 +17,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Platform_Default_1_DetectOsArch()
+        public static void Platform_Default_1_DetectOsArch()
         {
             var osArch = Platform.DetectOsArch();
             Assert.True(osArch == Platform.OsArch.Bit64);

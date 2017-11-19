@@ -9,14 +9,14 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void Md5_Default_0_GetInstance()
+        public static void Md5_Default_0_GetInstance()
         {
             var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
         }
 
         [Fact]
-        public void Md5_Default_1_GenerateInBase64_WithContent()
+        public static void Md5_Default_1_GenerateInBase64_WithContent()
         {
             var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
@@ -27,7 +27,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Md5_Default_1_GenerateInBase64_WithFile()
+        public static void Md5_Default_1_GenerateInBase64_WithFile()
         {
             var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
@@ -41,7 +41,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Md5_Default_2_ValidateInBase64_WithContent()
+        public static void Md5_Default_2_ValidateInBase64_WithContent()
         {
             var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
@@ -50,7 +50,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Md5_Default_2_ValidateInBase64_WithFile()
+        public static void Md5_Default_2_ValidateInBase64_WithFile()
         {
             var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
@@ -64,7 +64,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Md5_Default_3_GenerateInHex_WithContent()
+        public static void Md5_Default_3_GenerateInHex_WithContent()
         {
             var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
@@ -75,7 +75,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Md5_Default_3_GenerateInHex_WithFile()
+        public static void Md5_Default_3_GenerateInHex_WithFile()
         {
             var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
@@ -89,7 +89,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Md5_Default_4_ValidateInHex_WithContent()
+        public static void Md5_Default_4_ValidateInHex_WithContent()
         {
             var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
@@ -98,7 +98,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Md5_Default_4_ValidateInHex_WithFile()
+        public static void Md5_Default_4_ValidateInHex_WithFile()
         {
             var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
@@ -112,7 +112,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Md5_Default_5_ValidateInAll_WithContent()
+        public static void Md5_Default_5_ValidateInAll_WithContent()
         {
             var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
@@ -123,7 +123,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void Md5_Default_5_ValidateInAll_WithFile()
+        public static void Md5_Default_5_ValidateInAll_WithFile()
         {
             var md5 = Md5.GetInstance();
             Assert.NotNull(md5);

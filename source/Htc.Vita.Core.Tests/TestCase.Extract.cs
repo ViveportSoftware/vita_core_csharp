@@ -9,7 +9,7 @@ namespace Htc.Vita.Core.Tests
     public partial class TestCase
     {
         [Fact]
-        public void Extract_0_FromFileToIconInWindows()
+        public static void Extract_0_FromFileToIconInWindows()
         {
             if (!Platform.IsWindows)
             {
