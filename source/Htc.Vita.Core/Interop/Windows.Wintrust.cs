@@ -49,12 +49,13 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * WTD_REVOKE enumeration
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
-            internal enum WTD_REVOKE : uint
+            internal enum WinTrustDataRevoke : uint
             {
-                /* WTD_REVOKE_NONE       */ WTD_REVOKE_NONE,
-                /* WTD_REVOKE_WHOLECHAIN */ WTD_REVOKE_WHOLECHAIN
+                /* WTD_REVOKE_NONE       */ None,
+                /* WTD_REVOKE_WHOLECHAIN */ WholeChain
             }
 
             /**
@@ -103,7 +104,7 @@ namespace Htc.Vita.Core.Interop
                 public /* LPVOID */ IntPtr pPolicyCallbackData;
                 public /* LPVOID */ IntPtr pSIPCallbackData;
                 public /* DWORD  */ WinTrustDataUi dwUIChoice;
-                public /* DWORD  */ WTD_REVOKE fdwRevocationChecks;
+                public /* DWORD  */ WinTrustDataRevoke fdwRevocationChecks;
                 public /* DWORD  */ WTD_CHOICE dwUnionChoice;
                 public /* union  */ WinTrustDataUnionChoice infoUnion;
                 public /* DWORD  */ WinTrustDataStateAction dwStateAction;

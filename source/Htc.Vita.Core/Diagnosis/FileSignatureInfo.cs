@@ -86,7 +86,7 @@ namespace Htc.Vita.Core.Diagnosis
                         pPolicyCallbackData = IntPtr.Zero,
                         pSIPCallbackData = IntPtr.Zero,
                         dwUIChoice = Windows.Wintrust.WinTrustDataUi.None,
-                        fdwRevocationChecks = Windows.Wintrust.WTD_REVOKE.WTD_REVOKE_NONE,
+                        fdwRevocationChecks = Windows.Wintrust.WinTrustDataRevoke.None,
                         dwUnionChoice = Windows.Wintrust.WTD_CHOICE.WTD_CHOICE_FILE,
                         infoUnion = infoUnionChoice,
                         dwStateAction = Windows.Wintrust.WinTrustDataStateAction.Ignore,
