@@ -102,19 +102,19 @@ namespace Htc.Vita.Core.IO
                         Description = GetUsbDeviceStringPropertyInWindows(
                                 deviceInfoSet,
                                 ref devinfoData,
-                                Windows.Setupapi.SPDRP.SPDRP_DEVICEDESC
+                                Windows.Setupapi.SetupDeviceRegistryProperty.DeviceDesc
                         ),
                         Manufecturer = GetUsbDeviceStringPropertyInWindows(
                                 deviceInfoSet,
                                 ref devinfoData,
-                                Windows.Setupapi.SPDRP.SPDRP_MFG
+                                Windows.Setupapi.SetupDeviceRegistryProperty.Mfg
                         ),
                         SerialNumber = GetHidDeviceSerialNumberInWindows(devicePath)
                 };
                 var hardwareIds = GetUsbDeviceMultiStringPropertyInWindows(
                         deviceInfoSet,
                         ref devinfoData,
-                        Windows.Setupapi.SPDRP.SPDRP_HARDWAREID
+                        Windows.Setupapi.SetupDeviceRegistryProperty.HardwareId
                 );
                 var regex = new Regex("^(\\w{3})\\\\VID_([0-9A-F]{4})&PID_([0-9A-F]{4})", RegexOptions.IgnoreCase);
                 foreach (var hardwareId in hardwareIds)
@@ -153,7 +153,7 @@ namespace Htc.Vita.Core.IO
         private static byte[] GetUsbDevicePropertyInWindows(
                 IntPtr deviceInfoSetPtr,
                 ref Windows.Setupapi.SP_DEVINFO_DATA devinfoData,
-                Windows.Setupapi.SPDRP property,
+                Windows.Setupapi.SetupDeviceRegistryProperty property,
                 ref uint regType)
         {
             var requiredSize = 0U;
@@ -199,7 +199,7 @@ namespace Htc.Vita.Core.IO
         private static string GetUsbDeviceStringPropertyInWindows(
                 IntPtr deviceInfoSetPtr,
                 ref Windows.Setupapi.SP_DEVINFO_DATA devinfoData,
-                Windows.Setupapi.SPDRP property)
+                Windows.Setupapi.SetupDeviceRegistryProperty property)
         {
             var regType = Windows.REG_NONE;
             var bytes = GetUsbDevicePropertyInWindows(deviceInfoSetPtr, ref devinfoData, property, ref regType);
@@ -213,7 +213,7 @@ namespace Htc.Vita.Core.IO
         private static string[] GetUsbDeviceMultiStringPropertyInWindows(
                 IntPtr deviceInfoSetPtr,
                 ref Windows.Setupapi.SP_DEVINFO_DATA devinfoData,
-                Windows.Setupapi.SPDRP property)
+                Windows.Setupapi.SetupDeviceRegistryProperty property)
         {
             var regType = Windows.REG_NONE;
             var bytes = GetUsbDevicePropertyInWindows(deviceInfoSetPtr, ref devinfoData, property, ref regType);
