@@ -25,7 +25,7 @@ namespace Htc.Vita.Core.IO
                     ref classGuid,
                     null,
                     IntPtr.Zero,
-                    Windows.Setupapi.DIGCF.DIGCF_PRESENT | Windows.Setupapi.DIGCF.DIGCF_DEVICEINTERFACE
+                    Windows.Setupapi.DeviceInfoGetClassFlag.Present | Windows.Setupapi.DeviceInfoGetClassFlag.DeviceInterface
             );
             if (deviceInfoSet == Windows.INVALID_HANDLE_VALUE)
             {

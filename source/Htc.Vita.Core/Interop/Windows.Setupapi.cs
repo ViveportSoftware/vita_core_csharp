@@ -8,16 +8,17 @@ namespace Htc.Vita.Core.Interop
         internal static class Setupapi
         {
             /**
+             * DIGCF enumeration
              * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551069.aspx
              */
             [Flags]
-            internal enum DIGCF : uint
+            internal enum DeviceInfoGetClassFlag : uint
             {
-                /* DIGCF_DEFAULT         */ DIGCF_DEFAULT = 0x00000001,
-                /* DIGCF_PRESENT         */ DIGCF_PRESENT = 0x00000002,
-                /* DIGCF_ALLCLASSES      */ DIGCF_ALLCLASSES = 0x00000004,
-                /* DIGCF_PROFILE         */ DIGCF_PROFILE = 0x00000008,
-                /* DIGCF_DEVICEINTERFACE */ DIGCF_DEVICEINTERFACE = 0x00000010
+                /* DIGCF_DEFAULT         */ Default = 0x00000001,
+                /* DIGCF_PRESENT         */ Present = 0x00000002,
+                /* DIGCF_ALLCLASSES      */ AllClasses = 0x00000004,
+                /* DIGCF_PROFILE         */ Profile = 0x00000008,
+                /* DIGCF_DEVICEINTERFACE */ DeviceInterface = 0x00000010
             }
 
             /**
@@ -131,7 +132,7 @@ namespace Htc.Vita.Core.Interop
                     /* _In_opt_ const GUID   */ [In] ref Guid classGuid,
                     /* _In_opt_       PCTSTR */ [In] string enumerator,
                     /* _In_opt_       HWND   */ [In] IntPtr hwndParent,
-                    /* _In_           DWORD  */ [In] DIGCF flags
+                    /* _In_           DWORD  */ [In] DeviceInfoGetClassFlag flags
             );
 
             /**
