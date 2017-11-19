@@ -70,14 +70,15 @@ namespace Htc.Vita.Core.Interop
             }
 
             /**
+             * WTD_UI enumeration
              * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
              */
-            internal enum WTD_UI : uint
+            internal enum WinTrustDataUi : uint
             {
-                /* WTD_UI_ALL    */ WTD_UI_ALL = 1,
-                /* WTD_UI_NONE   */ WTD_UI_NONE,
-                /* WTD_UI_NOBAD  */ WTD_UI_NOBAD,
-                /* WTD_UI_NOGOOD */ WTD_UI_NOGOOD
+                /* WTD_UI_ALL    */ All = 1,
+                /* WTD_UI_NONE   */ None,
+                /* WTD_UI_NOBAD  */ NoBad,
+                /* WTD_UI_NOGOOD */ NoGood
             }
 
             /**
@@ -100,7 +101,7 @@ namespace Htc.Vita.Core.Interop
                 public /* DWORD  */ uint cbStruct;
                 public /* LPVOID */ IntPtr pPolicyCallbackData;
                 public /* LPVOID */ IntPtr pSIPCallbackData;
-                public /* DWORD  */ WTD_UI dwUIChoice;
+                public /* DWORD  */ WinTrustDataUi dwUIChoice;
                 public /* DWORD  */ WTD_REVOKE fdwRevocationChecks;
                 public /* DWORD  */ WTD_CHOICE dwUnionChoice;
                 public /* union  */ WinTrustDataUnionChoice infoUnion;

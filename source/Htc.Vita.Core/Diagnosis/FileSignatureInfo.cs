@@ -85,7 +85,7 @@ namespace Htc.Vita.Core.Diagnosis
                         cbStruct = (uint)Marshal.SizeOf(typeof(Windows.Wintrust.WinTrustData)),
                         pPolicyCallbackData = IntPtr.Zero,
                         pSIPCallbackData = IntPtr.Zero,
-                        dwUIChoice = Windows.Wintrust.WTD_UI.WTD_UI_NONE,
+                        dwUIChoice = Windows.Wintrust.WinTrustDataUi.None,
                         fdwRevocationChecks = Windows.Wintrust.WTD_REVOKE.WTD_REVOKE_NONE,
                         dwUnionChoice = Windows.Wintrust.WTD_CHOICE.WTD_CHOICE_FILE,
                         infoUnion = infoUnionChoice,
@@ -93,7 +93,7 @@ namespace Htc.Vita.Core.Diagnosis
                         hWVTStateData = IntPtr.Zero,
                         pwszURLReference = IntPtr.Zero,
                         dwProvFlags = Windows.Wintrust.WTD_PROVIDERFLAG.WTD_SAFER_FLAG,
-                        dwUIContext = Windows.Wintrust.WinTrustDataUiContext.Exe
+                        dwUIContext = Windows.Wintrust.WinTrustDataUiContext.Execute
                 };
                 var winTrustDataPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Windows.Wintrust.WinTrustData)));
                 Marshal.StructureToPtr(wintrustData, winTrustDataPtr, false);
