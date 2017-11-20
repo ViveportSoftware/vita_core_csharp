@@ -154,7 +154,7 @@ namespace Htc.Vita.Core.IO
                 IntPtr deviceInfoSetPtr,
                 ref Windows.SetupDeviceInfoData devinfoData,
                 Windows.SetupDeviceRegistryProperty property,
-                ref uint regType)
+                ref Windows.RegType regType)
         {
             var requiredSize = 0U;
             var success = Windows.SetupDiGetDeviceRegistryPropertyW(
@@ -201,9 +201,14 @@ namespace Htc.Vita.Core.IO
                 ref Windows.SetupDeviceInfoData devinfoData,
                 Windows.SetupDeviceRegistryProperty property)
         {
-            var regType = Windows.REG_NONE;
-            var bytes = GetUsbDevicePropertyInWindows(deviceInfoSetPtr, ref devinfoData, property, ref regType);
-            if (bytes == null || bytes.Length == 0 || regType != Windows.REG_SZ)
+            var regType = Windows.RegType.None;
+            var bytes = GetUsbDevicePropertyInWindows(
+                    deviceInfoSetPtr,
+                    ref devinfoData,
+                    property,
+                    ref regType
+            );
+            if (bytes == null || bytes.Length == 0 || regType != Windows.RegType.Sz)
             {
                 return string.Empty;
             }
@@ -215,9 +220,14 @@ namespace Htc.Vita.Core.IO
                 ref Windows.SetupDeviceInfoData devinfoData,
                 Windows.SetupDeviceRegistryProperty property)
         {
-            var regType = Windows.REG_NONE;
-            var bytes = GetUsbDevicePropertyInWindows(deviceInfoSetPtr, ref devinfoData, property, ref regType);
-            if (bytes == null || bytes.Length == 0 || regType != Windows.REG_MULTI_SZ)
+            var regType = Windows.RegType.None;
+            var bytes = GetUsbDevicePropertyInWindows(
+                    deviceInfoSetPtr,
+                    ref devinfoData,
+                    property,
+                    ref regType
+            );
+            if (bytes == null || bytes.Length == 0 || regType != Windows.RegType.MultiSz)
             {
                 return new string[] {};
             }

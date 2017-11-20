@@ -203,7 +203,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_      HDEVINFO         */ [In] IntPtr deviceInfoSet,
                 /* _In_      PSP_DEVINFO_DATA */ [In] ref SetupDeviceInfoData deviceInfoData,
                 /* _In_      DWORD            */ [In] SetupDeviceRegistryProperty property,
-                /* _Out_opt_ PDWORD           */ [In][Out] ref uint propertyRegDataType,
+                /* _Out_opt_ PDWORD           */ [In][Out] ref RegType propertyRegDataType,
                 /* _Out_opt_ PBYTE            */ [In][Out] byte[] propertyBuffer,
                 /* _In_      DWORD            */ [In] uint propertyBufferSize,
                 /* _Out_opt_ PDWORD           */ [In][Out] ref uint requiredSize
