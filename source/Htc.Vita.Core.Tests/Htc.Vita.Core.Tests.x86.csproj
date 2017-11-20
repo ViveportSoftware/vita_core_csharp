@@ -56,7 +56,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestCase.Config.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="TestCase.Convert.cs" />
     <Compile Include="TestCase.Dns.cs" />
     <Compile Include="TestCase.Extract.cs" />
