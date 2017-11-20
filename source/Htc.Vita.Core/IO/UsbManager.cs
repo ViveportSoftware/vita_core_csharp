@@ -27,7 +27,7 @@ namespace Htc.Vita.Core.IO
                     IntPtr.Zero,
                     Windows.DeviceInfoGetClassFlag.Present | Windows.DeviceInfoGetClassFlag.DeviceInterface
             );
-            if (deviceInfoSet == Windows.INVALID_HANDLE_VALUE)
+            if (deviceInfoSet == Windows.InvalidHandleValue)
             {
                 Log.Error("Can not find USB HID devices, error code: " + Marshal.GetLastWin32Error());
                 return deviceInfos;
@@ -254,7 +254,7 @@ namespace Htc.Vita.Core.IO
                     Windows.FileAttributeFlag.FlagOverlapped,
                     IntPtr.Zero
             );
-            if (deviceHandle == Windows.INVALID_HANDLE_VALUE)
+            if (deviceHandle == Windows.InvalidHandleValue)
             {
                 return result;
             }

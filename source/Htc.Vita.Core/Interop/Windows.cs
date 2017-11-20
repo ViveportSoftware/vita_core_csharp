@@ -4,7 +4,7 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        internal static IntPtr INVALID_HANDLE_VALUE = new IntPtr(-1);
+        internal static IntPtr /* INVALID_HANDLE_VALUE */ InvalidHandleValue = new IntPtr(-1);
 
         internal enum Error
         {
