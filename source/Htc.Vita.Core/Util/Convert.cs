@@ -4,7 +4,7 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Util
 {
-    public class Convert
+    public static class Convert
     {
         public static byte[] FromBase64String(string content)
         {

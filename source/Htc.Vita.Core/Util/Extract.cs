@@ -6,7 +6,7 @@ using Htc.Vita.Core.Runtime;
 
 namespace Htc.Vita.Core.Util
 {
-    public class Extract
+    public static class Extract
     {
         private static readonly Logger Log = Logger.GetInstance(typeof(Extract));
 

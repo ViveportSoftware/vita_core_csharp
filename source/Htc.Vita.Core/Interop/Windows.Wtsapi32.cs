@@ -5,7 +5,7 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        internal static IntPtr /* WTS_CURRENT_SERVER_HANDLE */ WindowsTerminalServiceCurrentServerHandle = IntPtr.Zero;
+        internal static readonly IntPtr /* WTS_CURRENT_SERVER_HANDLE */ WindowsTerminalServiceCurrentServerHandle = IntPtr.Zero;
 
         /**
          * WTS_CONNECTSTATE_CLASS enumeration
