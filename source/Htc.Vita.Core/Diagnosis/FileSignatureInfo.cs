@@ -108,19 +108,19 @@ namespace Htc.Vita.Core.Diagnosis
                 var success = result == 0;
                 if (!success)
                 {
-                    if (result == Windows.TRUST_E_PROVIDER_UNKNOWN)
+                    if (result == (uint) Windows.TrustError.ProviderUnknown)
                     {
                         Log.Error("WinVerifyTrust result: TRUST_E_PROVIDER_UNKNOWN");
                     }
-                    else if (result == Windows.TRUST_E_ACTION_UNKNOWN)
+                    else if (result == (uint) Windows.TrustError.ActionUnknown)
                     {
                         Log.Error("WinVerifyTrust result: TRUST_E_ACTION_UNKNOWN");
                     }
-                    else if (result == Windows.TRUST_E_SUBJECT_FORM_UNKNOWN)
+                    else if (result == (uint) Windows.TrustError.SubjectFormUnknown)
                     {
                         Log.Error("WinVerifyTrust result: TRUST_E_SUBJECT_FORM_UNKNOWN");
                     }
-                    else if (result == Windows.TRUST_E_SUBJECT_NOT_TRUSTED)
+                    else if (result == (uint) Windows.TrustError.SubjectNotTrusted)
                     {
                         Log.Warn("Can not trust " + fileInfo.FullName);
                     }

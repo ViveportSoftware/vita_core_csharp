@@ -6,11 +6,6 @@ namespace Htc.Vita.Core.Interop
     {
         internal static IntPtr INVALID_HANDLE_VALUE = new IntPtr(-1);
 
-        internal static uint TRUST_E_PROVIDER_UNKNOWN = 0x800B0001;
-        internal static uint TRUST_E_ACTION_UNKNOWN = 0x800B0002;
-        internal static uint TRUST_E_SUBJECT_FORM_UNKNOWN = 0x800B0003;
-        internal static uint TRUST_E_SUBJECT_NOT_TRUSTED = 0x800B0004;
-
         internal enum Error
         {
             /* ERROR_INSUFFICIENT_BUFFER     (122,  0x7a) */ InsufficientBuffer = 0x7a,
@@ -35,6 +30,14 @@ namespace Htc.Vita.Core.Interop
             /* REG_RESOURCE_REQUIREMENTS_LIST */ ResourceRequirementsList = 10,
             /* REG_QWORD                      */ Qword = 11,
             /* REG_QWORD_LITTLE_ENDIAN        */ QwordLittleEndian = Qword
+        }
+
+        internal enum TrustError : uint
+        {
+            /* TRUST_E_PROVIDER_UNKNOWN     */ ProviderUnknown = 0x800B0001,
+            /* TRUST_E_ACTION_UNKNOWN       */ ActionUnknown = 0x800B0002,
+            /* TRUST_E_SUBJECT_FORM_UNKNOWN */ SubjectFormUnknown = 0x800B0003,
+            /* TRUST_E_SUBJECT_NOT_TRUSTED  */ SubjectNotTrusted = 0x800B0004
         }
     }
 }
