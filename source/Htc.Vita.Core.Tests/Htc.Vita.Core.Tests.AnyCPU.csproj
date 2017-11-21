@@ -61,7 +61,7 @@
     <Compile Include="Dns.cs" />
     <Compile Include="Extract.cs" />
     <Compile Include="FileSignatureInfo.cs" />
-    <Compile Include="TestCase.FileSystemManager.cs" />
+    <Compile Include="FileSystemManager.cs" />
     <Compile Include="TestCase.JsonFactory.cs" />
     <Compile Include="TestCase.Logger.cs" />
     <Compile Include="TestCase.Md5.cs" />
