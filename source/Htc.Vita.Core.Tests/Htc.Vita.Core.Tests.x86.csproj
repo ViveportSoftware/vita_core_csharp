@@ -62,7 +62,7 @@
     <Compile Include="Extract.cs" />
     <Compile Include="FileSignatureInfo.cs" />
     <Compile Include="FileSystemManager.cs" />
-    <Compile Include="TestCase.JsonFactory.cs" />
+    <Compile Include="JsonFactory.cs" />
     <Compile Include="TestCase.Logger.cs" />
     <Compile Include="TestCase.Md5.cs" />
     <Compile Include="TestCase.Platform.cs" />
