@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public partial class TestCase
+    public static class Dns
     {
         [Fact]
         public static void Dns_Default_0_GetInstance()

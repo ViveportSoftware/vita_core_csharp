@@ -1,15 +1,14 @@
 ﻿using System;
 using System.IO;
 using Htc.Vita.Core.Runtime;
-using Htc.Vita.Core.Util;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public partial class TestCase
+    public static class Extract
     {
         [Fact]
-        public static void Extract_0_FromFileToIconInWindows()
+        public static void Default_0_FromFileToIconInWindows()
         {
             if (!Platform.IsWindows)
             {
@@ -22,7 +21,7 @@ namespace Htc.Vita.Core.Tests
             var intermediatePathName = "Icon-" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow);
             target = Path.Combine(target, intermediatePathName, intermediatePathName, "shell32.ico");
             var targetFileInfo = new FileInfo(target);
-            Assert.True(Extract.FromFileToIcon(sourceFileInfo, targetFileInfo));
+            Assert.True(Util.Extract.FromFileToIcon(sourceFileInfo, targetFileInfo));
             Assert.True(targetFileInfo.Exists);
         }
     }
