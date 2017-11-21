@@ -60,7 +60,7 @@
     <Compile Include="Convert.cs" />
     <Compile Include="Dns.cs" />
     <Compile Include="Extract.cs" />
-    <Compile Include="TestCase.FileSignatureInfo.cs" />
+    <Compile Include="FileSignatureInfo.cs" />
     <Compile Include="TestCase.FileSystemManager.cs" />
     <Compile Include="TestCase.JsonFactory.cs" />
     <Compile Include="TestCase.Logger.cs" />

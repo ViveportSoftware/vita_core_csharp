@@ -1,11 +1,10 @@
 ﻿using System.IO;
-using Htc.Vita.Core.Diagnosis;
 using Htc.Vita.Core.Runtime;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public partial class TestCase
+    public static class FileSignatureInfo
     {
         [Fact]
         public static void FileSignatureInfo_Default_0_GetSignatureInfo()
@@ -24,7 +23,7 @@ namespace Htc.Vita.Core.Tests
                 fileInfo = new FileInfo("C:\\Windows\\System32\\svchost.exe");
             }
             Assert.True(fileInfo.Exists);
-            var fileSignatureInfo = FileSignatureInfo.GetSignatureInfo(fileInfo);
+            var fileSignatureInfo = Diagnosis.FileSignatureInfo.GetSignatureInfo(fileInfo);
             Assert.NotNull(fileSignatureInfo);
             Assert.True(!string.IsNullOrEmpty(fileSignatureInfo.IssuerDistinguishedName));
             Assert.True(fileSignatureInfo.IssuerDistinguishedName.Contains("O="));
@@ -45,7 +44,7 @@ namespace Htc.Vita.Core.Tests
             }
             var fileInfo = new FileInfo("C:\\Windows\\System32\\notepad.exe");
             Assert.True(fileInfo.Exists);
-            var fileSignatureInfo = FileSignatureInfo.GetSignatureInfo(fileInfo);
+            var fileSignatureInfo = Diagnosis.FileSignatureInfo.GetSignatureInfo(fileInfo);
             Assert.NotNull(fileSignatureInfo);
             Assert.True(string.IsNullOrEmpty(fileSignatureInfo.IssuerDistinguishedName));
             Assert.True(string.IsNullOrEmpty(fileSignatureInfo.IssuerName));
