@@ -4,10 +4,10 @@ using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public partial class TestCase
+    public static class Convert
     {
         [Fact]
-        public static void Convert_0_FromBase64String()
+        public static void Default_0_FromBase64String()
         {
             var bytes1 = Encoding.UTF8.GetBytes("123");
             Assert.NotNull(bytes1);
@@ -19,7 +19,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Convert_1_FromHexString()
+        public static void Default_1_FromHexString()
         {
             var bytes1 = Encoding.UTF8.GetBytes("123");
             Assert.NotNull(bytes1);
@@ -31,7 +31,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Convert_2_ToBool()
+        public static void Default_2_ToBool()
         {
             Assert.False(Util.Convert.ToBool(null));
             Assert.False(Util.Convert.ToBool(""));
@@ -56,7 +56,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Convert_3_ToDateTime()
+        public static void Default_3_ToDateTime()
         {
             var dateTime = Util.Convert.ToDateTime("1503779659135.07");
             Assert.Equal(2017, dateTime.Year);
@@ -65,7 +65,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Convert_4_ToTimestampInMilli()
+        public static void Default_4_ToTimestampInMilli()
         {
             var time = string.Empty + Util.Convert.ToTimestampInMilli(new DateTime(2017, 8, 26));
             Assert.True(time.Length == 13);
