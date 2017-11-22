@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Htc.Vita.Core.Runtime;
 using Htc.Vita.Core.Shell;
 using Xunit;
 
@@ -11,7 +10,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void ShellLink_0_CreateInWindows()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }

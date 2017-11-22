@@ -11,7 +11,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void ProcessManager_Default_0_GetProcesses()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }
@@ -29,7 +29,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void ProcessManager_Default_1_GetProcessesByFirstActiveUser()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }
@@ -46,7 +46,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void ProcessManager_Default_2_KillProcessById()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }

@@ -9,7 +9,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void UserManager_Default_0_GetActiveUser()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }

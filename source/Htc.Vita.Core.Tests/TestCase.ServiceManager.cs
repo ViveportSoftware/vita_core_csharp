@@ -1,5 +1,4 @@
-﻿using System;
-using Htc.Vita.Core.Runtime;
+﻿using Htc.Vita.Core.Runtime;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
@@ -9,7 +8,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void ServiceManager_Default_0_CheckIfExists()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }
@@ -22,7 +21,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void ServiceManager_Default_1_QueryStartType()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }
@@ -39,7 +38,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void ServiceManager_Default_2_ChangeStartType()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }
@@ -63,7 +62,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void ServiceManager_Default_3_Start()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }

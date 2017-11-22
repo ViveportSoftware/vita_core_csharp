@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Htc.Vita.Core.Runtime;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
@@ -10,7 +9,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_0_FromFileToIconInWindows()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }

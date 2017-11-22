@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Htc.Vita.Core.Runtime;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
@@ -9,7 +8,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_0_GetSignatureInfo()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }
@@ -38,7 +37,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_0_GetSignatureInfo_WithNotepad()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }

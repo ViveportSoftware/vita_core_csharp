@@ -1,5 +1,4 @@
 ﻿using System;
-using Htc.Vita.Core.Runtime;
 using Htc.Vita.Core.Util;
 using Xunit;
 
@@ -10,7 +9,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Registry_0_GetStringValue32_UnderHKCR()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }
@@ -23,7 +22,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Registry_0_GetStringValue32_UnderHKLM()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }
@@ -35,7 +34,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Registry_0_GetStringValue64_UnderHKCR()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }
@@ -48,7 +47,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Registry_0_GetStringValue64_UnderHKLM()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }
@@ -61,7 +60,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Registry_0_GetStringValue_UnderHKCR()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }
@@ -74,7 +73,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Registry_0_GetStringValue_UnderHKLM()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }
@@ -167,7 +166,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Registry_4_GetIntValue32_UnderHKCR()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }
@@ -178,7 +177,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Registry_4_GetIntValue64_UnderHKCR()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }
@@ -189,7 +188,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Registry_4_GetIntValue_UnderHKCR()
         {
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 return;
             }

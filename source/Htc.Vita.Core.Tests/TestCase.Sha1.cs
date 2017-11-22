@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using Htc.Vita.Core.Crypto;
-using Htc.Vita.Core.Runtime;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
@@ -32,7 +31,7 @@ namespace Htc.Vita.Core.Tests
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
             string path = @"%USERPROFILE%\TestData.Sha1.txt";
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
             }
@@ -55,7 +54,7 @@ namespace Htc.Vita.Core.Tests
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
             string path = @"%USERPROFILE%\TestData.Sha1.txt";
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
             }
@@ -80,7 +79,7 @@ namespace Htc.Vita.Core.Tests
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
             string path = @"%USERPROFILE%\TestData.Sha1.txt";
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
             }
@@ -103,7 +102,7 @@ namespace Htc.Vita.Core.Tests
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
             string path = @"%USERPROFILE%\TestData.Sha1.txt";
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
             }
@@ -128,7 +127,7 @@ namespace Htc.Vita.Core.Tests
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
             string path = @"%USERPROFILE%\TestData.Sha1.txt";
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
             }

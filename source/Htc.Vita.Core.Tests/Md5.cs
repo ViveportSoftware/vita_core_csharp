@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Htc.Vita.Core.Runtime;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
@@ -31,7 +30,7 @@ namespace Htc.Vita.Core.Tests
             var md5 = Crypto.Md5.GetInstance();
             Assert.NotNull(md5);
             string path = @"%USERPROFILE%\TestData.Md5.txt";
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Md5.txt";
             }
@@ -54,7 +53,7 @@ namespace Htc.Vita.Core.Tests
             var md5 = Crypto.Md5.GetInstance();
             Assert.NotNull(md5);
             string path = @"%USERPROFILE%\TestData.Md5.txt";
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Md5.txt";
             }
@@ -79,7 +78,7 @@ namespace Htc.Vita.Core.Tests
             var md5 = Crypto.Md5.GetInstance();
             Assert.NotNull(md5);
             string path = @"%USERPROFILE%\TestData.Md5.txt";
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Md5.txt";
             }
@@ -102,7 +101,7 @@ namespace Htc.Vita.Core.Tests
             var md5 = Crypto.Md5.GetInstance();
             Assert.NotNull(md5);
             string path = @"%USERPROFILE%\TestData.Md5.txt";
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Md5.txt";
             }
@@ -127,7 +126,7 @@ namespace Htc.Vita.Core.Tests
             var md5 = Crypto.Md5.GetInstance();
             Assert.NotNull(md5);
             string path = @"%USERPROFILE%\TestData.Md5.txt";
-            if (!Platform.IsWindows)
+            if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Md5.txt";
             }
