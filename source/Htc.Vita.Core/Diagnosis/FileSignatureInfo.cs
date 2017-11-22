@@ -56,7 +56,7 @@ namespace Htc.Vita.Core.Diagnosis
             return new FileSignatureInfo(fileInfo);
         }
 
-        internal class Authenticode
+        internal static class Authenticode
         {
             public static bool IsVerified(FileInfo fileInfo)
             {
