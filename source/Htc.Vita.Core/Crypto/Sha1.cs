@@ -228,7 +228,7 @@ namespace Htc.Vita.Core.Crypto
             var result = false;
             try
             {
-                result = checksum.ToLower().Equals(OnGenerateInHex(file));
+                result = checksum.ToLowerInvariant().Equals(OnGenerateInHex(file));
             }
             catch (Exception e)
             {
@@ -247,7 +247,7 @@ namespace Htc.Vita.Core.Crypto
             var result = false;
             try
             {
-                result = checksum.ToLower().Equals(OnGenerateInHex(content));
+                result = checksum.ToLowerInvariant().Equals(OnGenerateInHex(content));
             }
             catch (Exception e)
             {
