@@ -55,7 +55,6 @@
     <Compile Include="..\generated\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Convert.cs" />
     <Compile Include="Dns.cs" />
@@ -68,7 +67,8 @@
     <Compile Include="Platform.cs" />
     <Compile Include="PreferenceFactory.cs" />
     <Compile Include="ProcessManager.cs" />
-    <Compile Include="TestCase.Registry.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registry.cs" />
     <Compile Include="TestCase.ServiceManager.cs" />
     <Compile Include="TestCase.Sha1.cs" />
     <Compile Include="TestCase.ShellLink.cs" />
