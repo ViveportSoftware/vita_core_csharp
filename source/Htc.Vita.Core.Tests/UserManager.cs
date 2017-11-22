@@ -1,19 +1,18 @@
 ﻿using System;
-using Htc.Vita.Core.Runtime;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public partial class TestCase
+    public static class UserManager
     {
         [Fact]
-        public static void UserManager_Default_0_GetActiveUser()
+        public static void Default_0_GetFirstActiveUser()
         {
             if (!Runtime.Platform.IsWindows)
             {
                 return;
             }
-            var username = UserManager.GetFirstActiveUser();
+            var username = Runtime.UserManager.GetFirstActiveUser();
             Console.WriteLine("username: " + username);
             Assert.True(username != null && username.Length >= 3);
         }
