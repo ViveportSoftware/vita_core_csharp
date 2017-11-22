@@ -158,8 +158,9 @@ namespace Htc.Vita.Core.Diagnosis
                 }
             }
 
-            public DistinguishedName(string content)
+            public DistinguishedName(string data)
             {
+                var content = data;
                 content = !string.IsNullOrWhiteSpace(content) ? content.Trim() : string.Empty;
 
                 while (true)

@@ -136,15 +136,21 @@ namespace Htc.Vita.Core.Runtime
             return result;
         }
 
-        internal static bool KillWindowsProcessById(int processId, string serverName = null)
+        internal static bool KillWindowsProcessById(int processId)
         {
-            if (string.IsNullOrWhiteSpace(serverName))
+            return KillWindowsProcessById(processId, null);
+        }
+
+        internal static bool KillWindowsProcessById(int processId, string serverName)
+        {
+            var machineName = serverName;
+            if (string.IsNullOrWhiteSpace(machineName))
             {
-                serverName = Environment.MachineName;
+                machineName = Environment.MachineName;
             }
 
             var result = false;
-            var serverHandle = Windows.WTSOpenServerW(serverName);
+            var serverHandle = Windows.WTSOpenServerW(machineName);
 
             try
             {
