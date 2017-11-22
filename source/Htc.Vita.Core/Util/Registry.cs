@@ -104,7 +104,12 @@ namespace Htc.Vita.Core.Util
             return false;
         }
 
-        public static int GetDwordValue32(Hive root, string keyPath, string valueName, int defaultValue = 0)
+        public static int GetDwordValue32(Hive root, string keyPath, string valueName)
+        {
+            return GetDwordValue32(root, keyPath, valueName, 0);
+        }
+
+        public static int GetDwordValue32(Hive root, string keyPath, string valueName, int defaultValue)
         {
             if (string.IsNullOrWhiteSpace(keyPath))
             {
@@ -142,7 +147,12 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
-        public static int GetDwordValue64(Hive root, string keyPath, string valueName, int defaultValue = 0)
+        public static int GetDwordValue64(Hive root, string keyPath, string valueName)
+        {
+            return GetDwordValue64(root, keyPath, valueName, 0);
+        }
+
+        public static int GetDwordValue64(Hive root, string keyPath, string valueName, int defaultValue)
         {
             if (string.IsNullOrWhiteSpace(keyPath))
             {
@@ -180,7 +190,12 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
-        public static int GetIntValue(Hive root, string keyPath, string valueName, int defaultValue = 0)
+        public static int GetIntValue(Hive root, string keyPath, string valueName)
+        {
+            return GetIntValue(root, keyPath, valueName, 0);
+        }
+
+        public static int GetIntValue(Hive root, string keyPath, string valueName, int defaultValue)
         {
             var result = Convert.ToInt32(GetStringValue(root, keyPath, valueName), defaultValue);
             if (result != defaultValue)
@@ -195,12 +210,22 @@ namespace Htc.Vita.Core.Util
             return GetDwordValue32(root, keyPath, valueName, result);
         }
 
-        public static string GetStringValue(Hive root, string keyPath, string valueName, string defaultValue = null)
+        public static string GetStringValue(Hive root, string keyPath, string valueName)
+        {
+            return GetStringValue(root, keyPath, valueName, null);
+        }
+
+        public static string GetStringValue(Hive root, string keyPath, string valueName, string defaultValue)
         {
             return (GetStringValue64(root, keyPath, valueName) ?? GetStringValue32(root, keyPath, valueName)) ?? defaultValue;
         }
 
-        public static string GetStringValue32(Hive root, string keyPath, string valueName, string defaultValue = null)
+        public static string GetStringValue32(Hive root, string keyPath, string valueName)
+        {
+            return GetStringValue32(root, keyPath, valueName, null);
+        }
+
+        public static string GetStringValue32(Hive root, string keyPath, string valueName, string defaultValue)
         {
             if (string.IsNullOrWhiteSpace(keyPath))
             {
@@ -237,7 +262,12 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
-        public static string GetStringValue64(Hive root, string keyPath, string valueName, string defaultValue = null)
+        public static string GetStringValue64(Hive root, string keyPath, string valueName)
+        {
+            return GetStringValue64(root, keyPath, valueName, null);
+        }
+
+        public static string GetStringValue64(Hive root, string keyPath, string valueName, string defaultValue)
         {
             if (string.IsNullOrWhiteSpace(keyPath))
             {

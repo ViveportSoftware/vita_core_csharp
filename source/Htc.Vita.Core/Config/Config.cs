@@ -102,7 +102,12 @@ namespace Htc.Vita.Core.Config
             return result;
         }
 
-        public string Get(string key, string defaultValue = null)
+        public string Get(string key)
+        {
+            return Get(key, null);
+        }
+
+        public string Get(string key, string defaultValue)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -122,22 +127,42 @@ namespace Htc.Vita.Core.Config
             return result ?? defaultValue;
         }
 
-        public bool GetBool(string key, bool defaultValue = false)
+        public bool GetBool(string key)
+        {
+            return GetBool(key, false);
+        }
+
+        public bool GetBool(string key, bool defaultValue)
         {
             return Util.Convert.ToBool(Get(key), defaultValue);
         }
 
-        public double GetDouble(string key, double defaultValue = 0.0D)
+        public double GetDouble(string key)
+        {
+            return GetDouble(key, 0.0D);
+        }
+
+        public double GetDouble(string key, double defaultValue)
         {
             return Util.Convert.ToDouble(Get(key), defaultValue);
         }
 
-        public int GetInt(string key, int defaultValue = 0)
+        public int GetInt(string key)
+        {
+            return GetInt(key, 0);
+        }
+
+        public int GetInt(string key, int defaultValue)
         {
             return Util.Convert.ToInt32(Get(key), defaultValue);
         }
 
-        public float GetLong(string key, long defaultValue = 0L)
+        public long GetLong(string key)
+        {
+            return GetLong(key, 0L);
+        }
+
+        public long GetLong(string key, long defaultValue)
         {
             return Util.Convert.ToInt64(Get(key), defaultValue);
         }

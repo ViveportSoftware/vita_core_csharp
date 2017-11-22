@@ -40,7 +40,12 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
-        public static bool ToBool(string content, bool defaultValue = false)
+        public static bool ToBool(string content)
+        {
+            return ToBool(content, false);
+        }
+
+        public static bool ToBool(string content, bool defaultValue)
         {
             if (string.IsNullOrWhiteSpace(content))
             {
@@ -59,7 +64,12 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
-        public static double ToDouble(string content, double defaultValue = 0.0D)
+        public static double ToDouble(string content)
+        {
+            return ToDouble(content, 0.0D);
+        }
+
+        public static double ToDouble(string content, double defaultValue)
         {
             if (string.IsNullOrWhiteSpace(content))
             {
@@ -79,7 +89,12 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
-        public static int ToInt32(string content, int defaultValue = 0)
+        public static int ToInt32(string content)
+        {
+            return ToInt32(content, 0);
+        }
+
+        public static int ToInt32(string content, int defaultValue)
         {
             if (string.IsNullOrWhiteSpace(content))
             {
@@ -98,7 +113,12 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
-        public static long ToInt64(string content, long defaultValue = 0L)
+        public static long ToInt64(string content)
+        {
+            return ToInt64(content, 0L);
+        }
+
+        public static long ToInt64(string content, long defaultValue)
         {
             if (string.IsNullOrWhiteSpace(content))
             {

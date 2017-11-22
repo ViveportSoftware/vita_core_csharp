@@ -41,7 +41,12 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
-        public bool ParseBool(string key, bool defaultValue = false)
+        public bool ParseBool(string key)
+        {
+            return ParseBool(key, false);
+        }
+
+        public bool ParseBool(string key, bool defaultValue)
         {
             var result = defaultValue;
             try
@@ -55,7 +60,12 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
-        public double ParseDouble(string key, double defaultValue = 0.0D)
+        public double ParseDouble(string key)
+        {
+            return ParseDouble(key, 0.0D);
+        }
+
+        public double ParseDouble(string key, double defaultValue)
         {
             var result = defaultValue;
             try
@@ -69,7 +79,12 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
-        public float ParseFloat(string key, float defaultValue = 0.0F)
+        public float ParseFloat(string key)
+        {
+            return ParseFloat(key, 0.0F);
+        }
+
+        public float ParseFloat(string key, float defaultValue)
         {
             var result = defaultValue;
             try
@@ -83,7 +98,12 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
-        public int ParseInt(string key, int defaultValue = 0)
+        public int ParseInt(string key)
+        {
+            return ParseInt(key, 0);
+        }
+
+        public int ParseInt(string key, int defaultValue)
         {
             var result = defaultValue;
             try
@@ -97,7 +117,12 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
-        public long ParseLong(string key, long defaultValue = 0L)
+        public long ParseLong(string key)
+        {
+            return ParseLong(key, 0L);
+        }
+
+        public long ParseLong(string key, long defaultValue)
         {
             var result = defaultValue;
             try
@@ -111,7 +136,12 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
-        public string ParseString(string key, string defaultValue = null)
+        public string ParseString(string key)
+        {
+            return ParseString(key, null);
+        }
+
+        public string ParseString(string key, string defaultValue)
         {
             var result = defaultValue;
             try

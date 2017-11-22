@@ -236,7 +236,12 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
-        public bool ParseBool(int index, bool defaultValue = false)
+        public bool ParseBool(int index)
+        {
+            return ParseBool(index, false);
+        }
+
+        public bool ParseBool(int index, bool defaultValue)
         {
             var result = defaultValue;
             try
@@ -250,7 +255,12 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
-        public double ParseDouble(int index, double defaultValue = 0.0D)
+        public double ParseDouble(int index)
+        {
+            return ParseDouble(index, 0.0D);
+        }
+
+        public double ParseDouble(int index, double defaultValue)
         {
             var result = defaultValue;
             try
@@ -264,7 +274,12 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
-        public float ParseFloat(int index, float defaultValue = 0.0F)
+        public float ParseFloat(int index)
+        {
+            return ParseFloat(index, 0.0F);
+        }
+
+        public float ParseFloat(int index, float defaultValue)
         {
             var result = defaultValue;
             try
@@ -278,7 +293,12 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
-        public int ParseInt(int index, int defaultValue = 0)
+        public int ParseInt(int index)
+        {
+            return ParseInt(index, 0);
+        }
+
+        public int ParseInt(int index, int defaultValue)
         {
             var result = defaultValue;
             try
@@ -292,7 +312,12 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
-        public long ParseLong(int index, long defaultValue = 0L)
+        public long ParseLong(int index)
+        {
+            return ParseLong(index, 0L);
+        }
+
+        public long ParseLong(int index, long defaultValue)
         {
             var result = defaultValue;
             try
@@ -306,7 +331,12 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
-        public string ParseString(int index, string defaultValue = null)
+        public string ParseString(int index)
+        {
+            return ParseString(index, null);
+        }
+
+        public string ParseString(int index, string defaultValue)
         {
             var result = defaultValue;
             try
