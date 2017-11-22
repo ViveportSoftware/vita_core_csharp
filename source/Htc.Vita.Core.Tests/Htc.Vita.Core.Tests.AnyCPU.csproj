@@ -74,7 +74,7 @@
     <Compile Include="ShellLink.cs" />
     <Compile Include="UsbManager.cs" />
     <Compile Include="UserManager.cs" />
-    <Compile Include="TestCase.WebProxyFactory.cs" />
+    <Compile Include="WebProxyFactory.cs" />
     <Compile Include="TestCase.WebRequestFactory.cs" />
   </ItemGroup>
   <ItemGroup>
