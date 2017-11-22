@@ -66,7 +66,7 @@
     <Compile Include="Logger.cs" />
     <Compile Include="Md5.cs" />
     <Compile Include="Platform.cs" />
-    <Compile Include="TestCase.PreferenceFactory.cs" />
+    <Compile Include="PreferenceFactory.cs" />
     <Compile Include="TestCase.ProcessManager.cs" />
     <Compile Include="TestCase.Registry.cs" />
     <Compile Include="TestCase.ServiceManager.cs" />
