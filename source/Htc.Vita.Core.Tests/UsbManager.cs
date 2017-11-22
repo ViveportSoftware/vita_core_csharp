@@ -1,19 +1,18 @@
 ﻿using System;
-using Htc.Vita.Core.IO;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public partial class TestCase
+    public static class UsbManager
     {
         [Fact]
-        public static void UsbManager_Default_0_GetHidDevices()
+        public static void Default_0_GetHidDevices()
         {
             if (!Runtime.Platform.IsWindows)
             {
                 return;
             }
-            var deviceInfos = UsbManager.GetHidDevices();
+            var deviceInfos = IO.UsbManager.GetHidDevices();
             Assert.NotNull(deviceInfos);
             foreach (var deviceInfo in deviceInfos) {
                 Console.WriteLine("deviceInfo.Path: \"" + deviceInfo.Path + "\"");
