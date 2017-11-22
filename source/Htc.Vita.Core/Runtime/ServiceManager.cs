@@ -425,14 +425,14 @@ namespace Htc.Vita.Core.Runtime
             PausePending = 7,
             Paused = 8
         }
-    }
 
-    public class ServiceInfo
-    {
-        public string ServiceName { get; set; }
-        public ServiceManager.CurrentState CurrentState { get; set; } = ServiceManager.CurrentState.Unknown;
-        public ServiceManager.StartType StartType { get; set; } = ServiceManager.StartType.Unknown;
-        public int ErrorCode { get; set; }
-        public string ErrorMessage { get; set; }
+        public class ServiceInfo
+        {
+            public string ServiceName { get; set; }
+            public CurrentState CurrentState { get; set; } = CurrentState.Unknown;
+            public StartType StartType { get; set; } = StartType.Unknown;
+            public int ErrorCode { get; set; }
+            public string ErrorMessage { get; set; }
+        }
     }
 }
