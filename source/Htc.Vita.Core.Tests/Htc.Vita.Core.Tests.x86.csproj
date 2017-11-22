@@ -71,7 +71,7 @@
     <Compile Include="Registry.cs" />
     <Compile Include="ServiceManager.cs" />
     <Compile Include="Sha1.cs" />
-    <Compile Include="TestCase.ShellLink.cs" />
+    <Compile Include="ShellLink.cs" />
     <Compile Include="TestCase.UsbManager.cs" />
     <Compile Include="TestCase.UserManager.cs" />
     <Compile Include="TestCase.WebProxyFactory.cs" />
