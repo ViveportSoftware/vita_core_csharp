@@ -34,7 +34,12 @@ namespace Htc.Vita.Core.Runtime
             return GetProcesses(null);
         }
 
-        public static List<ProcessInfo> GetProcesses(string username, string serverName = null)
+        public static List<ProcessInfo> GetProcesses(string username)
+        {
+            return GetProcesses(username, null);
+        }
+
+        public static List<ProcessInfo> GetProcesses(string username, string serverName)
         {
             var result = new List<ProcessInfo>();
 
@@ -65,15 +70,16 @@ namespace Htc.Vita.Core.Runtime
             return KillWindowsProcessById(processId);
         }
 
-        internal static List<WindowsProcessInfo> GetWindowsProcesses(string serverName = null)
+        internal static List<WindowsProcessInfo> GetWindowsProcesses(string serverName)
         {
-            if (string.IsNullOrWhiteSpace(serverName))
+            var machineName = serverName;
+            if (string.IsNullOrWhiteSpace(machineName))
             {
-                serverName = Environment.MachineName;
+                machineName = Environment.MachineName;
             }
 
             var result = new List<WindowsProcessInfo>();
-            var serverHandle = Windows.WTSOpenServerW(serverName);
+            var serverHandle = Windows.WTSOpenServerW(machineName);
 
             try
             {

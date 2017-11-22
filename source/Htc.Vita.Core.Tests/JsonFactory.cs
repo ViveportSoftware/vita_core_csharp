@@ -197,7 +197,6 @@ namespace Htc.Vita.Core.Tests
             classList.Add(class2);
             var result = jsonFactory.SerializeObject(classList);
             Assert.NotNull(result);
-            // Console.WriteLine("Serialized string: " + result);
             Assert.Equal("[{\"TestBool1\":true,\"TestInt1\":3,\"TestString1\":\"test\"},{\"TestBool1\":false,\"TestInt1\":5,\"TestString1\":null}]", result);
         }
 
@@ -214,7 +213,6 @@ namespace Htc.Vita.Core.Tests
             };
             var result = jsonFactory.SerializeObject(dict);
             Assert.NotNull(result);
-            // Console.WriteLine("Serialized string: " + result);
             Assert.Equal("{\"testKey0\":\"testValue0\",\"testKey1\":\"testValue1\",\"testKey2\":\"testValue2\"}", result);
         }
 

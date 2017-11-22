@@ -88,11 +88,16 @@ namespace Htc.Vita.Core.Preference
             return instance;
         }
 
-        public Preferences LoadPreferences(string label = "")
+        public Preferences LoadPreferences()
         {
-            if (string.IsNullOrEmpty(label))
+            return LoadPreferences("");
+        }
+
+        public Preferences LoadPreferences(string label)
+        {
+            if (string.IsNullOrWhiteSpace(label))
             {
-                label = "default";
+                OnLoadPreferences("default");
             }
             return OnLoadPreferences(label);
         }

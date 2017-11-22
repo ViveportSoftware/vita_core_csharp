@@ -29,7 +29,12 @@ namespace Htc.Vita.Core.Net
             Logger.GetInstance().Info("Registered default dns type to " + _defaultType);
         }
 
-        public static Dns GetInstance(string resolver = "")
+        public static Dns GetInstance()
+        {
+            return GetInstance("");
+        }
+
+        public static Dns GetInstance(string resolver)
         {
             Dns instance;
             try
@@ -45,7 +50,12 @@ namespace Htc.Vita.Core.Net
             return instance;
         }
 
-        public static Dns GetInstance<T>(string resolver = "") where T : Dns
+        public static Dns GetInstance<T>() where T : Dns
+        {
+            return GetInstance<T>("");
+        }
+
+        public static Dns GetInstance<T>(string resolver) where T : Dns
         {
             Dns instance;
             try

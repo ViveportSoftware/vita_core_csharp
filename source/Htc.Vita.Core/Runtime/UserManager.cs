@@ -12,7 +12,12 @@ namespace Htc.Vita.Core.Runtime
     {
         private static readonly Logger Log = Logger.GetInstance(typeof(UserManager));
 
-        public static string GetFirstActiveUser(string serverName = null)
+        public static string GetFirstActiveUser()
+        {
+            return GetFirstActiveUser(null);
+        }
+
+        public static string GetFirstActiveUser(string serverName)
         {
             var windowsUsers = GetWindowsUsers(serverName);
             return (from windowsUser
@@ -22,7 +27,12 @@ namespace Htc.Vita.Core.Runtime
             ).FirstOrDefault();
         }
 
-        internal static string GetWindowsUsernameBySid(string userSid, string serverName = null)
+        internal static string GetWindowsUsernameBySid(string userSid)
+        {
+            return GetWindowsUsernameBySid(userSid, null);
+        }
+
+        internal static string GetWindowsUsernameBySid(string userSid, string serverName)
         {
             if (string.IsNullOrWhiteSpace(userSid))
             {
@@ -76,15 +86,21 @@ namespace Htc.Vita.Core.Runtime
             return result;
         }
 
-        internal static List<WindowsUserInfo> GetWindowsUsers(string serverName = null)
+        internal static List<WindowsUserInfo> GetWindowsUsers()
         {
-            if (string.IsNullOrWhiteSpace(serverName))
+            return GetWindowsUsers(null);
+        }
+
+        internal static List<WindowsUserInfo> GetWindowsUsers(string serverName)
+        {
+            var machineName = serverName;
+            if (string.IsNullOrWhiteSpace(machineName))
             {
-                serverName = Environment.MachineName;
+                machineName = Environment.MachineName;
             }
 
             var results = new List<WindowsUserInfo>();
-            var serverHandle = Windows.WTSOpenServerW(serverName);
+            var serverHandle = Windows.WTSOpenServerW(machineName);
 
             try
             {

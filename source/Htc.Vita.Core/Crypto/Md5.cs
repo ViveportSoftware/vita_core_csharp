@@ -152,16 +152,13 @@ namespace Htc.Vita.Core.Crypto
                 return false;
             }
 
-            switch (checksum.Length)
+            if (checksum.Length == Base64Length)
             {
-                case Base64Length:
-                {
-                    return ValidateInBase64(file, checksum);
-                }
-                case HexLength:
-                {
-                    return ValidateInHex(file, checksum);
-                }
+                return ValidateInBase64(file, checksum);
+            }
+            if (checksum.Length == HexLength)
+            {
+                return ValidateInHex(file, checksum);
             }
             return false;
         }

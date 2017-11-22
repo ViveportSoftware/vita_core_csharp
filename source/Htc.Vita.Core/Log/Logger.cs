@@ -27,7 +27,12 @@ namespace Htc.Vita.Core.Log
             return GetInstance(name);
         }
 
-        public static Logger GetInstance(string name = "")
+        public static Logger GetInstance()
+        {
+            return GetInstance("");
+        }
+
+        public static Logger GetInstance(string name)
         {
             Logger instance;
             try
@@ -53,7 +58,12 @@ namespace Htc.Vita.Core.Log
             return GetInstance<T>(name);
         }
 
-        public static Logger GetInstance<T>(string name = "") where T : Logger
+        public static Logger GetInstance<T>() where T : Logger
+        {
+            return GetInstance<T>("");
+        }
+
+        public static Logger GetInstance<T>(string name) where T : Logger
         {
             Logger instance;
             try

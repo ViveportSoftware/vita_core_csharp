@@ -78,7 +78,7 @@ namespace Htc.Vita.Core.Log
 
         protected override void OnShutdown()
         {
-            Console.WriteLine("Shutdown the logger ...");
+            Console.Error.WriteLine("Shutdown the logger ...");
         }
 
         protected override void OnTrace(string tag, string message)
