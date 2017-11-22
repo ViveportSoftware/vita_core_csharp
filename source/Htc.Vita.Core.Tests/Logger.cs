@@ -28,7 +28,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance(typeof(Logger));
             Assert.NotNull(loggerAlt);
             Assert.NotSame(logger, loggerAlt);
         }
@@ -61,7 +61,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Debug("Default test debug message");
             loggerAlt.Debug("Default test debug message in TestCase", new Exception("TestCase"));
@@ -98,7 +98,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Error("Default test error message");
             loggerAlt.Error("Default test error message in TestCase", new Exception("TestCase"));
@@ -135,7 +135,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Fatal("Default test fatal message");
             loggerAlt.Fatal("Default test fatal message in TestCase", new Exception("TestCase"));
@@ -172,7 +172,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Info("Default test info message");
             loggerAlt.Info("Default test info message in TestCase", new Exception("TestCase"));
@@ -209,7 +209,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Trace("Default test trace message");
             loggerAlt.Trace("Default test trace message in TestCase", new Exception("TestCase"));
@@ -246,7 +246,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Warn("Default test warn message");
             loggerAlt.Warn("Default test warn message in TestCase", new Exception("TestCase"));
@@ -285,7 +285,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance<ConsoleLogger>(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance<ConsoleLogger>(typeof(Logger));
             Assert.NotNull(loggerAlt);
             Assert.NotSame(logger, loggerAlt);
         }
@@ -318,7 +318,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance<ConsoleLogger>(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance<ConsoleLogger>(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Debug("Console test debug message");
             loggerAlt.Debug("Console test debug message in TestCase", new Exception("TestCase"));
@@ -355,7 +355,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance<ConsoleLogger>(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance<ConsoleLogger>(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Error("Console test error message");
             loggerAlt.Error("Console test error message in TestCase", new Exception("TestCase"));
@@ -392,7 +392,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance<ConsoleLogger>(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance<ConsoleLogger>(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Fatal("Console test fatal message");
             loggerAlt.Fatal("Console test fatal message in TestCase", new Exception("TestCase"));
@@ -429,7 +429,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance<ConsoleLogger>(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance<ConsoleLogger>(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Info("Console test info message");
             loggerAlt.Info("Console test info message in TestCase", new Exception("TestCase"));
@@ -466,7 +466,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance<ConsoleLogger>(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance<ConsoleLogger>(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Trace("Console test trace message");
             loggerAlt.Trace("Console test trace message in TestCase", new Exception("TestCase"));
@@ -503,7 +503,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance<ConsoleLogger>();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance<ConsoleLogger>(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance<ConsoleLogger>(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Warn("Console test warn message");
             loggerAlt.Warn("Console test warn message in TestCase", new Exception("TestCase"));
@@ -571,7 +571,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance<DummyLogger>(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance<DummyLogger>(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Debug("Dummy test debug message");
             loggerAlt.Debug("Dummy test debug message in TestCase", new Exception("TestCase"));
@@ -618,7 +618,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance<DummyLogger>(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance<DummyLogger>(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Error("Dummy test error message");
             loggerAlt.Error("Dummy test error message in TestCase", new Exception("TestCase"));
@@ -665,7 +665,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance<DummyLogger>(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance<DummyLogger>(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Fatal("Dummy test fatal message");
             loggerAlt.Fatal("Dummy test fatal message in TestCase", new Exception("TestCase"));
@@ -712,7 +712,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance<DummyLogger>(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance<DummyLogger>(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Info("Dummy test info message");
             loggerAlt.Info("Dummy test info message in TestCase", new Exception("TestCase"));
@@ -759,7 +759,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance<DummyLogger>(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance<DummyLogger>(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Trace("Dummy test trace message");
             loggerAlt.Trace("Dummy test trace message in TestCase", new Exception("TestCase"));
@@ -806,7 +806,7 @@ namespace Htc.Vita.Core.Tests
         {
             var logger = Log.Logger.GetInstance<DummyLogger>();
             Assert.NotNull(logger);
-            var loggerAlt = Log.Logger.GetInstance<DummyLogger>(typeof(TestCase));
+            var loggerAlt = Log.Logger.GetInstance<DummyLogger>(typeof(Logger));
             Assert.NotNull(loggerAlt);
             logger.Warn("Dummy test warn message");
             loggerAlt.Warn("Dummy test warn message in TestCase", new Exception("TestCase"));

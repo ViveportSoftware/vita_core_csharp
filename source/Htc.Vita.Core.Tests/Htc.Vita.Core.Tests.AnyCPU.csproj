@@ -75,7 +75,7 @@
     <Compile Include="UsbManager.cs" />
     <Compile Include="UserManager.cs" />
     <Compile Include="WebProxyFactory.cs" />
-    <Compile Include="TestCase.WebRequestFactory.cs" />
+    <Compile Include="WebRequestFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

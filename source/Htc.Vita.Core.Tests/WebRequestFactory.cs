@@ -1,22 +1,21 @@
 ﻿using System;
-using Htc.Vita.Core.Net;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public partial class TestCase
+    public static class WebRequestFactory
     {
         [Fact]
-        public static void WebRequestFactory_Default_0_GetInstance()
+        public static void Default_0_GetInstance()
         {
-            var webRequestFactory = WebRequestFactory.GetInstance();
+            var webRequestFactory = Net.WebRequestFactory.GetInstance();
             Assert.NotNull(webRequestFactory);
         }
 
         [Fact]
-        public static void WebRequestFactory_Default_1_GetHttpWebRequest()
+        public static void Default_1_GetHttpWebRequest()
         {
-            var webRequestFactory = WebRequestFactory.GetInstance();
+            var webRequestFactory = Net.WebRequestFactory.GetInstance();
             Assert.NotNull(webRequestFactory);
             var webRequest = webRequestFactory.GetHttpWebRequest(new Uri("http://www.google.com"));
             Assert.NotNull(webRequest);
@@ -24,9 +23,9 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void WebRequestFactory_Default_1_GetHttpWebRequest_WithEmptyUri()
+        public static void Default_1_GetHttpWebRequest_WithEmptyUri()
         {
-            var webRequestFactory = WebRequestFactory.GetInstance();
+            var webRequestFactory = Net.WebRequestFactory.GetInstance();
             Assert.NotNull(webRequestFactory);
             var webRequest = webRequestFactory.GetHttpWebRequest(null);
             Assert.Null(webRequest);
