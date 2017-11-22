@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using Htc.Vita.Core.Runtime;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public partial class TestCase
+    public static class ProcessManager
     {
         [Fact]
         public static void ProcessManager_Default_0_GetProcesses()
@@ -15,7 +14,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            var processInfos = ProcessManager.GetProcesses();
+            var processInfos = Runtime.ProcessManager.GetProcesses();
             Assert.NotNull(processInfos);
             foreach (var processInfo in processInfos)
             {
@@ -33,7 +32,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            var processInfos = ProcessManager.GetProcessesByFirstActiveUser();
+            var processInfos = Runtime.ProcessManager.GetProcessesByFirstActiveUser();
             foreach (var processInfo in processInfos)
             {
                 Assert.True(processInfo.Id > 4);
@@ -56,7 +55,7 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(process);
             Assert.True(process.Id > 4);
             Console.WriteLine("Start " + fileInfo.FullName + " successfully on PID: " + process.Id);
-            Assert.True(ProcessManager.KillProcessById(process.Id));
+            Assert.True(Runtime.ProcessManager.KillProcessById(process.Id));
             Console.WriteLine("Kill " + fileInfo.Name + " successfully on PID: " + process.Id);
         }
     }
