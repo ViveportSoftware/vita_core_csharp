@@ -1,23 +1,22 @@
 ﻿using System;
 using System.IO;
-using Htc.Vita.Core.Crypto;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public partial class TestCase
+    public static class Sha1
     {
         [Fact]
-        public static void Sha1_Default_0_GetInstance()
+        public static void Default_0_GetInstance()
         {
-            var sha1 = Sha1.GetInstance();
+            var sha1 = Crypto.Sha1.GetInstance();
             Assert.NotNull(sha1);
         }
 
         [Fact]
-        public static void Sha1_Default_1_GenerateInBase64_WithContent()
+        public static void Default_1_GenerateInBase64_WithContent()
         {
-            var sha1 = Sha1.GetInstance();
+            var sha1 = Crypto.Sha1.GetInstance();
             Assert.NotNull(sha1);
             var value = sha1.GenerateInBase64("");
             Assert.Equal("2jmj7l5rSw0yVb/vlWAYkK/YBwk=", value);
@@ -26,9 +25,9 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Sha1_Default_1_GenerateInBase64_WithFile()
+        public static void Default_1_GenerateInBase64_WithFile()
         {
-            var sha1 = Sha1.GetInstance();
+            var sha1 = Crypto.Sha1.GetInstance();
             Assert.NotNull(sha1);
             string path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
@@ -40,18 +39,18 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Sha1_Default_2_ValidateInBase64_WithContent()
+        public static void Default_2_ValidateInBase64_WithContent()
         {
-            var sha1 = Sha1.GetInstance();
+            var sha1 = Crypto.Sha1.GetInstance();
             Assert.NotNull(sha1);
             Assert.True(sha1.ValidateInBase64("", "2jmj7l5rSw0yVb/vlWAYkK/YBwk="));
             Assert.True(sha1.ValidateInBase64("123", "QL0AFWMIX8NRZTKeof9cXsvbvu8="));
         }
 
         [Fact]
-        public static void Sha1_Default_2_ValidateInBase64_WithFile()
+        public static void Default_2_ValidateInBase64_WithFile()
         {
-            var sha1 = Sha1.GetInstance();
+            var sha1 = Crypto.Sha1.GetInstance();
             Assert.NotNull(sha1);
             string path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
@@ -63,9 +62,9 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Sha1_Default_3_GenerateInHex_WithContent()
+        public static void Default_3_GenerateInHex_WithContent()
         {
-            var sha1 = Sha1.GetInstance();
+            var sha1 = Crypto.Sha1.GetInstance();
             Assert.NotNull(sha1);
             var value = sha1.GenerateInHex("");
             Assert.Equal("da39a3ee5e6b4b0d3255bfef95601890afd80709", value);
@@ -74,9 +73,9 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Sha1_Default_3_GenerateInHex_WithFile()
+        public static void Default_3_GenerateInHex_WithFile()
         {
-            var sha1 = Sha1.GetInstance();
+            var sha1 = Crypto.Sha1.GetInstance();
             Assert.NotNull(sha1);
             string path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
@@ -88,18 +87,18 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Sha1_Default_4_ValidateInHex_WithContent()
+        public static void Default_4_ValidateInHex_WithContent()
         {
-            var sha1 = Sha1.GetInstance();
+            var sha1 = Crypto.Sha1.GetInstance();
             Assert.NotNull(sha1);
             Assert.True(sha1.ValidateInHex("", "da39a3ee5e6b4b0d3255bfef95601890afd80709"));
             Assert.True(sha1.ValidateInHex("123", "40bd001563085fc35165329ea1ff5c5ecbdbbeef"));
         }
 
         [Fact]
-        public static void Sha1_Default_4_ValidateInHex_WithFile()
+        public static void Default_4_ValidateInHex_WithFile()
         {
-            var sha1 = Sha1.GetInstance();
+            var sha1 = Crypto.Sha1.GetInstance();
             Assert.NotNull(sha1);
             string path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
@@ -111,9 +110,9 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Sha1_Default_5_ValidateInAll_WithContent()
+        public static void Default_5_ValidateInAll_WithContent()
         {
-            var sha1 = Sha1.GetInstance();
+            var sha1 = Crypto.Sha1.GetInstance();
             Assert.NotNull(sha1);
             Assert.True(sha1.ValidateInAll("", "2jmj7l5rSw0yVb/vlWAYkK/YBwk="));
             Assert.True(sha1.ValidateInAll("123", "QL0AFWMIX8NRZTKeof9cXsvbvu8="));
@@ -122,9 +121,9 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Sha1_Default_5_ValidateInAll_WithFile()
+        public static void Default_5_ValidateInAll_WithFile()
         {
-            var sha1 = Sha1.GetInstance();
+            var sha1 = Crypto.Sha1.GetInstance();
             Assert.NotNull(sha1);
             string path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
