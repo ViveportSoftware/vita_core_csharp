@@ -9,7 +9,7 @@ using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Runtime
 {
-    public class Platform
+    public static class Platform
     {
         private static readonly Logger Log = Logger.GetInstance(typeof(Platform));
 
@@ -43,10 +43,6 @@ namespace Htc.Vita.Core.Runtime
             Unknown = 0,
             Bit32 = 1,
             Bit64 = 2
-        }
-
-        private Platform()
-        {
         }
 
         public static Type Detect()
