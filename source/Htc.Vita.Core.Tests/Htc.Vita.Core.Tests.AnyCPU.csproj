@@ -64,7 +64,7 @@
     <Compile Include="FileSystemManager.cs" />
     <Compile Include="JsonFactory.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="TestCase.Md5.cs" />
+    <Compile Include="Md5.cs" />
     <Compile Include="TestCase.Platform.cs" />
     <Compile Include="TestCase.PreferenceFactory.cs" />
     <Compile Include="TestCase.ProcessManager.cs" />
