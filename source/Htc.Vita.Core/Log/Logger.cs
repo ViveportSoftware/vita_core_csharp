@@ -14,7 +14,7 @@ namespace Htc.Vita.Core.Log
         public static void Register<T>() where T : Logger
         {
             _defaultType = typeof(T);
-            Console.WriteLine("Registered default logger type to " + _defaultType);
+            Console.Error.WriteLine("Registered default logger type to " + _defaultType);
         }
 
         public static Logger GetInstance(Type type)
@@ -36,8 +36,8 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Fatal][Logger.GetInstance] " + e);
-                Console.WriteLine("Initializing " + typeof(ConsoleLogger).FullName + "...");
+                Console.Error.WriteLine("[Fatal][Logger.GetInstance] " + e);
+                Console.Error.WriteLine("Initializing " + typeof(ConsoleLogger).FullName + "...");
                 instance = new ConsoleLogger(string.Empty);
             }
             return instance;
@@ -62,8 +62,8 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Fatal][Logger.GetInstance<T>] " + e);
-                Console.WriteLine("Initializing " + typeof(ConsoleLogger).FullName + "...");
+                Console.Error.WriteLine("[Fatal][Logger.GetInstance<T>] " + e);
+                Console.Error.WriteLine("Initializing " + typeof(ConsoleLogger).FullName + "...");
                 instance = new ConsoleLogger(string.Empty);
             }
             return instance;
@@ -84,7 +84,7 @@ namespace Htc.Vita.Core.Log
             }
             if (instance == null)
             {
-                Console.WriteLine("Initializing " + key + "...");
+                Console.Error.WriteLine("Initializing " + key + "...");
                 var constructor = type.GetConstructor(new[] { typeof(string) });
                 if (constructor != null)
                 {
@@ -93,7 +93,7 @@ namespace Htc.Vita.Core.Log
             }
             if (instance == null)
             {
-                Console.WriteLine("Initializing " + typeof(ConsoleLogger).FullName + "[" + name + "]...");
+                Console.Error.WriteLine("Initializing " + typeof(ConsoleLogger).FullName + "[" + name + "]...");
                 instance = new ConsoleLogger(name);
             }
             if (!Instances.ContainsKey(key))
@@ -119,7 +119,7 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Fatal][Logger.Debug] " + e);
+                Console.Error.WriteLine("[Fatal][Logger.Debug] " + e);
             }
         }
 
@@ -131,7 +131,7 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Fatal][Logger.Debug] " + e);
+                Console.Error.WriteLine("[Fatal][Logger.Debug] " + e);
             }
         }
 
@@ -143,7 +143,7 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Fatal][Logger.Error] " + e);
+                Console.Error.WriteLine("[Fatal][Logger.Error] " + e);
             }
         }
 
@@ -155,7 +155,7 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Fatal][Logger.Error] " + e);
+                Console.Error.WriteLine("[Fatal][Logger.Error] " + e);
             }
         }
 
@@ -167,7 +167,7 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Fatal][Logger.Fatal] " + e);
+                Console.Error.WriteLine("[Fatal][Logger.Fatal] " + e);
             }
         }
 
@@ -179,7 +179,7 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Fatal][Logger.Fatal] " + e);
+                Console.Error.WriteLine("[Fatal][Logger.Fatal] " + e);
             }
         }
 
@@ -191,7 +191,7 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Fatal][Logger.Info] " + e);
+                Console.Error.WriteLine("[Fatal][Logger.Info] " + e);
             }
         }
 
@@ -203,7 +203,7 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Fatal][Logger.Info] " + e);
+                Console.Error.WriteLine("[Fatal][Logger.Info] " + e);
             }
         }
 
@@ -215,7 +215,7 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Fatal][Logger.Shutdown] " + e);
+                Console.Error.WriteLine("[Fatal][Logger.Shutdown] " + e);
             }
         }
 
@@ -227,7 +227,7 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Fatal][Logger.Trace] " + e);
+                Console.Error.WriteLine("[Fatal][Logger.Trace] " + e);
             }
         }
 
@@ -239,7 +239,7 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Fatal][Logger.Trace] " + e);
+                Console.Error.WriteLine("[Fatal][Logger.Trace] " + e);
             }
         }
 
@@ -251,7 +251,7 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Fatal][Logger.Warn] " + e);
+                Console.Error.WriteLine("[Fatal][Logger.Warn] " + e);
             }
         }
 
@@ -263,7 +263,7 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Fatal][Logger.Warn] " + e);
+                Console.Error.WriteLine("[Fatal][Logger.Warn] " + e);
             }
         }
 
