@@ -9,13 +9,6 @@ namespace Htc.Vita.Core.Preference
         private static Dictionary<string, PreferenceFactory> Instances { get; } = new Dictionary<string, PreferenceFactory>();
         private static Type _defaultType = typeof(DefaultPreferenceFactory);
 
-        private readonly Logger _logger;
-
-        protected PreferenceFactory()
-        {
-            _logger = Logger.GetInstance();
-        }
-
         public static void Register<T>() where T : PreferenceFactory
         {
             _defaultType = typeof(T);

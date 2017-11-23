@@ -149,11 +149,11 @@ namespace Htc.Vita.Core.Preference
                 public Storage(string category, string label)
                 {
                     _logger = Logger.GetInstance();
-                    category = !string.IsNullOrWhiteSpace(category) ? category : "Vita";
-                    label = !string.IsNullOrWhiteSpace(label) ? label : "default";
-                    _path = GetWindowsFilePath(category, label);
+                    var targetCategory = !string.IsNullOrWhiteSpace(category) ? category : "Vita";
+                    var targetLabel = !string.IsNullOrWhiteSpace(label) ? label : "default";
+                    _path = GetWindowsFilePath(targetCategory, targetLabel);
                     if (string.IsNullOrWhiteSpace(_path)){
-                        _path = GetUnixFilePath(category, label);
+                        _path = GetUnixFilePath(targetCategory, targetLabel);
                     }
                 }
 
