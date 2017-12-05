@@ -145,6 +145,34 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
+         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa365440.aspx
+         */
+        [DllImport(Libraries.WindowsKernel32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetNamedPipeClientProcessId(
+                /* _In_  HANDLE */ [In] IntPtr pipe,
+                /* _Out_ PULONG */ [In][Out] ref uint clientProcessId
+        );
+
+        /**
+         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa365446.aspx
+         */
+        [DllImport(Libraries.WindowsKernel32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetNamedPipeServerProcessId(
+                /* _In_  HANDLE */ [In] IntPtr pipe,
+                /* _Out_ PULONG */ [In][Out] ref uint serverProcessId
+        );
+
+        /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684139.aspx
          */
         [DllImport(Libraries.WindowsKernel32,

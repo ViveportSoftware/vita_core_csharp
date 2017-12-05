@@ -87,6 +87,8 @@
     <Compile Include="Preference\DefaultPreferenceFactory.cs" />
     <Compile Include="Preference\Preferences.cs" />
     <Compile Include="Preference\PreferenceFactory.cs" />
+    <Compile Include="Runtime\IpcChannel.cs" />
+    <Compile Include="Runtime\NamedPipeIpcChannel.cs" />
     <Compile Include="Runtime\Platform.cs" />
     <Compile Include="Runtime\ProcessManager.cs" />
     <Compile Include="Runtime\ServiceManager.cs" />
