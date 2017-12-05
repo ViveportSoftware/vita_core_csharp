@@ -118,6 +118,10 @@ namespace Htc.Vita.Core.Runtime
 
             public string Request(string input)
             {
+                if (input == null)
+                {
+                    return null;
+                }
                 string result = null;
                 try
                 {
