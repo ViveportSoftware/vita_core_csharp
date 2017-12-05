@@ -12,7 +12,7 @@ namespace Htc.Vita.Core.Runtime
 
         public abstract class Client
         {
-            public static string OptionVerifyProvider = "option_verify_provider";
+            public static readonly string OptionVerifyProvider = "option_verify_provider";
 
             private static Dictionary<string, Client> Instances { get; } = new Dictionary<string, Client>();
             private static Type _defaultType = typeof(NamedPipeIpcChannel.Client);
