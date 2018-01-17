@@ -42,14 +42,14 @@ var distDir = Directory("./dist");
 var tempDir = Directory("./temp");
 var generatedDir = Directory("./source/generated");
 var packagesDir = Directory("./source/packages");
-var nugetDir = Directory("./dist") + Directory(configuration) + Directory("nuget");
+var nugetDir = distDir + Directory(configuration) + Directory("nuget");
 var homeDir = Directory(EnvironmentVariable("USERPROFILE") ?? EnvironmentVariable("HOME"));
-var reportDotCoverDirAnyCPU = Directory("./dist") + Directory(configuration) + Directory("report/dotCover/AnyCPU");
-var reportDotCoverDirX86 = Directory("./dist") + Directory(configuration) + Directory("report/dotCover/x86");
-var reportXUnitDirAnyCPU = Directory("./dist") + Directory(configuration) + Directory("report/xUnit/AnyCPU");
-var reportXUnitDirX86 = Directory("./dist") + Directory(configuration) + Directory("report/xUnit/x86");
-var reportReSharperDupFinder = Directory("./dist") + Directory(configuration) + Directory("report/ReSharper/DupFinder");
-var reportReSharperInspectCode = Directory("./dist") + Directory(configuration) + Directory("report/ReSharper/InspectCode");
+var reportDotCoverDirAnyCPU = distDir + Directory(configuration) + Directory("report/dotCover/AnyCPU");
+var reportDotCoverDirX86 = distDir + Directory(configuration) + Directory("report/dotCover/x86");
+var reportXUnitDirAnyCPU = distDir + Directory(configuration) + Directory("report/xUnit/AnyCPU");
+var reportXUnitDirX86 = distDir + Directory(configuration) + Directory("report/xUnit/x86");
+var reportReSharperDupFinder = distDir + Directory(configuration) + Directory("report/ReSharper/DupFinder");
+var reportReSharperInspectCode = distDir + Directory(configuration) + Directory("report/ReSharper/InspectCode");
 
 // Define signing key, password and timestamp server
 var signKeyEnc = EnvironmentVariable("SIGNKEYENC") ?? "NOTSET";
