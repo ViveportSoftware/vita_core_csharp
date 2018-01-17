@@ -36,7 +36,6 @@ var signIntervalInMilli = 1000 * 5;
 
 // Define path
 var solutionFile = File(string.Format("./source/{0}.sln", product));
-var nuspecFile = File(string.Format("./source/{0}.nuspec", product));
 
 // Define directories.
 var distDir = Directory("./dist");
@@ -383,7 +382,7 @@ Task("Build-NuGet-Package")
             OutputDirectory = nugetDir
     };
 
-    NuGetPack(nuspecFile, nuGetPackSettings);
+    NuGetPack(nuGetPackSettings);
 });
 
 Task("Publish-NuGet-Package")
