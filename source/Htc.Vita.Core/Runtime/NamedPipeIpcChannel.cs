@@ -191,7 +191,14 @@ namespace Htc.Vita.Core.Runtime
                             };
                             if (!string.IsNullOrEmpty(channel.Output))
                             {
-                                OnMessageHandled(channel, GetClientSignature(serverStream));
+                                if (OnMessageHandled == null)
+                                {
+                                    _logger.Error("Can not find OnMessageHandled delegates to handle messages");
+                                }
+                                else
+                                {
+                                    OnMessageHandled(channel, GetClientSignature(serverStream));
+                                }
                             }
                             if (!string.IsNullOrEmpty(channel.Input))
                             {
