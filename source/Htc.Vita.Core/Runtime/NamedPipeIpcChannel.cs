@@ -280,9 +280,20 @@ namespace Htc.Vita.Core.Runtime
                 Logger.GetInstance().Error("Can not get named pipe server process id, error code: " + Marshal.GetLastWin32Error());
                 return false;
             }
-            var fileSignatureInfo = FileSignatureInfo.GetSignatureInfo(new FileInfo(
-                    Process.GetProcessById((int)processId).MainModule.FileName
-            ));
+            string processPath = null;
+            try
+            {
+                processPath = Process.GetProcessById((int)processId).MainModule.FileName;
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance().Error("Can not get named pipe server process path: " + e.Message);
+            }
+            if (processPath == null)
+            {
+                return false;
+            }
+            var fileSignatureInfo = FileSignatureInfo.GetSignatureInfo(new FileInfo(processPath));
             return fileSignatureInfo != null && fileSignatureInfo.Verified;
         }
 
@@ -303,9 +314,20 @@ namespace Htc.Vita.Core.Runtime
                 Logger.GetInstance().Error("Can not get named pipe client process id, error code: " + Marshal.GetLastWin32Error());
                 return null;
             }
-            return FileSignatureInfo.GetSignatureInfo(new FileInfo(
-                    Process.GetProcessById((int)processId).MainModule.FileName
-            ));
+            string processPath = null;
+            try
+            {
+                processPath = Process.GetProcessById((int)processId).MainModule.FileName;
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance().Error("Can not get named pipe client process path: " + e.Message);
+            }
+            if (processPath == null)
+            {
+                return null;
+            }
+            return FileSignatureInfo.GetSignatureInfo(new FileInfo(processPath));
         }
     }
 }
