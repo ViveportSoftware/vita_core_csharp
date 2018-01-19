@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
@@ -321,19 +322,30 @@ namespace Htc.Vita.Core.Runtime
                 Logger.GetInstance().Error("Can not get named pipe client process id, error code: " + Marshal.GetLastWin32Error());
                 return null;
             }
-            string processPath = null;
+
+            string processPath;
+            var clientProcess = Process.GetProcessById((int) processId);
             try
             {
-                processPath = Process.GetProcessById((int)processId).MainModule.FileName;
+                processPath = clientProcess.MainModule.FileName;
             }
-            catch (Exception e)
+            catch (Win32Exception)
             {
-                Logger.GetInstance().Error("Can not get named pipe client process path: " + e.Message);
+                var processHandle = clientProcess.Handle;
+                var fullPath = new StringBuilder(256);
+                Windows.GetModuleFileNameExW(
+                        processHandle,
+                        IntPtr.Zero,
+                        fullPath,
+                        (uint)fullPath.Capacity
+                );
+                processPath = fullPath.ToString();
             }
-            if (processPath == null)
+            if (string.IsNullOrWhiteSpace(processPath))
             {
                 return null;
             }
+
             return FileSignatureInfo.GetSignatureInfo(new FileInfo(processPath));
         }
     }
