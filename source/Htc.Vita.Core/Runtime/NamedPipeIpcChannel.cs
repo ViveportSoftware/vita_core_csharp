@@ -23,7 +23,7 @@ namespace Htc.Vita.Core.Runtime
 
             public Client()
             {
-                _pipeName = Sha1.GetInstance().GenerateInBase64("");
+                _pipeName = Sha1.GetInstance().GenerateInHex("");
             }
 
             protected override bool OnIsReady(Dictionary<string, string> options)
@@ -90,7 +90,7 @@ namespace Htc.Vita.Core.Runtime
             {
                 if (!string.IsNullOrWhiteSpace(name))
                 {
-                    _pipeName = Sha1.GetInstance().GenerateInBase64(name);
+                    _pipeName = Sha1.GetInstance().GenerateInHex(name);
                 }
                 return true;
             }
@@ -110,14 +110,14 @@ namespace Htc.Vita.Core.Runtime
             public Provider()
             {
                 _logger = Logger.GetInstance();
-                _pipeName = Sha1.GetInstance().GenerateInBase64("");
+                _pipeName = Sha1.GetInstance().GenerateInHex("");
             }
 
             protected override bool OnSetName(string name)
             {
                 if (!string.IsNullOrWhiteSpace(name))
                 {
-                    _pipeName = Sha1.GetInstance().GenerateInBase64(name);
+                    _pipeName = Sha1.GetInstance().GenerateInHex(name);
                 }
                 return true;
             }
