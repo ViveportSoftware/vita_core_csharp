@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
+using Htc.Vita.Core.Crypto;
 using Htc.Vita.Core.Interop;
 using Htc.Vita.Core.Log;
 
@@ -10,7 +11,10 @@ namespace Htc.Vita.Core.Diagnosis
 {
     public class FileSignatureInfo
     {
+        private static readonly HashSet<string> CachedErrorPathes = new HashSet<string>();
         private static readonly Logger Log = Logger.GetInstance(typeof(FileSignatureInfo));
+
+        private const int ErrorPathCacheTimeInMilli = 1000 * 60 * 60;
 
         private readonly X509Certificate _certificate;
 
@@ -38,7 +42,18 @@ namespace Htc.Vita.Core.Diagnosis
             }
             catch (Exception)
             {
-                Log.Warn("Can not find certificate from file " + fileInfo.FullName);
+                var key = Sha1.GetInstance().GenerateInHex(
+                        fileInfo.FullName + "_" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow) / ErrorPathCacheTimeInMilli
+                );
+                if (string.IsNullOrEmpty(key))
+                {
+                    Log.Warn("Can not find certificate from file " + fileInfo.FullName);
+                }
+                else if (!CachedErrorPathes.Contains(key))
+                {
+                    Log.Warn("Can not find certificate from file " + fileInfo.FullName);
+                    CachedErrorPathes.Add(key);
+                }
             }
             if (_certificate != null)
             {
