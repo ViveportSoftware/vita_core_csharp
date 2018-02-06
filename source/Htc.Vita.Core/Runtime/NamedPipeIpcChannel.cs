@@ -129,7 +129,10 @@ namespace Htc.Vita.Core.Runtime
                 _shouldStopWorkers = false;
                 for (var i = 0; i < _workerThreads.Length; i++)
                 {
-                    _workerThreads[i] = new Thread(OnHandleRequest);
+                    _workerThreads[i] = new Thread(OnHandleRequest)
+                    {
+                            IsBackground = true
+                    };
                     _workerThreads[i].Start();
                 }
                 return true;
