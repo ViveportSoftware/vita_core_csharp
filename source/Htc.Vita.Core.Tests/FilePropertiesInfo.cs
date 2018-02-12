@@ -32,6 +32,7 @@ namespace Htc.Vita.Core.Tests
             Assert.True(!string.IsNullOrEmpty(filePropertiesInfo.SubjectName));
             Assert.True(!string.IsNullOrEmpty(filePropertiesInfo.PublicKey));
             Assert.True(filePropertiesInfo.Verified);
+            Assert.True(!string.IsNullOrEmpty(filePropertiesInfo.Version));
         }
 
         [Fact]
@@ -51,6 +52,7 @@ namespace Htc.Vita.Core.Tests
             Assert.True(string.IsNullOrEmpty(filePropertiesInfo.SubjectName));
             Assert.True(string.IsNullOrEmpty(filePropertiesInfo.PublicKey));
             Assert.False(filePropertiesInfo.Verified);
+            System.Console.WriteLine("filePropertiesInfo.Version: " + filePropertiesInfo.Version);
         }
     }
 }

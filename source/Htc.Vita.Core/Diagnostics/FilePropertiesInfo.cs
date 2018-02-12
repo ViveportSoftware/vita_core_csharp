@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
@@ -24,6 +26,7 @@ namespace Htc.Vita.Core.Diagnostics
         public string SubjectDistinguishedName { get; }
         public string SubjectName { get; }
         public bool Verified { get; }
+        public string Version { get; }
 
         private FilePropertiesInfo(FileInfo fileInfo)
         {
@@ -33,7 +36,7 @@ namespace Htc.Vita.Core.Diagnostics
             }
             if (!fileInfo.Exists)
             {
-                Log.Warn("Can not find " + fileInfo.FullName + " to get certificate");
+                Log.Warn("Can not find " + fileInfo.FullName + " to get properties");
                 return;
             }
             try
@@ -63,6 +66,24 @@ namespace Htc.Vita.Core.Diagnostics
                 SubjectName = DistinguishedName.Parse(SubjectDistinguishedName).O;
                 PublicKey = _certificate.GetPublicKeyString();
                 Verified = Authenticode.IsVerified(fileInfo);
+            }
+
+            try
+            {
+                var versionInfo = FileVersionInfo.GetVersionInfo(fileInfo.FullName);
+                Version = string.Format(
+                        CultureInfo.InvariantCulture,
+                        @"{0}.{1}.{2}.{3}",
+                        versionInfo.FileMajorPart,
+                        versionInfo.FileMinorPart,
+                        versionInfo.FileBuildPart,
+                        versionInfo.FilePrivatePart
+                );
+            }
+            catch (Exception)
+            {
+                Log.Warn("Can not find version from file " + fileInfo.FullName);
+                Version = "0.0.0.0";
             }
         }
 
