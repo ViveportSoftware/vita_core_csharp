@@ -59,7 +59,7 @@
     <Compile Include="Convert.cs" />
     <Compile Include="Dns.cs" />
     <Compile Include="Extract.cs" />
-    <Compile Include="FileSignatureInfo.cs" />
+    <Compile Include="FilePropertiesInfo.cs" />
     <Compile Include="FileSystemManager.cs" />
     <Compile Include="IpcChannel.cs" />
     <Compile Include="JsonFactory.cs" />

@@ -54,7 +54,7 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(provider);
             Assert.True(provider.SetName("" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow)));
             Assert.True(provider.Start());
-            provider.OnMessageHandled = (channel, fileSignatureInfo) =>
+            provider.OnMessageHandled = (channel, filePropertiesInfo) =>
             {
                 Console.WriteLine("channel?.Output: " + channel?.Output);
             };
@@ -178,7 +178,7 @@ namespace Htc.Vita.Core.Tests
             var provider = Runtime.IpcChannel.Provider.GetInstance();
             Assert.NotNull(provider);
             Assert.True(provider.SetName(name));
-            provider.OnMessageHandled = (channel, fileSignatureInfo) =>
+            provider.OnMessageHandled = (channel, filePropertiesInfo) =>
             {
                 if (channel == null)
                 {
@@ -209,13 +209,13 @@ namespace Htc.Vita.Core.Tests
             var provider = Runtime.IpcChannel.Provider.GetInstance();
             Assert.NotNull(provider);
             Assert.True(provider.SetName(name));
-            provider.OnMessageHandled = (channel, fileSignatureInfo) =>
+            provider.OnMessageHandled = (channel, filePropertiesInfo) =>
             {
                 if (channel == null)
                 {
                     return;
                 }
-                if (fileSignatureInfo != null && fileSignatureInfo.Verified && channel.Output.Equals("TestRequest"))
+                if (filePropertiesInfo != null && filePropertiesInfo.Verified && channel.Output.Equals("TestRequest"))
                 {
                     channel.Input = "TestResponse";
                 }

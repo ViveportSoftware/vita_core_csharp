@@ -7,12 +7,12 @@ using Htc.Vita.Core.Crypto;
 using Htc.Vita.Core.Interop;
 using Htc.Vita.Core.Log;
 
-namespace Htc.Vita.Core.Diagnosis
+namespace Htc.Vita.Core.Diagnostics
 {
-    public class FileSignatureInfo
+    public class FilePropertiesInfo
     {
         private static readonly HashSet<string> CachedErrorPathes = new HashSet<string>();
-        private static readonly Logger Log = Logger.GetInstance(typeof(FileSignatureInfo));
+        private static readonly Logger Log = Logger.GetInstance(typeof(FilePropertiesInfo));
 
         private const int ErrorPathCacheTimeInMilli = 1000 * 60 * 60;
 
@@ -25,7 +25,7 @@ namespace Htc.Vita.Core.Diagnosis
         public string SubjectName { get; }
         public bool Verified { get; }
 
-        private FileSignatureInfo(FileInfo fileInfo)
+        private FilePropertiesInfo(FileInfo fileInfo)
         {
             if (fileInfo == null)
             {
@@ -66,9 +66,9 @@ namespace Htc.Vita.Core.Diagnosis
             }
         }
 
-        public static FileSignatureInfo GetSignatureInfo(FileInfo fileInfo)
+        public static FilePropertiesInfo GetPropertiesInfo(FileInfo fileInfo)
         {
-            return new FileSignatureInfo(fileInfo);
+            return new FilePropertiesInfo(fileInfo);
         }
 
         internal static class Authenticode

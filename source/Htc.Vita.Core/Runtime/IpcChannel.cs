@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Htc.Vita.Core.Diagnosis;
+using Htc.Vita.Core.Diagnostics;
 using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Runtime
@@ -155,7 +155,7 @@ namespace Htc.Vita.Core.Runtime
 
         public abstract class Provider
         {
-            public Action<IpcChannel, FileSignatureInfo> OnMessageHandled { protected get; set; }
+            public Action<IpcChannel, FilePropertiesInfo> OnMessageHandled { protected get; set; }
 
             private static Dictionary<string, Provider> Instances { get; } = new Dictionary<string, Provider>();
             private static Type _defaultType = typeof(NamedPipeIpcChannel.Provider);

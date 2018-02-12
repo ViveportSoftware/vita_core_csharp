@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using Htc.Vita.Core.Crypto;
-using Htc.Vita.Core.Diagnosis;
+using Htc.Vita.Core.Diagnostics;
 using Htc.Vita.Core.Interop;
 using Htc.Vita.Core.Log;
 
@@ -304,11 +304,11 @@ namespace Htc.Vita.Core.Runtime
             {
                 return false;
             }
-            var fileSignatureInfo = FileSignatureInfo.GetSignatureInfo(new FileInfo(processPath));
-            return fileSignatureInfo != null && fileSignatureInfo.Verified;
+            var filePropertiesInfo = FilePropertiesInfo.GetPropertiesInfo(new FileInfo(processPath));
+            return filePropertiesInfo != null && filePropertiesInfo.Verified;
         }
 
-        private static FileSignatureInfo GetClientSignature(PipeStream pipeStream)
+        private static FilePropertiesInfo GetClientSignature(PipeStream pipeStream)
         {
             if (pipeStream == null)
             {
@@ -349,7 +349,7 @@ namespace Htc.Vita.Core.Runtime
                 return null;
             }
 
-            return FileSignatureInfo.GetSignatureInfo(new FileInfo(processPath));
+            return FilePropertiesInfo.GetPropertiesInfo(new FileInfo(processPath));
         }
     }
 }
