@@ -45,7 +45,7 @@ namespace Htc.Vita.Core.Net
             {
                 Logger.GetInstance().Fatal("Instance initialization error " + e);
                 Logger.GetInstance().Info("Initializing " + typeof(DefaultDns).FullName + "...");
-                instance = new DefaultDns(string.Empty);
+                instance = new DefaultDns(resolver);
             }
             return instance;
         }
@@ -66,19 +66,19 @@ namespace Htc.Vita.Core.Net
             {
                 Logger.GetInstance().Fatal("Instance initialization error " + e);
                 Logger.GetInstance().Info("Initializing " + typeof(DefaultDns).FullName + "...");
-                instance = new DefaultDns(string.Empty);
+                instance = new DefaultDns(resolver);
             }
             return instance;
         }
 
-        private static Dns DoGetInstance(Type type, string name)
+        private static Dns DoGetInstance(Type type, string resolver)
         {
-            if (type == null || name == null)
+            if (type == null || resolver == null)
             {
                 throw new ArgumentException("Invalid arguments to get dns instance");
             }
 
-            var key = type.FullName + "_" + name;
+            var key = type.FullName + "_" + resolver;
             Dns instance = null;
             if (Instances.ContainsKey(key))
             {
@@ -90,13 +90,13 @@ namespace Htc.Vita.Core.Net
                 var constructor = type.GetConstructor(new[] { typeof(string) });
                 if (constructor != null)
                 {
-                    instance = (Dns)constructor.Invoke(new object[] { name });
+                    instance = (Dns)constructor.Invoke(new object[] { resolver });
                 }
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + typeof(DefaultDns).FullName + "[" + name + "]...");
-                instance = new DefaultDns(string.Empty);
+                Logger.GetInstance().Info("Initializing " + typeof(DefaultDns).FullName + "[" + resolver + "]...");
+                instance = new DefaultDns(resolver);
             }
             if (!Instances.ContainsKey(key))
             {

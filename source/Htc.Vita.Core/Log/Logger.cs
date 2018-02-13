@@ -43,7 +43,7 @@ namespace Htc.Vita.Core.Log
             {
                 Console.Error.WriteLine("[Fatal][Logger.GetInstance] " + e);
                 Console.Error.WriteLine("Initializing " + typeof(ConsoleLogger).FullName + "...");
-                instance = new ConsoleLogger(string.Empty);
+                instance = new ConsoleLogger(name);
             }
             return instance;
         }
@@ -74,7 +74,7 @@ namespace Htc.Vita.Core.Log
             {
                 Console.Error.WriteLine("[Fatal][Logger.GetInstance<T>] " + e);
                 Console.Error.WriteLine("Initializing " + typeof(ConsoleLogger).FullName + "...");
-                instance = new ConsoleLogger(string.Empty);
+                instance = new ConsoleLogger(name);
             }
             return instance;
         }
