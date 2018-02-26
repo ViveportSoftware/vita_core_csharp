@@ -212,6 +212,7 @@ namespace Htc.Vita.Core.Preference
                     {
                         jsonObject.Put(k, properties[k]);
                     }
+
                     try
                     {
                         var file = new FileInfo(_path);
@@ -222,18 +223,25 @@ namespace Htc.Vita.Core.Preference
                             {
                                 return false;
                             }
+
                             if (!directory.Exists)
                             {
                                 directory.Create();
                             }
                         }
+
                         File.WriteAllText(file.FullName, jsonObject.ToPrettyString());
                         return true;
+                    }
+                    catch (IOException e)
+                    {
+                        _logger.Error(e.Message);
                     }
                     catch (Exception e)
                     {
                         _logger.Error(e.ToString());
                     }
+
                     return false;
                 }
 
