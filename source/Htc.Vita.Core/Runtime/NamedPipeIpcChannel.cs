@@ -161,17 +161,17 @@ namespace Htc.Vita.Core.Runtime
 
             private void OnHandleRequest(object data)
             {
-                using (var serverStream = new NamedPipeServerStream(
-                        _pipeName,
-                        PipeDirection.InOut,
-                        PipeThreadNumber,
-                        PipeTransmissionMode.Message
-                ))
+                var threadId = Thread.CurrentThread.ManagedThreadId;
+                try
                 {
-                    var threadId = Thread.CurrentThread.ManagedThreadId;
-                    while (!_shouldStopWorkers)
+                    using (var serverStream = new NamedPipeServerStream(
+                            _pipeName,
+                            PipeDirection.InOut,
+                            PipeThreadNumber,
+                            PipeTransmissionMode.Message
+                    ))
                     {
-                        try
+                        while (!_shouldStopWorkers)
                         {
                             if (serverStream.IsConnected)
                             {
@@ -210,12 +210,15 @@ namespace Htc.Vita.Core.Runtime
                                 serverStream.Write(inputBytes, 0, inputBytes.Length);
                             }
                         }
-                        catch (Exception e)
+                        if (serverStream.IsConnected)
                         {
-                            _logger.Error("Error happened on thread[" + threadId + "]: " + e.Message);
                             serverStream.Disconnect();
                         }
                     }
+                }
+                catch (Exception e)
+                {
+                    _logger.Error("Error happened on thread[" + threadId + "]: " + e.Message);
                 }
             }
 
