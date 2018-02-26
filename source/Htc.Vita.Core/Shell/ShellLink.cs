@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Htc.Vita.Core.Log;
@@ -7,7 +6,7 @@ using Htc.Vita.Core.Runtime;
 
 namespace Htc.Vita.Core.Shell
 {
-    public class ShellLink
+    public partial class ShellLink
     {
         private static readonly Logger Log = Logger.GetInstance(typeof(ShellLink));
 
@@ -37,6 +36,10 @@ namespace Htc.Vita.Core.Shell
             }
 
             var targetPathDir = targetPath.Directory;
+            if (targetPathDir == null)
+            {
+                return false;
+            }
             if (!targetPathDir.Exists)
             {
                 targetPathDir.Create();
@@ -56,11 +59,11 @@ namespace Htc.Vita.Core.Shell
             try
             {
                 wshShortcut = type.InvokeMember(
-                    "CreateShortcut",
-                    BindingFlags.InvokeMethod,
-                    null,
-                    wshShell,
-                    new object[] {targetPath.FullName + ".lnk"}
+                        "CreateShortcut",
+                        BindingFlags.InvokeMethod,
+                        null,
+                        wshShell,
+                        new object[] {targetPath.FullName + ".lnk"}
                 );
                 success = true;
             }
@@ -112,14 +115,6 @@ namespace Htc.Vita.Core.Shell
                 Marshal.FinalReleaseComObject(wshShortcut);
             }
             return success;
-        }
-
-        public class FileLinkInfo
-        {
-            public FileInfo SourcePath { get; set; }
-            public FileInfo TargetPath { get; set; }
-            public FileInfo TargetIconPath { get; set; }
-            public int TargetIconIndex { get; set; }
         }
     }
 }

@@ -113,6 +113,7 @@
     <Compile Include="Runtime\UserManager.Windows.cs" />
     <Compile Include="Runtime\UserManager.WindowsUserInfo.cs" />
     <Compile Include="Shell\ShellLink.cs" />
+    <Compile Include="Shell\ShellLink.FileLinkInfo.cs" />
     <Compile Include="Util\Convert.cs" />
     <Compile Include="Util\Extract.cs" />
     <Compile Include="Util\Registry.cs" />
