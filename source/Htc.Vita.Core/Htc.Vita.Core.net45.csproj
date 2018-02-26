@@ -71,6 +71,8 @@
     <Compile Include="Json\JsonFactory.cs" />
     <Compile Include="Json\JsonObject.cs" />
     <Compile Include="Json\LitJsonJsonFactory.cs" />
+    <Compile Include="Json\LitJsonJsonFactory.LitJsonJsonArray.cs" />
+    <Compile Include="Json\LitJsonJsonFactory.LitJsonJsonObject.cs" />
     <Compile Include="Json\LitJson\IJsonWrapper.cs" />
     <Compile Include="Json\LitJson\JsonData.cs" />
     <Compile Include="Json\LitJson\JsonException.cs" />
