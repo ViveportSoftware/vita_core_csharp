@@ -66,6 +66,7 @@
     <Compile Include="IO\FileSystemManager.cs" />
     <Compile Include="IO\FileSystemManager.DiskSpaceInfo.cs" />
     <Compile Include="IO\UsbManager.cs" />
+    <Compile Include="IO\UsbManager.DeviceInfo.cs" />
     <Compile Include="Json\JsonArray.cs" />
     <Compile Include="Json\JsonFactory.cs" />
     <Compile Include="Json\JsonObject.cs" />
