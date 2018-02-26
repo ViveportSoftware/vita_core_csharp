@@ -25,7 +25,7 @@ var semanticVersion = string.Format("{0}.{1}", version, revision);
 var ciVersion = string.Format("{0}.{1}", version, "0");
 var nugetTags = new [] {"htc", "vita", "core"};
 var projectUrl = "https://github.com/ViveportSoftware/vita_core_csharp/";
-var description = "HTC Vita core module";
+var description = "HTC Vita Core module";
 
 // Define copyright
 var copyright = string.Format("Copyright © 2017 - {0}", DateTime.Now.Year);
