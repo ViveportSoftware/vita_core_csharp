@@ -4,7 +4,7 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.IO
 {
-    public class FileSystemManager
+    public partial class FileSystemManager
     {
         private static readonly Logger Log = Logger.GetInstance(typeof(FileSystemManager));
 
@@ -54,14 +54,6 @@ namespace Htc.Vita.Core.IO
                 Log.Error("Can not get Windows disk free space: " + e.Message);
             }
             return result;
-        }
-
-        public class DiskSpaceInfo
-        {
-            public string Path { get; set; } = "";
-            public long FreeOfBytes { get; set; } = -1;
-            public long TotalOfBytes { get; set; } = -1;
-            public long TotalFreeOfBytes { get; set; } = -1;
         }
     }
 }
