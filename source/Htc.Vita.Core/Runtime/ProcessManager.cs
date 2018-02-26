@@ -45,17 +45,17 @@ namespace Htc.Vita.Core.Runtime
             {
                 var processId = windowsProcess.Id;
                 var processName = windowsProcess.Name;
-                var processUsername = UserManager.GetWindowsUsernameBySid(windowsProcess.UserSid) ?? "";
+                var processUsername = UserManager.Windows.GetPlatformUsernameBySid(windowsProcess.UserSid) ?? "";
                 if (!string.IsNullOrWhiteSpace(username) && !username.Equals(processUsername))
                 {
                     continue;
                 }
                 var processInfo = new ProcessInfo
                 {
-                    Id = processId,
-                    Name = processName,
-                    User = processUsername,
-                    Path = ""
+                        Id = processId,
+                        Name = processName,
+                        User = processUsername,
+                        Path = ""
                 };
                 result.Add(processInfo);
             }

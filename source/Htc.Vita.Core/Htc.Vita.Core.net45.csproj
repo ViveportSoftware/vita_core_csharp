@@ -110,6 +110,8 @@
     <Compile Include="Runtime\ServiceManager.Windows.cs" />
     <Compile Include="Runtime\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runtime\UserManager.Windows.cs" />
+    <Compile Include="Runtime\UserManager.WindowsUserInfo.cs" />
     <Compile Include="Shell\ShellLink.cs" />
     <Compile Include="Util\Convert.cs" />
     <Compile Include="Util\Extract.cs" />
