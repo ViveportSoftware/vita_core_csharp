@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Htc.Vita.Core.Runtime
 {
-    public partial class UserManager
+    public static partial class UserManager
     {
         internal static class Windows
         {

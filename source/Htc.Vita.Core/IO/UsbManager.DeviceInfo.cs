@@ -2,7 +2,7 @@
 
 namespace Htc.Vita.Core.IO
 {
-    public partial class UsbManager
+    public static partial class UsbManager
     {
         public class DeviceInfo
         {

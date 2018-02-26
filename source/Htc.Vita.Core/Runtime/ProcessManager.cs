@@ -3,7 +3,7 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Runtime
 {
-    public partial class ProcessManager
+    public static partial class ProcessManager
     {
         private static readonly Logger Log = Logger.GetInstance(typeof(ProcessManager));
 

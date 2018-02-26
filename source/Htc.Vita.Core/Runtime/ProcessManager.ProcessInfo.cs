@@ -1,6 +1,6 @@
 ﻿namespace Htc.Vita.Core.Runtime
 {
-    public partial class ProcessManager
+    public static partial class ProcessManager
     {
         public class ProcessInfo
         {

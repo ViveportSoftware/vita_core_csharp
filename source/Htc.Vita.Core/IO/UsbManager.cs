@@ -8,7 +8,7 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.IO
 {
-    public partial class UsbManager
+    public static partial class UsbManager
     {
         private static readonly Logger Log = Logger.GetInstance(typeof(UsbManager));
 

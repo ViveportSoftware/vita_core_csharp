@@ -6,7 +6,7 @@ using Htc.Vita.Core.Runtime;
 
 namespace Htc.Vita.Core.Shell
 {
-    public partial class ShellLink
+    public static partial class ShellLink
     {
         private static readonly Logger Log = Logger.GetInstance(typeof(ShellLink));
 

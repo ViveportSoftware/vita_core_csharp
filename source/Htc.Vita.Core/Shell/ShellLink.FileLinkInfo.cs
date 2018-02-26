@@ -2,7 +2,7 @@
 
 namespace Htc.Vita.Core.Shell
 {
-    public partial class ShellLink
+    public static partial class ShellLink
     {
         public class FileLinkInfo
         {

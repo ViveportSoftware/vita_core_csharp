@@ -1,6 +1,6 @@
 ﻿namespace Htc.Vita.Core.IO
 {
-    public partial class FileSystemManager
+    public static partial class FileSystemManager
     {
         public class DiskSpaceInfo
         {
