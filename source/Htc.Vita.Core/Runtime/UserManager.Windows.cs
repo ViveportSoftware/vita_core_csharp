@@ -8,7 +8,7 @@ namespace Htc.Vita.Core.Runtime
 {
     public partial class UserManager
     {
-        internal class Windows
+        internal static class Windows
         {
             internal static string GetFirstActiveUser(string serverName)
             {

@@ -5,7 +5,7 @@ namespace Htc.Vita.Core.Preference
 {
     public partial class DefaultPreferenceFactory
     {
-        internal class Windows
+        internal static class Windows
         {
             internal static string GetAppDataPath()
             {

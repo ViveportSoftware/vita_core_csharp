@@ -6,7 +6,7 @@ namespace Htc.Vita.Core.Runtime
 {
     public partial class ProcessManager
     {
-        internal class Windows
+        internal static class Windows
         {
             internal static List<WindowsProcessInfo> GetPlatformProcesses(string serverName)
             {

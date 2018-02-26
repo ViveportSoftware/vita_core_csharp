@@ -5,7 +5,7 @@ namespace Htc.Vita.Core.Runtime
 {
     public partial class ServiceManager
     {
-        internal class Windows
+        internal static class Windows
         {
             internal static ServiceInfo ChangeStartTypeInPlatform(
                     string serviceName,
