@@ -116,6 +116,7 @@
     <Compile Include="Shell\ShellLink.FileLinkInfo.cs" />
     <Compile Include="Util\Convert.cs" />
     <Compile Include="Util\Extract.cs" />
+    <Compile Include="Util\Extract.Windows.cs" />
     <Compile Include="Util\Registry.cs" />
   </ItemGroup>
   <ItemGroup>
