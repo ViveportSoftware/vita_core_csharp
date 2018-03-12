@@ -43,7 +43,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error " + e);
+                Logger.GetInstance().Fatal("Instance initialization error: " + e);
                 Logger.GetInstance().Info("Initializing " + typeof(DefaultDns).FullName + "...");
                 instance = new DefaultDns(resolver);
             }

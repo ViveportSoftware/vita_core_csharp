@@ -31,7 +31,7 @@ namespace Htc.Vita.Core.Config
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error " + e);
+                Logger.GetInstance().Fatal("Instance initialization error: " + e);
                 Logger.GetInstance().Info("Initializing " + typeof(AppSettingsConfig).FullName + "...");
                 instance = new AppSettingsConfig();
             }
@@ -47,7 +47,7 @@ namespace Htc.Vita.Core.Config
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error " + e);
+                Logger.GetInstance().Fatal("Instance initialization error: " + e);
                 Logger.GetInstance().Info("Initializing " + typeof(AppSettingsConfig).FullName + "...");
                 instance = new AppSettingsConfig();
             }
@@ -61,7 +61,7 @@ namespace Htc.Vita.Core.Config
                 throw new ArgumentException("Invalid arguments to get config instance");
             }
 
-            var key = type.FullName;
+            var key = type.FullName + "_";
             Config instance = null;
             if (Instances.ContainsKey(key))
             {

@@ -24,7 +24,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error " + e);
+                Logger.GetInstance().Fatal("Instance initialization error: " + e);
                 Logger.GetInstance().Info("Initializing " + typeof(DefaultPreferenceFactory).FullName + "...");
                 instance = new DefaultPreferenceFactory();
             }
@@ -40,7 +40,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error " + e);
+                Logger.GetInstance().Fatal("Instance initialization error: " + e);
                 Logger.GetInstance().Info("Initializing " + typeof(DefaultPreferenceFactory).FullName + "...");
                 instance = new DefaultPreferenceFactory();
             }
@@ -54,7 +54,7 @@ namespace Htc.Vita.Core.Preference
                 throw new ArgumentException("Invalid arguments to get preference factory instance");
             }
 
-            var key = type.FullName;
+            var key = type.FullName + "_";
             PreferenceFactory instance = null;
             if (Instances.ContainsKey(key))
             {

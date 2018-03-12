@@ -55,7 +55,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    Logger.GetInstance().Fatal("Instance initialization error " + e);
+                    Logger.GetInstance().Fatal("Instance initialization error: " + e);
                     Logger.GetInstance().Info("Initializing " + typeof(NamedPipeIpcChannel.Client).FullName + "...");
                     instance = new NamedPipeIpcChannel.Client();
                 }
@@ -69,7 +69,7 @@ namespace Htc.Vita.Core.Runtime
                     throw new ArgumentException("Invalid arguments to get ipc channel client instance");
                 }
 
-                var key = type.FullName;
+                var key = type.FullName + "_";
                 Client instance = null;
                 if (Instances.ContainsKey(key))
                 {
@@ -198,7 +198,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    Logger.GetInstance().Fatal("Instance initialization error " + e);
+                    Logger.GetInstance().Fatal("Instance initialization error: " + e);
                     Logger.GetInstance().Info("Initializing " + typeof(NamedPipeIpcChannel.Provider).FullName + "...");
                     instance = new NamedPipeIpcChannel.Provider();
                 }
@@ -212,7 +212,7 @@ namespace Htc.Vita.Core.Runtime
                     throw new ArgumentException("Invalid arguments to get ipc channel provider instance");
                 }
 
-                var key = type.FullName;
+                var key = type.FullName + "_";
                 Provider instance = null;
                 if (Instances.ContainsKey(key))
                 {

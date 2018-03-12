@@ -42,7 +42,7 @@ namespace Htc.Vita.Core.Crypto
                 throw new ArgumentException("Invalid arguments to get md5 instance");
             }
 
-            var key = type.FullName;
+            var key = type.FullName + "_";
             Sha1 instance = null;
             if (Instances.ContainsKey(key))
             {

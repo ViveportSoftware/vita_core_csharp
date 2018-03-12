@@ -31,7 +31,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error " + e);
+                Logger.GetInstance().Fatal("Instance initialization error: " + e);
                 Logger.GetInstance().Info("Initializing " + typeof(LitJsonJsonFactory).FullName + "...");
                 instance = new LitJsonJsonFactory();
             }
@@ -45,7 +45,7 @@ namespace Htc.Vita.Core.Json
                 throw new ArgumentException("Invalid arguments to get json factory instance");
             }
 
-            var key = type.FullName;
+            var key = type.FullName + "_";
             JsonFactory instance = null;
             if (Instances.ContainsKey(key))
             {
