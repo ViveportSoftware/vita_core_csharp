@@ -35,7 +35,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error " + e);
+                Logger.GetInstance().Fatal("Instance initialization error: " + e);
                 Logger.GetInstance().Info("Initializing " + typeof(DefaultWebRequestFactory).FullName + "...");
                 instance = new DefaultWebRequestFactory();
             }
@@ -51,7 +51,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error " + e);
+                Logger.GetInstance().Fatal("Instance initialization error: " + e);
                 Logger.GetInstance().Info("Initializing " + typeof(DefaultWebRequestFactory).FullName + "...");
                 instance = new DefaultWebRequestFactory();
             }
@@ -65,7 +65,7 @@ namespace Htc.Vita.Core.Net
                 throw new ArgumentException("Invalid arguments to get web request factory instance");
             }
 
-            var key = type.FullName;
+            var key = type.FullName + "_";
             WebRequestFactory instance = null;
             if (Instances.ContainsKey(key))
             {
