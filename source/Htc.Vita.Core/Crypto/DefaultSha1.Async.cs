@@ -11,12 +11,12 @@ namespace Htc.Vita.Core.Crypto
 
         protected override async Task<string> OnGenerateInBase64Async(FileInfo file)
         {
-            return await DoGenerateInBase64Async(file);
+            return await DoGenerateInBase64Async(file).ConfigureAwait(false);
         }
 
         protected override async Task<string> OnGenerateInHexAsync(FileInfo file)
         {
-            return await DoGenerateInHexAsync(file);
+            return await DoGenerateInHexAsync(file).ConfigureAwait(false);
         }
 
         public static async Task<string> DoGenerateInBase64Async(FileInfo file)

@@ -6,7 +6,7 @@ namespace Htc.Vita.Core.Preference
     {
         protected override async Task<Preferences> OnLoadPreferencesAsync(string label)
         {
-            return await new DefaultPreferences("", label).InitializeAsync();
+            return await new DefaultPreferences("", label).InitializeAsync().ConfigureAwait(false);
         }
     }
 }

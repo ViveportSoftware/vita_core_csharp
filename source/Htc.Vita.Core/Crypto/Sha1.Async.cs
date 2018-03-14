@@ -17,7 +17,7 @@ namespace Htc.Vita.Core.Crypto
             var result = string.Empty;
             try
             {
-                result = await OnGenerateInBase64Async(file);
+                result = await OnGenerateInBase64Async(file).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -36,7 +36,7 @@ namespace Htc.Vita.Core.Crypto
             var result = string.Empty;
             try
             {
-                result = await OnGenerateInHexAsync(file);
+                result = await OnGenerateInHexAsync(file).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -54,11 +54,11 @@ namespace Htc.Vita.Core.Crypto
 
             if (checksum.Length == Base64Length)
             {
-                return await ValidateInBase64Async(file, checksum);
+                return await ValidateInBase64Async(file, checksum).ConfigureAwait(false);
             }
             if (checksum.Length == HexLength)
             {
-                return await ValidateInHexAsync(file, checksum);
+                return await ValidateInHexAsync(file, checksum).ConfigureAwait(false);
             }
             return false;
         }
@@ -73,7 +73,7 @@ namespace Htc.Vita.Core.Crypto
             var result = false;
             try
             {
-                result = checksum.Equals(await OnGenerateInBase64Async(file));
+                result = checksum.Equals(await OnGenerateInBase64Async(file).ConfigureAwait(false));
             }
             catch (Exception e)
             {
@@ -92,7 +92,7 @@ namespace Htc.Vita.Core.Crypto
             var result = false;
             try
             {
-                result = checksum.ToLowerInvariant().Equals(await OnGenerateInHexAsync(file));
+                result = checksum.ToLowerInvariant().Equals(await OnGenerateInHexAsync(file).ConfigureAwait(false));
             }
             catch (Exception e)
             {

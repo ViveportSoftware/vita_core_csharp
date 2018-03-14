@@ -6,12 +6,12 @@ namespace Htc.Vita.Core.Preference
     {
         public async Task<bool> CommitAsync()
         {
-            return await OnSaveAsync();
+            return await OnSaveAsync().ConfigureAwait(false);
         }
 
         public async Task<Preferences> InitializeAsync()
         {
-            return await OnInitializeAsync();
+            return await OnInitializeAsync().ConfigureAwait(false);
         }
 
         protected abstract Task<Preferences> OnInitializeAsync();

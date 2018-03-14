@@ -29,7 +29,7 @@ namespace Htc.Vita.Core.Preference
                     }
                     using (var streamReader = File.OpenText(file.FullName))
                     {
-                        data = await streamReader.ReadToEndAsync();
+                        data = await streamReader.ReadToEndAsync().ConfigureAwait(false);
                     }
                     if (string.IsNullOrWhiteSpace(data))
                     {
@@ -91,7 +91,7 @@ namespace Htc.Vita.Core.Preference
                     {
                         var bytes = Encoding.UTF8.GetBytes(jsonObject.ToPrettyString());
                         fileStream.SetLength(0);
-                        await fileStream.WriteAsync(bytes, 0, bytes.Length);
+                        await fileStream.WriteAsync(bytes, 0, bytes.Length).ConfigureAwait(false);
                     }
                     return true;
                 }

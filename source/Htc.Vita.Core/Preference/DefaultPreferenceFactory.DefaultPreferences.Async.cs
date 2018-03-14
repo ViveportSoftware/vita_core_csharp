@@ -8,13 +8,13 @@ namespace Htc.Vita.Core.Preference
         {
             protected override async Task<Preferences> OnInitializeAsync()
             {
-                _properties = await _storage.LoadFromFileAsync();
+                _properties = await _storage.LoadFromFileAsync().ConfigureAwait(false);
                 return this;
             }
 
             protected override async Task<bool> OnSaveAsync()
             {
-                return await _storage.SaveToFileAsync(_properties);
+                return await _storage.SaveToFileAsync(_properties).ConfigureAwait(false);
             }
         }
     }
