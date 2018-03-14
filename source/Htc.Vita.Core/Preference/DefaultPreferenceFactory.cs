@@ -4,7 +4,7 @@
     {
         protected override Preferences OnLoadPreferences(string label)
         {
-            return new DefaultPreferences("", label);
+            return new DefaultPreferences("", label).Initialize();
         }
     }
 }

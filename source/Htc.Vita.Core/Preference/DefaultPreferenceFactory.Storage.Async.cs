@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using Htc.Vita.Core.Json;
-using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Preference
 {
@@ -11,38 +11,7 @@ namespace Htc.Vita.Core.Preference
     {
         internal partial class Storage
         {
-            private readonly Logger _logger;
-            private readonly string _path;
-
-            internal Storage(string category, string label)
-            {
-                _logger = Logger.GetInstance();
-                var targetCategory = !string.IsNullOrWhiteSpace(category) ? category : "Vita";
-                var targetLabel = !string.IsNullOrWhiteSpace(label) ? label : "default";
-                _path = GetFilePath(targetCategory, targetLabel);
-            }
-
-            private static string GetAppDataPath()
-            {
-                var path = Windows.GetAppDataPath();
-                if (string.IsNullOrWhiteSpace(path))
-                {
-                    path = Unix.GetAppDataPath();
-                }
-                return path;
-            }
-
-            internal static string GetFilePath(string category, string label)
-            {
-                var path = GetAppDataPath();
-                if (string.IsNullOrWhiteSpace(path))
-                {
-                    return "";
-                }
-                return Path.Combine(path, category, label + ".pref");
-            }
-
-            internal Dictionary<string, string> LoadFromFile()
+            internal async Task<Dictionary<string, string>> LoadFromFileAsync()
             {
                 var result = new Dictionary<string, string>();
                 if (string.IsNullOrWhiteSpace(_path))
@@ -60,7 +29,7 @@ namespace Htc.Vita.Core.Preference
                     }
                     using (var streamReader = File.OpenText(file.FullName))
                     {
-                        data = streamReader.ReadToEnd();
+                        data = await streamReader.ReadToEndAsync();
                     }
                     if (string.IsNullOrWhiteSpace(data))
                     {
@@ -84,7 +53,7 @@ namespace Htc.Vita.Core.Preference
                 return result;
             }
 
-            internal bool SaveToFile(Dictionary<string, string> properties)
+            internal async Task<bool> SaveToFileAsync(Dictionary<string, string> properties)
             {
                 if (properties == null)
                 {
@@ -122,7 +91,7 @@ namespace Htc.Vita.Core.Preference
                     {
                         var bytes = Encoding.UTF8.GetBytes(jsonObject.ToPrettyString());
                         fileStream.SetLength(0);
-                        fileStream.Write(bytes, 0, bytes.Length);
+                        await fileStream.WriteAsync(bytes, 0, bytes.Length);
                     }
                     return true;
                 }

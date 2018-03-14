@@ -30,6 +30,16 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
+        public static void Default_2_LoadPreferencesAsync()
+        {
+            var preferenceFactory = Preference.PreferenceFactory.GetInstance();
+            Assert.NotNull(preferenceFactory);
+            var preferences = preferenceFactory.LoadPreferencesAsync().Result;
+            Assert.NotNull(preferences);
+            Assert.Equal("DefaultPreferences", preferences.ToString());
+        }
+
+        [Fact]
         public static void Preference_00_PutBool()
         {
             var preferenceFactory = Preference.PreferenceFactory.GetInstance();
@@ -276,6 +286,28 @@ namespace Htc.Vita.Core.Tests
             preferences.Commit();
             Assert.NotNull(preferences);
             var preferences2 = preferenceFactory.LoadPreferences();
+            Assert.NotNull(preferences2);
+            Assert.Equal("test", preferences2.ParseString("key11"));
+            Assert.Equal(1, preferences2.ParseInt("key12"));
+            Assert.Equal(2.2D, preferences2.ParseDouble("key13"));
+            Assert.Equal(true, preferences2.ParseBool("key14"));
+        }
+
+        [Fact]
+        public static void Preference_12_CommitAsync()
+        {
+            var preferenceFactory = Preference.PreferenceFactory.GetInstance();
+            Assert.NotNull(preferenceFactory);
+            var preferences = preferenceFactory.LoadPreferencesAsync().Result;
+            Assert.NotNull(preferences);
+            preferences.Put("key11", "test");
+            Assert.NotNull(preferences);
+            preferences.Put("key12", 1);
+            preferences.Put("key13", 2.2D);
+            preferences.Put("key14", true);
+            preferences.CommitAsync().GetAwaiter().GetResult();
+            Assert.NotNull(preferences);
+            var preferences2 = preferenceFactory.LoadPreferencesAsync().Result;
             Assert.NotNull(preferences2);
             Assert.Equal("test", preferences2.ParseString("key11"));
             Assert.Equal(1, preferences2.ParseInt("key12"));

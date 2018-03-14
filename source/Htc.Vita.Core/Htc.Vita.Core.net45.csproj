@@ -95,11 +95,16 @@
     <Compile Include="Net\Dns.cs" />
     <Compile Include="Net\WebProxyFactory.cs" />
     <Compile Include="Net\WebRequestFactory.cs" />
+    <Compile Include="Preference\DefaultPreferenceFactory.Async.cs" />
     <Compile Include="Preference\DefaultPreferenceFactory.cs" />
+    <Compile Include="Preference\DefaultPreferenceFactory.DefaultPreferences.Async.cs" />
     <Compile Include="Preference\DefaultPreferenceFactory.DefaultPreferences.cs" />
+    <Compile Include="Preference\DefaultPreferenceFactory.Storage.Async.cs" />
     <Compile Include="Preference\DefaultPreferenceFactory.Storage.cs" />
     <Compile Include="Preference\DefaultPreferenceFactory.Unix.cs" />
     <Compile Include="Preference\DefaultPreferenceFactory.Windows.cs" />
+    <Compile Include="Preference\PreferenceFactory.Async.cs" />
+    <Compile Include="Preference\Preferences.Async.cs" />
     <Compile Include="Preference\Preferences.cs" />
     <Compile Include="Preference\PreferenceFactory.cs" />
     <Compile Include="Runtime\IpcChannel.cs" />

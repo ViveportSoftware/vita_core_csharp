@@ -4,7 +4,7 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Preference
 {
-    public abstract class Preferences
+    public abstract partial class Preferences
     {
         private readonly Logger _logger;
 
@@ -63,6 +63,11 @@ namespace Htc.Vita.Core.Preference
                 _logger.Error(e.ToString());
             }
             return result;
+        }
+
+        public Preferences Initialize()
+        {
+            return OnInitialize();
         }
 
         public bool ParseBool(string key)
@@ -266,6 +271,7 @@ namespace Htc.Vita.Core.Preference
         protected abstract ICollection<string> OnAllKeys();
         protected abstract Preferences OnClear();
         protected abstract bool OnHasKey(string key);
+        protected abstract Preferences OnInitialize();
         protected abstract bool OnParseBool(string key, bool defaultValue);
         protected abstract double OnParseDouble(string key, double defaultValue);
         protected abstract float OnParseFloat(string key, float defaultValue);

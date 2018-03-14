@@ -4,7 +4,7 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Preference
 {
-    public abstract class PreferenceFactory
+    public abstract partial class PreferenceFactory
     {
         private static Dictionary<string, PreferenceFactory> Instances { get; } = new Dictionary<string, PreferenceFactory>();
         private static Type _defaultType = typeof(DefaultPreferenceFactory);
@@ -90,7 +90,7 @@ namespace Htc.Vita.Core.Preference
         {
             if (string.IsNullOrWhiteSpace(label))
             {
-                OnLoadPreferences("default");
+                return OnLoadPreferences("default");
             }
             return OnLoadPreferences(label);
         }

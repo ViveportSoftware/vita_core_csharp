@@ -5,15 +5,14 @@ namespace Htc.Vita.Core.Preference
 {
     public partial class DefaultPreferenceFactory
     {
-        public class DefaultPreferences : Preferences
+        public partial class DefaultPreferences : Preferences
         {
-            private readonly Dictionary<string, string> _properties;
+            private Dictionary<string, string> _properties;
             private readonly Storage _storage;
 
             public DefaultPreferences(string category, string label) : base(label)
             {
                 _storage = new Storage(category, Label);
-                _properties = _storage.LoadFromFile();
             }
 
             protected override ICollection<string> OnAllKeys()
@@ -30,6 +29,12 @@ namespace Htc.Vita.Core.Preference
             protected override bool OnHasKey(string key)
             {
                 return _properties.ContainsKey(key);
+            }
+
+            protected override Preferences OnInitialize()
+            {
+                _properties = _storage.LoadFromFile();
+                return this;
             }
 
             protected override bool OnParseBool(string key, bool defaultValue)
