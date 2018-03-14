@@ -5,7 +5,7 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Crypto
 {
-    public abstract class Sha1
+    public abstract partial class Sha1
     {
         private static Dictionary<string, Sha1> Instances { get; } = new Dictionary<string, Sha1>();
         private static Type _defaultType = typeof(DefaultSha1);

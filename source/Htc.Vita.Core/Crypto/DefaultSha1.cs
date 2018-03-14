@@ -5,7 +5,7 @@ using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Crypto
 {
-    public class DefaultSha1 : Sha1
+    public partial class DefaultSha1 : Sha1
     {
         protected override string OnGenerateInBase64(FileInfo file)
         {

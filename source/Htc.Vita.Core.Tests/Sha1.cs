@@ -29,13 +29,27 @@ namespace Htc.Vita.Core.Tests
         {
             var sha1 = Crypto.Sha1.GetInstance();
             Assert.NotNull(sha1);
-            string path = @"%USERPROFILE%\TestData.Sha1.txt";
+            var path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
             }
             var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
             Assert.Equal("9eJAeMCTbKeIFSYOfVjRqUCWbro=", sha1.GenerateInBase64(file));
+        }
+
+        [Fact]
+        public static void Default_1_GenerateInBase64Async_WithFile()
+        {
+            var sha1 = Crypto.Sha1.GetInstance();
+            Assert.NotNull(sha1);
+            var path = @"%USERPROFILE%\TestData.Sha1.txt";
+            if (!Runtime.Platform.IsWindows)
+            {
+                path = @"%HOME%/TestData.Sha1.txt";
+            }
+            var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
+            Assert.Equal("9eJAeMCTbKeIFSYOfVjRqUCWbro=", sha1.GenerateInBase64Async(file).Result);
         }
 
         [Fact]
@@ -52,13 +66,27 @@ namespace Htc.Vita.Core.Tests
         {
             var sha1 = Crypto.Sha1.GetInstance();
             Assert.NotNull(sha1);
-            string path = @"%USERPROFILE%\TestData.Sha1.txt";
+            var path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
             }
             var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
             Assert.True(sha1.ValidateInBase64(file, "9eJAeMCTbKeIFSYOfVjRqUCWbro="));
+        }
+
+        [Fact]
+        public static void Default_2_ValidateInBase64Async_WithFile()
+        {
+            var sha1 = Crypto.Sha1.GetInstance();
+            Assert.NotNull(sha1);
+            var path = @"%USERPROFILE%\TestData.Sha1.txt";
+            if (!Runtime.Platform.IsWindows)
+            {
+                path = @"%HOME%/TestData.Sha1.txt";
+            }
+            var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
+            Assert.True(sha1.ValidateInBase64Async(file, "9eJAeMCTbKeIFSYOfVjRqUCWbro=").Result);
         }
 
         [Fact]
@@ -77,13 +105,27 @@ namespace Htc.Vita.Core.Tests
         {
             var sha1 = Crypto.Sha1.GetInstance();
             Assert.NotNull(sha1);
-            string path = @"%USERPROFILE%\TestData.Sha1.txt";
+            var path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
             }
             var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
             Assert.Equal("f5e24078c0936ca78815260e7d58d1a940966eba", sha1.GenerateInHex(file));
+        }
+
+        [Fact]
+        public static void Default_3_GenerateInHexAsync_WithFile()
+        {
+            var sha1 = Crypto.Sha1.GetInstance();
+            Assert.NotNull(sha1);
+            var path = @"%USERPROFILE%\TestData.Sha1.txt";
+            if (!Runtime.Platform.IsWindows)
+            {
+                path = @"%HOME%/TestData.Sha1.txt";
+            }
+            var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
+            Assert.Equal("f5e24078c0936ca78815260e7d58d1a940966eba", sha1.GenerateInHexAsync(file).Result);
         }
 
         [Fact]
@@ -100,13 +142,27 @@ namespace Htc.Vita.Core.Tests
         {
             var sha1 = Crypto.Sha1.GetInstance();
             Assert.NotNull(sha1);
-            string path = @"%USERPROFILE%\TestData.Sha1.txt";
+            var path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
             }
             var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
             Assert.True(sha1.ValidateInHex(file, "f5e24078c0936ca78815260e7d58d1a940966eba"));
+        }
+
+        [Fact]
+        public static void Default_4_ValidateInHexAsync_WithFile()
+        {
+            var sha1 = Crypto.Sha1.GetInstance();
+            Assert.NotNull(sha1);
+            var path = @"%USERPROFILE%\TestData.Sha1.txt";
+            if (!Runtime.Platform.IsWindows)
+            {
+                path = @"%HOME%/TestData.Sha1.txt";
+            }
+            var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
+            Assert.True(sha1.ValidateInHexAsync(file, "f5e24078c0936ca78815260e7d58d1a940966eba").Result);
         }
 
         [Fact]
@@ -125,7 +181,7 @@ namespace Htc.Vita.Core.Tests
         {
             var sha1 = Crypto.Sha1.GetInstance();
             Assert.NotNull(sha1);
-            string path = @"%USERPROFILE%\TestData.Sha1.txt";
+            var path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
@@ -133,6 +189,21 @@ namespace Htc.Vita.Core.Tests
             var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
             Assert.True(sha1.ValidateInAll(file, "9eJAeMCTbKeIFSYOfVjRqUCWbro="));
             Assert.True(sha1.ValidateInAll(file, "f5e24078c0936ca78815260e7d58d1a940966eba"));
+        }
+
+        [Fact]
+        public static void Default_5_ValidateInAllAsync_WithFile()
+        {
+            var sha1 = Crypto.Sha1.GetInstance();
+            Assert.NotNull(sha1);
+            var path = @"%USERPROFILE%\TestData.Sha1.txt";
+            if (!Runtime.Platform.IsWindows)
+            {
+                path = @"%HOME%/TestData.Sha1.txt";
+            }
+            var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
+            Assert.True(sha1.ValidateInAllAsync(file, "9eJAeMCTbKeIFSYOfVjRqUCWbro=").Result);
+            Assert.True(sha1.ValidateInAllAsync(file, "f5e24078c0936ca78815260e7d58d1a940966eba").Result);
         }
     }
 }
