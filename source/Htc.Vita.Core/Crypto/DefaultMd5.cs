@@ -5,7 +5,7 @@ using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Crypto
 {
-    public class DefaultMd5 : Md5
+    public partial class DefaultMd5 : Md5
     {
         protected override string OnGenerateInBase64(FileInfo file)
         {

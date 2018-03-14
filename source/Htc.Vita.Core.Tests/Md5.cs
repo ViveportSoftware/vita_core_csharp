@@ -29,13 +29,27 @@ namespace Htc.Vita.Core.Tests
         {
             var md5 = Crypto.Md5.GetInstance();
             Assert.NotNull(md5);
-            string path = @"%USERPROFILE%\TestData.Md5.txt";
+            var path = @"%USERPROFILE%\TestData.Md5.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Md5.txt";
             }
             var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
             Assert.Equal("pq/Xu7jVnluxLJ28xOws/w==", md5.GenerateInBase64(file));
+        }
+
+        [Fact]
+        public static void Default_1_GenerateInBase64Async_WithFile()
+        {
+            var md5 = Crypto.Md5.GetInstance();
+            Assert.NotNull(md5);
+            var path = @"%USERPROFILE%\TestData.Md5.txt";
+            if (!Runtime.Platform.IsWindows)
+            {
+                path = @"%HOME%/TestData.Md5.txt";
+            }
+            var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
+            Assert.Equal("pq/Xu7jVnluxLJ28xOws/w==", md5.GenerateInBase64Async(file).Result);
         }
 
         [Fact]
@@ -52,13 +66,27 @@ namespace Htc.Vita.Core.Tests
         {
             var md5 = Crypto.Md5.GetInstance();
             Assert.NotNull(md5);
-            string path = @"%USERPROFILE%\TestData.Md5.txt";
+            var path = @"%USERPROFILE%\TestData.Md5.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Md5.txt";
             }
             var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
             Assert.True(md5.ValidateInBase64(file, "pq/Xu7jVnluxLJ28xOws/w=="));
+        }
+
+        [Fact]
+        public static void Default_2_ValidateInBase64Async_WithFile()
+        {
+            var md5 = Crypto.Md5.GetInstance();
+            Assert.NotNull(md5);
+            var path = @"%USERPROFILE%\TestData.Md5.txt";
+            if (!Runtime.Platform.IsWindows)
+            {
+                path = @"%HOME%/TestData.Md5.txt";
+            }
+            var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
+            Assert.True(md5.ValidateInBase64Async(file, "pq/Xu7jVnluxLJ28xOws/w==").Result);
         }
 
         [Fact]
@@ -77,13 +105,27 @@ namespace Htc.Vita.Core.Tests
         {
             var md5 = Crypto.Md5.GetInstance();
             Assert.NotNull(md5);
-            string path = @"%USERPROFILE%\TestData.Md5.txt";
+            var path = @"%USERPROFILE%\TestData.Md5.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Md5.txt";
             }
             var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
             Assert.Equal("a6afd7bbb8d59e5bb12c9dbcc4ec2cff", md5.GenerateInHex(file));
+        }
+
+        [Fact]
+        public static void Default_3_GenerateInHexAsync_WithFile()
+        {
+            var md5 = Crypto.Md5.GetInstance();
+            Assert.NotNull(md5);
+            var path = @"%USERPROFILE%\TestData.Md5.txt";
+            if (!Runtime.Platform.IsWindows)
+            {
+                path = @"%HOME%/TestData.Md5.txt";
+            }
+            var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
+            Assert.Equal("a6afd7bbb8d59e5bb12c9dbcc4ec2cff", md5.GenerateInHexAsync(file).Result);
         }
 
         [Fact]
@@ -100,13 +142,27 @@ namespace Htc.Vita.Core.Tests
         {
             var md5 = Crypto.Md5.GetInstance();
             Assert.NotNull(md5);
-            string path = @"%USERPROFILE%\TestData.Md5.txt";
+            var path = @"%USERPROFILE%\TestData.Md5.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Md5.txt";
             }
             var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
             Assert.True(md5.ValidateInHex(file, "a6afd7bbb8d59e5bb12c9dbcc4ec2cff"));
+        }
+
+        [Fact]
+        public static void Default_4_ValidateInHexAsync_WithFile()
+        {
+            var md5 = Crypto.Md5.GetInstance();
+            Assert.NotNull(md5);
+            var path = @"%USERPROFILE%\TestData.Md5.txt";
+            if (!Runtime.Platform.IsWindows)
+            {
+                path = @"%HOME%/TestData.Md5.txt";
+            }
+            var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
+            Assert.True(md5.ValidateInHexAsync(file, "a6afd7bbb8d59e5bb12c9dbcc4ec2cff").Result);
         }
 
         [Fact]
@@ -125,7 +181,7 @@ namespace Htc.Vita.Core.Tests
         {
             var md5 = Crypto.Md5.GetInstance();
             Assert.NotNull(md5);
-            string path = @"%USERPROFILE%\TestData.Md5.txt";
+            var path = @"%USERPROFILE%\TestData.Md5.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Md5.txt";
@@ -133,6 +189,21 @@ namespace Htc.Vita.Core.Tests
             var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
             Assert.True(md5.ValidateInAll(file, "pq/Xu7jVnluxLJ28xOws/w=="));
             Assert.True(md5.ValidateInAll(file, "a6afd7bbb8d59e5bb12c9dbcc4ec2cff"));
+        }
+
+        [Fact]
+        public static void Default_5_ValidateInAllAsync_WithFile()
+        {
+            var md5 = Crypto.Md5.GetInstance();
+            Assert.NotNull(md5);
+            var path = @"%USERPROFILE%\TestData.Md5.txt";
+            if (!Runtime.Platform.IsWindows)
+            {
+                path = @"%HOME%/TestData.Md5.txt";
+            }
+            var file = new FileInfo(Environment.ExpandEnvironmentVariables(path));
+            Assert.True(md5.ValidateInAllAsync(file, "pq/Xu7jVnluxLJ28xOws/w==").Result);
+            Assert.True(md5.ValidateInAllAsync(file, "a6afd7bbb8d59e5bb12c9dbcc4ec2cff").Result);
         }
     }
 }

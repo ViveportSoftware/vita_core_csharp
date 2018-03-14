@@ -47,8 +47,10 @@
     <Compile Include="Config\AppSettingsConfig.cs" />
     <Compile Include="Config\Config.cs" />
     <Compile Include="Config\RegistryConfig.cs" />
+    <Compile Include="Crypto\DefaultMd5.Async.cs" />
     <Compile Include="Crypto\DefaultMd5.cs" />
     <Compile Include="Crypto\DefaultSha1.cs" />
+    <Compile Include="Crypto\Md5.Async.cs" />
     <Compile Include="Crypto\Md5.cs" />
     <Compile Include="Crypto\Sha1.cs" />
     <Compile Include="Diagnostics\FilePropertiesInfo.Authenticode.cs" />

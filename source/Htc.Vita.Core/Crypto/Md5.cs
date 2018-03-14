@@ -5,7 +5,7 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Crypto
 {
-    public abstract class Md5
+    public abstract partial class Md5
     {
         private static Dictionary<string, Md5> Instances { get; } = new Dictionary<string, Md5>();
         private static Type _defaultType = typeof(DefaultMd5);
