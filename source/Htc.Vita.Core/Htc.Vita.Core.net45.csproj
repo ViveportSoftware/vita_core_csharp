@@ -107,6 +107,7 @@
     <Compile Include="Preference\Preferences.Async.cs" />
     <Compile Include="Preference\Preferences.cs" />
     <Compile Include="Preference\PreferenceFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\IpcChannel.cs" />
     <Compile Include="Runtime\NamedPipeIpcChannel.cs" />
     <Compile Include="Runtime\Platform.cs" />
@@ -118,11 +119,13 @@
     <Compile Include="Runtime\ServiceManager.ServiceInfo.cs" />
     <Compile Include="Runtime\ServiceManager.Windows.cs" />
     <Compile Include="Runtime\UserManager.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\UserManager.Windows.cs" />
     <Compile Include="Runtime\UserManager.WindowsUserInfo.cs" />
     <Compile Include="Shell\ShellLink.cs" />
     <Compile Include="Shell\ShellLink.FileLinkInfo.cs" />
+    <Compile Include="Shell\UriSchemeManager.cs" />
+    <Compile Include="Shell\UriSchemeManager.UriSchemeInfo.cs" />
+    <Compile Include="Shell\UriSchemeManager.Windows.cs" />
     <Compile Include="Util\Convert.cs" />
     <Compile Include="Util\Extract.cs" />
     <Compile Include="Util\Extract.Windows.cs" />

@@ -73,6 +73,7 @@
     <Compile Include="ServiceManager.cs" />
     <Compile Include="Sha1.cs" />
     <Compile Include="ShellLink.cs" />
+    <Compile Include="UriSchemeManager.cs" />
     <Compile Include="UsbManager.cs" />
     <Compile Include="UserManager.cs" />
     <Compile Include="WebProxyFactory.cs" />
