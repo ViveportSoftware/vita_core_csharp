@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using Htc.Vita.Core.Log;
 using Microsoft.Win32;
@@ -161,7 +162,7 @@ namespace Htc.Vita.Core.Shell
 
                 var key = GetProtocolCommandPathKey(
                         schemeName,
-                        new FileInfo(commandPath).Name.ToLower()
+                        new FileInfo(commandPath).Name.ToLower(CultureInfo.InvariantCulture)
                 );
                 if (whitelistOnly && !ProtocolCommandPathWhitelist.Contains(key))
                 {
