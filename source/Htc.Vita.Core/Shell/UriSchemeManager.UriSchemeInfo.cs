@@ -1,6 +1,6 @@
 ﻿namespace Htc.Vita.Core.Shell
 {
-    public partial class UriSchemeManager
+    public abstract partial class UriSchemeManager
     {
         public class UriSchemeInfo
         {

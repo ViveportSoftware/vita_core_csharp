@@ -1,24 +1,129 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Shell
 {
-    public partial class UriSchemeManager
+    public abstract partial class UriSchemeManager
     {
-        private static readonly Logger Log = Logger.GetInstance(typeof(UriSchemeManager));
+        public static readonly string OptionAcceptWhitelistOnly = "option_accept_whitelist_only";
 
-        public static UriSchemeInfo GetSystemUriScheme(string name)
+        private static Dictionary<string, UriSchemeManager> Instances { get; } = new Dictionary<string, UriSchemeManager>();
+        private static Type _defaultType = typeof(UriSchemeManager);
+
+        private readonly Logger _log;
+
+        protected UriSchemeManager()
+        {
+            _log = Logger.GetInstance();
+        }
+
+        public static void Register<T>() where T : UriSchemeManager
+        {
+            _defaultType = typeof(T);
+            Logger.GetInstance().Info("Registered default uri scheme manager type to " + _defaultType);
+        }
+
+        public static UriSchemeManager GetInstance()
+        {
+            UriSchemeManager instance;
+            try
+            {
+                instance = DoGetInstance(_defaultType);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance().Fatal("Instance initialization error " + e);
+                Logger.GetInstance().Info("Initializing " + typeof(RegistryUriSchemeManager).FullName + "...");
+                instance = new RegistryUriSchemeManager();
+            }
+            return instance;
+        }
+
+        public static UriSchemeManager GetInstance<T>() where T : UriSchemeManager
+        {
+            UriSchemeManager instance;
+            try
+            {
+                instance = DoGetInstance(typeof(T));
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance().Fatal("Instance initialization error: " + e);
+                Logger.GetInstance().Info("Initializing " + typeof(RegistryUriSchemeManager).FullName + "...");
+                instance = new RegistryUriSchemeManager();
+            }
+            return instance;
+        }
+
+        private static UriSchemeManager DoGetInstance(Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentException("Invalid arguments to get uri scheme manager instance");
+            }
+
+            var key = type.FullName + "_";
+            UriSchemeManager instance = null;
+            if (Instances.ContainsKey(key))
+            {
+                instance = Instances[key];
+            }
+            if (instance == null)
+            {
+                Logger.GetInstance().Info("Initializing " + key + "...");
+                var constructor = type.GetConstructor(new Type[] { });
+                if (constructor != null)
+                {
+                    instance = (RegistryUriSchemeManager)constructor.Invoke(new object[] { });
+                }
+            }
+            if (instance == null)
+            {
+                Logger.GetInstance().Info("Initializing " + typeof(RegistryUriSchemeManager).FullName + "...");
+                instance = new RegistryUriSchemeManager();
+            }
+            if (!Instances.ContainsKey(key))
+            {
+                Instances.Add(key, instance);
+            }
+            return instance;
+        }
+
+        public UriSchemeInfo GetSystemUriScheme(string name)
+        {
+            return GetSystemUriScheme(name, null);
+        }
+
+        public UriSchemeInfo GetSystemUriScheme(string name, Dictionary<string, string> options)
         {
             if (!name.All(c => char.IsLetterOrDigit(c) || c == '+' || c == '-' || c == '.'))
             {
-                Log.Error("Do not find valid scheme name: \"" + name + "\"");
+                _log.Error("Do not find valid scheme name: \"" + name + "\"");
                 return new UriSchemeInfo
                 {
                         Name = name
                 };
             }
 
-            return Windows.GetSystemUriSchemeInPlatform(name);
+            var opts = options ?? new Dictionary<string, string>();
+            UriSchemeInfo result = null;
+            try
+            {
+                result = OnGetSystemUriScheme(name, opts);
+            }
+            catch (Exception e)
+            {
+                _log.Error("Can not get system uri scheme: " + e.Message);
+            }
+
+            return result ?? new UriSchemeInfo
+            {
+                Name = name
+            };
         }
+
+        protected abstract UriSchemeInfo OnGetSystemUriScheme(string schemeName, Dictionary<string, string> options);
     }
 }

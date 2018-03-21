@@ -121,11 +121,11 @@
     <Compile Include="Runtime\UserManager.cs" />
     <Compile Include="Runtime\UserManager.Windows.cs" />
     <Compile Include="Runtime\UserManager.WindowsUserInfo.cs" />
+    <Compile Include="Shell\RegistryUriSchemeManager.cs" />
     <Compile Include="Shell\ShellLink.cs" />
     <Compile Include="Shell\ShellLink.FileLinkInfo.cs" />
     <Compile Include="Shell\UriSchemeManager.cs" />
     <Compile Include="Shell\UriSchemeManager.UriSchemeInfo.cs" />
-    <Compile Include="Shell\UriSchemeManager.Windows.cs" />
     <Compile Include="Util\Convert.cs" />
     <Compile Include="Util\Extract.cs" />
     <Compile Include="Util\Extract.Windows.cs" />
