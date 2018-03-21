@@ -1,14 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Htc.Vita.Core.Log;
 using Microsoft.Win32;
 
 namespace Htc.Vita.Core.Shell
 {
     public class RegistryUriSchemeManager : UriSchemeManager
     {
+        private static readonly HashSet<string> ProtocolCommandPathWhitelist = new HashSet<string>();
+        private static readonly Logger Log = Logger.GetInstance(typeof(RegistryUriSchemeManager));
+
+        static RegistryUriSchemeManager()
+        {
+            InitWhitelist();
+        }
+
+        private static void InitWhitelist()
+        {
+            ProtocolCommandPathWhitelist.Add(GetProtocolCommandPathKey("http", "chrome.exe"));
+            ProtocolCommandPathWhitelist.Add(GetProtocolCommandPathKey("http", "firefox.exe"));
+            ProtocolCommandPathWhitelist.Add(GetProtocolCommandPathKey("http", "iexplore.exe"));
+            ProtocolCommandPathWhitelist.Add(GetProtocolCommandPathKey("http", "launchwinapp.exe"));
+            ProtocolCommandPathWhitelist.Add(GetProtocolCommandPathKey("https", "chrome.exe"));
+            ProtocolCommandPathWhitelist.Add(GetProtocolCommandPathKey("https", "firefox.exe"));
+            ProtocolCommandPathWhitelist.Add(GetProtocolCommandPathKey("https", "iexplore.exe"));
+            ProtocolCommandPathWhitelist.Add(GetProtocolCommandPathKey("https", "launchwinapp.exe"));
+        }
+
+        private static string GetProtocolCommandPathKey(string protocol, string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(protocol) || string.IsNullOrWhiteSpace(fileName))
+            {
+                return null;
+            }
+
+            return protocol + "_" + fileName;
+        }
+
         protected override UriSchemeInfo OnGetSystemUriScheme(string schemeName, Dictionary<string, string> options)
         {
+            var shouldAcceptWhitelistOnly = false;
+            if (options.ContainsKey(OptionAcceptWhitelistOnly))
+            {
+                shouldAcceptWhitelistOnly = Util.Convert.ToBool(options[OptionAcceptWhitelistOnly]);
+            }
             var uriSchemeInfo = new UriSchemeInfo
             {
                 Name = schemeName
@@ -24,7 +60,9 @@ namespace Htc.Vita.Core.Shell
             {
                 var commandPair = GetCommandPair(
                         baseKey,
-                        realSchemeName
+                        schemeName,
+                        realSchemeName,
+                        shouldAcceptWhitelistOnly
                 );
                 if (string.IsNullOrWhiteSpace(commandPair.Key))
                 {
@@ -88,7 +126,9 @@ namespace Htc.Vita.Core.Shell
 
         private static KeyValuePair<string, string> GetCommandPair(
                 RegistryKey baseKey,
-                string realSchemeName)
+                string schemeName,
+                string realSchemeName,
+                bool whitelistOnly)
         {
             var empty = new KeyValuePair<string, string>();
             if (baseKey == null || string.IsNullOrWhiteSpace(realSchemeName))
@@ -117,6 +157,16 @@ namespace Htc.Vita.Core.Shell
                 var commandPath = result.Key;
                 if (!File.Exists(commandPath))
                 {
+                    return empty;
+                }
+
+                var key = GetProtocolCommandPathKey(
+                        schemeName,
+                        new FileInfo(commandPath).Name.ToLower()
+                );
+                if (whitelistOnly && !ProtocolCommandPathWhitelist.Contains(key))
+                {
+                    Log.Warn("The command \"" + commandPath + "\" is not in " + schemeName + " whitelist");
                     return empty;
                 }
 
