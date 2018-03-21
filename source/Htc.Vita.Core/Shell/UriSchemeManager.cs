@@ -10,7 +10,7 @@ namespace Htc.Vita.Core.Shell
         public static readonly string OptionAcceptWhitelistOnly = "option_accept_whitelist_only";
 
         private static Dictionary<string, UriSchemeManager> Instances { get; } = new Dictionary<string, UriSchemeManager>();
-        private static Type _defaultType = typeof(UriSchemeManager);
+        private static Type _defaultType = typeof(RegistryUriSchemeManager);
 
         private readonly Logger _log;
 
