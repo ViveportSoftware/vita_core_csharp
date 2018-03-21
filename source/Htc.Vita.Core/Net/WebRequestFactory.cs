@@ -13,17 +13,10 @@ namespace Htc.Vita.Core.Net
         private static Dictionary<string, WebRequestFactory> Instances { get; } = new Dictionary<string, WebRequestFactory>();
         private static Type _defaultType = typeof(DefaultWebRequestFactory);
 
-        private readonly Logger _logger;
-
-        protected WebRequestFactory()
-        {
-            _logger = Logger.GetInstance();
-        }
-
         public static void Register<T>() where T : WebRequestFactory
         {
             _defaultType = typeof(T);
-            Logger.GetInstance().Info("Registered default web request factory type to " + _defaultType);
+            Logger.GetInstance(typeof(WebRequestFactory)).Info("Registered default web request factory type to " + _defaultType);
         }
 
         public static WebRequestFactory GetInstance()
@@ -35,8 +28,8 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error: " + e);
-                Logger.GetInstance().Info("Initializing " + typeof(DefaultWebRequestFactory).FullName + "...");
+                Logger.GetInstance(typeof(WebRequestFactory)).Fatal("Instance initialization error: " + e);
+                Logger.GetInstance(typeof(WebRequestFactory)).Info("Initializing " + typeof(DefaultWebRequestFactory).FullName + "...");
                 instance = new DefaultWebRequestFactory();
             }
             return instance;
@@ -51,8 +44,8 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error: " + e);
-                Logger.GetInstance().Info("Initializing " + typeof(DefaultWebRequestFactory).FullName + "...");
+                Logger.GetInstance(typeof(WebRequestFactory)).Fatal("Instance initialization error: " + e);
+                Logger.GetInstance(typeof(WebRequestFactory)).Info("Initializing " + typeof(DefaultWebRequestFactory).FullName + "...");
                 instance = new DefaultWebRequestFactory();
             }
             return instance;
@@ -73,7 +66,7 @@ namespace Htc.Vita.Core.Net
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + key + "...");
+                Logger.GetInstance(typeof(WebRequestFactory)).Info("Initializing " + key + "...");
                 var constructor = type.GetConstructor(new Type[] { });
                 if (constructor != null)
                 {
@@ -82,7 +75,7 @@ namespace Htc.Vita.Core.Net
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + typeof(DefaultWebRequestFactory).FullName + "...");
+                Logger.GetInstance(typeof(WebRequestFactory)).Info("Initializing " + typeof(DefaultWebRequestFactory).FullName + "...");
                 instance = new DefaultWebRequestFactory();
             }
             if (!Instances.ContainsKey(key))
@@ -105,7 +98,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(WebRequestFactory)).Error(e.ToString());
             }
             return result;
         }

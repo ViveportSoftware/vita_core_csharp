@@ -8,8 +8,6 @@ namespace Htc.Vita.Core.Shell
 {
     public static partial class ShellLink
     {
-        private static readonly Logger Log = Logger.GetInstance(typeof(ShellLink));
-
         public static bool Create(FileLinkInfo fileLinkInfo)
         {
             if (!Platform.IsWindows)
@@ -49,7 +47,7 @@ namespace Htc.Vita.Core.Shell
             var type = Type.GetTypeFromCLSID(guid);
             if (type == null)
             {
-                Log.Error("Can not find type class from system with CLSID: " + guid);
+                Logger.GetInstance(typeof(ShellLink)).Error("Can not find type class from system with CLSID: " + guid);
                 return false;
             }
 
@@ -69,7 +67,7 @@ namespace Htc.Vita.Core.Shell
             }
             catch (Exception e)
             {
-                Log.Error("Can not create wshShell class from system with CLSID: " + guid + ", " + e.Message);
+                Logger.GetInstance(typeof(ShellLink)).Error("Can not create wshShell class from system with CLSID: " + guid + ", " + e.Message);
             }
             finally
             {
@@ -108,7 +106,7 @@ namespace Htc.Vita.Core.Shell
             }
             catch (Exception e)
             {
-                Log.Error("Can not create shortcut: " + e.Message);
+                Logger.GetInstance(typeof(ShellLink)).Error("Can not create shortcut: " + e.Message);
             }
             finally
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Util
 {
@@ -36,7 +37,7 @@ namespace Htc.Vita.Core.Util
                 }
                 catch (Exception e)
                 {
-                    Log.Error("Can not extract icon to path: " + e.Message);
+                    Logger.GetInstance(typeof(Extract)).Error("Can not extract icon to path: " + e.Message);
                 }
                 return false;
             }

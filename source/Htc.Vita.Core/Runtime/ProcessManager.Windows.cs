@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Runtime
 {
@@ -64,7 +65,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    Log.Error("Can not get Windows process list: " + e.Message);
+                    Logger.GetInstance(typeof(Windows)).Error("Can not get Windows process list: " + e.Message);
                 }
 
                 if (serverHandle != Interop.Windows.WindowsTerminalServiceCurrentServerHandle)
@@ -100,7 +101,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    Log.Error("Can not kill Windows process by id: " + processId + ", " + e.Message);
+                    Logger.GetInstance(typeof(Windows)).Error("Can not kill Windows process by id: " + processId + ", " + e.Message);
                 }
 
                 if (serverHandle != Interop.Windows.WindowsTerminalServiceCurrentServerHandle)

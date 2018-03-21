@@ -6,8 +6,6 @@ namespace Htc.Vita.Core.IO
 {
     public static partial class FileSystemManager
     {
-        private static readonly Logger Log = Logger.GetInstance(typeof(FileSystemManager));
-
         public static DiskSpaceInfo GetDiskSpaceFor(DirectoryInfo directoryInfo)
         {
             return GetWindowsDiskSpace(directoryInfo);
@@ -51,7 +49,7 @@ namespace Htc.Vita.Core.IO
             }
             catch (Exception e)
             {
-                Log.Error("Can not get Windows disk free space: " + e.Message);
+                Logger.GetInstance(typeof(FileSystemManager)).Error("Can not get Windows disk free space: " + e.Message);
             }
             return result;
         }

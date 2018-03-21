@@ -9,7 +9,6 @@ namespace Htc.Vita.Core.Shell
     public class RegistryUriSchemeManager : UriSchemeManager
     {
         private static readonly HashSet<string> ProtocolCommandPathWhitelist = new HashSet<string>();
-        private static readonly Logger Log = Logger.GetInstance(typeof(RegistryUriSchemeManager));
 
         static RegistryUriSchemeManager()
         {
@@ -166,7 +165,7 @@ namespace Htc.Vita.Core.Shell
                 );
                 if (whitelistOnly && !ProtocolCommandPathWhitelist.Contains(key))
                 {
-                    Log.Warn("The command \"" + commandPath + "\" is not in " + schemeName + " whitelist");
+                    Logger.GetInstance(typeof(RegistryUriSchemeManager)).Warn("The command \"" + commandPath + "\" is not in " + schemeName + " whitelist");
                     return empty;
                 }
 

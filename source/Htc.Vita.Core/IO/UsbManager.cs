@@ -10,8 +10,6 @@ namespace Htc.Vita.Core.IO
 {
     public static partial class UsbManager
     {
-        private static readonly Logger Log = Logger.GetInstance(typeof(UsbManager));
-
         public static List<DeviceInfo> GetHidDevices()
         {
             return GetHidDevicesInWindows();
@@ -29,7 +27,7 @@ namespace Htc.Vita.Core.IO
             );
             if (deviceInfoSet == Windows.InvalidHandleValue)
             {
-                Log.Error("Can not find USB HID devices, error code: " + Marshal.GetLastWin32Error());
+                Logger.GetInstance(typeof(UsbManager)).Error("Can not find USB HID devices, error code: " + Marshal.GetLastWin32Error());
                 return deviceInfos;
             }
 
@@ -50,7 +48,7 @@ namespace Htc.Vita.Core.IO
                     var win32Error = Marshal.GetLastWin32Error();
                     if (win32Error != (int) Windows.Error.NoMoreItems)
                     {
-                        Log.Error("Can not enumerate USB HID device on index: " + deviceIndex + ", error code: " + win32Error);
+                        Logger.GetInstance(typeof(UsbManager)).Error("Can not enumerate USB HID device on index: " + deviceIndex + ", error code: " + win32Error);
                     }
                     break;
                 }
@@ -69,7 +67,7 @@ namespace Htc.Vita.Core.IO
                     var win32Error = Marshal.GetLastWin32Error();
                     if (win32Error != (int) Windows.Error.InsufficientBuffer)
                     {
-                        Log.Error("Can not query USB HID device interface detail on index: " + deviceIndex + ", error code: " + win32Error);
+                        Logger.GetInstance(typeof(UsbManager)).Error("Can not query USB HID device interface detail on index: " + deviceIndex + ", error code: " + win32Error);
                         break;
                     }
                 }
@@ -89,7 +87,7 @@ namespace Htc.Vita.Core.IO
                 if (!success)
                 {
                     var win32Error = Marshal.GetLastWin32Error();
-                    Log.Error("Can not get USB HID device interface detail on index: " + deviceIndex + ", error code: " + win32Error);
+                    Logger.GetInstance(typeof(UsbManager)).Error("Can not get USB HID device interface detail on index: " + deviceIndex + ", error code: " + win32Error);
                     break;
                 }
 
@@ -146,7 +144,7 @@ namespace Htc.Vita.Core.IO
             {
                 return guid;
             }
-            Log.Warn("HID Guid is empty. Use default HID Guid");
+            Logger.GetInstance(typeof(UsbManager)).Warn("HID Guid is empty. Use default HID Guid");
             return new Guid("4d1e55b2-f16f-11cf-88cb-001111000030"); // default HID GUID
         }
 
@@ -171,7 +169,7 @@ namespace Htc.Vita.Core.IO
                 var win32Error = Marshal.GetLastWin32Error();
                 if (win32Error != (int) Windows.Error.InsufficientBuffer)
                 {
-                    Log.Error("Can not query USB device registry property, error code: " + win32Error);
+                    Logger.GetInstance(typeof(UsbManager)).Error("Can not query USB device registry property, error code: " + win32Error);
                     regType = 0;
                     return null;
                 }
@@ -190,7 +188,7 @@ namespace Htc.Vita.Core.IO
             if (!success)
             {
                 var win32Error = Marshal.GetLastWin32Error();
-                Log.Error("Can not get USB device registry property, error code: " + win32Error);
+                Logger.GetInstance(typeof(UsbManager)).Error("Can not get USB device registry property, error code: " + win32Error);
                 return null;
             }
             return propertyBuffer;
@@ -272,7 +270,7 @@ namespace Htc.Vita.Core.IO
             else
             {
                 var win32Error = Marshal.GetLastWin32Error();
-                Log.Error("Can not get USB HID serial number, error code: " + win32Error);
+                Logger.GetInstance(typeof(UsbManager)).Error("Can not get USB HID serial number, error code: " + win32Error);
             }
             Windows.CloseHandle(deviceHandle);
             return result;

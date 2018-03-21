@@ -16,7 +16,7 @@ namespace Htc.Vita.Core.Crypto
         public static void Register<T>() where T : Md5
         {
             _defaultType = typeof(T);
-            Logger.GetInstance().Info("Registered default md5 type to " + _defaultType);
+            Logger.GetInstance(typeof(Md5)).Info("Registered default md5 type to " + _defaultType);
         }
 
         public static Md5 GetInstance()
@@ -28,8 +28,8 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error: " + e);
-                Logger.GetInstance().Info("Initializing " + typeof(DefaultMd5).FullName + "...");
+                Logger.GetInstance(typeof(Md5)).Fatal("Instance initialization error: " + e);
+                Logger.GetInstance(typeof(Md5)).Info("Initializing " + typeof(DefaultMd5).FullName + "...");
                 instance = new DefaultMd5();
             }
             return instance;
@@ -50,7 +50,7 @@ namespace Htc.Vita.Core.Crypto
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + key + "...");
+                Logger.GetInstance(typeof(Md5)).Info("Initializing " + key + "...");
                 var constructor = type.GetConstructor(new Type[] { });
                 if (constructor != null)
                 {
@@ -59,7 +59,7 @@ namespace Htc.Vita.Core.Crypto
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + typeof(DefaultMd5).FullName + "...");
+                Logger.GetInstance(typeof(Md5)).Info("Initializing " + typeof(DefaultMd5).FullName + "...");
                 instance = new DefaultMd5();
             }
             if (!Instances.ContainsKey(key))
@@ -83,7 +83,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Generating checksum in base64 error: " + e);
+                Logger.GetInstance(typeof(Md5)).Fatal("Generating checksum in base64 error: " + e);
             }
             return result;
         }
@@ -102,7 +102,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Generating checksum in base64 error: " + e);
+                Logger.GetInstance(typeof(Md5)).Fatal("Generating checksum in base64 error: " + e);
             }
             return result;
         }
@@ -121,7 +121,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Generating checksum in hex error: " + e);
+                Logger.GetInstance(typeof(Md5)).Fatal("Generating checksum in hex error: " + e);
             }
             return result;
         }
@@ -140,7 +140,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Generating checksum in hex error: " + e);
+                Logger.GetInstance(typeof(Md5)).Fatal("Generating checksum in hex error: " + e);
             }
             return result;
         }
@@ -191,7 +191,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Validating checksum in base64 error: " + e);
+                Logger.GetInstance(typeof(Md5)).Fatal("Validating checksum in base64 error: " + e);
             }
             return result;
         }
@@ -210,7 +210,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Validating checksum in base64 error: " + e);
+                Logger.GetInstance(typeof(Md5)).Fatal("Validating checksum in base64 error: " + e);
             }
             return result;
         }
@@ -229,7 +229,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Validating checksum in hex error: " + e);
+                Logger.GetInstance(typeof(Md5)).Fatal("Validating checksum in hex error: " + e);
             }
             return result;
         }
@@ -248,7 +248,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Validating checksum in hex error: " + e);
+                Logger.GetInstance(typeof(Md5)).Fatal("Validating checksum in hex error: " + e);
             }
             return result;
         }

@@ -17,17 +17,10 @@ namespace Htc.Vita.Core.Runtime
             private static Dictionary<string, Client> Instances { get; } = new Dictionary<string, Client>();
             private static Type _defaultType = typeof(NamedPipeIpcChannel.Client);
 
-            private readonly Logger _logger;
-
-            protected Client()
-            {
-                _logger = Logger.GetInstance();
-            }
-
             public static void Register<T>() where T : Client
             {
                 _defaultType = typeof(T);
-                Logger.GetInstance().Info("Registered default ipc channel client type to " + _defaultType);
+                Logger.GetInstance(typeof(Client)).Info("Registered default ipc channel client type to " + _defaultType);
             }
 
             public static Client GetInstance()
@@ -39,8 +32,8 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    Logger.GetInstance().Fatal("Instance initialization error " + e);
-                    Logger.GetInstance().Info("Initializing " + typeof(NamedPipeIpcChannel.Client).FullName + "...");
+                    Logger.GetInstance(typeof(Client)).Fatal("Instance initialization error " + e);
+                    Logger.GetInstance(typeof(Client)).Info("Initializing " + typeof(NamedPipeIpcChannel.Client).FullName + "...");
                     instance = new NamedPipeIpcChannel.Client();
                 }
                 return instance;
@@ -55,8 +48,8 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    Logger.GetInstance().Fatal("Instance initialization error: " + e);
-                    Logger.GetInstance().Info("Initializing " + typeof(NamedPipeIpcChannel.Client).FullName + "...");
+                    Logger.GetInstance(typeof(Client)).Fatal("Instance initialization error: " + e);
+                    Logger.GetInstance(typeof(Client)).Info("Initializing " + typeof(NamedPipeIpcChannel.Client).FullName + "...");
                     instance = new NamedPipeIpcChannel.Client();
                 }
                 return instance;
@@ -77,7 +70,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 if (instance == null)
                 {
-                    Logger.GetInstance().Info("Initializing " + key + "...");
+                    Logger.GetInstance(typeof(Client)).Info("Initializing " + key + "...");
                     var constructor = type.GetConstructor(new Type[] { });
                     if (constructor != null)
                     {
@@ -86,7 +79,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 if (instance == null)
                 {
-                    Logger.GetInstance().Info("Initializing " + typeof(NamedPipeIpcChannel.Client).FullName + "...");
+                    Logger.GetInstance(typeof(Client)).Info("Initializing " + typeof(NamedPipeIpcChannel.Client).FullName + "...");
                     instance = new NamedPipeIpcChannel.Client();
                 }
                 if (!Instances.ContainsKey(key))
@@ -111,7 +104,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e.ToString());
+                    Logger.GetInstance(typeof(Client)).Error(e.ToString());
                 }
                 return result;
             }
@@ -129,7 +122,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e.ToString());
+                    Logger.GetInstance(typeof(Client)).Error(e.ToString());
                 }
                 return result;
             }
@@ -143,7 +136,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e.ToString());
+                    Logger.GetInstance(typeof(Client)).Error(e.ToString());
                 }
                 return result;
             }
@@ -160,17 +153,10 @@ namespace Htc.Vita.Core.Runtime
             private static Dictionary<string, Provider> Instances { get; } = new Dictionary<string, Provider>();
             private static Type _defaultType = typeof(NamedPipeIpcChannel.Provider);
 
-            private readonly Logger _logger;
-
-            protected Provider()
-            {
-                _logger = Logger.GetInstance();
-            }
-
             public static void Register<T>() where T : Provider
             {
                 _defaultType = typeof(T);
-                Logger.GetInstance().Info("Registered default ipc channel provider type to " + _defaultType);
+                Logger.GetInstance(typeof(Provider)).Info("Registered default ipc channel provider type to " + _defaultType);
             }
 
             public static Provider GetInstance()
@@ -182,8 +168,8 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    Logger.GetInstance().Fatal("Instance initialization error " + e);
-                    Logger.GetInstance().Info("Initializing " + typeof(NamedPipeIpcChannel.Provider).FullName + "...");
+                    Logger.GetInstance(typeof(Provider)).Fatal("Instance initialization error " + e);
+                    Logger.GetInstance(typeof(Provider)).Info("Initializing " + typeof(NamedPipeIpcChannel.Provider).FullName + "...");
                     instance = new NamedPipeIpcChannel.Provider();
                 }
                 return instance;
@@ -198,8 +184,8 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    Logger.GetInstance().Fatal("Instance initialization error: " + e);
-                    Logger.GetInstance().Info("Initializing " + typeof(NamedPipeIpcChannel.Provider).FullName + "...");
+                    Logger.GetInstance(typeof(Provider)).Fatal("Instance initialization error: " + e);
+                    Logger.GetInstance(typeof(Provider)).Info("Initializing " + typeof(NamedPipeIpcChannel.Provider).FullName + "...");
                     instance = new NamedPipeIpcChannel.Provider();
                 }
                 return instance;
@@ -220,7 +206,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 if (instance == null)
                 {
-                    Logger.GetInstance().Info("Initializing " + key + "...");
+                    Logger.GetInstance(typeof(Provider)).Info("Initializing " + key + "...");
                     var constructor = type.GetConstructor(new Type[] { });
                     if (constructor != null)
                     {
@@ -229,7 +215,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 if (instance == null)
                 {
-                    Logger.GetInstance().Info("Initializing " + typeof(NamedPipeIpcChannel.Provider).FullName + "...");
+                    Logger.GetInstance(typeof(Provider)).Info("Initializing " + typeof(NamedPipeIpcChannel.Provider).FullName + "...");
                     instance = new NamedPipeIpcChannel.Provider();
                 }
                 if (!Instances.ContainsKey(key))
@@ -248,7 +234,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e.ToString());
+                    Logger.GetInstance(typeof(Provider)).Error(e.ToString());
                 }
                 return result;
             }
@@ -262,7 +248,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e.ToString());
+                    Logger.GetInstance(typeof(Provider)).Error(e.ToString());
                 }
                 return result;
             }
@@ -276,7 +262,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e.ToString());
+                    Logger.GetInstance(typeof(Provider)).Error(e.ToString());
                 }
                 return result;
             }

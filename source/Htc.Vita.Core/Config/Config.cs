@@ -9,17 +9,10 @@ namespace Htc.Vita.Core.Config
         private static Dictionary<string, Config> Instances { get; } = new Dictionary<string, Config>();
         private static Type _defaultType = typeof(AppSettingsConfig);
 
-        private readonly Logger _logger;
-
-        protected Config()
-        {
-            _logger = Logger.GetInstance();
-        }
-
         public static void Register<T>() where T : Config
         {
             _defaultType = typeof(T);
-            Logger.GetInstance().Info("Registered default config type to " + _defaultType);
+            Logger.GetInstance(typeof(Config)).Info("Registered default config type to " + _defaultType);
         }
 
         public static Config GetInstance()
@@ -31,8 +24,8 @@ namespace Htc.Vita.Core.Config
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error: " + e);
-                Logger.GetInstance().Info("Initializing " + typeof(AppSettingsConfig).FullName + "...");
+                Logger.GetInstance(typeof(Config)).Fatal("Instance initialization error: " + e);
+                Logger.GetInstance(typeof(Config)).Info("Initializing " + typeof(AppSettingsConfig).FullName + "...");
                 instance = new AppSettingsConfig();
             }
             return instance;
@@ -47,8 +40,8 @@ namespace Htc.Vita.Core.Config
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error: " + e);
-                Logger.GetInstance().Info("Initializing " + typeof(AppSettingsConfig).FullName + "...");
+                Logger.GetInstance(typeof(Config)).Fatal("Instance initialization error: " + e);
+                Logger.GetInstance(typeof(Config)).Info("Initializing " + typeof(AppSettingsConfig).FullName + "...");
                 instance = new AppSettingsConfig();
             }
             return instance;
@@ -69,7 +62,7 @@ namespace Htc.Vita.Core.Config
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + key + "...");
+                Logger.GetInstance(typeof(Config)).Info("Initializing " + key + "...");
                 var constructor = type.GetConstructor(new Type[] { });
                 if (constructor != null)
                 {
@@ -78,7 +71,7 @@ namespace Htc.Vita.Core.Config
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + typeof(AppSettingsConfig).FullName + "...");
+                Logger.GetInstance(typeof(Config)).Info("Initializing " + typeof(AppSettingsConfig).FullName + "...");
                 instance = new AppSettingsConfig();
             }
             if (!Instances.ContainsKey(key))
@@ -97,7 +90,7 @@ namespace Htc.Vita.Core.Config
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Config)).Error(e.ToString());
             }
             return result;
         }
@@ -121,7 +114,7 @@ namespace Htc.Vita.Core.Config
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Config)).Error(e.ToString());
             }
 
             return result ?? defaultValue;

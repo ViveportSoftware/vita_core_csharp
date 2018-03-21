@@ -44,7 +44,7 @@ namespace Htc.Vita.Core.Config
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Error("Getting registry string value error: " + e.Message);
+                Logger.GetInstance(typeof(RegistryConfig)).Error("Getting registry string value error: " + e.Message);
             }
             return properties;
         }

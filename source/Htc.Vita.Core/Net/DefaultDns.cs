@@ -7,7 +7,7 @@ namespace Htc.Vita.Core.Net
     {
         public DefaultDns(string resolver) : base(resolver)
         {
-            Logger.GetInstance().Warn("[DefaultDns] This implementation does not support custom resolver");
+            Logger.GetInstance(typeof(DefaultDns)).Warn("This implementation does not support custom resolver");
         }
 
         protected override IPAddress[] OnGetHostAddresses(string hostNameOrAddress)

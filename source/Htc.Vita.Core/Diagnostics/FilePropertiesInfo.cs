@@ -12,7 +12,6 @@ namespace Htc.Vita.Core.Diagnostics
     public partial class FilePropertiesInfo
     {
         private static readonly HashSet<string> CachedErrorPathes = new HashSet<string>();
-        private static readonly Logger Log = Logger.GetInstance(typeof(FilePropertiesInfo));
 
         private const int ErrorPathCacheTimeInMilli = 1000 * 60 * 60;
 
@@ -34,7 +33,7 @@ namespace Htc.Vita.Core.Diagnostics
             }
             if (!fileInfo.Exists)
             {
-                Log.Warn("Can not find " + fileInfo.FullName + " to get properties");
+                Logger.GetInstance(typeof(FilePropertiesInfo)).Warn("Can not find " + fileInfo.FullName + " to get properties");
                 return;
             }
             try
@@ -48,11 +47,11 @@ namespace Htc.Vita.Core.Diagnostics
                 );
                 if (string.IsNullOrEmpty(key))
                 {
-                    Log.Warn("Can not find certificate from file " + fileInfo.FullName);
+                    Logger.GetInstance(typeof(FilePropertiesInfo)).Warn("Can not find certificate from file " + fileInfo.FullName);
                 }
                 else if (!CachedErrorPathes.Contains(key))
                 {
-                    Log.Warn("Can not find certificate from file " + fileInfo.FullName);
+                    Logger.GetInstance(typeof(FilePropertiesInfo)).Warn("Can not find certificate from file " + fileInfo.FullName);
                     CachedErrorPathes.Add(key);
                 }
             }
@@ -80,7 +79,7 @@ namespace Htc.Vita.Core.Diagnostics
             }
             catch (Exception)
             {
-                Log.Warn("Can not find version from file " + fileInfo.FullName);
+                Logger.GetInstance(typeof(FilePropertiesInfo)).Warn("Can not find version from file " + fileInfo.FullName);
                 Version = "0.0.0.0";
             }
         }

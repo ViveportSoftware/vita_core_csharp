@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Htc.Vita.Core.Json;
+using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Preference
 {
@@ -38,7 +39,7 @@ namespace Htc.Vita.Core.Preference
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e.ToString());
+                    Logger.GetInstance(typeof(Storage)).Error(e.ToString());
                 }
 
                 var jsonObject = JsonFactory.GetInstance().GetJsonObject(data);
@@ -97,11 +98,11 @@ namespace Htc.Vita.Core.Preference
                 }
                 catch (IOException e)
                 {
-                    _logger.Error(e.Message);
+                    Logger.GetInstance(typeof(Storage)).Error(e.Message);
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e.ToString());
+                    Logger.GetInstance(typeof(Storage)).Error(e.ToString());
                 }
 
                 return false;

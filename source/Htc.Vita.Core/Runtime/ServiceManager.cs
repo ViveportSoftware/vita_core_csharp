@@ -1,11 +1,7 @@
-﻿using Htc.Vita.Core.Log;
-
-namespace Htc.Vita.Core.Runtime
+﻿namespace Htc.Vita.Core.Runtime
 {
     public partial class ServiceManager
     {
-        private static readonly Logger Log = Logger.GetInstance(typeof(ServiceManager));
-
         public static ServiceInfo ChangeStartType(string serviceName, StartType startType)
         {
             return Windows.ChangeStartTypeInPlatform(serviceName, startType);

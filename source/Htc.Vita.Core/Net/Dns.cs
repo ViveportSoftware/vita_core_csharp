@@ -12,21 +12,18 @@ namespace Htc.Vita.Core.Net
 
         public string Resolver { get; } = string.Empty;
 
-        private readonly Logger _logger;
-
         protected Dns(string resolver)
         {
             if (!string.IsNullOrWhiteSpace(resolver))
             {
                 Resolver = resolver;
             }
-            _logger = Logger.GetInstance();
         }
 
         public static void Register<T>() where T : Dns
         {
             _defaultType = typeof(T);
-            Logger.GetInstance().Info("Registered default dns type to " + _defaultType);
+            Logger.GetInstance(typeof(Dns)).Info("Registered default dns type to " + _defaultType);
         }
 
         public static Dns GetInstance()
@@ -43,8 +40,8 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error: " + e);
-                Logger.GetInstance().Info("Initializing " + typeof(DefaultDns).FullName + "...");
+                Logger.GetInstance(typeof(Dns)).Fatal("Instance initialization error: " + e);
+                Logger.GetInstance(typeof(Dns)).Info("Initializing " + typeof(DefaultDns).FullName + "...");
                 instance = new DefaultDns(resolver);
             }
             return instance;
@@ -64,8 +61,8 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error " + e);
-                Logger.GetInstance().Info("Initializing " + typeof(DefaultDns).FullName + "...");
+                Logger.GetInstance(typeof(Dns)).Fatal("Instance initialization error " + e);
+                Logger.GetInstance(typeof(Dns)).Info("Initializing " + typeof(DefaultDns).FullName + "...");
                 instance = new DefaultDns(resolver);
             }
             return instance;
@@ -86,7 +83,7 @@ namespace Htc.Vita.Core.Net
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + key + "...");
+                Logger.GetInstance(typeof(Dns)).Info("Initializing " + key + "...");
                 var constructor = type.GetConstructor(new[] { typeof(string) });
                 if (constructor != null)
                 {
@@ -95,7 +92,7 @@ namespace Htc.Vita.Core.Net
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + typeof(DefaultDns).FullName + "[" + resolver + "]...");
+                Logger.GetInstance(typeof(Dns)).Info("Initializing " + typeof(DefaultDns).FullName + "[" + resolver + "]...");
                 instance = new DefaultDns(resolver);
             }
             if (!Instances.ContainsKey(key))
@@ -119,7 +116,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Dns)).Error(e.ToString());
             }
             return result;
         }
@@ -138,7 +135,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Dns)).Error(e.ToString());
             }
             return result;
         }
@@ -157,7 +154,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Dns)).Error(e.ToString());
             }
             return result;
         }

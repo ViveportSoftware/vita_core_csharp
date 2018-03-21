@@ -6,8 +6,6 @@ namespace Htc.Vita.Core.Preference
 {
     public abstract partial class Preferences
     {
-        private readonly Logger _logger;
-
         public string Label { get; } = string.Empty;
 
         protected Preferences(string label)
@@ -16,7 +14,6 @@ namespace Htc.Vita.Core.Preference
             {
                 Label = label;
             }
-            _logger = Logger.GetInstance();
         }
 
         public ICollection<string> AllKeys()
@@ -28,7 +25,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Preferences)).Error(e.ToString());
             }
             return result ?? new List<string>();
         }
@@ -41,7 +38,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Preferences)).Error(e.ToString());
             }
             return this;
         }
@@ -60,7 +57,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Preferences)).Error(e.ToString());
             }
             return result;
         }
@@ -84,7 +81,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Preferences)).Error(e.ToString());
             }
             return result;
         }
@@ -103,7 +100,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Preferences)).Error(e.ToString());
             }
             return result;
         }
@@ -122,7 +119,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Preferences)).Error(e.ToString());
             }
             return result;
         }
@@ -141,7 +138,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Preferences)).Error(e.ToString());
             }
             return result;
         }
@@ -160,7 +157,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Preferences)).Error(e.ToString());
             }
             return result;
         }
@@ -179,7 +176,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Preferences)).Error(e.ToString());
             }
             return result;
         }
@@ -193,7 +190,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Preferences)).Error(e.ToString());
             }
             return result;
         }
@@ -207,7 +204,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Preferences)).Error(e.ToString());
             }
             return result;
         }
@@ -221,7 +218,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Preferences)).Error(e.ToString());
             }
             return result;
         }
@@ -235,7 +232,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Preferences)).Error(e.ToString());
             }
             return result;
         }
@@ -249,7 +246,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Preferences)).Error(e.ToString());
             }
             return result;
         }
@@ -263,7 +260,7 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(Preferences)).Error(e.ToString());
             }
             return result;
         }

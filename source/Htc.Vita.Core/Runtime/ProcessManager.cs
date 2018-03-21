@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
-using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Runtime
 {
     public static partial class ProcessManager
     {
-        private static readonly Logger Log = Logger.GetInstance(typeof(ProcessManager));
-
         public static List<ProcessInfo> GetProcessesByFirstActiveUser()
         {
             var username = UserManager.GetFirstActiveUser();

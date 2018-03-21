@@ -12,7 +12,7 @@ namespace Htc.Vita.Core.Preference
         public static void Register<T>() where T : PreferenceFactory
         {
             _defaultType = typeof(T);
-            Logger.GetInstance().Info("Registered default preference factory type to " + _defaultType);
+            Logger.GetInstance(typeof(PreferenceFactory)).Info("Registered default preference factory type to " + _defaultType);
         }
 
         public static PreferenceFactory GetInstance()
@@ -24,8 +24,8 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error: " + e);
-                Logger.GetInstance().Info("Initializing " + typeof(DefaultPreferenceFactory).FullName + "...");
+                Logger.GetInstance(typeof(PreferenceFactory)).Fatal("Instance initialization error: " + e);
+                Logger.GetInstance(typeof(PreferenceFactory)).Info("Initializing " + typeof(DefaultPreferenceFactory).FullName + "...");
                 instance = new DefaultPreferenceFactory();
             }
             return instance;
@@ -40,8 +40,8 @@ namespace Htc.Vita.Core.Preference
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error: " + e);
-                Logger.GetInstance().Info("Initializing " + typeof(DefaultPreferenceFactory).FullName + "...");
+                Logger.GetInstance(typeof(PreferenceFactory)).Fatal("Instance initialization error: " + e);
+                Logger.GetInstance(typeof(PreferenceFactory)).Info("Initializing " + typeof(DefaultPreferenceFactory).FullName + "...");
                 instance = new DefaultPreferenceFactory();
             }
             return instance;
@@ -62,7 +62,7 @@ namespace Htc.Vita.Core.Preference
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + key + "...");
+                Logger.GetInstance(typeof(PreferenceFactory)).Info("Initializing " + key + "...");
                 var constructor = type.GetConstructor(new Type[] { });
                 if (constructor != null)
                 {
@@ -71,7 +71,7 @@ namespace Htc.Vita.Core.Preference
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + typeof(DefaultPreferenceFactory).FullName + "...");
+                Logger.GetInstance(typeof(PreferenceFactory)).Info("Initializing " + typeof(DefaultPreferenceFactory).FullName + "...");
                 instance = new DefaultPreferenceFactory();
             }
             if (!Instances.ContainsKey(key))

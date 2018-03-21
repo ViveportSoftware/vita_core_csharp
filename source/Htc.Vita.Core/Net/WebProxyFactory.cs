@@ -10,17 +10,10 @@ namespace Htc.Vita.Core.Net
         private static Dictionary<string, WebProxyFactory> Instances { get; } = new Dictionary<string, WebProxyFactory>();
         private static Type _defaultType = typeof(DefaultWebProxyFactory);
 
-        private readonly Logger _logger;
-
-        protected WebProxyFactory()
-        {
-            _logger = Logger.GetInstance();
-        }
-
         public static void Register<T>() where T : WebProxyFactory
         {
             _defaultType = typeof(T);
-            Logger.GetInstance().Info("Registered default web proxy factory type to " + _defaultType);
+            Logger.GetInstance(typeof(WebProxyFactory)).Info("Registered default web proxy factory type to " + _defaultType);
         }
 
         public static WebProxyFactory GetInstance()
@@ -32,8 +25,8 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error: " + e);
-                Logger.GetInstance().Info("Initializing " + typeof(DefaultWebProxyFactory).FullName + "...");
+                Logger.GetInstance(typeof(WebProxyFactory)).Fatal("Instance initialization error: " + e);
+                Logger.GetInstance(typeof(WebProxyFactory)).Info("Initializing " + typeof(DefaultWebProxyFactory).FullName + "...");
                 instance = new DefaultWebProxyFactory();
             }
             return instance;
@@ -48,8 +41,8 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error: " + e);
-                Logger.GetInstance().Info("Initializing " + typeof(DefaultWebProxyFactory).FullName + "...");
+                Logger.GetInstance(typeof(WebProxyFactory)).Fatal("Instance initialization error: " + e);
+                Logger.GetInstance(typeof(WebProxyFactory)).Info("Initializing " + typeof(DefaultWebProxyFactory).FullName + "...");
                 instance = new DefaultWebProxyFactory();
             }
             return instance;
@@ -70,7 +63,7 @@ namespace Htc.Vita.Core.Net
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + key + "...");
+                Logger.GetInstance(typeof(WebProxyFactory)).Info("Initializing " + key + "...");
                 var constructor = type.GetConstructor(new Type[] { });
                 if (constructor != null)
                 {
@@ -79,7 +72,7 @@ namespace Htc.Vita.Core.Net
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + typeof(DefaultWebProxyFactory).FullName + "...");
+                Logger.GetInstance(typeof(WebProxyFactory)).Info("Initializing " + typeof(DefaultWebProxyFactory).FullName + "...");
                 instance = new DefaultWebProxyFactory();
             }
             if (!Instances.ContainsKey(key))
@@ -103,7 +96,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception)
             {
-                Logger.GetInstance().Error("Cannot parse web proxy uri: " + webProxy);
+                Logger.GetInstance(typeof(WebProxyFactory)).Error("Cannot parse web proxy uri: " + webProxy);
             }
             return result;
         }
@@ -117,7 +110,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(WebProxyFactory)).Error(e.ToString());
             }
             return result;
         }

@@ -12,17 +12,10 @@ namespace Htc.Vita.Core.Shell
         private static Dictionary<string, UriSchemeManager> Instances { get; } = new Dictionary<string, UriSchemeManager>();
         private static Type _defaultType = typeof(RegistryUriSchemeManager);
 
-        private readonly Logger _log;
-
-        protected UriSchemeManager()
-        {
-            _log = Logger.GetInstance();
-        }
-
         public static void Register<T>() where T : UriSchemeManager
         {
             _defaultType = typeof(T);
-            Logger.GetInstance().Info("Registered default uri scheme manager type to " + _defaultType);
+            Logger.GetInstance(typeof(UriSchemeManager)).Info("Registered default uri scheme manager type to " + _defaultType);
         }
 
         public static UriSchemeManager GetInstance()
@@ -34,8 +27,8 @@ namespace Htc.Vita.Core.Shell
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error " + e);
-                Logger.GetInstance().Info("Initializing " + typeof(RegistryUriSchemeManager).FullName + "...");
+                Logger.GetInstance(typeof(UriSchemeManager)).Fatal("Instance initialization error " + e);
+                Logger.GetInstance(typeof(UriSchemeManager)).Info("Initializing " + typeof(RegistryUriSchemeManager).FullName + "...");
                 instance = new RegistryUriSchemeManager();
             }
             return instance;
@@ -50,8 +43,8 @@ namespace Htc.Vita.Core.Shell
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error: " + e);
-                Logger.GetInstance().Info("Initializing " + typeof(RegistryUriSchemeManager).FullName + "...");
+                Logger.GetInstance(typeof(UriSchemeManager)).Fatal("Instance initialization error: " + e);
+                Logger.GetInstance(typeof(UriSchemeManager)).Info("Initializing " + typeof(RegistryUriSchemeManager).FullName + "...");
                 instance = new RegistryUriSchemeManager();
             }
             return instance;
@@ -72,7 +65,7 @@ namespace Htc.Vita.Core.Shell
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + key + "...");
+                Logger.GetInstance(typeof(UriSchemeManager)).Info("Initializing " + key + "...");
                 var constructor = type.GetConstructor(new Type[] { });
                 if (constructor != null)
                 {
@@ -81,7 +74,7 @@ namespace Htc.Vita.Core.Shell
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + typeof(RegistryUriSchemeManager).FullName + "...");
+                Logger.GetInstance(typeof(UriSchemeManager)).Info("Initializing " + typeof(RegistryUriSchemeManager).FullName + "...");
                 instance = new RegistryUriSchemeManager();
             }
             if (!Instances.ContainsKey(key))
@@ -100,7 +93,7 @@ namespace Htc.Vita.Core.Shell
         {
             if (!name.All(c => char.IsLetterOrDigit(c) || c == '+' || c == '-' || c == '.'))
             {
-                _log.Error("Do not find valid scheme name: \"" + name + "\"");
+                Logger.GetInstance(typeof(UriSchemeManager)).Error("Do not find valid scheme name: \"" + name + "\"");
                 return new UriSchemeInfo
                 {
                         Name = name
@@ -115,7 +108,7 @@ namespace Htc.Vita.Core.Shell
             }
             catch (Exception e)
             {
-                _log.Error("Can not get system uri scheme: " + e.Message);
+                Logger.GetInstance(typeof(UriSchemeManager)).Error("Can not get system uri scheme: " + e.Message);
             }
 
             return result ?? new UriSchemeInfo

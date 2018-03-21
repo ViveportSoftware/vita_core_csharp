@@ -102,7 +102,6 @@ namespace Htc.Vita.Core.Runtime
             private const int PipeBufferSize = 512;
             private const int PipeThreadNumber = 10;
 
-            private readonly Logger _logger;
             private readonly Thread[] _workerThreads = new Thread[PipeThreadNumber];
 
             private bool _shouldStopWorkers;
@@ -110,7 +109,6 @@ namespace Htc.Vita.Core.Runtime
 
             public Provider()
             {
-                _logger = Logger.GetInstance();
                 _pipeName = Sha1.GetInstance().GenerateInHex("");
             }
 
@@ -125,7 +123,7 @@ namespace Htc.Vita.Core.Runtime
 
             protected override bool OnStart()
             {
-                _logger.Info("Channel name: " + _pipeName);
+                Logger.GetInstance(typeof(Provider)).Info("Channel name: " + _pipeName);
                 _shouldStopWorkers = false;
                 for (var i = 0; i < _workerThreads.Length; i++)
                 {
@@ -197,7 +195,7 @@ namespace Htc.Vita.Core.Runtime
                             {
                                 if (OnMessageHandled == null)
                                 {
-                                    _logger.Error("Can not find OnMessageHandled delegates to handle messages");
+                                    Logger.GetInstance(typeof(Provider)).Error("Can not find OnMessageHandled delegates to handle messages");
                                 }
                                 else
                                 {
@@ -218,7 +216,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    _logger.Error("Error happened on thread[" + threadId + "]: " + e.Message);
+                    Logger.GetInstance(typeof(Provider)).Error("Error happened on thread[" + threadId + "]: " + e.Message);
                 }
             }
 
@@ -262,7 +260,7 @@ namespace Htc.Vita.Core.Runtime
                             inputBuffer = new byte[inputBuffer.Length];
                         }
                         while (!clientStream.IsMessageComplete);
-                        Logger.GetInstance().Info("Dump return: \"" + FilterOutInvalidChars(inputBuilder.ToString()) + "\"");
+                        Logger.GetInstance(typeof(Provider)).Info("Dump return: \"" + FilterOutInvalidChars(inputBuilder.ToString()) + "\"");
                     }
                 }
             }
@@ -291,7 +289,7 @@ namespace Htc.Vita.Core.Runtime
             var processId = 0u;
             if (!Windows.GetNamedPipeServerProcessId(pipeHandle, ref processId))
             {
-                Logger.GetInstance().Error("Can not get named pipe server process id, error code: " + Marshal.GetLastWin32Error());
+                Logger.GetInstance(typeof(NamedPipeIpcChannel)).Error("Can not get named pipe server process id, error code: " + Marshal.GetLastWin32Error());
                 return false;
             }
             string processPath = null;
@@ -301,7 +299,7 @@ namespace Htc.Vita.Core.Runtime
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Error("Can not get named pipe server process path: " + e.Message);
+                Logger.GetInstance(typeof(NamedPipeIpcChannel)).Error("Can not get named pipe server process path: " + e.Message);
             }
             if (processPath == null)
             {
@@ -325,7 +323,7 @@ namespace Htc.Vita.Core.Runtime
             var processId = 0u;
             if (!Windows.GetNamedPipeClientProcessId(pipeHandle, ref processId))
             {
-                Logger.GetInstance().Error("Can not get named pipe client process id, error code: " + Marshal.GetLastWin32Error());
+                Logger.GetInstance(typeof(NamedPipeIpcChannel)).Error("Can not get named pipe client process id, error code: " + Marshal.GetLastWin32Error());
                 return null;
             }
 

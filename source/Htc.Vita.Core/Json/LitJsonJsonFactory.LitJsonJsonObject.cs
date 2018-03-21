@@ -12,12 +12,10 @@ namespace Htc.Vita.Core.Json
         public class LitJsonJsonObject : JsonObject
         {
             private readonly JsonData _jsonData;
-            private readonly Logger _logger;
 
             public LitJsonJsonObject(JsonData jsonData)
             {
                 _jsonData = jsonData;
-                _logger = Logger.GetInstance();
             }
 
             public JsonData GetInnerInstance()
@@ -67,7 +65,7 @@ namespace Htc.Vita.Core.Json
                 }
                 catch (Exception)
                 {
-                    _logger.Error("Can not parse bool value by key: " + key);
+                    Logger.GetInstance(typeof(LitJsonJsonObject)).Error("Can not parse bool value by key: " + key);
                 }
                 return result;
             }
@@ -100,7 +98,7 @@ namespace Htc.Vita.Core.Json
                 }
                 catch (Exception)
                 {
-                    _logger.Error("Can not parse double value by key: " + key);
+                    Logger.GetInstance(typeof(LitJsonJsonObject)).Error("Can not parse double value by key: " + key);
                 }
                 return result;
             }
@@ -133,7 +131,7 @@ namespace Htc.Vita.Core.Json
                 }
                 catch (Exception)
                 {
-                    _logger.Error("Can not parse float value by key: " + key);
+                    Logger.GetInstance(typeof(LitJsonJsonObject)).Error("Can not parse float value by key: " + key);
                 }
                 return result;
             }
@@ -166,7 +164,7 @@ namespace Htc.Vita.Core.Json
                 }
                 catch (Exception)
                 {
-                    _logger.Error("Can not parse int value by key: " + key);
+                    Logger.GetInstance(typeof(LitJsonJsonObject)).Error("Can not parse int value by key: " + key);
                 }
                 return result;
             }
@@ -199,7 +197,7 @@ namespace Htc.Vita.Core.Json
                 }
                 catch (Exception)
                 {
-                    _logger.Error("Can not parse long value by key: " + key);
+                    Logger.GetInstance(typeof(LitJsonJsonObject)).Error("Can not parse long value by key: " + key);
                 }
                 return result;
             }
@@ -228,7 +226,7 @@ namespace Htc.Vita.Core.Json
                 }
                 catch (Exception)
                 {
-                    _logger.Error("Can not parse string value by key: " + key);
+                    Logger.GetInstance(typeof(LitJsonJsonObject)).Error("Can not parse string value by key: " + key);
                 }
                 return result;
             }
@@ -256,7 +254,7 @@ namespace Htc.Vita.Core.Json
                 }
                 catch (Exception)
                 {
-                    _logger.Error("Can not parse JsonArray by key: " + key);
+                    Logger.GetInstance(typeof(LitJsonJsonObject)).Error("Can not parse JsonArray by key: " + key);
                 }
                 return null;
             }
@@ -284,7 +282,7 @@ namespace Htc.Vita.Core.Json
                 }
                 catch (Exception)
                 {
-                    _logger.Error("Can not parse JsonObject by key: " + key);
+                    Logger.GetInstance(typeof(LitJsonJsonObject)).Error("Can not parse JsonObject by key: " + key);
                 }
                 return null;
             }

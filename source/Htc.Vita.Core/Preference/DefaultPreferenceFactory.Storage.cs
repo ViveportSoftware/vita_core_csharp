@@ -11,12 +11,10 @@ namespace Htc.Vita.Core.Preference
     {
         internal partial class Storage
         {
-            private readonly Logger _logger;
             private readonly string _path;
 
             internal Storage(string category, string label)
             {
-                _logger = Logger.GetInstance();
                 var targetCategory = !string.IsNullOrWhiteSpace(category) ? category : "Vita";
                 var targetLabel = !string.IsNullOrWhiteSpace(label) ? label : "default";
                 _path = GetFilePath(targetCategory, targetLabel);
@@ -69,7 +67,7 @@ namespace Htc.Vita.Core.Preference
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e.ToString());
+                    Logger.GetInstance(typeof(Storage)).Error(e.ToString());
                 }
 
                 var jsonObject = JsonFactory.GetInstance().GetJsonObject(data);
@@ -128,11 +126,11 @@ namespace Htc.Vita.Core.Preference
                 }
                 catch (IOException e)
                 {
-                    _logger.Error(e.Message);
+                    Logger.GetInstance(typeof(Storage)).Error(e.Message);
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e.ToString());
+                    Logger.GetInstance(typeof(Storage)).Error(e.ToString());
                 }
 
                 return false;

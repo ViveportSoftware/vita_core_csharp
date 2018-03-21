@@ -21,7 +21,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Generating checksum in base64 in async error: " + e);
+                Logger.GetInstance(typeof(Md5)).Fatal("Generating checksum in base64 in async error: " + e);
             }
             return result;
         }
@@ -40,7 +40,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Generating checksum in hex in async error: " + e);
+                Logger.GetInstance(typeof(Md5)).Fatal("Generating checksum in hex in async error: " + e);
             }
             return result;
         }
@@ -77,7 +77,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Validating checksum in base64 in async error: " + e);
+                Logger.GetInstance(typeof(Md5)).Fatal("Validating checksum in base64 in async error: " + e);
             }
             return result;
         }
@@ -96,7 +96,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Validating checksum in hex in async error: " + e);
+                Logger.GetInstance(typeof(Md5)).Fatal("Validating checksum in hex in async error: " + e);
             }
             return result;
         }

@@ -9,17 +9,10 @@ namespace Htc.Vita.Core.Json
         private static Dictionary<string, JsonFactory> Instances { get; } = new Dictionary<string, JsonFactory>();
         private static Type _defaultType = typeof(LitJsonJsonFactory);
 
-        private readonly Logger _logger;
-
-        protected JsonFactory()
-        {
-            _logger = Logger.GetInstance();
-        }
-
         public static void Register<T>() where T : JsonFactory
         {
             _defaultType = typeof(T);
-            Logger.GetInstance().Info("Registered default json factory type to " + _defaultType);
+            Logger.GetInstance(typeof(JsonFactory)).Info("Registered default json factory type to " + _defaultType);
         }
 
         public static JsonFactory GetInstance()
@@ -31,8 +24,8 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Instance initialization error: " + e);
-                Logger.GetInstance().Info("Initializing " + typeof(LitJsonJsonFactory).FullName + "...");
+                Logger.GetInstance(typeof(JsonFactory)).Fatal("Instance initialization error: " + e);
+                Logger.GetInstance(typeof(JsonFactory)).Info("Initializing " + typeof(LitJsonJsonFactory).FullName + "...");
                 instance = new LitJsonJsonFactory();
             }
             return instance;
@@ -53,7 +46,7 @@ namespace Htc.Vita.Core.Json
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + key + "...");
+                Logger.GetInstance(typeof(JsonFactory)).Info("Initializing " + key + "...");
                 var constructor = type.GetConstructor(new Type[] { });
                 if (constructor != null)
                 {
@@ -62,7 +55,7 @@ namespace Htc.Vita.Core.Json
             }
             if (instance == null)
             {
-                Logger.GetInstance().Info("Initializing " + typeof(LitJsonJsonFactory).FullName + "...");
+                Logger.GetInstance(typeof(JsonFactory)).Info("Initializing " + typeof(LitJsonJsonFactory).FullName + "...");
                 instance = new LitJsonJsonFactory();
             }
             if (!Instances.ContainsKey(key))
@@ -96,7 +89,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Fatal("Deserializing object error: " + e);
+                Logger.GetInstance(typeof(JsonFactory)).Fatal("Deserializing object error: " + e);
             }
             return result;
         }
@@ -115,7 +108,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Fatal("Serializing object error: " + e);
+                Logger.GetInstance(typeof(JsonFactory)).Fatal("Serializing object error: " + e);
             }
             return result;
         }
@@ -134,7 +127,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Fatal("Getting json array error: " + e);
+                Logger.GetInstance(typeof(JsonFactory)).Fatal("Getting json array error: " + e);
             }
             return result;
         }
@@ -153,7 +146,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Fatal("Getting json object error: " + e);
+                Logger.GetInstance(typeof(JsonFactory)).Fatal("Getting json object error: " + e);
             }
             return result;
         }

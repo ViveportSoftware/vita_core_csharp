@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using Htc.Vita.Core.Interop;
+using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Diagnostics
 {
@@ -61,23 +62,23 @@ namespace Htc.Vita.Core.Diagnostics
                 {
                     if (result == (uint)Windows.TrustError.ProviderUnknown)
                     {
-                        Log.Error("WinVerifyTrust result: TRUST_E_PROVIDER_UNKNOWN");
+                        Logger.GetInstance(typeof(FilePropertiesInfo)).Error("WinVerifyTrust result: TRUST_E_PROVIDER_UNKNOWN");
                     }
                     else if (result == (uint)Windows.TrustError.ActionUnknown)
                     {
-                        Log.Error("WinVerifyTrust result: TRUST_E_ACTION_UNKNOWN");
+                        Logger.GetInstance(typeof(FilePropertiesInfo)).Error("WinVerifyTrust result: TRUST_E_ACTION_UNKNOWN");
                     }
                     else if (result == (uint)Windows.TrustError.SubjectFormUnknown)
                     {
-                        Log.Error("WinVerifyTrust result: TRUST_E_SUBJECT_FORM_UNKNOWN");
+                        Logger.GetInstance(typeof(FilePropertiesInfo)).Error("WinVerifyTrust result: TRUST_E_SUBJECT_FORM_UNKNOWN");
                     }
                     else if (result == (uint)Windows.TrustError.SubjectNotTrusted)
                     {
-                        Log.Warn("Can not trust " + fileInfo.FullName);
+                        Logger.GetInstance(typeof(FilePropertiesInfo)).Warn("Can not trust " + fileInfo.FullName);
                     }
                     else
                     {
-                        Log.Error("WinVerifyTrust result: 0x" + result.ToString("X"));
+                        Logger.GetInstance(typeof(FilePropertiesInfo)).Error("WinVerifyTrust result: 0x" + result.ToString("X"));
                     }
                 }
 

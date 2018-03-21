@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Runtime
 {
@@ -66,14 +67,14 @@ namespace Htc.Vita.Core.Runtime
                             }
                             else
                             {
-                                Log.Warn("Can not translate sid type " + sidType + " to username.");
+                                Logger.GetInstance(typeof(Windows)).Warn("Can not translate sid type " + sidType + " to username.");
                             }
                         }
                     }
                 }
                 catch (Exception e)
                 {
-                    Log.Error("Can not get Windows username: " + e.Message);
+                    Logger.GetInstance(typeof(Windows)).Error("Can not get Windows username: " + e.Message);
                 }
 
                 return result;
@@ -165,7 +166,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    Log.Error("Can not get Windows user list: " + e.Message);
+                    Logger.GetInstance(typeof(Windows)).Error("Can not get Windows user list: " + e.Message);
                 }
 
                 if (serverHandle != Interop.Windows.WindowsTerminalServiceCurrentServerHandle)

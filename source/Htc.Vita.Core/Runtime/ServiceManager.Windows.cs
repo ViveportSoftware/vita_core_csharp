@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Runtime
 {
@@ -101,7 +102,7 @@ namespace Htc.Vita.Core.Runtime
                 if (managerHandle == IntPtr.Zero)
                 {
                     var errorCode = Marshal.GetLastWin32Error();
-                    Log.Error("Can not open Windows service controller manager, error code: " + errorCode);
+                    Logger.GetInstance(typeof(Windows)).Error("Can not open Windows service controller manager, error code: " + errorCode);
                     return false;
                 }
 
@@ -115,7 +116,7 @@ namespace Htc.Vita.Core.Runtime
                     var errorCode = Marshal.GetLastWin32Error();
                     if (errorCode != (int)Interop.Windows.Error.ServiceDoesNotExist)
                     {
-                        Log.Error("Can not open Windows service \"" + serviceName + "\", error code: " + errorCode);
+                        Logger.GetInstance(typeof(Windows)).Error("Can not open Windows service \"" + serviceName + "\", error code: " + errorCode);
                     }
                     return false;
                 }
@@ -138,7 +139,7 @@ namespace Htc.Vita.Core.Runtime
                 {
                     return StartType.Disabled;
                 }
-                Log.Error("Can not convert Windows service start type " + startType + ". Use Automatic as fallback type");
+                Logger.GetInstance(typeof(Windows)).Error("Can not convert Windows service start type " + startType + ". Use Automatic as fallback type");
                 return StartType.Automatic;
             }
 
@@ -172,7 +173,7 @@ namespace Htc.Vita.Core.Runtime
                 {
                     return CurrentState.StopPending;
                 }
-                Log.Error("Can not convert Windows service current state " + currentState + ". Use Unknown as fallback state");
+                Logger.GetInstance(typeof(Windows)).Error("Can not convert Windows service current state " + currentState + ". Use Unknown as fallback state");
                 return CurrentState.Unknown;
             }
 
@@ -190,7 +191,7 @@ namespace Htc.Vita.Core.Runtime
                 {
                     return Interop.Windows.StartType.AutoStart;
                 }
-                Log.Error("Can not convert service start type " + startType + " in Windows. Use Interop.Windows.Advapi32.StartType.AutoStart as fallback type");
+                Logger.GetInstance(typeof(Windows)).Error("Can not convert service start type " + startType + " in Windows. Use Interop.Windows.Advapi32.StartType.AutoStart as fallback type");
                 return Interop.Windows.StartType.AutoStart;
             }
 
@@ -267,7 +268,7 @@ namespace Htc.Vita.Core.Runtime
                     }
                     catch (Exception e)
                     {
-                        Log.Error("Can not query Windows service \"" + serviceName + "\" start type: " + e.Message);
+                        Logger.GetInstance(typeof(Windows)).Error("Can not query Windows service \"" + serviceName + "\" start type: " + e.Message);
                     }
                     finally
                     {

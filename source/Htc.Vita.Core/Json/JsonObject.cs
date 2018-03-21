@@ -6,13 +6,6 @@ namespace Htc.Vita.Core.Json
 {
     public abstract class JsonObject
     {
-        private readonly Logger _logger;
-
-        protected JsonObject()
-        {
-            _logger = Logger.GetInstance();
-        }
-
         public ICollection<string> AllKeys()
         {
             ICollection<string> result = null;
@@ -22,7 +15,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result ?? new List<string>();
         }
@@ -36,7 +29,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -55,7 +48,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -74,7 +67,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -93,7 +86,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -112,7 +105,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -131,7 +124,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -150,7 +143,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -164,7 +157,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -178,7 +171,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -192,7 +185,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -206,7 +199,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -220,7 +213,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -234,7 +227,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -248,7 +241,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -262,7 +255,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -276,7 +269,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -290,7 +283,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }
@@ -305,7 +298,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                _logger.Error(e.ToString());
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
         }

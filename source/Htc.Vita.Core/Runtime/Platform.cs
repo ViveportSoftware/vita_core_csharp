@@ -11,8 +11,6 @@ namespace Htc.Vita.Core.Runtime
 {
     public static class Platform
     {
-        private static readonly Logger Log = Logger.GetInstance(typeof(Platform));
-
         public static bool IsLinux { get; } = CheckIsLinux();
 
         public static bool IsMacOsX { get; } = CheckIsMacOsX();
@@ -141,7 +139,7 @@ namespace Htc.Vita.Core.Runtime
             }
             catch (Exception e)
             {
-                Log.Error("Can not detect if process is 32-bit onder 64-bit Windows: " + e.Message);
+                Logger.GetInstance(typeof(Platform)).Error("Can not detect if process is 32-bit onder 64-bit Windows: " + e.Message);
             }
             return false;
         }
