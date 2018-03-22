@@ -168,6 +168,27 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
+        public static void Client_3_Request_StartTwice()
+        {
+            if (!Runtime.Platform.IsWindows)
+            {
+                return;
+            }
+            var name = "" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow);
+            var provider = Runtime.IpcChannel.Provider.GetInstance();
+            Assert.NotNull(provider);
+            Assert.True(provider.SetName(name));
+            Assert.True(provider.Start());
+            Assert.True(provider.Start());
+            var client = Runtime.IpcChannel.Client.GetInstance();
+            Assert.NotNull(client);
+            Assert.True(client.SetName(name));
+            Assert.True(client.IsReady());
+            Assert.True(string.IsNullOrEmpty(client.Request("Test")));
+            Assert.True(provider.Stop());
+        }
+
+        [Fact]
         public static void Client_3_Request_WithResponse()
         {
             if (!Runtime.Platform.IsWindows)

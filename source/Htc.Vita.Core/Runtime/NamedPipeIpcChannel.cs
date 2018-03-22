@@ -106,6 +106,7 @@ namespace Htc.Vita.Core.Runtime
 
             private readonly Thread[] _workerThreads = new Thread[PipeThreadNumber];
 
+            private bool _isRunning;
             private bool _shouldStopWorkers;
             private string _pipeName;
 
@@ -126,6 +127,13 @@ namespace Htc.Vita.Core.Runtime
             protected override bool OnStart()
             {
                 Logger.GetInstance(typeof(Provider)).Info("Channel name: " + _pipeName);
+
+                if (_isRunning)
+                {
+                    return true;
+                }
+                _isRunning = true;
+
                 _shouldStopWorkers = false;
                 for (var i = 0; i < _workerThreads.Length; i++)
                 {
@@ -140,6 +148,11 @@ namespace Htc.Vita.Core.Runtime
 
             protected override bool OnStop()
             {
+                if (!_isRunning)
+                {
+                    return true;
+                }
+
                 _shouldStopWorkers = true;
                 var runningThreadNumber = PipeThreadNumber;
                 while (runningThreadNumber > 0)
@@ -156,6 +169,7 @@ namespace Htc.Vita.Core.Runtime
                         runningThreadNumber--;
                     }
                 }
+                _isRunning = false;
                 return true;
             }
 
