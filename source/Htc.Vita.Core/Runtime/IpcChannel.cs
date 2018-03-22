@@ -225,6 +225,20 @@ namespace Htc.Vita.Core.Runtime
                 return instance;
             }
 
+            public bool IsRunning()
+            {
+                var result = false;
+                try
+                {
+                    result = OnIsRunning();
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(Provider)).Error(e.ToString());
+                }
+                return result;
+            }
+
             public bool SetName(string name)
             {
                 var result = false;
@@ -267,6 +281,7 @@ namespace Htc.Vita.Core.Runtime
                 return result;
             }
 
+            protected abstract bool OnIsRunning();
             protected abstract bool OnSetName(string name);
             protected abstract bool OnStart();
             protected abstract bool OnStop();

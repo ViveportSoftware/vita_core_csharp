@@ -115,6 +115,11 @@ namespace Htc.Vita.Core.Runtime
                 _pipeName = Sha1.GetInstance().GenerateInHex("");
             }
 
+            protected override bool OnIsRunning()
+            {
+                return _isRunning;
+            }
+
             protected override bool OnSetName(string name)
             {
                 if (!string.IsNullOrWhiteSpace(name))
