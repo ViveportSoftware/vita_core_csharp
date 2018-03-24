@@ -3,7 +3,7 @@ using Htc.Vita.Core.Runtime;
 
 namespace Htc.Vita.Core.TestProgram
 {
-    internal class Program
+    internal static class Program
     {
         private static void Main()
         {
