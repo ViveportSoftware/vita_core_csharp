@@ -39,6 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\generated\SharedAssemblyInfo.cs">
@@ -115,12 +116,17 @@
     <Compile Include="Runtime\ProcessManager.ProcessInfo.cs" />
     <Compile Include="Runtime\ProcessManager.Windows.cs" />
     <Compile Include="Runtime\ProcessManager.WindowsProcessInfo.cs" />
+    <Compile Include="Runtime\ProcessWatcher.cs" />
+    <Compile Include="Runtime\ProcessWatcher.ProcessInfo.cs" />
+    <Compile Include="Runtime\ProcessWatcherFactory.cs" />
     <Compile Include="Runtime\ServiceManager.cs" />
     <Compile Include="Runtime\ServiceManager.ServiceInfo.cs" />
     <Compile Include="Runtime\ServiceManager.Windows.cs" />
     <Compile Include="Runtime\UserManager.cs" />
     <Compile Include="Runtime\UserManager.Windows.cs" />
     <Compile Include="Runtime\UserManager.WindowsUserInfo.cs" />
+    <Compile Include="Runtime\WmiProcessWatcher.cs" />
+    <Compile Include="Runtime\WmiProcessWatcherFactory.cs" />
     <Compile Include="Shell\RegistryUriSchemeManager.cs" />
     <Compile Include="Shell\ShellLink.cs" />
     <Compile Include="Shell\ShellLink.FileLinkInfo.cs" />

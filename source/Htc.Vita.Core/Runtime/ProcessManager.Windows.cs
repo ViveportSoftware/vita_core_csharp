@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Runtime
@@ -73,6 +76,30 @@ namespace Htc.Vita.Core.Runtime
                     Interop.Windows.WTSCloseServer(serverHandle);
                 }
                 return result;
+            }
+
+            internal static string GetPlatformProcessPathById(int processId)
+            {
+                string processPath;
+                var clientProcess = Process.GetProcessById(processId);
+                try
+                {
+                    processPath = clientProcess.MainModule.FileName;
+                }
+                catch (Win32Exception)
+                {
+                    var processHandle = clientProcess.Handle;
+                    var fullPath = new StringBuilder(256);
+                    Interop.Windows.GetModuleFileNameExW(
+                            processHandle,
+                            IntPtr.Zero,
+                            fullPath,
+                            (uint)fullPath.Capacity
+                    );
+                    processPath = fullPath.ToString();
+                }
+
+                return processPath;
             }
 
             internal static bool KillPlatformProcessById(int processId)

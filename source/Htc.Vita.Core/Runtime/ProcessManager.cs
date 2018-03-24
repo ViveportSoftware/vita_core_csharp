@@ -59,6 +59,11 @@ namespace Htc.Vita.Core.Runtime
             return result;
         }
 
+        public static string GetProcessPathById(int processId)
+        {
+            return Windows.GetPlatformProcessPathById(processId);
+        }
+
         public static bool KillProcessById(int processId)
         {
             return Windows.KillPlatformProcessById(processId);
