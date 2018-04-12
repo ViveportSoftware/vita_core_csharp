@@ -337,5 +337,17 @@ namespace Htc.Vita.Core.Tests
             Assert.Equal(0.0D, preferences2.ParseDouble("key13"));
             Assert.Equal(false, preferences2.ParseBool("key14"));
         }
+
+        [Fact]
+        public static void Preference_14_Unicode()
+        {
+            var preferenceFactory = Preference.PreferenceFactory.GetInstance();
+            Assert.NotNull(preferenceFactory);
+            var preferences = preferenceFactory.LoadPreferences();
+            Assert.NotNull(preferences);
+            preferences.Put("unicode", "測試");
+            Assert.NotNull(preferences);
+            preferences.Commit();
+        }
     }
 }
