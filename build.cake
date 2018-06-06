@@ -1,3 +1,4 @@
+#addin "nuget:?package=Cake.Coveralls&version=0.8.0"
 #addin "nuget:?package=Cake.Git&version=0.16.1"
 #addin "nuget:?package=Cake.ReSharperReports&version=0.8.0"
 
@@ -46,6 +47,8 @@ var nugetDir = distDir + Directory(configuration) + Directory("nuget");
 var homeDir = Directory(EnvironmentVariable("USERPROFILE") ?? EnvironmentVariable("HOME"));
 var reportDotCoverDirAnyCPU = distDir + Directory(configuration) + Directory("report/dotCover/AnyCPU");
 var reportDotCoverDirX86 = distDir + Directory(configuration) + Directory("report/dotCover/x86");
+var reportOpenCoverDirAnyCPU = distDir + Directory(configuration) + Directory("report/OpenCover/AnyCPU");
+var reportOpenCoverDirX86 = distDir + Directory(configuration) + Directory("report/OpenCover/x86");
 var reportXUnitDirAnyCPU = distDir + Directory(configuration) + Directory("report/xUnit/AnyCPU");
 var reportXUnitDirX86 = distDir + Directory(configuration) + Directory("report/xUnit/x86");
 var reportReSharperDupFinder = distDir + Directory(configuration) + Directory("report/ReSharper/DupFinder");
@@ -57,10 +60,12 @@ var signPass = EnvironmentVariable("SIGNPASS") ?? "NOTSET";
 var signSha1Uri = new Uri("http://timestamp.digicert.com");
 var signSha256Uri = new Uri("http://timestamp.digicert.com");
 
+// Define coveralls update key
+var coverallsApiKey = EnvironmentVariable("COVERALLS_APIKEY") ?? "NOTSET";
+
 // Define nuget push source and key
 var nugetApiKey = EnvironmentVariable("NUGET_PUSH_TOKEN") ?? EnvironmentVariable("NUGET_APIKEY") ?? "NOTSET";
 var nugetSource = EnvironmentVariable("NUGET_PUSH_PATH") ?? EnvironmentVariable("NUGET_SOURCE") ?? "NOTSET";
-
 
 //////////////////////////////////////////////////////////////////////
 // TASKS
@@ -181,7 +186,8 @@ Task("Run-Unit-Tests-Under-AnyCPU")
                 {
                         tool.XUnit2(
                                 "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/*.Tests.dll",
-                                new XUnit2Settings {
+                                new XUnit2Settings
+                                {
                                         Parallelism = ParallelismOption.All,
                                         HtmlReport = true,
                                         NUnitReport = true,
@@ -190,16 +196,46 @@ Task("Run-Unit-Tests-Under-AnyCPU")
                         );
                 },
                 new FilePath(reportDotCoverDirAnyCPU.ToString() + "/" + product + ".html"),
-                new DotCoverAnalyseSettings {
+                new DotCoverAnalyseSettings
+                {
                         ReportType = DotCoverReportType.HTML
                 }
+        );
+        CreateDirectory(reportOpenCoverDirAnyCPU);
+        var openCoverSettings = new OpenCoverSettings
+        {
+                MergeByHash = true,
+                NoDefaultFilters = true,
+                Register = "user",
+                SkipAutoProps = true
+        }.WithFilter("+[*]*")
+        .WithFilter("-[xunit.*]*")
+        .WithFilter("-[*.NunitTest]*")
+        .WithFilter("-[*.Tests]*")
+        .WithFilter("-[*.XunitTest]*");
+        OpenCover(
+                tool =>
+                {
+                        tool.XUnit2(
+                                "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/*.Tests.dll",
+                                new XUnit2Settings
+                                {
+                                        ShadowCopy = false,
+                                        Parallelism = ParallelismOption.All,
+                                        OutputDirectory = reportXUnitDirAnyCPU
+                                }
+                        );
+                },
+                new FilePath(reportOpenCoverDirAnyCPU.ToString() + "/" + product + ".xml"),
+                openCoverSettings
         );
     }
     else
     {
         XUnit2(
                 "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/*.Tests.dll",
-                new XUnit2Settings {
+                new XUnit2Settings
+                {
                         Parallelism = ParallelismOption.All,
                         HtmlReport = true,
                         NUnitReport = true,
@@ -221,7 +257,8 @@ Task("Run-Unit-Tests-Under-X86")
                 {
                         tool.XUnit2(
                                 "./temp/" + configuration + "/" + product + ".Tests/bin/x86/*.Tests.dll",
-                                new XUnit2Settings {
+                                new XUnit2Settings
+                                {
                                         Parallelism = ParallelismOption.All,
                                         HtmlReport = true,
                                         NUnitReport = true,
@@ -231,7 +268,8 @@ Task("Run-Unit-Tests-Under-X86")
                         );
                 },
                 new FilePath(reportDotCoverDirX86.ToString() + "/" + product + ".html"),
-                new DotCoverAnalyseSettings {
+                new DotCoverAnalyseSettings
+                {
                         ReportType = DotCoverReportType.HTML
                 }
         );
@@ -240,7 +278,8 @@ Task("Run-Unit-Tests-Under-X86")
     {
         XUnit2(
                 "./temp/" + configuration + "/" + product + ".Tests/bin/x86/*.Tests.dll",
-                new XUnit2Settings {
+                new XUnit2Settings
+                {
                         Parallelism = ParallelismOption.All,
                         HtmlReport = true,
                         NUnitReport = true,
@@ -259,7 +298,8 @@ Task("Run-DupFinder")
     {
         DupFinder(
                 string.Format("./source/{0}.sln", product),
-                new DupFinderSettings() {
+                new DupFinderSettings()
+                {
                         ShowStats = true,
                         ShowText = true,
                         OutputFile = new FilePath(reportReSharperDupFinder.ToString() + "/" + product + ".xml"),
@@ -385,9 +425,23 @@ Task("Build-NuGet-Package")
     NuGetPack(nuGetPackSettings);
 });
 
+Task("Update-Coverage-Report")
+    .WithCriteria(() => "Release".Equals(configuration) && !"NOTSET".Equals(coverallsApiKey))
+    .IsDependentOn("Build-NuGet-Package")
+    .Does(() =>
+{
+    CoverallsIo(
+            reportOpenCoverDirAnyCPU.ToString() + "/" + product + ".xml",
+            new CoverallsIoSettings()
+            {
+                    RepoToken = coverallsApiKey
+            }
+    );
+});
+
 Task("Publish-NuGet-Package")
     .WithCriteria(() => "Release".Equals(configuration) && !"NOTSET".Equals(nugetApiKey) && !"NOTSET".Equals(nugetSource))
-    .IsDependentOn("Build-NuGet-Package")
+    .IsDependentOn("Update-Coverage-Report")
     .Does(() =>
 {
     var nugetPushVersion = semanticVersion;
@@ -413,7 +467,7 @@ Task("Publish-NuGet-Package")
 //////////////////////////////////////////////////////////////////////
 
 Task("Default")
-    .IsDependentOn("Build-NuGet-Package");
+    .IsDependentOn("Update-Coverage-Report");
 
 //////////////////////////////////////////////////////////////////////
 // EXECUTION
