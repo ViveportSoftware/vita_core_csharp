@@ -426,7 +426,7 @@ Task("Build-NuGet-Package")
 });
 
 Task("Update-Coverage-Report")
-    .WithCriteria(() => "Release".Equals(configuration) && !"NOTSET".Equals(coverallsApiKey))
+    .WithCriteria(() => !"NOTSET".Equals(coverallsApiKey))
     .IsDependentOn("Build-NuGet-Package")
     .Does(() =>
 {
