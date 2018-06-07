@@ -3,13 +3,12 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
-using Htc.Vita.Core.Interop;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Runtime
 {
-    public static class Platform
+    public static partial class Platform
     {
         public static bool IsLinux { get; } = CheckIsLinux();
 
@@ -127,7 +126,7 @@ namespace Htc.Vita.Core.Runtime
             try
             {
                 var isWow64 = false;
-                var sucess = Windows.IsWow64Process(
+                var sucess = Interop.Windows.IsWow64Process(
                         Process.GetCurrentProcess().Handle,
                         ref isWow64
                 );
@@ -155,7 +154,7 @@ namespace Htc.Vita.Core.Runtime
             }
             if (IsWindows)
             {
-                info.Handle = Windows.LoadLibraryW(path);
+                info.Handle = Interop.Windows.LoadLibraryW(path);
                 if (info.Handle == IntPtr.Zero)
                 {
                     TraceInternal("Load Windows native library error.");
@@ -195,6 +194,11 @@ namespace Htc.Vita.Core.Runtime
                 return;
             }
             Debug.WriteLine("[" + qualifiedName + "] " + message);
+        }
+
+        public static string GetProductName()
+        {
+            return Windows.GetProductNameInPlatform();
         }
 
         private static void TraceInternal(string message)

@@ -112,6 +112,7 @@
     <Compile Include="Runtime\IpcChannel.cs" />
     <Compile Include="Runtime\NamedPipeIpcChannel.cs" />
     <Compile Include="Runtime\Platform.cs" />
+    <Compile Include="Runtime\Platform.Windows.cs" />
     <Compile Include="Runtime\ProcessManager.cs" />
     <Compile Include="Runtime\ProcessManager.ProcessInfo.cs" />
     <Compile Include="Runtime\ProcessManager.Windows.cs" />

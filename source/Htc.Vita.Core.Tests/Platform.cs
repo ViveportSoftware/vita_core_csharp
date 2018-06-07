@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
@@ -20,6 +21,18 @@ namespace Htc.Vita.Core.Tests
         {
             var osArch = Runtime.Platform.DetectOsArch();
             Assert.True(osArch == Runtime.Platform.OsArch.Bit64);
+        }
+
+        [Fact]
+        public static void Default_2_GetProductName()
+        {
+            var productName = Runtime.Platform.GetProductName();
+            Assert.NotEmpty(productName);
+            Console.WriteLine("productName: \"" + productName + "\"");
+            if (Runtime.Platform.IsWindows)
+            {
+                Assert.NotEqual("UNKNOWN", productName);
+            }
         }
     }
 }
