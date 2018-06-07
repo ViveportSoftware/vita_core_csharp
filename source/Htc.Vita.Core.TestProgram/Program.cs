@@ -25,6 +25,12 @@ namespace Htc.Vita.Core.TestProgram
 
             allProcessWatcher.Stop();
             Console.ReadKey();
+
+            Console.WriteLine("WARNING!! This program will reboot system");
+            Console.ReadKey();
+
+            Platform.Exit(Platform.ExitType.Reboot);
+            Console.ReadKey();
         }
 
         private static void OnProcessCreated(ProcessWatcher.ProcessInfo processInfo)

@@ -27,6 +27,13 @@ namespace Htc.Vita.Core.Runtime
             }
         }
 
+        public enum ExitType
+        {
+            Logoff,
+            Shutdown,
+            Reboot
+        }
+
         public enum Type
         {
             Unknown = 0,
@@ -74,6 +81,14 @@ namespace Htc.Vita.Core.Runtime
                 return Is32BitProcessOn64BitSystem() ? OsArch.Bit64 : OsArch.Bit32;
             }
             return OsArch.Unknown;
+        }
+
+        public static void Exit(ExitType exitType)
+        {
+            if (IsWindows)
+            {
+                Windows.ExitInPlatform(exitType);
+            }
         }
 
         public static bool CheckIsMacOsX()

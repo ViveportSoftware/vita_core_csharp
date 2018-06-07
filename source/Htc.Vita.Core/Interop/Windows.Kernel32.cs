@@ -129,6 +129,16 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
+         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms683179.aspx
+         */
+        [DllImport(Libraries.WindowsKernel32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern IntPtr GetCurrentProcess();
+
+        /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/aa364937.aspx
          */
         [DllImport(Libraries.WindowsKernel32,

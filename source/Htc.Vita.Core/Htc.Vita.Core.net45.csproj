@@ -66,6 +66,7 @@
     <Compile Include="Interop\Windows.Kernel32.cs" />
     <Compile Include="Interop\Windows.Psapi.cs" />
     <Compile Include="Interop\Windows.Setupapi.cs" />
+    <Compile Include="Interop\Windows.User32.cs" />
     <Compile Include="Interop\Windows.Wintrust.cs" />
     <Compile Include="Interop\Windows.Wtsapi32.cs" />
     <Compile Include="IO\FileSystemManager.cs" />

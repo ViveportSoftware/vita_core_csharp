@@ -7,6 +7,11 @@ namespace Htc.Vita.Core.Interop
     internal static partial class Windows
     {
         /**
+         * https://msdn.microsoft.com/en-us/library/windows/desktop/bb530716.aspx
+         */
+        internal const string SeShutdownName = "SeShutdownPrivilege";
+
+        /**
          * CONTROL_ACCEPTED enumeration
          * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685996.aspx
          */
@@ -55,6 +60,15 @@ namespace Htc.Vita.Core.Interop
             /* SERVICE_ERROR_SEVERE   */ Severe = 0x00000002,
             /* SERVICE_ERROR_CRITICAL */ Critical = 0x00000003,
             /* SERVICE_NO_CHANGE      */ NoChange = 0xffffffff
+        }
+
+        [Flags]
+        internal enum SePrivilege : uint
+        {
+            /* SE_PRIVILEGE_ENABLED_BY_DEFAULT */ EnabledByDefault = 0x00000001,
+            /* SE_PRIVILEGE_ENABLED            */ Enabled = 0x00000002,
+            /* SE_PRIVILEGE_REMOVED            */ Removed = 0x00000004,
+            /* SE_PRIVILEGE_USED_FOR_ACCESS    */ UsedForAccess = 0x80000000
         }
 
         /**
@@ -181,6 +195,39 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
+         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa374905.aspx
+         */
+        [Flags]
+        internal enum TokenAccessRight
+        {
+            /* TOKEN_ASSIGN_PRIMARY    */ AssignPrimary = 0x0001,
+            /* TOKEN_DUPLICATE         */ Duplicate = 0x0002,
+            /* TOKEN_IMPERSONATE       */ Impersonate = 0x0004,
+            /* TOKEN_QUERY             */ Query = 0x0008,
+            /* TOKEN_QUERY_SOURCE      */ QuerySource = 0x0010,
+            /* TOKEN_ADJUST_PRIVILEGES */ AdjustPrivileges = 0x0020,
+            /* TOKEN_ADJUST_GROUPS     */ AdjustGroups = 0x0040,
+            /* TOKEN_ADJUST_DEFAULT    */ AdjustDefault = 0x0080,
+            /* TOKEN_ADJUST_SESSIONID  */ AdjustSessionId = 0x0100,
+            /* TOKEN_EXECUTE           */ Execute = 0x20000,
+            /* TOKEN_READ              */ Read = 0x20000
+                                               | Query,
+            /* TOKEN_WRITE             */ Write = 0x20000
+                                                | AdjustPrivileges
+                                                | AdjustGroups
+                                                | AdjustDefault,
+            /* TOKEN_ALL_ACCESS        */ AllAccess = 0xf0000
+                                                    | AssignPrimary
+                                                    | Duplicate
+                                                    | Impersonate
+                                                    | Query
+                                                    | QuerySource
+                                                    | AdjustPrivileges
+                                                    | AdjustGroups
+                                                    | AdjustDefault
+        }
+
+        /**
          * QUERY_SERVICE_CONFIG structure
          * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684950.aspx
          */
@@ -213,6 +260,35 @@ namespace Htc.Vita.Core.Interop
             public /* DWORD */ uint dwCheckPoint;
             public /* DWORD */ uint dwWaitHint;
         }
+
+        /**
+         * TOKEN_PRIVILEGES structure
+         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa379630.aspx
+         */
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        internal struct TokenPrivileges
+        {
+            public /* DWORD */ int Count;
+            public /* LUID  */ long Luid;
+            public /* DWORD */ SePrivilege Attr;
+        }
+
+        /**
+         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa375202.aspx
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern bool AdjustTokenPrivileges(
+                /* _In_      HANDLE            */ [In] IntPtr tokenHandle,
+                /* _In_      BOOL              */ [In] bool disableAllPrivileges,
+                /* _In_opt_  PTOKEN_PRIVILEGES */ [In] ref TokenPrivileges newState,
+                /* _In_      DWORD             */ [In] int bufferLength,
+                /* _Out_opt_ PTOKEN_PRIVILEGES */ [In][Out] IntPtr previousState,
+                /* _Out_opt_ PDWORD            */ [In][Out] IntPtr returnLength
+        );
 
         /**
          * https://msdn.microsoft.com/en-us/library/ms681987.aspx
@@ -295,6 +371,34 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_opt_ LPTSTR        */ [In][Out] StringBuilder lpReferencedDomainName,
                 /* _Inout_   LPDWORD       */ [In][Out] ref uint cchReferencedDomainName,
                 /* _Out_     PSID_NAME_USE */ [In][Out] ref SidType peUse
+        );
+
+        /**
+         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa379180.aspx
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern bool LookupPrivilegeValueW(
+                /* _In_opt_ LPCTSTR */ [In] string lpSystemName,
+                /* _In_     LPCTSTR */ [In] string lpName,
+                /* _Out_    PLUID   */ [In][Out] ref long lpLuid
+        );
+
+        /**
+         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa379295.aspx
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern bool OpenProcessToken(
+                /* _In_  HANDLE  */ [In] IntPtr processHandle,
+                /* _In_  DWORD   */ [In] TokenAccessRight desiredAccess,
+                /* _Out_ PHANDLE */ [In][Out] ref IntPtr tokenHandle
         );
 
         /**
