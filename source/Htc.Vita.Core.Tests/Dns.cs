@@ -61,5 +61,22 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(entry);
             Console.WriteLine("entry for \"" + host + "\": " + entry.HostName);
         }
+
+        [Fact]
+        public static void Dns_Default_3_FlushCache()
+        {
+            var dns = Net.Dns.GetInstance();
+            Assert.NotNull(dns);
+            Assert.True(dns.FlushCache());
+        }
+
+        [Fact]
+        public static void Dns_Default_3_FlushCache_WithHostName()
+        {
+            var dns = Net.Dns.GetInstance();
+            Assert.NotNull(dns);
+            Assert.False(dns.FlushCache(""));
+            Assert.True(dns.FlushCache("www.google.com"));
+        }
     }
 }

@@ -26,6 +26,39 @@ namespace Htc.Vita.Core.Net
             Logger.GetInstance(typeof(Dns)).Info("Registered default dns type to " + _defaultType);
         }
 
+        public bool FlushCache()
+        {
+            var result = false;
+            try
+            {
+                result = OnFlushCache();
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(Dns)).Error(e.ToString());
+            }
+            return result;
+        }
+
+        public bool FlushCache(string hostName)
+        {
+            if (string.IsNullOrWhiteSpace(hostName))
+            {
+                return false;
+            }
+
+            var result = false;
+            try
+            {
+                result = OnFlushCache(hostName);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(Dns)).Error(e.ToString());
+            }
+            return result;
+        }
+
         public static Dns GetInstance()
         {
             return GetInstance("");
@@ -159,6 +192,8 @@ namespace Htc.Vita.Core.Net
             return result;
         }
 
+        protected abstract bool OnFlushCache();
+        protected abstract bool OnFlushCache(string hostName);
         protected abstract IPAddress[] OnGetHostAddresses(string hostNameOrAddress);
         protected abstract IPHostEntry OnGetHostEntry(IPAddress ipAddress);
         protected abstract IPHostEntry OnGetHostEntry(string hostNameOrAddress);

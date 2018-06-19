@@ -3,6 +3,7 @@
     internal static class Libraries
     {
         public const string WindowsAdvapi32 = "advapi32.dll";
+        public const string WindowsDnsapi = "dnsapi.dll";
         public const string WindowsHid = "hid.dll";
         public const string WindowsKernel32 = "kernel32.dll";
         public const string WindowsPsapi = "psapi.dll";

@@ -10,6 +10,16 @@ namespace Htc.Vita.Core.Net
             Logger.GetInstance(typeof(DefaultDns)).Warn("This implementation does not support custom resolver");
         }
 
+        protected override bool OnFlushCache()
+        {
+            return Interop.Windows.DnsFlushResolverCache();
+        }
+
+        protected override bool OnFlushCache(string hostName)
+        {
+            return Interop.Windows.DnsFlushResolverCacheEntry_W(hostName);
+        }
+
         protected override IPAddress[] OnGetHostAddresses(string hostNameOrAddress)
         {
             return System.Net.Dns.GetHostAddresses(hostNameOrAddress);
