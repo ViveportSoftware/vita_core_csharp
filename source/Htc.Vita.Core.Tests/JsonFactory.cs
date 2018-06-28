@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Htc.Vita.Core.Json;
-using LitJson;
+using Htc.Vita.Core.Json.LitJson;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests

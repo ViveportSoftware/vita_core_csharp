@@ -15,7 +15,7 @@ using System.Collections;
 using System.Collections.Specialized;
 
 
-namespace LitJson
+namespace Htc.Vita.Core.Json.LitJson
 {
     public class JsonMockWrapper : IJsonWrapper
     {

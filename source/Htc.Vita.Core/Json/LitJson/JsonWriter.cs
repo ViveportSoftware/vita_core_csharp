@@ -16,7 +16,7 @@ using System.IO;
 using System.Text;
 
 
-namespace LitJson
+namespace Htc.Vita.Core.Json.LitJson
 {
     internal enum Condition
     {

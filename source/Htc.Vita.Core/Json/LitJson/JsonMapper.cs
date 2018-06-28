@@ -17,7 +17,7 @@ using System.IO;
 using System.Reflection;
 
 
-namespace LitJson
+namespace Htc.Vita.Core.Json.LitJson
 {
     internal struct PropertyMetadata
     {

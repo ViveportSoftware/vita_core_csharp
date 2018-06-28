@@ -9,7 +9,7 @@
 #endregion
 
 
-namespace LitJson
+namespace Htc.Vita.Core.Json.LitJson
 {
     internal enum ParserToken
     {

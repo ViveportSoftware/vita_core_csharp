@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
+using Htc.Vita.Core.Json.LitJson;
 using Htc.Vita.Core.Log;
-using LitJson;
 
 namespace Htc.Vita.Core.Json
 {

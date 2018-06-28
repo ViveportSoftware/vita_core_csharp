@@ -12,7 +12,7 @@
 using System;
 
 
-namespace LitJson
+namespace Htc.Vita.Core.Json.LitJson
 {
     public class JsonException : ApplicationException
     {

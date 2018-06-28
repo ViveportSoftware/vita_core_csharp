@@ -17,7 +17,7 @@ using System.Collections.Specialized;
 using System.IO;
 
 
-namespace LitJson
+namespace Htc.Vita.Core.Json.LitJson
 {
     public class JsonData : IJsonWrapper, IEquatable<JsonData>
     {
