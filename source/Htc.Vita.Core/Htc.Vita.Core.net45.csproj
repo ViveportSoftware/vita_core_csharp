@@ -136,6 +136,7 @@
     <Compile Include="Shell\UriSchemeManager.cs" />
     <Compile Include="Shell\UriSchemeManager.UriSchemeInfo.cs" />
     <Compile Include="Util\Convert.cs" />
+    <Compile Include="Util\EnumExtension.cs" />
     <Compile Include="Util\Extract.cs" />
     <Compile Include="Util\Extract.Windows.cs" />
     <Compile Include="Util\Registry.cs" />

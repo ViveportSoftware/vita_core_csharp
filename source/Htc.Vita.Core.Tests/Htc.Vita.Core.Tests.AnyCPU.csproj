@@ -58,6 +58,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Convert.cs" />
     <Compile Include="Dns.cs" />
+    <Compile Include="EnumExtension.cs" />
     <Compile Include="Extract.cs" />
     <Compile Include="FilePropertiesInfo.cs" />
     <Compile Include="FileSystemManager.cs" />
