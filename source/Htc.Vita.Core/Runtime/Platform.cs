@@ -133,6 +133,16 @@ namespace Htc.Vita.Core.Runtime
             return Windows.GetProductNameInPlatform();
         }
 
+        public static DateTime GetSystemBootTime()
+        {
+            return DateTime.Now.Subtract(TimeSpan.FromMilliseconds(Environment.TickCount));
+        }
+
+        public static DateTime GetSystemBootTimeUtc()
+        {
+            return DateTime.UtcNow.Subtract(TimeSpan.FromMilliseconds(Environment.TickCount));
+        }
+
         private static bool Is32BitProcessOn64BitSystem()
         {
             if (!IsWindows)

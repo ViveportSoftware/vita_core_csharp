@@ -34,5 +34,18 @@ namespace Htc.Vita.Core.Tests
                 Assert.NotEqual("UNKNOWN", productName);
             }
         }
+
+        [Fact]
+        public static void Default_3_GetSystemBootTime()
+        {
+            var bootTime = Runtime.Platform.GetSystemBootTime();
+            Console.WriteLine("bootTime: " + bootTime);
+            Assert.NotEqual(DateTime.MinValue, bootTime);
+            Assert.NotEqual(DateTime.Now, bootTime);
+            var bootTimeUtc = Runtime.Platform.GetSystemBootTimeUtc();
+            Console.WriteLine("bootTimeUtc: " + bootTimeUtc);
+            Assert.NotEqual(DateTime.MinValue, bootTimeUtc);
+            Assert.NotEqual(DateTime.UtcNow, bootTimeUtc);
+        }
     }
 }
