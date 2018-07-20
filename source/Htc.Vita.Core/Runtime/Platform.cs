@@ -16,26 +16,59 @@ namespace Htc.Vita.Core.Runtime
 
         public static bool IsWindows { get; } = CheckIsWindows();
 
-        public enum ExitType
+        public static bool CheckIsLinux()
         {
-            Logoff,
-            Shutdown,
-            Reboot
+            if (!File.Exists(@"/proc/sys/kernel/ostype"))
+            {
+                return false;
+            }
+            var osType = File.ReadAllText(@"/proc/sys/kernel/ostype");
+            if (!osType.StartsWith("Linux", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+            return true;
         }
 
-        public enum Type
+        public static bool CheckIsMacOsX()
         {
-            Unknown = 0,
-            Windows = 1,
-            Linux = 2,
-            MacOsX = 3
+            if (!File.Exists(@"/System/Library/CoreServices/SystemVersion.plist"))
+            {
+                return false;
+            }
+            return true;
         }
 
-        public enum OsArch
+        public static bool CheckIsWindows()
         {
-            Unknown = 0,
-            Bit32 = 1,
-            Bit64 = 2
+            var windir = Environment.GetEnvironmentVariable("windir");
+            if (string.IsNullOrEmpty(windir))
+            {
+                return false;
+            }
+            if (!windir.Contains(@"\"))
+            {
+                return false;
+            }
+            if (!Directory.Exists(windir))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static void DebugInternal(string message)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                return;
+            }
+            var qualifiedName = typeof(Platform).AssemblyQualifiedName;
+            if (string.IsNullOrWhiteSpace(qualifiedName))
+            {
+                return;
+            }
+            Debug.WriteLine("[" + qualifiedName + "] " + message);
         }
 
         public static Type Detect()
@@ -80,45 +113,24 @@ namespace Htc.Vita.Core.Runtime
             }
         }
 
-        public static bool CheckIsMacOsX()
+        public static string GetMachineId()
         {
-            if (!File.Exists(@"/System/Library/CoreServices/SystemVersion.plist"))
+            var result = GetMachineGuidFromRegistry();
+            if (!string.IsNullOrWhiteSpace(result))
             {
-                return false;
+                return result;
             }
-            return true;
+            return string.Empty;
         }
 
-        public static bool CheckIsLinux()
+        private static string GetMachineGuidFromRegistry()
         {
-            if (!File.Exists(@"/proc/sys/kernel/ostype"))
-            {
-                return false;
-            }
-            string osType = File.ReadAllText(@"/proc/sys/kernel/ostype");
-            if (!osType.StartsWith("Linux", StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
-            return true;
+            return Registry.GetStringValue(Registry.Hive.LocalMachine, "SOFTWARE\\Microsoft\\Cryptography", "MachineGuid", "");
         }
 
-        public static bool CheckIsWindows()
+        public static string GetProductName()
         {
-            string windir = Environment.GetEnvironmentVariable("windir");
-            if (string.IsNullOrEmpty(windir))
-            {
-                return false;
-            }
-            if (!windir.Contains(@"\"))
-            {
-                return false;
-            }
-            if (!Directory.Exists(windir))
-            {
-                return false;
-            }
-            return true;
+            return Windows.GetProductNameInPlatform();
         }
 
         private static bool Is32BitProcessOn64BitSystem()
@@ -171,40 +183,6 @@ namespace Htc.Vita.Core.Runtime
             return info;
         }
 
-        public static string GetMachineId()
-        {
-            string result = GetMachineGuidFromRegistry();
-            if (!string.IsNullOrWhiteSpace(result))
-            {
-                return result;
-            }
-            return string.Empty;
-        }
-
-        private static string GetMachineGuidFromRegistry()
-        {
-            return Registry.GetStringValue(Registry.Hive.LocalMachine, "SOFTWARE\\Microsoft\\Cryptography", "MachineGuid", "");
-        }
-
-        private static void DebugInternal(string message)
-        {
-            if (string.IsNullOrEmpty(message))
-            {
-                return;
-            }
-            var qualifiedName = typeof(Platform).AssemblyQualifiedName;
-            if (string.IsNullOrWhiteSpace(qualifiedName))
-            {
-                return;
-            }
-            Debug.WriteLine("[" + qualifiedName + "] " + message);
-        }
-
-        public static string GetProductName()
-        {
-            return Windows.GetProductNameInPlatform();
-        }
-
         private static void TraceInternal(string message)
         {
             if (string.IsNullOrEmpty(message))
@@ -217,6 +195,28 @@ namespace Htc.Vita.Core.Runtime
                 return;
             }
             Trace.WriteLine("[" + qualifiedName + "] " + message);
+        }
+
+        public enum ExitType
+        {
+            Logoff,
+            Shutdown,
+            Reboot
+        }
+
+        public enum OsArch
+        {
+            Unknown = 0,
+            Bit32 = 1,
+            Bit64 = 2
+        }
+
+        public enum Type
+        {
+            Unknown = 0,
+            Windows = 1,
+            Linux = 2,
+            MacOsX = 3
         }
     }
 }
