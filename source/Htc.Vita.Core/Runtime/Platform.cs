@@ -16,17 +16,6 @@ namespace Htc.Vita.Core.Runtime
 
         public static bool IsWindows { get; } = CheckIsWindows();
 
-        public class NativeLibInfo
-        {
-            public Exception InnerException { get; internal set; }
-            public IntPtr Handle { get; internal set; }
-
-            public bool IsNoError()
-            {
-                return (InnerException == null);
-            }
-        }
-
         public enum ExitType
         {
             Logoff,
