@@ -139,7 +139,7 @@ namespace Htc.Vita.Core.Net
         {
             if (string.IsNullOrWhiteSpace(hostNameOrAddress))
             {
-                return null;
+                return new IPAddress[] { };
             }
 
             IPAddress[] result = null;
@@ -151,7 +151,8 @@ namespace Htc.Vita.Core.Net
             {
                 Logger.GetInstance(typeof(Dns)).Error(e.ToString());
             }
-            return result;
+
+            return result ?? new IPAddress[] { };
         }
 
         public IPHostEntry GetHostEntry(IPAddress ipAddress)
