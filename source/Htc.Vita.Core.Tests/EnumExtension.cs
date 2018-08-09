@@ -92,9 +92,21 @@ namespace Htc.Vita.Core.Tests
             Assert.True(accumulateFlags.IsFlagAppliedOnly(TestFlag.Flag1));
         }
 
+        [Fact]
+        public static void Default_6_IsFlagAppliedAny()
+        {
+            var accumulateFlags = TestFlag.Flag0 | TestFlag.Flag3 | TestFlag.Flag4;
+            var accumulateFlags2 = TestFlag.Flag0 | TestFlag.Flag1;
+            var accumulateFlags3 = TestFlag.Flag0 | TestFlag.Flag2;
+            var accumulateFlags4 = TestFlag.Flag1 | TestFlag.Flag2;
+            Assert.True(accumulateFlags.IsFlagAppliedAny(accumulateFlags2));
+            Assert.True(accumulateFlags.IsFlagAppliedAny(accumulateFlags3));
+            Assert.False(accumulateFlags.IsFlagAppliedAny(accumulateFlags4));
+        }
+
         /*
         [Fact]
-        public static void Default_6_SetValueKeepingFlags()
+        public static void Default_7_SetValueKeepingFlags()
         {
             var flags = TestFlag.Flag0 | TestFlag.Flag2 | TestFlag.Flag4 | TestFlag.Flag6;
             var flags2 = flags.SetValueKeepingFlags(TestFlag.Flag3, TestFlag.Flag7);

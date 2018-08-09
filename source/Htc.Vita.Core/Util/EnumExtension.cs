@@ -67,6 +67,14 @@ namespace Htc.Vita.Core.Util
             return (longValue & longFlag) != 0 && ((longValue | longFlag) == longFlag || (longValue | longFlag) == longValue);
         }
 
+        public static bool IsFlagAppliedAny<T>(this T value, T flag) where T : struct, IConvertible, IComparable, IFormattable
+        {
+            CheckIsEnum<T>(true);
+            var longValue = System.Convert.ToInt64(value);
+            var longFlag = System.Convert.ToInt64(flag);
+            return (longValue & longFlag) != 0;
+        }
+
         public static bool IsFlagAppliedOnly<T>(this T value, T flag) where T : struct, IConvertible, IComparable, IFormattable
         {
             CheckIsEnum<T>(true);
