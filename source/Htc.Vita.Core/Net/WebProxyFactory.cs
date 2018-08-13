@@ -115,6 +115,34 @@ namespace Htc.Vita.Core.Net
             return result;
         }
 
+        public WebProxyStatus GetWebProxyStatus(IWebProxy webProxy)
+        {
+            if (webProxy == null)
+            {
+                return WebProxyStatus.NotSet;
+            }
+
+            var result = WebProxyStatus.Unknown;
+            try
+            {
+                result = OnGetWebProxyStatus(webProxy);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(WebProxyFactory)).Error(e.ToString());
+            }
+            return result;
+        }
+
         protected abstract IWebProxy OnGetWebProxy();
+        protected abstract WebProxyStatus OnGetWebProxyStatus(IWebProxy webProxy);
+
+        public enum WebProxyStatus
+        {
+            Unknown,
+            NotSet,
+            Working,
+            CannotTest
+        }
     }
 }

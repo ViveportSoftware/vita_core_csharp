@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
@@ -18,6 +19,18 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(webProxyFactory);
             var webProxy = webProxyFactory.GetWebProxy();
             Assert.NotNull(webProxy);
+        }
+
+        [Fact]
+        public static void Default_2_GetWebProxyStatus()
+        {
+            var webProxyFactory = Net.WebProxyFactory.GetInstance();
+            Assert.NotNull(webProxyFactory);
+            var webProxy = webProxyFactory.GetWebProxy();
+            Assert.NotNull(webProxy);
+            var webProxyStatus = webProxyFactory.GetWebProxyStatus(webProxy);
+            Assert.True(webProxyStatus != Net.WebProxyFactory.WebProxyStatus.Unknown);
+            Console.WriteLine("WebProxyStatus: " + webProxyStatus);
         }
     }
 }
