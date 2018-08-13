@@ -17,7 +17,7 @@ namespace Htc.Vita.Core.Tests
         {
             var webRequestFactory = Net.WebRequestFactory.GetInstance();
             Assert.NotNull(webRequestFactory);
-            var webRequest = webRequestFactory.GetHttpWebRequest(new Uri("http://www.google.com"));
+            var webRequest = webRequestFactory.GetHttpWebRequest(new Uri("https://www.google.com/search?q=firefox"));
             Assert.NotNull(webRequest);
             Console.WriteLine("WebRequest.UserAgent: " + webRequest.UserAgent);
         }
