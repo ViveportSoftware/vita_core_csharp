@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Sockets;
 using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
@@ -167,10 +168,15 @@ namespace Htc.Vita.Core.Net
             {
                 result = OnGetHostEntry(ipAddress);
             }
+            catch (SocketException e)
+            {
+                Logger.GetInstance(typeof(Dns)).Error(e.Message);
+            }
             catch (Exception e)
             {
                 Logger.GetInstance(typeof(Dns)).Error(e.ToString());
             }
+
             return result;
         }
 

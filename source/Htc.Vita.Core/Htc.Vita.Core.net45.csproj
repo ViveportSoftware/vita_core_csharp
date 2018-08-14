@@ -97,6 +97,8 @@
     <Compile Include="Net\DefaultWebRequestFactory.cs" />
     <Compile Include="Net\Dns.cs" />
     <Compile Include="Net\LocalPortManager.cs" />
+    <Compile Include="Net\RouteTracer.cs" />
+    <Compile Include="Net\RouteTracer.Hop.cs" />
     <Compile Include="Net\WebProxyFactory.cs" />
     <Compile Include="Net\WebRequestFactory.cs" />
     <Compile Include="Preference\DefaultPreferenceFactory.Async.cs" />
