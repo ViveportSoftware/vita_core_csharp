@@ -9,14 +9,14 @@ namespace Htc.Vita.Core.Crypto
     {
         private const int BufferSizeInByte = 4096;
 
-        protected override async Task<string> OnGenerateInBase64Async(FileInfo file)
+        protected override Task<string> OnGenerateInBase64Async(FileInfo file)
         {
-            return await DoGenerateInBase64Async(file).ConfigureAwait(false);
+            return DoGenerateInBase64Async(file);
         }
 
-        protected override async Task<string> OnGenerateInHexAsync(FileInfo file)
+        protected override Task<string> OnGenerateInHexAsync(FileInfo file)
         {
-            return await DoGenerateInHexAsync(file).ConfigureAwait(false);
+            return DoGenerateInHexAsync(file);
         }
 
         public static async Task<string> DoGenerateInBase64Async(FileInfo file)

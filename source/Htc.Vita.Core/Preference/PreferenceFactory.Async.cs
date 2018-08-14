@@ -4,18 +4,18 @@ namespace Htc.Vita.Core.Preference
 {
     public abstract partial class PreferenceFactory
     {
-        public async Task<Preferences> LoadPreferencesAsync()
+        public Task<Preferences> LoadPreferencesAsync()
         {
-            return await LoadPreferencesAsync("").ConfigureAwait(false);
+            return LoadPreferencesAsync("");
         }
 
-        public async Task<Preferences> LoadPreferencesAsync(string label)
+        public Task<Preferences> LoadPreferencesAsync(string label)
         {
             if (string.IsNullOrWhiteSpace(label))
             {
-                return await OnLoadPreferencesAsync("default").ConfigureAwait(false);
+                return OnLoadPreferencesAsync("default");
             }
-            return await OnLoadPreferencesAsync(label).ConfigureAwait(false);
+            return OnLoadPreferencesAsync(label);
         }
 
         protected abstract Task<Preferences> OnLoadPreferencesAsync(string label);

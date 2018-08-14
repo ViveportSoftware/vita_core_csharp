@@ -12,9 +12,9 @@ namespace Htc.Vita.Core.Preference
                 return this;
             }
 
-            protected override async Task<bool> OnSaveAsync()
+            protected override Task<bool> OnSaveAsync()
             {
-                return await _storage.SaveToFileAsync(_properties).ConfigureAwait(false);
+                return _storage.SaveToFileAsync(_properties);
             }
         }
     }

@@ -4,14 +4,14 @@ namespace Htc.Vita.Core.Preference
 {
     public abstract partial class Preferences
     {
-        public async Task<bool> CommitAsync()
+        public Task<bool> CommitAsync()
         {
-            return await OnSaveAsync().ConfigureAwait(false);
+            return OnSaveAsync();
         }
 
-        public async Task<Preferences> InitializeAsync()
+        public Task<Preferences> InitializeAsync()
         {
-            return await OnInitializeAsync().ConfigureAwait(false);
+            return OnInitializeAsync();
         }
 
         protected abstract Task<Preferences> OnInitializeAsync();
