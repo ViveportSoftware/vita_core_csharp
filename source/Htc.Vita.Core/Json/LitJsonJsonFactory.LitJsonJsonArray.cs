@@ -299,6 +299,14 @@ namespace Htc.Vita.Core.Json
                 try
                 {
                     var data = _jsonData[index];
+                    if (data.IsInt)
+                    {
+                        result = Convert.ToDouble((int)data);
+                    }
+                    if (data.IsLong)
+                    {
+                        result = Convert.ToDouble((long)data);
+                    }
                     if (data.IsDouble)
                     {
                         result = (double)data;
@@ -325,6 +333,14 @@ namespace Htc.Vita.Core.Json
                 try
                 {
                     var data = _jsonData[index];
+                    if (data.IsInt)
+                    {
+                        result = (float)Convert.ToDouble((int)data);
+                    }
+                    if (data.IsLong)
+                    {
+                        result = (float)Convert.ToDouble((long)data);
+                    }
                     if (data.IsDouble)
                     {
                         result = (float)(double)data;
@@ -377,6 +393,10 @@ namespace Htc.Vita.Core.Json
                 try
                 {
                     var data = _jsonData[index];
+                    if (data.IsInt)
+                    {
+                        result = (int)data;
+                    }
                     if (data.IsLong)
                     {
                         result = (long)data;

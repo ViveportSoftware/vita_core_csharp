@@ -418,6 +418,9 @@ namespace Htc.Vita.Core.Tests
             jsonArray.Insert(1, 300000000002L);
             var value3 = jsonArray.ParseLong(1);
             Assert.Equal(300000000002, value3);
+            jsonArray.Insert(1, 1);
+            var value4 = jsonArray.ParseLong(1);
+            Assert.Equal(1L, value4);
         }
 
         [Fact]
@@ -536,6 +539,9 @@ namespace Htc.Vita.Core.Tests
             jsonArray.Append("2.2");
             var value2 = jsonArray.ParseDouble(1);
             Assert.Equal(2.2D, value2);
+            jsonArray.Append("2");
+            var value3 = jsonArray.ParseDouble(2);
+            Assert.Equal(2.0D, value3);
         }
 
         [Fact]
@@ -584,6 +590,9 @@ namespace Htc.Vita.Core.Tests
             jsonArray.Append("200000000001");
             var value2 = jsonArray.ParseLong(1);
             Assert.Equal(200000000001L, value2);
+            jsonArray.Append(1);
+            var value3 = jsonArray.ParseLong(2);
+            Assert.Equal(1L, value3);
         }
 
         [Fact]
@@ -907,6 +916,12 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(jsonObject);
             jsonObject = jsonObject.Put("key", 3.3D);
             Assert.NotNull(jsonObject);
+            jsonObject = jsonObject.Put("key2", 1.1D);
+            var value = jsonObject.ParseDouble("key2");
+            Assert.Equal(1.1D, value);
+            jsonObject = jsonObject.Put("key3", 2);
+            var value2 = jsonObject.ParseDouble("key3");
+            Assert.Equal(2.0D, value2);
         }
 
         [Fact]
@@ -940,6 +955,9 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(jsonObject);
             jsonObject = jsonObject.Put("key", 100000000000L);
             Assert.NotNull(jsonObject);
+            jsonObject = jsonObject.Put("key2", 1L);
+            var value = jsonObject.ParseLong("key2");
+            Assert.Equal(1L, value);
         }
 
         [Fact]
