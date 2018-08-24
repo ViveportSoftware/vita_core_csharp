@@ -101,6 +101,7 @@
     <Compile Include="Net\RouteTracer.Hop.cs" />
     <Compile Include="Net\WebProxyFactory.cs" />
     <Compile Include="Net\WebRequestFactory.cs" />
+    <Compile Include="Net\WebUserAgent.cs" />
     <Compile Include="Preference\DefaultPreferenceFactory.Async.cs" />
     <Compile Include="Preference\DefaultPreferenceFactory.cs" />
     <Compile Include="Preference\DefaultPreferenceFactory.DefaultPreferences.Async.cs" />

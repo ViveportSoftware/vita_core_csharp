@@ -24,7 +24,7 @@ namespace Htc.Vita.Core.Net
 
         protected virtual string GetUserAgentString()
         {
-            return new UserAgent().ToString();
+            return new WebUserAgent().ToString();
         }
 
         protected virtual int GetTimeoutInMiniSec()
