@@ -55,6 +55,7 @@
     <Compile Include="..\generated\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AesFactory.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Convert.cs" />
     <Compile Include="Dns.cs" />
