@@ -21,6 +21,26 @@ namespace Htc.Vita.Core.Crypto
         private CipherMode _cipherMode = CipherMode.Cbc;
         private PaddingMode _paddingMode = PaddingMode.Pkcs7;
 
+        private static System.Security.Cryptography.CipherMode ConvertToImpl(CipherMode cipherMode)
+        {
+            if (cipherMode == CipherMode.Cbc)
+            {
+                return System.Security.Cryptography.CipherMode.CBC;
+            }
+            Logger.GetInstance().Error("unknown cipher mode: " + cipherMode);
+            return System.Security.Cryptography.CipherMode.CBC;
+        }
+
+        private static System.Security.Cryptography.PaddingMode ConvertToImpl(PaddingMode paddingMode)
+        {
+            if (paddingMode == PaddingMode.Pkcs7)
+            {
+                return System.Security.Cryptography.PaddingMode.PKCS7;
+            }
+            Logger.GetInstance().Error("unknown padding mode: " + paddingMode);
+            return System.Security.Cryptography.PaddingMode.PKCS7;
+        }
+
         protected override byte[] OnDecrypt(byte[] input, string password)
         {
             var encryptedDataLength = input.Length - SaltSize128BitInByte;
@@ -82,6 +102,9 @@ namespace Htc.Vita.Core.Crypto
                     Logger.GetInstance().Info("can not create aes instance");
                     return null;
                 }
+
+                aes.Mode = ConvertToImpl(_cipherMode);
+                aes.Padding = ConvertToImpl(_paddingMode);
 
                 using (var decryptor = aes.CreateDecryptor(key, iv))
                 {
@@ -146,6 +169,9 @@ namespace Htc.Vita.Core.Crypto
                     Logger.GetInstance().Info("can not create aes instance");
                     return null;
                 }
+
+                aes.Mode = ConvertToImpl(_cipherMode);
+                aes.Padding = ConvertToImpl(_paddingMode);
 
                 using (var encryptor = aes.CreateEncryptor(key, iv))
                 {

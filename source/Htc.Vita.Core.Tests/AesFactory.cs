@@ -33,7 +33,6 @@ namespace Htc.Vita.Core.Tests
             const string password = "p@ssword";
             var inputInBytes = Encoding.UTF8.GetBytes(plain);
             var outputInBytes = aes.Encrypt(inputInBytes, password);
-            var outputInHex = Util.Convert.ToHexString(outputInBytes);
             Assert.NotNull(outputInBytes);
         }
 
@@ -48,8 +47,8 @@ namespace Htc.Vita.Core.Tests
             const string password = "p@ssword";
             var inputInBytes = Encoding.UTF8.GetBytes(plain);
             var outputInBytes = aes.Encrypt(inputInBytes, password);
-            var outputInHex = Util.Convert.ToHexString(outputInBytes);
             Assert.NotNull(outputInBytes);
+            var outputInHex = Util.Convert.ToHexString(outputInBytes);
             Console.WriteLine("outputInHex: " + outputInHex);
         }
 
