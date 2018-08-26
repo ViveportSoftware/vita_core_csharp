@@ -7,16 +7,16 @@ namespace Htc.Vita.Core.Crypto
 {
     public abstract class Aes
     {
-        public const int IvSize128BitInBit = 128;
-        public const int IvSize128BitInByte = IvSize128BitInBit / 8;
-        public const int KeySize128BitInBit = 128;
-        public const int KeySize128BitInByte = KeySize128BitInBit / 8;
-        public const int KeySize192BitInBit = 192;
-        public const int KeySize192BitInByte = KeySize192BitInBit / 8;
-        public const int KeySize256BitInBit = 256;
-        public const int KeySize256BitInByte = KeySize256BitInBit / 8;
-        public const int SaltSize128BitInBit = 128;
-        public const int SaltSize128BitInByte = SaltSize128BitInBit / 8;
+        public static int IvSize128BitInBit { get; } = 128;
+        public static int IvSize128BitInByte { get; } = IvSize128BitInBit / 8;
+        public static int KeySize128BitInBit { get; } = 128;
+        public static int KeySize128BitInByte { get; } = KeySize128BitInBit / 8;
+        public static int KeySize192BitInBit { get; } = 192;
+        public static int KeySize192BitInByte { get; } = KeySize192BitInBit / 8;
+        public static int KeySize256BitInBit { get; } = 256;
+        public static int KeySize256BitInByte { get; } = KeySize256BitInBit / 8;
+        public static int SaltSize128BitInBit { get; } = 128;
+        public static int SaltSize128BitInByte { get; } = SaltSize128BitInBit / 8;
 
         private CipherMode _cipherMode = CipherMode.Cbc;
         private PaddingMode _paddingMode = PaddingMode.Pkcs7;
