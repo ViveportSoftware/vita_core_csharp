@@ -18,9 +18,6 @@ namespace Htc.Vita.Core.Crypto
         private const int SaltSize128BitInBit = 128;
         private const int SaltSize128BitInByte = SaltSize128BitInBit / 8;
 
-        private CipherMode _cipherMode = CipherMode.Cbc;
-        private PaddingMode _paddingMode = PaddingMode.Pkcs7;
-
         private static System.Security.Cryptography.CipherMode ConvertToImpl(CipherMode cipherMode)
         {
             if (cipherMode == CipherMode.Cbc)
@@ -103,8 +100,8 @@ namespace Htc.Vita.Core.Crypto
                     return null;
                 }
 
-                aes.Mode = ConvertToImpl(_cipherMode);
-                aes.Padding = ConvertToImpl(_paddingMode);
+                aes.Mode = ConvertToImpl(Cipher);
+                aes.Padding = ConvertToImpl(Padding);
 
                 using (var decryptor = aes.CreateDecryptor(key, iv))
                 {
@@ -170,8 +167,8 @@ namespace Htc.Vita.Core.Crypto
                     return null;
                 }
 
-                aes.Mode = ConvertToImpl(_cipherMode);
-                aes.Padding = ConvertToImpl(_paddingMode);
+                aes.Mode = ConvertToImpl(Cipher);
+                aes.Padding = ConvertToImpl(Padding);
 
                 using (var encryptor = aes.CreateEncryptor(key, iv))
                 {
@@ -189,30 +186,6 @@ namespace Htc.Vita.Core.Crypto
                     }
                 }
             }
-        }
-
-        protected override Aes OnSetCipherMode(CipherMode cipherMode)
-        {
-            if (_cipherMode == cipherMode)
-            {
-                return this;
-            }
-
-            Logger.GetInstance().Info("set cipher mode to " + cipherMode);
-            _cipherMode = cipherMode;
-            return this;
-        }
-
-        protected override Aes OnSetPaddingMode(PaddingMode paddingMode)
-        {
-            if (_paddingMode == paddingMode)
-            {
-                return this;
-            }
-
-            Logger.GetInstance().Info("set padding mode to " + paddingMode);
-            _paddingMode = paddingMode;
-            return this;
         }
     }
 }

@@ -5,14 +5,35 @@ namespace Htc.Vita.Core.Crypto
 {
     public abstract class Aes
     {
-        public Aes SetCipherMode(CipherMode cipherMode)
+        private CipherMode _cipherMode = CipherMode.Cbc;
+        private PaddingMode _paddingMode = PaddingMode.Pkcs7;
+
+        public CipherMode Cipher
         {
-            return OnSetCipherMode(cipherMode);
+            get { return _cipherMode; }
+            set
+            {
+                if (value == _cipherMode)
+                {
+                    return;
+                }
+                Logger.GetInstance().Info("set cipher mode to " + value);
+                _cipherMode = value;
+            }
         }
 
-        public Aes SetPaddingMode(PaddingMode paddingMode)
+        public PaddingMode Padding
         {
-            return OnSetPaddingMode(paddingMode);
+            get { return _paddingMode; }
+            set
+            {
+                if (value == _paddingMode)
+                {
+                    return;
+                }
+                Logger.GetInstance().Info("set padding mode to " + value);
+                _paddingMode = value;
+            }
         }
 
         public byte[] Decrypt(byte[] input, string password)
@@ -135,8 +156,6 @@ namespace Htc.Vita.Core.Crypto
         protected abstract byte[] OnDecrypt(byte[] input, byte[] key, byte[] iv);
         protected abstract byte[] OnEncrypt(byte[] input, string password);
         protected abstract byte[] OnEncrypt(byte[] input, byte[] key, byte[] iv);
-        protected abstract Aes OnSetCipherMode(CipherMode cipherMode);
-        protected abstract Aes OnSetPaddingMode(PaddingMode paddingMode);
 
         public enum CipherMode
         {
