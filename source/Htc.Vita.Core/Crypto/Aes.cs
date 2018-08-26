@@ -1,10 +1,23 @@
 ﻿using System;
+using System.IO;
+using System.Security.Cryptography;
 using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Crypto
 {
     public abstract class Aes
     {
+        public const int IvSize128BitInBit = 128;
+        public const int IvSize128BitInByte = IvSize128BitInBit / 8;
+        public const int KeySize128BitInBit = 128;
+        public const int KeySize128BitInByte = KeySize128BitInBit / 8;
+        public const int KeySize192BitInBit = 192;
+        public const int KeySize192BitInByte = KeySize192BitInBit / 8;
+        public const int KeySize256BitInBit = 256;
+        public const int KeySize256BitInByte = KeySize256BitInBit / 8;
+        public const int SaltSize128BitInBit = 128;
+        public const int SaltSize128BitInByte = SaltSize128BitInBit / 8;
+
         private CipherMode _cipherMode = CipherMode.Cbc;
         private PaddingMode _paddingMode = PaddingMode.Pkcs7;
 
@@ -50,10 +63,45 @@ namespace Htc.Vita.Core.Crypto
                 return null;
             }
 
+            var encryptedDataLength = input.Length - SaltSize128BitInByte;
+            if (encryptedDataLength <= 0)
+            {
+                Logger.GetInstance().Error("input cipher text is malformed");
+                return null;
+            }
+
+            var salt = new byte[SaltSize128BitInByte];
+            var encryptedData = new byte[encryptedDataLength];
             byte[] result = null;
             try
             {
-                result = OnDecrypt(input, password);
+                using (var resultStream = new MemoryStream(input))
+                {
+                    using (var binaryReader = new BinaryReader(resultStream))
+                    {
+                        binaryReader.Read(
+                                salt,
+                                0,
+                                SaltSize128BitInByte
+                        );
+                        binaryReader.Read(
+                                encryptedData,
+                                0,
+                                encryptedDataLength
+                        );
+                    }
+                }
+
+                using (var deriveBytes = new Rfc2898DeriveBytes(password, salt))
+                {
+                    var key = deriveBytes.GetBytes(KeySize256BitInByte);
+                    var iv = deriveBytes.GetBytes(IvSize128BitInByte);
+                    result = Decrypt(
+                            encryptedData,
+                            key,
+                            iv
+                    );
+                }
             }
             catch (Exception e)
             {
@@ -108,10 +156,29 @@ namespace Htc.Vita.Core.Crypto
                 return null;
             }
 
+            var deriveBytes = new Rfc2898DeriveBytes(password, SaltSize128BitInByte);
+            var salt = deriveBytes.Salt;
+            var key = deriveBytes.GetBytes(KeySize256BitInByte);
+            var iv = deriveBytes.GetBytes(IvSize128BitInByte);
+
             byte[] result = null;
             try
             {
-                result = OnEncrypt(input, password);
+                var encryptedBytes = Encrypt(
+                        input,
+                        key,
+                        iv
+                );
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    using (var binaryWriter = new BinaryWriter(memoryStream))
+                    {
+                        binaryWriter.Write(salt);
+                        binaryWriter.Write(encryptedBytes);
+                    }
+                    result = memoryStream.ToArray();
+                }
             }
             catch (Exception e)
             {
@@ -152,9 +219,7 @@ namespace Htc.Vita.Core.Crypto
             return result;
         }
 
-        protected abstract byte[] OnDecrypt(byte[] input, string password);
         protected abstract byte[] OnDecrypt(byte[] input, byte[] key, byte[] iv);
-        protected abstract byte[] OnEncrypt(byte[] input, string password);
         protected abstract byte[] OnEncrypt(byte[] input, byte[] key, byte[] iv);
 
         public enum CipherMode
