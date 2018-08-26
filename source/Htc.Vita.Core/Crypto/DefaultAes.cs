@@ -13,7 +13,7 @@ namespace Htc.Vita.Core.Crypto
             {
                 return System.Security.Cryptography.CipherMode.CBC;
             }
-            Logger.GetInstance().Error("unknown cipher mode: " + cipherMode);
+            Logger.GetInstance(typeof(DefaultAes)).Error("unknown cipher mode: " + cipherMode);
             return System.Security.Cryptography.CipherMode.CBC;
         }
 
@@ -23,7 +23,7 @@ namespace Htc.Vita.Core.Crypto
             {
                 return System.Security.Cryptography.PaddingMode.PKCS7;
             }
-            Logger.GetInstance().Error("unknown padding mode: " + paddingMode);
+            Logger.GetInstance(typeof(DefaultAes)).Error("unknown padding mode: " + paddingMode);
             return System.Security.Cryptography.PaddingMode.PKCS7;
         }
 
@@ -45,7 +45,7 @@ namespace Htc.Vita.Core.Crypto
             {
                 if (aes == null)
                 {
-                    Logger.GetInstance().Info("can not create aes instance");
+                    Logger.GetInstance(typeof(DefaultAes)).Info("can not create aes instance");
                     return null;
                 }
 
@@ -88,7 +88,7 @@ namespace Htc.Vita.Core.Crypto
             {
                 if (aes == null)
                 {
-                    Logger.GetInstance().Info("can not create aes instance");
+                    Logger.GetInstance(typeof(DefaultAes)).Info("can not create aes instance");
                     return null;
                 }
 

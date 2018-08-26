@@ -30,7 +30,7 @@ namespace Htc.Vita.Core.Crypto
                 {
                     return;
                 }
-                Logger.GetInstance().Info("set cipher mode to " + value);
+                Logger.GetInstance(typeof(Aes)).Info("set cipher mode to " + value);
                 _cipherMode = value;
             }
         }
@@ -44,7 +44,7 @@ namespace Htc.Vita.Core.Crypto
                 {
                     return;
                 }
-                Logger.GetInstance().Info("set padding mode to " + value);
+                Logger.GetInstance(typeof(Aes)).Info("set padding mode to " + value);
                 _paddingMode = value;
             }
         }
@@ -66,7 +66,7 @@ namespace Htc.Vita.Core.Crypto
             var encryptedDataLength = input.Length - SaltSize128BitInByte;
             if (encryptedDataLength <= 0)
             {
-                Logger.GetInstance().Error("input cipher text is malformed");
+                Logger.GetInstance(typeof(Aes)).Error("input cipher text is malformed");
                 return null;
             }
 

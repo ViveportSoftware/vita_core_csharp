@@ -229,7 +229,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Validating checksum in hex error: " + e);
+                Logger.GetInstance(typeof(Sha1)).Fatal("Validating checksum in hex error: " + e);
             }
             return result;
         }
@@ -248,7 +248,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance().Fatal("Validating checksum in hex error: " + e);
+                Logger.GetInstance(typeof(Sha1)).Fatal("Validating checksum in hex error: " + e);
             }
             return result;
         }
