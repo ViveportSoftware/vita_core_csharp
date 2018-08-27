@@ -46,13 +46,15 @@ namespace Htc.Vita.Core.Runtime
 
         private void OnManagementEventArrived(object sender, EventArrivedEventArgs e)
         {
-            using (var managementBaseObject = e.NewEvent)
+            var managementBaseObject = e.NewEvent;
+            if (managementBaseObject == null)
             {
-                if (managementBaseObject == null)
-                {
-                    return;
-                }
+                Logger.GetInstance(typeof(WmiProcessWatcher)).Warn("Can not find arrived management event");
+                return;
+            }
 
+            try
+            {
                 EventHandler eventHandler = null;
                 var eventType = managementBaseObject.ClassPath.ClassName;
                 foreach (var wmiInstanceEvent in WmiInstanceEvents)
@@ -62,19 +64,22 @@ namespace Htc.Vita.Core.Runtime
                         eventHandler = EventHandlers[wmiInstanceEvent.Key];
                     }
                 }
+
                 if (eventHandler == null)
                 {
                     return;
                 }
 
-                ProcessInfo processInfo;
-                using (var targetInstance = managementBaseObject["TargetInstance"] as ManagementBaseObject)
+                var targetInstance = managementBaseObject["TargetInstance"] as ManagementBaseObject;
+                if (targetInstance == null)
                 {
-                    if (targetInstance == null)
-                    {
-                        return;
-                    }
+                    Logger.GetInstance(typeof(WmiProcessWatcher)).Warn("Can not find arrived target instance");
+                    return;
+                }
 
+                ProcessInfo processInfo = null;
+                try
+                {
                     var id = (int) (targetInstance["ProcessId"] as uint? ?? 0);
                     var name = targetInstance["Name"] as string;
                     var path = targetInstance["ExecutablePath"] as string;
@@ -89,9 +94,32 @@ namespace Htc.Vita.Core.Runtime
                             Name = name,
                             Path = path
                     };
+
+                }
+                catch (Exception exception)
+                {
+                    Logger.GetInstance(typeof(WmiProcessWatcher)).Error("Can not process arrived target instance: " + exception.Message);
+                }
+                finally
+                {
+                    /*
+                     * https://stackoverflow.com/questions/11896282/using-clause-fails-to-call-dispose
+                     */
+                    targetInstance.Dispose();
                 }
 
                 eventHandler(processInfo);
+            }
+            catch (Exception exception)
+            {
+                Logger.GetInstance(typeof(WmiProcessWatcher)).Error("Can not process arrived management event: " + exception.Message);
+            }
+            finally
+            {
+                /*
+                 * https://stackoverflow.com/questions/11896282/using-clause-fails-to-call-dispose
+                 */
+                managementBaseObject.Dispose();
             }
         }
 

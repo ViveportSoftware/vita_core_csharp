@@ -93,7 +93,18 @@ namespace Htc.Vita.Core.Runtime
                             {
                                 continue;
                             }
-                            return (string)managementObject.GetPropertyValue("Caption");
+
+                            try
+                            {
+                                return (string) managementObject.GetPropertyValue("Caption");
+                            }
+                            finally
+                            {
+                                /*
+                                 * https://stackoverflow.com/questions/11896282/using-clause-fails-to-call-dispose
+                                 */
+                                managementObject.Dispose();
+                            }
                         }
                     }
                 }
