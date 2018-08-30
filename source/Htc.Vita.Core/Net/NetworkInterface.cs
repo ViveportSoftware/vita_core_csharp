@@ -5,7 +5,7 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
 {
-    public class NetworkInterface
+    public static class NetworkInterface
     {
         public static bool IsNetworkAvailable()
         {
