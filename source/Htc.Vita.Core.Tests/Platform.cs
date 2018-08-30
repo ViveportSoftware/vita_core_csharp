@@ -54,5 +54,14 @@ namespace Htc.Vita.Core.Tests
             Assert.False(Runtime.Platform.IsDotNetCore);
             Assert.False(Runtime.Platform.IsMono);
         }
+
+        [Fact]
+        public static void Default_5_DetectOsType()
+        {
+            if (Runtime.Platform.IsWindows)
+            {
+                Assert.False(Runtime.Platform.IsLinux || Runtime.Platform.IsMacOsX);
+            }
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace Htc.Vita.Core.Runtime
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Platform)).Error("Can not detect if process is running in .NET Core runtime: " + e.Message);
+                Logger.GetInstance(typeof(Platform)).Error("Can not detect if process is running on .NET Core runtime: " + e.Message);
             }
             return false;
         }
@@ -70,7 +70,7 @@ namespace Htc.Vita.Core.Runtime
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Platform)).Error("Can not detect if process is running in Mono runtime: " + e.Message);
+                Logger.GetInstance(typeof(Platform)).Error("Can not detect if process is running on Mono runtime: " + e.Message);
             }
             return false;
         }
@@ -200,7 +200,7 @@ namespace Htc.Vita.Core.Runtime
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Platform)).Error("Can not detect if process is 32-bit onder 64-bit Windows: " + e.Message);
+                Logger.GetInstance(typeof(Platform)).Error("Can not detect if process is 32-bit on 64-bit Windows: " + e.Message);
             }
             return false;
         }
