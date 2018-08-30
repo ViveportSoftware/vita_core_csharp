@@ -63,5 +63,14 @@ namespace Htc.Vita.Core.Tests
                 Assert.False(Runtime.Platform.IsLinux || Runtime.Platform.IsMacOsX);
             }
         }
+
+        [Fact]
+        public static void Default_6_GetFrameworkName()
+        {
+            var frameworkName = Runtime.Platform.GetFrameworkName();
+            Console.WriteLine("framework: " + frameworkName);
+            Assert.NotNull(frameworkName);
+            Assert.False(frameworkName.StartsWith("Unknown", StringComparison.InvariantCultureIgnoreCase));
+        }
     }
 }

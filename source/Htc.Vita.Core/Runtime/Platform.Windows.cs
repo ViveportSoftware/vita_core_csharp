@@ -2,6 +2,7 @@
 using System.Management;
 using System.Runtime.InteropServices;
 using Htc.Vita.Core.Log;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Runtime
 {
@@ -78,6 +79,56 @@ namespace Htc.Vita.Core.Runtime
                 {
                     Logger.GetInstance(typeof(Platform)).Error("Can not exit Windows, error code: " + Marshal.GetLastWin32Error());
                 }
+            }
+
+            /**
+             * https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed
+             */
+            internal static string GetFrameworkNameInPlatform()
+            {
+                const string path = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\";
+                var release = Registry.GetIntValue(
+                        Registry.Hive.LocalMachine,
+                        path,
+                        "Release"
+                );
+                if (release >= 461808)
+                {
+                    return ".NET Framework 4.7.2 or later";
+                }
+                if (release >= 461308)
+                {
+                    return ".NET Framework 4.7.1";
+                }
+                if (release >= 460798)
+                {
+                    return ".NET Framework 4.7";
+                }
+                if (release >= 394802)
+                {
+                    return ".NET Framework 4.6.2";
+                }
+                if (release >= 394254)
+                {
+                    return ".NET Framework 4.6.1";
+                }
+                if (release >= 393295)
+                {
+                    return ".NET Framework 4.6";
+                }
+                if (release >= 379893)
+                {
+                    return ".NET Framework 4.5.2";
+                }
+                if (release >= 378675)
+                {
+                    return ".NET Framework 4.5.1";
+                }
+                if (release >= 378389)
+                {
+                    return ".NET Framework 4.5";
+                }
+                return "Unknown .NET Framework (release " + release + ")";
             }
 
             internal static string GetProductNameInPlatform()

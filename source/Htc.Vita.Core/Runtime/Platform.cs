@@ -149,6 +149,23 @@ namespace Htc.Vita.Core.Runtime
             }
         }
 
+        public static string GetFrameworkName()
+        {
+            if (IsDotNetCore)
+            {
+                return "Unknown .NET Core framework";
+            }
+            if (IsMono)
+            {
+                return "Unknown Mono framework";
+            }
+            if (IsWindows)
+            {
+                return Windows.GetFrameworkNameInPlatform();
+            }
+            return "Unknown framework";
+        }
+
         public static string GetMachineId()
         {
             var result = GetMachineGuidFromRegistry();
