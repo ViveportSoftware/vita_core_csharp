@@ -10,11 +10,31 @@ namespace Htc.Vita.Core.Runtime
 {
     public static partial class Platform
     {
+        public static bool IsDotNetCore { get; } = CheckIsDotNetCore();
+
         public static bool IsLinux { get; } = CheckIsLinux();
 
         public static bool IsMacOsX { get; } = CheckIsMacOsX();
 
+        public static bool IsMono { get; } = CheckIsMono();
+
         public static bool IsWindows { get; } = CheckIsWindows();
+
+        /**
+         * https://apisof.net/catalog/System.Runtime.Loader.AssemblyLoadContext
+         */
+        public static bool CheckIsDotNetCore()
+        {
+            try
+            {
+                return System.Type.GetType("System.Runtime.Loader.AssemblyLoadContext") != null;
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(Platform)).Error("Can not detect if process is running in .NET Core runtime: " + e.Message);
+            }
+            return false;
+        }
 
         public static bool CheckIsLinux()
         {
@@ -37,6 +57,22 @@ namespace Htc.Vita.Core.Runtime
                 return false;
             }
             return true;
+        }
+
+        /**
+         * https://www.mono-project.com/docs/gui/winforms/porting-winforms-applications/
+         */
+        public static bool CheckIsMono()
+        {
+            try
+            {
+                return System.Type.GetType("Mono.Runtime") != null;
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(Platform)).Error("Can not detect if process is running in Mono runtime: " + e.Message);
+            }
+            return false;
         }
 
         public static bool CheckIsWindows()

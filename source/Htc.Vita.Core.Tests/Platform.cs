@@ -47,5 +47,12 @@ namespace Htc.Vita.Core.Tests
             Assert.NotEqual(DateTime.MinValue, bootTimeUtc);
             Assert.NotEqual(DateTime.UtcNow, bootTimeUtc);
         }
+
+        [Fact]
+        public static void Default_4_DetectFramework()
+        {
+            Assert.False(Runtime.Platform.IsDotNetCore);
+            Assert.False(Runtime.Platform.IsMono);
+        }
     }
 }
