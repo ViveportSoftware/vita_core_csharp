@@ -1,4 +1,5 @@
 ﻿using System;
+using Htc.Vita.Core.Net;
 using Htc.Vita.Core.Runtime;
 
 namespace Htc.Vita.Core.TestProgram
@@ -7,6 +8,10 @@ namespace Htc.Vita.Core.TestProgram
     {
         private static void Main()
         {
+            Console.WriteLine("NetworkInterface.IsNetworkAvailable(): " + NetworkInterface.IsNetworkAvailable());
+            Console.WriteLine("NetworkInterface.IsInternetAvailable(): " + NetworkInterface.IsInternetAvailable());
+            Console.ReadKey();
+
             var processWatcherFactory = ProcessWatcherFactory.GetInstance();
             var notepadProcessWatcher = processWatcherFactory.CreateProcessWatcher("notepad.exe");
             notepadProcessWatcher.ProcessCreated += OnProcessCreated;

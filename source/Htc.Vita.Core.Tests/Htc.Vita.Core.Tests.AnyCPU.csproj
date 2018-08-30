@@ -68,6 +68,7 @@
     <Compile Include="LocalPortManager.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Md5.cs" />
+    <Compile Include="NetworkInterface.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="PreferenceFactory.cs" />
     <Compile Include="ProcessManager.cs" />

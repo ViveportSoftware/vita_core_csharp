@@ -51,7 +51,20 @@ namespace Htc.Vita.Core.Shell
                 return false;
             }
 
-            var wshShell = Activator.CreateInstance(type);
+            object wshShell = null;
+            try
+            {
+                wshShell = Activator.CreateInstance(type);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(ShellLink)).Error("Can not create wshShell class from system with CLSID: " + guid + ", " + e.Message);
+            }
+            if (wshShell == null)
+            {
+                return false;
+            }
+
             object wshShortcut = null;
             var success = false;
             try
@@ -67,7 +80,7 @@ namespace Htc.Vita.Core.Shell
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(ShellLink)).Error("Can not create wshShell class from system with CLSID: " + guid + ", " + e.Message);
+                Logger.GetInstance(typeof(ShellLink)).Error("Can not create wshShortcut class from wshShell: " + e.Message);
             }
             finally
             {
