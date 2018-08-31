@@ -1,6 +1,6 @@
 #addin "nuget:?package=Cake.Coveralls&version=0.8.0"
 #addin "nuget:?package=Cake.Git&version=0.19.0"
-#addin "nuget:?package=Cake.ReSharperReports&version=0.8.0"
+#addin "nuget:?package=Cake.ReSharperReports&version=0.10.0"
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS

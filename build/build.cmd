@@ -16,4 +16,4 @@ echo %POWERSHELL%: Found in path
 cd "%PJ_D_ROOT%"
 
 rem %POWERSHELL% -ExecutionPolicy Unrestricted -File .\build.ps1 -Configuration Release -Target Publish-NuGet-Package -ScriptArgs '--revision="100"'
-%POWERSHELL% -ExecutionPolicy Unrestricted -File .\build.ps1 --settings_skipverification=true
+%POWERSHELL% -ExecutionPolicy Unrestricted -File .\build.ps1
