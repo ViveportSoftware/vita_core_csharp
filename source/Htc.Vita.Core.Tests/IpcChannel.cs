@@ -134,7 +134,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Client_2_IsReady_WithoutDigitalSignature()
+        public static void Client_2_IsReady_WithDigitalSignature()
         {
             if (!Runtime.Platform.IsWindows)
             {
@@ -152,7 +152,7 @@ namespace Htc.Vita.Core.Tests
             {
                 {Runtime.IpcChannel.Client.OptionVerifyProvider, "true"}
             };
-            Assert.False(client.IsReady(options));
+            Assert.True(client.IsReady(options));
             Assert.True(client.IsReady());
             Assert.True(provider.Stop());
         }
@@ -229,7 +229,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Client_3_Request_WithoutDigitalSignature()
+        public static void Client_3_Request_WithDigitalSignature()
         {
             if (!Runtime.Platform.IsWindows)
             {
@@ -255,7 +255,7 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(client);
             Assert.True(client.SetName(name));
             Assert.True(client.IsReady());
-            Assert.True(string.IsNullOrEmpty(client.Request("TestRequest")));
+            Assert.False(string.IsNullOrEmpty(client.Request("TestRequest")));
             Assert.True(provider.Stop());
         }
     }
