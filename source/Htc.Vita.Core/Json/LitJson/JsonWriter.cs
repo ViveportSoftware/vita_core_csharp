@@ -266,7 +266,7 @@ namespace Htc.Vita.Core.Json.LitJson
                 writer.Write ("\\u");
                 writer.Write (hex_seq);
                 */
-                writer.Write(str);
+                writer.Write(str[i]);
             }
 
             writer.Write ('"');
