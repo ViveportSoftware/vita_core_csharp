@@ -1006,6 +1006,17 @@ namespace Htc.Vita.Core.Tests
             Assert.Equal(3, jsonObject.AllKeys().Count);
         }
 
+        [Fact]
+        public static void JsonObject_18_Unicode()
+        {
+            var jsonFactory = Json.JsonFactory.GetInstance();
+            Assert.NotNull(jsonFactory);
+            var jsonObject = jsonFactory.CreateJsonObject();
+            Assert.NotNull(jsonObject);
+            jsonObject.Put("title", "Vive视频");
+            Console.WriteLine("jsonObject: " + jsonObject);
+        }
+
         public class TestClass1
         {
             public bool TestBool1 { get; set; }
