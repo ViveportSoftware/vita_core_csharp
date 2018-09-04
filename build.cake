@@ -199,7 +199,11 @@ Task("Run-Unit-Tests-Under-AnyCPU")
                 new DotCoverAnalyseSettings
                 {
                         ReportType = DotCoverReportType.HTML
-                }
+                }.WithFilter("+:*")
+                .WithFilter("-:xunit.*")
+                .WithFilter("-:*.NunitTest")
+                .WithFilter("-:*.Tests")
+                .WithFilter("-:*.XunitTest")
         );
         CreateDirectory(reportOpenCoverDirAnyCPU);
         var openCoverSettings = new OpenCoverSettings
@@ -271,7 +275,11 @@ Task("Run-Unit-Tests-Under-X86")
                 new DotCoverAnalyseSettings
                 {
                         ReportType = DotCoverReportType.HTML
-                }
+                }.WithFilter("+:*")
+                .WithFilter("-:xunit.*")
+                .WithFilter("-:*.NunitTest")
+                .WithFilter("-:*.Tests")
+                .WithFilter("-:*.XunitTest")
         );
     }
     else
@@ -321,7 +329,8 @@ Task("Run-InspectCode")
     {
         InspectCode(
                 string.Format("./source/{0}.sln", product),
-                new InspectCodeSettings() {
+                new InspectCodeSettings()
+                {
                         SolutionWideAnalysis = true,
                         OutputFile = new FilePath(reportReSharperInspectCode.ToString() + "/" + product + ".xml"),
                         ThrowExceptionOnFindingViolations = false
