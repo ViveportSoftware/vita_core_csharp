@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
@@ -22,6 +23,33 @@ namespace Htc.Vita.Core.Tests
             var targetFileInfo = new FileInfo(target);
             Assert.True(Util.Extract.FromFileToIcon(sourceFileInfo, targetFileInfo));
             Assert.True(targetFileInfo.Exists);
+        }
+
+        [Fact]
+        public static void Default_0_FromAssemblyToFileByResourceName()
+        {
+            var assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
+            var fileName = "TestData.Sha1.txt";
+            var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            var destPath = Path.Combine(desktopPath, fileName);
+            var file = new FileInfo(destPath);
+
+            var result = Util.Extract.FromAssemblyToFileByResourceName(
+                    assemblyName + "." + fileName + ".gz",
+                    file,
+                    Util.Extract.CompressionType.Gzip
+            );
+            Assert.True(result);
+            Assert.Equal("9eJAeMCTbKeIFSYOfVjRqUCWbro=", Crypto.Sha1.GetInstance().GenerateInBase64(file));
+
+            try
+            {
+                Directory.Delete(destPath, true);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
         }
     }
 }

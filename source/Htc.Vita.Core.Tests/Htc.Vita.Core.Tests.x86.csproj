@@ -87,6 +87,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="TestData.Sha1.txt.gz" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Htc.Vita.Core\Htc.Vita.Core.net45.csproj">

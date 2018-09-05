@@ -55,6 +55,7 @@ namespace Htc.Vita.Core.Util
 
                 if (!doesResourceExist)
                 {
+                    Logger.GetInstance(typeof(Extract)).Error("Can not find resource \"" + byResourceName);
                     return false;
                 }
 
