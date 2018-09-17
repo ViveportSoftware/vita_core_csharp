@@ -1,10 +1,14 @@
-﻿using System;
-using Htc.Vita.Core.Json.LitJson;
+﻿using Htc.Vita.Core.Json.LitJson;
 
 namespace Htc.Vita.Core.Json
 {
     public partial class LitJsonJsonFactory : JsonFactory
     {
+        public LitJsonJsonFactory()
+        {
+            JsonMapper.RegisterImporter<int, long>(l => 0L + l);
+        }
+
         protected override JsonArray OnCreateJsonArray()
         {
             return new LitJsonJsonArray(JsonMapper.ToObject("[]"));
