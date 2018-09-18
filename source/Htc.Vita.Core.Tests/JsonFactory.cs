@@ -174,7 +174,7 @@ namespace Htc.Vita.Core.Tests
             };
             var result = jsonFactory.SerializeObject(class1);
             Assert.NotNull(result);
-            Assert.Equal("{\"TestBool1\":true,\"TestInt1\":3,\"TestString1\":\"test\"}", result);
+            Assert.Equal("{\"TestBool1\":true,\"TestInt1\":3,\"TestLong1\":0,\"TestString1\":\"test\"}", result);
         }
 
         [Fact]
@@ -197,7 +197,7 @@ namespace Htc.Vita.Core.Tests
             classList.Add(class2);
             var result = jsonFactory.SerializeObject(classList);
             Assert.NotNull(result);
-            Assert.Equal("[{\"TestBool1\":true,\"TestInt1\":3,\"TestString1\":\"test\"},{\"TestBool1\":false,\"TestInt1\":5,\"TestString1\":null}]", result);
+            Assert.Equal("[{\"TestBool1\":true,\"TestInt1\":3,\"TestLong1\":0,\"TestString1\":\"test\"},{\"TestBool1\":false,\"TestInt1\":5,\"TestLong1\":0,\"TestString1\":null}]", result);
         }
 
         [Fact]
@@ -241,6 +241,36 @@ namespace Htc.Vita.Core.Tests
             var result = jsonFactory.SerializeObject(dictList);
             Console.WriteLine("Serialized string: " + result);
             Assert.Equal("[{\"testKey0\":\"testValue0\",\"testKey1\":\"testValue1\",\"testKey2\":\"testValue2\"},{\"testKey0\":\"testValue3\",\"testKey2\":\"testValue4\",\"testKey4\":\"testValue5\"}]", result);
+        }
+
+        [Fact]
+        public static void Default_7_DeserializeObject()
+        {
+            var jsonFactory = Json.JsonFactory.GetInstance();
+            Assert.NotNull(jsonFactory);
+            var class1 = new TestClass1
+            {
+                TestBool1 = true,
+                TestInt1 = 3,
+                TestLong1 = 10,
+                TestString1 = "test"
+            };
+            var result = jsonFactory.SerializeObject(class1);
+            Assert.NotNull(result);
+            Assert.Equal("{\"TestBool1\":true,\"TestInt1\":3,\"TestLong1\":10,\"TestString1\":\"test\"}", result);
+            var deserializedClass1 = jsonFactory.DeserializeObject<TestClass1>(result);
+            Assert.Equal(class1.TestBool1, deserializedClass1.TestBool1);
+            Assert.Equal(class1.TestInt1, deserializedClass1.TestInt1);
+            Assert.Equal(class1.TestLong1, deserializedClass1.TestLong1);
+            Assert.Equal(class1.TestString1, deserializedClass1.TestString1);
+
+            class1 = new TestClass1
+            {
+                TestLong1 = 1000000000000
+            };
+            result = jsonFactory.SerializeObject(class1);
+            deserializedClass1 = jsonFactory.DeserializeObject<TestClass1>(result);
+            Assert.Equal(class1.TestLong1, deserializedClass1.TestLong1);
         }
 
         [Fact]
@@ -1021,6 +1051,7 @@ namespace Htc.Vita.Core.Tests
         {
             public bool TestBool1 { get; set; }
             public int TestInt1 { get; set; }
+            public long TestLong1 { get; set; }
             public string TestString1 { get; set; }
         }
     }
