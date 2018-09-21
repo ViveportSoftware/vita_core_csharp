@@ -7,6 +7,9 @@ namespace Htc.Vita.Core.Json
     public abstract class JsonFactory
     {
         private static Dictionary<string, JsonFactory> Instances { get; } = new Dictionary<string, JsonFactory>();
+
+        private static readonly object InstancesLock = new object();
+
         private static Type _defaultType = typeof(LitJsonJsonFactory);
 
         public static void Register<T>() where T : JsonFactory
@@ -58,9 +61,12 @@ namespace Htc.Vita.Core.Json
                 Logger.GetInstance(typeof(JsonFactory)).Info("Initializing " + typeof(LitJsonJsonFactory).FullName + "...");
                 instance = new LitJsonJsonFactory();
             }
-            if (!Instances.ContainsKey(key))
+            lock (InstancesLock)
             {
-                Instances.Add(key, instance);
+                if (!Instances.ContainsKey(key))
+                {
+                    Instances.Add(key, instance);
+                }
             }
             return instance;
         }

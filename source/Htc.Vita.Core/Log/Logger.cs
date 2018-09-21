@@ -7,6 +7,9 @@ namespace Htc.Vita.Core.Log
     public abstract class Logger
     {
         private static Dictionary<string, Logger> Instances { get; } = new Dictionary<string, Logger>();
+
+        private static readonly object InstancesLock = new object();
+
         private static Type _defaultType = typeof(ConsoleLogger);
 
         public string Name { get; } = string.Empty;
@@ -106,9 +109,12 @@ namespace Htc.Vita.Core.Log
                 Console.Error.WriteLine("Initializing " + typeof(ConsoleLogger).FullName + "[" + name + "]...");
                 instance = new ConsoleLogger(name);
             }
-            if (!Instances.ContainsKey(key))
+            lock (InstancesLock)
             {
-                Instances.Add(key, instance);
+                if (!Instances.ContainsKey(key))
+                {
+                    Instances.Add(key, instance);
+                }
             }
             return instance;
         }

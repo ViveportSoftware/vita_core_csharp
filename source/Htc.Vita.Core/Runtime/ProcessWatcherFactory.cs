@@ -7,6 +7,9 @@ namespace Htc.Vita.Core.Runtime
     public abstract class ProcessWatcherFactory
     {
         private static Dictionary<string, ProcessWatcherFactory> Instances { get; } = new Dictionary<string, ProcessWatcherFactory>();
+
+        private static readonly object InstancesLock = new object();
+
         private static Type _defaultType = typeof(WmiProcessWatcherFactory);
 
         public static void Register<T>() where T : ProcessWatcherFactory
@@ -74,9 +77,12 @@ namespace Htc.Vita.Core.Runtime
                 Logger.GetInstance(typeof(ProcessWatcherFactory)).Info("Initializing " + typeof(WmiProcessWatcherFactory).FullName + "...");
                 instance = new WmiProcessWatcherFactory();
             }
-            if (!Instances.ContainsKey(key))
+            lock (InstancesLock)
             {
-                Instances.Add(key, instance);
+                if (!Instances.ContainsKey(key))
+                {
+                    Instances.Add(key, instance);
+                }
             }
             return instance;
         }

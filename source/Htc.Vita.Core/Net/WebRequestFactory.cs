@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
-using System.Reflection;
-using System.Text;
 using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
@@ -11,6 +8,9 @@ namespace Htc.Vita.Core.Net
     public abstract class WebRequestFactory
     {
         private static Dictionary<string, WebRequestFactory> Instances { get; } = new Dictionary<string, WebRequestFactory>();
+
+        private static readonly object InstancesLock = new object();
+
         private static Type _defaultType = typeof(DefaultWebRequestFactory);
 
         public static void Register<T>() where T : WebRequestFactory
@@ -78,9 +78,12 @@ namespace Htc.Vita.Core.Net
                 Logger.GetInstance(typeof(WebRequestFactory)).Info("Initializing " + typeof(DefaultWebRequestFactory).FullName + "...");
                 instance = new DefaultWebRequestFactory();
             }
-            if (!Instances.ContainsKey(key))
+            lock (InstancesLock)
             {
-                Instances.Add(key, instance);
+                if (!Instances.ContainsKey(key))
+                {
+                    Instances.Add(key, instance);
+                }
             }
             return instance;
         }

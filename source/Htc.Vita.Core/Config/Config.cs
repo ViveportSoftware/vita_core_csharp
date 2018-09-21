@@ -7,6 +7,9 @@ namespace Htc.Vita.Core.Config
     public abstract class Config
     {
         private static Dictionary<string, Config> Instances { get; } = new Dictionary<string, Config>();
+
+        private static readonly object InstancesLock = new object();
+
         private static Type _defaultType = typeof(AppSettingsConfig);
 
         public static void Register<T>() where T : Config
@@ -74,9 +77,12 @@ namespace Htc.Vita.Core.Config
                 Logger.GetInstance(typeof(Config)).Info("Initializing " + typeof(AppSettingsConfig).FullName + "...");
                 instance = new AppSettingsConfig();
             }
-            if (!Instances.ContainsKey(key))
+            lock (InstancesLock)
             {
-                Instances.Add(key, instance);
+                if (!Instances.ContainsKey(key))
+                {
+                    Instances.Add(key, instance);
+                }
             }
             return instance;
         }

@@ -7,6 +7,9 @@ namespace Htc.Vita.Core.Preference
     public abstract partial class PreferenceFactory
     {
         private static Dictionary<string, PreferenceFactory> Instances { get; } = new Dictionary<string, PreferenceFactory>();
+
+        private static readonly object InstancesLock = new object();
+
         private static Type _defaultType = typeof(DefaultPreferenceFactory);
 
         public static void Register<T>() where T : PreferenceFactory
@@ -74,9 +77,12 @@ namespace Htc.Vita.Core.Preference
                 Logger.GetInstance(typeof(PreferenceFactory)).Info("Initializing " + typeof(DefaultPreferenceFactory).FullName + "...");
                 instance = new DefaultPreferenceFactory();
             }
-            if (!Instances.ContainsKey(key))
+            lock (InstancesLock)
             {
-                Instances.Add(key, instance);
+                if (!Instances.ContainsKey(key))
+                {
+                    Instances.Add(key, instance);
+                }
             }
             return instance;
         }

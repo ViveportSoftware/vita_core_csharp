@@ -9,6 +9,9 @@ namespace Htc.Vita.Core.Net
     public abstract class Dns
     {
         private static Dictionary<string, Dns> Instances { get; } = new Dictionary<string, Dns>();
+
+        private static readonly object InstancesLock = new object();
+
         private static Type _defaultType = typeof(DefaultDns);
 
         public string Resolver { get; } = string.Empty;
@@ -129,9 +132,12 @@ namespace Htc.Vita.Core.Net
                 Logger.GetInstance(typeof(Dns)).Info("Initializing " + typeof(DefaultDns).FullName + "[" + resolver + "]...");
                 instance = new DefaultDns(resolver);
             }
-            if (!Instances.ContainsKey(key))
+            lock (InstancesLock)
             {
-                Instances.Add(key, instance);
+                if (!Instances.ContainsKey(key))
+                {
+                    Instances.Add(key, instance);
+                }
             }
             return instance;
         }

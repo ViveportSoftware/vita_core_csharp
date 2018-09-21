@@ -8,6 +8,9 @@ namespace Htc.Vita.Core.Crypto
     public abstract partial class Md5
     {
         private static Dictionary<string, Md5> Instances { get; } = new Dictionary<string, Md5>();
+
+        private static readonly object InstancesLock = new object();
+
         private static Type _defaultType = typeof(DefaultMd5);
 
         private const int Base64Length = 24; // "pq/Xu7jVnluxLJ28xOws/w=="
@@ -62,9 +65,12 @@ namespace Htc.Vita.Core.Crypto
                 Logger.GetInstance(typeof(Md5)).Info("Initializing " + typeof(DefaultMd5).FullName + "...");
                 instance = new DefaultMd5();
             }
-            if (!Instances.ContainsKey(key))
+            lock (InstancesLock)
             {
-                Instances.Add(key, instance);
+                if (!Instances.ContainsKey(key))
+                {
+                    Instances.Add(key, instance);
+                }
             }
             return instance;
         }
