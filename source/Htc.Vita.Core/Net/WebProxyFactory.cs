@@ -8,6 +8,9 @@ namespace Htc.Vita.Core.Net
     public abstract class WebProxyFactory
     {
         private static Dictionary<string, WebProxyFactory> Instances { get; } = new Dictionary<string, WebProxyFactory>();
+
+        private static readonly object InstancesLock = new object();
+
         private static Type _defaultType = typeof(DefaultWebProxyFactory);
 
         public static void Register<T>() where T : WebProxyFactory
@@ -75,9 +78,12 @@ namespace Htc.Vita.Core.Net
                 Logger.GetInstance(typeof(WebProxyFactory)).Info("Initializing " + typeof(DefaultWebProxyFactory).FullName + "...");
                 instance = new DefaultWebProxyFactory();
             }
-            if (!Instances.ContainsKey(key))
+            lock (InstancesLock)
             {
-                Instances.Add(key, instance);
+                if (!Instances.ContainsKey(key))
+                {
+                    Instances.Add(key, instance);
+                }
             }
             return instance;
         }

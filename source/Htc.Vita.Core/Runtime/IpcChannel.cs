@@ -15,6 +15,9 @@ namespace Htc.Vita.Core.Runtime
             public static readonly string OptionVerifyProvider = "option_verify_provider";
 
             private static Dictionary<string, Client> Instances { get; } = new Dictionary<string, Client>();
+
+            private static readonly object InstancesLock = new object();
+
             private static Type _defaultType = typeof(NamedPipeIpcChannel.Client);
 
             public static void Register<T>() where T : Client
@@ -82,9 +85,12 @@ namespace Htc.Vita.Core.Runtime
                     Logger.GetInstance(typeof(Client)).Info("Initializing " + typeof(NamedPipeIpcChannel.Client).FullName + "...");
                     instance = new NamedPipeIpcChannel.Client();
                 }
-                if (!Instances.ContainsKey(key))
+                lock (InstancesLock)
                 {
-                    Instances.Add(key, instance);
+                    if (!Instances.ContainsKey(key))
+                    {
+                        Instances.Add(key, instance);
+                    }
                 }
                 return instance;
             }
@@ -151,6 +157,9 @@ namespace Htc.Vita.Core.Runtime
             public Action<IpcChannel, FilePropertiesInfo> OnMessageHandled { protected get; set; }
 
             private static Dictionary<string, Provider> Instances { get; } = new Dictionary<string, Provider>();
+
+            private static readonly object InstancesLock = new object();
+
             private static Type _defaultType = typeof(NamedPipeIpcChannel.Provider);
 
             public static void Register<T>() where T : Provider
@@ -218,9 +227,12 @@ namespace Htc.Vita.Core.Runtime
                     Logger.GetInstance(typeof(Provider)).Info("Initializing " + typeof(NamedPipeIpcChannel.Provider).FullName + "...");
                     instance = new NamedPipeIpcChannel.Provider();
                 }
-                if (!Instances.ContainsKey(key))
+                lock (InstancesLock)
                 {
-                    Instances.Add(key, instance);
+                    if (!Instances.ContainsKey(key))
+                    {
+                        Instances.Add(key, instance);
+                    }
                 }
                 return instance;
             }

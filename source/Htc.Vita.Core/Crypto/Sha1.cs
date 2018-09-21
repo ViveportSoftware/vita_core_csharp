@@ -8,6 +8,9 @@ namespace Htc.Vita.Core.Crypto
     public abstract partial class Sha1
     {
         private static Dictionary<string, Sha1> Instances { get; } = new Dictionary<string, Sha1>();
+
+        private static readonly object InstancesLock = new object();
+
         private static Type _defaultType = typeof(DefaultSha1);
 
         private const int Base64Length = 28; // "2jmj7l5rSw0yVb/vlWAYkK/YBwk="
@@ -62,9 +65,12 @@ namespace Htc.Vita.Core.Crypto
                 Logger.GetInstance(typeof(Sha1)).Info("Initializing " + typeof(DefaultSha1).FullName + "...");
                 instance = new DefaultSha1();
             }
-            if (!Instances.ContainsKey(key))
+            lock (InstancesLock)
             {
-                Instances.Add(key, instance);
+                if (!Instances.ContainsKey(key))
+                {
+                    Instances.Add(key, instance);
+                }
             }
             return instance;
         }

@@ -10,6 +10,9 @@ namespace Htc.Vita.Core.Shell
         public static readonly string OptionAcceptWhitelistOnly = "option_accept_whitelist_only";
 
         private static Dictionary<string, UriSchemeManager> Instances { get; } = new Dictionary<string, UriSchemeManager>();
+
+        private static readonly object InstancesLock = new object();
+
         private static Type _defaultType = typeof(RegistryUriSchemeManager);
 
         public static void Register<T>() where T : UriSchemeManager
@@ -77,9 +80,12 @@ namespace Htc.Vita.Core.Shell
                 Logger.GetInstance(typeof(UriSchemeManager)).Info("Initializing " + typeof(RegistryUriSchemeManager).FullName + "...");
                 instance = new RegistryUriSchemeManager();
             }
-            if (!Instances.ContainsKey(key))
+            lock (InstancesLock)
             {
-                Instances.Add(key, instance);
+                if (!Instances.ContainsKey(key))
+                {
+                    Instances.Add(key, instance);
+                }
             }
             return instance;
         }

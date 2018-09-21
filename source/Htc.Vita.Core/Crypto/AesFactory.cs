@@ -7,6 +7,9 @@ namespace Htc.Vita.Core.Crypto
     public abstract class AesFactory
     {
         private static Dictionary<string, AesFactory> Instances { get; } = new Dictionary<string, AesFactory>();
+
+        private static readonly object InstancesLock = new object();
+
         private static Type _defaultType = typeof(DefaultAesFactory);
 
         public static void Register<T>() where T : AesFactory
@@ -58,9 +61,12 @@ namespace Htc.Vita.Core.Crypto
                 Logger.GetInstance(typeof(AesFactory)).Info("Initializing " + typeof(DefaultAesFactory).FullName + "...");
                 instance = new DefaultAesFactory();
             }
-            if (!Instances.ContainsKey(key))
+            lock (InstancesLock)
             {
-                Instances.Add(key, instance);
+                if (!Instances.ContainsKey(key))
+                {
+                    Instances.Add(key, instance);
+                }
             }
             return instance;
         }
