@@ -191,7 +191,7 @@ namespace Htc.Vita.Core.Runtime
                 {
                     return Interop.Windows.StartType.AutoStart;
                 }
-                Logger.GetInstance(typeof(Windows)).Error("Can not convert service start type " + startType + " in Windows. Use Interop.Windows.Advapi32.StartType.AutoStart as fallback type");
+                Logger.GetInstance(typeof(Windows)).Error("Can not convert service start type " + startType + " in Windows. Use Interop.Windows.StartType.AutoStart as fallback type");
                 return Interop.Windows.StartType.AutoStart;
             }
 

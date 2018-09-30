@@ -29,7 +29,7 @@ namespace Htc.Vita.Core.Tests
                     Assert.True(vendorId.Length == 4);
                 }
                 Assert.False(string.IsNullOrWhiteSpace(deviceInfo.Description));
-                Assert.False(string.IsNullOrWhiteSpace(deviceInfo.Manufecturer));
+                Assert.False(string.IsNullOrWhiteSpace(deviceInfo.Manufacturer));
                 var optional = deviceInfo.Optional;
                 if (optional.ContainsKey("type"))
                 {

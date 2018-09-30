@@ -45,7 +45,7 @@ namespace Htc.Vita.Core.Interop
             /* WTD_LIFETIME_SIGNING_FLAG               */ LifetimeSigningFlag = 2048,
             /* WTD_CACHE_ONLY_URL_RETRIEVAL            */ CacheOnlyUrlRetrieval = 4096,
             /* WTD_DISABLE_MD2_MD4                     */ DisableMd2Md4 = 8192,
-            /* WTD_MOTW                                */ Motw = 16384
+            /* WTD_MOTW                                */ MarkOfTheWeb = 16384
         }
 
         /**

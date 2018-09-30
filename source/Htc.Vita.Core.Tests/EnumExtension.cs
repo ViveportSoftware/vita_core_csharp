@@ -56,7 +56,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Default_3_GetDescription_WithoutDescriptionAtrribute()
+        public static void Default_3_GetDescription_WithoutDescriptionAttribute()
         {
             foreach (AltTestType testType in Enum.GetValues(typeof(AltTestType)))
             {

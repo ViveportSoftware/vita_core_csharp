@@ -11,7 +11,7 @@ namespace Htc.Vita.Core.Diagnostics
 {
     public partial class FilePropertiesInfo
     {
-        private static readonly HashSet<string> CachedErrorPathes = new HashSet<string>();
+        private static readonly HashSet<string> CachedErrorPaths = new HashSet<string>();
 
         private const int ErrorPathCacheTimeInMilli = 1000 * 60 * 60;
 
@@ -49,10 +49,10 @@ namespace Htc.Vita.Core.Diagnostics
                 {
                     Logger.GetInstance(typeof(FilePropertiesInfo)).Warn("Can not find certificate from file " + fileInfo.FullName);
                 }
-                else if (!CachedErrorPathes.Contains(key))
+                else if (!CachedErrorPaths.Contains(key))
                 {
                     Logger.GetInstance(typeof(FilePropertiesInfo)).Warn("Can not find certificate from file " + fileInfo.FullName);
-                    CachedErrorPathes.Add(key);
+                    CachedErrorPaths.Add(key);
                 }
             }
             if (_certificate != null)

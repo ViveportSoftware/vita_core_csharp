@@ -32,7 +32,7 @@ namespace Htc.Vita.Core.Diagnostics
                         pFile = winTrustFileInfoPtr
                 };
 
-                var wintrustData = new Windows.WinTrustData
+                var winTrustData = new Windows.WinTrustData
                 {
                         cbStruct = (uint)Marshal.SizeOf(typeof(Windows.WinTrustData)),
                         pPolicyCallbackData = IntPtr.Zero,
@@ -49,7 +49,7 @@ namespace Htc.Vita.Core.Diagnostics
                         pSignatureSettings = IntPtr.Zero
                 };
                 var winTrustDataPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Windows.WinTrustData)));
-                Marshal.StructureToPtr(wintrustData, winTrustDataPtr, false);
+                Marshal.StructureToPtr(winTrustData, winTrustDataPtr, false);
 
                 var result = Windows.WinVerifyTrust(
                         IntPtr.Zero,

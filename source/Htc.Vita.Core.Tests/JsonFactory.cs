@@ -1019,7 +1019,7 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(jsonFactory);
             var jsonObject = jsonFactory.GetJsonObject("{}");
             Assert.NotNull(jsonObject);
-            jsonObject = jsonObject.Put("key", new LitJsonJsonFactory.LitJsonJsonArray(JsonMapper.ToObject("{}")));
+            jsonObject = jsonObject.Put("key", new LitJsonJsonFactory.LitJsonJsonObject(JsonMapper.ToObject("{}")));
             Assert.NotNull(jsonObject);
         }
 
