@@ -174,9 +174,9 @@ namespace Htc.Vita.Core.Net
             {
                 result = OnGetHostEntry(ipAddress);
             }
-            catch (SocketException e)
+            catch (SocketException)
             {
-                Logger.GetInstance(typeof(Dns)).Error(e.Message);
+                // ignore
             }
             catch (Exception e)
             {
