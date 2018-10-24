@@ -56,10 +56,14 @@
     <Compile Include="Crypto\DefaultMd5.cs" />
     <Compile Include="Crypto\DefaultSha1.Async.cs" />
     <Compile Include="Crypto\DefaultSha1.cs" />
+    <Compile Include="Crypto\DefaultSha256.Async.cs" />
+    <Compile Include="Crypto\DefaultSha256.cs" />
     <Compile Include="Crypto\Md5.Async.cs" />
     <Compile Include="Crypto\Md5.cs" />
     <Compile Include="Crypto\Sha1.Async.cs" />
     <Compile Include="Crypto\Sha1.cs" />
+    <Compile Include="Crypto\Sha256.Async.cs" />
+    <Compile Include="Crypto\Sha256.cs" />
     <Compile Include="Diagnostics\FilePropertiesInfo.Authenticode.cs" />
     <Compile Include="Diagnostics\FilePropertiesInfo.cs" />
     <Compile Include="Diagnostics\FilePropertiesInfo.DistinguishedName.cs" />

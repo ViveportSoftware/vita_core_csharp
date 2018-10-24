@@ -5,65 +5,65 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Crypto
 {
-    public abstract partial class Sha1
+    public abstract partial class Sha256
     {
-        private static Dictionary<string, Sha1> Instances { get; } = new Dictionary<string, Sha1>();
+        private static Dictionary<string, Sha256> Instances { get; } = new Dictionary<string, Sha256>();
 
         private static readonly object InstancesLock = new object();
 
-        private static Type _defaultType = typeof(DefaultSha1);
+        private static Type _defaultType = typeof(DefaultSha256);
 
-        private const int Base64Length = 28; // "2jmj7l5rSw0yVb/vlWAYkK/YBwk="
-        private const int HexLength = 40;    // "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        private const int Base64Length = 44; // "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        private const int HexLength = 64;    // "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 
-        public static void Register<T>() where T : Sha1
+        public static void Register<T>() where T : Sha256
         {
             _defaultType = typeof(T);
-            Logger.GetInstance(typeof(Sha1)).Info("Registered default sha1 type to " + _defaultType);
+            Logger.GetInstance(typeof(Sha256)).Info("Registered default sha256 type to " + _defaultType);
         }
 
-        public static Sha1 GetInstance()
+        public static Sha256 GetInstance()
         {
-            Sha1 instance;
+            Sha256 instance;
             try
             {
                 instance = DoGetInstance(_defaultType);
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Sha1)).Fatal("Instance initialization error: " + e);
-                Logger.GetInstance(typeof(Sha1)).Info("Initializing " + typeof(DefaultSha1).FullName + "...");
-                instance = new DefaultSha1();
+                Logger.GetInstance(typeof(Sha256)).Fatal("Instance initialization error: " + e);
+                Logger.GetInstance(typeof(Sha256)).Info("Initializing " + typeof(DefaultSha256).FullName + "...");
+                instance = new DefaultSha256();
             }
             return instance;
         }
 
-        private static Sha1 DoGetInstance(Type type)
+        private static Sha256 DoGetInstance(Type type)
         {
             if (type == null)
             {
-                throw new ArgumentException("Invalid arguments to get sha1 instance");
+                throw new ArgumentException("Invalid arguments to get sha256 instance");
             }
 
             var key = type.FullName + "_";
-            Sha1 instance = null;
+            Sha256 instance = null;
             if (Instances.ContainsKey(key))
             {
                 instance = Instances[key];
             }
             if (instance == null)
             {
-                Logger.GetInstance(typeof(Sha1)).Info("Initializing " + key + "...");
+                Logger.GetInstance(typeof(Sha256)).Info("Initializing " + key + "...");
                 var constructor = type.GetConstructor(new Type[] { });
                 if (constructor != null)
                 {
-                    instance = (Sha1)constructor.Invoke(new object[] { });
+                    instance = (Sha256)constructor.Invoke(new object[] { });
                 }
             }
             if (instance == null)
             {
-                Logger.GetInstance(typeof(Sha1)).Info("Initializing " + typeof(DefaultSha1).FullName + "...");
-                instance = new DefaultSha1();
+                Logger.GetInstance(typeof(Sha256)).Info("Initializing " + typeof(DefaultSha256).FullName + "...");
+                instance = new DefaultSha256();
             }
             lock (InstancesLock)
             {
@@ -89,7 +89,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Sha1)).Fatal("Generating checksum in base64 error: " + e);
+                Logger.GetInstance(typeof(Sha256)).Fatal("Generating checksum in base64 error: " + e);
             }
             return result;
         }
@@ -108,7 +108,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Sha1)).Fatal("Generating checksum in base64 error: " + e);
+                Logger.GetInstance(typeof(Sha256)).Fatal("Generating checksum in base64 error: " + e);
             }
             return result;
         }
@@ -127,7 +127,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Sha1)).Fatal("Generating checksum in hex error: " + e);
+                Logger.GetInstance(typeof(Sha256)).Fatal("Generating checksum in hex error: " + e);
             }
             return result;
         }
@@ -146,7 +146,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Sha1)).Fatal("Generating checksum in hex error: " + e);
+                Logger.GetInstance(typeof(Sha256)).Fatal("Generating checksum in hex error: " + e);
             }
             return result;
         }
@@ -197,7 +197,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Sha1)).Fatal("Validating checksum in base64 error: " + e);
+                Logger.GetInstance(typeof(Sha256)).Fatal("Validating checksum in base64 error: " + e);
             }
             return result;
         }
@@ -216,7 +216,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Sha1)).Fatal("Validating checksum in base64 error: " + e);
+                Logger.GetInstance(typeof(Sha256)).Fatal("Validating checksum in base64 error: " + e);
             }
             return result;
         }
@@ -235,7 +235,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Sha1)).Fatal("Validating checksum in hex error: " + e);
+                Logger.GetInstance(typeof(Sha256)).Fatal("Validating checksum in hex error: " + e);
             }
             return result;
         }
@@ -254,7 +254,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Sha1)).Fatal("Validating checksum in hex error: " + e);
+                Logger.GetInstance(typeof(Sha256)).Fatal("Validating checksum in hex error: " + e);
             }
             return result;
         }
