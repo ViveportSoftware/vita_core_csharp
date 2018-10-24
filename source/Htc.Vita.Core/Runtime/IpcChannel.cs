@@ -23,7 +23,7 @@ namespace Htc.Vita.Core.Runtime
             public static void Register<T>() where T : Client
             {
                 _defaultType = typeof(T);
-                Logger.GetInstance(typeof(Client)).Info("Registered default ipc channel client type to " + _defaultType);
+                Logger.GetInstance(typeof(Client)).Info("Registered default " + typeof(Client).Name + " type to " + _defaultType);
             }
 
             public static Client GetInstance()
@@ -62,7 +62,7 @@ namespace Htc.Vita.Core.Runtime
             {
                 if (type == null)
                 {
-                    throw new ArgumentException("Invalid arguments to get ipc channel client instance");
+                    throw new ArgumentException("Invalid arguments to get " + typeof(Client).Name + " instance");
                 }
 
                 var key = type.FullName + "_";
@@ -165,7 +165,7 @@ namespace Htc.Vita.Core.Runtime
             public static void Register<T>() where T : Provider
             {
                 _defaultType = typeof(T);
-                Logger.GetInstance(typeof(Provider)).Info("Registered default ipc channel provider type to " + _defaultType);
+                Logger.GetInstance(typeof(Provider)).Info("Registered default " + typeof(Provider).Name + " type to " + _defaultType);
             }
 
             public static Provider GetInstance()
@@ -204,7 +204,7 @@ namespace Htc.Vita.Core.Runtime
             {
                 if (type == null)
                 {
-                    throw new ArgumentException("Invalid arguments to get ipc channel provider instance");
+                    throw new ArgumentException("Invalid arguments to get " + typeof(Provider).Name + " instance");
                 }
 
                 var key = type.FullName + "_";

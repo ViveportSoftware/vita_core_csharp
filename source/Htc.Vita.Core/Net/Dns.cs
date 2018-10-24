@@ -27,7 +27,7 @@ namespace Htc.Vita.Core.Net
         public static void Register<T>() where T : Dns
         {
             _defaultType = typeof(T);
-            Logger.GetInstance(typeof(Dns)).Info("Registered default dns type to " + _defaultType);
+            Logger.GetInstance(typeof(Dns)).Info("Registered default " + typeof(Dns).Name + " type to " + _defaultType);
         }
 
         public bool FlushCache()
@@ -109,7 +109,7 @@ namespace Htc.Vita.Core.Net
         {
             if (type == null || resolver == null)
             {
-                throw new ArgumentException("Invalid arguments to get dns instance");
+                throw new ArgumentException("Invalid arguments to get " + typeof(Dns).Name + " instance");
             }
 
             var key = type.FullName + "_" + resolver;

@@ -19,7 +19,7 @@ namespace Htc.Vita.Core.Crypto
         public static void Register<T>() where T : Sha1
         {
             _defaultType = typeof(T);
-            Logger.GetInstance(typeof(Sha1)).Info("Registered default sha1 type to " + _defaultType);
+            Logger.GetInstance(typeof(Sha1)).Info("Registered default " + typeof(Sha1).Name + " type to " + _defaultType);
         }
 
         public static Sha1 GetInstance()
@@ -42,7 +42,7 @@ namespace Htc.Vita.Core.Crypto
         {
             if (type == null)
             {
-                throw new ArgumentException("Invalid arguments to get sha1 instance");
+                throw new ArgumentException("Invalid arguments to get " + typeof(Sha1).Name + " instance");
             }
 
             var key = type.FullName + "_";

@@ -15,7 +15,7 @@ namespace Htc.Vita.Core.Config
         public static void Register<T>() where T : Config
         {
             _defaultType = typeof(T);
-            Logger.GetInstance(typeof(Config)).Info("Registered default config type to " + _defaultType);
+            Logger.GetInstance(typeof(Config)).Info("Registered default " + typeof(Config).Name + " type to " + _defaultType);
         }
 
         public static Config GetInstance()
@@ -54,7 +54,7 @@ namespace Htc.Vita.Core.Config
         {
             if (type == null)
             {
-                throw new ArgumentException("Invalid arguments to get config instance");
+                throw new ArgumentException("Invalid arguments to get " + typeof(Config).Name + " instance");
             }
 
             var key = type.FullName + "_";

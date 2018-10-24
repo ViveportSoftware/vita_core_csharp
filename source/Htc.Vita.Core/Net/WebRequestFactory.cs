@@ -16,7 +16,7 @@ namespace Htc.Vita.Core.Net
         public static void Register<T>() where T : WebRequestFactory
         {
             _defaultType = typeof(T);
-            Logger.GetInstance(typeof(WebRequestFactory)).Info("Registered default web request factory type to " + _defaultType);
+            Logger.GetInstance(typeof(WebRequestFactory)).Info("Registered default " + typeof(WebRequestFactory).Name + " type to " + _defaultType);
         }
 
         public static WebRequestFactory GetInstance()
@@ -55,7 +55,7 @@ namespace Htc.Vita.Core.Net
         {
             if (type == null)
             {
-                throw new ArgumentException("Invalid arguments to get web request factory instance");
+                throw new ArgumentException("Invalid arguments to get " + typeof(WebRequestFactory).Name + " instance");
             }
 
             var key = type.FullName + "_";

@@ -15,7 +15,7 @@ namespace Htc.Vita.Core.Preference
         public static void Register<T>() where T : PreferenceFactory
         {
             _defaultType = typeof(T);
-            Logger.GetInstance(typeof(PreferenceFactory)).Info("Registered default preference factory type to " + _defaultType);
+            Logger.GetInstance(typeof(PreferenceFactory)).Info("Registered default " + typeof(PreferenceFactory).Name + " type to " + _defaultType);
         }
 
         public static PreferenceFactory GetInstance()
@@ -54,7 +54,7 @@ namespace Htc.Vita.Core.Preference
         {
             if (type == null)
             {
-                throw new ArgumentException("Invalid arguments to get preference factory instance");
+                throw new ArgumentException("Invalid arguments to get " + typeof(PreferenceFactory).Name + " instance");
             }
 
             var key = type.FullName + "_";

@@ -15,7 +15,7 @@ namespace Htc.Vita.Core.Runtime
         public static void Register<T>() where T : ProcessWatcherFactory
         {
             _defaultType = typeof(T);
-            Logger.GetInstance(typeof(ProcessWatcherFactory)).Info("Registered default process watcher factory type to " + _defaultType);
+            Logger.GetInstance(typeof(ProcessWatcherFactory)).Info("Registered default " + typeof(ProcessWatcherFactory).Name + " type to " + _defaultType);
         }
 
         public static ProcessWatcherFactory GetInstance()
@@ -54,7 +54,7 @@ namespace Htc.Vita.Core.Runtime
         {
             if (type == null)
             {
-                throw new ArgumentException("Invalid arguments to get process watcher factory instance");
+                throw new ArgumentException("Invalid arguments to get " + typeof(ProcessWatcherFactory).Name + " instance");
             }
 
             var key = type.FullName + "_";

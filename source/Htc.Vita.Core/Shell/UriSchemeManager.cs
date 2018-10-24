@@ -18,7 +18,7 @@ namespace Htc.Vita.Core.Shell
         public static void Register<T>() where T : UriSchemeManager
         {
             _defaultType = typeof(T);
-            Logger.GetInstance(typeof(UriSchemeManager)).Info("Registered default uri scheme manager type to " + _defaultType);
+            Logger.GetInstance(typeof(UriSchemeManager)).Info("Registered default " + typeof(UriSchemeManager).Name + " type to " + _defaultType);
         }
 
         public static UriSchemeManager GetInstance()
@@ -57,7 +57,7 @@ namespace Htc.Vita.Core.Shell
         {
             if (type == null)
             {
-                throw new ArgumentException("Invalid arguments to get uri scheme manager instance");
+                throw new ArgumentException("Invalid arguments to get " + typeof(UriSchemeManager).Name + " instance");
             }
 
             var key = type.FullName + "_";

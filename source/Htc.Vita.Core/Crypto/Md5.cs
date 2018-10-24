@@ -19,7 +19,7 @@ namespace Htc.Vita.Core.Crypto
         public static void Register<T>() where T : Md5
         {
             _defaultType = typeof(T);
-            Logger.GetInstance(typeof(Md5)).Info("Registered default md5 type to " + _defaultType);
+            Logger.GetInstance(typeof(Md5)).Info("Registered default " + typeof(Md5).Name + " type to " + _defaultType);
         }
 
         public static Md5 GetInstance()
@@ -42,7 +42,7 @@ namespace Htc.Vita.Core.Crypto
         {
             if (type == null)
             {
-                throw new ArgumentException("Invalid arguments to get md5 instance");
+                throw new ArgumentException("Invalid arguments to get " + typeof(Md5).Name + " instance");
             }
 
             var key = type.FullName + "_";

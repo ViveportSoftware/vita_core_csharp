@@ -15,7 +15,7 @@ namespace Htc.Vita.Core.Json
         public static void Register<T>() where T : JsonFactory
         {
             _defaultType = typeof(T);
-            Logger.GetInstance(typeof(JsonFactory)).Info("Registered default json factory type to " + _defaultType);
+            Logger.GetInstance(typeof(JsonFactory)).Info("Registered default " + typeof(JsonFactory).Name + " type to " + _defaultType);
         }
 
         public static JsonFactory GetInstance()
@@ -38,7 +38,7 @@ namespace Htc.Vita.Core.Json
         {
             if (type == null)
             {
-                throw new ArgumentException("Invalid arguments to get json factory instance");
+                throw new ArgumentException("Invalid arguments to get " + typeof(JsonFactory).Name + " instance");
             }
 
             var key = type.FullName + "_";

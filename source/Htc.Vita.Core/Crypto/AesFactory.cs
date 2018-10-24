@@ -15,7 +15,7 @@ namespace Htc.Vita.Core.Crypto
         public static void Register<T>() where T : AesFactory
         {
             _defaultType = typeof(T);
-            Logger.GetInstance(typeof(AesFactory)).Info("Registered default aes factory type to " + _defaultType);
+            Logger.GetInstance(typeof(AesFactory)).Info("Registered default " + typeof(AesFactory).Name + " type to " + _defaultType);
         }
 
         public static AesFactory GetInstance()
@@ -38,7 +38,7 @@ namespace Htc.Vita.Core.Crypto
         {
             if (type == null)
             {
-                throw new ArgumentException("Invalid arguments to get aes instance");
+                throw new ArgumentException("Invalid arguments to get " + typeof(AesFactory).Name + " instance");
             }
 
             var key = type.FullName + "_";
