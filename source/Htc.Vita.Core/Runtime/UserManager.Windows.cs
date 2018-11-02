@@ -163,6 +163,10 @@ namespace Htc.Vita.Core.Runtime
                         }
                         Interop.Windows.WTSFreeMemory(sessionInfoPtr);
                     }
+                    else
+                    {
+                        Logger.GetInstance(typeof(UserManager)).Error("Can not enumerate WTS session, error code: " + Marshal.GetLastWin32Error());
+                    }
                 }
                 catch (Exception e)
                 {
