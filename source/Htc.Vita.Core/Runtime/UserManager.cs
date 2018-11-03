@@ -8,7 +8,19 @@ namespace Htc.Vita.Core.Runtime
     {
         public static string GetFirstActiveUser()
         {
-            return Windows.GetFirstActiveUser(null) ?? GetCurrentUser();
+            var result = Windows.GetFirstActiveUser(null);
+            if (string.IsNullOrWhiteSpace(result))
+            {
+                result = GetCurrentUser();
+            }
+
+            if (!"NT AUTHORITY\\SYSTEM".Equals(result))
+            {
+                return result;
+            }
+
+            Logger.GetInstance(typeof(UserManager)).Error("Only system account found, no user account");
+            return null;
         }
 
         private static string GetCurrentUser()

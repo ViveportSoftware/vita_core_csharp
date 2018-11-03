@@ -112,6 +112,11 @@ namespace Htc.Vita.Core.Runtime
 
                     if (success)
                     {
+                        if (sessionCount <= 0U)
+                        {
+                            Logger.GetInstance(typeof(UserManager)).Error("Can not find available WTS session");
+                        }
+
                         for (var sessionIndex = 0U; sessionIndex < sessionCount; sessionIndex++)
                         {
                             var sessionInfo = (Interop.Windows.WindowsTerminalServiceSessionInfo)Marshal.PtrToStructure(
