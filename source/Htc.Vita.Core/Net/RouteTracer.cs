@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
+using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
 {
@@ -35,27 +37,34 @@ namespace Htc.Vita.Core.Net
             var pingOptions = new PingOptions(1, true);
             var pingReplyTime = new Stopwatch();
 
-            while (true)
+            try
             {
-                pingReplyTime.Start();
-                var reply = ping.Send(hostNameOrIpAddress, currentTimeoutInMilli, new byte[] { 0 }, pingOptions);
-                pingReplyTime.Stop();
-
-                result.Add(new Hop
+                while (true)
                 {
-                        Node = pingOptions.Ttl,
-                        IP = reply?.Address?.ToString(),
-                        Hostname = Dns.GetInstance().GetHostEntry(reply?.Address)?.HostName,
-                        Time = pingReplyTime.ElapsedMilliseconds,
-                        Status = reply?.Status.ToString()
-                });
+                    pingReplyTime.Start();
+                    var reply = ping.Send(hostNameOrIpAddress, currentTimeoutInMilli, new byte[] { 0 }, pingOptions);
+                    pingReplyTime.Stop();
 
-                pingOptions.Ttl++;
-                pingReplyTime.Reset();
-                if (pingOptions.Ttl > currentMaxHop || IPStatus.Success == reply?.Status)
-                {
-                    break;
+                    result.Add(new Hop
+                    {
+                            Node = pingOptions.Ttl,
+                            IP = reply?.Address?.ToString(),
+                            Hostname = Dns.GetInstance().GetHostEntry(reply?.Address)?.HostName,
+                            Time = pingReplyTime.ElapsedMilliseconds,
+                            Status = reply?.Status.ToString()
+                    });
+
+                    pingOptions.Ttl++;
+                    pingReplyTime.Reset();
+                    if (pingOptions.Ttl > currentMaxHop || IPStatus.Success == reply?.Status)
+                    {
+                        break;
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(RouteTracer)).Error("Can not trace route: " + e.Message);
             }
 
             return result;
