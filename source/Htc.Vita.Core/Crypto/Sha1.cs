@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Crypto
@@ -77,6 +78,11 @@ namespace Htc.Vita.Core.Crypto
 
         public string GenerateInBase64(FileInfo file)
         {
+            return GenerateInBase64(file, new CancellationToken());
+        }
+
+        public string GenerateInBase64(FileInfo file, CancellationToken cancellationToken)
+        {
             if (file == null || !file.Exists)
             {
                 return string.Empty;
@@ -85,7 +91,7 @@ namespace Htc.Vita.Core.Crypto
             var result = string.Empty;
             try
             {
-                result = OnGenerateInBase64(file);
+                result = OnGenerateInBase64(file, cancellationToken);
             }
             catch (Exception e)
             {
@@ -115,6 +121,11 @@ namespace Htc.Vita.Core.Crypto
 
         public string GenerateInHex(FileInfo file)
         {
+            return GenerateInHex(file, new CancellationToken());
+        }
+
+        public string GenerateInHex(FileInfo file, CancellationToken cancellationToken)
+        {
             if (file == null || !file.Exists)
             {
                 return string.Empty;
@@ -123,7 +134,7 @@ namespace Htc.Vita.Core.Crypto
             var result = string.Empty;
             try
             {
-                result = OnGenerateInHex(file);
+                result = OnGenerateInHex(file, cancellationToken);
             }
             catch (Exception e)
             {
@@ -153,6 +164,11 @@ namespace Htc.Vita.Core.Crypto
 
         public bool ValidateInAll(FileInfo file, string checksum)
         {
+            return ValidateInAll(file, checksum, new CancellationToken());
+        }
+
+        public bool ValidateInAll(FileInfo file, string checksum, CancellationToken cancellationToken)
+        {
             if (string.IsNullOrWhiteSpace(checksum))
             {
                 return false;
@@ -160,11 +176,11 @@ namespace Htc.Vita.Core.Crypto
 
             if (checksum.Length == Base64Length)
             {
-                return ValidateInBase64(file, checksum);
+                return ValidateInBase64(file, checksum, cancellationToken);
             }
             if (checksum.Length == HexLength)
             {
-                return ValidateInHex(file, checksum);
+                return ValidateInHex(file, checksum, cancellationToken);
             }
             return false;
         }
@@ -185,6 +201,11 @@ namespace Htc.Vita.Core.Crypto
 
         public bool ValidateInBase64(FileInfo file, string checksum)
         {
+            return ValidateInBase64(file, checksum, new CancellationToken());
+        }
+
+        public bool ValidateInBase64(FileInfo file, string checksum, CancellationToken cancellationToken)
+        {
             if (file == null || !file.Exists || string.IsNullOrWhiteSpace(checksum))
             {
                 return false;
@@ -193,7 +214,7 @@ namespace Htc.Vita.Core.Crypto
             var result = false;
             try
             {
-                result = checksum.Equals(OnGenerateInBase64(file));
+                result = checksum.Equals(OnGenerateInBase64(file, cancellationToken));
             }
             catch (Exception e)
             {
@@ -223,6 +244,11 @@ namespace Htc.Vita.Core.Crypto
 
         public bool ValidateInHex(FileInfo file, string checksum)
         {
+            return ValidateInHex(file, checksum, new CancellationToken());
+        }
+
+        public bool ValidateInHex(FileInfo file, string checksum, CancellationToken cancellationToken)
+        {
             if (file == null || !file.Exists || string.IsNullOrWhiteSpace(checksum))
             {
                 return false;
@@ -231,7 +257,7 @@ namespace Htc.Vita.Core.Crypto
             var result = false;
             try
             {
-                result = checksum.ToLowerInvariant().Equals(OnGenerateInHex(file));
+                result = checksum.ToLowerInvariant().Equals(OnGenerateInHex(file, cancellationToken));
             }
             catch (Exception e)
             {
@@ -259,9 +285,9 @@ namespace Htc.Vita.Core.Crypto
             return result;
         }
 
-        protected abstract string OnGenerateInBase64(FileInfo file);
+        protected abstract string OnGenerateInBase64(FileInfo file, CancellationToken cancellationToken);
         protected abstract string OnGenerateInBase64(string content);
-        protected abstract string OnGenerateInHex(FileInfo file);
+        protected abstract string OnGenerateInHex(FileInfo file, CancellationToken cancellationToken);
         protected abstract string OnGenerateInHex(string content);
     }
 }
