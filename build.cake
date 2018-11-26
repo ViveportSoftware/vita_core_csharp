@@ -21,7 +21,7 @@ var commitId = "SNAPSHOT";
 // Define product name and version
 var product = "Htc.Vita.Core";
 var companyName = "HTC";
-var version = "0.9.13";
+var version = "0.9.14";
 var semanticVersion = string.Format("{0}.{1}", version, revision);
 var ciVersion = string.Format("{0}.{1}", version, "0");
 var nugetTags = new [] {"htc", "vita", "core"};
