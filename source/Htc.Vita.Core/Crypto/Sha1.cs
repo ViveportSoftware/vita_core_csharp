@@ -93,6 +93,10 @@ namespace Htc.Vita.Core.Crypto
             {
                 result = OnGenerateInBase64(file, cancellationToken);
             }
+            catch (OperationCanceledException)
+            {
+                Logger.GetInstance(typeof(Sha1)).Warn("Generating checksum in base64 cancelled");
+            }
             catch (Exception e)
             {
                 Logger.GetInstance(typeof(Sha1)).Fatal("Generating checksum in base64 error: " + e);
@@ -135,6 +139,10 @@ namespace Htc.Vita.Core.Crypto
             try
             {
                 result = OnGenerateInHex(file, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                Logger.GetInstance(typeof(Sha1)).Warn("Generating checksum in hex cancelled");
             }
             catch (Exception e)
             {
@@ -216,6 +224,10 @@ namespace Htc.Vita.Core.Crypto
             {
                 result = checksum.Equals(OnGenerateInBase64(file, cancellationToken));
             }
+            catch (OperationCanceledException)
+            {
+                Logger.GetInstance(typeof(Sha1)).Warn("Validating checksum in base64 cancelled");
+            }
             catch (Exception e)
             {
                 Logger.GetInstance(typeof(Sha1)).Fatal("Validating checksum in base64 error: " + e);
@@ -258,6 +270,10 @@ namespace Htc.Vita.Core.Crypto
             try
             {
                 result = checksum.ToLowerInvariant().Equals(OnGenerateInHex(file, cancellationToken));
+            }
+            catch (OperationCanceledException)
+            {
+                Logger.GetInstance(typeof(Sha1)).Warn("Validating checksum in hex cancelled");
             }
             catch (Exception e)
             {

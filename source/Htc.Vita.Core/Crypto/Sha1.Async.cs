@@ -25,6 +25,10 @@ namespace Htc.Vita.Core.Crypto
             {
                 result = await OnGenerateInBase64Async(file, cancellationToken).ConfigureAwait(false);
             }
+            catch (OperationCanceledException)
+            {
+                Logger.GetInstance(typeof(Sha1)).Warn("Generating checksum in base64 in async cancelled");
+            }
             catch (Exception e)
             {
                 Logger.GetInstance(typeof(Sha1)).Fatal("Generating checksum in base64 in async error: " + e);
@@ -48,6 +52,10 @@ namespace Htc.Vita.Core.Crypto
             try
             {
                 result = await OnGenerateInHexAsync(file, cancellationToken).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                Logger.GetInstance(typeof(Sha1)).Warn("Generating checksum in hex in async cancelled");
             }
             catch (Exception e)
             {
@@ -96,6 +104,10 @@ namespace Htc.Vita.Core.Crypto
             {
                 result = checksum.Equals(await OnGenerateInBase64Async(file, cancellationToken).ConfigureAwait(false));
             }
+            catch (OperationCanceledException)
+            {
+                Logger.GetInstance(typeof(Sha1)).Warn("Validating checksum in base64 in async cancelled");
+            }
             catch (Exception e)
             {
                 Logger.GetInstance(typeof(Sha1)).Fatal("Validating checksum in base64 in async error: " + e);
@@ -119,6 +131,10 @@ namespace Htc.Vita.Core.Crypto
             try
             {
                 result = checksum.ToLowerInvariant().Equals(await OnGenerateInHexAsync(file, cancellationToken).ConfigureAwait(false));
+            }
+            catch (OperationCanceledException)
+            {
+                Logger.GetInstance(typeof(Sha1)).Warn("Validating checksum in hex in async cancelled");
             }
             catch (Exception e)
             {
