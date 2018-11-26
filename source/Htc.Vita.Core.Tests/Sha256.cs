@@ -131,10 +131,10 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_4_ValidateInHex_WithContent()
         {
-            var sha1 = Crypto.Sha256.GetInstance();
-            Assert.NotNull(sha1);
-            Assert.True(sha1.ValidateInHex("", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"));
-            Assert.True(sha1.ValidateInHex("123", "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"));
+            var sha256 = Crypto.Sha256.GetInstance();
+            Assert.NotNull(sha256);
+            Assert.True(sha256.ValidateInHex("", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"));
+            Assert.True(sha256.ValidateInHex("123", "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"));
         }
 
         [Fact]
