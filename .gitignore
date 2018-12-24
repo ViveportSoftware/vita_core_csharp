@@ -9,6 +9,7 @@ tools/*
 # files
 *.csproj.user
 *.log
+*.sln.DotSettings.user
 *.userprefs
 .DS_Store
 

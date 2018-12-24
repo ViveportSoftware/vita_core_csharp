@@ -272,11 +272,15 @@ namespace Htc.Vita.Core.IO
                 var win32Error = Marshal.GetLastWin32Error();
                 if (win32Error == (int) Windows.Error.NotSupported)
                 {
-                    Logger.GetInstance(typeof(UsbManager)).Warn("The device \"" + devicePath + "\" does not support to get serial number");
+                    Logger.GetInstance(typeof(UsbManager)).Debug("The device \"" + devicePath + "\" does not support to get serial number");
+                }
+                else if (win32Error == (int) Windows.Error.InvalidParameter)
+                {
+                    Logger.GetInstance(typeof(UsbManager)).Debug("Can not get USB HID serial number with invalid parameter on the device \"" + devicePath + "\"");
                 }
                 else
                 {
-                    Logger.GetInstance(typeof(UsbManager)).Error("Can not get USB HID serial number, error code: " + win32Error);
+                    Logger.GetInstance(typeof(UsbManager)).Error("Can not get USB HID serial number on the device \"" + devicePath + "\", error code: " + win32Error);
                 }
             }
             Windows.CloseHandle(deviceHandle);
