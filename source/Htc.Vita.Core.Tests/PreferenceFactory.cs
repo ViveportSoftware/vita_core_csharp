@@ -114,9 +114,9 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(preferences);
             preferences.Put("key", true);
             Assert.NotNull(preferences);
-            Assert.Equal(true, preferences.ParseBool("key"));
+            Assert.True(preferences.ParseBool("key"));
             preferences.Put("key2", "true");
-            Assert.Equal(true, preferences.ParseBool("key2"));
+            Assert.True(preferences.ParseBool("key2"));
         }
 
         [Fact]
@@ -128,9 +128,9 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(preferences);
             preferences.Put("key", true);
             Assert.NotNull(preferences);
-            Assert.Equal(true, preferences.ParseBool("key"));
-            Assert.Equal(false, preferences.ParseBool("key2"));
-            Assert.Equal(true, preferences.ParseBool("key3", true));
+            Assert.True(preferences.ParseBool("key"));
+            Assert.False(preferences.ParseBool("key2"));
+            Assert.True(preferences.ParseBool("key3", true));
         }
 
         [Fact]
@@ -267,7 +267,7 @@ namespace Htc.Vita.Core.Tests
             preferences.Put("key", "test");
             Assert.NotNull(preferences);
             Assert.Equal("test", preferences.ParseString("key"));
-            Assert.Equal(null, preferences.ParseString("key2"));
+            Assert.Null(preferences.ParseString("key2"));
             Assert.Equal("test2", preferences.ParseString("key3", "test2"));
         }
 
@@ -290,7 +290,7 @@ namespace Htc.Vita.Core.Tests
             Assert.Equal("test", preferences2.ParseString("key11"));
             Assert.Equal(1, preferences2.ParseInt("key12"));
             Assert.Equal(2.2D, preferences2.ParseDouble("key13"));
-            Assert.Equal(true, preferences2.ParseBool("key14"));
+            Assert.True(preferences2.ParseBool("key14"));
         }
 
         [Fact]
@@ -312,7 +312,7 @@ namespace Htc.Vita.Core.Tests
             Assert.Equal("test", preferences2.ParseString("key11"));
             Assert.Equal(1, preferences2.ParseInt("key12"));
             Assert.Equal(2.2D, preferences2.ParseDouble("key13"));
-            Assert.Equal(true, preferences2.ParseBool("key14"));
+            Assert.True(preferences2.ParseBool("key14"));
         }
 
         [Fact]
@@ -332,10 +332,10 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(preferences);
             var preferences2 = preferenceFactory.LoadPreferences();
             Assert.NotNull(preferences2);
-            Assert.Equal(null, preferences2.ParseString("key11"));
+            Assert.Null(preferences2.ParseString("key11"));
             Assert.Equal(0, preferences2.ParseInt("key12"));
             Assert.Equal(0.0D, preferences2.ParseDouble("key13"));
-            Assert.Equal(false, preferences2.ParseBool("key14"));
+            Assert.False(preferences2.ParseBool("key14"));
         }
 
         [Fact]

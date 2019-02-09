@@ -38,7 +38,7 @@ namespace Htc.Vita.Core.Tests
             var value = config.Get("boolKey");
             Assert.Equal("true", value);
             var value2 = config.GetBool("boolKey");
-            Assert.Equal(true, value2);
+            Assert.True(value2);
         }
 
         [Fact]
@@ -47,11 +47,11 @@ namespace Htc.Vita.Core.Tests
             var config = Core.Config.Config.GetInstance();
             Assert.NotNull(config);
             var value = config.Get("boolKey2");
-            Assert.Equal(null, value);
+            Assert.Null(value);
             var value2 = config.GetBool("boolKey2");
-            Assert.Equal(false, value2);
+            Assert.False(value2);
             var value3 = config.GetBool("boolKey2", true);
-            Assert.Equal(true, value3);
+            Assert.True(value3);
         }
 
         [Fact]
@@ -71,7 +71,7 @@ namespace Htc.Vita.Core.Tests
             var config = Core.Config.Config.GetInstance();
             Assert.NotNull(config);
             var value = config.Get("doubleKey2");
-            Assert.Equal(null, value);
+            Assert.Null(value);
             var value2 = config.GetDouble("doubleKey2");
             Assert.Equal(0.0D, value2);
             var value3 = config.GetDouble("doubleKey2", 13.3D);
@@ -95,7 +95,7 @@ namespace Htc.Vita.Core.Tests
             var config = Core.Config.Config.GetInstance();
             Assert.NotNull(config);
             var value = config.Get("intKey2");
-            Assert.Equal(null, value);
+            Assert.Null(value);
             var value2 = config.GetInt("intKey2");
             Assert.Equal(0, value2);
             var value3 = config.GetInt("intKey2", 10);
@@ -119,7 +119,7 @@ namespace Htc.Vita.Core.Tests
             var config = Core.Config.Config.GetInstance();
             Assert.NotNull(config);
             var value = config.Get("longKey2");
-            Assert.Equal(null, value);
+            Assert.Null(value);
             var value2 = config.GetLong("longKey2");
             Assert.Equal(0L, value2);
             var value3 = config.GetLong("longKey2", 200000000000L);
@@ -159,7 +159,7 @@ namespace Htc.Vita.Core.Tests
             var value = config.Get("boolKey");
             Assert.Equal("true", value);
             var value2 = config.GetBool("boolKey");
-            Assert.Equal(true, value2);
+            Assert.True(value2);
         }
 
         [Fact]
@@ -168,11 +168,11 @@ namespace Htc.Vita.Core.Tests
             var config = Core.Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
             var value = config.Get("boolKey2");
-            Assert.Equal(null, value);
+            Assert.Null(value);
             var value2 = config.GetBool("boolKey2");
-            Assert.Equal(false, value2);
+            Assert.False(value2);
             var value3 = config.GetBool("boolKey2", true);
-            Assert.Equal(true, value3);
+            Assert.True(value3);
         }
 
         [Fact]
@@ -192,7 +192,7 @@ namespace Htc.Vita.Core.Tests
             var config = Core.Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
             var value = config.Get("doubleKey2");
-            Assert.Equal(null, value);
+            Assert.Null(value);
             var value2 = config.GetDouble("doubleKey2");
             Assert.Equal(0.0D, value2);
             var value3 = config.GetDouble("doubleKey2", 13.3D);
@@ -216,7 +216,7 @@ namespace Htc.Vita.Core.Tests
             var config = Core.Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
             var value = config.Get("intKey2");
-            Assert.Equal(null, value);
+            Assert.Null(value);
             var value2 = config.GetInt("intKey2");
             Assert.Equal(0, value2);
             var value3 = config.GetInt("intKey2", 10);
@@ -240,7 +240,7 @@ namespace Htc.Vita.Core.Tests
             var config = Core.Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
             var value = config.Get("longKey2");
-            Assert.Equal(null, value);
+            Assert.Null(value);
             var value2 = config.GetLong("longKey2");
             Assert.Equal(0L, value2);
             var value3 = config.GetLong("longKey2", 200000000000L);
@@ -280,7 +280,7 @@ namespace Htc.Vita.Core.Tests
             var value = config.Get("boolKey");
             Assert.Equal("true", value);
             var value2 = config.GetBool("boolKey");
-            Assert.Equal(true, value2);
+            Assert.True(value2);
         }
 
         [Fact]
@@ -289,11 +289,11 @@ namespace Htc.Vita.Core.Tests
             var config = Core.Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
             var value = config.Get("boolKey2");
-            Assert.Equal(null, value);
+            Assert.Null(value);
             var value2 = config.GetBool("boolKey2");
-            Assert.Equal(false, value2);
+            Assert.False(value2);
             var value3 = config.GetBool("boolKey2", true);
-            Assert.Equal(true, value3);
+            Assert.True(value3);
         }
 
         [Fact(Skip = "PredefinedGlobalDataNeeded")]
@@ -313,7 +313,7 @@ namespace Htc.Vita.Core.Tests
             var config = Core.Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
             var value = config.Get("doubleKey2");
-            Assert.Equal(null, value);
+            Assert.Null(value);
             var value2 = config.GetDouble("doubleKey2");
             Assert.Equal(0.0D, value2);
             var value3 = config.GetDouble("doubleKey2", 13.3D);
@@ -337,7 +337,7 @@ namespace Htc.Vita.Core.Tests
             var config = Core.Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
             var value = config.Get("intKey2");
-            Assert.Equal(null, value);
+            Assert.Null(value);
             var value2 = config.GetInt("intKey2");
             Assert.Equal(0, value2);
             var value3 = config.GetInt("intKey2", 10);
@@ -361,7 +361,7 @@ namespace Htc.Vita.Core.Tests
             var config = Core.Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
             var value = config.Get("longKey2");
-            Assert.Equal(null, value);
+            Assert.Null(value);
             var value2 = config.GetLong("longKey2");
             Assert.Equal(0L, value2);
             var value3 = config.GetLong("longKey2", 200000000000L);

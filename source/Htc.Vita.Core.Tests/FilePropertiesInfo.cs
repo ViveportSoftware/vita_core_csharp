@@ -25,10 +25,10 @@ namespace Htc.Vita.Core.Tests
             var filePropertiesInfo = Diagnostics.FilePropertiesInfo.GetPropertiesInfo(fileInfo);
             Assert.NotNull(filePropertiesInfo);
             Assert.True(!string.IsNullOrEmpty(filePropertiesInfo.IssuerDistinguishedName));
-            Assert.True(filePropertiesInfo.IssuerDistinguishedName.Contains("O="));
+            Assert.Contains("O=", filePropertiesInfo.IssuerDistinguishedName);
             Assert.True(!string.IsNullOrEmpty(filePropertiesInfo.IssuerName));
             Assert.True(!string.IsNullOrEmpty(filePropertiesInfo.SubjectDistinguishedName));
-            Assert.True(filePropertiesInfo.SubjectDistinguishedName.Contains("O="));
+            Assert.Contains("O=", filePropertiesInfo.SubjectDistinguishedName);
             Assert.True(!string.IsNullOrEmpty(filePropertiesInfo.SubjectName));
             Assert.True(!string.IsNullOrEmpty(filePropertiesInfo.PublicKey));
             Assert.True(filePropertiesInfo.Verified);

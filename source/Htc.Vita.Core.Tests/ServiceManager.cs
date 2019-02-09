@@ -76,16 +76,16 @@ namespace Htc.Vita.Core.Tests
             }
             serviceInfo = Runtime.ServiceManager.ChangeStartType("Winmgmt", Runtime.ServiceManager.StartType.Automatic);
             Assert.False(string.IsNullOrWhiteSpace(serviceInfo.ServiceName));
-            Assert.NotEqual(serviceInfo.CurrentState, Runtime.ServiceManager.CurrentState.Unknown);
-            Assert.Equal(serviceInfo.StartType, Runtime.ServiceManager.StartType.Automatic);
-            Assert.Equal(serviceInfo.ErrorCode, 0);
+            Assert.NotEqual(Runtime.ServiceManager.CurrentState.Unknown, serviceInfo.CurrentState);
+            Assert.Equal(Runtime.ServiceManager.StartType.Automatic, serviceInfo.StartType);
+            Assert.Equal(0, serviceInfo.ErrorCode);
             Assert.True(string.IsNullOrWhiteSpace(serviceInfo.ErrorMessage));
 
             serviceInfo = Runtime.ServiceManager.Start("Winmgmt");
             Assert.False(string.IsNullOrWhiteSpace(serviceInfo.ServiceName));
             Assert.True(serviceInfo.CurrentState == Runtime.ServiceManager.CurrentState.Running || serviceInfo.CurrentState == Runtime.ServiceManager.CurrentState.StartPending);
-            Assert.Equal(serviceInfo.StartType, Runtime.ServiceManager.StartType.Automatic);
-            Assert.Equal(serviceInfo.ErrorCode, 0);
+            Assert.Equal(Runtime.ServiceManager.StartType.Automatic, serviceInfo.StartType);
+            Assert.Equal(0, serviceInfo.ErrorCode);
             Assert.True(string.IsNullOrWhiteSpace(serviceInfo.ErrorMessage));
         }
     }

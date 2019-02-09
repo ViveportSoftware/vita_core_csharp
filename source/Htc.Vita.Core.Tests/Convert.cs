@@ -69,7 +69,7 @@ namespace Htc.Vita.Core.Tests
         {
             var time = string.Empty + Util.Convert.ToTimestampInMilli(new DateTime(2017, 8, 26));
             Assert.True(time.Length == 13);
-            Assert.True(time.StartsWith("15037"));
+            Assert.StartsWith("15037", time);
         }
     }
 }

@@ -545,7 +545,7 @@ namespace Htc.Vita.Core.Tests
             logger.Debug("Dummy test debug message");
             Assert.True(logger is DummyLogger);
             var dummyLogger = (DummyLogger)logger;
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test debug message"));
+            Assert.EndsWith("Dummy test debug message", dummyLogger.GetBuffer());
         }
 
         [Fact]
@@ -562,8 +562,8 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(dummyLogger);
             Assert.NotNull(dummyLoggerAlt);
             Assert.NotSame(dummyLogger, dummyLoggerAlt);
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test debug message"));
-            Assert.True(dummyLoggerAlt.GetBuffer().EndsWith("Dummy test debug message in Alt" + new DummyException("Alt")));
+            Assert.EndsWith("Dummy test debug message", dummyLogger.GetBuffer());
+            Assert.EndsWith("Dummy test debug message in Alt" + new DummyException("Alt"), dummyLoggerAlt.GetBuffer());
         }
 
         [Fact]
@@ -580,8 +580,8 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(dummyLogger);
             Assert.NotNull(dummyLoggerAlt);
             Assert.NotSame(dummyLogger, dummyLoggerAlt);
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test debug message"));
-            Assert.True(dummyLoggerAlt.GetBuffer().EndsWith("Dummy test debug message in TestCase" + new DummyException("TestCase")));
+            Assert.EndsWith("Dummy test debug message", dummyLogger.GetBuffer());
+            Assert.EndsWith("Dummy test debug message in TestCase" + new DummyException("TestCase"), dummyLoggerAlt.GetBuffer());
         }
 
         [Fact]
@@ -592,7 +592,7 @@ namespace Htc.Vita.Core.Tests
             logger.Error("Dummy test error message");
             Assert.True(logger is DummyLogger);
             var dummyLogger = (DummyLogger)logger;
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test error message"));
+            Assert.EndsWith("Dummy test error message", dummyLogger.GetBuffer());
         }
 
         [Fact]
@@ -609,8 +609,8 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(dummyLogger);
             Assert.NotNull(dummyLoggerAlt);
             Assert.NotSame(dummyLogger, dummyLoggerAlt);
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test error message"));
-            Assert.True(dummyLoggerAlt.GetBuffer().EndsWith("Dummy test error message in Alt" + new DummyException("Alt")));
+            Assert.EndsWith("Dummy test error message", dummyLogger.GetBuffer());
+            Assert.EndsWith("Dummy test error message in Alt" + new DummyException("Alt"), dummyLoggerAlt.GetBuffer());
         }
 
         [Fact]
@@ -627,8 +627,8 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(dummyLogger);
             Assert.NotNull(dummyLoggerAlt);
             Assert.NotSame(dummyLogger, dummyLoggerAlt);
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test error message"));
-            Assert.True(dummyLoggerAlt.GetBuffer().EndsWith("Dummy test error message in TestCase" + new DummyException("TestCase")));
+            Assert.EndsWith("Dummy test error message", dummyLogger.GetBuffer());
+            Assert.EndsWith("Dummy test error message in TestCase" + new DummyException("TestCase"), dummyLoggerAlt.GetBuffer());
         }
 
         [Fact]
@@ -639,7 +639,7 @@ namespace Htc.Vita.Core.Tests
             logger.Fatal("Dummy test fatal message");
             Assert.True(logger is DummyLogger);
             var dummyLogger = (DummyLogger)logger;
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test fatal message"));
+            Assert.EndsWith("Dummy test fatal message", dummyLogger.GetBuffer());
         }
 
         [Fact]
@@ -656,8 +656,8 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(dummyLogger);
             Assert.NotNull(dummyLoggerAlt);
             Assert.NotSame(dummyLogger, dummyLoggerAlt);
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test fatal message"));
-            Assert.True(dummyLoggerAlt.GetBuffer().EndsWith("Dummy test fatal message in Alt" + new DummyException("Alt")));
+            Assert.EndsWith("Dummy test fatal message", dummyLogger.GetBuffer());
+            Assert.EndsWith("Dummy test fatal message in Alt" + new DummyException("Alt"), dummyLoggerAlt.GetBuffer());
         }
 
         [Fact]
@@ -674,8 +674,8 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(dummyLogger);
             Assert.NotNull(dummyLoggerAlt);
             Assert.NotSame(dummyLogger, dummyLoggerAlt);
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test fatal message"));
-            Assert.True(dummyLoggerAlt.GetBuffer().EndsWith("Dummy test fatal message in TestCase" + new DummyException("TestCase")));
+            Assert.EndsWith("Dummy test fatal message", dummyLogger.GetBuffer());
+            Assert.EndsWith("Dummy test fatal message in TestCase" + new DummyException("TestCase"), dummyLoggerAlt.GetBuffer());
         }
 
         [Fact]
@@ -686,7 +686,7 @@ namespace Htc.Vita.Core.Tests
             logger.Info("Dummy test info message");
             Assert.True(logger is DummyLogger);
             var dummyLogger = (DummyLogger)logger;
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test info message"));
+            Assert.EndsWith("Dummy test info message", dummyLogger.GetBuffer());
         }
 
         [Fact]
@@ -703,8 +703,8 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(dummyLogger);
             Assert.NotNull(dummyLoggerAlt);
             Assert.NotSame(dummyLogger, dummyLoggerAlt);
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test info message"));
-            Assert.True(dummyLoggerAlt.GetBuffer().EndsWith("Dummy test info message in Alt" + new DummyException("Alt")));
+            Assert.EndsWith("Dummy test info message", dummyLogger.GetBuffer());
+            Assert.EndsWith("Dummy test info message in Alt" + new DummyException("Alt"), dummyLoggerAlt.GetBuffer());
         }
 
         [Fact]
@@ -721,8 +721,8 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(dummyLogger);
             Assert.NotNull(dummyLoggerAlt);
             Assert.NotSame(dummyLogger, dummyLoggerAlt);
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test info message"));
-            Assert.True(dummyLoggerAlt.GetBuffer().EndsWith("Dummy test info message in TestCase" + new DummyException("TestCase")));
+            Assert.EndsWith("Dummy test info message", dummyLogger.GetBuffer());
+            Assert.EndsWith("Dummy test info message in TestCase" + new DummyException("TestCase"), dummyLoggerAlt.GetBuffer());
         }
 
         [Fact]
@@ -733,7 +733,7 @@ namespace Htc.Vita.Core.Tests
             logger.Trace("Dummy test trace message");
             Assert.True(logger is DummyLogger);
             var dummyLogger = (DummyLogger)logger;
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test trace message"));
+            Assert.EndsWith("Dummy test trace message", dummyLogger.GetBuffer());
         }
 
         [Fact]
@@ -750,8 +750,8 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(dummyLogger);
             Assert.NotNull(dummyLoggerAlt);
             Assert.NotSame(dummyLogger, dummyLoggerAlt);
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test trace message"));
-            Assert.True(dummyLoggerAlt.GetBuffer().EndsWith("Dummy test trace message in Alt" + new DummyException("Alt")));
+            Assert.EndsWith("Dummy test trace message", dummyLogger.GetBuffer());
+            Assert.EndsWith("Dummy test trace message in Alt" + new DummyException("Alt"), dummyLoggerAlt.GetBuffer());
         }
 
         [Fact]
@@ -768,8 +768,8 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(dummyLogger);
             Assert.NotNull(dummyLoggerAlt);
             Assert.NotSame(dummyLogger, dummyLoggerAlt);
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test trace message"));
-            Assert.True(dummyLoggerAlt.GetBuffer().EndsWith("Dummy test trace message in TestCase" + new DummyException("TestCase")));
+            Assert.EndsWith("Dummy test trace message", dummyLogger.GetBuffer());
+            Assert.EndsWith("Dummy test trace message in TestCase" + new DummyException("TestCase"), dummyLoggerAlt.GetBuffer());
         }
 
         [Fact]
@@ -780,7 +780,7 @@ namespace Htc.Vita.Core.Tests
             logger.Warn("Dummy test warn message");
             Assert.True(logger is DummyLogger);
             var dummyLogger = (DummyLogger)logger;
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test warn message"));
+            Assert.EndsWith("Dummy test warn message", dummyLogger.GetBuffer());
         }
 
         [Fact]
@@ -797,8 +797,8 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(dummyLogger);
             Assert.NotNull(dummyLoggerAlt);
             Assert.NotSame(dummyLogger, dummyLoggerAlt);
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test warn message"));
-            Assert.True(dummyLoggerAlt.GetBuffer().EndsWith("Dummy test warn message in Alt" + new DummyException("Alt")));
+            Assert.EndsWith("Dummy test warn message", dummyLogger.GetBuffer());
+            Assert.EndsWith("Dummy test warn message in Alt" + new DummyException("Alt"), dummyLoggerAlt.GetBuffer());
         }
 
         [Fact]
@@ -815,8 +815,8 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(dummyLogger);
             Assert.NotNull(dummyLoggerAlt);
             Assert.NotSame(dummyLogger, dummyLoggerAlt);
-            Assert.True(dummyLogger.GetBuffer().EndsWith("Dummy test warn message"));
-            Assert.True(dummyLoggerAlt.GetBuffer().EndsWith("Dummy test warn message in TestCase" + new DummyException("TestCase")));
+            Assert.EndsWith("Dummy test warn message", dummyLogger.GetBuffer());
+            Assert.EndsWith("Dummy test warn message in TestCase" + new DummyException("TestCase"), dummyLoggerAlt.GetBuffer());
         }
 
         [Fact]

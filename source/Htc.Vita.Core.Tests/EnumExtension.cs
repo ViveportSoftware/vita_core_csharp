@@ -38,12 +38,12 @@ namespace Htc.Vita.Core.Tests
             const TestFlag accumulateFlags = TestFlag.Flag0 | TestFlag.Flag1 | TestFlag.Flag2 | TestFlag.Flag3 | TestFlag.Flag4 | TestFlag.Flag5;
             var appliedFlagList = accumulateFlags.GetAppliedFlags().ToArray();
             Assert.Equal(6, appliedFlagList.Length);
-            Assert.True(appliedFlagList.Contains(TestFlag.Flag0));
-            Assert.True(appliedFlagList.Contains(TestFlag.Flag1));
-            Assert.True(appliedFlagList.Contains(TestFlag.Flag2));
-            Assert.True(appliedFlagList.Contains(TestFlag.Flag3));
-            Assert.True(appliedFlagList.Contains(TestFlag.Flag4));
-            Assert.True(appliedFlagList.Contains(TestFlag.Flag5));
+            Assert.Contains(TestFlag.Flag0, appliedFlagList);
+            Assert.Contains(TestFlag.Flag1, appliedFlagList);
+            Assert.Contains(TestFlag.Flag2, appliedFlagList);
+            Assert.Contains(TestFlag.Flag3, appliedFlagList);
+            Assert.Contains(TestFlag.Flag4, appliedFlagList);
+            Assert.Contains(TestFlag.Flag5, appliedFlagList);
         }
 
         [Fact]
