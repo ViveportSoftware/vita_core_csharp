@@ -185,7 +185,7 @@ Task("Run-Unit-Tests-Under-AnyCPU")
                 tool =>
                 {
                         tool.XUnit2(
-                                "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/*.Tests.dll",
+                                "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/net452/*.Tests.dll",
                                 new XUnit2Settings
                                 {
                                         Parallelism = ParallelismOption.All,
@@ -221,7 +221,7 @@ Task("Run-Unit-Tests-Under-AnyCPU")
                 tool =>
                 {
                         tool.XUnit2(
-                                "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/*.Tests.dll",
+                                "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/net452/*.Tests.dll",
                                 new XUnit2Settings
                                 {
                                         ShadowCopy = false,
@@ -237,7 +237,7 @@ Task("Run-Unit-Tests-Under-AnyCPU")
     else
     {
         XUnit2(
-                "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/*.Tests.dll",
+                "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/net452/*.Tests.dll",
                 new XUnit2Settings
                 {
                         Parallelism = ParallelismOption.All,
@@ -260,7 +260,7 @@ Task("Run-Unit-Tests-Under-X86")
                 tool =>
                 {
                         tool.XUnit2(
-                                "./temp/" + configuration + "/" + product + ".Tests/bin/x86/*.Tests.dll",
+                                "./temp/" + configuration + "/" + product + ".Tests/bin/x86/net452/*.Tests.dll",
                                 new XUnit2Settings
                                 {
                                         Parallelism = ParallelismOption.All,
@@ -285,7 +285,7 @@ Task("Run-Unit-Tests-Under-X86")
     else
     {
         XUnit2(
-                "./temp/" + configuration + "/" + product + ".Tests/bin/x86/*.Tests.dll",
+                "./temp/" + configuration + "/" + product + ".Tests/bin/x86/net452/*.Tests.dll",
                 new XUnit2Settings
                 {
                         Parallelism = ParallelismOption.All,

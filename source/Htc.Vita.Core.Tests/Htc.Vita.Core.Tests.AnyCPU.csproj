@@ -1,100 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\xunit.runner.visualstudio.2.4.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\packages\xunit.runner.visualstudio.2.4.0\build\net20\xunit.runner.visualstudio.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{14692D50-B67A-49D3-A32C-59E9F4F4FDC6}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Htc.Vita.Core.Tests</RootNamespace>
     <AssemblyName>Htc.Vita.Core.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <IntermediateOutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\obj\$(Platform)</IntermediateOutputPath>
-    <OutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\bin\$(Platform)</OutputPath>
+    <TargetFramework>net452</TargetFramework>
+    <IntermediateOutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\obj\AnyCPU</IntermediateOutputPath>
+    <OutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\bin\AnyCPU</OutputPath>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="xunit.abstractions, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.abstractions.2.0.2\lib\net35\xunit.abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.assert, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.assert.2.4.0\lib\netstandard1.1\xunit.assert.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.core, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.core.2.4.0\lib\netstandard1.1\xunit.core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.execution.desktop, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.execution.2.4.0\lib\net452\xunit.execution.desktop.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.abstractions" Version="2.0.2" />
+    <PackageReference Include="xunit.analyzers" Version="0.10.0" />
+    <PackageReference Include="xunit.assert" Version="2.4.0" />
+    <PackageReference Include="xunit.core" Version="2.4.0" />
+    <PackageReference Include="xunit.extensibility.core" Version="2.4.0" />
+    <PackageReference Include="xunit.extensibility.execution" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.console" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\generated\SharedAssemblyInfo.cs">
-      <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="AesFactory.cs" />
-    <Compile Include="Config.cs" />
-    <Compile Include="Convert.cs" />
-    <Compile Include="Dns.cs" />
-    <Compile Include="EnumExtension.cs" />
-    <Compile Include="Extract.cs" />
-    <Compile Include="FilePropertiesInfo.cs" />
-    <Compile Include="FileSystemManager.cs" />
-    <Compile Include="IpcChannel.cs" />
-    <Compile Include="JsonFactory.cs" />
-    <Compile Include="LocalPortManager.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="Md5.cs" />
-    <Compile Include="NetworkInterface.cs" />
-    <Compile Include="Platform.cs" />
-    <Compile Include="PreferenceFactory.cs" />
-    <Compile Include="ProcessManager.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registry.cs" />
-    <Compile Include="RouteTracer.cs" />
-    <Compile Include="ServiceManager.cs" />
-    <Compile Include="Sha1.cs" />
-    <Compile Include="Sha256.cs" />
-    <Compile Include="ShellLink.cs" />
-    <Compile Include="UriSchemeManager.cs" />
-    <Compile Include="UsbManager.cs" />
-    <Compile Include="UserManager.cs" />
-    <Compile Include="WebProxyFactory.cs" />
-    <Compile Include="WebRequestFactory.cs" />
+    <Compile Include="..\generated\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
+    <ProjectReference Include="..\Htc.Vita.Core\Htc.Vita.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="TestData.Sha1.txt.gz" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Htc.Vita.Core\Htc.Vita.Core.net45.csproj">
-      <Project>{A4DDDFFE-4E1F-4C33-B8CC-A30738DC22F0}</Project>
-      <Name>Htc.Vita.Core.net45</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
@@ -110,18 +48,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\xunit.runner.visualstudio.2.4.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.visualstudio.2.4.0\build\net20\xunit.runner.visualstudio.props'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

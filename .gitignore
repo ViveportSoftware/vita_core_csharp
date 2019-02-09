@@ -1,5 +1,6 @@
 # folders
 dist/
+obj/
 source/.vs/
 source/generated/
 source/packages/
