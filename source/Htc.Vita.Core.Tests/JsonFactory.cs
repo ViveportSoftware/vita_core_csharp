@@ -1,13 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Htc.Vita.Core.Json;
 using Htc.Vita.Core.Json.LitJson;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class JsonFactory
+    public class JsonFactory
     {
+        private readonly ITestOutputHelper _output;
+
+        public JsonFactory(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public static void Default_0_GetInstance()
         {
@@ -217,7 +224,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Default_6_SerializeObject_WithListOfDictionary()
+        public void Default_6_SerializeObject_WithListOfDictionary()
         {
             var jsonFactory = Json.JsonFactory.GetInstance();
             Assert.NotNull(jsonFactory);
@@ -239,7 +246,7 @@ namespace Htc.Vita.Core.Tests
                 dict2
             };
             var result = jsonFactory.SerializeObject(dictList);
-            Console.WriteLine("Serialized string: " + result);
+            _output.WriteLine("Serialized string: " + result);
             Assert.Equal("[{\"testKey0\":\"testValue0\",\"testKey1\":\"testValue1\",\"testKey2\":\"testValue2\"},{\"testKey0\":\"testValue3\",\"testKey2\":\"testValue4\",\"testKey4\":\"testValue5\"}]", result);
         }
 
@@ -1037,14 +1044,14 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void JsonObject_18_Unicode()
+        public void JsonObject_18_Unicode()
         {
             var jsonFactory = Json.JsonFactory.GetInstance();
             Assert.NotNull(jsonFactory);
             var jsonObject = jsonFactory.CreateJsonObject();
             Assert.NotNull(jsonObject);
             jsonObject.Put("title", "Vive视频");
-            Console.WriteLine("jsonObject: " + jsonObject);
+            _output.WriteLine("jsonObject: " + jsonObject);
         }
 
         public class TestClass1

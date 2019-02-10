@@ -1,11 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class IpcChannel
+    public class IpcChannel
     {
+        private readonly ITestOutputHelper _output;
+
+        public IpcChannel(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public static void Provider_0_GetInstance()
         {
@@ -74,7 +82,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Provider_3_OnMessageHandled()
+        public void Provider_3_OnMessageHandled()
         {
             if (!Runtime.Platform.IsWindows)
             {
@@ -86,7 +94,7 @@ namespace Htc.Vita.Core.Tests
             Assert.True(provider.Start());
             provider.OnMessageHandled = (channel, filePropertiesInfo) =>
             {
-                Console.WriteLine("channel?.Output: " + channel?.Output);
+                _output.WriteLine("channel?.Output: " + channel?.Output);
             };
             Assert.True(provider.Stop());
         }

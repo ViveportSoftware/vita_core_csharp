@@ -1,12 +1,19 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class ProcessManager
+    public class ProcessManager
     {
+        private readonly ITestOutputHelper _output;
+
+        public ProcessManager(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public static void ProcessManager_Default_0_GetProcesses()
         {
@@ -43,7 +50,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void ProcessManager_Default_2_KillProcessById()
+        public void ProcessManager_Default_2_KillProcessById()
         {
             if (!Runtime.Platform.IsWindows)
             {
@@ -54,9 +61,9 @@ namespace Htc.Vita.Core.Tests
             var process = Process.Start(fileInfo.FullName);
             Assert.NotNull(process);
             Assert.True(process.Id > 4);
-            Console.WriteLine("Start " + fileInfo.FullName + " successfully on PID: " + process.Id);
+            _output.WriteLine("Start " + fileInfo.FullName + " successfully on PID: " + process.Id);
             Assert.True(Runtime.ProcessManager.KillProcessById(process.Id));
-            Console.WriteLine("Kill " + fileInfo.Name + " successfully on PID: " + process.Id);
+            _output.WriteLine("Kill " + fileInfo.Name + " successfully on PID: " + process.Id);
         }
     }
 }

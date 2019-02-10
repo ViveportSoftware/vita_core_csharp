@@ -1,13 +1,20 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class FileSystemManager
+    public class FileSystemManager
     {
+        private readonly ITestOutputHelper _output;
+
+        public FileSystemManager(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
-        public static void Default_0_GetDiskSpaceFor()
+        public void Default_0_GetDiskSpaceFor()
         {
             if (!Runtime.Platform.IsWindows)
             {
@@ -17,13 +24,13 @@ namespace Htc.Vita.Core.Tests
             Assert.True(directoryInfo.Exists);
             var diskSpaceInfo = IO.FileSystemManager.GetDiskSpaceFor(directoryInfo);
             Assert.NotNull(diskSpaceInfo);
-            Console.WriteLine("diskSpaceInfo.Path: " + diskSpaceInfo.Path);
+            _output.WriteLine("diskSpaceInfo.Path: " + diskSpaceInfo.Path);
             Assert.False(string.IsNullOrWhiteSpace(diskSpaceInfo.Path));
-            Console.WriteLine("diskSpaceInfo.FreeOfBytes: " + diskSpaceInfo.FreeOfBytes);
+            _output.WriteLine("diskSpaceInfo.FreeOfBytes: " + diskSpaceInfo.FreeOfBytes);
             Assert.True(diskSpaceInfo.FreeOfBytes >= 0);
-            Console.WriteLine("diskSpaceInfo.TotalOfBytes: " + diskSpaceInfo.TotalOfBytes);
+            _output.WriteLine("diskSpaceInfo.TotalOfBytes: " + diskSpaceInfo.TotalOfBytes);
             Assert.True(diskSpaceInfo.TotalOfBytes >= 0);
-            Console.WriteLine("diskSpaceInfo.TotalFreeOfBytes: " + diskSpaceInfo.TotalFreeOfBytes);
+            _output.WriteLine("diskSpaceInfo.TotalFreeOfBytes: " + diskSpaceInfo.TotalFreeOfBytes);
             Assert.True(diskSpaceInfo.TotalFreeOfBytes >= 0);
         }
 

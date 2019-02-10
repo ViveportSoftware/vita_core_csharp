@@ -1,10 +1,18 @@
 ﻿using System;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class Platform
+    public class Platform
     {
+        private readonly ITestOutputHelper _output;
+
+        public Platform(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public static void Default_0_GetMachineId()
         {
@@ -24,11 +32,11 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Default_2_GetProductName()
+        public void Default_2_GetProductName()
         {
             var productName = Runtime.Platform.GetProductName();
             Assert.NotEmpty(productName);
-            Console.WriteLine("productName: \"" + productName + "\"");
+            _output.WriteLine("productName: \"" + productName + "\"");
             if (Runtime.Platform.IsWindows)
             {
                 Assert.NotEqual("UNKNOWN", productName);
@@ -36,14 +44,14 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Default_3_GetSystemBootTime()
+        public  void Default_3_GetSystemBootTime()
         {
             var bootTime = Runtime.Platform.GetSystemBootTime();
-            Console.WriteLine("bootTime: " + bootTime);
+            _output.WriteLine("bootTime: " + bootTime);
             Assert.NotEqual(DateTime.MinValue, bootTime);
             Assert.NotEqual(DateTime.Now, bootTime);
             var bootTimeUtc = Runtime.Platform.GetSystemBootTimeUtc();
-            Console.WriteLine("bootTimeUtc: " + bootTimeUtc);
+            _output.WriteLine("bootTimeUtc: " + bootTimeUtc);
             Assert.NotEqual(DateTime.MinValue, bootTimeUtc);
             Assert.NotEqual(DateTime.UtcNow, bootTimeUtc);
         }
@@ -65,10 +73,10 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Default_6_GetFrameworkName()
+        public void Default_6_GetFrameworkName()
         {
             var frameworkName = Runtime.Platform.GetFrameworkName();
-            Console.WriteLine("framework: " + frameworkName);
+            _output.WriteLine("framework: " + frameworkName);
             Assert.NotNull(frameworkName);
             Assert.False(frameworkName.StartsWith("Unknown", StringComparison.InvariantCultureIgnoreCase));
         }

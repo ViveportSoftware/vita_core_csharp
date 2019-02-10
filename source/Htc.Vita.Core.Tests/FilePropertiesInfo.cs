@@ -1,10 +1,18 @@
 ﻿using System.IO;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class FilePropertiesInfo
+    public class FilePropertiesInfo
     {
+        private readonly ITestOutputHelper _output;
+
+        public FilePropertiesInfo(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public static void Default_0_GetPropertiesInfo()
         {
@@ -36,7 +44,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Default_0_GetPropertiesInfo_WithNotepad()
+        public void Default_0_GetPropertiesInfo_WithNotepad()
         {
             if (!Runtime.Platform.IsWindows)
             {
@@ -52,7 +60,7 @@ namespace Htc.Vita.Core.Tests
             Assert.True(string.IsNullOrEmpty(filePropertiesInfo.SubjectName));
             Assert.True(string.IsNullOrEmpty(filePropertiesInfo.PublicKey));
             Assert.False(filePropertiesInfo.Verified);
-            System.Console.WriteLine("filePropertiesInfo.Version: " + filePropertiesInfo.Version);
+            _output.WriteLine("filePropertiesInfo.Version: " + filePropertiesInfo.Version);
         }
     }
 }

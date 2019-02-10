@@ -1,11 +1,18 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class Dns
+    public class Dns
     {
+        private readonly ITestOutputHelper _output;
+
+        public Dns(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public static void Dns_Default_0_GetInstance()
         {
@@ -14,7 +21,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Dns_Default_1_GetHostAddresses()
+        public void Dns_Default_1_GetHostAddresses()
         {
             var dns = Net.Dns.GetInstance();
             Assert.NotNull(dns);
@@ -24,7 +31,7 @@ namespace Htc.Vita.Core.Tests
             Assert.NotEmpty(addresses);
             foreach (var address in addresses)
             {
-                Console.WriteLine("address for \"" + host + "\": " + address);
+                _output.WriteLine("address for \"" + host + "\": " + address);
             }
             var host2 = "172.217.27.132";
             var addresses2 = dns.GetHostAddresses(host2);
@@ -37,14 +44,14 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Dns_Default_2_GetHostEntry()
+        public void Dns_Default_2_GetHostEntry()
         {
             var dns = Net.Dns.GetInstance();
             Assert.NotNull(dns);
             var host = "8.8.8.8";
             var entry = dns.GetHostEntry(host);
             Assert.NotNull(entry);
-            Console.WriteLine("entry for \"" + host + "\": " + entry.HostName);
+            _output.WriteLine("entry for \"" + host + "\": " + entry.HostName);
             var host2 = "www.google.com";
             var entry2 = dns.GetHostEntry(host2);
             Assert.NotNull(entry2);
@@ -52,14 +59,14 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Dns_Default_2_GetHostEntry_WithIPAddress()
+        public void Dns_Default_2_GetHostEntry_WithIPAddress()
         {
             var dns = Net.Dns.GetInstance();
             Assert.NotNull(dns);
             var host = IPAddress.Parse("8.8.8.8");
             var entry = dns.GetHostEntry(host);
             Assert.NotNull(entry);
-            Console.WriteLine("entry for \"" + host + "\": " + entry.HostName);
+            _output.WriteLine("entry for \"" + host + "\": " + entry.HostName);
         }
 
         [Fact]

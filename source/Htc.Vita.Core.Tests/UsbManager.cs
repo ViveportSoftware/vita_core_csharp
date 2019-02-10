@@ -1,12 +1,19 @@
-﻿using System;
-using Xunit;
+﻿using Xunit;
+using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class UsbManager
+    public class UsbManager
     {
+        private readonly ITestOutputHelper _output;
+
+        public UsbManager(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
-        public static void Default_0_GetHidDevices()
+        public void Default_0_GetHidDevices()
         {
             if (!Runtime.Platform.IsWindows)
             {
@@ -15,8 +22,8 @@ namespace Htc.Vita.Core.Tests
             var deviceInfos = IO.UsbManager.GetHidDevices();
             Assert.NotNull(deviceInfos);
             foreach (var deviceInfo in deviceInfos) {
-                Console.WriteLine("deviceInfo.Path: \"" + deviceInfo.Path + "\"");
-                Console.WriteLine("deviceInfo.SerialNumber: \"" + deviceInfo.SerialNumber + "\"");
+                _output.WriteLine("deviceInfo.Path: \"" + deviceInfo.Path + "\"");
+                _output.WriteLine("deviceInfo.SerialNumber: \"" + deviceInfo.SerialNumber + "\"");
                 Assert.False(string.IsNullOrWhiteSpace(deviceInfo.Path));
                 var productId = deviceInfo.ProductId;
                 if (!string.IsNullOrEmpty(productId))

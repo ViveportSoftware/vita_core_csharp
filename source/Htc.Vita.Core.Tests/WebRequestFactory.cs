@@ -1,10 +1,18 @@
 ﻿using System;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class WebRequestFactory
+    public class WebRequestFactory
     {
+        private readonly ITestOutputHelper _output;
+
+        public WebRequestFactory(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public static void Default_0_GetInstance()
         {
@@ -13,13 +21,13 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Default_1_GetHttpWebRequest()
+        public void Default_1_GetHttpWebRequest()
         {
             var webRequestFactory = Net.WebRequestFactory.GetInstance();
             Assert.NotNull(webRequestFactory);
             var webRequest = webRequestFactory.GetHttpWebRequest(new Uri("https://www.google.com/search?q=firefox"));
             Assert.NotNull(webRequest);
-            Console.WriteLine("WebRequest.UserAgent: " + webRequest.UserAgent);
+            _output.WriteLine("WebRequest.UserAgent: " + webRequest.UserAgent);
         }
 
         [Fact]

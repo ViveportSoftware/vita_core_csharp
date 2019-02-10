@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class UriSchemeManager
+    public class UriSchemeManager
     {
+        private readonly ITestOutputHelper _output;
+
+        public UriSchemeManager(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
-        public static void Default_0_GetSystemUriScheme()
+        public void Default_0_GetSystemUriScheme()
         {
             if (!Runtime.Platform.IsWindows)
             {
@@ -19,13 +27,13 @@ namespace Htc.Vita.Core.Tests
 
             var systemUriScheme = uriSchemeManager.GetSystemUriScheme("http");
             Assert.NotNull(systemUriScheme);
-            Console.WriteLine("systemUriScheme.Name: \"" + systemUriScheme.Name + "\"");
+            _output.WriteLine("systemUriScheme.Name: \"" + systemUriScheme.Name + "\"");
             Assert.False(string.IsNullOrEmpty(systemUriScheme.Name));
-            Console.WriteLine("systemUriScheme.DefaultIcon: \"" + systemUriScheme.DefaultIcon + "\"");
+            _output.WriteLine("systemUriScheme.DefaultIcon: \"" + systemUriScheme.DefaultIcon + "\"");
             Assert.False(string.IsNullOrEmpty(systemUriScheme.DefaultIcon));
-            Console.WriteLine("systemUriScheme.CommandPath: \"" + systemUriScheme.CommandPath + "\"");
+            _output.WriteLine("systemUriScheme.CommandPath: \"" + systemUriScheme.CommandPath + "\"");
             Assert.False(string.IsNullOrEmpty(systemUriScheme.CommandPath));
-            Console.WriteLine("systemUriScheme.CommandParameter: \"" + systemUriScheme.CommandParameter + "\"");
+            _output.WriteLine("systemUriScheme.CommandParameter: \"" + systemUriScheme.CommandParameter + "\"");
             Assert.False(string.IsNullOrEmpty(systemUriScheme.CommandParameter));
 
             var systemUriScheme2 = uriSchemeManager.GetSystemUriScheme("http2");
@@ -37,7 +45,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Default_0_GetSystemUriScheme_WithWhitelist()
+        public void Default_0_GetSystemUriScheme_WithWhitelist()
         {
             if (!Runtime.Platform.IsWindows)
             {
@@ -53,10 +61,10 @@ namespace Htc.Vita.Core.Tests
             };
             var systemUriScheme = uriSchemeManager.GetSystemUriScheme("http", options);
             Assert.NotNull(systemUriScheme);
-            Console.WriteLine("systemUriScheme.Name: \"" + systemUriScheme.Name + "\"");
-            Console.WriteLine("systemUriScheme.DefaultIcon: \"" + systemUriScheme.DefaultIcon + "\"");
-            Console.WriteLine("systemUriScheme.CommandPath: \"" + systemUriScheme.CommandPath + "\"");
-            Console.WriteLine("systemUriScheme.CommandParameter: \"" + systemUriScheme.CommandParameter + "\"");
+            _output.WriteLine("systemUriScheme.Name: \"" + systemUriScheme.Name + "\"");
+            _output.WriteLine("systemUriScheme.DefaultIcon: \"" + systemUriScheme.DefaultIcon + "\"");
+            _output.WriteLine("systemUriScheme.CommandPath: \"" + systemUriScheme.CommandPath + "\"");
+            _output.WriteLine("systemUriScheme.CommandParameter: \"" + systemUriScheme.CommandParameter + "\"");
 
             var systemUriScheme2 = uriSchemeManager.GetSystemUriScheme("http2", options);
             Assert.NotNull(systemUriScheme2);
