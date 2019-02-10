@@ -5,8 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
 using System.Runtime.InteropServices;
-using System.Security.AccessControl;
-using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using Htc.Vita.Core.Crypto;
@@ -181,28 +179,6 @@ namespace Htc.Vita.Core.Runtime
             private void OnHandleRequest(object data)
             {
                 var threadId = Thread.CurrentThread.ManagedThreadId;
-                var pipeSecurity = new PipeSecurity();
-                pipeSecurity.AddAccessRule(
-                        new PipeAccessRule(
-                                new SecurityIdentifier(WellKnownSidType.BuiltinUsersSid, null),
-                                PipeAccessRights.ReadWrite | PipeAccessRights.CreateNewInstance,
-                                AccessControlType.Allow
-                        )
-                );
-                pipeSecurity.AddAccessRule(
-                        new PipeAccessRule(
-                                new SecurityIdentifier(WellKnownSidType.CreatorOwnerSid, null),
-                                PipeAccessRights.FullControl,
-                                AccessControlType.Allow
-                        )
-                );
-                pipeSecurity.AddAccessRule(
-                        new PipeAccessRule(
-                                new SecurityIdentifier(WellKnownSidType.LocalSystemSid, null),
-                                PipeAccessRights.FullControl,
-                                AccessControlType.Allow
-                        )
-                );
 
                 try
                 {
@@ -211,10 +187,7 @@ namespace Htc.Vita.Core.Runtime
                             PipeDirection.InOut,
                             PipeThreadNumber,
                             PipeTransmissionMode.Message,
-                            PipeOptions.None,
-                            /* default */ 0,
-                            /* default */ 0,
-                            pipeSecurity
+                            PipeOptions.None
                     ))
                     {
                         while (!_shouldStopWorkers)

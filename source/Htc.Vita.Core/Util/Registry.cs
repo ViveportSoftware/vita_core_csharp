@@ -360,7 +360,7 @@ namespace Htc.Vita.Core.Util
             Users = RegistryHive.Users,
             PerformanceData = RegistryHive.PerformanceData,
             CurrentConfig = RegistryHive.CurrentConfig,
-            DynData = RegistryHive.DynData,
+            DynData = -2147483642 /* RegistryHive.DynData */
         }
     }
 }

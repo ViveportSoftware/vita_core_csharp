@@ -24,9 +24,6 @@ var companyName = "HTC";
 var version = "0.10.0";
 var semanticVersion = string.Format("{0}.{1}", version, revision);
 var ciVersion = string.Format("{0}.{1}", version, "0");
-var nugetTags = new [] {"htc", "vita", "core"};
-var projectUrl = "https://github.com/ViveportSoftware/vita_core_csharp/";
-var description = "HTC Vita Core module";
 
 // Define copyright
 var copyright = string.Format("Copyright © 2017 - {0}", DateTime.Now.Year);
@@ -142,22 +139,11 @@ Task("Build-Assemblies")
     .IsDependentOn("Generate-AssemblyInfo")
     .Does(() =>
 {
-    if(IsRunningOnWindows())
+    var settings = new DotNetCoreBuildSettings
     {
-        // Use MSBuild
-        MSBuild(
-                solutionFile,
-                settings => settings.SetConfiguration(configuration)
-        );
-    }
-    else
-    {
-        // Use XBuild
-        XBuild(
-                solutionFile,
-                settings => settings.SetConfiguration(configuration)
-        );
-    }
+            Configuration = configuration
+    };
+    DotNetCoreBuild("./source/", settings);
 });
 
 Task("Prepare-Unit-Test-Data")
@@ -387,6 +373,38 @@ Task("Sign-Assemblies")
             }
     );
     lastSignTimestamp = DateTime.Now;
+
+    file = string.Format("./temp/{0}/{1}/bin/netcoreapp2.1/{1}.dll", configuration, product);
+
+    if (totalTimeInMilli < signIntervalInMilli)
+    {
+        System.Threading.Thread.Sleep(signIntervalInMilli - (int)totalTimeInMilli);
+    }
+    Sign(
+            file,
+            new SignToolSignSettings
+            {
+                    TimeStampUri = signSha1Uri,
+                    CertPath = signKey,
+                    Password = signPass
+            }
+    );
+    lastSignTimestamp = DateTime.Now;
+
+    System.Threading.Thread.Sleep(signIntervalInMilli);
+    Sign(
+            file,
+            new SignToolSignSettings
+            {
+                    AppendSignature = true,
+                    TimeStampUri = signSha256Uri,
+                    DigestAlgorithm = SignToolDigestAlgorithm.Sha256,
+                    TimeStampDigestAlgorithm = SignToolDigestAlgorithm.Sha256,
+                    CertPath = signKey,
+                    Password = signPass
+            }
+    );
+    lastSignTimestamp = DateTime.Now;
 });
 
 Task("Build-NuGet-Package")
@@ -400,38 +418,18 @@ Task("Build-NuGet-Package")
         nugetPackVersion = string.Format("{0}-CI{1}", ciVersion, revision);
     }
     Information("Pack version: {0}", nugetPackVersion);
-    var nuGetPackSettings = new NuGetPackSettings
+    var settings = new DotNetCorePackSettings
     {
-            Id = product,
-            Version = nugetPackVersion,
-            Authors = new[] {"HTC"},
-            Description = description + " [CommitId: " + commitId + "]",
-            Copyright = copyright,
-            ProjectUrl = new Uri(projectUrl),
-            Tags = nugetTags,
-            RequireLicenseAcceptance= false,
-            Files = new []
+            Configuration = configuration,
+            OutputDirectory = nugetDir,
+            NoBuild = true,
+            ArgumentCustomization = (args) =>
             {
-                    new NuSpecContent
-                    {
-                            Source = string.Format("{0}/bin/net45/{0}.dll", product),
-                            Target = "lib\\net45"
-                    },
-                    new NuSpecContent
-                    {
-                            Source = string.Format("{0}/bin/net45/{0}.pdb", product),
-                            Target = "lib\\net45"
-                    },
-            },
-            Properties = new Dictionary<string, string>
-            {
-                    {"Configuration", configuration}
-            },
-            BasePath = tempDir + Directory(configuration),
-            OutputDirectory = nugetDir
+                    return args.Append("/p:Version={0}", nugetPackVersion);
+            }
     };
 
-    NuGetPack(nuGetPackSettings);
+    DotNetCorePack("./source/" + product + "/", settings);
 });
 
 Task("Update-Coverage-Report")
