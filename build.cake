@@ -64,6 +64,7 @@ var coverallsApiKey = EnvironmentVariable("COVERALLS_APIKEY") ?? "NOTSET";
 var nugetApiKey = EnvironmentVariable("NUGET_PUSH_TOKEN") ?? EnvironmentVariable("NUGET_APIKEY") ?? "NOTSET";
 var nugetSource = EnvironmentVariable("NUGET_PUSH_PATH") ?? EnvironmentVariable("NUGET_SOURCE") ?? "NOTSET";
 
+
 //////////////////////////////////////////////////////////////////////
 // TASKS
 //////////////////////////////////////////////////////////////////////
@@ -210,8 +211,9 @@ Task("Run-Unit-Tests-Under-AnyCPU")
                                 "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/net452/*.Tests.dll",
                                 new XUnit2Settings
                                 {
-                                        ShadowCopy = false,
                                         Parallelism = ParallelismOption.All,
+                                        HtmlReport = true,
+                                        NUnitReport = true,
                                         OutputDirectory = reportXUnitDirAnyCPU
                                 }
                         );
