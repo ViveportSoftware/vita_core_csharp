@@ -79,8 +79,7 @@ namespace Htc.Vita.Core.Net
             request.Timeout = 2000;
             try
             {
-                var response = request.GetResponse() as HttpWebResponse;
-                if (response != null)
+                using (request.GetResponse())
                 {
                     WebProxyStatusMap[proxyUrl] = new KeyValuePair<WebProxyStatus, long>(
                             WebProxyStatus.Working,
@@ -88,8 +87,6 @@ namespace Htc.Vita.Core.Net
                     );
                     return WebProxyStatus.Working;
                 }
-                Logger.GetInstance(typeof(DefaultWebProxyFactory)).Error("Can not get web response to test proxy.");
-                return WebProxyStatus.CannotTest;
             }
             catch (Exception e)
             {

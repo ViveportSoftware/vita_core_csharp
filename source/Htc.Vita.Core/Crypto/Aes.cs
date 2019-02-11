@@ -156,33 +156,35 @@ namespace Htc.Vita.Core.Crypto
                 return null;
             }
 
-            var deriveBytes = new Rfc2898DeriveBytes(password, SaltSize128BitInByte);
-            var salt = deriveBytes.Salt;
-            var key = deriveBytes.GetBytes(KeySize256BitInByte);
-            var iv = deriveBytes.GetBytes(IvSize128BitInByte);
-
             byte[] result = null;
-            try
+            using (var deriveBytes = new Rfc2898DeriveBytes(password, SaltSize128BitInByte))
             {
-                var encryptedBytes = Encrypt(
-                        input,
-                        key,
-                        iv
-                );
+                var salt = deriveBytes.Salt;
+                var key = deriveBytes.GetBytes(KeySize256BitInByte);
+                var iv = deriveBytes.GetBytes(IvSize128BitInByte);
 
-                using (var memoryStream = new MemoryStream())
+                try
                 {
-                    using (var binaryWriter = new BinaryWriter(memoryStream))
+                    var encryptedBytes = Encrypt(
+                            input,
+                            key,
+                            iv
+                    );
+
+                    using (var memoryStream = new MemoryStream())
                     {
-                        binaryWriter.Write(salt);
-                        binaryWriter.Write(encryptedBytes);
+                        using (var binaryWriter = new BinaryWriter(memoryStream))
+                        {
+                            binaryWriter.Write(salt);
+                            binaryWriter.Write(encryptedBytes);
+                        }
+                        result = memoryStream.ToArray();
                     }
-                    result = memoryStream.ToArray();
                 }
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(Aes)).Fatal("Encrypt input with password error: " + e);
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(Aes)).Fatal("Encrypt input with password error: " + e);
+                }
             }
             return result;
         }

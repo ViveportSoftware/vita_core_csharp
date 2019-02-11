@@ -24,16 +24,18 @@ namespace Htc.Vita.Core.Util
 
                 try
                 {
-                    var icon = Icon.ExtractAssociatedIcon(fromFile.FullName);
-                    if (icon == null)
+                    using (var icon = Icon.ExtractAssociatedIcon(fromFile.FullName))
                     {
-                        return false;
+                        if (icon == null)
+                        {
+                            return false;
+                        }
+                        using (var stream = new FileStream(toIcon.FullName, FileMode.CreateNew))
+                        {
+                            icon.Save(stream);
+                        }
+                        return true;
                     }
-                    using (var stream = new FileStream(toIcon.FullName, FileMode.CreateNew))
-                    {
-                        icon.Save(stream);
-                    }
-                    return true;
                 }
                 catch (Exception e)
                 {

@@ -15,8 +15,6 @@ namespace Htc.Vita.Core.Diagnostics
 
         private const int ErrorPathCacheTimeInMilli = 1000 * 60 * 60;
 
-        private readonly X509Certificate _certificate;
-
         public string IssuerDistinguishedName { get; }
         public string IssuerName { get; }
         public string PublicKey { get; }
@@ -36,9 +34,11 @@ namespace Htc.Vita.Core.Diagnostics
                 Logger.GetInstance(typeof(FilePropertiesInfo)).Warn("Can not find " + fileInfo.FullName + " to get properties");
                 return;
             }
+
+            X509Certificate certificate = null;
             try
             {
-                _certificate = X509Certificate.CreateFromSignedFile(fileInfo.FullName);
+                certificate = X509Certificate.CreateFromSignedFile(fileInfo.FullName);
             }
             catch (Exception)
             {
@@ -55,13 +55,13 @@ namespace Htc.Vita.Core.Diagnostics
                     CachedErrorPaths.Add(key);
                 }
             }
-            if (_certificate != null)
+            if (certificate != null)
             {
-                IssuerDistinguishedName = _certificate.Issuer;
+                IssuerDistinguishedName = certificate.Issuer;
                 IssuerName = DistinguishedName.Parse(IssuerDistinguishedName).O;
-                SubjectDistinguishedName = _certificate.Subject;
+                SubjectDistinguishedName = certificate.Subject;
                 SubjectName = DistinguishedName.Parse(SubjectDistinguishedName).O;
-                PublicKey = _certificate.GetPublicKeyString();
+                PublicKey = certificate.GetPublicKeyString();
                 Verified = Authenticode.IsVerified(fileInfo);
             }
 

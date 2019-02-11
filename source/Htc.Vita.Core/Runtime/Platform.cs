@@ -205,12 +205,12 @@ namespace Htc.Vita.Core.Runtime
             try
             {
                 var isWow64 = false;
-                var sucess = Interop.Windows.IsWow64Process(
+                var success = Interop.Windows.IsWow64Process(
                         Process.GetCurrentProcess().Handle,
                         ref isWow64
                 );
 
-                if (sucess)
+                if (success)
                 {
                     return isWow64;
                 }

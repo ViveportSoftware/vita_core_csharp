@@ -137,24 +137,27 @@ namespace Htc.Vita.Core.Runtime
                 {
                     using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_OperatingSystem"))
                     {
-                        foreach (var o in searcher.Get())
+                        using (var managementObjectCollection = searcher.Get())
                         {
-                            var managementObject = o as ManagementObject;
-                            if (managementObject == null)
+                            foreach (var o in managementObjectCollection)
                             {
-                                continue;
-                            }
+                                var managementObject = o as ManagementObject;
+                                if (managementObject == null)
+                                {
+                                    continue;
+                                }
 
-                            try
-                            {
-                                return (string) managementObject.GetPropertyValue("Caption");
-                            }
-                            finally
-                            {
-                                /*
-                                 * https://stackoverflow.com/questions/11896282/using-clause-fails-to-call-dispose
-                                 */
-                                managementObject.Dispose();
+                                try
+                                {
+                                    return (string)managementObject.GetPropertyValue("Caption");
+                                }
+                                finally
+                                {
+                                    /*
+                                     * https://stackoverflow.com/questions/11896282/using-clause-fails-to-call-dispose
+                                     */
+                                    managementObject.Dispose();
+                                }
                             }
                         }
                     }

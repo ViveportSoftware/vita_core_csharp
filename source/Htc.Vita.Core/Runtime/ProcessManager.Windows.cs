@@ -81,22 +81,24 @@ namespace Htc.Vita.Core.Runtime
             internal static string GetPlatformProcessPathById(int processId)
             {
                 string processPath;
-                var clientProcess = Process.GetProcessById(processId);
-                try
+                using (var clientProcess = Process.GetProcessById(processId))
                 {
-                    processPath = clientProcess.MainModule.FileName;
-                }
-                catch (Win32Exception)
-                {
-                    var processHandle = clientProcess.Handle;
-                    var fullPath = new StringBuilder(256);
-                    Interop.Windows.GetModuleFileNameExW(
-                            processHandle,
-                            IntPtr.Zero,
-                            fullPath,
-                            (uint)fullPath.Capacity
-                    );
-                    processPath = fullPath.ToString();
+                    try
+                    {
+                        processPath = clientProcess.MainModule.FileName;
+                    }
+                    catch (Win32Exception)
+                    {
+                        var processHandle = clientProcess.Handle;
+                        var fullPath = new StringBuilder(256);
+                        Interop.Windows.GetModuleFileNameExW(
+                                processHandle,
+                                IntPtr.Zero,
+                                fullPath,
+                                (uint)fullPath.Capacity
+                        );
+                        processPath = fullPath.ToString();
+                    }
                 }
 
                 return processPath;
