@@ -212,9 +212,8 @@ Task("Run-Unit-Tests-Under-AnyCPU")
                                 new XUnit2Settings
                                 {
                                         Parallelism = ParallelismOption.All,
-                                        HtmlReport = true,
-                                        NUnitReport = true,
-                                        OutputDirectory = reportXUnitDirAnyCPU
+                                        OutputDirectory = reportXUnitDirAnyCPU,
+                                        ShadowCopy = false
                                 }
                         );
                 },
