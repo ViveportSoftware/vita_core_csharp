@@ -1,11 +1,18 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class AesFactory
+    public class AesFactory
     {
+        private readonly ITestOutputHelper _output;
+
+        public AesFactory(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public static void Default_0_GetInstance()
         {
@@ -37,7 +44,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Aes_0_Encrypt_WithEmptyInput_WithPassword()
+        public void Aes_0_Encrypt_WithEmptyInput_WithPassword()
         {
             var aesFactory = Crypto.AesFactory.GetInstance();
             Assert.NotNull(aesFactory);
@@ -49,7 +56,7 @@ namespace Htc.Vita.Core.Tests
             var outputInBytes = aes.Encrypt(inputInBytes, password);
             Assert.NotNull(outputInBytes);
             var outputInHex = Util.Convert.ToHexString(outputInBytes);
-            Console.WriteLine("outputInHex: " + outputInHex);
+            _output.WriteLine("outputInHex: " + outputInHex);
         }
 
         [Fact]

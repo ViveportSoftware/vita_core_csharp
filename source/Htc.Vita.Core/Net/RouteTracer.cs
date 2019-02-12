@@ -33,32 +33,34 @@ namespace Htc.Vita.Core.Net
                 currentTimeoutInMilli = 1;
             }
 
-            var ping = new Ping();
             var pingOptions = new PingOptions(1, true);
             var pingReplyTime = new Stopwatch();
 
             try
             {
-                while (true)
+                using (var ping = new Ping())
                 {
-                    pingReplyTime.Start();
-                    var reply = ping.Send(hostNameOrIpAddress, currentTimeoutInMilli, new byte[] { 0 }, pingOptions);
-                    pingReplyTime.Stop();
-
-                    result.Add(new Hop
+                    while (true)
                     {
-                            Node = pingOptions.Ttl,
-                            IP = reply?.Address?.ToString(),
-                            Hostname = Dns.GetInstance().GetHostEntry(reply?.Address)?.HostName,
-                            Time = pingReplyTime.ElapsedMilliseconds,
-                            Status = reply?.Status.ToString()
-                    });
+                        pingReplyTime.Start();
+                        var reply = ping.Send(hostNameOrIpAddress, currentTimeoutInMilli, new byte[] { 0 }, pingOptions);
+                        pingReplyTime.Stop();
 
-                    pingOptions.Ttl++;
-                    pingReplyTime.Reset();
-                    if (pingOptions.Ttl > currentMaxHop || IPStatus.Success == reply?.Status)
-                    {
-                        break;
+                        result.Add(new Hop
+                        {
+                                Node = pingOptions.Ttl,
+                                IP = reply?.Address?.ToString(),
+                                Hostname = Dns.GetInstance().GetHostEntry(reply?.Address)?.HostName,
+                                Time = pingReplyTime.ElapsedMilliseconds,
+                                Status = reply?.Status.ToString()
+                        });
+
+                        pingOptions.Ttl++;
+                        pingReplyTime.Reset();
+                        if (pingOptions.Ttl > currentMaxHop || IPStatus.Success == reply?.Status)
+                        {
+                            break;
+                        }
                     }
                 }
             }

@@ -28,7 +28,10 @@ namespace Htc.Vita.Core.Runtime
             string result = null;
             try
             {
-                result = WindowsIdentity.GetCurrent().Name;
+                using (var identity = WindowsIdentity.GetCurrent())
+                {
+                    result = identity.Name;
+                }
             }
             catch (Exception e)
             {

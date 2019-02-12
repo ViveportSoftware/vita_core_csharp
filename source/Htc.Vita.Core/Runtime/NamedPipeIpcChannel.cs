@@ -355,7 +355,10 @@ namespace Htc.Vita.Core.Runtime
             string processPath = null;
             try
             {
-                processPath = Process.GetProcessById((int)processId).MainModule.FileName;
+                using (var process = Process.GetProcessById((int) processId))
+                {
+                    processPath = process.MainModule.FileName;
+                }
             }
             catch (Exception e)
             {
@@ -388,22 +391,24 @@ namespace Htc.Vita.Core.Runtime
             }
 
             string processPath;
-            var clientProcess = Process.GetProcessById((int) processId);
-            try
+            using (var clientProcess = Process.GetProcessById((int) processId))
             {
-                processPath = clientProcess.MainModule.FileName;
-            }
-            catch (Win32Exception)
-            {
-                var processHandle = clientProcess.Handle;
-                var fullPath = new StringBuilder(256);
-                Windows.GetModuleFileNameExW(
-                        processHandle,
-                        IntPtr.Zero,
-                        fullPath,
-                        (uint)fullPath.Capacity
-                );
-                processPath = fullPath.ToString();
+                try
+                {
+                    processPath = clientProcess.MainModule.FileName;
+                }
+                catch (Win32Exception)
+                {
+                    var processHandle = clientProcess.Handle;
+                    var fullPath = new StringBuilder(256);
+                    Windows.GetModuleFileNameExW(
+                            processHandle,
+                            IntPtr.Zero,
+                            fullPath,
+                            (uint)fullPath.Capacity
+                    );
+                    processPath = fullPath.ToString();
+                }
             }
             if (string.IsNullOrWhiteSpace(processPath))
             {
