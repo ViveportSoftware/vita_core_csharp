@@ -116,7 +116,7 @@ Task("Generate-AssemblyInfo")
     .Does(() =>
 {
     CreateDirectory(generatedDir);
-    var file = "./source/Generated/SharedAssemblyInfo.cs";
+    var file = "./source/generated/SharedAssemblyInfo.cs";
     var assemblyVersion = semanticVersion;
     if (!"Release".Equals(configuration))
     {
