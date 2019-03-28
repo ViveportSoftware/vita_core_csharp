@@ -1,13 +1,14 @@
-﻿using Xunit;
+﻿using Htc.Vita.Core.Runtime;
+using Xunit;
 using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class UserManager
+    public class UserManagerTest
     {
         private readonly ITestOutputHelper _output;
 
-        public UserManager(ITestOutputHelper output)
+        public UserManagerTest(ITestOutputHelper output)
         {
             _output = output;
         }
@@ -15,11 +16,11 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void Default_0_GetFirstActiveUser()
         {
-            if (!Runtime.Platform.IsWindows)
+            if (!Platform.IsWindows)
             {
                 return;
             }
-            var username = Runtime.UserManager.GetFirstActiveUser();
+            var username = UserManager.GetFirstActiveUser();
             _output.WriteLine("username: " + username);
             Assert.True(username != null && username.Length >= 3);
         }
