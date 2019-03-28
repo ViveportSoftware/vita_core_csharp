@@ -1,11 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using Htc.Vita.Core.Util;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class Extract
+    public static class ExtractTest
     {
         [Fact]
         public static void Default_0_FromFileToIconInWindows()
@@ -21,7 +22,7 @@ namespace Htc.Vita.Core.Tests
             var intermediatePathName = "Icon-" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow);
             target = Path.Combine(target, intermediatePathName, intermediatePathName, "shell32.ico");
             var targetFileInfo = new FileInfo(target);
-            Assert.True(Util.Extract.FromFileToIcon(sourceFileInfo, targetFileInfo));
+            Assert.True(Extract.FromFileToIcon(sourceFileInfo, targetFileInfo));
             Assert.True(targetFileInfo.Exists);
         }
 
@@ -34,10 +35,10 @@ namespace Htc.Vita.Core.Tests
             var destPath = Path.Combine(desktopPath, fileName);
             var file = new FileInfo(destPath);
 
-            var result = Util.Extract.FromAssemblyToFileByResourceName(
+            var result = Extract.FromAssemblyToFileByResourceName(
                     assemblyName + "." + fileName + ".gz",
                     file,
-                    Util.Extract.CompressionType.Gzip
+                    Extract.CompressionType.Gzip
             );
             Assert.True(result);
             Assert.Equal("9eJAeMCTbKeIFSYOfVjRqUCWbro=", Crypto.Sha1.GetInstance().GenerateInBase64(file));
