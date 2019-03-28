@@ -1,15 +1,16 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using Htc.Vita.Core.Runtime;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class ProcessManager
+    public class ProcessManagerTest
     {
         private readonly ITestOutputHelper _output;
 
-        public ProcessManager(ITestOutputHelper output)
+        public ProcessManagerTest(ITestOutputHelper output)
         {
             _output = output;
         }
@@ -17,11 +18,11 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void ProcessManager_Default_0_GetProcesses()
         {
-            if (!Runtime.Platform.IsWindows)
+            if (!Platform.IsWindows)
             {
                 return;
             }
-            var processInfos = Runtime.ProcessManager.GetProcesses();
+            var processInfos = ProcessManager.GetProcesses();
             Assert.NotNull(processInfos);
             foreach (var processInfo in processInfos)
             {
@@ -35,11 +36,11 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void ProcessManager_Default_1_GetProcessesByFirstActiveUser()
         {
-            if (!Runtime.Platform.IsWindows)
+            if (!Platform.IsWindows)
             {
                 return;
             }
-            var processInfos = Runtime.ProcessManager.GetProcessesByFirstActiveUser();
+            var processInfos = ProcessManager.GetProcessesByFirstActiveUser();
             foreach (var processInfo in processInfos)
             {
                 Assert.True(processInfo.Id > 4);
@@ -52,7 +53,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void ProcessManager_Default_2_KillProcessById()
         {
-            if (!Runtime.Platform.IsWindows)
+            if (!Platform.IsWindows)
             {
                 return;
             }
@@ -62,7 +63,7 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(process);
             Assert.True(process.Id > 4);
             _output.WriteLine("Start " + fileInfo.FullName + " successfully on PID: " + process.Id);
-            Assert.True(Runtime.ProcessManager.KillProcessById(process.Id));
+            Assert.True(ProcessManager.KillProcessById(process.Id));
             _output.WriteLine("Kill " + fileInfo.Name + " successfully on PID: " + process.Id);
         }
     }
