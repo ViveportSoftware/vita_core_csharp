@@ -1,14 +1,15 @@
 ﻿using System.Text;
+using Htc.Vita.Core.Crypto;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class AesFactory
+    public class AesFactoryTest
     {
         private readonly ITestOutputHelper _output;
 
-        public AesFactory(ITestOutputHelper output)
+        public AesFactoryTest(ITestOutputHelper output)
         {
             _output = output;
         }
@@ -16,14 +17,14 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_0_GetInstance()
         {
-            var aesFactory = Crypto.AesFactory.GetInstance();
+            var aesFactory = AesFactory.GetInstance();
             Assert.NotNull(aesFactory);
         }
 
         [Fact]
         public static void Default_1_Get()
         {
-            var aesFactory = Crypto.AesFactory.GetInstance();
+            var aesFactory = AesFactory.GetInstance();
             Assert.NotNull(aesFactory);
             var aes = aesFactory.Get();
             Assert.NotNull(aes);
@@ -32,7 +33,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Aes_0_Encrypt_WithInput_WithPassword()
         {
-            var aesFactory = Crypto.AesFactory.GetInstance();
+            var aesFactory = AesFactory.GetInstance();
             Assert.NotNull(aesFactory);
             var aes = aesFactory.Get();
             Assert.NotNull(aes);
@@ -46,7 +47,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void Aes_0_Encrypt_WithEmptyInput_WithPassword()
         {
-            var aesFactory = Crypto.AesFactory.GetInstance();
+            var aesFactory = AesFactory.GetInstance();
             Assert.NotNull(aesFactory);
             var aes = aesFactory.Get();
             Assert.NotNull(aes);
@@ -62,7 +63,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Aes_1_Decrypt_WithPassword()
         {
-            var aesFactory = Crypto.AesFactory.GetInstance();
+            var aesFactory = AesFactory.GetInstance();
             Assert.NotNull(aesFactory);
             var aesEncryptor = aesFactory.Get();
             Assert.NotNull(aesEncryptor);
