@@ -1,25 +1,26 @@
 ﻿using System.Net;
 using System.Net.Sockets;
+using Htc.Vita.Core.Net;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class LocalPortManager
+    public static class LocalPortManagerTest
     {
         [Fact]
         public static void Default_0_GetRandomUnusedPort()
         {
-            var unusedPort = Net.LocalPortManager.GetRandomUnusedPort();
+            var unusedPort = LocalPortManager.GetRandomUnusedPort();
             Assert.True(unusedPort > 0);
         }
 
         [Fact]
         public static void Default_1_GetPortStatus()
         {
-            var unusedPort = Net.LocalPortManager.GetRandomUnusedPort();
+            var unusedPort = LocalPortManager.GetRandomUnusedPort();
             Assert.True(unusedPort > 0);
-            var portStatus = Net.LocalPortManager.GetPortStatus(unusedPort);
-            Assert.Equal(Net.LocalPortManager.PortStatus.Available, portStatus);
+            var portStatus = LocalPortManager.GetPortStatus(unusedPort);
+            Assert.Equal(LocalPortManager.PortStatus.Available, portStatus);
         }
 
         [Fact]
@@ -31,8 +32,8 @@ namespace Htc.Vita.Core.Tests
                 listener.Start();
                 var usedPort = ((IPEndPoint)listener.LocalEndpoint).Port;
                 Assert.True(usedPort > 0);
-                var portStatus = Net.LocalPortManager.GetPortStatus(usedPort);
-                Assert.Equal(Net.LocalPortManager.PortStatus.InUse, portStatus);
+                var portStatus = LocalPortManager.GetPortStatus(usedPort);
+                Assert.Equal(LocalPortManager.PortStatus.InUse, portStatus);
             }
             finally
             {
