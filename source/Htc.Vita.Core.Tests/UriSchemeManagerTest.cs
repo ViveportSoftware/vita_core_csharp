@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using Htc.Vita.Core.Shell;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class UriSchemeManager
+    public class UriSchemeManagerTest
     {
         private readonly ITestOutputHelper _output;
 
-        public UriSchemeManager(ITestOutputHelper output)
+        public UriSchemeManagerTest(ITestOutputHelper output)
         {
             _output = output;
         }
@@ -21,7 +22,7 @@ namespace Htc.Vita.Core.Tests
                 return;
             }
 
-            var uriSchemeManager = Shell.UriSchemeManager.GetInstance();
+            var uriSchemeManager = UriSchemeManager.GetInstance();
             Assert.NotNull(uriSchemeManager);
 
             var systemUriScheme = uriSchemeManager.GetSystemUriScheme("http");
@@ -51,12 +52,12 @@ namespace Htc.Vita.Core.Tests
                 return;
             }
 
-            var uriSchemeManager = Shell.UriSchemeManager.GetInstance();
+            var uriSchemeManager = UriSchemeManager.GetInstance();
             Assert.NotNull(uriSchemeManager);
 
             var options = new Dictionary<string, string>
             {
-                {Shell.UriSchemeManager.OptionAcceptWhitelistOnly, "true"}
+                {UriSchemeManager.OptionAcceptWhitelistOnly, "true"}
             };
             var systemUriScheme = uriSchemeManager.GetSystemUriScheme("http", options);
             Assert.NotNull(systemUriScheme);
