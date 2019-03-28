@@ -4,11 +4,11 @@ using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class Dns
+    public class DnsTest
     {
         private readonly ITestOutputHelper _output;
 
-        public Dns(ITestOutputHelper output)
+        public DnsTest(ITestOutputHelper output)
         {
             _output = output;
         }
