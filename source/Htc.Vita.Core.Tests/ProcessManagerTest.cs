@@ -59,12 +59,14 @@ namespace Htc.Vita.Core.Tests
             }
             var fileInfo = new FileInfo("C:\\Windows\\System32\\notepad.exe");
             Assert.True(fileInfo.Exists);
-            var process = Process.Start(fileInfo.FullName);
-            Assert.NotNull(process);
-            Assert.True(process.Id > 4);
-            _output.WriteLine("Start " + fileInfo.FullName + " successfully on PID: " + process.Id);
-            Assert.True(ProcessManager.KillProcessById(process.Id));
-            _output.WriteLine("Kill " + fileInfo.Name + " successfully on PID: " + process.Id);
+            using (var process = Process.Start(fileInfo.FullName))
+            {
+                Assert.NotNull(process);
+                Assert.True(process.Id > 4);
+                _output.WriteLine("Start " + fileInfo.FullName + " successfully on PID: " + process.Id);
+                Assert.True(ProcessManager.KillProcessById(process.Id));
+                _output.WriteLine("Kill " + fileInfo.Name + " successfully on PID: " + process.Id);
+            }
         }
     }
 }
