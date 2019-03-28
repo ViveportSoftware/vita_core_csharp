@@ -1,13 +1,14 @@
-﻿using Xunit;
+﻿using Htc.Vita.Core.Net;
+using Xunit;
 using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class RouteTracer
+    public class RouteTracerTest
     {
         private readonly ITestOutputHelper _output;
 
-        public RouteTracer(ITestOutputHelper output)
+        public RouteTracerTest(ITestOutputHelper output)
         {
             _output = output;
         }
@@ -16,7 +17,7 @@ namespace Htc.Vita.Core.Tests
         public void Default_0_Trace_WithHostname()
         {
             var hostname = "www.google.com";
-            var hops = Net.RouteTracer.Trace(hostname, 20, 5000);
+            var hops = RouteTracer.Trace(hostname, 20, 5000);
             Assert.NotNull(hops);
             Assert.True(hops.Count > 0);
             foreach (var hop in hops)
@@ -29,7 +30,7 @@ namespace Htc.Vita.Core.Tests
         public void Default_0_Trace_WithIpAddress()
         {
             var ipAddress = "8.8.8.8";
-            var hops = Net.RouteTracer.Trace(ipAddress, 20, 5000);
+            var hops = RouteTracer.Trace(ipAddress, 20, 5000);
             Assert.NotNull(hops);
             Assert.True(hops.Count > 0);
             foreach (var hop in hops)
