@@ -57,6 +57,7 @@ namespace Htc.Vita.Core.Net
             {
                 using (new TcpClient("localhost", portNumber))
                 {
+                    // do nothing
                 }
                 return PortStatus.InUse;
             }
