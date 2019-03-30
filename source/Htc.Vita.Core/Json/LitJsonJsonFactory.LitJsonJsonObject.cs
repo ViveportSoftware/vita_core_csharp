@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Htc.Vita.Core.Json.LitJson;
 using Htc.Vita.Core.Log;
@@ -34,7 +33,7 @@ namespace Htc.Vita.Core.Json
                 {
                     return false;
                 }
-                return _jsonData.Keys.Any(key.Equals);
+                return _jsonData.ContainsKey(key);
             }
 
             protected override bool OnParseBool(string key, bool defaultValue)
@@ -168,7 +167,7 @@ namespace Htc.Vita.Core.Json
                             continue;
                         }
                         var data = _jsonData[k];
-                        if (data.IsInt)
+                        if (data.IsInt || data.IsLong)
                         {
                             result = (int)data;
                         }
@@ -201,11 +200,7 @@ namespace Htc.Vita.Core.Json
                             continue;
                         }
                         var data = _jsonData[k];
-                        if (data.IsInt)
-                        {
-                            result = (int)data;
-                        }
-                        if (data.IsLong)
+                        if (data.IsInt || data.IsLong)
                         {
                             result = (long)data;
                         }
