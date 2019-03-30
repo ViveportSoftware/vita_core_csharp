@@ -12,6 +12,15 @@ namespace Htc.Vita.Core.TestProgram
             Console.WriteLine("NetworkInterface.IsInternetAvailable(): " + NetworkInterface.IsInternetAvailable());
             Console.ReadKey();
 
+            var randomUnusedPort = LocalPortManager.GetRandomUnusedPort();
+            var specificPort = 35447;
+            var randomUnusedPortStatus = LocalPortManager.GetPortStatus(randomUnusedPort);
+            var specificPortStatus = LocalPortManager.GetPortStatus(specificPort);
+            var randomUnusedPortVerifyStatus = LocalPortManager.VerifyPortStatus(randomUnusedPort);
+            var specificPortVerifyStatus = LocalPortManager.VerifyPortStatus(specificPort);
+            Console.WriteLine("Random unused port [" + randomUnusedPort + "] status: " + randomUnusedPortStatus + ", verify: " + randomUnusedPortVerifyStatus);
+            Console.WriteLine("Specific port [" + specificPort + "] status: " + specificPortStatus + ", verify: " + specificPortVerifyStatus);
+
             var processWatcherFactory = ProcessWatcherFactory.GetInstance();
             var notepadProcessWatcher = processWatcherFactory.CreateProcessWatcher("notepad.exe");
             notepadProcessWatcher.ProcessCreated += OnProcessCreated;
