@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
 
 namespace Htc.Vita.Core.Interop
 {
@@ -164,7 +165,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetNamedPipeClientProcessId(
-                /* _In_  HANDLE */ [In] IntPtr pipe,
+                /* _In_  HANDLE */ [In] SafePipeHandle pipe,
                 /* _Out_ PULONG */ [In][Out] ref uint clientProcessId
         );
 
@@ -178,7 +179,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetNamedPipeServerProcessId(
-                /* _In_  HANDLE */ [In] IntPtr pipe,
+                /* _In_  HANDLE */ [In] SafePipeHandle pipe,
                 /* _Out_ PULONG */ [In][Out] ref uint serverProcessId
         );
 
