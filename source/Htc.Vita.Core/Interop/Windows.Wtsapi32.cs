@@ -110,7 +110,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool WTSEnumerateProcessesW(
-                /* _In_  HANDLE             */ [In] IntPtr hServer,
+                /* _In_  HANDLE             */ [In] SafeWtsServerHandle hServer,
                 /* _In_  DWORD              */ [In] uint reserved,
                 /* _In_  DWORD              */ [In] uint version,
                 /* _Out_ PWTS_PROCESS_INFO* */ [In][Out] ref IntPtr ppProcessInfo,
@@ -127,7 +127,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool WTSEnumerateSessionsW(
-                /* _In_  HANDLE             */ [In] IntPtr hServer,
+                /* _In_  HANDLE             */ [In] SafeWtsServerHandle hServer,
                 /* _In_  DWORD              */ [In] uint reserved,
                 /* _In_  DWORD              */ [In] uint version,
                 /* _Out_ PWTS_SESSION_INFO* */ [In][Out] ref IntPtr ppSessionInfo,
@@ -154,7 +154,7 @@ namespace Htc.Vita.Core.Interop
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
                 SetLastError = true)]
-        internal static extern IntPtr WTSOpenServerW(
+        internal static extern SafeWtsServerHandle WTSOpenServerW(
                 /* _In_ LPTSTR */ [In] string pServerName
         );
 
@@ -168,7 +168,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool WTSQuerySessionInformationW(
-                /* _In_  HANDLE         */ [In] IntPtr hServer,
+                /* _In_  HANDLE         */ [In] SafeWtsServerHandle hServer,
                 /* _In_  DWORD          */ [In] uint sessionId,
                 /* _In_  WTS_INFO_CLASS */ [In] WindowsTerminalServiceInfoClass wtsInfoClass,
                 /* _Out_ LPTSTR*        */ [In][Out] ref IntPtr ppBuffer,
@@ -185,7 +185,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool WTSTerminateProcess(
-                /* _In_ HANDLE */ [In] IntPtr hServer,
+                /* _In_ HANDLE */ [In] SafeWtsServerHandle hServer,
                 /* _In_ DWORD  */ [In] uint processId,
                 /* _In_ DWORD  */ [In] uint exitCode
         );

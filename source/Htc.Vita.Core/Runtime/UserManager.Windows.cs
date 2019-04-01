@@ -94,95 +94,97 @@ namespace Htc.Vita.Core.Runtime
                 }
 
                 var results = new List<WindowsUserInfo>();
-                var serverHandle = Interop.Windows.WTSOpenServerW(machineName);
-
-                try
+                using (var serverHandle = Interop.Windows.WTSOpenServerW(machineName))
                 {
-                    var sessionInfoPtr = IntPtr.Zero;
-                    var sessionCount = 0U;
-                    var success = Interop.Windows.WTSEnumerateSessionsW(
-                            serverHandle,
-                            0,
-                            1,
-                            ref sessionInfoPtr,
-                            ref sessionCount
-                    );
-                    var dataSize = Marshal.SizeOf(typeof(Interop.Windows.WindowsTerminalServiceSessionInfo));
-                    var currentSessionInfoPtr = sessionInfoPtr;
-
-                    if (success)
+                    if (serverHandle == null || serverHandle.IsInvalid)
                     {
-                        if (sessionCount <= 0U)
-                        {
-                            Logger.GetInstance(typeof(UserManager)).Error("Can not find available WTS session");
-                        }
+                        return results;
+                    }
 
-                        for (var sessionIndex = 0U; sessionIndex < sessionCount; sessionIndex++)
-                        {
-                            var sessionInfo = (Interop.Windows.WindowsTerminalServiceSessionInfo)Marshal.PtrToStructure(
-                                    currentSessionInfoPtr,
-                                    typeof(Interop.Windows.WindowsTerminalServiceSessionInfo)
-                            );
-                            currentSessionInfoPtr += dataSize;
+                    try
+                    {
+                        var sessionInfoPtr = IntPtr.Zero;
+                        var sessionCount = 0U;
+                        var success = Interop.Windows.WTSEnumerateSessionsW(
+                                serverHandle,
+                                0,
+                                1,
+                                ref sessionInfoPtr,
+                                ref sessionCount
+                        );
+                        var dataSize = Marshal.SizeOf(typeof(Interop.Windows.WindowsTerminalServiceSessionInfo));
+                        var currentSessionInfoPtr = sessionInfoPtr;
 
-                            uint bytes = 0;
-                            var usernamePtr = IntPtr.Zero;
-                            var ret = Interop.Windows.WTSQuerySessionInformationW(
-                                    serverHandle,
-                                    sessionInfo.sessionId,
-                                    Interop.Windows.WindowsTerminalServiceInfoClass.UserName,
-                                    ref usernamePtr,
-                                    ref bytes
-                            );
-                            if (ret == false)
+                        if (success)
+                        {
+                            if (sessionCount <= 0U)
                             {
-                                continue;
+                                Logger.GetInstance(typeof(UserManager)).Error("Can not find available WTS session");
                             }
 
-                            var username = Marshal.PtrToStringUni(usernamePtr);
-                            Interop.Windows.WTSFreeMemory(usernamePtr);
-
-                            var domainPtr = IntPtr.Zero;
-                            ret = Interop.Windows.WTSQuerySessionInformationW(
-                                    serverHandle,
-                                    sessionInfo.sessionId,
-                                    Interop.Windows.WindowsTerminalServiceInfoClass.DomainName,
-                                    ref domainPtr,
-                                    ref bytes
-                            );
-                            if (ret == false)
+                            for (var sessionIndex = 0U; sessionIndex < sessionCount; sessionIndex++)
                             {
-                                continue;
+                                var sessionInfo = (Interop.Windows.WindowsTerminalServiceSessionInfo)Marshal.PtrToStructure(
+                                        currentSessionInfoPtr,
+                                        typeof(Interop.Windows.WindowsTerminalServiceSessionInfo)
+                                );
+                                currentSessionInfoPtr += dataSize;
+
+                                uint bytes = 0;
+                                var usernamePtr = IntPtr.Zero;
+                                success = Interop.Windows.WTSQuerySessionInformationW(
+                                        serverHandle,
+                                        sessionInfo.sessionId,
+                                        Interop.Windows.WindowsTerminalServiceInfoClass.UserName,
+                                        ref usernamePtr,
+                                        ref bytes
+                                );
+                                if (!success)
+                                {
+                                    continue;
+                                }
+
+                                var username = Marshal.PtrToStringUni(usernamePtr);
+                                Interop.Windows.WTSFreeMemory(usernamePtr);
+
+                                var domainPtr = IntPtr.Zero;
+                                success = Interop.Windows.WTSQuerySessionInformationW(
+                                        serverHandle,
+                                        sessionInfo.sessionId,
+                                        Interop.Windows.WindowsTerminalServiceInfoClass.DomainName,
+                                        ref domainPtr,
+                                        ref bytes
+                                );
+                                if (!success)
+                                {
+                                    continue;
+                                }
+
+                                var domain = Marshal.PtrToStringUni(domainPtr);
+                                Interop.Windows.WTSFreeMemory(domainPtr);
+
+                                var userInfo = new WindowsUserInfo
+                                {
+                                        State = sessionInfo.state,
+                                        Domain = domain,
+                                        Username = username
+                                };
+                                results.Add(userInfo);
                             }
-
-                            var domain = Marshal.PtrToStringUni(domainPtr);
-                            Interop.Windows.WTSFreeMemory(domainPtr);
-
-                            var userInfo = new WindowsUserInfo
-                            {
-                                    State = sessionInfo.state,
-                                    Domain = domain,
-                                    Username = username
-                            };
-                            results.Add(userInfo);
+                            Interop.Windows.WTSFreeMemory(sessionInfoPtr);
                         }
-                        Interop.Windows.WTSFreeMemory(sessionInfoPtr);
+                        else
+                        {
+                            Logger.GetInstance(typeof(UserManager)).Error("Can not enumerate WTS session, error code: " + Marshal.GetLastWin32Error());
+                        }
                     }
-                    else
+                    catch (Exception e)
                     {
-                        Logger.GetInstance(typeof(UserManager)).Error("Can not enumerate WTS session, error code: " + Marshal.GetLastWin32Error());
+                        Logger.GetInstance(typeof(Windows)).Error("Can not get Windows user list: " + e.Message);
                     }
-                }
-                catch (Exception e)
-                {
-                    Logger.GetInstance(typeof(Windows)).Error("Can not get Windows user list: " + e.Message);
-                }
 
-                if (serverHandle != Interop.Windows.WindowsTerminalServiceCurrentServerHandle)
-                {
-                    Interop.Windows.WTSCloseServer(serverHandle);
+                    return results;
                 }
-                return results;
             }
         }
     }
