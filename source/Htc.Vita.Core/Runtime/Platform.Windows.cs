@@ -32,11 +32,11 @@ namespace Htc.Vita.Core.Runtime
             {
                 using (var processHandle = new Interop.Windows.SafeProcessHandle(Process.GetCurrentProcess()))
                 {
-                    var tokenHandle = IntPtr.Zero;
+                    Interop.Windows.SafeTokenHandle tokenHandle;
                     var success = Interop.Windows.OpenProcessToken(
                             processHandle,
                             Interop.Windows.TokenAccessRight.AdjustPrivileges | Interop.Windows.TokenAccessRight.Query,
-                            ref tokenHandle
+                            out tokenHandle
                     );
                     if (!success)
                     {

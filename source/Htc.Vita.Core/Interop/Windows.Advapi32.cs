@@ -282,7 +282,7 @@ namespace Htc.Vita.Core.Interop
                 ExactSpelling = true,
                 SetLastError = true)]
         internal static extern bool AdjustTokenPrivileges(
-                /* _In_      HANDLE            */ [In] IntPtr tokenHandle,
+                /* _In_      HANDLE            */ [In] SafeTokenHandle tokenHandle,
                 /* _In_      BOOL              */ [In] bool disableAllPrivileges,
                 /* _In_opt_  PTOKEN_PRIVILEGES */ [In] ref TokenPrivileges newState,
                 /* _In_      DWORD             */ [In] int bufferLength,
@@ -398,7 +398,7 @@ namespace Htc.Vita.Core.Interop
         internal static extern bool OpenProcessToken(
                 /* _In_  HANDLE  */ [In] SafeProcessHandle processHandle,
                 /* _In_  DWORD   */ [In] TokenAccessRight desiredAccess,
-                /* _Out_ PHANDLE */ [In][Out] ref IntPtr tokenHandle
+                /* _Out_ PHANDLE */ [Out] out SafeTokenHandle tokenHandle
         );
 
         /**
