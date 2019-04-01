@@ -40,6 +40,10 @@ namespace Htc.Vita.Core.TestProgram
             allProcessWatcher.Stop();
             Console.ReadKey();
 
+            var serviceName = "Winmgmt";
+            Console.WriteLine("service[" + serviceName + "].CurrentState: " + ServiceManager.QueryStartType(serviceName).CurrentState);
+            Console.ReadKey();
+
             Console.WriteLine("WARNING!! This program will reboot system");
             Console.ReadKey();
 
