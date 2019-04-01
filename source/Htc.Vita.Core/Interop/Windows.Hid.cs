@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using Microsoft.Win32.SafeHandles;
 
 namespace Htc.Vita.Core.Interop
 {
@@ -28,7 +29,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool HidD_GetSerialNumberString(
-                /* _In_  HANDLE */ [In] IntPtr hidDeviceObject,
+                /* _In_  HANDLE */ [In] SafeFileHandle hidDeviceObject,
                 /* _Out_ PVOID  */ [In][Out] StringBuilder buffer,
                 /* _In_  ULONG  */ [In] uint bufferLength
         );

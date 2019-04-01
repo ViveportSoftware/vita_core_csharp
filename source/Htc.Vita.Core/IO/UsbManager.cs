@@ -243,7 +243,7 @@ namespace Htc.Vita.Core.IO
             }
 
             var result = string.Empty;
-            var deviceHandle = Windows.CreateFileW(
+            using (var deviceHandle = Windows.CreateFileW(
                     devicePath,
                     Windows.Generic.Read | Windows.Generic.Write,
                     Windows.FileShare.Read | Windows.FileShare.Write,
@@ -251,40 +251,41 @@ namespace Htc.Vita.Core.IO
                     Windows.CreationDisposition.OpenExisting,
                     Windows.FileAttributeFlag.FlagOverlapped,
                     IntPtr.Zero
-            );
-            if (deviceHandle == Windows.InvalidHandleValue)
+            ))
             {
-                return result;
-            }
-
-            var buffer = new StringBuilder(126);
-            var success = Windows.HidD_GetSerialNumberString(
-                    deviceHandle,
-                    buffer,
-                    (uint) buffer.Capacity
-            );
-            if (success)
-            {
-                result = buffer.ToString();
-            }
-            else
-            {
-                var win32Error = Marshal.GetLastWin32Error();
-                if (win32Error == (int) Windows.Error.NotSupported)
+                if (deviceHandle == null || deviceHandle.IsInvalid)
                 {
-                    Logger.GetInstance(typeof(UsbManager)).Debug("The device \"" + devicePath + "\" does not support to get serial number");
+                    return result;
                 }
-                else if (win32Error == (int) Windows.Error.InvalidParameter)
+
+                var buffer = new StringBuilder(126);
+                var success = Windows.HidD_GetSerialNumberString(
+                        deviceHandle,
+                        buffer,
+                        (uint)buffer.Capacity
+                );
+                if (success)
                 {
-                    Logger.GetInstance(typeof(UsbManager)).Debug("Can not get USB HID serial number with invalid parameter on the device \"" + devicePath + "\"");
+                    result = buffer.ToString();
                 }
                 else
                 {
-                    Logger.GetInstance(typeof(UsbManager)).Error("Can not get USB HID serial number on the device \"" + devicePath + "\", error code: " + win32Error);
+                    var win32Error = Marshal.GetLastWin32Error();
+                    if (win32Error == (int)Windows.Error.NotSupported)
+                    {
+                        Logger.GetInstance(typeof(UsbManager)).Debug("The device \"" + devicePath + "\" does not support to get serial number");
+                    }
+                    else if (win32Error == (int)Windows.Error.InvalidParameter)
+                    {
+                        Logger.GetInstance(typeof(UsbManager)).Debug("Can not get USB HID serial number with invalid parameter on the device \"" + devicePath + "\"");
+                    }
+                    else
+                    {
+                        Logger.GetInstance(typeof(UsbManager)).Error("Can not get USB HID serial number on the device \"" + devicePath + "\", error code: " + win32Error);
+                    }
                 }
+                return result;
             }
-            Windows.CloseHandle(deviceHandle);
-            return result;
         }
     }
 }

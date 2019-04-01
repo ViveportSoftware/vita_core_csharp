@@ -106,7 +106,7 @@ namespace Htc.Vita.Core.Interop
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
                 SetLastError = true)]
-        internal static extern IntPtr CreateFileW(
+        internal static extern SafeFileHandle CreateFileW(
                 /* _In_     LPCTSTR               */ [In] string lpFileName,
                 /* _In_     DWORD                 */ [In] Generic dwDesiredAccess,
                 /* _In_     DWORD                 */ [In] FileShare dwShareMode,
