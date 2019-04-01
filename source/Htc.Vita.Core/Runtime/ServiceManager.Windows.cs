@@ -22,69 +22,70 @@ namespace Htc.Vita.Core.Runtime
                     };
                 }
 
-                var managerHandle = Interop.Windows.OpenSCManagerW(
+                using (var managerHandle = Interop.Windows.OpenSCManagerW(
                         null,
                         null,
                         Interop.Windows.ServiceControlManagerAccessRight.Connect
-                );
-                if (managerHandle == IntPtr.Zero)
+                ))
                 {
-                    var errorCode = Marshal.GetLastWin32Error();
-                    return new ServiceInfo
-                    {
-                            ServiceName = serviceName,
-                            ErrorCode = errorCode,
-                            ErrorMessage = "Can not open Windows service controller manager, error code: " + errorCode
-                    };
-                }
-
-                var serviceInfo = new ServiceInfo
-                {
-                        ServiceName = serviceName,
-                        StartType = startType
-                };
-                var serviceHandle = Interop.Windows.OpenServiceW(
-                        managerHandle,
-                        serviceName,
-                        Interop.Windows.ServiceAccessRight.ChangeConfig |
-                                Interop.Windows.ServiceAccessRight.QueryConfig |
-                                Interop.Windows.ServiceAccessRight.QueryStatus
-                );
-                if (serviceHandle == IntPtr.Zero)
-                {
-                    var errorCode = Marshal.GetLastWin32Error();
-                    serviceInfo.ErrorCode = errorCode;
-                    serviceInfo.ErrorMessage = "Can not open Windows service \"" + serviceName + "\", error code: " + errorCode;
-                }
-                else
-                {
-                    var success = Interop.Windows.ChangeServiceConfigW(
-                            serviceHandle,
-                            Interop.Windows.ServiceType.NoChange,
-                            ConvertToPlatform(startType),
-                            Interop.Windows.ErrorControlType.NoChange,
-                            null,
-                            null,
-                            IntPtr.Zero,
-                            null,
-                            null,
-                            null,
-                            null
-                    );
-                    if (!success)
+                    if (managerHandle == null || managerHandle.IsInvalid)
                     {
                         var errorCode = Marshal.GetLastWin32Error();
-                        serviceInfo.ErrorCode = errorCode;
-                        serviceInfo.ErrorMessage = "Can not change Windows service \"" + serviceName + "\" config, error code: " + errorCode;
+                        return new ServiceInfo
+                        {
+                                ServiceName = serviceName,
+                                ErrorCode = errorCode,
+                                ErrorMessage = "Can not open Windows service controller manager, error code: " + errorCode
+                        };
                     }
 
-                    serviceInfo = UpdateCurrentState(serviceHandle, serviceInfo);
+                    var serviceInfo = new ServiceInfo
+                    {
+                        ServiceName = serviceName,
+                        StartType = startType
+                    };
+                    using (var serviceHandle = Interop.Windows.OpenServiceW(
+                            managerHandle,
+                            serviceName,
+                            Interop.Windows.ServiceAccessRight.ChangeConfig |
+                                    Interop.Windows.ServiceAccessRight.QueryConfig |
+                                    Interop.Windows.ServiceAccessRight.QueryStatus
+                    ))
+                    {
+                        if (serviceHandle == null || serviceHandle.IsInvalid)
+                        {
+                            var errorCode = Marshal.GetLastWin32Error();
+                            serviceInfo.ErrorCode = errorCode;
+                            serviceInfo.ErrorMessage = "Can not open Windows service \"" + serviceName + "\", error code: " + errorCode;
+                        }
+                        else
+                        {
+                            var success = Interop.Windows.ChangeServiceConfigW(
+                                    serviceHandle,
+                                    Interop.Windows.ServiceType.NoChange,
+                                    ConvertToPlatform(startType),
+                                    Interop.Windows.ErrorControlType.NoChange,
+                                    null,
+                                    null,
+                                    IntPtr.Zero,
+                                    null,
+                                    null,
+                                    null,
+                                    null
+                            );
+                            if (!success)
+                            {
+                                var errorCode = Marshal.GetLastWin32Error();
+                                serviceInfo.ErrorCode = errorCode;
+                                serviceInfo.ErrorMessage = "Can not change Windows service \"" + serviceName + "\" config, error code: " + errorCode;
+                            }
 
-                    Interop.Windows.CloseServiceHandle(serviceHandle);
+                            serviceInfo = UpdateCurrentState(serviceHandle, serviceInfo);
+                        }
+
+                        return serviceInfo;
+                    }
                 }
-
-                Interop.Windows.CloseServiceHandle(managerHandle);
-                return serviceInfo;
             }
 
             internal static bool CheckIfExistsInPlatform(string serviceName)
@@ -94,35 +95,38 @@ namespace Htc.Vita.Core.Runtime
                     return false;
                 }
 
-                var managerHandle = Interop.Windows.OpenSCManagerW(
+                using (var managerHandle = Interop.Windows.OpenSCManagerW(
                         null,
                         null,
                         Interop.Windows.ServiceControlManagerAccessRight.Connect
-                );
-                if (managerHandle == IntPtr.Zero)
+                ))
                 {
-                    var errorCode = Marshal.GetLastWin32Error();
-                    Logger.GetInstance(typeof(Windows)).Error("Can not open Windows service controller manager, error code: " + errorCode);
-                    return false;
-                }
-
-                var serviceHandle = Interop.Windows.OpenServiceW(
-                        managerHandle,
-                        serviceName,
-                        Interop.Windows.ServiceAccessRight.QueryConfig
-                );
-                if (serviceHandle == IntPtr.Zero)
-                {
-                    var errorCode = Marshal.GetLastWin32Error();
-                    if (errorCode != (int)Interop.Windows.Error.ServiceDoesNotExist)
+                    if (managerHandle == null || managerHandle.IsInvalid)
                     {
-                        Logger.GetInstance(typeof(Windows)).Error("Can not open Windows service \"" + serviceName + "\", error code: " + errorCode);
+                        var errorCode = Marshal.GetLastWin32Error();
+                        Logger.GetInstance(typeof(Windows)).Error("Can not open Windows service controller manager, error code: " + errorCode);
+                        return false;
                     }
-                    return false;
-                }
 
-                Interop.Windows.CloseServiceHandle(serviceHandle);
-                return true;
+                    using (var serviceHandle = Interop.Windows.OpenServiceW(
+                            managerHandle,
+                            serviceName,
+                            Interop.Windows.ServiceAccessRight.QueryConfig
+                    ))
+                    {
+                        if (serviceHandle != null && !serviceHandle.IsInvalid)
+                        {
+                            return true;
+                        }
+
+                        var errorCode = Marshal.GetLastWin32Error();
+                        if (errorCode != (int)Interop.Windows.Error.ServiceDoesNotExist)
+                        {
+                            Logger.GetInstance(typeof(Windows)).Error("Can not open Windows service \"" + serviceName + "\", error code: " + errorCode);
+                        }
+                        return false;
+                    }
+                }
             }
 
             private static StartType ConvertFromPlatform(Interop.Windows.StartType startType)
@@ -207,81 +211,82 @@ namespace Htc.Vita.Core.Runtime
                     };
                 }
 
-                var managerHandle = Interop.Windows.OpenSCManagerW(
+                using (var managerHandle = Interop.Windows.OpenSCManagerW(
                         null,
                         null,
                         Interop.Windows.ServiceControlManagerAccessRight.Connect
-                );
-                if (managerHandle == IntPtr.Zero)
+                ))
                 {
-                    var errorCode = Marshal.GetLastWin32Error();
-                    return new ServiceInfo
+                    if (managerHandle.IsInvalid)
                     {
-                            ServiceName = serviceName,
-                            ErrorCode = errorCode,
-                            ErrorMessage = "Can not open Windows service controller manager, error code: " + errorCode
-                    };
-                }
-
-                var serviceInfo = new ServiceInfo
-                {
-                    ServiceName = serviceName
-                };
-                var serviceHandle = Interop.Windows.OpenServiceW(
-                        managerHandle,
-                        serviceName,
-                        Interop.Windows.ServiceAccessRight.QueryConfig | Interop.Windows.ServiceAccessRight.QueryStatus
-                );
-                if (serviceHandle == IntPtr.Zero)
-                {
-                    var errorCode = Marshal.GetLastWin32Error();
-                    serviceInfo.ErrorCode = errorCode;
-                    serviceInfo.ErrorMessage = "Can not open Windows service \"" + serviceName + "\", error code: " + errorCode;
-                }
-                else
-                {
-                    const uint bytesAllocated = 8192;
-                    var serviceConfigPtr = Marshal.AllocHGlobal((int)bytesAllocated);
-                    try
-                    {
-                        uint bytes = 0;
-                        var success = Interop.Windows.QueryServiceConfigW(
-                                serviceHandle,
-                                serviceConfigPtr,
-                                bytesAllocated,
-                                ref bytes
-                        );
-                        if (success)
+                        var errorCode = Marshal.GetLastWin32Error();
+                        return new ServiceInfo
                         {
-                            var serviceConfig = (Interop.Windows.QueryServiceConfig)Marshal.PtrToStructure(
-                                    serviceConfigPtr,
-                                    typeof(Interop.Windows.QueryServiceConfig)
-                            );
-                            serviceInfo.StartType = ConvertFromPlatform(serviceConfig.dwStartType);
-                        }
-                        else
+                                ServiceName = serviceName,
+                                ErrorCode = errorCode,
+                                ErrorMessage = "Can not open Windows service controller manager, error code: " + errorCode
+                        };
+                    }
+
+                    var serviceInfo = new ServiceInfo
+                    {
+                        ServiceName = serviceName
+                    };
+                    using (var serviceHandle = Interop.Windows.OpenServiceW(
+                            managerHandle,
+                            serviceName,
+                            Interop.Windows.ServiceAccessRight.QueryConfig | Interop.Windows.ServiceAccessRight.QueryStatus
+                    ))
+                    {
+                        if (serviceHandle == null || serviceHandle.IsInvalid)
                         {
                             var errorCode = Marshal.GetLastWin32Error();
                             serviceInfo.ErrorCode = errorCode;
-                            serviceInfo.ErrorMessage = "Can not query Windows service \"" + serviceName + "\" config, error code: " + errorCode;
+                            serviceInfo.ErrorMessage = "Can not open Windows service \"" + serviceName + "\", error code: " + errorCode;
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.GetInstance(typeof(Windows)).Error("Can not query Windows service \"" + serviceName + "\" start type: " + e.Message);
-                    }
-                    finally
-                    {
-                        Marshal.FreeHGlobal(serviceConfigPtr);
-                    }
+                        else
+                        {
+                            const uint bytesAllocated = 8192;
+                            var serviceConfigPtr = Marshal.AllocHGlobal((int)bytesAllocated);
+                            try
+                            {
+                                uint bytes = 0;
+                                var success = Interop.Windows.QueryServiceConfigW(
+                                        serviceHandle,
+                                        serviceConfigPtr,
+                                        bytesAllocated,
+                                        ref bytes
+                                );
+                                if (success)
+                                {
+                                    var serviceConfig = (Interop.Windows.QueryServiceConfig)Marshal.PtrToStructure(
+                                            serviceConfigPtr,
+                                            typeof(Interop.Windows.QueryServiceConfig)
+                                    );
+                                    serviceInfo.StartType = ConvertFromPlatform(serviceConfig.dwStartType);
+                                }
+                                else
+                                {
+                                    var errorCode = Marshal.GetLastWin32Error();
+                                    serviceInfo.ErrorCode = errorCode;
+                                    serviceInfo.ErrorMessage = "Can not query Windows service \"" + serviceName + "\" config, error code: " + errorCode;
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                Logger.GetInstance(typeof(Windows)).Error("Can not query Windows service \"" + serviceName + "\" start type: " + e.Message);
+                            }
+                            finally
+                            {
+                                Marshal.FreeHGlobal(serviceConfigPtr);
+                            }
 
-                    serviceInfo = UpdateCurrentState(serviceHandle, serviceInfo);
+                            serviceInfo = UpdateCurrentState(serviceHandle, serviceInfo);
+                        }
 
-                    Interop.Windows.CloseServiceHandle(serviceHandle);
+                        return serviceInfo;
+                    }
                 }
-
-                Interop.Windows.CloseServiceHandle(managerHandle);
-                return serviceInfo;
             }
 
             internal static ServiceInfo StartInPlatform(string serviceName)
@@ -296,69 +301,70 @@ namespace Htc.Vita.Core.Runtime
                     };
                 }
 
-                var managerHandle = Interop.Windows.OpenSCManagerW(
+                using (var managerHandle = Interop.Windows.OpenSCManagerW(
                         null,
                         null,
                         Interop.Windows.ServiceControlManagerAccessRight.Connect
-                );
-                if (managerHandle == IntPtr.Zero)
+                ))
                 {
-                    var errorCode = Marshal.GetLastWin32Error();
-                    return new ServiceInfo
-                    {
-                            ServiceName = serviceName,
-                            ErrorCode = errorCode,
-                            ErrorMessage = "Can not open Windows service controller manager, error code: " + errorCode
-                    };
-                }
-
-                var serviceInfo = new ServiceInfo
-                {
-                        ServiceName = serviceName
-                };
-                var serviceHandle = Interop.Windows.OpenServiceW(
-                        managerHandle,
-                        serviceName,
-                        Interop.Windows.ServiceAccessRight.Start | Interop.Windows.ServiceAccessRight.QueryStatus
-                );
-                if (serviceHandle == IntPtr.Zero)
-                {
-                    var errorCode = Marshal.GetLastWin32Error();
-                    serviceInfo.ErrorCode = errorCode;
-                    serviceInfo.ErrorMessage = "Can not open Windows service \"" + serviceName + "\", error code: " + errorCode;
-                }
-                else
-                {
-                    var success = Interop.Windows.StartServiceW(
-                            serviceHandle,
-                            0,
-                            null
-                    );
-                    if (success)
-                    {
-                        serviceInfo.CurrentState = CurrentState.Running;
-                    }
-                    else
+                    if (managerHandle == null || managerHandle.IsInvalid)
                     {
                         var errorCode = Marshal.GetLastWin32Error();
-                        serviceInfo.ErrorCode = errorCode;
-                        serviceInfo.ErrorMessage = "Can not start Windows service \"" + serviceName + "\", error code: " + errorCode;
+                        return new ServiceInfo
+                        {
+                                ServiceName = serviceName,
+                                ErrorCode = errorCode,
+                                ErrorMessage = "Can not open Windows service controller manager, error code: " + errorCode
+                        };
                     }
 
-                    serviceInfo = UpdateCurrentState(serviceHandle, serviceInfo);
+                    var serviceInfo = new ServiceInfo
+                    {
+                        ServiceName = serviceName
+                    };
+                    using (var serviceHandle = Interop.Windows.OpenServiceW(
+                            managerHandle,
+                            serviceName,
+                            Interop.Windows.ServiceAccessRight.Start | Interop.Windows.ServiceAccessRight.QueryStatus
+                    ))
+                    {
+                        if (serviceHandle == null || serviceHandle.IsInvalid)
+                        {
+                            var errorCode = Marshal.GetLastWin32Error();
+                            serviceInfo.ErrorCode = errorCode;
+                            serviceInfo.ErrorMessage = "Can not open Windows service \"" + serviceName + "\", error code: " + errorCode;
+                        }
+                        else
+                        {
+                            var success = Interop.Windows.StartServiceW(
+                                    serviceHandle,
+                                    0,
+                                    null
+                            );
+                            if (success)
+                            {
+                                serviceInfo.CurrentState = CurrentState.Running;
+                            }
+                            else
+                            {
+                                var errorCode = Marshal.GetLastWin32Error();
+                                serviceInfo.ErrorCode = errorCode;
+                                serviceInfo.ErrorMessage = "Can not start Windows service \"" + serviceName + "\", error code: " + errorCode;
+                            }
 
-                    Interop.Windows.CloseServiceHandle(serviceHandle);
+                            serviceInfo = UpdateCurrentState(serviceHandle, serviceInfo);
+                        }
+
+                        return serviceInfo;
+                    }
                 }
-
-                Interop.Windows.CloseServiceHandle(managerHandle);
-                return serviceInfo;
             }
 
             internal static ServiceInfo UpdateCurrentState(
-                    IntPtr serviceHandle,
+                    Interop.Windows.SafeServiceHandle serviceHandle,
                     ServiceInfo serviceInfo)
             {
-                if (serviceHandle == IntPtr.Zero || serviceInfo == null)
+                if (serviceHandle == null || serviceHandle.IsInvalid || serviceInfo == null)
                 {
                     return serviceInfo;
                 }
