@@ -25,6 +25,5 @@ namespace Htc.Vita.Core.Interop
                 return true;
             }
         }
-
     }
 }
