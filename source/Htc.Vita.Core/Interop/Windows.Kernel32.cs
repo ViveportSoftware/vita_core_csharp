@@ -137,7 +137,7 @@ namespace Htc.Vita.Core.Interop
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
                 SetLastError = true)]
-        internal static extern IntPtr GetCurrentProcess();
+        internal static extern SafeProcessHandle GetCurrentProcess();
 
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/aa364937.aspx
@@ -193,7 +193,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool IsWow64Process(
-                /* _In_  HANDLE */ [In] IntPtr hProcess,
+                /* _In_  HANDLE */ [In] SafeProcessHandle hProcess,
                 /* _Out_ PBOOL  */ [In][Out] ref bool wow64Process
         );
 

@@ -15,7 +15,7 @@ namespace Htc.Vita.Core.Interop
                 ExactSpelling = true,
                 SetLastError = true)]
         internal static extern uint GetModuleFileNameExW(
-                /* _In_     HANDLE  */ [In] IntPtr hProcess,
+                /* _In_     HANDLE  */ [In] SafeProcessHandle hProcess,
                 /* _In_opt_ HMODULE */ [In] IntPtr hModule,
                 /* _Out_    LPTSTR  */ [Out] StringBuilder lpFilename,
                 /* _In_     DWORD   */ [In] uint nSize

@@ -389,15 +389,17 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Win32Exception)
                 {
-                    var processHandle = clientProcess.Handle;
-                    var fullPath = new StringBuilder(256);
-                    Windows.GetModuleFileNameExW(
-                            processHandle,
-                            IntPtr.Zero,
-                            fullPath,
-                            (uint)fullPath.Capacity
-                    );
-                    processPath = fullPath.ToString();
+                    using (var processHandle = new Windows.SafeProcessHandle(clientProcess))
+                    {
+                        var fullPath = new StringBuilder(256);
+                        Windows.GetModuleFileNameExW(
+                                processHandle,
+                                IntPtr.Zero,
+                                fullPath,
+                                (uint)fullPath.Capacity
+                        );
+                        processPath = fullPath.ToString();
+                    }
                 }
             }
             if (string.IsNullOrWhiteSpace(processPath))

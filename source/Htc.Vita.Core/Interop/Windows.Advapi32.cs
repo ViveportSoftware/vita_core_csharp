@@ -396,7 +396,7 @@ namespace Htc.Vita.Core.Interop
                 ExactSpelling = true,
                 SetLastError = true)]
         internal static extern bool OpenProcessToken(
-                /* _In_  HANDLE  */ [In] IntPtr processHandle,
+                /* _In_  HANDLE  */ [In] SafeProcessHandle processHandle,
                 /* _In_  DWORD   */ [In] TokenAccessRight desiredAccess,
                 /* _Out_ PHANDLE */ [In][Out] ref IntPtr tokenHandle
         );
