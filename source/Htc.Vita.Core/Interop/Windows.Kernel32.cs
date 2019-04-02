@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
 
 namespace Htc.Vita.Core.Interop
 {
@@ -105,7 +106,7 @@ namespace Htc.Vita.Core.Interop
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
                 SetLastError = true)]
-        internal static extern IntPtr CreateFileW(
+        internal static extern SafeFileHandle CreateFileW(
                 /* _In_     LPCTSTR               */ [In] string lpFileName,
                 /* _In_     DWORD                 */ [In] Generic dwDesiredAccess,
                 /* _In_     DWORD                 */ [In] FileShare dwShareMode,
@@ -136,7 +137,7 @@ namespace Htc.Vita.Core.Interop
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
                 SetLastError = true)]
-        internal static extern IntPtr GetCurrentProcess();
+        internal static extern SafeProcessHandle GetCurrentProcess();
 
         /**
          * https://msdn.microsoft.com/en-us/library/windows/desktop/aa364937.aspx
@@ -164,7 +165,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetNamedPipeClientProcessId(
-                /* _In_  HANDLE */ [In] IntPtr pipe,
+                /* _In_  HANDLE */ [In] SafePipeHandle pipe,
                 /* _Out_ PULONG */ [In][Out] ref uint clientProcessId
         );
 
@@ -178,7 +179,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetNamedPipeServerProcessId(
-                /* _In_  HANDLE */ [In] IntPtr pipe,
+                /* _In_  HANDLE */ [In] SafePipeHandle pipe,
                 /* _Out_ PULONG */ [In][Out] ref uint serverProcessId
         );
 
@@ -192,7 +193,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool IsWow64Process(
-                /* _In_  HANDLE */ [In] IntPtr hProcess,
+                /* _In_  HANDLE */ [In] SafeProcessHandle hProcess,
                 /* _Out_ PBOOL  */ [In][Out] ref bool wow64Process
         );
 

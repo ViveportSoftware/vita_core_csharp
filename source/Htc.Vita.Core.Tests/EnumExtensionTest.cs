@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class EnumExtension
+    public static class EnumExtensionTest
     {
         [Fact]
         public static void Default_0_ApplyFlags()

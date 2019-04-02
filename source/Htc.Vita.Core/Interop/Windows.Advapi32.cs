@@ -282,7 +282,7 @@ namespace Htc.Vita.Core.Interop
                 ExactSpelling = true,
                 SetLastError = true)]
         internal static extern bool AdjustTokenPrivileges(
-                /* _In_      HANDLE            */ [In] IntPtr tokenHandle,
+                /* _In_      HANDLE            */ [In] SafeTokenHandle tokenHandle,
                 /* _In_      BOOL              */ [In] bool disableAllPrivileges,
                 /* _In_opt_  PTOKEN_PRIVILEGES */ [In] ref TokenPrivileges newState,
                 /* _In_      DWORD             */ [In] int bufferLength,
@@ -300,7 +300,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool ChangeServiceConfigW(
-                /* _In_      SC_HANDLE */ [In] IntPtr hService,
+                /* _In_      SC_HANDLE */ [In] SafeServiceHandle hService,
                 /* _In_      DWORD     */ [In] ServiceType dwServiceType,
                 /* _In_      DWORD     */ [In] StartType dwStartType,
                 /* _In_      DWORD     */ [In] ErrorControlType dwErrorControl,
@@ -396,9 +396,9 @@ namespace Htc.Vita.Core.Interop
                 ExactSpelling = true,
                 SetLastError = true)]
         internal static extern bool OpenProcessToken(
-                /* _In_  HANDLE  */ [In] IntPtr processHandle,
+                /* _In_  HANDLE  */ [In] SafeProcessHandle processHandle,
                 /* _In_  DWORD   */ [In] TokenAccessRight desiredAccess,
-                /* _Out_ PHANDLE */ [In][Out] ref IntPtr tokenHandle
+                /* _Out_ PHANDLE */ [Out] out SafeTokenHandle tokenHandle
         );
 
         /**
@@ -409,7 +409,7 @@ namespace Htc.Vita.Core.Interop
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
                 SetLastError = true)]
-        internal static extern IntPtr OpenSCManagerW(
+        internal static extern SafeServiceHandle OpenSCManagerW(
                 /* _In_opt_ LPCTSTR */ [In] string lpMachineName,
                 /* _In_opt_ LPCTSTR */ [In] string lpDatabaseName,
                 /* _In_     DWORD   */ [In] ServiceControlManagerAccessRight dwDesiredAccess
@@ -423,8 +423,8 @@ namespace Htc.Vita.Core.Interop
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
                 SetLastError = true)]
-        internal static extern IntPtr OpenServiceW(
-                /* _In_ SC_HANDLE */ [In] IntPtr hScManager,
+        internal static extern SafeServiceHandle OpenServiceW(
+                /* _In_ SC_HANDLE */ [In] SafeServiceHandle hScManager,
                 /* _In_ LPCTSTR   */ [In] string lpServiceName,
                 /* _In_ DWORD     */ [In] ServiceAccessRight dwDesiredAccess
         );
@@ -439,7 +439,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool QueryServiceConfigW(
-                /* _In_      SC_HANDLE              */ [In] IntPtr hService,
+                /* _In_      SC_HANDLE              */ [In] SafeServiceHandle hService,
                 /* _Out_opt_ LPQUERY_SERVICE_CONFIG */ [In][Out] IntPtr lpServiceConfig,
                 /* _In_      DWORD                  */ [In] uint cbBufSize,
                 /* _Out_     LPDWORD                */ [In][Out] ref uint pcbBytesNeeded
@@ -455,7 +455,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool QueryServiceStatus(
-                /* _In_  SC_HANDLE        */ [In] IntPtr hService,
+                /* _In_  SC_HANDLE        */ [In] SafeServiceHandle hService,
                 /* _Out_ LPSERVICE_STATUS */ [In][Out] ref ServiceStatus lpServiceStatus
         );
 
@@ -469,7 +469,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool StartServiceW(
-                /* _In_     SC_HANDLE */ [In] IntPtr hService,
+                /* _In_     SC_HANDLE */ [In] SafeServiceHandle hService,
                 /* _In_     DWORD     */ [In] uint dwNumServiceArgs,
                 /* _In_opt_ LPCTSTR*  */ [In] string[] lpServiceArgVectors
         );

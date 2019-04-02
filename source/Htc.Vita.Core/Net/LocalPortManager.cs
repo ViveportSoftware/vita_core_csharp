@@ -51,6 +51,32 @@ namespace Htc.Vita.Core.Net
             return PortStatus.Unknown;
         }
 
+        public static PortStatus VerifyPortStatus(int portNumber)
+        {
+            try
+            {
+                using (new TcpClient("localhost", portNumber))
+                {
+                    // do nothing
+                }
+                return PortStatus.InUse;
+            }
+            catch (SocketException e)
+            {
+                var socketErrorCode = e.SocketErrorCode;
+                if (socketErrorCode != SocketError.ConnectionRefused)
+                {
+                    Logger.GetInstance(typeof(LocalPortManager)).Error("Can not get verify port status: " + e.Message + ", socketErrorCode: " + socketErrorCode);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(LocalPortManager)).Error("Can not get verify port status: " + e);
+            }
+
+            return PortStatus.Available;
+        }
+
         public enum PortStatus
         {
             Unknown,

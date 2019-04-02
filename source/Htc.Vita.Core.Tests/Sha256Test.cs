@@ -1,22 +1,23 @@
 ﻿using System;
 using System.IO;
+using Htc.Vita.Core.Crypto;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class Sha256
+    public static class Sha256Test
     {
         [Fact]
         public static void Default_0_GetInstance()
         {
-            var sha256 = Crypto.Sha256.GetInstance();
+            var sha256 = Sha256.GetInstance();
             Assert.NotNull(sha256);
         }
 
         [Fact]
         public static void Default_1_GenerateInBase64_WithContent()
         {
-            var sha256 = Crypto.Sha256.GetInstance();
+            var sha256 = Sha256.GetInstance();
             Assert.NotNull(sha256);
             var value = sha256.GenerateInBase64("");
             Assert.Equal("47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=", value);
@@ -27,7 +28,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_1_GenerateInBase64_WithFile()
         {
-            var sha256 = Crypto.Sha256.GetInstance();
+            var sha256 = Sha256.GetInstance();
             Assert.NotNull(sha256);
             var path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
@@ -41,7 +42,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_1_GenerateInBase64Async_WithFile()
         {
-            var sha256 = Crypto.Sha256.GetInstance();
+            var sha256 = Sha256.GetInstance();
             Assert.NotNull(sha256);
             var path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
@@ -55,7 +56,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_2_ValidateInBase64_WithContent()
         {
-            var sha256 = Crypto.Sha256.GetInstance();
+            var sha256 = Sha256.GetInstance();
             Assert.NotNull(sha256);
             Assert.True(sha256.ValidateInBase64("", "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="));
             Assert.True(sha256.ValidateInBase64("123", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="));
@@ -64,7 +65,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_2_ValidateInBase64_WithFile()
         {
-            var sha256 = Crypto.Sha256.GetInstance();
+            var sha256 = Sha256.GetInstance();
             Assert.NotNull(sha256);
             var path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
@@ -78,7 +79,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_2_ValidateInBase64Async_WithFile()
         {
-            var sha256 = Crypto.Sha256.GetInstance();
+            var sha256 = Sha256.GetInstance();
             Assert.NotNull(sha256);
             var path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
@@ -92,7 +93,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_3_GenerateInHex_WithContent()
         {
-            var sha256 = Crypto.Sha256.GetInstance();
+            var sha256 = Sha256.GetInstance();
             Assert.NotNull(sha256);
             var value = sha256.GenerateInHex("");
             Assert.Equal("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", value);
@@ -103,7 +104,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_3_GenerateInHex_WithFile()
         {
-            var sha256 = Crypto.Sha256.GetInstance();
+            var sha256 = Sha256.GetInstance();
             Assert.NotNull(sha256);
             var path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
@@ -117,7 +118,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_3_GenerateInHexAsync_WithFile()
         {
-            var sha256 = Crypto.Sha256.GetInstance();
+            var sha256 = Sha256.GetInstance();
             Assert.NotNull(sha256);
             var path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
@@ -131,7 +132,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_4_ValidateInHex_WithContent()
         {
-            var sha256 = Crypto.Sha256.GetInstance();
+            var sha256 = Sha256.GetInstance();
             Assert.NotNull(sha256);
             Assert.True(sha256.ValidateInHex("", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"));
             Assert.True(sha256.ValidateInHex("123", "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"));
@@ -140,7 +141,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_4_ValidateInHex_WithFile()
         {
-            var sha256 = Crypto.Sha256.GetInstance();
+            var sha256 = Sha256.GetInstance();
             Assert.NotNull(sha256);
             var path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
@@ -154,7 +155,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_4_ValidateInHexAsync_WithFile()
         {
-            var sha256 = Crypto.Sha256.GetInstance();
+            var sha256 = Sha256.GetInstance();
             Assert.NotNull(sha256);
             var path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
@@ -168,7 +169,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_5_ValidateInAll_WithContent()
         {
-            var sha256 = Crypto.Sha256.GetInstance();
+            var sha256 = Sha256.GetInstance();
             Assert.NotNull(sha256);
             Assert.True(sha256.ValidateInAll("", "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="));
             Assert.True(sha256.ValidateInAll("123", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="));
@@ -179,7 +180,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_5_ValidateInAll_WithFile()
         {
-            var sha256 = Crypto.Sha256.GetInstance();
+            var sha256 = Sha256.GetInstance();
             Assert.NotNull(sha256);
             var path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
@@ -194,7 +195,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_5_ValidateInAllAsync_WithFile()
         {
-            var sha256 = Crypto.Sha256.GetInstance();
+            var sha256 = Sha256.GetInstance();
             Assert.NotNull(sha256);
             var path = @"%USERPROFILE%\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)

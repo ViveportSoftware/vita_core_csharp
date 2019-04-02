@@ -1,19 +1,20 @@
-﻿using Xunit;
+﻿using Htc.Vita.Core.Net;
+using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class NetworkInterface
+    public static class NetworkInterfaceTest
     {
         [Fact]
         public static void Default_0_IsNetworkAvailable()
         {
-            Assert.True(Net.NetworkInterface.IsNetworkAvailable());
+            Assert.True(NetworkInterface.IsNetworkAvailable());
         }
 
         [Fact]
         public static void Default_0_IsInternetAvailable()
         {
-            Assert.True(Net.NetworkInterface.IsInternetAvailable());
+            Assert.True(NetworkInterface.IsInternetAvailable());
         }
     }
 }

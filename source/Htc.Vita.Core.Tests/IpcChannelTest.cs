@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using Htc.Vita.Core.Runtime;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class IpcChannel
+    public class IpcChannelTest
     {
         private readonly ITestOutputHelper _output;
 
-        public IpcChannel(ITestOutputHelper output)
+        public IpcChannelTest(ITestOutputHelper output)
         {
             _output = output;
         }
@@ -21,7 +22,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            var provider = Runtime.IpcChannel.Provider.GetInstance();
+            var provider = IpcChannel.Provider.GetInstance();
             Assert.NotNull(provider);
         }
 
@@ -32,7 +33,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            var provider = Runtime.IpcChannel.Provider.GetInstance();
+            var provider = IpcChannel.Provider.GetInstance();
             Assert.NotNull(provider);
             Assert.True(provider.SetName("" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow)));
         }
@@ -44,7 +45,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            var provider = Runtime.IpcChannel.Provider.GetInstance();
+            var provider = IpcChannel.Provider.GetInstance();
             Assert.NotNull(provider);
             Assert.True(provider.SetName("" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow)));
             Assert.True(provider.Start());
@@ -58,7 +59,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            var provider = Runtime.IpcChannel.Provider.GetInstance();
+            var provider = IpcChannel.Provider.GetInstance();
             Assert.NotNull(provider);
             Assert.True(provider.SetName("" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow)));
             Assert.True(provider.Start());
@@ -73,7 +74,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            var provider = Runtime.IpcChannel.Provider.GetInstance();
+            var provider = IpcChannel.Provider.GetInstance();
             Assert.NotNull(provider);
             Assert.True(provider.SetName("" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow)));
             Assert.True(provider.Start());
@@ -88,7 +89,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            var provider = Runtime.IpcChannel.Provider.GetInstance();
+            var provider = IpcChannel.Provider.GetInstance();
             Assert.NotNull(provider);
             Assert.True(provider.SetName("" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow)));
             Assert.True(provider.Start());
@@ -106,7 +107,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            var client = Runtime.IpcChannel.Client.GetInstance();
+            var client = IpcChannel.Client.GetInstance();
             Assert.NotNull(client);
         }
 
@@ -117,7 +118,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            var client = Runtime.IpcChannel.Client.GetInstance();
+            var client = IpcChannel.Client.GetInstance();
             Assert.NotNull(client);
             Assert.True(client.SetName("" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow)));
         }
@@ -130,11 +131,11 @@ namespace Htc.Vita.Core.Tests
                 return;
             }
             var name = "" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow);
-            var provider = Runtime.IpcChannel.Provider.GetInstance();
+            var provider = IpcChannel.Provider.GetInstance();
             Assert.NotNull(provider);
             Assert.True(provider.SetName(name));
             Assert.True(provider.Start());
-            var client = Runtime.IpcChannel.Client.GetInstance();
+            var client = IpcChannel.Client.GetInstance();
             Assert.NotNull(client);
             Assert.True(client.SetName(name));
             Assert.True(client.IsReady());
@@ -149,16 +150,16 @@ namespace Htc.Vita.Core.Tests
                 return;
             }
             var name = "" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow);
-            var provider = Runtime.IpcChannel.Provider.GetInstance();
+            var provider = IpcChannel.Provider.GetInstance();
             Assert.NotNull(provider);
             Assert.True(provider.SetName(name));
             Assert.True(provider.Start());
-            var client = Runtime.IpcChannel.Client.GetInstance();
+            var client = IpcChannel.Client.GetInstance();
             Assert.NotNull(client);
             Assert.True(client.SetName(name));
             var options = new Dictionary<string, string>
             {
-                {Runtime.IpcChannel.Client.OptionVerifyProvider, "true"}
+                {IpcChannel.Client.OptionVerifyProvider, "true"}
             };
             Assert.True(client.IsReady(options));
             Assert.True(client.IsReady());
@@ -173,11 +174,11 @@ namespace Htc.Vita.Core.Tests
                 return;
             }
             var name = "" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow);
-            var provider = Runtime.IpcChannel.Provider.GetInstance();
+            var provider = IpcChannel.Provider.GetInstance();
             Assert.NotNull(provider);
             Assert.True(provider.SetName(name));
             Assert.True(provider.Start());
-            var client = Runtime.IpcChannel.Client.GetInstance();
+            var client = IpcChannel.Client.GetInstance();
             Assert.NotNull(client);
             Assert.True(client.SetName(name));
             Assert.True(client.IsReady());
@@ -193,11 +194,11 @@ namespace Htc.Vita.Core.Tests
                 return;
             }
             var name = "" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow);
-            var provider = Runtime.IpcChannel.Provider.GetInstance();
+            var provider = IpcChannel.Provider.GetInstance();
             Assert.NotNull(provider);
             Assert.True(provider.SetName(name));
             Assert.True(provider.Start());
-            var client = Runtime.IpcChannel.Client.GetInstance();
+            var client = IpcChannel.Client.GetInstance();
             Assert.NotNull(client);
             Assert.True(client.SetName(name));
             Assert.True(client.IsReady());
@@ -213,7 +214,7 @@ namespace Htc.Vita.Core.Tests
                 return;
             }
             var name = "" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow);
-            var provider = Runtime.IpcChannel.Provider.GetInstance();
+            var provider = IpcChannel.Provider.GetInstance();
             Assert.NotNull(provider);
             Assert.True(provider.SetName(name));
             provider.OnMessageHandled = (channel, filePropertiesInfo) =>
@@ -228,7 +229,7 @@ namespace Htc.Vita.Core.Tests
                 }
             };
             Assert.True(provider.Start());
-            var client = Runtime.IpcChannel.Client.GetInstance();
+            var client = IpcChannel.Client.GetInstance();
             Assert.NotNull(client);
             Assert.True(client.SetName(name));
             Assert.True(client.IsReady());
@@ -244,7 +245,7 @@ namespace Htc.Vita.Core.Tests
                 return;
             }
             var name = "" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow);
-            var provider = Runtime.IpcChannel.Provider.GetInstance();
+            var provider = IpcChannel.Provider.GetInstance();
             Assert.NotNull(provider);
             Assert.True(provider.SetName(name));
             provider.OnMessageHandled = (channel, filePropertiesInfo) =>
@@ -259,7 +260,7 @@ namespace Htc.Vita.Core.Tests
                 }
             };
             Assert.True(provider.Start());
-            var client = Runtime.IpcChannel.Client.GetInstance();
+            var client = IpcChannel.Client.GetInstance();
             Assert.NotNull(client);
             Assert.True(client.SetName(name));
             Assert.True(client.IsReady());

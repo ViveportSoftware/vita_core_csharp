@@ -21,61 +21,63 @@ namespace Htc.Vita.Core.Runtime
                 }
 
                 var result = new List<WindowsProcessInfo>();
-                var serverHandle = Interop.Windows.WTSOpenServerW(machineName);
-
-                try
+                using (var serverHandle = Interop.Windows.WTSOpenServerW(machineName))
                 {
-                    var processInfoPtr = IntPtr.Zero;
-                    var processCount = 0U;
-                    var success = Interop.Windows.WTSEnumerateProcessesW(
-                            serverHandle,
-                            0,
-                            1,
-                            ref processInfoPtr,
-                            ref processCount
-                    );
-                    var dataSize = Marshal.SizeOf(typeof(Interop.Windows.WindowsTerminalServiceProcessInfo));
-                    var currentProcessInfoPtr = processInfoPtr;
-
-                    if (success)
+                    if (serverHandle == null || serverHandle.IsInvalid)
                     {
-                        for (var processIndex = 0; processIndex < processCount; processIndex++)
-                        {
-                            var processInfo = (Interop.Windows.WindowsTerminalServiceProcessInfo)Marshal.PtrToStructure(
-                                    currentProcessInfoPtr,
-                                    typeof(Interop.Windows.WindowsTerminalServiceProcessInfo)
-                            );
-                            currentProcessInfoPtr += dataSize;
-
-                            var userSid = string.Empty;
-                            success = Interop.Windows.ConvertSidToStringSidW(processInfo.pUserSid, ref userSid);
-                            if (!success)
-                            {
-                                userSid = string.Empty;
-                            }
-
-                            var windowsProcessInfo = new WindowsProcessInfo
-                            {
-                                Id = (int)processInfo.processId,
-                                Name = processInfo.pProcessName,
-                                SessionId = (int)processInfo.sessionId,
-                                UserSid = userSid
-                            };
-                            result.Add(windowsProcessInfo);
-                        }
-                        Interop.Windows.WTSFreeMemory(processInfoPtr);
+                        return result;
                     }
-                }
-                catch (Exception e)
-                {
-                    Logger.GetInstance(typeof(Windows)).Error("Can not get Windows process list: " + e.Message);
-                }
 
-                if (serverHandle != Interop.Windows.WindowsTerminalServiceCurrentServerHandle)
-                {
-                    Interop.Windows.WTSCloseServer(serverHandle);
+                    try
+                    {
+                        var processInfoPtr = IntPtr.Zero;
+                        var processCount = 0U;
+                        var success = Interop.Windows.WTSEnumerateProcessesW(
+                                serverHandle,
+                                0,
+                                1,
+                                ref processInfoPtr,
+                                ref processCount
+                        );
+                        var dataSize = Marshal.SizeOf(typeof(Interop.Windows.WindowsTerminalServiceProcessInfo));
+                        var currentProcessInfoPtr = processInfoPtr;
+
+                        if (success)
+                        {
+                            for (var processIndex = 0; processIndex < processCount; processIndex++)
+                            {
+                                var processInfo = (Interop.Windows.WindowsTerminalServiceProcessInfo)Marshal.PtrToStructure(
+                                        currentProcessInfoPtr,
+                                        typeof(Interop.Windows.WindowsTerminalServiceProcessInfo)
+                                );
+                                currentProcessInfoPtr += dataSize;
+
+                                var userSid = string.Empty;
+                                success = Interop.Windows.ConvertSidToStringSidW(processInfo.pUserSid, ref userSid);
+                                if (!success)
+                                {
+                                    userSid = string.Empty;
+                                }
+
+                                var windowsProcessInfo = new WindowsProcessInfo
+                                {
+                                        Id = (int)processInfo.processId,
+                                        Name = processInfo.pProcessName,
+                                        SessionId = (int)processInfo.sessionId,
+                                        UserSid = userSid
+                                };
+                                result.Add(windowsProcessInfo);
+                            }
+                            Interop.Windows.WTSFreeMemory(processInfoPtr);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.GetInstance(typeof(Windows)).Error("Can not get Windows process list: " + e.Message);
+                    }
+
+                    return result;
                 }
-                return result;
             }
 
             internal static string GetPlatformProcessPathById(int processId)
@@ -89,15 +91,17 @@ namespace Htc.Vita.Core.Runtime
                     }
                     catch (Win32Exception)
                     {
-                        var processHandle = clientProcess.Handle;
-                        var fullPath = new StringBuilder(256);
-                        Interop.Windows.GetModuleFileNameExW(
-                                processHandle,
-                                IntPtr.Zero,
-                                fullPath,
-                                (uint)fullPath.Capacity
-                        );
-                        processPath = fullPath.ToString();
+                        using (var processHandle = new Interop.Windows.SafeProcessHandle(clientProcess))
+                        {
+                            var fullPath = new StringBuilder(256);
+                            Interop.Windows.GetModuleFileNameExW(
+                                    processHandle,
+                                    IntPtr.Zero,
+                                    fullPath,
+                                    (uint)fullPath.Capacity
+                            );
+                            processPath = fullPath.ToString();
+                        }
                     }
                 }
 
@@ -118,26 +122,28 @@ namespace Htc.Vita.Core.Runtime
                 }
 
                 var result = false;
-                var serverHandle = Interop.Windows.WTSOpenServerW(machineName);
+                using (var serverHandle = Interop.Windows.WTSOpenServerW(machineName))
+                {
+                    if (serverHandle == null || serverHandle.IsInvalid)
+                    {
+                        return false;
+                    }
 
-                try
-                {
-                    result = Interop.Windows.WTSTerminateProcess(
-                        serverHandle,
-                        (uint)processId,
-                        0
-                    );
-                }
-                catch (Exception e)
-                {
-                    Logger.GetInstance(typeof(Windows)).Error("Can not kill Windows process by id: " + processId + ", " + e.Message);
-                }
+                    try
+                    {
+                        result = Interop.Windows.WTSTerminateProcess(
+                                serverHandle,
+                                (uint)processId,
+                                0
+                        );
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.GetInstance(typeof(Windows)).Error("Can not kill Windows process by id: " + processId + ", " + e.Message);
+                    }
 
-                if (serverHandle != Interop.Windows.WindowsTerminalServiceCurrentServerHandle)
-                {
-                    Interop.Windows.WTSCloseServer(serverHandle);
+                    return result;
                 }
-                return result;
             }
         }
     }

@@ -1,22 +1,23 @@
 ﻿using System;
 using System.IO;
+using Htc.Vita.Core.Crypto;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class Md5
+    public static class Md5Test
     {
         [Fact]
         public static void Default_0_GetInstance()
         {
-            var md5 = Crypto.Md5.GetInstance();
+            var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
         }
 
         [Fact]
         public static void Default_1_GenerateInBase64_WithContent()
         {
-            var md5 = Crypto.Md5.GetInstance();
+            var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
             var value = md5.GenerateInBase64("");
             Assert.Equal("1B2M2Y8AsgTpgAmY7PhCfg==", value);
@@ -27,7 +28,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_1_GenerateInBase64_WithFile()
         {
-            var md5 = Crypto.Md5.GetInstance();
+            var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
             var path = @"%USERPROFILE%\TestData.Md5.txt";
             if (!Runtime.Platform.IsWindows)
@@ -41,7 +42,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_1_GenerateInBase64Async_WithFile()
         {
-            var md5 = Crypto.Md5.GetInstance();
+            var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
             var path = @"%USERPROFILE%\TestData.Md5.txt";
             if (!Runtime.Platform.IsWindows)
@@ -55,7 +56,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_2_ValidateInBase64_WithContent()
         {
-            var md5 = Crypto.Md5.GetInstance();
+            var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
             Assert.True(md5.ValidateInBase64("", "1B2M2Y8AsgTpgAmY7PhCfg=="));
             Assert.True(md5.ValidateInBase64("123", "ICy5YqxZB1uWSwcVLSNLcA=="));
@@ -64,7 +65,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_2_ValidateInBase64_WithFile()
         {
-            var md5 = Crypto.Md5.GetInstance();
+            var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
             var path = @"%USERPROFILE%\TestData.Md5.txt";
             if (!Runtime.Platform.IsWindows)
@@ -78,7 +79,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_2_ValidateInBase64Async_WithFile()
         {
-            var md5 = Crypto.Md5.GetInstance();
+            var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
             var path = @"%USERPROFILE%\TestData.Md5.txt";
             if (!Runtime.Platform.IsWindows)
@@ -92,7 +93,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_3_GenerateInHex_WithContent()
         {
-            var md5 = Crypto.Md5.GetInstance();
+            var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
             var value = md5.GenerateInHex("");
             Assert.Equal("d41d8cd98f00b204e9800998ecf8427e", value);
@@ -103,7 +104,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_3_GenerateInHex_WithFile()
         {
-            var md5 = Crypto.Md5.GetInstance();
+            var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
             var path = @"%USERPROFILE%\TestData.Md5.txt";
             if (!Runtime.Platform.IsWindows)
@@ -117,7 +118,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_3_GenerateInHexAsync_WithFile()
         {
-            var md5 = Crypto.Md5.GetInstance();
+            var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
             var path = @"%USERPROFILE%\TestData.Md5.txt";
             if (!Runtime.Platform.IsWindows)
@@ -131,7 +132,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_4_ValidateInHex_WithContent()
         {
-            var md5 = Crypto.Md5.GetInstance();
+            var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
             Assert.True(md5.ValidateInHex("", "d41d8cd98f00b204e9800998ecf8427e"));
             Assert.True(md5.ValidateInHex("123", "202cb962ac59075b964b07152d234b70"));
@@ -140,7 +141,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_4_ValidateInHex_WithFile()
         {
-            var md5 = Crypto.Md5.GetInstance();
+            var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
             var path = @"%USERPROFILE%\TestData.Md5.txt";
             if (!Runtime.Platform.IsWindows)
@@ -154,7 +155,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_4_ValidateInHexAsync_WithFile()
         {
-            var md5 = Crypto.Md5.GetInstance();
+            var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
             var path = @"%USERPROFILE%\TestData.Md5.txt";
             if (!Runtime.Platform.IsWindows)
@@ -168,7 +169,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_5_ValidateInAll_WithContent()
         {
-            var md5 = Crypto.Md5.GetInstance();
+            var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
             Assert.True(md5.ValidateInAll("", "1B2M2Y8AsgTpgAmY7PhCfg=="));
             Assert.True(md5.ValidateInAll("123", "ICy5YqxZB1uWSwcVLSNLcA=="));
@@ -179,7 +180,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_5_ValidateInAll_WithFile()
         {
-            var md5 = Crypto.Md5.GetInstance();
+            var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
             var path = @"%USERPROFILE%\TestData.Md5.txt";
             if (!Runtime.Platform.IsWindows)
@@ -194,7 +195,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_5_ValidateInAllAsync_WithFile()
         {
-            var md5 = Crypto.Md5.GetInstance();
+            var md5 = Md5.GetInstance();
             Assert.NotNull(md5);
             var path = @"%USERPROFILE%\TestData.Md5.txt";
             if (!Runtime.Platform.IsWindows)

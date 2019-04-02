@@ -1,13 +1,15 @@
-﻿using Xunit;
+﻿using Htc.Vita.Core.IO;
+using Htc.Vita.Core.Runtime;
+using Xunit;
 using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class UsbManager
+    public class UsbManagerTest
     {
         private readonly ITestOutputHelper _output;
 
-        public UsbManager(ITestOutputHelper output)
+        public UsbManagerTest(ITestOutputHelper output)
         {
             _output = output;
         }
@@ -15,11 +17,11 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void Default_0_GetHidDevices()
         {
-            if (!Runtime.Platform.IsWindows)
+            if (!Platform.IsWindows)
             {
                 return;
             }
-            var deviceInfos = IO.UsbManager.GetHidDevices();
+            var deviceInfos = UsbManager.GetHidDevices();
             Assert.NotNull(deviceInfos);
             foreach (var deviceInfo in deviceInfos) {
                 _output.WriteLine("deviceInfo.Path: \"" + deviceInfo.Path + "\"");

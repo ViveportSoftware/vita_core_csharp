@@ -341,13 +341,8 @@ namespace Htc.Vita.Core.Runtime
             {
                 return false;
             }
-            var pipeHandle = pipeStream.SafePipeHandle.DangerousGetHandle();
-            if (pipeHandle == IntPtr.Zero)
-            {
-                return false;
-            }
             var processId = 0u;
-            if (!Windows.GetNamedPipeServerProcessId(pipeHandle, ref processId))
+            if (!Windows.GetNamedPipeServerProcessId(pipeStream.SafePipeHandle, ref processId))
             {
                 Logger.GetInstance(typeof(NamedPipeIpcChannel)).Error("Can not get named pipe server process id, error code: " + Marshal.GetLastWin32Error());
                 return false;
@@ -378,13 +373,8 @@ namespace Htc.Vita.Core.Runtime
             {
                 return null;
             }
-            var pipeHandle = pipeStream.SafePipeHandle.DangerousGetHandle();
-            if (pipeHandle == IntPtr.Zero)
-            {
-                return null;
-            }
             var processId = 0u;
-            if (!Windows.GetNamedPipeClientProcessId(pipeHandle, ref processId))
+            if (!Windows.GetNamedPipeClientProcessId(pipeStream.SafePipeHandle, ref processId))
             {
                 Logger.GetInstance(typeof(NamedPipeIpcChannel)).Error("Can not get named pipe client process id, error code: " + Marshal.GetLastWin32Error());
                 return null;
@@ -399,15 +389,17 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Win32Exception)
                 {
-                    var processHandle = clientProcess.Handle;
-                    var fullPath = new StringBuilder(256);
-                    Windows.GetModuleFileNameExW(
-                            processHandle,
-                            IntPtr.Zero,
-                            fullPath,
-                            (uint)fullPath.Capacity
-                    );
-                    processPath = fullPath.ToString();
+                    using (var processHandle = new Windows.SafeProcessHandle(clientProcess))
+                    {
+                        var fullPath = new StringBuilder(256);
+                        Windows.GetModuleFileNameExW(
+                                processHandle,
+                                IntPtr.Zero,
+                                fullPath,
+                                (uint)fullPath.Capacity
+                        );
+                        processPath = fullPath.ToString();
+                    }
                 }
             }
             if (string.IsNullOrWhiteSpace(processPath))

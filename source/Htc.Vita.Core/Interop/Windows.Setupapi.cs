@@ -113,7 +113,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool SetupDiEnumDeviceInterfaces(
-                /* _In_           HDEVINFO                  */ [In] IntPtr deviceInfoSet,
+                /* _In_           HDEVINFO                  */ [In] SafeDevInfoSetHandle deviceInfoSet,
                 /* _In_opt_       PSP_DEVINFO_DATA          */ [In] IntPtr deviceInfoData,
                 /* _In_     const GUID*                     */ [In] ref Guid interfaceClassGuid,
                 /* _In_           DWORD                     */ [In] uint memberIndex,
@@ -128,7 +128,7 @@ namespace Htc.Vita.Core.Interop
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
                 SetLastError = true)]
-        internal static extern IntPtr SetupDiGetClassDevsW(
+        internal static extern SafeDevInfoSetHandle SetupDiGetClassDevsW(
                 /* _In_opt_ const GUID   */ [In] ref Guid classGuid,
                 /* _In_opt_       PCTSTR */ [In] string enumerator,
                 /* _In_opt_       HWND   */ [In] IntPtr hwndParent,
@@ -145,7 +145,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool SetupDiGetDeviceInterfaceDetailW(
-                /* _In_      HDEVINFO                         */ [In] IntPtr hDevInfo,
+                /* _In_      HDEVINFO                         */ [In] SafeDevInfoSetHandle hDevInfo,
                 /* _In_      PSP_DEVICE_INTERFACE_DATA        */ [In] ref SetupDeviceInterfaceData deviceInterfaceData,
                 /* _Out_opt_ PSP_DEVICE_INTERFACE_DETAIL_DATA */ [In][Out] IntPtr deviceInterfaceDetailData,
                 /* _In_      DWORD                            */ [In] int deviceInterfaceDetailDataSize,
@@ -163,7 +163,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool SetupDiGetDeviceInterfaceDetailW(
-                /* _In_      HDEVINFO                         */ [In] IntPtr hDevInfo,
+                /* _In_      HDEVINFO                         */ [In] SafeDevInfoSetHandle hDevInfo,
                 /* _In_      PSP_DEVICE_INTERFACE_DATA        */ [In] ref SetupDeviceInterfaceData deviceInterfaceData,
                 /* _Out_opt_ PSP_DEVICE_INTERFACE_DETAIL_DATA */ [In][Out] IntPtr deviceInterfaceDetailData,
                 /* _In_      DWORD                            */ [In] int deviceInterfaceDetailDataSize,
@@ -181,7 +181,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool SetupDiGetDeviceRegistryPropertyW(
-                /* _In_      HDEVINFO         */ [In] IntPtr deviceInfoSet,
+                /* _In_      HDEVINFO         */ [In] SafeDevInfoSetHandle deviceInfoSet,
                 /* _In_      PSP_DEVINFO_DATA */ [In] ref SetupDeviceInfoData deviceInfoData,
                 /* _In_      DWORD            */ [In] SetupDeviceRegistryProperty property,
                 /* _Out_opt_ PDWORD           */ [In][Out] IntPtr propertyRegDataType,
@@ -200,7 +200,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool SetupDiGetDeviceRegistryPropertyW(
-                /* _In_      HDEVINFO         */ [In] IntPtr deviceInfoSet,
+                /* _In_      HDEVINFO         */ [In] SafeDevInfoSetHandle deviceInfoSet,
                 /* _In_      PSP_DEVINFO_DATA */ [In] ref SetupDeviceInfoData deviceInfoData,
                 /* _In_      DWORD            */ [In] SetupDeviceRegistryProperty property,
                 /* _Out_opt_ PDWORD           */ [In][Out] ref RegType propertyRegDataType,

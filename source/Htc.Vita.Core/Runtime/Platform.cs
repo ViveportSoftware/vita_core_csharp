@@ -204,15 +204,18 @@ namespace Htc.Vita.Core.Runtime
             }
             try
             {
-                var isWow64 = false;
-                var success = Interop.Windows.IsWow64Process(
-                        Process.GetCurrentProcess().Handle,
-                        ref isWow64
-                );
-
-                if (success)
+                using (var processHandle = new Interop.Windows.SafeProcessHandle(Process.GetCurrentProcess()))
                 {
-                    return isWow64;
+                    var isWow64 = false;
+                    var success = Interop.Windows.IsWow64Process(
+                            processHandle,
+                            ref isWow64
+                    );
+
+                    if (success)
+                    {
+                        return isWow64;
+                    }
                 }
             }
             catch (Exception e)

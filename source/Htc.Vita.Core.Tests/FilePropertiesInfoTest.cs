@@ -1,14 +1,15 @@
 ﻿using System.IO;
+using Htc.Vita.Core.Diagnostics;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class FilePropertiesInfo
+    public class FilePropertiesInfoTest
     {
         private readonly ITestOutputHelper _output;
 
-        public FilePropertiesInfo(ITestOutputHelper output)
+        public FilePropertiesInfoTest(ITestOutputHelper output)
         {
             _output = output;
         }
@@ -30,7 +31,7 @@ namespace Htc.Vita.Core.Tests
                 fileInfo = new FileInfo("C:\\Windows\\System32\\svchost.exe");
             }
             Assert.True(fileInfo.Exists);
-            var filePropertiesInfo = Diagnostics.FilePropertiesInfo.GetPropertiesInfo(fileInfo);
+            var filePropertiesInfo = FilePropertiesInfo.GetPropertiesInfo(fileInfo);
             Assert.NotNull(filePropertiesInfo);
             Assert.True(!string.IsNullOrEmpty(filePropertiesInfo.IssuerDistinguishedName));
             Assert.Contains("O=", filePropertiesInfo.IssuerDistinguishedName);
@@ -52,7 +53,7 @@ namespace Htc.Vita.Core.Tests
             }
             var fileInfo = new FileInfo("C:\\Windows\\System32\\notepad.exe");
             Assert.True(fileInfo.Exists);
-            var filePropertiesInfo = Diagnostics.FilePropertiesInfo.GetPropertiesInfo(fileInfo);
+            var filePropertiesInfo = FilePropertiesInfo.GetPropertiesInfo(fileInfo);
             Assert.NotNull(filePropertiesInfo);
             Assert.True(string.IsNullOrEmpty(filePropertiesInfo.IssuerDistinguishedName));
             Assert.True(string.IsNullOrEmpty(filePropertiesInfo.IssuerName));

@@ -3,19 +3,19 @@ using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class Config
+    public static class ConfigTest
     {
         [Fact]
         public static void Default_0_GetInstance()
         {
-            var config = Core.Config.Config.GetInstance();
+            var config = Config.Config.GetInstance();
             Assert.NotNull(config);
         }
 
         [Fact]
         public static void Default_1_Get()
         {
-            var config = Core.Config.Config.GetInstance();
+            var config = Config.Config.GetInstance();
             Assert.NotNull(config);
             var value = config.Get("intKey");
             Assert.Equal("1", value);
@@ -24,7 +24,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_1_Get_WithDefault()
         {
-            var config = Core.Config.Config.GetInstance();
+            var config = Config.Config.GetInstance();
             Assert.NotNull(config);
             var value = config.Get("intKey2", "2");
             Assert.Equal("2", value);
@@ -33,7 +33,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_2_GetBool()
         {
-            var config = Core.Config.Config.GetInstance();
+            var config = Config.Config.GetInstance();
             Assert.NotNull(config);
             var value = config.Get("boolKey");
             Assert.Equal("true", value);
@@ -44,7 +44,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_2_GetBool_WithDefault()
         {
-            var config = Core.Config.Config.GetInstance();
+            var config = Config.Config.GetInstance();
             Assert.NotNull(config);
             var value = config.Get("boolKey2");
             Assert.Null(value);
@@ -57,7 +57,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_3_GetDouble()
         {
-            var config = Core.Config.Config.GetInstance();
+            var config = Config.Config.GetInstance();
             Assert.NotNull(config);
             var value = config.Get("doubleKey");
             Assert.Equal("3.3", value);
@@ -68,7 +68,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_3_GetDouble_WithDefault()
         {
-            var config = Core.Config.Config.GetInstance();
+            var config = Config.Config.GetInstance();
             Assert.NotNull(config);
             var value = config.Get("doubleKey2");
             Assert.Null(value);
@@ -81,7 +81,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_4_GetInt()
         {
-            var config = Core.Config.Config.GetInstance();
+            var config = Config.Config.GetInstance();
             Assert.NotNull(config);
             var value = config.Get("intKey");
             Assert.Equal("1", value);
@@ -92,7 +92,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_4_GetInt_WithDefault()
         {
-            var config = Core.Config.Config.GetInstance();
+            var config = Config.Config.GetInstance();
             Assert.NotNull(config);
             var value = config.Get("intKey2");
             Assert.Null(value);
@@ -105,7 +105,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_5_GetLong()
         {
-            var config = Core.Config.Config.GetInstance();
+            var config = Config.Config.GetInstance();
             Assert.NotNull(config);
             var value = config.Get("longKey");
             Assert.Equal("100000000000", value);
@@ -116,7 +116,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_5_GetLong_WithDefault()
         {
-            var config = Core.Config.Config.GetInstance();
+            var config = Config.Config.GetInstance();
             Assert.NotNull(config);
             var value = config.Get("longKey2");
             Assert.Null(value);
@@ -129,14 +129,14 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void AppSettings_0_GetInstance()
         {
-            var config = Core.Config.Config.GetInstance<AppSettingsConfig>();
+            var config = Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
         }
 
         [Fact]
         public static void AppSettings_1_Get()
         {
-            var config = Core.Config.Config.GetInstance<AppSettingsConfig>();
+            var config = Config.Config.GetInstance<AppSettingsConfig>();
             Assert.NotNull(config);
             var value = config.Get("intKey");
             Assert.Equal("1", value);

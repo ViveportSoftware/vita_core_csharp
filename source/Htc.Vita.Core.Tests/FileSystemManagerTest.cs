@@ -1,14 +1,15 @@
 ﻿using System.IO;
+using Htc.Vita.Core.IO;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class FileSystemManager
+    public class FileSystemManagerTest
     {
         private readonly ITestOutputHelper _output;
 
-        public FileSystemManager(ITestOutputHelper output)
+        public FileSystemManagerTest(ITestOutputHelper output)
         {
             _output = output;
         }
@@ -22,7 +23,7 @@ namespace Htc.Vita.Core.Tests
             }
             var directoryInfo = new DirectoryInfo("C:\\");
             Assert.True(directoryInfo.Exists);
-            var diskSpaceInfo = IO.FileSystemManager.GetDiskSpaceFor(directoryInfo);
+            var diskSpaceInfo = FileSystemManager.GetDiskSpaceFor(directoryInfo);
             Assert.NotNull(diskSpaceInfo);
             _output.WriteLine("diskSpaceInfo.Path: " + diskSpaceInfo.Path);
             Assert.False(string.IsNullOrWhiteSpace(diskSpaceInfo.Path));
@@ -43,7 +44,7 @@ namespace Htc.Vita.Core.Tests
             }
             var directoryInfo = new DirectoryInfo("R:\\");
             Assert.False(directoryInfo.Exists);
-            var diskSpaceInfo = IO.FileSystemManager.GetDiskSpaceFor(directoryInfo);
+            var diskSpaceInfo = FileSystemManager.GetDiskSpaceFor(directoryInfo);
             Assert.NotNull(diskSpaceInfo);
             Assert.False(string.IsNullOrWhiteSpace(diskSpaceInfo.Path));
             Assert.True(diskSpaceInfo.FreeOfBytes == -1);

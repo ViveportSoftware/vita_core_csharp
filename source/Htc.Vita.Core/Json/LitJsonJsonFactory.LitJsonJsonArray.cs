@@ -367,7 +367,7 @@ namespace Htc.Vita.Core.Json
                 try
                 {
                     var data = _jsonData[index];
-                    if (data.IsInt)
+                    if (data.IsInt || data.IsLong)
                     {
                         result = (int)data;
                     }
@@ -393,11 +393,7 @@ namespace Htc.Vita.Core.Json
                 try
                 {
                     var data = _jsonData[index];
-                    if (data.IsInt)
-                    {
-                        result = (int)data;
-                    }
-                    if (data.IsLong)
+                    if (data.IsInt || data.IsLong)
                     {
                         result = (long)data;
                     }
