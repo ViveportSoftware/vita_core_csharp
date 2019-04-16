@@ -129,12 +129,10 @@ namespace Htc.Vita.Core.IO
                         break;
                     }
 
-                    if (string.IsNullOrWhiteSpace(deviceInfo.VendorId) || string.IsNullOrWhiteSpace(deviceInfo.ProductId))
+                    if (!string.IsNullOrWhiteSpace(deviceInfo.VendorId) && !string.IsNullOrWhiteSpace(deviceInfo.ProductId))
                     {
-                        continue;
+                        deviceInfos.Add(deviceInfo);
                     }
-
-                    deviceInfos.Add(deviceInfo);
 
                     deviceIndex++;
                 }
