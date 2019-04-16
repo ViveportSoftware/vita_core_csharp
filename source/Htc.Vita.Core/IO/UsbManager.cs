@@ -129,6 +129,11 @@ namespace Htc.Vita.Core.IO
                         break;
                     }
 
+                    if (string.IsNullOrWhiteSpace(deviceInfo.VendorId) || string.IsNullOrWhiteSpace(deviceInfo.ProductId))
+                    {
+                        continue;
+                    }
+
                     deviceInfos.Add(deviceInfo);
 
                     deviceIndex++;
@@ -148,6 +153,79 @@ namespace Htc.Vita.Core.IO
             }
             Logger.GetInstance(typeof(UsbManager)).Warn("HID Guid is empty. Use default HID Guid");
             return new Guid("4d1e55b2-f16f-11cf-88cb-001111000030"); // default HID GUID
+        }
+
+        public static byte[] GetHidFeatureReport(string devicePath, byte reportId)
+        {
+            return GetHidFeatureReportInWindows(devicePath, reportId);
+        }
+
+        private static byte[] GetHidFeatureReportInWindows(string devicePath, byte reportId)
+        {
+            if (string.IsNullOrWhiteSpace(devicePath))
+            {
+                return null;
+            }
+
+            using (var deviceHandle = Windows.CreateFileW(
+                    devicePath,
+                    Windows.Generic.Read | Windows.Generic.Write,
+                    Windows.FileShare.Read | Windows.FileShare.Write,
+                    IntPtr.Zero,
+                    Windows.CreationDisposition.OpenExisting,
+                    Windows.FileAttributeFlag.FlagOverlapped,
+                    IntPtr.Zero
+            ))
+            {
+                if (deviceHandle == null || deviceHandle.IsInvalid)
+                {
+                    Logger.GetInstance(typeof(UsbManager)).Error($"Can not get valid device handle for path: {devicePath}");
+                    return null;
+                }
+
+                var preparsedData = new IntPtr();
+                var success = Windows.HidD_GetPreparsedData(deviceHandle, ref preparsedData);
+                if (!success)
+                {
+                    Logger.GetInstance(typeof(UsbManager)).Error($"Can not get valid preparsed data for path: {devicePath}");
+                    return null;
+                }
+
+                var hidDeviceCapability = new Windows.HidDeviceCapability();
+                var ntStatus = Windows.HidP_GetCaps(preparsedData, ref hidDeviceCapability);
+                if (ntStatus != Windows.NtStatus.HidpStatusSuccess)
+                {
+                    Logger.GetInstance(typeof(UsbManager)).Error($"Can not get device capability for path: {devicePath}, status: {ntStatus}");
+                    return null;
+                }
+
+                var featureReportByteLength = hidDeviceCapability.featureReportByteLength;
+                if (featureReportByteLength <= 0)
+                {
+                    Logger.GetInstance(typeof(UsbManager)).Error($"Can not get valid feature report length for path: {devicePath}");
+                    return null;
+                }
+
+                var result = new byte[featureReportByteLength];
+                result[0] = reportId;
+                success = Windows.HidD_GetFeature(
+                        deviceHandle,
+                        result,
+                        featureReportByteLength
+                );
+                if (!success)
+                {
+                    Logger.GetInstance(typeof(UsbManager)).Error($"Can not get valid feature report for path: {devicePath}");
+                    return null;
+                }
+
+                success = Windows.HidD_FreePreparsedData(preparsedData);
+                if (!success)
+                {
+                    Logger.GetInstance(typeof(UsbManager)).Error($"Can not free preparsed data for path: {devicePath}");
+                }
+                return result;
+            }
         }
 
         private static byte[] GetUsbDevicePropertyInWindows(

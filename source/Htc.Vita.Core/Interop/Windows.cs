@@ -16,6 +16,30 @@ namespace Htc.Vita.Core.Interop
             /* ERROR_SERVICE_DOES_NOT_EXIST (1060, 0x424) */ ServiceDoesNotExist = 0x424
         }
 
+        internal enum NtStatus
+        {
+            /* STATUS_WAIT_0                       */ StatusWait0 = 0,
+            /* HIDP_STATUS_SUCCESS                 */ HidpStatusSuccess = 0x00110000,
+            /* HIDP_STATUS_NULL                    */ HidpStatusNull = unchecked((int)0x80110001),
+            /* HIDP_STATUS_INVALID_PREPARSED_DATA  */ HidpStatusInvalidPreparsedData = unchecked((int)0xc0110001),
+            /* HIDP_STATUS_INVALID_REPORT_TYPE     */ HidpStatusInvalidReportType = unchecked((int)0xc0110002),
+            /* HIDP_STATUS_INVALID_REPORT_LENGTH   */ HidpStatusInvalidReportLength = unchecked((int)0xc0110003),
+            /* HIDP_STATUS_USAGE_NOT_FOUND         */ HidpStatusUsageNotFound = unchecked((int)0xc0110004),
+            /* HIDP_STATUS_VALUE_OUT_OF_RANGE      */ HidpStatusValueOutOfRange = unchecked((int)0xc0110005),
+            /* HIDP_STATUS_BAD_LOG_PHY_VALUES      */ HidpStatusBadLogPhyValues = unchecked((int)0xc0110006),
+            /* HIDP_STATUS_BUFFER_TOO_SMALL        */ HidpStatusBufferTooSmall = unchecked((int)0xc0110007),
+            /* HIDP_STATUS_INTERNAL_ERROR          */ HidpStatusInternalError = unchecked((int)0xc0110008),
+            /* HIDP_STATUS_I8042_TRANS_UNKNOWN     */ HidpStatusI8042TransUnknown = unchecked((int)0xc0110009),
+            /* HIDP_STATUS_INCOMPATIBLE_REPORT_ID  */ HidpStatusIncompatibleReportId = unchecked((int)0xc011000a),
+            /* HIDP_STATUS_NOT_VALUE_ARRAY         */ HidpStatusNotValueArray = unchecked((int)0xc011000b),
+            /* HIDP_STATUS_IS_VALUE_ARRAY          */ HidpStatusIsValueArray = unchecked((int)0xc011000c),
+            /* HIDP_STATUS_DATA_INDEX_NOT_FOUND    */ HidpStatusDataIndexNotFound = unchecked((int)0xc011000d),
+            /* HIDP_STATUS_DATA_INDEX_OUT_OF_RANGE */ HidpStatusDataIndexOutOfRange = unchecked((int)0xc011000e),
+            /* HIDP_STATUS_BUTTON_NOT_PRESSED      */ HidpStatusButtonNotPressed = unchecked((int)0xc011000f),
+            /* HIDP_STATUS_REPORT_DOES_NOT_EXIST   */ HidpStatusReportDoesNotExist = unchecked((int)0xc0110010),
+            /* HIDP_STATUS_NOT_IMPLEMENTED         */ HidpStatusNotImplemented = unchecked((int)0xc0110020)
+        }
+
         internal enum RegType : uint
         {
             /* REG_NONE                       */ None = 0,

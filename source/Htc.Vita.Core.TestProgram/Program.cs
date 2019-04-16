@@ -1,4 +1,5 @@
 ﻿using System;
+using Htc.Vita.Core.IO;
 using Htc.Vita.Core.Net;
 using Htc.Vita.Core.Runtime;
 
@@ -10,6 +11,27 @@ namespace Htc.Vita.Core.TestProgram
         {
             Console.WriteLine("NetworkInterface.IsNetworkAvailable(): " + NetworkInterface.IsNetworkAvailable());
             Console.WriteLine("NetworkInterface.IsInternetAvailable(): " + NetworkInterface.IsInternetAvailable());
+            Console.ReadKey();
+
+            var deviceInfos = UsbManager.GetHidDevices();
+            var index = 0;
+            foreach (var deviceInfo in deviceInfos)
+            {
+                Console.WriteLine($"deviceInfo[{index}].Path: \"{deviceInfo.Path}\"");
+                Console.WriteLine($"deviceInfo[{index}].VendorId: \"{deviceInfo.VendorId}\"");
+                Console.WriteLine($"deviceInfo[{index}].ProductId: \"{deviceInfo.ProductId}\"");
+                Console.WriteLine($"deviceInfo[{index}].SerialNumber: \"{deviceInfo.SerialNumber}\"");
+                var featureReport = UsbManager.GetHidFeatureReport(deviceInfo.Path, 0);
+                if (featureReport == null)
+                {
+                    Console.WriteLine($"deviceInfo[{index}].featureReport is null");
+                }
+                else
+                {
+                    Console.WriteLine($"deviceInfo[{index}].featureReport is {Util.Convert.ToHexString(featureReport)}");
+                }
+                index++;
+            }
             Console.ReadKey();
 
             var randomUnusedPort = LocalPortManager.GetRandomUnusedPort();
