@@ -13,12 +13,12 @@ namespace Htc.Vita.Core.Shell
 
         private static readonly object InstancesLock = new object();
 
-        private static Type _defaultType = typeof(RegistryUriSchemeManager);
+        private static Type defaultType = typeof(RegistryUriSchemeManager);
 
         public static void Register<T>() where T : UriSchemeManager
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(UriSchemeManager)).Info("Registered default " + typeof(UriSchemeManager).Name + " type to " + _defaultType);
+            defaultType = typeof(T);
+            Logger.GetInstance(typeof(UriSchemeManager)).Info("Registered default " + typeof(UriSchemeManager).Name + " type to " + defaultType);
         }
 
         public static UriSchemeManager GetInstance()
@@ -26,7 +26,7 @@ namespace Htc.Vita.Core.Shell
             UriSchemeManager instance;
             try
             {
-                instance = DoGetInstance(_defaultType);
+                instance = DoGetInstance(defaultType);
             }
             catch (Exception e)
             {

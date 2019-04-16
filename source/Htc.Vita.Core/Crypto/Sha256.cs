@@ -12,15 +12,15 @@ namespace Htc.Vita.Core.Crypto
 
         private static readonly object InstancesLock = new object();
 
-        private static Type _defaultType = typeof(DefaultSha256);
+        private static Type defaultType = typeof(DefaultSha256);
 
         private const int Base64Length = 44; // "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
         private const int HexLength = 64;    // "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 
         public static void Register<T>() where T : Sha256
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(Sha256)).Info("Registered default " + typeof(Sha256).Name + " type to " + _defaultType);
+            defaultType = typeof(T);
+            Logger.GetInstance(typeof(Sha256)).Info("Registered default " + typeof(Sha256).Name + " type to " + defaultType);
         }
 
         public static Sha256 GetInstance()
@@ -28,7 +28,7 @@ namespace Htc.Vita.Core.Crypto
             Sha256 instance;
             try
             {
-                instance = DoGetInstance(_defaultType);
+                instance = DoGetInstance(defaultType);
             }
             catch (Exception e)
             {

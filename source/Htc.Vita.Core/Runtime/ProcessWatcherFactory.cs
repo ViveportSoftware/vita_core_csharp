@@ -10,12 +10,12 @@ namespace Htc.Vita.Core.Runtime
 
         private static readonly object InstancesLock = new object();
 
-        private static Type _defaultType = typeof(WmiProcessWatcherFactory);
+        private static Type defaultType = typeof(WmiProcessWatcherFactory);
 
         public static void Register<T>() where T : ProcessWatcherFactory
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(ProcessWatcherFactory)).Info("Registered default " + typeof(ProcessWatcherFactory).Name + " type to " + _defaultType);
+            defaultType = typeof(T);
+            Logger.GetInstance(typeof(ProcessWatcherFactory)).Info("Registered default " + typeof(ProcessWatcherFactory).Name + " type to " + defaultType);
         }
 
         public static ProcessWatcherFactory GetInstance()
@@ -23,7 +23,7 @@ namespace Htc.Vita.Core.Runtime
             ProcessWatcherFactory instance;
             try
             {
-                instance = DoGetInstance(_defaultType);
+                instance = DoGetInstance(defaultType);
             }
             catch (Exception e)
             {

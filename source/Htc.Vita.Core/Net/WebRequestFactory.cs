@@ -11,12 +11,12 @@ namespace Htc.Vita.Core.Net
 
         private static readonly object InstancesLock = new object();
 
-        private static Type _defaultType = typeof(DefaultWebRequestFactory);
+        private static Type defaultType = typeof(DefaultWebRequestFactory);
 
         public static void Register<T>() where T : WebRequestFactory
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(WebRequestFactory)).Info("Registered default " + typeof(WebRequestFactory).Name + " type to " + _defaultType);
+            defaultType = typeof(T);
+            Logger.GetInstance(typeof(WebRequestFactory)).Info("Registered default " + typeof(WebRequestFactory).Name + " type to " + defaultType);
         }
 
         public static WebRequestFactory GetInstance()
@@ -24,7 +24,7 @@ namespace Htc.Vita.Core.Net
             WebRequestFactory instance;
             try
             {
-                instance = DoGetInstance(_defaultType);
+                instance = DoGetInstance(defaultType);
             }
             catch (Exception e)
             {

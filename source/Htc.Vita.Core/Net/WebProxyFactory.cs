@@ -11,12 +11,12 @@ namespace Htc.Vita.Core.Net
 
         private static readonly object InstancesLock = new object();
 
-        private static Type _defaultType = typeof(DefaultWebProxyFactory);
+        private static Type defaultType = typeof(DefaultWebProxyFactory);
 
         public static void Register<T>() where T : WebProxyFactory
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(WebProxyFactory)).Info("Registered default " + typeof(WebProxyFactory).Name + " type to " + _defaultType);
+            defaultType = typeof(T);
+            Logger.GetInstance(typeof(WebProxyFactory)).Info("Registered default " + typeof(WebProxyFactory).Name + " type to " + defaultType);
         }
 
         public static WebProxyFactory GetInstance()
@@ -24,7 +24,7 @@ namespace Htc.Vita.Core.Net
             WebProxyFactory instance;
             try
             {
-                instance = DoGetInstance(_defaultType);
+                instance = DoGetInstance(defaultType);
             }
             catch (Exception e)
             {

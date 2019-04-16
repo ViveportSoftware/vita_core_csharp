@@ -10,12 +10,12 @@ namespace Htc.Vita.Core.Preference
 
         private static readonly object InstancesLock = new object();
 
-        private static Type _defaultType = typeof(DefaultPreferenceFactory);
+        private static Type defaultType = typeof(DefaultPreferenceFactory);
 
         public static void Register<T>() where T : PreferenceFactory
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(PreferenceFactory)).Info("Registered default " + typeof(PreferenceFactory).Name + " type to " + _defaultType);
+            defaultType = typeof(T);
+            Logger.GetInstance(typeof(PreferenceFactory)).Info("Registered default " + typeof(PreferenceFactory).Name + " type to " + defaultType);
         }
 
         public static PreferenceFactory GetInstance()
@@ -23,7 +23,7 @@ namespace Htc.Vita.Core.Preference
             PreferenceFactory instance;
             try
             {
-                instance = DoGetInstance(_defaultType);
+                instance = DoGetInstance(defaultType);
             }
             catch (Exception e)
             {

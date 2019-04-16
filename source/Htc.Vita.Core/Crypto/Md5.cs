@@ -12,15 +12,15 @@ namespace Htc.Vita.Core.Crypto
 
         private static readonly object InstancesLock = new object();
 
-        private static Type _defaultType = typeof(DefaultMd5);
+        private static Type defaultType = typeof(DefaultMd5);
 
         private const int Base64Length = 24; // "pq/Xu7jVnluxLJ28xOws/w=="
         private const int HexLength = 32;    // "202cb962ac59075b964b07152d234b70"
 
         public static void Register<T>() where T : Md5
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(Md5)).Info("Registered default " + typeof(Md5).Name + " type to " + _defaultType);
+            defaultType = typeof(T);
+            Logger.GetInstance(typeof(Md5)).Info("Registered default " + typeof(Md5).Name + " type to " + defaultType);
         }
 
         public static Md5 GetInstance()
@@ -28,7 +28,7 @@ namespace Htc.Vita.Core.Crypto
             Md5 instance;
             try
             {
-                instance = DoGetInstance(_defaultType);
+                instance = DoGetInstance(defaultType);
             }
             catch (Exception e)
             {

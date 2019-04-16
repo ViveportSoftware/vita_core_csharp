@@ -5,7 +5,7 @@ namespace Htc.Vita.Core.Net
 {
     public class DefaultWebRequestFactory : WebRequestFactory
     {
-        private const int TimeoutInMiniSec = 20 * 1000;
+        private const int TimeoutInMilli = 20 * 1000;
 
         protected override HttpWebRequest OnGetHttpWebRequest(Uri uri)
         {
@@ -17,7 +17,7 @@ namespace Htc.Vita.Core.Net
             result.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
             result.Proxy = WebProxyFactory.GetInstance().GetWebProxy();
             result.ServicePoint.Expect100Continue = false;
-            result.Timeout = GetTimeoutInMiniSec();
+            result.Timeout = GetTimeoutInMilli();
             result.UserAgent = GetUserAgentString();
             return result;
         }
@@ -27,9 +27,9 @@ namespace Htc.Vita.Core.Net
             return new WebUserAgent().ToString();
         }
 
-        protected virtual int GetTimeoutInMiniSec()
+        protected virtual int GetTimeoutInMilli()
         {
-            return TimeoutInMiniSec;
+            return TimeoutInMilli;
         }
     }
 }

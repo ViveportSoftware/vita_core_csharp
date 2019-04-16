@@ -10,12 +10,12 @@ namespace Htc.Vita.Core.Config
 
         private static readonly object InstancesLock = new object();
 
-        private static Type _defaultType = typeof(AppSettingsConfig);
+        private static Type defaultType = typeof(AppSettingsConfig);
 
         public static void Register<T>() where T : Config
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(Config)).Info("Registered default " + typeof(Config).Name + " type to " + _defaultType);
+            defaultType = typeof(T);
+            Logger.GetInstance(typeof(Config)).Info("Registered default " + typeof(Config).Name + " type to " + defaultType);
         }
 
         public static Config GetInstance()
@@ -23,7 +23,7 @@ namespace Htc.Vita.Core.Config
             Config instance;
             try
             {
-                instance = DoGetInstance(_defaultType);
+                instance = DoGetInstance(defaultType);
             }
             catch (Exception e)
             {

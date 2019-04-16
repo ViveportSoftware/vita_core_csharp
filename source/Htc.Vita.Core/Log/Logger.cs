@@ -10,14 +10,14 @@ namespace Htc.Vita.Core.Log
 
         private static readonly object InstancesLock = new object();
 
-        private static Type _defaultType = typeof(ConsoleLogger);
+        private static Type defaultType = typeof(ConsoleLogger);
 
         public string Name { get; } = string.Empty;
 
         public static void Register<T>() where T : Logger
         {
-            _defaultType = typeof(T);
-            Console.Error.WriteLine("Registered default logger type to " + _defaultType);
+            defaultType = typeof(T);
+            Console.Error.WriteLine("Registered default logger type to " + defaultType);
         }
 
         public static Logger GetInstance(Type type)
@@ -40,7 +40,7 @@ namespace Htc.Vita.Core.Log
             Logger instance;
             try
             {
-                instance = DoGetInstance(_defaultType, name);
+                instance = DoGetInstance(defaultType, name);
             }
             catch (Exception e)
             {

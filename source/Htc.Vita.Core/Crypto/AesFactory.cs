@@ -10,12 +10,12 @@ namespace Htc.Vita.Core.Crypto
 
         private static readonly object InstancesLock = new object();
 
-        private static Type _defaultType = typeof(DefaultAesFactory);
+        private static Type defaultType = typeof(DefaultAesFactory);
 
         public static void Register<T>() where T : AesFactory
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(AesFactory)).Info("Registered default " + typeof(AesFactory).Name + " type to " + _defaultType);
+            defaultType = typeof(T);
+            Logger.GetInstance(typeof(AesFactory)).Info("Registered default " + typeof(AesFactory).Name + " type to " + defaultType);
         }
 
         public static AesFactory GetInstance()
@@ -23,7 +23,7 @@ namespace Htc.Vita.Core.Crypto
             AesFactory instance;
             try
             {
-                instance = DoGetInstance(_defaultType);
+                instance = DoGetInstance(defaultType);
             }
             catch (Exception e)
             {

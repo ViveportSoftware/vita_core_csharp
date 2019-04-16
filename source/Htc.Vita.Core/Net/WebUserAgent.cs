@@ -15,16 +15,16 @@ namespace Htc.Vita.Core.Net
         private readonly StringBuilder _optionalSection = new StringBuilder();
 
         private static readonly Assembly ModuleAssembly = Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
-        private static string _name = DefaultName;
+        private static string name = DefaultName;
 
         public static string Name
         {
-            get { return _name; }
+            get { return name; }
             set
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    _name = value;
+                    name = value;
                 }
             }
         }

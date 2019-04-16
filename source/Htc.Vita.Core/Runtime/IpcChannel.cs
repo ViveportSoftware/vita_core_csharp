@@ -18,12 +18,12 @@ namespace Htc.Vita.Core.Runtime
 
             private static readonly object InstancesLock = new object();
 
-            private static Type _defaultType = typeof(NamedPipeIpcChannel.Client);
+            private static Type defaultType = typeof(NamedPipeIpcChannel.Client);
 
             public static void Register<T>() where T : Client
             {
-                _defaultType = typeof(T);
-                Logger.GetInstance(typeof(Client)).Info("Registered default " + typeof(Client).Name + " type to " + _defaultType);
+                defaultType = typeof(T);
+                Logger.GetInstance(typeof(Client)).Info("Registered default " + typeof(Client).Name + " type to " + defaultType);
             }
 
             public static Client GetInstance()
@@ -31,7 +31,7 @@ namespace Htc.Vita.Core.Runtime
                 Client instance;
                 try
                 {
-                    instance = DoGetInstance(_defaultType);
+                    instance = DoGetInstance(defaultType);
                 }
                 catch (Exception e)
                 {
@@ -160,12 +160,12 @@ namespace Htc.Vita.Core.Runtime
 
             private static readonly object InstancesLock = new object();
 
-            private static Type _defaultType = typeof(NamedPipeIpcChannel.Provider);
+            private static Type defaultType = typeof(NamedPipeIpcChannel.Provider);
 
             public static void Register<T>() where T : Provider
             {
-                _defaultType = typeof(T);
-                Logger.GetInstance(typeof(Provider)).Info("Registered default " + typeof(Provider).Name + " type to " + _defaultType);
+                defaultType = typeof(T);
+                Logger.GetInstance(typeof(Provider)).Info("Registered default " + typeof(Provider).Name + " type to " + defaultType);
             }
 
             public static Provider GetInstance()
@@ -173,7 +173,7 @@ namespace Htc.Vita.Core.Runtime
                 Provider instance;
                 try
                 {
-                    instance = DoGetInstance(_defaultType);
+                    instance = DoGetInstance(defaultType);
                 }
                 catch (Exception e)
                 {

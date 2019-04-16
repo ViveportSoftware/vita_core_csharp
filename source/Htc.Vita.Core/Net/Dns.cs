@@ -12,7 +12,7 @@ namespace Htc.Vita.Core.Net
 
         private static readonly object InstancesLock = new object();
 
-        private static Type _defaultType = typeof(DefaultDns);
+        private static Type defaultType = typeof(DefaultDns);
 
         public string Resolver { get; } = string.Empty;
 
@@ -26,8 +26,8 @@ namespace Htc.Vita.Core.Net
 
         public static void Register<T>() where T : Dns
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(Dns)).Info("Registered default " + typeof(Dns).Name + " type to " + _defaultType);
+            defaultType = typeof(T);
+            Logger.GetInstance(typeof(Dns)).Info("Registered default " + typeof(Dns).Name + " type to " + defaultType);
         }
 
         public bool FlushCache()
@@ -73,7 +73,7 @@ namespace Htc.Vita.Core.Net
             Dns instance;
             try
             {
-                instance = DoGetInstance(_defaultType, resolver);
+                instance = DoGetInstance(defaultType, resolver);
             }
             catch (Exception e)
             {

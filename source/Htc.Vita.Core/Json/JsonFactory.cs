@@ -10,12 +10,12 @@ namespace Htc.Vita.Core.Json
 
         private static readonly object InstancesLock = new object();
 
-        private static Type _defaultType = typeof(LitJsonJsonFactory);
+        private static Type defaultType = typeof(LitJsonJsonFactory);
 
         public static void Register<T>() where T : JsonFactory
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(JsonFactory)).Info("Registered default " + typeof(JsonFactory).Name + " type to " + _defaultType);
+            defaultType = typeof(T);
+            Logger.GetInstance(typeof(JsonFactory)).Info("Registered default " + typeof(JsonFactory).Name + " type to " + defaultType);
         }
 
         public static JsonFactory GetInstance()
@@ -23,7 +23,7 @@ namespace Htc.Vita.Core.Json
             JsonFactory instance;
             try
             {
-                instance = DoGetInstance(_defaultType);
+                instance = DoGetInstance(defaultType);
             }
             catch (Exception e)
             {
