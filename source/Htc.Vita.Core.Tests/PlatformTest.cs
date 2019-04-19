@@ -81,5 +81,14 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(frameworkName);
             Assert.False(frameworkName.StartsWith("Unknown", StringComparison.InvariantCultureIgnoreCase));
         }
+
+        [Fact]
+        public void Default_7_GetMachineName()
+        {
+            var machineName = Platform.GetMachineName();
+            _output.WriteLine("machineName: " + machineName);
+            Assert.NotNull(machineName);
+            Assert.False(machineName.StartsWith("UNKNOWN-MACHINE-NAME", StringComparison.InvariantCultureIgnoreCase));
+        }
     }
 }

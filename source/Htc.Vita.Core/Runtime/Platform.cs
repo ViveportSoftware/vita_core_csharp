@@ -181,6 +181,16 @@ namespace Htc.Vita.Core.Runtime
             return Registry.GetStringValue(Registry.Hive.LocalMachine, "SOFTWARE\\Microsoft\\Cryptography", "MachineGuid", "");
         }
 
+        public static string GetMachineName()
+        {
+            var result = "UNKNOWN-MACHINE-NAME";
+            if (IsWindows)
+            {
+                result = Environment.MachineName;
+            }
+            return result;
+        }
+
         public static string GetProductName()
         {
             return Windows.GetProductNameInPlatform();
