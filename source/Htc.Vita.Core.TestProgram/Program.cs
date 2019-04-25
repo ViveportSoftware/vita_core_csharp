@@ -13,6 +13,9 @@ namespace Htc.Vita.Core.TestProgram
             Console.WriteLine("NetworkInterface.IsInternetAvailable(): " + NetworkInterface.IsInternetAvailable());
             Console.ReadKey();
 
+            Console.WriteLine("Platform.DetectProcessArch(): " + Platform.DetectProcessArch());
+            Console.ReadKey();
+
             var deviceInfos = UsbManager.GetHidDevices();
             var index = 0;
             foreach (var deviceInfo in deviceInfos)

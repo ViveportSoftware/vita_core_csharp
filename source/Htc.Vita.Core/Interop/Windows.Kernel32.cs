@@ -59,6 +59,42 @@ namespace Htc.Vita.Core.Interop
             /* FILE_FLAG_WRITE_THROUGH              */ FlagWriteThrough = 0x80000000
         }
 
+        internal enum ImageFileMachine : ushort
+        {
+            /* IMAGE_FILE_MACHINE_UNKNOWN     */ Unknown = 0,
+            /* IMAGE_FILE_MACHINE_TARGET_HOST */ TargetHost = 0x0001,
+            /* IMAGE_FILE_MACHINE_I386        */ I386 = 0x014c,
+            /* IMAGE_FILE_MACHINE_R3000       */ R3000 = 0x0162,
+            /* IMAGE_FILE_MACHINE_R4000       */ R4000 = 0x0166,
+            /* IMAGE_FILE_MACHINE_R10000      */ R10000 = 0x0168,
+            /* IMAGE_FILE_MACHINE_WCEMIPSV2   */ WceMipsV2 = 0x0169,
+            /* IMAGE_FILE_MACHINE_ALPHA       */ Alpha = 0x0184,
+            /* IMAGE_FILE_MACHINE_SH3         */ Sh3 = 0x01a2,
+            /* IMAGE_FILE_MACHINE_SH3DSP      */ Sh3Dsp = 0x01a3,
+            /* IMAGE_FILE_MACHINE_SH3E        */ Sh3E = 0x01a4,
+            /* IMAGE_FILE_MACHINE_SH4         */ Sh4 = 0x01a6,
+            /* IMAGE_FILE_MACHINE_SH5         */ Sh5 = 0x01a8,
+            /* IMAGE_FILE_MACHINE_ARM         */ Arm = 0x01c0,
+            /* IMAGE_FILE_MACHINE_THUMB       */ Thumb = 0x01c2,
+            /* IMAGE_FILE_MACHINE_ARMNT       */ ArmNT = 0x01c4,
+            /* IMAGE_FILE_MACHINE_AM33        */ Am33 = 0x01d3,
+            /* IMAGE_FILE_MACHINE_POWERPC     */ PowerPC = 0x01F0,
+            /* IMAGE_FILE_MACHINE_POWERPCFP   */ PowerPCFp = 0x01f1,
+            /* IMAGE_FILE_MACHINE_IA64        */ Ia64 = 0x0200,
+            /* IMAGE_FILE_MACHINE_MIPS16      */ Mips16 = 0x0266,
+            /* IMAGE_FILE_MACHINE_ALPHA64     */ Alpha64= 0x0284,
+            /* IMAGE_FILE_MACHINE_MIPSFPU     */ MipsFpu = 0x0366,
+            /* IMAGE_FILE_MACHINE_MIPSFPU16   */ MipsFpu16 = 0x0466,
+            /* IMAGE_FILE_MACHINE_AXP64       */ Axp64 = Alpha64,
+            /* IMAGE_FILE_MACHINE_TRICORE     */ TriCore = 0x0520,
+            /* IMAGE_FILE_MACHINE_CEF         */ Cef = 0x0CEF,
+            /* IMAGE_FILE_MACHINE_EBC         */ Ebc = 0x0EBC,
+            /* IMAGE_FILE_MACHINE_AMD64       */ Amd64 = 0x8664,
+            /* IMAGE_FILE_MACHINE_M32R        */ M32R = 0x9041,
+            /* IMAGE_FILE_MACHINE_ARM64       */ Arm64 = 0xAA64,
+            /* IMAGE_FILE_MACHINE_CEE         */ Cee = 0xC0EE
+        }
+
         /**
          * FILE_SHARE enumeration
          * https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx
@@ -195,6 +231,21 @@ namespace Htc.Vita.Core.Interop
         internal static extern bool IsWow64Process(
                 /* _In_  HANDLE */ [In] SafeProcessHandle hProcess,
                 /* _Out_ PBOOL  */ [In][Out] ref bool wow64Process
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wow64apiset/nf-wow64apiset-iswow64process2
+         */
+        [DllImport(Libraries.WindowsKernel32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool IsWow64Process2(
+                /* _In_      HANDLE */ [In] SafeProcessHandle hProcess,
+                /* _Out_     USHORT */ [In][Out] ref ImageFileMachine processMachine,
+                /* _Out_opt_ USHORT */ [In][Out] ref ImageFileMachine nativeMachine
         );
 
         /**

@@ -123,6 +123,34 @@ namespace Htc.Vita.Core.Shell
             };
         }
 
+        public bool IsSystemUriSchemeValid(string name)
+        {
+            return IsSystemUriSchemeValid(name, null);
+        }
+
+        public bool IsSystemUriSchemeValid(string name, Dictionary<string, string> options)
+        {
+            var uriSchemeInfo = GetSystemUriScheme(name, options);
+            if (uriSchemeInfo == null)
+            {
+                return false;
+            }
+
+            return IsSystemUriSchemeValid(uriSchemeInfo);
+        }
+
+        public bool IsSystemUriSchemeValid(UriSchemeInfo uriSchemeInfo)
+        {
+            if (uriSchemeInfo == null)
+            {
+                return false;
+            }
+
+            return !string.IsNullOrWhiteSpace(uriSchemeInfo.Name)
+                    && !string.IsNullOrWhiteSpace(uriSchemeInfo.CommandPath)
+                    && !string.IsNullOrWhiteSpace(uriSchemeInfo.DefaultIcon);
+        }
+
         protected abstract UriSchemeInfo OnGetSystemUriScheme(string schemeName, Dictionary<string, string> options);
     }
 }

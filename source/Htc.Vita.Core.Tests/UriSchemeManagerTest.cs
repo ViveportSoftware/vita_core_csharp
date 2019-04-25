@@ -73,5 +73,27 @@ namespace Htc.Vita.Core.Tests
             Assert.True(string.IsNullOrEmpty(systemUriScheme2.CommandPath));
             Assert.True(string.IsNullOrEmpty(systemUriScheme2.CommandParameter));
         }
+
+        [Fact]
+        public void Default_1_IsSystemUriSchemeValid()
+        {
+            if (!Runtime.Platform.IsWindows)
+            {
+                return;
+            }
+
+            var uriSchemeManager = UriSchemeManager.GetInstance();
+            Assert.NotNull(uriSchemeManager);
+
+            var schemeName = "http";
+            Assert.True(uriSchemeManager.IsSystemUriSchemeValid(schemeName));
+            var systemUriScheme = uriSchemeManager.GetSystemUriScheme(schemeName);
+            Assert.True(uriSchemeManager.IsSystemUriSchemeValid(systemUriScheme));
+
+            schemeName = "http2";
+            Assert.False(uriSchemeManager.IsSystemUriSchemeValid(schemeName));
+            systemUriScheme = uriSchemeManager.GetSystemUriScheme(schemeName);
+            Assert.False(uriSchemeManager.IsSystemUriSchemeValid(systemUriScheme));
+        }
     }
 }
