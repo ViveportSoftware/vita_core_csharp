@@ -93,6 +93,32 @@ namespace Htc.Vita.Core.Runtime
             return true;
         }
 
+        private static ProcessArch ConvertFrom(Interop.Windows.ImageFileMachine imageFileMachine)
+        {
+            var result = ProcessArch.Unknown;
+            if (imageFileMachine == Interop.Windows.ImageFileMachine.I386)
+            {
+                result = ProcessArch.X86;
+            }
+            if (imageFileMachine == Interop.Windows.ImageFileMachine.Amd64)
+            {
+                result = ProcessArch.X64;
+            }
+            if (imageFileMachine == Interop.Windows.ImageFileMachine.Arm)
+            {
+                result = ProcessArch.Arm;
+            }
+            if (imageFileMachine == Interop.Windows.ImageFileMachine.Arm64)
+            {
+                result = ProcessArch.Arm64;
+            }
+            if (result == ProcessArch.Unknown)
+            {
+                Logger.GetInstance(typeof(Platform)).Error("Unknown imageFileMachine: " + imageFileMachine);
+            }
+            return result;
+        }
+
         private static void DebugInternal(string message)
         {
             if (string.IsNullOrEmpty(message))
@@ -139,6 +165,50 @@ namespace Htc.Vita.Core.Runtime
                 return Is32BitProcessOn64BitSystem() ? OsArch.Bit64 : OsArch.Bit32;
             }
             return OsArch.Unknown;
+        }
+
+        public static ProcessArch DetectProcessArch()
+        {
+            if (!IsWindows)
+            {
+                return ProcessArch.Unknown;
+            }
+
+            try
+            {
+                using (var processHandle = new Interop.Windows.SafeProcessHandle(Process.GetCurrentProcess()))
+                {
+                    var processMachine = Interop.Windows.ImageFileMachine.Unknown;
+                    var nativeMachine = Interop.Windows.ImageFileMachine.Unknown;
+                    var success = Interop.Windows.IsWow64Process2(
+                            processHandle,
+                            ref processMachine,
+                            ref nativeMachine
+                    );
+
+                    if (success)
+                    {
+                        Logger.GetInstance(typeof(Platform)).Error("processMachine: " + processMachine);
+                        Logger.GetInstance(typeof(Platform)).Error("nativeMachine: " + nativeMachine);
+                        if (processMachine != Interop.Windows.ImageFileMachine.Unknown)
+                        {
+                            return ConvertFrom(processMachine);
+                        }
+
+                        return ConvertFrom(nativeMachine);
+                    }
+                }
+            }
+            catch (EntryPointNotFoundException)
+            {
+                Logger.GetInstance(typeof(Platform)).Warn("Can not use IsWow64Process2 to detect process architecture");
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(Platform)).Error("Can not detect process architecture: " + e.Message);
+            }
+
+            return IntPtr.Size == 8 ? ProcessArch.X64 : ProcessArch.X86;
         }
 
         public static void Exit(ExitType exitType)
@@ -285,6 +355,15 @@ namespace Htc.Vita.Core.Runtime
             Unknown = 0,
             Bit32 = 1,
             Bit64 = 2
+        }
+
+        public enum ProcessArch
+        {
+            Unknown = 0,
+            X86 = 1,
+            X64 = 2,
+            Arm = 3,
+            Arm64 = 4
         }
 
         public enum Type

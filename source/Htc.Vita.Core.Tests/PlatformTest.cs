@@ -90,5 +90,16 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(machineName);
             Assert.False(machineName.StartsWith("UNKNOWN-MACHINE-NAME", StringComparison.InvariantCultureIgnoreCase));
         }
+
+        [Fact]
+        public void Default_8_DetectProcessArch()
+        {
+            if (Platform.IsWindows)
+            {
+                var processArch = Platform.DetectProcessArch();
+                _output.WriteLine("processArch: " + processArch);
+                Assert.False(processArch == Platform.ProcessArch.Unknown);
+            }
+        }
     }
 }
