@@ -16,6 +16,25 @@ namespace Htc.Vita.Core.TestProgram
             Console.WriteLine("Platform.DetectProcessArch(): " + Platform.DetectProcessArch());
             Console.ReadKey();
 
+            using (var usbWatcher = UsbWatcherFactory.GetInstance().CreateUsbWatcher())
+            {
+                usbWatcher.OnDeviceConnected += OnUsbDeviceConnected;
+                usbWatcher.OnDeviceDisconnected += OnUsbDeviceDisconnected;
+                var isRunning = usbWatcher.IsRunning();
+                if (isRunning)
+                {
+                    Console.WriteLine("usbWatcher is running");
+                }
+                else
+                {
+                    Console.WriteLine("usbWatcher.Start(): " + usbWatcher.Start());
+                }
+                Console.ReadKey();
+
+                Console.WriteLine("usbWatcher.Stop(): " + usbWatcher.Stop());
+                Console.ReadKey();
+            }
+
             var deviceInfos = UsbManager.GetHidDevices();
             var index = 0;
             foreach (var deviceInfo in deviceInfos)
@@ -84,6 +103,16 @@ namespace Htc.Vita.Core.TestProgram
         private static void OnProcessDeleted(ProcessWatcher.ProcessInfo processInfo)
         {
             Console.WriteLine("" + processInfo.Path + " (" + processInfo.Id + ") is deleted");
+        }
+
+        private static void OnUsbDeviceConnected()
+        {
+            Console.WriteLine("Some USB device connected");
+        }
+
+        private static void OnUsbDeviceDisconnected()
+        {
+            Console.WriteLine("Some USB device disconnected");
         }
     }
 }
