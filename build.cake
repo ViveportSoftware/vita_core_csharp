@@ -1,6 +1,7 @@
 #addin "nuget:?package=Cake.Coveralls&version=0.9.0"
 #addin "nuget:?package=Cake.Git&version=0.19.0"
 #addin "nuget:?package=Cake.ReSharperReports&version=0.10.0"
+#addin "nuget:?package=Cake.Sonar&version=1.1.18"
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -63,6 +64,9 @@ var coverallsApiKey = EnvironmentVariable("COVERALLS_APIKEY") ?? "NOTSET";
 // Define nuget push source and key
 var nugetApiKey = EnvironmentVariable("NUGET_PUSH_TOKEN") ?? EnvironmentVariable("NUGET_APIKEY") ?? "NOTSET";
 var nugetSource = EnvironmentVariable("NUGET_PUSH_PATH") ?? EnvironmentVariable("NUGET_SOURCE") ?? "NOTSET";
+
+// Define sonarcloud key
+var sonarcloudApiKey = EnvironmentVariable("SONARCLOUD_APIKEY") ?? "NOTSET";
 
 
 //////////////////////////////////////////////////////////////////////
@@ -136,8 +140,24 @@ Task("Generate-AssemblyInfo")
     );
 });
 
-Task("Build-Assemblies")
+Task("Run-Sonar-Begin")
+    .WithCriteria(() => !"NOTSET".Equals(sonarcloudApiKey))
     .IsDependentOn("Generate-AssemblyInfo")
+    .Does(() =>
+{
+    SonarBegin(
+            new SonarBeginSettings {
+                    Url = "https://sonarcloud.io",
+                    Login = sonarcloudApiKey,
+                    Key = "ViveportSoftware_vita_core_csharp",
+                    Organization = "viveportsoftware",
+                    OpenCoverReportsPath = "**/*.OpenCover.xml"
+            }
+    );
+});
+
+Task("Build-Assemblies")
+    .IsDependentOn("Run-Sonar-Begin")
     .Does(() =>
 {
     var settings = new DotNetCoreBuildSettings
@@ -217,7 +237,7 @@ Task("Run-Unit-Tests-Under-AnyCPU")
                                 }
                         );
                 },
-                new FilePath(reportOpenCoverDirAnyCPU.ToString() + "/" + product + ".xml"),
+                new FilePath(reportOpenCoverDirAnyCPU.ToString() + "/" + product + ".OpenCover.xml"),
                 openCoverSettings
         );
     }
@@ -285,8 +305,21 @@ Task("Run-Unit-Tests-Under-X86")
     }
 });
 
-Task("Run-DupFinder")
+Task("Run-Sonar-End")
+    .WithCriteria(() => !"NOTSET".Equals(sonarcloudApiKey))
     .IsDependentOn("Run-Unit-Tests-Under-X86")
+    .Does(() =>
+{
+    SonarEnd(
+            new SonarEndSettings
+            {
+                    Login = sonarcloudApiKey,
+            }
+    );
+});
+
+Task("Run-DupFinder")
+    .IsDependentOn("Run-Sonar-End")
     .Does(() =>
 {
     if(IsRunningOnWindows())

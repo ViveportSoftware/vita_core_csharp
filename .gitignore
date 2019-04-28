@@ -1,4 +1,5 @@
 # folders
+.sonarqube/
 dist/
 obj/
 source/.vs/
