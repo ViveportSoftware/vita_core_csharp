@@ -8,12 +8,15 @@ namespace Htc.Vita.Core.Interop
 
         internal enum Error
         {
+            /* ERROR_FILE_NOT_FOUND            (2,   0x2) */ FileNotFound = 0x2,
+            /* ERROR_GEN_FAILURE              (31,  0x1f) */ GenFailure = 0x1f,
             /* ERROR_NOT_SUPPORTED            (50,  0x32) */ NotSupported = 0x32,
             /* ERROR_INVALID_PARAMETER        (87,  0x57) */ InvalidParameter = 0x57,
             /* ERROR_INSUFFICIENT_BUFFER     (122,  0x7a) */ InsufficientBuffer = 0x7a,
             /* ERROR_INVALID_NAME            (123,  0x7b) */ InvalidName = 0x7b,
             /* ERROR_NO_MORE_ITEMS           (259, 0x103) */ NoMoreItems = 0x103,
-            /* ERROR_SERVICE_DOES_NOT_EXIST (1060, 0x424) */ ServiceDoesNotExist = 0x424
+            /* ERROR_SERVICE_DOES_NOT_EXIST (1060, 0x424) */ ServiceDoesNotExist = 0x424,
+            /* ERROR_DEVICE_NOT_CONNECTED   (1167, 0x48f) */ DeviceNotConnected = 0x48f
         }
 
         internal enum NtStatus
