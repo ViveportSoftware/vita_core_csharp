@@ -99,15 +99,20 @@ namespace Htc.Vita.Core.IO
                     {
                         Path = devicePath,
                         Description = GetUsbDeviceStringPropertyInWindows(
-                                    deviceInfoSetHandle,
-                                    ref deviceInfoData,
-                                    Windows.SetupDeviceRegistryProperty.DeviceDesc
-                            ),
+                                deviceInfoSetHandle,
+                                ref deviceInfoData,
+                                Windows.SetupDeviceRegistryProperty.DeviceDesc
+                        ),
+                        FriendlyName = GetUsbDeviceStringPropertyInWindows(
+                                deviceInfoSetHandle,
+                                ref deviceInfoData,
+                                Windows.SetupDeviceRegistryProperty.FriendlyName
+                        ),
                         Manufacturer = GetUsbDeviceStringPropertyInWindows(
-                                    deviceInfoSetHandle,
-                                    ref deviceInfoData,
-                                    Windows.SetupDeviceRegistryProperty.Mfg
-                            ),
+                                deviceInfoSetHandle,
+                                ref deviceInfoData,
+                                Windows.SetupDeviceRegistryProperty.Mfg
+                        ),
                         SerialNumber = GetHidDeviceSerialNumberInWindows(devicePath)
                     };
                     var hardwareIds = GetUsbDeviceMultiStringPropertyInWindows(
@@ -245,6 +250,12 @@ namespace Htc.Vita.Core.IO
             if (!success)
             {
                 var win32Error = Marshal.GetLastWin32Error();
+                if (win32Error == (int) Windows.Error.InvalidData)
+                {
+                    Logger.GetInstance(typeof(UsbManager)).Debug("The requested property " + property + " does not exist");
+                    regType = 0;
+                    return null;
+                }
                 if (win32Error != (int) Windows.Error.InsufficientBuffer)
                 {
                     Logger.GetInstance(typeof(UsbManager)).Error("Can not query USB device registry property, error code: " + win32Error);

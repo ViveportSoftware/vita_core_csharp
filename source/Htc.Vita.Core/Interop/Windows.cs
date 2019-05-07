@@ -9,6 +9,7 @@ namespace Htc.Vita.Core.Interop
         internal enum Error
         {
             /* ERROR_FILE_NOT_FOUND            (2,   0x2) */ FileNotFound = 0x2,
+            /* ERROR_INVALID_DATA             (13,   0xd) */ InvalidData = 0xd,
             /* ERROR_GEN_FAILURE              (31,  0x1f) */ GenFailure = 0x1f,
             /* ERROR_NOT_SUPPORTED            (50,  0x32) */ NotSupported = 0x32,
             /* ERROR_INVALID_PARAMETER        (87,  0x57) */ InvalidParameter = 0x57,
