@@ -103,11 +103,6 @@ namespace Htc.Vita.Core.IO
                                 ref deviceInfoData,
                                 Windows.SetupDeviceRegistryProperty.DeviceDesc
                         ),
-                        FriendlyName = GetUsbDeviceStringPropertyInWindows(
-                                deviceInfoSetHandle,
-                                ref deviceInfoData,
-                                Windows.SetupDeviceRegistryProperty.FriendlyName
-                        ),
                         Manufacturer = GetUsbDeviceStringPropertyInWindows(
                                 deviceInfoSetHandle,
                                 ref deviceInfoData,
@@ -375,11 +370,6 @@ namespace Htc.Vita.Core.IO
                                 deviceInfoSetHandle,
                                 ref deviceInfoData,
                                 Windows.SetupDeviceRegistryProperty.DeviceDesc
-                        ),
-                        FriendlyName = GetUsbDeviceStringPropertyInWindows(
-                                deviceInfoSetHandle,
-                                ref deviceInfoData,
-                                Windows.SetupDeviceRegistryProperty.FriendlyName
                         ),
                         Manufacturer = GetUsbDeviceStringPropertyInWindows(
                                 deviceInfoSetHandle,

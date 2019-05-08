@@ -7,7 +7,6 @@ namespace Htc.Vita.Core.IO
         public class DeviceInfo
         {
             public string Description { get; set; } = "";
-            public string FriendlyName { get; set; } = "";
             public string Manufacturer { get; set; } = "";
             public string Path { get; set; } = "";
             public string ProductId { get; set; } = "";
