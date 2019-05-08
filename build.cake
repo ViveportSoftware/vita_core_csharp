@@ -472,7 +472,7 @@ Task("Update-Coverage-Report")
     .Does(() =>
 {
     CoverallsIo(
-            reportOpenCoverDirAnyCPU.ToString() + "/" + product + ".xml",
+            reportOpenCoverDirAnyCPU.ToString() + "/" + product + ".OpenCover.xml",
             new CoverallsIoSettings()
             {
                     RepoToken = coverallsApiKey
