@@ -59,6 +59,21 @@ namespace Htc.Vita.Core.TestProgram
             }
             Console.ReadKey();
 
+            deviceInfos = UsbManager.GetUsbDevices();
+            index = 0;
+            foreach (var deviceInfo in deviceInfos)
+            {
+                Console.WriteLine($"deviceInfo[{index}].Path: \"{deviceInfo.Path}\"");
+                Console.WriteLine($"deviceInfo[{index}].VendorId: \"{deviceInfo.VendorId}\"");
+                Console.WriteLine($"deviceInfo[{index}].ProductId: \"{deviceInfo.ProductId}\"");
+                Console.WriteLine($"deviceInfo[{index}].Description: \"{deviceInfo.Description}\"");
+                Console.WriteLine($"deviceInfo[{index}].FriendlyName: \"{deviceInfo.FriendlyName}\"");
+                Console.WriteLine($"deviceInfo[{index}].Manufacturer: \"{deviceInfo.Manufacturer}\"");
+                Console.WriteLine($"deviceInfo[{index}].SerialNumber: \"{deviceInfo.SerialNumber}\"");
+                index++;
+            }
+            Console.ReadKey();
+
             var randomUnusedPort = LocalPortManager.GetRandomUnusedPort();
             var specificPort = 35447;
             var randomUnusedPortStatus = LocalPortManager.GetPortStatus(randomUnusedPort);
