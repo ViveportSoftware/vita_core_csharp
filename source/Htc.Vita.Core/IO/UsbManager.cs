@@ -99,15 +99,15 @@ namespace Htc.Vita.Core.IO
                     {
                         Path = devicePath,
                         Description = GetUsbDeviceStringPropertyInWindows(
-                                    deviceInfoSetHandle,
-                                    ref deviceInfoData,
-                                    Windows.SetupDeviceRegistryProperty.DeviceDesc
-                            ),
+                                deviceInfoSetHandle,
+                                ref deviceInfoData,
+                                Windows.SetupDeviceRegistryProperty.DeviceDesc
+                        ),
                         Manufacturer = GetUsbDeviceStringPropertyInWindows(
-                                    deviceInfoSetHandle,
-                                    ref deviceInfoData,
-                                    Windows.SetupDeviceRegistryProperty.Mfg
-                            ),
+                                deviceInfoSetHandle,
+                                ref deviceInfoData,
+                                Windows.SetupDeviceRegistryProperty.Mfg
+                        ),
                         SerialNumber = GetHidDeviceSerialNumberInWindows(devicePath)
                     };
                     var hardwareIds = GetUsbDeviceMultiStringPropertyInWindows(
@@ -150,7 +150,7 @@ namespace Htc.Vita.Core.IO
                 return guid;
             }
             Logger.GetInstance(typeof(UsbManager)).Warn("HID Guid is empty. Use default HID Guid");
-            return new Guid("4d1e55b2-f16f-11cf-88cb-001111000030"); // default HID GUID
+            return Windows.DeviceInterfaceHid;
         }
 
         public static byte[] GetHidFeatureReport(string devicePath, byte reportId)
@@ -245,6 +245,12 @@ namespace Htc.Vita.Core.IO
             if (!success)
             {
                 var win32Error = Marshal.GetLastWin32Error();
+                if (win32Error == (int) Windows.Error.InvalidData)
+                {
+                    Logger.GetInstance(typeof(UsbManager)).Debug("The requested property " + property + " does not exist");
+                    regType = 0;
+                    return null;
+                }
                 if (win32Error != (int) Windows.Error.InsufficientBuffer)
                 {
                     Logger.GetInstance(typeof(UsbManager)).Error("Can not query USB device registry property, error code: " + win32Error);
@@ -270,6 +276,137 @@ namespace Htc.Vita.Core.IO
                 return null;
             }
             return propertyBuffer;
+        }
+
+        public static List<DeviceInfo> GetUsbDevices()
+        {
+            return GetUsbDevicesInWindows();
+        }
+
+        private static List<DeviceInfo> GetUsbDevicesInWindows()
+        {
+            var deviceInfos = new List<DeviceInfo>();
+            var classGuid = GetUsbGuidInWindows();
+            using (var deviceInfoSetHandle = Windows.SetupDiGetClassDevsW(
+                    ref classGuid,
+                    null,
+                    IntPtr.Zero,
+                    Windows.DeviceInfoGetClassFlag.Present | Windows.DeviceInfoGetClassFlag.DeviceInterface
+            ))
+            {
+                if (deviceInfoSetHandle == null || deviceInfoSetHandle.IsInvalid)
+                {
+                    Logger.GetInstance(typeof(UsbManager)).Error("Can not find USB devices, error code: " + Marshal.GetLastWin32Error());
+                    return deviceInfos;
+                }
+
+                var deviceIndex = 0U;
+                while (true)
+                {
+                    var deviceInterfaceData = new Windows.SetupDeviceInterfaceData();
+                    deviceInterfaceData.cbSize = (uint)Marshal.SizeOf(deviceInterfaceData);
+                    var success = Windows.SetupDiEnumDeviceInterfaces(
+                            deviceInfoSetHandle,
+                            IntPtr.Zero,
+                            ref classGuid,
+                            deviceIndex,
+                            ref deviceInterfaceData
+                    );
+                    if (!success)
+                    {
+                        var win32Error = Marshal.GetLastWin32Error();
+                        if (win32Error != (int)Windows.Error.NoMoreItems)
+                        {
+                            Logger.GetInstance(typeof(UsbManager)).Error("Can not enumerate USB device on index: " + deviceIndex + ", error code: " + win32Error);
+                        }
+                        break;
+                    }
+
+                    var bufferSize = 0;
+                    success = Windows.SetupDiGetDeviceInterfaceDetailW(
+                            deviceInfoSetHandle,
+                            ref deviceInterfaceData,
+                            IntPtr.Zero,
+                            0,
+                            ref bufferSize,
+                            IntPtr.Zero
+                    );
+                    if (!success)
+                    {
+                        var win32Error = Marshal.GetLastWin32Error();
+                        if (win32Error != (int)Windows.Error.InsufficientBuffer)
+                        {
+                            Logger.GetInstance(typeof(UsbManager)).Error("Can not query USB device interface detail on index: " + deviceIndex + ", error code: " + win32Error);
+                            break;
+                        }
+                    }
+
+                    var deviceInterfaceDetailData = Marshal.AllocHGlobal(bufferSize);
+                    Marshal.WriteInt32(deviceInterfaceDetailData, IntPtr.Size == 8 ? 8 : 6);
+                    var deviceInfoData = new Windows.SetupDeviceInfoData();
+                    deviceInfoData.cbSize = (uint)Marshal.SizeOf(deviceInfoData);
+                    success = Windows.SetupDiGetDeviceInterfaceDetailW(
+                            deviceInfoSetHandle,
+                            ref deviceInterfaceData,
+                            deviceInterfaceDetailData,
+                            bufferSize,
+                            ref bufferSize,
+                            ref deviceInfoData
+                    );
+                    if (!success)
+                    {
+                        var win32Error = Marshal.GetLastWin32Error();
+                        Logger.GetInstance(typeof(UsbManager)).Error("Can not get USB device interface detail on index: " + deviceIndex + ", error code: " + win32Error);
+                        break;
+                    }
+
+                    var devicePath = Marshal.PtrToStringUni(deviceInterfaceDetailData + 4);
+                    Marshal.FreeHGlobal(deviceInterfaceDetailData);
+
+                    var deviceInfo = new DeviceInfo
+                    {
+                        Path = devicePath,
+                        Description = GetUsbDeviceStringPropertyInWindows(
+                                deviceInfoSetHandle,
+                                ref deviceInfoData,
+                                Windows.SetupDeviceRegistryProperty.DeviceDesc
+                        ),
+                        Manufacturer = GetUsbDeviceStringPropertyInWindows(
+                                deviceInfoSetHandle,
+                                ref deviceInfoData,
+                                Windows.SetupDeviceRegistryProperty.Mfg
+                        ),
+                        SerialNumber = GetHidDeviceSerialNumberInWindows(devicePath)
+                    };
+                    var hardwareIds = GetUsbDeviceMultiStringPropertyInWindows(
+                            deviceInfoSetHandle,
+                            ref deviceInfoData,
+                            Windows.SetupDeviceRegistryProperty.HardwareId
+                    );
+                    var regex = new Regex("^(\\w{3})\\\\VID_([0-9A-F]{4})&PID_([0-9A-F]{4})", RegexOptions.IgnoreCase);
+                    foreach (var hardwareId in hardwareIds)
+                    {
+                        var match = regex.Match(hardwareId);
+                        if (!match.Success)
+                        {
+                            continue;
+                        }
+                        deviceInfo.Optional["type"] = match.Groups[1].Value;
+                        deviceInfo.VendorId = match.Groups[2].Value;
+                        deviceInfo.ProductId = match.Groups[3].Value;
+                        break;
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(deviceInfo.VendorId) && !string.IsNullOrWhiteSpace(deviceInfo.ProductId))
+                    {
+                        deviceInfos.Add(deviceInfo);
+                    }
+
+                    deviceIndex++;
+                }
+
+                return deviceInfos;
+            }
         }
 
         private static string GetUsbDeviceStringPropertyInWindows(
@@ -308,9 +445,14 @@ namespace Htc.Vita.Core.IO
                 return new string[] {};
             }
             return Encoding.Unicode.GetString(bytes).Split(
-                    (char[]) null,
+                    new[] { '\0' },
                     StringSplitOptions.RemoveEmptyEntries
             );
+        }
+
+        private static Guid GetUsbGuidInWindows()
+        {
+            return Windows.DeviceInterfaceUsbDevice;
         }
 
         private static string GetHidDeviceSerialNumberInWindows(string devicePath)
