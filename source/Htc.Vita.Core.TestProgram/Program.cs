@@ -9,6 +9,9 @@ namespace Htc.Vita.Core.TestProgram
     {
         private static void Main()
         {
+            Console.WriteLine($"SecurityProtocolManager.GetAvailableProtocol(): {SecurityProtocolManager.GetAvailableProtocol()}");
+            Console.ReadKey();
+
             Console.WriteLine("NetworkInterface.IsNetworkAvailable(): " + NetworkInterface.IsNetworkAvailable());
             Console.WriteLine("NetworkInterface.IsInternetAvailable(): " + NetworkInterface.IsInternetAvailable());
             Console.ReadKey();
