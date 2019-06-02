@@ -3,7 +3,7 @@ using System.Net;
 
 namespace Htc.Vita.Core.Net
 {
-    public class SecurityProtocolManager
+    public static class SecurityProtocolManager
     {
         public static SecurityProtocolType GetAvailableProtocol()
         {
