@@ -5,9 +5,9 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        internal static Guid /* GUID_DEVCLASS_USB            */ DeviceClassUsb = new Guid("{36FC9E60-C465-11CF-8056-444553540000}");
-        internal static Guid /* GUID_DEVINTERFACE_HID        */ DeviceInterfaceHid = new Guid("{4D1E55B2-F16F-11CF-88CB-001111000030}");
-        internal static Guid /* GUID_DEVINTERFACE_USB_DEVICE */ DeviceInterfaceUsbDevice = new Guid("{A5DCBF10-6530-11D2-901F-00C04FB951ED}");
+        internal static readonly Guid /* GUID_DEVCLASS_USB            */ DeviceClassUsb = new Guid("{36FC9E60-C465-11CF-8056-444553540000}");
+        internal static readonly Guid /* GUID_DEVINTERFACE_HID        */ DeviceInterfaceHid = new Guid("{4D1E55B2-F16F-11CF-88CB-001111000030}");
+        internal static readonly Guid /* GUID_DEVINTERFACE_USB_DEVICE */ DeviceInterfaceUsbDevice = new Guid("{A5DCBF10-6530-11D2-901F-00C04FB951ED}");
 
         /**
          * DIGCF enumeration
