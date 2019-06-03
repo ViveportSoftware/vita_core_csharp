@@ -195,7 +195,7 @@ Task("Run-Unit-Tests-Under-AnyCPU")
                                 "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/net452/*.Tests.dll",
                                 new XUnit2Settings
                                 {
-                                        Parallelism = ParallelismOption.All,
+                                        Parallelism = ParallelismOption.None,
                                         HtmlReport = true,
                                         NUnitReport = true,
                                         OutputDirectory = reportXUnitDirAnyCPU
@@ -231,7 +231,7 @@ Task("Run-Unit-Tests-Under-AnyCPU")
                                 "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/net452/*.Tests.dll",
                                 new XUnit2Settings
                                 {
-                                        Parallelism = ParallelismOption.All,
+                                        Parallelism = ParallelismOption.None,
                                         OutputDirectory = reportXUnitDirAnyCPU,
                                         ShadowCopy = false
                                 }
@@ -247,7 +247,7 @@ Task("Run-Unit-Tests-Under-AnyCPU")
                 "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/net452/*.Tests.dll",
                 new XUnit2Settings
                 {
-                        Parallelism = ParallelismOption.All,
+                        Parallelism = ParallelismOption.None,
                         HtmlReport = true,
                         NUnitReport = true,
                         OutputDirectory = reportXUnitDirAnyCPU
@@ -270,7 +270,7 @@ Task("Run-Unit-Tests-Under-X86")
                                 "./temp/" + configuration + "/" + product + ".Tests/bin/x86/net452/*.Tests.dll",
                                 new XUnit2Settings
                                 {
-                                        Parallelism = ParallelismOption.All,
+                                        Parallelism = ParallelismOption.None,
                                         HtmlReport = true,
                                         NUnitReport = true,
                                         UseX86 = true,
@@ -295,7 +295,7 @@ Task("Run-Unit-Tests-Under-X86")
                 "./temp/" + configuration + "/" + product + ".Tests/bin/x86/net452/*.Tests.dll",
                 new XUnit2Settings
                 {
-                        Parallelism = ParallelismOption.All,
+                        Parallelism = ParallelismOption.None,
                         HtmlReport = true,
                         NUnitReport = true,
                         UseX86 = true,
