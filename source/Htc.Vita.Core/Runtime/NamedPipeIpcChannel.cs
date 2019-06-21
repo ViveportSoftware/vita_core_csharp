@@ -181,7 +181,6 @@ namespace Htc.Vita.Core.Runtime
             private void OnHandleRequest(object data)
             {
                 var threadId = Thread.CurrentThread.ManagedThreadId;
-#if NET45
                 var pipeSecurity = new PipeSecurity();
                 pipeSecurity.AddAccessRule(
                         new PipeAccessRule(
@@ -204,7 +203,6 @@ namespace Htc.Vita.Core.Runtime
                                 AccessControlType.Allow
                         )
                 );
-#endif
 
                 try
                 {
