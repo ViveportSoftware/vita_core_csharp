@@ -11,7 +11,7 @@ namespace Htc.Vita.Core.Interop
             {
             }
 
-            public SafeDevInfoSetHandle(IntPtr handle) : base(true)
+            internal SafeDevInfoSetHandle(IntPtr handle) : base(true)
             {
                 SetHandle(handle);
             }

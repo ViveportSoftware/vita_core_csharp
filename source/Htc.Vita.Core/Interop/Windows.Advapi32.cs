@@ -7,13 +7,13 @@ namespace Htc.Vita.Core.Interop
     internal static partial class Windows
     {
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/bb530716.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/privilege-constants
          */
         internal const string SeShutdownName = "SeShutdownPrivilege";
 
         /**
          * CONTROL_ACCEPTED enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685996.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-_service_status
          */
         [Flags]
         internal enum AcceptedControl : uint
@@ -36,7 +36,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * CURRENT_STATE enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685996.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-_service_status
          */
         internal enum CurrentState : uint
         {
@@ -51,7 +51,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * ERROR_CONTROL_TYPE enumeration
-         * https://msdn.microsoft.com/en-us/library/ms681987.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-changeserviceconfigw
          */
         internal enum ErrorControlType : uint
         {
@@ -73,8 +73,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * SC_MANAGER_ACCESS_RIGHT enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684323.aspx
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685981.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/Services/service-security-and-access-rights
          */
         [Flags]
         internal enum ServiceControlManagerAccessRight : uint
@@ -97,8 +96,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * SERVICE_ACCESS_RIGHT enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684330.aspx
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685981.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/Services/service-security-and-access-rights
          */
         [Flags]
         internal enum ServiceAccessRight : uint
@@ -127,8 +125,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * SERVICE_TYPE enumeration
-         * https://msdn.microsoft.com/en-us/library/ms681987.aspx
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685996.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-_service_status
          */
         [Flags]
         internal enum ServiceType : uint
@@ -164,7 +161,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * SID_NAME_USE enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa379601.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ne-winnt-_sid_name_use
          */
         internal enum SidType
         {
@@ -182,7 +179,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * START_TYPE enumeration
-         * https://msdn.microsoft.com/en-us/library/ms681987.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-changeserviceconfigw
          */
         internal enum StartType : uint
         {
@@ -195,7 +192,7 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa374905.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/access-rights-for-access-token-objects
          */
         [Flags]
         internal enum TokenAccessRight
@@ -229,7 +226,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * QUERY_SERVICE_CONFIG structure
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684950.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-query_service_configw
          */
         [StructLayout(LayoutKind.Sequential)]
         internal struct QueryServiceConfig
@@ -247,7 +244,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * SERVICE_STATUS structure
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms685996.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-_service_status
          */
         [StructLayout(LayoutKind.Sequential)]
         internal struct ServiceStatus
@@ -263,7 +260,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * TOKEN_PRIVILEGES structure
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa379630.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ns-winnt-_token_privileges
          */
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         internal struct TokenPrivileges
@@ -274,7 +271,7 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa375202.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/securitybaseapi/nf-securitybaseapi-adjusttokenprivileges
          */
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -291,7 +288,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/ms681987.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-changeserviceconfigw
          */
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -314,7 +311,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms682028.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-closeservicehandle
          */
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -327,7 +324,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa376399.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/sddl/nf-sddl-convertsidtostringsidw
          */
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -341,7 +338,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa376402.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/sddl/nf-sddl-convertstringsidtosidw
          */
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -355,7 +352,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa379166.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-lookupaccountsidw
          */
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -374,7 +371,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa379180.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-lookupprivilegevaluew
          */
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -388,7 +385,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa379295.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/nf-processthreadsapi-openprocesstoken
          */
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -402,7 +399,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684323.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-openscmanagerw
          */
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -416,7 +413,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684330.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-openservicew
          */
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -430,7 +427,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684932.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-queryserviceconfigw
          */
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -446,7 +443,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684939.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-queryservicestatus
          */
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -460,7 +457,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms686321.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-startservicew
          */
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,

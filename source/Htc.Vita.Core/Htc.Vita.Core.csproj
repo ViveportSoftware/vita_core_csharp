@@ -6,6 +6,7 @@
     <TargetFrameworks>net45;netcoreapp2.1</TargetFrameworks>
     <IntermediateOutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\obj</IntermediateOutputPath>
     <OutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\bin</OutputPath>
+    <DocumentationFile>..\..\temp\$(Configuration)\$(AssemblyName)\bin\$(AssemblyName).xml</DocumentationFile>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>6</LangVersion>
     <Prefer32Bit>false</Prefer32Bit>
@@ -29,6 +30,7 @@
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.5.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
     <PackageReference Include="System.Drawing.Common" Version="4.5.0" />
+    <PackageReference Include="System.IO.Pipes.AccessControl" Version="4.5.0" />
     <PackageReference Include="System.Management" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,6 @@ namespace Htc.Vita.Core.Interop
     internal static partial class Windows
     {
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa376868.aspx
          * https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-exitwindowsex
          */
         [Flags]
@@ -25,7 +24,6 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa376868.aspx
          * https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-exitwindowsex
          */
         [DllImport(Libraries.WindowsUser32,

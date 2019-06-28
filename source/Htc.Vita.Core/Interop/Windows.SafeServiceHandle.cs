@@ -11,7 +11,7 @@ namespace Htc.Vita.Core.Interop
             {
             }
 
-            public SafeServiceHandle(IntPtr handle) : base(true)
+            internal SafeServiceHandle(IntPtr handle) : base(true)
             {
                 SetHandle(handle);
             }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
@@ -181,7 +180,6 @@ namespace Htc.Vita.Core.Runtime
             private void OnHandleRequest(object data)
             {
                 var threadId = Thread.CurrentThread.ManagedThreadId;
-#if NET45
                 var pipeSecurity = new PipeSecurity();
                 pipeSecurity.AddAccessRule(
                         new PipeAccessRule(
@@ -204,7 +202,6 @@ namespace Htc.Vita.Core.Runtime
                                 AccessControlType.Allow
                         )
                 );
-#endif
 
                 try
                 {
@@ -352,7 +349,7 @@ namespace Htc.Vita.Core.Runtime
             {
                 using (var process = Process.GetProcessById((int) processId))
                 {
-                    processPath = process.MainModule.FileName;
+                    processPath = process.MainModule?.FileName;
                 }
             }
             catch (Exception e)
@@ -380,28 +377,7 @@ namespace Htc.Vita.Core.Runtime
                 return null;
             }
 
-            string processPath;
-            using (var clientProcess = Process.GetProcessById((int) processId))
-            {
-                try
-                {
-                    processPath = clientProcess.MainModule.FileName;
-                }
-                catch (Win32Exception)
-                {
-                    using (var processHandle = new Windows.SafeProcessHandle(clientProcess))
-                    {
-                        var fullPath = new StringBuilder(256);
-                        Windows.GetModuleFileNameExW(
-                                processHandle,
-                                IntPtr.Zero,
-                                fullPath,
-                                (uint)fullPath.Capacity
-                        );
-                        processPath = fullPath.ToString();
-                    }
-                }
-            }
+            var processPath = ProcessManager.GetProcessPathById((int) processId);
             if (string.IsNullOrWhiteSpace(processPath))
             {
                 return null;

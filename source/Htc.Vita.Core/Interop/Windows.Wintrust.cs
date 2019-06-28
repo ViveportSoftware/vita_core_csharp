@@ -14,7 +14,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * WTD_CHOICE enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data
          */
         internal enum WinTrustDataChoice : uint
         {
@@ -27,7 +27,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * WTD_PROVIDERFLAG enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data
          */
         [Flags]
         internal enum WinTrustDataProviderFlag : uint
@@ -50,7 +50,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * WTD_REVOKE enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data
          */
         internal enum WinTrustDataRevoke : uint
         {
@@ -60,7 +60,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * WTD_STATEACTION enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data
          */
         internal enum WinTrustDataStateAction : uint
         {
@@ -73,7 +73,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * WTD_UI enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data
          */
         internal enum WinTrustDataUi : uint
         {
@@ -85,7 +85,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * WTD_UICONTEXT enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data
          */
         internal enum WinTrustDataUiContext : uint
         {
@@ -95,42 +95,42 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * WINTRUST_DATA structure
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data
          */
         [StructLayout(LayoutKind.Sequential)]
         internal struct WinTrustData
         {
-            public /* DWORD                        */ uint cbStruct;
-            public /* LPVOID                       */ IntPtr pPolicyCallbackData;
-            public /* LPVOID                       */ IntPtr pSIPCallbackData;
-            public /* DWORD                        */ WinTrustDataUi dwUIChoice;
-            public /* DWORD                        */ WinTrustDataRevoke fdwRevocationChecks;
-            public /* DWORD                        */ WinTrustDataChoice dwUnionChoice;
-            public /* union                        */ WinTrustDataUnionChoice infoUnion;
-            public /* DWORD                        */ WinTrustDataStateAction dwStateAction;
-            public /* HANDLE                       */ IntPtr hWVTStateData;
-            public /* WCHAR*                       */ IntPtr pwszURLReference;
-            public /* DWORD                        */ WinTrustDataProviderFlag dwProvFlags;
-            public /* DWORD                        */ WinTrustDataUiContext dwUIContext;
-            public /* WINTRUST_SIGNATURE_SETTINGS* */ IntPtr pSignatureSettings;
+            internal /* DWORD                        */ uint cbStruct;
+            internal /* LPVOID                       */ IntPtr pPolicyCallbackData;
+            internal /* LPVOID                       */ IntPtr pSIPCallbackData;
+            internal /* DWORD                        */ WinTrustDataUi dwUIChoice;
+            internal /* DWORD                        */ WinTrustDataRevoke fdwRevocationChecks;
+            internal /* DWORD                        */ WinTrustDataChoice dwUnionChoice;
+            internal /* union                        */ WinTrustDataUnionChoice infoUnion;
+            internal /* DWORD                        */ WinTrustDataStateAction dwStateAction;
+            internal /* HANDLE                       */ IntPtr hWVTStateData;
+            internal /* WCHAR*                       */ IntPtr pwszURLReference;
+            internal /* DWORD                        */ WinTrustDataProviderFlag dwProvFlags;
+            internal /* DWORD                        */ WinTrustDataUiContext dwUIContext;
+            internal /* WINTRUST_SIGNATURE_SETTINGS* */ IntPtr pSignatureSettings;
         }
 
         /**
          * WINTRUST_FILE_INFO structure
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388206.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-wintrust_file_info_
          */
         [StructLayout(LayoutKind.Sequential)]
         internal struct WinTrustFileInfo
         {
-            public /* DWORD  */ uint cbStruct;
-            [MarshalAs(UnmanagedType.LPWStr)] public /* LPCWSTR */ string pcwszFilePath;
-            public /* HANDLE */ IntPtr hFile;
-            public /* GUID*  */ IntPtr pgKnownSubject;
+            internal /* DWORD  */ uint cbStruct;
+            [MarshalAs(UnmanagedType.LPWStr)] internal /* LPCWSTR */ string pcwszFilePath;
+            internal /* HANDLE */ IntPtr hFile;
+            internal /* GUID*  */ IntPtr pgKnownSubject;
         }
 
         /**
          * WTD_UNION_CHOICE union
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388205.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data
          */
         [StructLayout(LayoutKind.Explicit)]
         internal struct WinTrustDataUnionChoice
@@ -143,7 +143,7 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa388208.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/nf-wintrust-winverifytrust
          */
         [DllImport(Libraries.WindowsWintrust,
                 CallingConvention = CallingConvention.Winapi,

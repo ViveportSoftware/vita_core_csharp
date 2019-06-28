@@ -12,12 +12,12 @@ namespace Htc.Vita.Core.Interop
             {
             }
 
-            public SafeProcessHandle(IntPtr handle) : base(true)
+            internal SafeProcessHandle(IntPtr handle) : base(true)
             {
                 SetHandle(handle);
             }
 
-            public SafeProcessHandle(Process process) : base(true)
+            internal SafeProcessHandle(Process process) : base(true)
             {
                 SetHandle(process.Handle);
             }
