@@ -9,7 +9,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * WTS_CONNECTSTATE_CLASS enumeration
-         * https://msdn.microsoft.com/en-us/library/aa383860.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/ne-wtsapi32-_wts_connectstate_class
          */
         internal enum WindowsTerminalServiceConnectStateClass
         {
@@ -27,7 +27,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * WTS_INFO_CLASS enumeration
-         * https://msdn.microsoft.com/en-us/library/aa383861.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/ne-wtsapi32-_wts_info_class
          */
         internal enum WindowsTerminalServiceInfoClass
         {
@@ -65,7 +65,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * WTS_PROCESS_INFO structure
-         * https://msdn.microsoft.com/en-us/library/aa383862.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/ns-wtsapi32-wts_process_infow
          */
         [StructLayout(LayoutKind.Sequential)]
         internal struct WindowsTerminalServiceProcessInfo
@@ -78,7 +78,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * WTS_SESSION_INFO structure
-         * https://msdn.microsoft.com/en-us/library/aa383864.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/ns-wtsapi32-wts_session_infow
          */
         [StructLayout(LayoutKind.Sequential)]
         internal struct WindowsTerminalServiceSessionInfo
@@ -89,7 +89,7 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
-         * https://msdn.microsoft.com/en-us/library/aa383829.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtscloseserver
          */
         [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -101,7 +101,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/aa383831.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsenumerateprocessesw
          */
         [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -118,7 +118,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/aa383833.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsenumeratesessionsw
          */
         [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -135,7 +135,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/aa383834.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsfreememory
          */
         [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -147,7 +147,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/aa383837.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsopenserverw
          */
         [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -159,7 +159,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/aa383838.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsquerysessioninformationw
          */
         [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -176,7 +176,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/aa383846.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsterminateprocess
          */
         [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,

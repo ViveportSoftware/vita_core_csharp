@@ -9,7 +9,7 @@ namespace Htc.Vita.Core.Interop
     {
         /**
          * CREATION_DISPOSITION enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-createfilew
          */
         internal enum CreationDisposition : uint
         {
@@ -22,8 +22,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * FILE_ATTRIBUTE_FLAG enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/gg258117.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/FileIO/file-attribute-constants
          */
         [Flags]
         internal enum FileAttributeFlag : uint
@@ -98,7 +97,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * FILE_SHARE enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-createfilew
          */
         [Flags]
         internal enum FileShare : uint
@@ -111,7 +110,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * GENERIC enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/generic-access-rights
          */
         [Flags]
         internal enum Generic : uint
@@ -123,7 +122,7 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms724211.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/handleapi/nf-handleapi-closehandle
          */
         [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
@@ -136,7 +135,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-createfilew
          */
         [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
@@ -154,7 +153,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms683152.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/libloaderapi/nf-libloaderapi-freelibrary
          */
         [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
@@ -167,7 +166,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms683179.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/nf-processthreadsapi-getcurrentprocess
          */
         [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
@@ -177,7 +176,7 @@ namespace Htc.Vita.Core.Interop
         internal static extern SafeProcessHandle GetCurrentProcess();
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa364937.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-getdiskfreespaceexw
          */
         [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
@@ -193,7 +192,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa365440.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-getnamedpipeclientprocessid
          */
         [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
@@ -207,7 +206,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa365446.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-getnamedpipeserverprocessid
          */
         [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
@@ -221,7 +220,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684139.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wow64apiset/nf-wow64apiset-iswow64process
          */
         [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
@@ -250,7 +249,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms684175.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/libloaderapi/nf-libloaderapi-loadlibraryw
          */
         [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,

@@ -11,7 +11,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * DIGCF enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551069.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetclassdevsw
          */
         [Flags]
         internal enum DeviceInfoGetClassFlag : uint
@@ -25,7 +25,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * SPDRP enumeration
-         * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551967.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetdeviceregistrypropertyw
          */
         internal enum SetupDeviceRegistryProperty : uint
         {
@@ -70,7 +70,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * SP_DEVICE_INTERFACE_DATA structure
-         * https://msdn.microsoft.com/en-us/library/windows/hardware/ff552342.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/ns-setupapi-_sp_device_interface_data
          */
         [StructLayout(LayoutKind.Sequential)]
         internal struct SetupDeviceInterfaceData
@@ -83,7 +83,7 @@ namespace Htc.Vita.Core.Interop
 
         /**
          * SP_DEVINFO_DATA structure
-         * https://msdn.microsoft.com/en-us/library/windows/hardware/ff552344.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/ns-setupapi-_sp_devinfo_data
          */
         [StructLayout(LayoutKind.Sequential)]
         internal struct SetupDeviceInfoData
@@ -95,7 +95,7 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/hardware/ff550996.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdidestroydeviceinfolist
          */
         [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
@@ -108,7 +108,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551015.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdienumdeviceinterfaces
          */
         [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
@@ -125,7 +125,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551069.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetclassdevsw
          */
         [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
@@ -140,7 +140,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551120.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetdeviceinterfacedetailw
          */
         [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
@@ -158,7 +158,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551120.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetdeviceinterfacedetailw
          */
         [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
@@ -176,7 +176,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551967.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetdeviceregistrypropertyw
          */
         [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
@@ -195,7 +195,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/hardware/ff551967.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetdeviceregistrypropertyw
          */
         [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,

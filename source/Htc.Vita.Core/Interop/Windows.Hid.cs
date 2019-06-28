@@ -74,7 +74,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/hardware/ff538924.aspx
+         * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_gethidguid
          */
         [DllImport(Libraries.WindowsHid,
                 CallingConvention = CallingConvention.Winapi,
@@ -100,7 +100,7 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/hardware/ff539683.aspx
+         * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getserialnumberstring
          */
         [DllImport(Libraries.WindowsHid,
                 CallingConvention = CallingConvention.Winapi,

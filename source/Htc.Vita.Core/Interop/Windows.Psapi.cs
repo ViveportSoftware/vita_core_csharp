@@ -7,7 +7,7 @@ namespace Htc.Vita.Core.Interop
     internal static partial class Windows
     {
         /**
-         * https://msdn.microsoft.com/en-us/library/windows/desktop/ms683198.aspx
+         * https://docs.microsoft.com/en-us/windows/desktop/api/psapi/nf-psapi-getmodulefilenameexw
          */
         [DllImport(Libraries.WindowsPsapi,
                 CallingConvention = CallingConvention.Winapi,
