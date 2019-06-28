@@ -11,7 +11,7 @@ namespace Htc.Vita.Core.Interop
             {
             }
 
-            public SafeTokenHandle(IntPtr handle) : base(true)
+            internal SafeTokenHandle(IntPtr handle) : base(true)
             {
                 SetHandle(handle);
             }

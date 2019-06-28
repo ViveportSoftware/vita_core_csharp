@@ -13,22 +13,22 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct HidDeviceCapability
         {
-            public /* USAGE  */ ushort usage;
-            public /* USAGE  */ ushort usagePage;
-            public /* USHORT */ ushort inputReportByteLength;
-            public /* USHORT */ ushort outputReportByteLength;
-            public /* USHORT */ ushort featureReportByteLength;
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 17)] public /* USHORT */ ushort[] reserved;
-            public /* USHORT */ ushort numberLinkCollectionNodes;
-            public /* USHORT */ ushort numberInputButtonCaps;
-            public /* USHORT */ ushort numberInputValueCaps;
-            public /* USHORT */ ushort numberInputDataIndices;
-            public /* USHORT */ ushort numberOutputButtonCaps;
-            public /* USHORT */ ushort numberOutputValueCaps;
-            public /* USHORT */ ushort numberOutputDataIndices;
-            public /* USHORT */ ushort numberFeatureButtonCaps;
-            public /* USHORT */ ushort numberFeatureValueCaps;
-            public /* USHORT */ ushort numberFeatureDataIndices;
+            internal /* USAGE  */ ushort usage;
+            internal /* USAGE  */ ushort usagePage;
+            internal /* USHORT */ ushort inputReportByteLength;
+            internal /* USHORT */ ushort outputReportByteLength;
+            internal /* USHORT */ ushort featureReportByteLength;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 17)] internal /* USHORT */ ushort[] reserved;
+            internal /* USHORT */ ushort numberLinkCollectionNodes;
+            internal /* USHORT */ ushort numberInputButtonCaps;
+            internal /* USHORT */ ushort numberInputValueCaps;
+            internal /* USHORT */ ushort numberInputDataIndices;
+            internal /* USHORT */ ushort numberOutputButtonCaps;
+            internal /* USHORT */ ushort numberOutputValueCaps;
+            internal /* USHORT */ ushort numberOutputDataIndices;
+            internal /* USHORT */ ushort numberFeatureButtonCaps;
+            internal /* USHORT */ ushort numberFeatureValueCaps;
+            internal /* USHORT */ ushort numberFeatureDataIndices;
         }
 
         /**
@@ -40,7 +40,7 @@ namespace Htc.Vita.Core.Interop
                 ExactSpelling = true,
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool HidD_FreePreparsedData(
+        internal static extern bool HidD_FreePreparsedData(
                 IntPtr preparsedData
         );
 
@@ -53,7 +53,7 @@ namespace Htc.Vita.Core.Interop
                 CharSet = CharSet.Unicode,
                 ExactSpelling = true,
                 SetLastError = true)]
-        public static extern NtStatus HidP_GetCaps(
+        internal static extern NtStatus HidP_GetCaps(
                 /* _In_  PHIDP_PREPARSED_DATA */ [In] IntPtr preparsedData,
                 /* _Out_ PHIDP_CAPS           */ [In][Out] ref HidDeviceCapability capabilities
         );
@@ -94,7 +94,7 @@ namespace Htc.Vita.Core.Interop
                 ExactSpelling = true,
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool HidD_GetPreparsedData(
+        internal static extern bool HidD_GetPreparsedData(
                 /* _In_  HANDLE               */ [In] SafeFileHandle hidDeviceObject,
                 /* _Out_ PHIDP_PREPARSED_DATA */ [In][Out] ref IntPtr preparsedData
         );

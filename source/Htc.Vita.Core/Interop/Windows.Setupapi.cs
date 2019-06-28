@@ -75,10 +75,10 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct SetupDeviceInterfaceData
         {
-            public /* DWORD     */ uint cbSize;
-            public /* GUID      */ Guid interfaceClassGuid;
-            public /* DWORD     */ uint flags;
-            public /* ULONG_PTR */ IntPtr reserved;
+            internal /* DWORD     */ uint cbSize;
+            internal /* GUID      */ Guid interfaceClassGuid;
+            internal /* DWORD     */ uint flags;
+            internal /* ULONG_PTR */ IntPtr reserved;
         }
 
         /**
@@ -88,10 +88,10 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct SetupDeviceInfoData
         {
-            public /* DWORD     */ uint cbSize;
-            public /* GUID      */ Guid classGuid;
-            public /* DWORD     */ uint devInst;
-            public /* ULONG_PTR */ IntPtr reserved;
+            internal /* DWORD     */ uint cbSize;
+            internal /* GUID      */ Guid classGuid;
+            internal /* DWORD     */ uint devInst;
+            internal /* ULONG_PTR */ IntPtr reserved;
         }
 
         /**

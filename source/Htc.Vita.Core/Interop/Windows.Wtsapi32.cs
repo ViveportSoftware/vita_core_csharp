@@ -70,10 +70,10 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct WindowsTerminalServiceProcessInfo
         {
-            public /* DWORD  */ uint sessionId;
-            public /* DWORD  */ uint processId;
-            public /* LPTSTR */ string pProcessName;
-            public /* PSID   */ IntPtr pUserSid;
+            internal /* DWORD  */ uint sessionId;
+            internal /* DWORD  */ uint processId;
+            internal /* LPTSTR */ string pProcessName;
+            internal /* PSID   */ IntPtr pUserSid;
         }
 
         /**
@@ -83,9 +83,9 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct WindowsTerminalServiceSessionInfo
         {
-            public /* DWORD                  */ uint sessionId;
-            public /* LPTSTR                 */ string pWinStationName;
-            public /* WTS_CONNECTSTATE_CLASS */ WindowsTerminalServiceConnectStateClass state;
+            internal /* DWORD                  */ uint sessionId;
+            internal /* LPTSTR                 */ string pWinStationName;
+            internal /* WTS_CONNECTSTATE_CLASS */ WindowsTerminalServiceConnectStateClass state;
         }
 
         /**

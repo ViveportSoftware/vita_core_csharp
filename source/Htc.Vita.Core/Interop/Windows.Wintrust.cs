@@ -100,19 +100,19 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct WinTrustData
         {
-            public /* DWORD                        */ uint cbStruct;
-            public /* LPVOID                       */ IntPtr pPolicyCallbackData;
-            public /* LPVOID                       */ IntPtr pSIPCallbackData;
-            public /* DWORD                        */ WinTrustDataUi dwUIChoice;
-            public /* DWORD                        */ WinTrustDataRevoke fdwRevocationChecks;
-            public /* DWORD                        */ WinTrustDataChoice dwUnionChoice;
-            public /* union                        */ WinTrustDataUnionChoice infoUnion;
-            public /* DWORD                        */ WinTrustDataStateAction dwStateAction;
-            public /* HANDLE                       */ IntPtr hWVTStateData;
-            public /* WCHAR*                       */ IntPtr pwszURLReference;
-            public /* DWORD                        */ WinTrustDataProviderFlag dwProvFlags;
-            public /* DWORD                        */ WinTrustDataUiContext dwUIContext;
-            public /* WINTRUST_SIGNATURE_SETTINGS* */ IntPtr pSignatureSettings;
+            internal /* DWORD                        */ uint cbStruct;
+            internal /* LPVOID                       */ IntPtr pPolicyCallbackData;
+            internal /* LPVOID                       */ IntPtr pSIPCallbackData;
+            internal /* DWORD                        */ WinTrustDataUi dwUIChoice;
+            internal /* DWORD                        */ WinTrustDataRevoke fdwRevocationChecks;
+            internal /* DWORD                        */ WinTrustDataChoice dwUnionChoice;
+            internal /* union                        */ WinTrustDataUnionChoice infoUnion;
+            internal /* DWORD                        */ WinTrustDataStateAction dwStateAction;
+            internal /* HANDLE                       */ IntPtr hWVTStateData;
+            internal /* WCHAR*                       */ IntPtr pwszURLReference;
+            internal /* DWORD                        */ WinTrustDataProviderFlag dwProvFlags;
+            internal /* DWORD                        */ WinTrustDataUiContext dwUIContext;
+            internal /* WINTRUST_SIGNATURE_SETTINGS* */ IntPtr pSignatureSettings;
         }
 
         /**
@@ -122,10 +122,10 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct WinTrustFileInfo
         {
-            public /* DWORD  */ uint cbStruct;
-            [MarshalAs(UnmanagedType.LPWStr)] public /* LPCWSTR */ string pcwszFilePath;
-            public /* HANDLE */ IntPtr hFile;
-            public /* GUID*  */ IntPtr pgKnownSubject;
+            internal /* DWORD  */ uint cbStruct;
+            [MarshalAs(UnmanagedType.LPWStr)] internal /* LPCWSTR */ string pcwszFilePath;
+            internal /* HANDLE */ IntPtr hFile;
+            internal /* GUID*  */ IntPtr pgKnownSubject;
         }
 
         /**
