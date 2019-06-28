@@ -82,30 +82,60 @@ namespace Htc.Vita.Core.Runtime
 
             internal static string GetPlatformProcessPathById(int processId)
             {
-                string processPath;
-                using (var clientProcess = Process.GetProcessById(processId))
+                try
                 {
-                    try
+                    using (var clientProcess = Process.GetProcessById(processId))
                     {
-                        processPath = clientProcess.MainModule.FileName;
-                    }
-                    catch (Win32Exception)
-                    {
-                        using (var processHandle = new Interop.Windows.SafeProcessHandle(clientProcess))
+                        try
                         {
-                            var fullPath = new StringBuilder(256);
-                            Interop.Windows.GetModuleFileNameExW(
-                                    processHandle,
-                                    IntPtr.Zero,
-                                    fullPath,
-                                    (uint)fullPath.Capacity
-                            );
-                            processPath = fullPath.ToString();
+                            return clientProcess.MainModule?.FileName;
+                        }
+                        catch (Win32Exception)
+                        {
+                            using (var processHandle = new Interop.Windows.SafeProcessHandle(clientProcess))
+                            {
+                                var bufferSize = 256;
+                                while (true)
+                                {
+                                    var fullPath = new StringBuilder(bufferSize);
+                                    var success = Interop.Windows.QueryFullProcessImageNameW(
+                                            processHandle,
+                                            0,
+                                            fullPath,
+                                            ref bufferSize
+                                    );
+                                    if (success)
+                                    {
+                                        return fullPath.ToString(0, bufferSize);
+                                    }
+
+                                    var win32Error = Marshal.GetLastWin32Error();
+                                    if (win32Error != (int) Interop.Windows.Error.InsufficientBuffer)
+                                    {
+                                        Logger.GetInstance(typeof(Windows)).Error("Can not get Windows process path, error code: " + win32Error);
+                                        break;
+                                    }
+
+                                    if (bufferSize > 1024 * 30)
+                                    {
+                                        Logger.GetInstance(typeof(Windows)).Error("Can not get Windows process path under length of " + bufferSize);
+                                        break;
+                                    }
+
+                                    bufferSize *= 2;
+                                }
+
+                                return null;
+                            }
                         }
                     }
                 }
+                catch (ArgumentException)
+                {
+                    // skip
+                }
 
-                return processPath;
+                return null;
             }
 
             internal static bool KillPlatformProcessById(int processId)

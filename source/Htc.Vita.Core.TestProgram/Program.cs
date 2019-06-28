@@ -83,24 +83,29 @@ namespace Htc.Vita.Core.TestProgram
             var specificPortVerifyStatus = LocalPortManager.VerifyPortStatus(specificPort);
             Console.WriteLine("Random unused port [" + randomUnusedPort + "] status: " + randomUnusedPortStatus + ", verify: " + randomUnusedPortVerifyStatus);
             Console.WriteLine("Specific port [" + specificPort + "] status: " + specificPortStatus + ", verify: " + specificPortVerifyStatus);
+            Console.ReadKey();
 
             var processWatcherFactory = ProcessWatcherFactory.GetInstance();
             var notepadProcessWatcher = processWatcherFactory.CreateProcessWatcher("notepad.exe");
             notepadProcessWatcher.ProcessCreated += OnProcessCreated;
             notepadProcessWatcher.ProcessDeleted += OnProcessDeleted;
             notepadProcessWatcher.Start();
+            Console.WriteLine("notepadProcessWatcher is running");
             Console.ReadKey();
 
             notepadProcessWatcher.Stop();
+            Console.WriteLine("notepadProcessWatcher is stopping");
             Console.ReadKey();
 
             var allProcessWatcher = processWatcherFactory.CreateProcessWatcher();
             allProcessWatcher.ProcessCreated += OnProcessCreated;
             allProcessWatcher.ProcessDeleted += OnProcessDeleted;
             allProcessWatcher.Start();
+            Console.WriteLine("allProcessWatcher is running");
             Console.ReadKey();
 
             allProcessWatcher.Stop();
+            Console.WriteLine("allProcessWatcher is stopping");
             Console.ReadKey();
 
             var serviceName = "Winmgmt";
@@ -116,12 +121,14 @@ namespace Htc.Vita.Core.TestProgram
 
         private static void OnProcessCreated(ProcessWatcher.ProcessInfo processInfo)
         {
-            Console.WriteLine("" + processInfo.Path + " (" + processInfo.Id + ") is created");
+            var path = processInfo.Path ?? "<empty path>";
+            Console.WriteLine("" + path + " (" + processInfo.Id + ") is created");
         }
 
         private static void OnProcessDeleted(ProcessWatcher.ProcessInfo processInfo)
         {
-            Console.WriteLine("" + processInfo.Path + " (" + processInfo.Id + ") is deleted");
+            var path = processInfo.Path ?? "<empty path>";
+            Console.WriteLine("" + path + " (" + processInfo.Id + ") is deleted");
         }
 
         private static void OnUsbDeviceConnected()

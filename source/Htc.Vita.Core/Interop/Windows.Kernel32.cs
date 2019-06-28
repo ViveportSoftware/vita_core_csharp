@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Text;
 using Microsoft.Win32.SafeHandles;
 
 namespace Htc.Vita.Core.Interop
@@ -258,6 +259,22 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         internal static extern IntPtr LoadLibraryW(
                 /* _In_ LPCTSTR */ [In] string lpFileName
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-queryfullprocessimagenamew
+         */
+        [DllImport(Libraries.WindowsKernel32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool QueryFullProcessImageNameW(
+                /* _In_    HANDLE */ [In] SafeProcessHandle hProcess,
+                /* _In_    DWORD  */ [In] int dwFlags,
+                /* _Out_   LPWSTR */ [Out] StringBuilder lpExeName,
+                /* _Inout_ PDWORD */ [In][Out] ref int lpdwSize
         );
     }
 }

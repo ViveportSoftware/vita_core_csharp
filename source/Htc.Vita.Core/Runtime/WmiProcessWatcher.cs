@@ -108,7 +108,10 @@ namespace Htc.Vita.Core.Runtime
                     targetInstance.Dispose();
                 }
 
-                eventHandler(processInfo);
+                if (processInfo != null)
+                {
+                    eventHandler(processInfo);
+                }
             }
             catch (Exception exception)
             {
