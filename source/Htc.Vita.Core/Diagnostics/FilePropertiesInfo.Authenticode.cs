@@ -45,15 +45,16 @@ namespace Htc.Vita.Core.Diagnostics
                         hWVTStateData = IntPtr.Zero,
                         pwszURLReference = IntPtr.Zero,
                         dwProvFlags = Windows.WinTrustDataProviderFlag.SaferFlag,
-                        dwUIContext = Windows.WinTrustDataUiContext.Execute,
+                        dwUIContext = Windows.WinTrustDataUIContext.Execute,
                         pSignatureSettings = IntPtr.Zero
                 };
                 var winTrustDataPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Windows.WinTrustData)));
                 Marshal.StructureToPtr(winTrustData, winTrustDataPtr, false);
 
+                var actionId = Guid.Parse(Windows.WinTrustActionGenericVerifyV2.ToString("D"));
                 var result = Windows.WinVerifyTrust(
                         IntPtr.Zero,
-                        ref Windows.WinTrustActionGenericVerifyV2,
+                        ref actionId,
                         winTrustDataPtr
                 );
 
