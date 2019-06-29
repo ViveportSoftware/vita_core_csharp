@@ -6,6 +6,27 @@ namespace Htc.Vita.Core.Interop
     {
         internal static readonly IntPtr /* INVALID_HANDLE_VALUE */ InvalidHandleValue = new IntPtr(-1);
 
+        /**
+         * https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/standard-access-rights
+         */
+        internal enum AccessRight : uint
+        {
+            /* DELETE                   */ Delete = 0x00010000,
+            /* READ_CONTROL             */ ReadControl = 0x00020000,
+            /* WRITE_DAC                */ WriteDac = 0x00040000,
+            /* WRITE_OWNER              */ WriteOwner = 0x00080000,
+            /* STANDARD_RIGHTS_REQUIRED */ StandardRightsRequired = Delete
+                                                                  | ReadControl
+                                                                  | WriteDac
+                                                                  | WriteOwner,
+            /* STANDARD_RIGHTS_READ     */ StandardRightsRead = ReadControl,
+            /* STANDARD_RIGHTS_WRITE    */ StandardRightsWrite = ReadControl,
+            /* STANDARD_RIGHTS_EXECUTE  */ StandardRightsExecute = ReadControl,
+            /* SYNCHRONIZE              */ Synchronize = 0x00100000,
+            /* STANDARD_RIGHTS_ALL      */ StandardRightsAll = StandardRightsRequired
+                                                             | Synchronize
+        }
+
         internal enum Error
         {
             /* ERROR_FILE_NOT_FOUND            (2,   0x2) */ FileNotFound = 0x2,

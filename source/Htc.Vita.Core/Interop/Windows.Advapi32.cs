@@ -78,7 +78,7 @@ namespace Htc.Vita.Core.Interop
         [Flags]
         internal enum ServiceControlManagerAccessRight : uint
         {
-            /* STANDARD_RIGHTS_REQUIRED      */ StandardRightsRequired = 0xF0000,
+            /* STANDARD_RIGHTS_REQUIRED      */ StandardRightsRequired = AccessRight.StandardRightsRequired,
             /* SC_MANAGER_CONNECT            */ Connect = 0x0001,
             /* SC_MANAGER_CREATE_SERVICE     */ CreateService = 0x0002,
             /* SC_MANAGER_ENUMERATE_SERVICE  */ EnumerateService = 0x0004,
@@ -101,7 +101,7 @@ namespace Htc.Vita.Core.Interop
         [Flags]
         internal enum ServiceAccessRight : uint
         {
-            /* STANDARD_RIGHTS_REQUIRED     */ StandardRightsRequired = 0xF0000,
+            /* STANDARD_RIGHTS_REQUIRED     */ StandardRightsRequired = AccessRight.StandardRightsRequired,
             /* SERVICE_QUERY_CONFIG         */ QueryConfig = 0x0001,
             /* SERVICE_CHANGE_CONFIG        */ ChangeConfig = 0x0002,
             /* SERVICE_QUERY_STATUS         */ QueryStatus = 0x0004,
