@@ -24,78 +24,6 @@ namespace Htc.Vita.Core.Interop
         internal const string SeShutdownName = "SeShutdownPrivilege";
 
         /**
-         * CONTROL_ACCEPTED enumeration
-         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-_service_status
-         */
-        [Flags]
-        internal enum AcceptedControl : uint
-        {
-            /* SERVICE_ACCEPT_STOP                  */ Stop = 0x00000001,
-            /* SERVICE_ACCEPT_PAUSE_CONTINUE        */ PauseContinue = 0x00000002,
-            /* SERVICE_ACCEPT_SHUTDOWN              */ Shutdown = 0x00000004,
-            /* SERVICE_ACCEPT_PARAMCHANGE           */ ParamChange = 0x00000008,
-            /* SERVICE_ACCEPT_NETBINDCHANGE         */ NetBindChange = 0x00000010,
-            /* SERVICE_ACCEPT_HARDWAREPROFILECHANGE */ HardwareProfileChange = 0x00000020,
-            /* SERVICE_ACCEPT_POWEREVENT            */ PowerEvent = 0x00000040,
-            /* SERVICE_ACCEPT_SESSIONCHANGE         */ SessionChange = 0x00000080,
-            /* SERVICE_ACCEPT_PRESHUTDOWN           */ PreShutdown = 0x00000100,
-            /* SERVICE_ACCEPT_TIMECHANGE            */ TimeChange = 0x00000200,
-            /* SERVICE_ACCEPT_TRIGGEREVENT          */ TriggerEvent = 0x00000400,
-            /* SERVICE_ACCEPT_USER_LOGOFF           */ UserLogoff = 0x00000800,
-            /* SERVICE_ACCEPT_LOWRESOURCES          */ LowResources = 0x00002000,
-            /* SERVICE_ACCEPT_SYSTEMLOWRESOURCES    */ SystemLowResources = 0x00004000
-        }
-
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/standard-access-rights
-         */
-        internal enum AccessRight : uint
-        {
-            /* DELETE                   */ Delete = 0x00010000,
-            /* READ_CONTROL             */ ReadControl = 0x00020000,
-            /* WRITE_DAC                */ WriteDac = 0x00040000,
-            /* WRITE_OWNER              */ WriteOwner = 0x00080000,
-            /* STANDARD_RIGHTS_REQUIRED */ StandardRightsRequired = Delete
-                                                                  | ReadControl
-                                                                  | WriteDac
-                                                                  | WriteOwner,
-            /* STANDARD_RIGHTS_READ     */ StandardRightsRead = ReadControl,
-            /* STANDARD_RIGHTS_WRITE    */ StandardRightsWrite = ReadControl,
-            /* STANDARD_RIGHTS_EXECUTE  */ StandardRightsExecute = ReadControl,
-            /* SYNCHRONIZE              */ Synchronize = 0x00100000,
-            /* STANDARD_RIGHTS_ALL      */ StandardRightsAll = StandardRightsRequired
-                                                             | Synchronize
-        }
-
-        /**
-         * CREATION_DISPOSITION enumeration
-         * https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-createfilew
-         */
-        internal enum CreationDisposition : uint
-        {
-            /* CREATE_NEW        */ CreateNew = 1,
-            /* CREATE_ALWAYS     */ CreateAlways = 2,
-            /* OPEN_EXISTING     */ OpenExisting = 3,
-            /* OPEN_ALWAYS       */ OpenAlways = 4,
-            /* TRUNCATE_EXISTING */ TruncateExisting = 5
-        }
-
-        /**
-         * CURRENT_STATE enumeration
-         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-_service_status
-         */
-        internal enum CurrentState : uint
-        {
-            /* SERVICE_STOPPED          */ Stopped = 0x00000001,
-            /* SERVICE_START_PENDING    */ StartPending = 0x00000002,
-            /* SERVICE_STOP_PENDING     */ StopPending = 0x00000003,
-            /* SERVICE_RUNNING          */ Running = 0x00000004,
-            /* SERVICE_CONTINUE_PENDING */ ContinuePending = 0x00000005,
-            /* SERVICE_PAUSE_PENDING    */ PausePending = 0x00000006,
-            /* SERVICE_PAUSED           */ Paused = 0x00000007
-        }
-
-        /**
          * DIGCF enumeration
          * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetclassdevsw
          */
@@ -121,19 +49,6 @@ namespace Htc.Vita.Core.Interop
             /* ERROR_NO_MORE_ITEMS           (259, 0x103) */ NoMoreItems = 0x103,
             /* ERROR_SERVICE_DOES_NOT_EXIST (1060, 0x424) */ ServiceDoesNotExist = 0x424,
             /* ERROR_DEVICE_NOT_CONNECTED   (1167, 0x48f) */ DeviceNotConnected = 0x48f
-        }
-
-        /**
-         * ERROR_CONTROL_TYPE enumeration
-         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-changeserviceconfigw
-         */
-        internal enum ErrorControlType : uint
-        {
-            /* SERVICE_ERROR_IGNORE   */ Ignore = 0x00000000,
-            /* SERVICE_ERROR_NORMAL   */ Normal = 0x00000001,
-            /* SERVICE_ERROR_SEVERE   */ Severe = 0x00000002,
-            /* SERVICE_ERROR_CRITICAL */ Critical = 0x00000003,
-            /* SERVICE_NO_CHANGE      */ NoChange = 0xffffffff
         }
 
         /**
@@ -194,6 +109,19 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
+         * CREATION_DISPOSITION enumeration
+         * https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-createfilew
+         */
+        internal enum FileCreationDisposition : uint
+        {
+            /* CREATE_NEW        */ CreateNew = 1,
+            /* CREATE_ALWAYS     */ CreateAlways = 2,
+            /* OPEN_EXISTING     */ OpenExisting = 3,
+            /* OPEN_ALWAYS       */ OpenAlways = 4,
+            /* TRUNCATE_EXISTING */ TruncateExisting = 5
+        }
+
+        /**
          * FILE_SHARE enumeration
          * https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-createfilew
          */
@@ -211,7 +139,7 @@ namespace Htc.Vita.Core.Interop
          * https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/generic-access-rights
          */
         [Flags]
-        internal enum Generic : uint
+        internal enum GenericAccessRight : uint
         {
             /* GENERIC_ALL     */ All = 0x10000000,
             /* GENERIC_EXECUTE */ Execute = 0x20000000,
@@ -282,6 +210,9 @@ namespace Htc.Vita.Core.Interop
             /* HIDP_STATUS_NOT_IMPLEMENTED         */ HidpStatusNotImplemented = unchecked((int)0xc0110020)
         }
 
+        /**
+         * https://docs.microsoft.com/en-us/windows/desktop/sysinfo/registry-value-types
+         */
         internal enum RegType : uint
         {
             /* REG_NONE                       */ None = 0,
@@ -310,13 +241,36 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
+         * CONTROL_ACCEPTED enumeration
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-_service_status
+         */
+        [Flags]
+        internal enum ServiceAcceptedControl : uint
+        {
+            /* SERVICE_ACCEPT_STOP                  */ Stop = 0x00000001,
+            /* SERVICE_ACCEPT_PAUSE_CONTINUE        */ PauseContinue = 0x00000002,
+            /* SERVICE_ACCEPT_SHUTDOWN              */ Shutdown = 0x00000004,
+            /* SERVICE_ACCEPT_PARAMCHANGE           */ ParamChange = 0x00000008,
+            /* SERVICE_ACCEPT_NETBINDCHANGE         */ NetBindChange = 0x00000010,
+            /* SERVICE_ACCEPT_HARDWAREPROFILECHANGE */ HardwareProfileChange = 0x00000020,
+            /* SERVICE_ACCEPT_POWEREVENT            */ PowerEvent = 0x00000040,
+            /* SERVICE_ACCEPT_SESSIONCHANGE         */ SessionChange = 0x00000080,
+            /* SERVICE_ACCEPT_PRESHUTDOWN           */ PreShutdown = 0x00000100,
+            /* SERVICE_ACCEPT_TIMECHANGE            */ TimeChange = 0x00000200,
+            /* SERVICE_ACCEPT_TRIGGEREVENT          */ TriggerEvent = 0x00000400,
+            /* SERVICE_ACCEPT_USER_LOGOFF           */ UserLogoff = 0x00000800,
+            /* SERVICE_ACCEPT_LOWRESOURCES          */ LowResources = 0x00002000,
+            /* SERVICE_ACCEPT_SYSTEMLOWRESOURCES    */ SystemLowResources = 0x00004000
+        }
+
+        /**
          * SERVICE_ACCESS_RIGHT enumeration
          * https://docs.microsoft.com/en-us/windows/desktop/Services/service-security-and-access-rights
          */
         [Flags]
         internal enum ServiceAccessRight : uint
         {
-            /* STANDARD_RIGHTS_REQUIRED     */ StandardRightsRequired = AccessRight.StandardRightsRequired,
+            /* STANDARD_RIGHTS_REQUIRED     */ StandardRightsRequired = StandardAccessRight.StandardRightsRequired,
             /* SERVICE_QUERY_CONFIG         */ QueryConfig = 0x0001,
             /* SERVICE_CHANGE_CONFIG        */ ChangeConfig = 0x0002,
             /* SERVICE_QUERY_STATUS         */ QueryStatus = 0x0004,
@@ -345,7 +299,7 @@ namespace Htc.Vita.Core.Interop
         [Flags]
         internal enum ServiceControlManagerAccessRight : uint
         {
-            /* STANDARD_RIGHTS_REQUIRED      */ StandardRightsRequired = AccessRight.StandardRightsRequired,
+            /* STANDARD_RIGHTS_REQUIRED      */ StandardRightsRequired = StandardAccessRight.StandardRightsRequired,
             /* SC_MANAGER_CONNECT            */ Connect = 0x0001,
             /* SC_MANAGER_CREATE_SERVICE     */ CreateService = 0x0002,
             /* SC_MANAGER_ENUMERATE_SERVICE  */ EnumerateService = 0x0004,
@@ -359,6 +313,48 @@ namespace Htc.Vita.Core.Interop
                                                           | Lock
                                                           | QueryLockStatus
                                                           | ModifyBootConfig
+        }
+
+        /**
+         * CURRENT_STATE enumeration
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-_service_status
+         */
+        internal enum ServiceCurrentState : uint
+        {
+            /* SERVICE_STOPPED          */ Stopped = 0x00000001,
+            /* SERVICE_START_PENDING    */ StartPending = 0x00000002,
+            /* SERVICE_STOP_PENDING     */ StopPending = 0x00000003,
+            /* SERVICE_RUNNING          */ Running = 0x00000004,
+            /* SERVICE_CONTINUE_PENDING */ ContinuePending = 0x00000005,
+            /* SERVICE_PAUSE_PENDING    */ PausePending = 0x00000006,
+            /* SERVICE_PAUSED           */ Paused = 0x00000007
+        }
+
+        /**
+         * ERROR_CONTROL_TYPE enumeration
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-changeserviceconfigw
+         */
+        internal enum ServiceErrorControl : uint
+        {
+            /* SERVICE_ERROR_IGNORE   */ Ignore = 0x00000000,
+            /* SERVICE_ERROR_NORMAL   */ Normal = 0x00000001,
+            /* SERVICE_ERROR_SEVERE   */ Severe = 0x00000002,
+            /* SERVICE_ERROR_CRITICAL */ Critical = 0x00000003,
+            /* SERVICE_NO_CHANGE      */ NoChange = 0xffffffff
+        }
+
+        /**
+         * START_TYPE enumeration
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-changeserviceconfigw
+         */
+        internal enum ServiceStartType : uint
+        {
+            /* SERVICE_BOOT_START   */ BootStart = 0x00000000,
+            /* SERVICE_SYSTEM_START */ SystemStart = 0x00000001,
+            /* SERVICE_AUTO_START   */ AutoStart = 0x00000002,
+            /* SERVICE_DEMAND_START */ DemandStart = 0x00000003,
+            /* SERVICE_DISABLED     */ Disabled = 0x00000004,
+            /* SERVICE_NO_CHANGE    */ NoChange = 0xffffffff
         }
 
         /**
@@ -512,24 +508,31 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
-         * START_TYPE enumeration
-         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-changeserviceconfigw
+         * https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/standard-access-rights
          */
-        internal enum StartType : uint
+        internal enum StandardAccessRight : uint
         {
-            /* SERVICE_BOOT_START   */ BootStart = 0x00000000,
-            /* SERVICE_SYSTEM_START */ SystemStart = 0x00000001,
-            /* SERVICE_AUTO_START   */ AutoStart = 0x00000002,
-            /* SERVICE_DEMAND_START */ DemandStart = 0x00000003,
-            /* SERVICE_DISABLED     */ Disabled = 0x00000004,
-            /* SERVICE_NO_CHANGE    */ NoChange = 0xffffffff
+            /* DELETE                   */ Delete = 0x00010000,
+            /* READ_CONTROL             */ ReadControl = 0x00020000,
+            /* WRITE_DAC                */ WriteDac = 0x00040000,
+            /* WRITE_OWNER              */ WriteOwner = 0x00080000,
+            /* STANDARD_RIGHTS_REQUIRED */ StandardRightsRequired = Delete
+                                                                  | ReadControl
+                                                                  | WriteDac
+                                                                  | WriteOwner,
+            /* STANDARD_RIGHTS_READ     */ StandardRightsRead = ReadControl,
+            /* STANDARD_RIGHTS_WRITE    */ StandardRightsWrite = ReadControl,
+            /* STANDARD_RIGHTS_EXECUTE  */ StandardRightsExecute = ReadControl,
+            /* SYNCHRONIZE              */ Synchronize = 0x00100000,
+            /* STANDARD_RIGHTS_ALL      */ StandardRightsAll = StandardRightsRequired
+                                                             | Synchronize
         }
 
         /**
          * https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/access-rights-for-access-token-objects
          */
         [Flags]
-        internal enum TokenAccessRight
+        internal enum TokenAccessRight : uint
         {
             /* TOKEN_ASSIGN_PRIMARY    */ AssignPrimary = 0x0001,
             /* TOKEN_DUPLICATE         */ Duplicate = 0x0002,
@@ -570,7 +573,7 @@ namespace Htc.Vita.Core.Interop
          * WTS_CONNECTSTATE_CLASS enumeration
          * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/ne-wtsapi32-_wts_connectstate_class
          */
-        internal enum WindowsTerminalServiceConnectStateClass
+        internal enum WindowsTerminalServiceConnectState
         {
             /* WTSActive       */ Active,
             /* WTSConnected    */ Connected,
@@ -588,7 +591,7 @@ namespace Htc.Vita.Core.Interop
          * WTS_INFO_CLASS enumeration
          * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/ne-wtsapi32-_wts_info_class
          */
-        internal enum WindowsTerminalServiceInfoClass
+        internal enum WindowsTerminalServiceInfo
         {
             /* WTSInitialProgram     */ InitialProgram,
             /* WTSApplicationName    */ ApplicationName,
@@ -685,7 +688,7 @@ namespace Htc.Vita.Core.Interop
          * WTD_UI enumeration
          * https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data
          */
-        internal enum WinTrustDataUi : uint
+        internal enum WinTrustDataUI : uint
         {
             /* WTD_UI_ALL    */ All = 1,
             /* WTD_UI_NONE   */ None,
@@ -735,8 +738,8 @@ namespace Htc.Vita.Core.Interop
         internal struct QueryServiceConfig
         {
             internal /* DWORD  */ ServiceType dwServiceType;
-            internal /* DWORD  */ StartType dwStartType;
-            internal /* DWORD  */ ErrorControlType dwErrorControl;
+            internal /* DWORD  */ ServiceStartType dwStartType;
+            internal /* DWORD  */ ServiceErrorControl dwErrorControl;
             internal /* LPTSTR */ string lpBinaryPathName;
             internal /* LPTSTR */ string lpLoadOrderGroup;
             internal /* DWORD  */ uint dwTagId;
@@ -753,8 +756,8 @@ namespace Htc.Vita.Core.Interop
         internal struct ServiceStatus
         {
             internal /* DWORD */ ServiceType dwServiceType;
-            internal /* DWORD */ CurrentState dwCurrentState;
-            internal /* DWORD */ AcceptedControl dwControlAccepted;
+            internal /* DWORD */ ServiceCurrentState dwCurrentState;
+            internal /* DWORD */ ServiceAcceptedControl dwControlAccepted;
             internal /* DWORD */ uint dwWin32ExitCode;
             internal /* DWORD */ uint dwServiceSpecificExitCode;
             internal /* DWORD */ uint dwCheckPoint;
@@ -821,7 +824,7 @@ namespace Htc.Vita.Core.Interop
         {
             internal /* DWORD                  */ uint sessionId;
             internal /* LPTSTR                 */ string pWinStationName;
-            internal /* WTS_CONNECTSTATE_CLASS */ WindowsTerminalServiceConnectStateClass state;
+            internal /* WTS_CONNECTSTATE_CLASS */ WindowsTerminalServiceConnectState state;
         }
 
         /**
@@ -834,7 +837,7 @@ namespace Htc.Vita.Core.Interop
             internal /* DWORD                        */ uint cbStruct;
             internal /* LPVOID                       */ IntPtr pPolicyCallbackData;
             internal /* LPVOID                       */ IntPtr pSIPCallbackData;
-            internal /* DWORD                        */ WinTrustDataUi dwUIChoice;
+            internal /* DWORD                        */ WinTrustDataUI dwUIChoice;
             internal /* DWORD                        */ WinTrustDataRevoke fdwRevocationChecks;
             internal /* DWORD                        */ WinTrustDataChoice dwUnionChoice;
             internal /* union                        */ WinTrustDataUnionChoice infoUnion;

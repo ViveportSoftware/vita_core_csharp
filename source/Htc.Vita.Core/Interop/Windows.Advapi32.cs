@@ -35,8 +35,8 @@ namespace Htc.Vita.Core.Interop
         internal static extern bool ChangeServiceConfigW(
                 /* _In_      SC_HANDLE */ [In] SafeServiceHandle hService,
                 /* _In_      DWORD     */ [In] ServiceType dwServiceType,
-                /* _In_      DWORD     */ [In] StartType dwStartType,
-                /* _In_      DWORD     */ [In] ErrorControlType dwErrorControl,
+                /* _In_      DWORD     */ [In] ServiceStartType dwStartType,
+                /* _In_      DWORD     */ [In] ServiceErrorControl dwErrorControl,
                 /* _In_opt_  LPCTSTR   */ [In] string lpBinaryPathName,
                 /* _In_opt_  LPCTSTR   */ [In] string lpLoadOrderGroup,
                 /* _Out_opt_ LPDWORD   */ [In][Out] IntPtr lpdwTagId,

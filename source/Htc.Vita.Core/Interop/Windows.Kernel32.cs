@@ -30,10 +30,10 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         internal static extern SafeFileHandle CreateFileW(
                 /* _In_     LPCTSTR               */ [In] string lpFileName,
-                /* _In_     DWORD                 */ [In] Generic dwDesiredAccess,
+                /* _In_     DWORD                 */ [In] GenericAccessRight dwDesiredAccess,
                 /* _In_     DWORD                 */ [In] FileShare dwShareMode,
                 /* _In_opt_ LPSECURITY_ATTRIBUTES */ [In] IntPtr lpSecurityAttributes,
-                /* _In_     DWORD                 */ [In] CreationDisposition dwCreationDisposition,
+                /* _In_     DWORD                 */ [In] FileCreationDisposition dwCreationDisposition,
                 /* _In_     DWORD                 */ [In] FileAttributeFlag dwFlagsAndAttributes,
                 /* _In_opt_ HANDLE                */ [In] IntPtr hTemplateFile
         );

@@ -87,7 +87,7 @@ namespace Htc.Vita.Core.Interop
         internal static extern bool WTSQuerySessionInformationW(
                 /* _In_  HANDLE         */ [In] SafeWtsServerHandle hServer,
                 /* _In_  DWORD          */ [In] uint sessionId,
-                /* _In_  WTS_INFO_CLASS */ [In] WindowsTerminalServiceInfoClass wtsInfoClass,
+                /* _In_  WTS_INFO_CLASS */ [In] WindowsTerminalServiceInfo wtsInfoClass,
                 /* _Out_ LPTSTR*        */ [In][Out] ref IntPtr ppBuffer,
                 /* _Out_ DWORD*         */ [In][Out] ref uint pBytesReturned
         );

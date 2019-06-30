@@ -167,10 +167,10 @@ namespace Htc.Vita.Core.IO
 
             using (var deviceHandle = Windows.CreateFileW(
                     devicePath,
-                    Windows.Generic.Read | Windows.Generic.Write,
+                    Windows.GenericAccessRight.Read | Windows.GenericAccessRight.Write,
                     Windows.FileShare.Read | Windows.FileShare.Write,
                     IntPtr.Zero,
-                    Windows.CreationDisposition.OpenExisting,
+                    Windows.FileCreationDisposition.OpenExisting,
                     Windows.FileAttributeFlag.FlagOverlapped,
                     IntPtr.Zero
             ))
@@ -465,10 +465,10 @@ namespace Htc.Vita.Core.IO
             var result = string.Empty;
             using (var deviceHandle = Windows.CreateFileW(
                     devicePath,
-                    Windows.Generic.Read | Windows.Generic.Write,
+                    Windows.GenericAccessRight.Read | Windows.GenericAccessRight.Write,
                     Windows.FileShare.Read | Windows.FileShare.Write,
                     IntPtr.Zero,
-                    Windows.CreationDisposition.OpenExisting,
+                    Windows.FileCreationDisposition.OpenExisting,
                     Windows.FileAttributeFlag.FlagOverlapped,
                     IntPtr.Zero
             ))

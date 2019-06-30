@@ -37,7 +37,7 @@ namespace Htc.Vita.Core.Diagnostics
                         cbStruct = (uint)Marshal.SizeOf(typeof(Windows.WinTrustData)),
                         pPolicyCallbackData = IntPtr.Zero,
                         pSIPCallbackData = IntPtr.Zero,
-                        dwUIChoice = Windows.WinTrustDataUi.None,
+                        dwUIChoice = Windows.WinTrustDataUI.None,
                         fdwRevocationChecks = Windows.WinTrustDataRevoke.None,
                         dwUnionChoice = Windows.WinTrustDataChoice.File,
                         infoUnion = infoUnionChoice,

@@ -64,7 +64,7 @@ namespace Htc.Vita.Core.Runtime
                                     serviceHandle,
                                     Interop.Windows.ServiceType.NoChange,
                                     ConvertToPlatform(startType),
-                                    Interop.Windows.ErrorControlType.NoChange,
+                                    Interop.Windows.ServiceErrorControl.NoChange,
                                     null,
                                     null,
                                     IntPtr.Zero,
@@ -129,17 +129,17 @@ namespace Htc.Vita.Core.Runtime
                 }
             }
 
-            private static StartType ConvertFromPlatform(Interop.Windows.StartType startType)
+            private static StartType ConvertFromPlatform(Interop.Windows.ServiceStartType startType)
             {
-                if (startType == Interop.Windows.StartType.AutoStart)
+                if (startType == Interop.Windows.ServiceStartType.AutoStart)
                 {
                     return StartType.Automatic;
                 }
-                if (startType == Interop.Windows.StartType.DemandStart)
+                if (startType == Interop.Windows.ServiceStartType.DemandStart)
                 {
                     return StartType.Manual;
                 }
-                if (startType == Interop.Windows.StartType.Disabled)
+                if (startType == Interop.Windows.ServiceStartType.Disabled)
                 {
                     return StartType.Disabled;
                 }
@@ -147,33 +147,33 @@ namespace Htc.Vita.Core.Runtime
                 return StartType.Automatic;
             }
 
-            private static CurrentState ConvertFromPlatform(Interop.Windows.CurrentState currentState)
+            private static CurrentState ConvertFromPlatform(Interop.Windows.ServiceCurrentState currentState)
             {
-                if (currentState == Interop.Windows.CurrentState.ContinuePending)
+                if (currentState == Interop.Windows.ServiceCurrentState.ContinuePending)
                 {
                     return CurrentState.ContinuePending;
                 }
-                if (currentState == Interop.Windows.CurrentState.Paused)
+                if (currentState == Interop.Windows.ServiceCurrentState.Paused)
                 {
                     return CurrentState.Paused;
                 }
-                if (currentState == Interop.Windows.CurrentState.PausePending)
+                if (currentState == Interop.Windows.ServiceCurrentState.PausePending)
                 {
                     return CurrentState.PausePending;
                 }
-                if (currentState == Interop.Windows.CurrentState.Running)
+                if (currentState == Interop.Windows.ServiceCurrentState.Running)
                 {
                     return CurrentState.Running;
                 }
-                if (currentState == Interop.Windows.CurrentState.StartPending)
+                if (currentState == Interop.Windows.ServiceCurrentState.StartPending)
                 {
                     return CurrentState.StartPending;
                 }
-                if (currentState == Interop.Windows.CurrentState.Stopped)
+                if (currentState == Interop.Windows.ServiceCurrentState.Stopped)
                 {
                     return CurrentState.Stopped;
                 }
-                if (currentState == Interop.Windows.CurrentState.StopPending)
+                if (currentState == Interop.Windows.ServiceCurrentState.StopPending)
                 {
                     return CurrentState.StopPending;
                 }
@@ -181,22 +181,22 @@ namespace Htc.Vita.Core.Runtime
                 return CurrentState.Unknown;
             }
 
-            private static Interop.Windows.StartType ConvertToPlatform(StartType startType)
+            private static Interop.Windows.ServiceStartType ConvertToPlatform(StartType startType)
             {
                 if (startType == StartType.Disabled)
                 {
-                    return Interop.Windows.StartType.Disabled;
+                    return Interop.Windows.ServiceStartType.Disabled;
                 }
                 if (startType == StartType.Manual)
                 {
-                    return Interop.Windows.StartType.DemandStart;
+                    return Interop.Windows.ServiceStartType.DemandStart;
                 }
                 if (startType == StartType.Automatic)
                 {
-                    return Interop.Windows.StartType.AutoStart;
+                    return Interop.Windows.ServiceStartType.AutoStart;
                 }
-                Logger.GetInstance(typeof(Windows)).Error("Can not convert service start type " + startType + " in Windows. Use Interop.Windows.StartType.AutoStart as fallback type");
-                return Interop.Windows.StartType.AutoStart;
+                Logger.GetInstance(typeof(Windows)).Error("Can not convert service start type " + startType + " in Windows. Use Interop.Windows.ServiceStartType.AutoStart as fallback type");
+                return Interop.Windows.ServiceStartType.AutoStart;
             }
 
             internal static ServiceInfo QueryStartTypeInPlatform(string serviceName)
