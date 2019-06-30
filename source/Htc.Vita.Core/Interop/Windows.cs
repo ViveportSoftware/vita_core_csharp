@@ -490,6 +490,85 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
+         * https://docs.microsoft.com/en-us/windows/desktop/Shutdown/system-shutdown-reason-codes
+         */
+        internal enum ShutdownReason : uint
+        {
+            /* SHTDN_REASON_UNKNOWN    */ Unknown = ShutdownReasonMinor.None,
+            /* SHTDN_REASON_LEGACY_API */ LegacyApi = ShutdownReasonMajor.LegacyApi
+                                                    | ShutdownReasonFlag.Planned
+        }
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/desktop/Shutdown/system-shutdown-reason-codes
+         */
+        [Flags]
+        internal enum ShutdownReasonFlag : uint
+        {
+            /* SHTDN_REASON_FLAG_COMMENT_REQUIRED          */ CommentRequired = 0x01000000,
+            /* SHTDN_REASON_FLAG_DIRTY_PROBLEM_ID_REQUIRED */ DirtyProblemIdRequired = 0x02000000,
+            /* SHTDN_REASON_FLAG_CLEAN_UI                  */ CleanUI = 0x04000000,
+            /* SHTDN_REASON_FLAG_DIRTY_UI                  */ DirtyUI = 0x08000000,
+            /* SHTDN_REASON_FLAG_MOBILE_UI_RESERVED        */ MobileUIReserved = 0x10000000,
+            /* SHTDN_REASON_FLAG_USER_DEFINED              */ UserDefined = 0x40000000,
+            /* SHTDN_REASON_FLAG_PLANNED                   */ Planned = 0x80000000
+        }
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/desktop/Shutdown/system-shutdown-reason-codes
+         */
+        internal enum ShutdownReasonMajor : uint
+        {
+            /* SHTDN_REASON_MAJOR_OTHER           */ Other = 0x00000000,
+            /* SHTDN_REASON_MAJOR_NONE            */ None = 0x00000000,
+            /* SHTDN_REASON_MAJOR_HARDWARE        */ Hardware = 0x00010000,
+            /* SHTDN_REASON_MAJOR_OPERATINGSYSTEM */ OperatingSystem = 0x00020000,
+            /* SHTDN_REASON_MAJOR_SOFTWARE        */ Software = 0x00030000,
+            /* SHTDN_REASON_MAJOR_APPLICATION     */ Application = 0x00040000,
+            /* SHTDN_REASON_MAJOR_SYSTEM          */ System = 0x00050000,
+            /* SHTDN_REASON_MAJOR_POWER           */ Power = 0x00060000,
+            /* SHTDN_REASON_MAJOR_POWER           */ LegacyApi = 0x00070000
+        }
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/desktop/Shutdown/system-shutdown-reason-codes
+         */
+        internal enum ShutdownReasonMinor : uint
+        {
+            /* SHTDN_REASON_MINOR_OTHER                 */ Oth = 0x00000000,
+            /* SHTDN_REASON_MINOR_MAINTENANCE           */ Maintenance = 0x00000001,
+            /* SHTDN_REASON_MINOR_INSTALLATION          */ Installation = 0x00000002,
+            /* SHTDN_REASON_MINOR_UPGRADE               */ Upgrade = 0x00000003,
+            /* SHTDN_REASON_MINOR_RECONFIG              */ Reconfig = 0x00000004,
+            /* SHTDN_REASON_MINOR_HUNG                  */ Hung = 0x00000005,
+            /* SHTDN_REASON_MINOR_UNSTABLE              */ Unstable = 0x00000006,
+            /* SHTDN_REASON_MINOR_DISK                  */ Disk = 0x00000007,
+            /* SHTDN_REASON_MINOR_PROCESSOR             */ Processor = 0x00000008,
+            /* SHTDN_REASON_MINOR_NETWORKCARD           */ NetworkCard= 0x00000009,
+            /* SHTDN_REASON_MINOR_POWER_SUPPLY          */ PowerSupply = 0x0000000a,
+            /* SHTDN_REASON_MINOR_CORDUNPLUGGED         */ CordUnplugged = 0x0000000b,
+            /* SHTDN_REASON_MINOR_ENVIRONMENT           */ Environment = 0x0000000c,
+            /* SHTDN_REASON_MINOR_HARDWARE_DRIVER       */ HardwareDriver = 0x0000000d,
+            /* SHTDN_REASON_MINOR_OTHERDRIVER           */ OtherDriver = 0x0000000e,
+            /* SHTDN_REASON_MINOR_BLUESCREEN            */ BlueScreen = 0x0000000f,
+            /* SHTDN_REASON_MINOR_SERVICEPACK           */ ServicePack = 0x00000010,
+            /* SHTDN_REASON_MINOR_HOTFIX                */ Hotfix = 0x00000011,
+            /* SHTDN_REASON_MINOR_SECURITYFIX           */ SecurityFix = 0x00000012,
+            /* SHTDN_REASON_MINOR_SECURITY              */ Security = 0x00000013,
+            /* SHTDN_REASON_MINOR_NETWORK_CONNECTIVITY  */ NetworkConnectivity = 0x00000014,
+            /* SHTDN_REASON_MINOR_WMI                   */ Wmi = 0x00000015,
+            /* SHTDN_REASON_MINOR_SERVICEPACK_UNINSTALL */ ServicePackUninstall = 0x00000016,
+            /* SHTDN_REASON_MINOR_HOTFIX_UNINSTALL      */ HotfixUninstall = 0x00000017,
+            /* SHTDN_REASON_MINOR_SECURITYFIX_UNINSTALL */ SecurityFixUninstall = 0x00000018,
+            /* SHTDN_REASON_MINOR_MMC                   */ Mmc = 0x00000019,
+            /* SHTDN_REASON_MINOR_SYSTEMRESTORE         */ SystemRestore = 0x0000001a,
+            /* SHTDN_REASON_MINOR_TERMSRV               */ TermSrv = 0x00000020,
+            /* SHTDN_REASON_MINOR_DC_PROMOTION          */ DcPromotion = 0x00000021,
+            /* SHTDN_REASON_MINOR_DC_DEMOTION           */ DcDemotion = 0x00000022,
+            /* SHTDN_REASON_MINOR_NONE                  */ None = 0x000000ff
+        }
+
+        /**
          * SID_NAME_USE enumeration
          * https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ne-winnt-_sid_name_use
          */

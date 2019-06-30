@@ -15,7 +15,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         internal static extern bool ExitWindowsEx(
                 /* _In_ UINT  */ [In] ExitType uFlags,
-                /* _In_ DWORD */ [In] int dwReason
+                /* _In_ DWORD */ [In] uint dwReason
         );
     }
 }
