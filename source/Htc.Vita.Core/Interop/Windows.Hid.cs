@@ -8,30 +8,6 @@ namespace Htc.Vita.Core.Interop
     internal static partial class Windows
     {
         /**
-         * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidpi/ns-hidpi-_hidp_caps
-         */
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct HidDeviceCapability
-        {
-            internal /* USAGE  */ ushort usage;
-            internal /* USAGE  */ ushort usagePage;
-            internal /* USHORT */ ushort inputReportByteLength;
-            internal /* USHORT */ ushort outputReportByteLength;
-            internal /* USHORT */ ushort featureReportByteLength;
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 17)] internal /* USHORT */ ushort[] reserved;
-            internal /* USHORT */ ushort numberLinkCollectionNodes;
-            internal /* USHORT */ ushort numberInputButtonCaps;
-            internal /* USHORT */ ushort numberInputValueCaps;
-            internal /* USHORT */ ushort numberInputDataIndices;
-            internal /* USHORT */ ushort numberOutputButtonCaps;
-            internal /* USHORT */ ushort numberOutputValueCaps;
-            internal /* USHORT */ ushort numberOutputDataIndices;
-            internal /* USHORT */ ushort numberFeatureButtonCaps;
-            internal /* USHORT */ ushort numberFeatureValueCaps;
-            internal /* USHORT */ ushort numberFeatureDataIndices;
-        }
-
-        /**
          * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_freepreparseddata
          */
         [DllImport(Libraries.WindowsHid,

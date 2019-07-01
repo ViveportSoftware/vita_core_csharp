@@ -16,7 +16,7 @@ namespace Htc.Vita.Core.Runtime
                 var windowsUsers = GetPlatformUsers(serverName);
                 return (from windowsUser
                         in windowsUsers
-                        where windowsUser.State == Interop.Windows.WindowsTerminalServiceConnectStateClass.Active
+                        where windowsUser.State == Interop.Windows.WindowsTerminalServiceConnectState.Active
                         select string.Format($"{windowsUser.Domain}\\{windowsUser.Username}")
                 ).FirstOrDefault();
             }
@@ -135,7 +135,7 @@ namespace Htc.Vita.Core.Runtime
                                 success = Interop.Windows.WTSQuerySessionInformationW(
                                         serverHandle,
                                         sessionInfo.sessionId,
-                                        Interop.Windows.WindowsTerminalServiceInfoClass.UserName,
+                                        Interop.Windows.WindowsTerminalServiceInfo.UserName,
                                         ref usernamePtr,
                                         ref bytes
                                 );
@@ -151,7 +151,7 @@ namespace Htc.Vita.Core.Runtime
                                 success = Interop.Windows.WTSQuerySessionInformationW(
                                         serverHandle,
                                         sessionInfo.sessionId,
-                                        Interop.Windows.WindowsTerminalServiceInfoClass.DomainName,
+                                        Interop.Windows.WindowsTerminalServiceInfo.DomainName,
                                         ref domainPtr,
                                         ref bytes
                                 );

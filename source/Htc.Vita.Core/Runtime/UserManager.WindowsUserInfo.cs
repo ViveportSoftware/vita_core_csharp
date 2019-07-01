@@ -4,7 +4,7 @@
     {
         internal class WindowsUserInfo
         {
-            public Interop.Windows.WindowsTerminalServiceConnectStateClass State { get; set; }
+            public Interop.Windows.WindowsTerminalServiceConnectState State { get; set; }
             public string Domain { get; set; }
             public string Username { get; set; }
         }

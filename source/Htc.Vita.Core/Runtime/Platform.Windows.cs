@@ -75,7 +75,7 @@ namespace Htc.Vita.Core.Runtime
 
                     success = Interop.Windows.ExitWindowsEx(
                             ConvertWindowsExitTypeFrom(exitType),
-                            0
+                            (uint) Interop.Windows.ShutdownReason.Unknown
                     );
                     if (!success)
                     {
