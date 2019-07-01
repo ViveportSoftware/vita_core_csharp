@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Htc.Vita.Core.Interop;
 using Htc.Vita.Core.Log;
 
@@ -477,6 +478,8 @@ namespace Htc.Vita.Core.IO
                 {
                     return result;
                 }
+
+                SpinWait.SpinUntil(() => false, 1);
 
                 var buffer = new StringBuilder(126);
                 var success = Windows.HidD_GetSerialNumberString(
