@@ -1,5 +1,6 @@
 ﻿using System.ServiceProcess;
 using Htc.Vita.Core.Log;
+using Htc.Vita.Core.Runtime;
 
 namespace Htc.Vita.Core.TestService
 {
@@ -28,6 +29,18 @@ namespace Htc.Vita.Core.TestService
                 Logger.GetInstance(typeof(DefaultService)).Info("Service starting");
 
                 // TODO
+                var processAsUser = ProcessManager.LaunchProcessAsUser("C:\\Windows\\system32\\notepad.exe", "");
+                if (processAsUser == null)
+                {
+                    Logger.GetInstance(typeof(DefaultService)).Info("Can not launch process as user");
+                }
+                else
+                {
+                    Logger.GetInstance(typeof(DefaultService)).Info("processAsUser.Id: " + processAsUser.Id);
+                    Logger.GetInstance(typeof(DefaultService)).Info("processAsUser.Name: " + processAsUser.Name);
+                    Logger.GetInstance(typeof(DefaultService)).Info("processAsUser.Path: " + processAsUser.Path);
+                    Logger.GetInstance(typeof(DefaultService)).Info("processAsUser.User: " + processAsUser.User);
+                }
             }
 
             Logger.GetInstance(typeof(DefaultService)).Info("Service started");

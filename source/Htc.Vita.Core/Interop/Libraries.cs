@@ -10,6 +10,7 @@
         internal const string WindowsSetupapi = "setupapi.dll";
         internal const string WindowsShell32 = "shell32.dll";
         internal const string WindowsUser32 = "user32.dll";
+        internal const string WindowsUserenv = "userenv.dll";
         internal const string WindowsWintrust = "wintrust.dll";
         internal const string WindowsWtsapi32 = "wtsapi32.dll";
     }

@@ -68,5 +68,10 @@ namespace Htc.Vita.Core.Runtime
         {
             return Windows.KillPlatformProcessById(processId);
         }
+
+        public static ProcessInfo LaunchProcessAsUser(string fileName, string arguments)
+        {
+            return Windows.LaunchProcessAsUserInPlatform(fileName, arguments);
+        }
     }
 }

@@ -88,6 +88,63 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
+         * https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/nf-processthreadsapi-createprocessasuserw
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool CreateProcessAsUserW(
+                /* _In_opt_    HANDLE                */ [In] SafeTokenHandle hToken,
+                /* _In_opt_    LPCWSTR               */ [In] string lpApplicationName,
+                /* _Inout_opt_ LPWSTR                */ [In] string lpCommandLine,
+                /* _In_opt_    LPSECURITY_ATTRIBUTES */ [In] ref SecurityAttributes lpProcessAttributes,
+                /* _In_opt_    LPSECURITY_ATTRIBUTES */ [In] ref SecurityAttributes lpThreadAttributes,
+                /* _In_        BOOL                  */ [In] bool bInheritHandle,
+                /* _In_        DWORD                 */ [In] ProcessCreationFlag dwCreationFlags,
+                /* _In_opt_    LPVOID                */ [In] IntPtr lpEnvironment,
+                /* _In_opt_    LPCWSTR               */ [In] string lpCurrentDirectory,
+                /* _In_        LPSTARTUPINFOW        */ [In] ref StartupInfo lpStartupInfo,
+                /* _Out_       LPPROCESS_INFORMATION */ [Out] out ProcessInformation lpProcessInformation
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/desktop/api/securitybaseapi/nf-securitybaseapi-duplicatetokenex
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool DuplicateTokenEx(
+                /* _In_     HANDLE                       */ [In] SafeTokenHandle existingToken,
+                /* _In_     DWORD                        */ [In] TokenAccessRight desiredAccess,
+                /* _In_opt_ LPSECURITY_ATTRIBUTES        */ [In][Out] ref SecurityAttributes threadAttributes,
+                /* _In_     SECURITY_IMPERSONATION_LEVEL */ [In] SecurityImpersonationLevel impersonationLevel,
+                /* _In_     TOKEN_TYPE                   */ [In] TokenType tokenType,
+                /* _Outptr_ PHANDLE                      */ [Out] out SafeTokenHandle newToken
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/desktop/api/securitybaseapi/nf-securitybaseapi-gettokeninformation
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern bool GetTokenInformation(
+                /* _In_  HANDLE                  */ [In] SafeTokenHandle tokenHandle,
+                /* _In_  TOKEN_INFORMATION_CLASS */ [In] TokenInformationClass tokenInformationClass,
+                /* _Out_ LPVOID                  */ [In][Out] ref IntPtr tokenInformation,
+                /* _In_  DWORD                   */ [In] uint tokenInformationLength,
+                /* _Out_ PDWORD                  */ [Out] out uint returnLength
+        );
+
+        /**
          * https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-lookupaccountsidw
          */
         [DllImport(Libraries.WindowsAdvapi32,
