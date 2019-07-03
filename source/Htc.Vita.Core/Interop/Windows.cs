@@ -494,9 +494,9 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
-        * SHCNE enumeration
-        * https://docs.microsoft.com/en-us/windows/desktop/api/shlobj_core/nf-shlobj_core-shchangenotify
-        */
+         * SHCNE enumeration
+         * https://docs.microsoft.com/en-us/windows/desktop/api/shlobj_core/nf-shlobj_core-shchangenotify
+         */
         [Flags]
         internal enum ShellChangeNotifyEventId
         {
@@ -528,9 +528,9 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
-        * SHCNE enumeration
-        * https://docs.microsoft.com/en-us/windows/desktop/api/shlobj_core/nf-shlobj_core-shchangenotify
-        */
+         * SHCNE enumeration
+         * https://docs.microsoft.com/en-us/windows/desktop/api/shlobj_core/nf-shlobj_core-shchangenotify
+         */
         internal enum ShellChangeNotifyFlags : uint
         {
             /* SHCNF_IDLIST      */ IdList = 0x0000,
@@ -760,6 +760,9 @@ namespace Htc.Vita.Core.Interop
             /* TokenImpersonation */ TokenImpersonation
         }
 
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/wintrust/nf-wintrust-winverifytrust
+         */
         internal enum TrustError : uint
         {
             /* TRUST_E_PROVIDER_UNKNOWN     */ ProviderUnknown = 0x800B0001,
