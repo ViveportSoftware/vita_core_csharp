@@ -5,7 +5,7 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.TestService
 {
-    internal class Program
+    internal static class Program
     {
         static Program()
         {

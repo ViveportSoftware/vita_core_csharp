@@ -9,7 +9,7 @@ namespace Htc.Vita.Core.TestService
     [RunInstaller(true)]
     public class DefaultInstaller : Installer
     {
-        internal static string ServiceName = "HtcVitaCoreTestService";
+        internal static readonly string ServiceName = "HtcVitaCoreTestService";
 
         public DefaultInstaller()
         {
