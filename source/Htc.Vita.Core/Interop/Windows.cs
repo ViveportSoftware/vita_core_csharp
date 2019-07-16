@@ -914,22 +914,22 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct HidDeviceCapability
         {
-            internal /* USAGE  */ ushort usage;
-            internal /* USAGE  */ ushort usagePage;
-            internal /* USHORT */ ushort inputReportByteLength;
-            internal /* USHORT */ ushort outputReportByteLength;
-            internal /* USHORT */ ushort featureReportByteLength;
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 17)] internal /* USHORT */ ushort[] reserved;
-            internal /* USHORT */ ushort numberLinkCollectionNodes;
-            internal /* USHORT */ ushort numberInputButtonCaps;
-            internal /* USHORT */ ushort numberInputValueCaps;
-            internal /* USHORT */ ushort numberInputDataIndices;
-            internal /* USHORT */ ushort numberOutputButtonCaps;
-            internal /* USHORT */ ushort numberOutputValueCaps;
-            internal /* USHORT */ ushort numberOutputDataIndices;
-            internal /* USHORT */ ushort numberFeatureButtonCaps;
-            internal /* USHORT */ ushort numberFeatureValueCaps;
-            internal /* USHORT */ ushort numberFeatureDataIndices;
+            internal /* USAGE      */ ushort usage;
+            internal /* USAGE      */ ushort usagePage;
+            internal /* USHORT     */ ushort inputReportByteLength;
+            internal /* USHORT     */ ushort outputReportByteLength;
+            internal /* USHORT     */ ushort featureReportByteLength;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 17)] internal /* USHORT[17] */ ushort[] reserved;
+            internal /* USHORT     */ ushort numberLinkCollectionNodes;
+            internal /* USHORT     */ ushort numberInputButtonCaps;
+            internal /* USHORT     */ ushort numberInputValueCaps;
+            internal /* USHORT     */ ushort numberInputDataIndices;
+            internal /* USHORT     */ ushort numberOutputButtonCaps;
+            internal /* USHORT     */ ushort numberOutputValueCaps;
+            internal /* USHORT     */ ushort numberOutputDataIndices;
+            internal /* USHORT     */ ushort numberFeatureButtonCaps;
+            internal /* USHORT     */ ushort numberFeatureValueCaps;
+            internal /* USHORT     */ ushort numberFeatureDataIndices;
         }
 
         /**
@@ -937,12 +937,12 @@ namespace Htc.Vita.Core.Interop
          * https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/ns-processthreadsapi-process_information
          */
         [StructLayout(LayoutKind.Sequential)]
-        public struct ProcessInformation
+        internal struct ProcessInformation
         {
-            public /* HANDLE */ IntPtr hProcess;
-            public /* HANDLE */ IntPtr hThread;
-            public /* DWORD  */ int dwProcessID;
-            public /* DWORD  */ int dwThreadID;
+            internal /* HANDLE */ IntPtr hProcess;
+            internal /* HANDLE */ IntPtr hThread;
+            internal /* DWORD  */ int dwProcessID;
+            internal /* DWORD  */ int dwThreadID;
         }
 
         /**
@@ -968,11 +968,11 @@ namespace Htc.Vita.Core.Interop
          * https://msdn.microsoft.com/en-us/library/windows/desktop/aa379560.aspx
          */
         [StructLayout(LayoutKind.Sequential)]
-        public struct SecurityAttributes
+        internal struct SecurityAttributes
         {
-            public /* DWORD  */ int nLength;
-            public /* LPVOID */ IntPtr lpSecurityDescriptor;
-            public /* BOOL   */ bool bInheritHandle;
+            internal /* DWORD  */ int nLength;
+            internal /* LPVOID */ IntPtr lpSecurityDescriptor;
+            internal /* BOOL   */ bool bInheritHandle;
         }
 
         /**
@@ -1024,23 +1024,23 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct StartupInfo
         {
-            public /* DWORD  */ int cb;
-            public /* LPWSTR */ string lpReserved;
-            public /* LPWSTR */ string lpDesktop;
-            public /* LPWSTR */ string lpTitle;
-            public /* DWORD  */ int dwX;
-            public /* DWORD  */ int dwY;
-            public /* DWORD  */ int dwXSize;
-            public /* DWORD  */ int dwXCountChars;
-            public /* DWORD  */ int dwYCountChars;
-            public /* DWORD  */ int dwFillAttribute;
-            public /* DWORD  */ int dwFlags;
-            public /* WORD   */ short wShowWindow;
-            public /* WORD   */ short cbReserved2;
-            public /* LPBYTE */ IntPtr lpReserved2;
-            public /* HANDLE */ IntPtr hStdInput;
-            public /* HANDLE */ IntPtr hStdOutput;
-            public /* HANDLE */ IntPtr hStdError;
+            internal /* DWORD  */ int cb;
+            internal /* LPWSTR */ string lpReserved;
+            internal /* LPWSTR */ string lpDesktop;
+            internal /* LPWSTR */ string lpTitle;
+            internal /* DWORD  */ int dwX;
+            internal /* DWORD  */ int dwY;
+            internal /* DWORD  */ int dwXSize;
+            internal /* DWORD  */ int dwXCountChars;
+            internal /* DWORD  */ int dwYCountChars;
+            internal /* DWORD  */ int dwFillAttribute;
+            internal /* DWORD  */ int dwFlags;
+            internal /* WORD   */ short wShowWindow;
+            internal /* WORD   */ short cbReserved2;
+            internal /* LPBYTE */ IntPtr lpReserved2;
+            internal /* HANDLE */ IntPtr hStdInput;
+            internal /* HANDLE */ IntPtr hStdOutput;
+            internal /* HANDLE */ IntPtr hStdError;
         }
 
         /**
@@ -1109,11 +1109,11 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Explicit)]
         internal struct WinTrustDataUnionChoice
         {
-            [FieldOffset(0)] public /* struct WINTRUST_FILE_INFO_    */ IntPtr pFile;
-            [FieldOffset(0)] public /* struct WINTRUST_CATALOG_INFO_ */ IntPtr pCatalog;
-            [FieldOffset(0)] public /* struct WINTRUST_BLOB_INFO_    */ IntPtr pBlob;
-            [FieldOffset(0)] public /* struct WINTRUST_SGNR_INFO_    */ IntPtr pSgnr;
-            [FieldOffset(0)] public /* struct WINTRUST_CERT_INFO_    */ IntPtr pCert;
+            [FieldOffset(0)] internal /* struct WINTRUST_FILE_INFO_    */ IntPtr pFile;
+            [FieldOffset(0)] internal /* struct WINTRUST_CATALOG_INFO_ */ IntPtr pCatalog;
+            [FieldOffset(0)] internal /* struct WINTRUST_BLOB_INFO_    */ IntPtr pBlob;
+            [FieldOffset(0)] internal /* struct WINTRUST_SGNR_INFO_    */ IntPtr pSgnr;
+            [FieldOffset(0)] internal /* struct WINTRUST_CERT_INFO_    */ IntPtr pCert;
         }
 
         /**
