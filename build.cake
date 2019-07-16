@@ -10,6 +10,7 @@
 var configuration = Argument("configuration", "Debug");
 var revision = EnvironmentVariable("BUILD_NUMBER") ?? Argument("revision", "9999");
 var target = Argument("target", "Default");
+var unitTesting = EnvironmentVariable("UNIT_TESTING") ?? "ON";
 
 
 //////////////////////////////////////////////////////////////////////
@@ -168,6 +169,7 @@ Task("Build-Assemblies")
 });
 
 Task("Prepare-Unit-Test-Data")
+    .WithCriteria(() => "ON".Equals(unitTesting))
     .IsDependentOn("Build-Assemblies")
     .Does(() =>
 {
@@ -182,6 +184,7 @@ Task("Prepare-Unit-Test-Data")
 });
 
 Task("Run-Unit-Tests-Under-AnyCPU")
+    .WithCriteria(() => "ON".Equals(unitTesting))
     .IsDependentOn("Prepare-Unit-Test-Data")
     .Does(() =>
 {
@@ -257,6 +260,7 @@ Task("Run-Unit-Tests-Under-AnyCPU")
 });
 
 Task("Run-Unit-Tests-Under-X86")
+    .WithCriteria(() => "ON".Equals(unitTesting))
     .IsDependentOn("Run-Unit-Tests-Under-AnyCPU")
     .Does(() =>
 {

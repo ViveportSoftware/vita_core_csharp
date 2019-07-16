@@ -93,6 +93,20 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
+         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsqueryusertoken
+         */
+        [DllImport(Libraries.WindowsWtsapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool WTSQueryUserToken(
+                /* _In_  ULONG   */ [In] uint sessionId,
+                /* _Out_ PHANDLE */ [Out] out SafeTokenHandle token
+        );
+
+        /**
          * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsterminateprocess
          */
         [DllImport(Libraries.WindowsWtsapi32,

@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.329
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Htc.Vita.Core", "Htc.Vita.Core\Htc.Vita.Core.csproj", "{A4DDDFFE-4E1F-4C33-B8CC-A30738DC22F0}"
 EndProject
@@ -11,6 +11,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Htc.Vita.Core.TestProgram.AnyCPU", "Htc.Vita.Core.TestProgram\Htc.Vita.Core.TestProgram.AnyCPU.csproj", "{1D7DEAFB-302C-4FC5-B587-38BF5195DDA0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Htc.Vita.Core.TestProgram.x86", "Htc.Vita.Core.TestProgram\Htc.Vita.Core.TestProgram.x86.csproj", "{42B6D3D6-8922-443C-881E-720290CF3519}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Htc.Vita.Core.TestService.AnyCPU", "Htc.Vita.Core.TestService\Htc.Vita.Core.TestService.AnyCPU.csproj", "{8F1C820D-1099-4133-BC44-73A752DD298F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Htc.Vita.Core.TestService.x86", "Htc.Vita.Core.TestService\Htc.Vita.Core.TestService.x86.csproj", "{7F36BF80-1F06-4129-A322-E20ADCD9B1FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +64,22 @@ Global
 		{42B6D3D6-8922-443C-881E-720290CF3519}.Release|AnyCPU.Build.0 = Release|Any CPU
 		{42B6D3D6-8922-443C-881E-720290CF3519}.Release|x86.ActiveCfg = Release|Any CPU
 		{42B6D3D6-8922-443C-881E-720290CF3519}.Release|x86.Build.0 = Release|Any CPU
+		{8F1C820D-1099-4133-BC44-73A752DD298F}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{8F1C820D-1099-4133-BC44-73A752DD298F}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{8F1C820D-1099-4133-BC44-73A752DD298F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8F1C820D-1099-4133-BC44-73A752DD298F}.Debug|x86.Build.0 = Debug|Any CPU
+		{8F1C820D-1099-4133-BC44-73A752DD298F}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{8F1C820D-1099-4133-BC44-73A752DD298F}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{8F1C820D-1099-4133-BC44-73A752DD298F}.Release|x86.ActiveCfg = Release|Any CPU
+		{8F1C820D-1099-4133-BC44-73A752DD298F}.Release|x86.Build.0 = Release|Any CPU
+		{7F36BF80-1F06-4129-A322-E20ADCD9B1FE}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{7F36BF80-1F06-4129-A322-E20ADCD9B1FE}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{7F36BF80-1F06-4129-A322-E20ADCD9B1FE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7F36BF80-1F06-4129-A322-E20ADCD9B1FE}.Debug|x86.Build.0 = Debug|Any CPU
+		{7F36BF80-1F06-4129-A322-E20ADCD9B1FE}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{7F36BF80-1F06-4129-A322-E20ADCD9B1FE}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{7F36BF80-1F06-4129-A322-E20ADCD9B1FE}.Release|x86.ActiveCfg = Release|Any CPU
+		{7F36BF80-1F06-4129-A322-E20ADCD9B1FE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

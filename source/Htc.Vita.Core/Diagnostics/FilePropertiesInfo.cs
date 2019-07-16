@@ -17,6 +17,7 @@ namespace Htc.Vita.Core.Diagnostics
 
         public string IssuerDistinguishedName { get; }
         public string IssuerName { get; }
+        public string ProductVersion { get; }
         public string PublicKey { get; }
         public string SubjectDistinguishedName { get; }
         public string SubjectName { get; }
@@ -65,9 +66,9 @@ namespace Htc.Vita.Core.Diagnostics
                 Verified = Authenticode.IsVerified(fileInfo);
             }
 
+            var versionInfo = FileVersionInfo.GetVersionInfo(fileInfo.FullName);
             try
             {
-                var versionInfo = FileVersionInfo.GetVersionInfo(fileInfo.FullName);
                 Version = string.Format(
                         CultureInfo.InvariantCulture,
                         @"{0}.{1}.{2}.{3}",
@@ -81,6 +82,22 @@ namespace Htc.Vita.Core.Diagnostics
             {
                 Logger.GetInstance(typeof(FilePropertiesInfo)).Warn("Can not find version from file " + fileInfo.FullName);
                 Version = "0.0.0.0";
+            }
+            try
+            {
+                ProductVersion = string.Format(
+                        CultureInfo.InvariantCulture,
+                        @"{0}.{1}.{2}.{3}",
+                        versionInfo.ProductMajorPart,
+                        versionInfo.ProductMinorPart,
+                        versionInfo.ProductBuildPart,
+                        versionInfo.ProductPrivatePart
+                );
+            }
+            catch (Exception)
+            {
+                Logger.GetInstance(typeof(FilePropertiesInfo)).Warn("Can not find product version from file " + fileInfo.FullName);
+                ProductVersion = "0.0.0.0";
             }
         }
 

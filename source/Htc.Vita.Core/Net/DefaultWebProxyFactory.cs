@@ -34,7 +34,15 @@ namespace Htc.Vita.Core.Net
                 result = new WebProxy(webProxyUri);
             }
 
-            var webProxyStatus = OnGetWebProxyStatus(result);
+            var webProxyStatus = WebProxyStatus.Unknown;
+            try
+            {
+                webProxyStatus = OnGetWebProxyStatus(result);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(DefaultWebProxyFactory)).Error("Can not get web proxy status. error: " + e.Message);
+            }
             if (webProxyStatus == WebProxyStatus.Working || webProxyStatus == WebProxyStatus.NotSet)
             {
                 return result;
@@ -44,7 +52,15 @@ namespace Htc.Vita.Core.Net
 
         protected override WebProxyStatus OnGetWebProxyStatus(IWebProxy webProxy)
         {
-            var webProxyUri = webProxy.GetProxy(new Uri(TestUrl));
+            Uri webProxyUri = null;
+            try
+            {
+                webProxyUri = webProxy.GetProxy(new Uri(TestUrl));
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(DefaultWebProxyFactory)).Error("Can not get proxy uri. error: " + e.Message);
+            }
             if (webProxyUri == null)
             {
                 Logger.GetInstance(typeof(DefaultWebProxyFactory)).Error("Can not get proxy uri.");

@@ -39,8 +39,10 @@ namespace Htc.Vita.Core.Interop
 
         internal enum Error
         {
+            /* ERROR_SUCCESS                   (0,   0x0) */ Success = 0x0,
             /* ERROR_FILE_NOT_FOUND            (2,   0x2) */ FileNotFound = 0x2,
             /* ERROR_INVALID_DATA             (13,   0xd) */ InvalidData = 0xd,
+            /* ERROR_BAD_LENGTH               (24,  0x18) */ BadLength = 0x18,
             /* ERROR_GEN_FAILURE              (31,  0x1f) */ GenFailure = 0x1f,
             /* ERROR_NOT_SUPPORTED            (50,  0x32) */ NotSupported = 0x32,
             /* ERROR_INVALID_PARAMETER        (87,  0x57) */ InvalidParameter = 0x57,
@@ -48,7 +50,8 @@ namespace Htc.Vita.Core.Interop
             /* ERROR_INVALID_NAME            (123,  0x7b) */ InvalidName = 0x7b,
             /* ERROR_NO_MORE_ITEMS           (259, 0x103) */ NoMoreItems = 0x103,
             /* ERROR_SERVICE_DOES_NOT_EXIST (1060, 0x424) */ ServiceDoesNotExist = 0x424,
-            /* ERROR_DEVICE_NOT_CONNECTED   (1167, 0x48f) */ DeviceNotConnected = 0x48f
+            /* ERROR_DEVICE_NOT_CONNECTED   (1167, 0x48f) */ DeviceNotConnected = 0x48f,
+            /* ERROR_NO_SUCH_LOGON_SESSION  (1312, 0x520) */ NoSuchLogonSession = 0x520
         }
 
         /**
@@ -211,6 +214,46 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
+         * Process Creation enumeration
+         * https://docs.microsoft.com/en-us/windows/desktop/ProcThread/process-creation-flags
+         */
+        [Flags]
+        internal enum ProcessCreationFlag : uint
+        {
+            /* DEBUG_PROCESS                    */ DebugProcess = 0x00000001,
+            /* DEBUG_ONLY_THIS_PROCESS          */ DebugOnlyThisProcess = 0x00000002,
+            /* CREATE_SUSPENDED                 */ CreateSuspended = 0x00000004,
+            /* DETACHED_PROCESS                 */ DetachedProcess = 0x00000008,
+            /* CREATE_NEW_CONSOLE               */ CreateNewConsole = 0x00000010,
+            /* NORMAL_PRIORITY_CLASS            */ NormalPriorityClass = 0x00000020,
+            /* IDLE_PRIORITY_CLASS              */ IdlePriorityClass = 0x00000040,
+            /* HIGH_PRIORITY_CLASS              */ HighPriorityClass = 0x00000080,
+            /* REALTIME_PRIORITY_CLASS          */ RealtimePriorityClass = 0x00000100,
+            /* CREATE_NEW_PROCESS_GROUP         */ CreateNewProcessGroup = 0x00000200,
+            /* CREATE_UNICODE_ENVIRONMENT       */ CreateUnicodeEnvironment = 0x00000400,
+            /* CREATE_SEPARATE_WOW_VDM          */ CreateSeparateWowVdm = 0x00000800,
+            /* CREATE_SHARED_WOW_VDM            */ CreateSharedWowVdm = 0x00001000,
+            /* CREATE_FORCEDOS                  */ CreateForceDos = 0x00002000,
+            /* BELOW_NORMAL_PRIORITY_CLASS      */ BelowNormalPriorityClass = 0x00004000,
+            /* ABOVE_NORMAL_PRIORITY_CLASS      */ AboveNormalPriorityClass = 0x00008000,
+            /* INHERIT_PARENT_AFFINITY          */ InheritParentAffinity = 0x00010000,
+            /* INHERIT_CALLER_PRIORITY          */ InheritCallerPriority = 0x00020000,
+            /* CREATE_PROTECTED_PROCESS         */ CreateProtectedProcess = 0x00040000,
+            /* EXTENDED_STARTUPINFO_PRESENT     */ ExtendedStartupInfoPresent = 0x00080000,
+            /* PROCESS_MODE_BACKGROUND_BEGIN    */ ProcessModeBackgroundBegin = 0x00100000,
+            /* PROCESS_MODE_BACKGROUND_END      */ ProcessModeBackgroundEnd = 0x00200000,
+            /* CREATE_SECURE_PROCESS            */ CreateSecureProcess = 0x00400000,
+            /* CREATE_BREAKAWAY_FROM_JOB        */ CreateBreakawayFromJob = 0x01000000,
+            /* CREATE_PRESERVE_CODE_AUTHZ_LEVEL */ CreatePreserveCodeAuthzLevel = 0x02000000,
+            /* CREATE_DEFAULT_ERROR_MODE        */ CreateDefaultErrorMode = 0x04000000,
+            /* CREATE_NO_WINDOW                 */ CreateNoWindow = 0x08000000,
+            /* PROFILE_USER                     */ ProfileUser = 0x10000000,
+            /* PROFILE_KERNEL                   */ ProfileKernel = 0x20000000,
+            /* PROFILE_SERVER                   */ ProfileServer = 0x40000000,
+            /* CREATE_IGNORE_SYSTEM_DEFAULT     */ CreateIgnoreSystemDefault = 0x80000000
+        }
+
+        /**
          * https://docs.microsoft.com/en-us/windows/desktop/sysinfo/registry-value-types
          */
         internal enum RegType : uint
@@ -229,6 +272,18 @@ namespace Htc.Vita.Core.Interop
             /* REG_RESOURCE_REQUIREMENTS_LIST */ ResourceRequirementsList = 10,
             /* REG_QWORD                      */ Qword = 11,
             /* REG_QWORD_LITTLE_ENDIAN        */ QwordLittleEndian = Qword
+        }
+
+        /**
+         * SECURITY_IMPERSONATION_LEVEL enumeration
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ne-winnt-_security_impersonation_level
+         */
+        internal enum SecurityImpersonationLevel : uint
+        {
+                /* SecurityAnonymous      */ SecurityAnonymous,
+                /* SecurityIdentification */ SecurityIdentification,
+                /* SecurityImpersonation  */ SecurityImpersonation,
+                /* SecurityDelegation     */ SecurityDelegation
         }
 
         [Flags]
@@ -439,9 +494,9 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
-        * SHCNE enumeration
-        * https://docs.microsoft.com/en-us/windows/desktop/api/shlobj_core/nf-shlobj_core-shchangenotify
-        */
+         * SHCNE enumeration
+         * https://docs.microsoft.com/en-us/windows/desktop/api/shlobj_core/nf-shlobj_core-shchangenotify
+         */
         [Flags]
         internal enum ShellChangeNotifyEventId
         {
@@ -473,9 +528,9 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
-        * SHCNE enumeration
-        * https://docs.microsoft.com/en-us/windows/desktop/api/shlobj_core/nf-shlobj_core-shchangenotify
-        */
+         * SHCNE enumeration
+         * https://docs.microsoft.com/en-us/windows/desktop/api/shlobj_core/nf-shlobj_core-shchangenotify
+         */
         internal enum ShellChangeNotifyFlags : uint
         {
             /* SHCNF_IDLIST      */ IdList = 0x0000,
@@ -640,6 +695,74 @@ namespace Htc.Vita.Core.Interop
                                                     | AdjustDefault
         }
 
+        /**
+         * TOKEN_INFORMATION_CLASS enumeration
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ne-winnt-_token_information_class
+         */
+        internal enum TokenInformationClass : uint
+        {
+            /* TokenUser                            */ User = 1,
+            /* TokenGroups                          */ Groups,
+            /* TokenPrivileges                      */ Privileges,
+            /* TokenOwner                           */ Owner,
+            /* TokenPrimaryGroup                    */ PrimaryGroup,
+            /* TokenDefaultDacl                     */ DefaultDacl,
+            /* TokenSource                          */ Source,
+            /* TokenType                            */ Type,
+            /* TokenImpersonationLevel              */ ImpersonationLevel,
+            /* TokenStatistics                      */ Statistics,
+            /* TokenRestrictedSids                  */ RestrictedSids,
+            /* TokenSessionId                       */ SessionId,
+            /* TokenGroupsAndPrivileges             */ GroupsAndPrivileges,
+            /* TokenSessionReference                */ SessionReference,
+            /* TokenSandBoxInert                    */ SandBoxInert,
+            /* TokenAuditPolicy                     */ AuditPolicy,
+            /* TokenOrigin                          */ Origin,
+            /* TokenElevationType                   */ ElevationType,
+            /* TokenLinkedToken                     */ LinkedToken,
+            /* TokenElevation                       */ Elevation,
+            /* TokenHasRestrictions                 */ HasRestrictions,
+            /* TokenAccessInformation               */ AccessInformation,
+            /* TokenVirtualizationAllowed           */ VirtualizationAllowed,
+            /* TokenVirtualizationEnabled           */ VirtualizationEnabled,
+            /* TokenIntegrityLevel                  */ IntegrityLevel,
+            /* TokenUIAccess                        */ UIAccess,
+            /* TokenMandatoryPolicy                 */ MandatoryPolicy,
+            /* TokenLogonSid                        */ LogonSid,
+            /* TokenIsAppContainer                  */ IsAppContainer,
+            /* TokenCapabilities                    */ Capabilities,
+            /* TokenAppContainerSid                 */ AppContainerSid,
+            /* TokenAppContainerNumber              */ AppContainerNumber,
+            /* TokenUserClaimAttributes             */ UserClaimAttributes,
+            /* TokenDeviceClaimAttributes           */ DeviceClaimAttributes,
+            /* TokenRestrictedUserClaimAttributes   */ RestrictedUserClaimAttributes,
+            /* TokenRestrictedDeviceClaimAttributes */ RestrictedDeviceClaimAttributes,
+            /* TokenDeviceGroups                    */ DeviceGroups,
+            /* TokenRestrictedDeviceGroups          */ RestrictedDeviceGroups,
+            /* TokenSecurityAttributes              */ SecurityAttributes,
+            /* TokenIsRestricted                    */ IsRestricted,
+            /* TokenProcessTrustLevel               */ ProcessTrustLevel,
+            /* TokenPrivateNameSpace                */ PrivateNameSpace,
+            /* TokenSingletonAttributes             */ SingletonAttributes,
+            /* TokenBnoIsolation                    */ BnoIsolation,
+            /* TokenChildProcessFlags               */ ChildProcessFlags,
+            /* TokenIsLessPrivilegedAppContainer    */ IsLessPrivilegedAppContainer,
+            /* MaxTokenInfoClass                    */ MaxTokenInfoClass
+        }
+
+        /**
+         * TOKEN_TYPE enumeration
+         * https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ne-winnt-_token_type
+         */
+        internal enum TokenType : uint
+        {
+            /* TokenPrimary       */ TokenPrimary = 1,
+            /* TokenImpersonation */ TokenImpersonation
+        }
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/wintrust/nf-wintrust-winverifytrust
+         */
         internal enum TrustError : uint
         {
             /* TRUST_E_PROVIDER_UNKNOWN     */ ProviderUnknown = 0x800B0001,
@@ -810,6 +933,19 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
+         * PROCESS_INFORMATION structure
+         * https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/ns-processthreadsapi-process_information
+         */
+        [StructLayout(LayoutKind.Sequential)]
+        public struct ProcessInformation
+        {
+            public /* HANDLE */ IntPtr hProcess;
+            public /* HANDLE */ IntPtr hThread;
+            public /* DWORD  */ int dwProcessID;
+            public /* DWORD  */ int dwThreadID;
+        }
+
+        /**
          * QUERY_SERVICE_CONFIG structure
          * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-query_service_configw
          */
@@ -825,6 +961,18 @@ namespace Htc.Vita.Core.Interop
             internal /* LPTSTR */ string lpDependencies;
             internal /* LPTSTR */ string lpServiceStartName;
             internal /* LPTSTR */ string lpDisplayName;
+        }
+
+        /**
+         * SECURITY_ATTRIBUTES
+         * https://msdn.microsoft.com/en-us/library/windows/desktop/aa379560.aspx
+         */
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SecurityAttributes
+        {
+            public /* DWORD  */ int nLength;
+            public /* LPVOID */ IntPtr lpSecurityDescriptor;
+            public /* BOOL   */ bool bInheritHandle;
         }
 
         /**
@@ -867,6 +1015,32 @@ namespace Htc.Vita.Core.Interop
             internal /* GUID      */ Guid interfaceClassGuid;
             internal /* DWORD     */ uint flags;
             internal /* ULONG_PTR */ IntPtr reserved;
+        }
+
+        /**
+         * STARTUPINFO structure
+         * https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/ns-processthreadsapi-_startupinfow
+         */
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct StartupInfo
+        {
+            public /* DWORD  */ int cb;
+            public /* LPWSTR */ string lpReserved;
+            public /* LPWSTR */ string lpDesktop;
+            public /* LPWSTR */ string lpTitle;
+            public /* DWORD  */ int dwX;
+            public /* DWORD  */ int dwY;
+            public /* DWORD  */ int dwXSize;
+            public /* DWORD  */ int dwXCountChars;
+            public /* DWORD  */ int dwYCountChars;
+            public /* DWORD  */ int dwFillAttribute;
+            public /* DWORD  */ int dwFlags;
+            public /* WORD   */ short wShowWindow;
+            public /* WORD   */ short cbReserved2;
+            public /* LPBYTE */ IntPtr lpReserved2;
+            public /* HANDLE */ IntPtr hStdInput;
+            public /* HANDLE */ IntPtr hStdOutput;
+            public /* HANDLE */ IntPtr hStdError;
         }
 
         /**
