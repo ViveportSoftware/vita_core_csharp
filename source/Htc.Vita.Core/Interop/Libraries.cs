@@ -4,6 +4,7 @@
     {
         internal const string WindowsAdvapi32 = "advapi32.dll";
         internal const string WindowsDnsapi = "dnsapi.dll";
+        internal const string WindowsDxgi = "dxgi.dll";
         internal const string WindowsHid = "hid.dll";
         internal const string WindowsKernel32 = "kernel32.dll";
         internal const string WindowsPsapi = "psapi.dll";
