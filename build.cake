@@ -1,7 +1,7 @@
 #addin "nuget:?package=Cake.Coveralls&version=0.10.0"
 #addin "nuget:?package=Cake.Git&version=0.21.0"
 #addin "nuget:?package=Cake.ReSharperReports&version=0.11.0"
-#addin "nuget:?package=Cake.Sonar&version=1.1.18"
+#addin "nuget:?package=Cake.Sonar&version=1.1.22"
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
