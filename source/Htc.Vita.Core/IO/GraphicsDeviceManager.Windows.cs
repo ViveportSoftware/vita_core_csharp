@@ -2,9 +2,9 @@
 
 namespace Htc.Vita.Core.IO
 {
-    public partial class GraphicsDeviceManager
+    public static partial class GraphicsDeviceManager
     {
-        internal class Windows
+        internal static class Windows
         {
             internal static List<GraphicsAdapterInfo> GetGraphicsAdapterListInPlatform()
             {

@@ -2,7 +2,7 @@
 
 namespace Htc.Vita.Core.IO
 {
-    public partial class GraphicsDeviceManager
+    public static partial class GraphicsDeviceManager
     {
         public static List<GraphicsAdapterInfo> GetGraphicsAdapterList()
         {

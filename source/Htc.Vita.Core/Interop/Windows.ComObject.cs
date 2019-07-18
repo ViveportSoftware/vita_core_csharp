@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Htc.Vita.Core.Interop
 {
-    internal partial class Windows
+    internal static partial class Windows
     {
         internal const string ComInterfaceDxgiAdapter = "2411e7e1-12ac-4ccf-bd14-9798e8534dc0";
         internal const string ComInterfaceDxgiFactory = "7b7166ec-21c7-44ae-b21a-c9ae321ae369";

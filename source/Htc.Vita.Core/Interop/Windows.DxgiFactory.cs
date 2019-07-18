@@ -5,7 +5,7 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Interop
 {
-    internal partial class Windows
+    internal static partial class Windows
     {
         internal class DxgiFactory : IDisposable
         {

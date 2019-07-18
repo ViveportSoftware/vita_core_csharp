@@ -7,7 +7,7 @@ namespace Htc.Vita.Core.Tests
     public class GraphicsDeviceManagerTest
     {
         [Fact]
-        public void Default_0_GetGraphicsAdapterList()
+        public static void Default_0_GetGraphicsAdapterList()
         {
             var graphicsAdapterList = GraphicsDeviceManager.GetGraphicsAdapterList();
             Assert.NotNull(graphicsAdapterList);
