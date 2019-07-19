@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class GraphicsDeviceManagerTest
+    public static class GraphicsDeviceManagerTest
     {
         [Fact]
         public static void Default_0_GetGraphicsAdapterList()
@@ -21,6 +21,19 @@ namespace Htc.Vita.Core.Tests
                 Logger.GetInstance(typeof(GraphicsDeviceManagerTest)).Info($"graphicsAdapterInfo[{index}].SubsystemVendorId: {graphicsAdapterInfo.SubsystemVendorId}");
                 Logger.GetInstance(typeof(GraphicsDeviceManagerTest)).Info($"graphicsAdapterInfo[{index}].SubsystemDeviceId: {graphicsAdapterInfo.SubsystemDeviceId}");
                 Logger.GetInstance(typeof(GraphicsDeviceManagerTest)).Info($"graphicsAdapterInfo[{index}].RevisionId: {graphicsAdapterInfo.RevisionId}");
+                var index1 = 0;
+                foreach (var graphicsDisplayInfo in graphicsAdapterInfo.DisplayList)
+                {
+                    Logger.GetInstance(typeof(GraphicsDeviceManagerTest)).Info($"graphicsAdapterInfo[{index}].DisplayList[{index1}].Name: {graphicsDisplayInfo.Name}");
+                    var index2 = 0;
+                    foreach (var graphicsMonitorInfo in graphicsDisplayInfo.MonitorList)
+                    {
+                        Logger.GetInstance(typeof(GraphicsDeviceManagerTest)).Info($"graphicsAdapterInfo[{index}].DisplayList[{index1}].MonitorList[{index2}].Name: {graphicsMonitorInfo.Name}");
+                        Logger.GetInstance(typeof(GraphicsDeviceManagerTest)).Info($"graphicsAdapterInfo[{index}].DisplayList[{index1}].MonitorList[{index2}].Description: {graphicsMonitorInfo.Description}");
+                        index2++;
+                    }
+                    index1++;
+                }
                 index++;
             }
         }

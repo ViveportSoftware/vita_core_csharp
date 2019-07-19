@@ -38,6 +38,26 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-_display_devicew
+         */
+        [Flags]
+        internal enum DisplayDeviceStateFlags : uint
+        {
+            /*                                    */ None = 0,
+            /* DISPLAY_DEVICE_ATTACHED_TO_DESKTOP */ AttachedToDesktop = 0x00000001,
+            /* DISPLAY_DEVICE_MULTI_DRIVER        */ MultiDriver = 0x00000002,
+            /* DISPLAY_DEVICE_PRIMARY_DEVICE      */ PrimaryDevice = 0x00000004,
+            /* DISPLAY_DEVICE_MIRRORING_DRIVER    */ MirroringDriver = 0x00000008,
+            /* DISPLAY_DEVICE_VGA_COMPATIBLE      */ VgaCompatible = 0x00000010,
+            /* DISPLAY_DEVICE_REMOVABLE           */ Removable = 0x00000020,
+            /* DISPLAY_DEVICE_ACC_DRIVER          */ AccDriver = 0x00000040,
+            /* DISPLAY_DEVICE_RDPUDD              */ RdpUdd = 0x01000000,
+            /* DISPLAY_DEVICE_DISCONNECT          */ Disconnect = 0x02000000,
+            /* DISPLAY_DEVICE_REMOTE              */ Remote = 0x04000000,
+            /* DISPLAY_DEVICE_MODESPRUNED         */ ModesPruned = 0x08000000
+        }
+
+        /**
          * DXGI_ERROR enumeration
          * https://docs.microsoft.com/en-us/windows/win32/direct3ddxgi/dxgi-error
          */
@@ -76,6 +96,19 @@ namespace Htc.Vita.Core.Interop
             /* DXGI_ERROR_CACHE_FULL                    */ CacheFull = 0x887a0034,
             /* DXGI_ERROR_CACHE_HASH_COLLISION          */ CacheHashCollision = 0x887a0035,
             /* DXGI_ERROR_ALREADY_EXISTS                */ AlreadyExists = 0x887a0036
+        }
+
+        /**
+         * DXGI_MODE_ROTATION enumeration
+         * https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/bb173065(v=vs.85)
+         */
+        internal enum DxgiModeRotation
+        {
+            /* DXGI_MODE_ROTATION_UNSPECIFIED */ Unspecified = 0,
+            /* DXGI_MODE_ROTATION_IDENTITY    */ Identity = 1,
+            /* DXGI_MODE_ROTATION_ROTATE90    */ Rotate90 = 2,
+            /* DXGI_MODE_ROTATION_ROTATE180   */ Rotate180 = 3,
+            /* DXGI_MODE_ROTATION_ROTATE270   */ Rotate270 = 4
         }
 
         internal enum Error
@@ -965,6 +998,21 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
+         * DISPLAY_DEVICEW structure
+         * https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-_display_devicew
+         */
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        internal struct DisplayDeviceW
+        {
+            internal /* DWORD      */ int cb;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal /* WCHAR[32]  */ string deviceName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string deviceString;
+            internal /* DWORD      */ DisplayDeviceStateFlags stateFlags;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string deviceId;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string deviceKey;
+        }
+
+        /**
          * DXGI_ADAPTER_DESC structure
          * https://docs.microsoft.com/en-us/windows/win32/api/dxgi/ns-dxgi-dxgi_adapter_desc
          */
@@ -980,6 +1028,20 @@ namespace Htc.Vita.Core.Interop
             internal /* SIZE_T     */ UIntPtr dedicatedSystemMemory;
             internal /* SIZE_T     */ UIntPtr sharedSystemMemory;
             internal /* LUID       */ long adapterLuid;
+        }
+
+        /**
+         * DXGI_OUTPUT_DESC structure
+         * https://docs.microsoft.com/en-us/windows/win32/api/dxgi/ns-dxgi-dxgi_output_desc
+         */
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        internal struct DxgiOutputDescription
+        {
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal /* WCHAR              */ string deviceName;
+            internal /* RECT               */ Rectangle desktopCoordinates;
+            internal /* BOOL               */ bool attachedToDesktop;
+            internal /* DXGI_MODE_ROTATION */ DxgiModeRotation rotation;
+            internal /* HMONITOR           */ IntPtr monitor;
         }
 
         /**
@@ -1004,6 +1066,33 @@ namespace Htc.Vita.Core.Interop
             internal /* USHORT     */ ushort numberFeatureButtonCaps;
             internal /* USHORT     */ ushort numberFeatureValueCaps;
             internal /* USHORT     */ ushort numberFeatureDataIndices;
+        }
+
+        /**
+         * MONITORINFOEXW structure
+         * https://docs.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-monitorinfoexw
+         */
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        internal struct MonitorInfoExW
+        {
+            internal /* DWORD     */ int size;
+            internal /* RECT      */ Rectangle rcMonitor;
+            internal /* RECT      */ Rectangle rcWork;
+            internal /* DWORD     */ uint flags;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal /* WCHAR[32] */ string DeviceName;
+        }
+
+        /**
+         * RECT structure
+         * https://docs.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect
+         */
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Rectangle
+        {
+            internal /* LONG */ int left;
+            internal /* LONG */ int top;
+            internal /* LONG */ int right;
+            internal /* LONG */ int bottom;
         }
 
         /**

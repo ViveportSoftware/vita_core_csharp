@@ -222,6 +222,14 @@ namespace Htc.Vita.Core.Interop
                     /* _In_         REFGUID */ [In] ref Guid riid,
                     /* _COM_Outptr_ void**  */ [Out] out object unknown
             );
+
+            /**
+             * https://docs.microsoft.com/en-us/windows/win32/api/dxgi/nf-dxgi-idxgioutput-getdesc
+             */
+            [PreserveSig]
+            DxgiError GetDesc(
+                    /* _Out_ DXGI_OUTPUT_DESC*  */ [Out] out DxgiOutputDescription desc
+            );
         }
     }
 }

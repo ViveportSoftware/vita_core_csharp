@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.IO
 {
@@ -27,8 +30,7 @@ namespace Htc.Vita.Core.IO
                         using (dxgiAdapter)
                         {
                             var dxgiAdapterDescription = dxgiAdapter.GetDescription();
-
-                            result.Add(new GraphicsAdapterInfo
+                            var graphicsAdapterInfo = new GraphicsAdapterInfo
                             {
                                     Description = dxgiAdapterDescription.description,
                                     DeviceId = ParseDeviceId(dxgiAdapterDescription.deviceId),
@@ -36,7 +38,73 @@ namespace Htc.Vita.Core.IO
                                     SubsystemDeviceId = ParseSubsystemDeviceId(dxgiAdapterDescription.subSysId),
                                     SubsystemVendorId = ParseSubsystemVendorId(dxgiAdapterDescription.subSysId),
                                     VendorId = ParseVendorId(dxgiAdapterDescription.vendorId)
-                            });
+                            };
+
+                            foreach (var dxgiOutput in dxgiAdapter.EnumerateOutputs())
+                            {
+                                if (dxgiOutput == null)
+                                {
+                                    continue;
+                                }
+
+                                using (dxgiOutput)
+                                {
+                                    var dxgiOutputDescription = dxgiOutput.GetDescription();
+                                    var graphicsDisplayInfo = new GraphicsDisplayInfo
+                                    {
+                                            Name = dxgiOutputDescription.deviceName
+                                    };
+
+                                    var monitorInfo = new Interop.Windows.MonitorInfoExW();
+                                    monitorInfo.size = Marshal.SizeOf(monitorInfo);
+                                    var success = Interop.Windows.GetMonitorInfoW(
+                                            dxgiOutputDescription.monitor,
+                                            ref monitorInfo
+                                    );
+                                    if (!success)
+                                    {
+                                        Logger.GetInstance(typeof(Windows)).Error("Can not get monitor info. error: " + Marshal.GetLastWin32Error());
+                                        continue;
+                                    }
+
+                                    var displayDevice = new Interop.Windows.DisplayDeviceW();
+                                    displayDevice.cb = Marshal.SizeOf(displayDevice);
+
+                                    try
+                                    {
+                                        for (uint adapterId = 0; Interop.Windows.EnumDisplayDevicesW(null, adapterId, ref displayDevice, 0); adapterId++)
+                                        {
+                                            var adapterDeviceName = displayDevice.deviceName;
+                                            if (string.IsNullOrWhiteSpace(adapterDeviceName))
+                                            {
+                                                continue;
+                                            }
+
+                                            if (!adapterDeviceName.Equals(monitorInfo.DeviceName))
+                                            {
+                                                continue;
+                                            }
+
+                                            for (uint monitorId = 0; Interop.Windows.EnumDisplayDevicesW(adapterDeviceName, monitorId, ref displayDevice, 0); monitorId++)
+                                            {
+                                                graphicsDisplayInfo.MonitorList.Add(new GraphicsMonitorInfo
+                                                {
+                                                        Name = displayDevice.deviceName,
+                                                        Description = displayDevice.deviceString
+                                                });
+                                            }
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Logger.GetInstance(typeof(Windows)).Error($"{e}");
+                                    }
+
+                                    graphicsAdapterInfo.DisplayList.Add(graphicsDisplayInfo);
+                                }
+                            }
+
+                            result.Add(graphicsAdapterInfo);
                         }
                     }
                 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Htc.Vita.Core.Log;
 
@@ -26,6 +27,41 @@ namespace Htc.Vita.Core.Interop
                 {
                     Marshal.ReleaseComObject(_dxgiAdapter);
                 }
+            }
+
+            internal List<DxgiOutput> EnumerateOutputs()
+            {
+                var result = new List<DxgiOutput>();
+                if (_dxgiAdapter == null)
+                {
+                    return result;
+                }
+
+                try
+                {
+                    var index = 0U;
+                    while (true)
+                    {
+                        IDxgiOutput iDxgiOutput;
+                        var dxgiError = _dxgiAdapter.EnumOutputs(
+                            index,
+                            out iDxgiOutput
+                        );
+                        if (dxgiError != DxgiError.SOk)
+                        {
+                            break;
+                        }
+
+                        result.Add(new DxgiOutput(iDxgiOutput));
+                        index++;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(DxgiAdapter)).Error("Can not enumerate DXGI outputs. error: " + e.Message);
+                }
+
+                return result;
             }
 
             internal DxgiAdapterDescription GetDescription()
