@@ -219,6 +219,11 @@ namespace Htc.Vita.Core.Runtime
             }
         }
 
+        public static DateTime GetEpochTime()
+        {
+            return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        }
+
         public static string GetFrameworkName()
         {
             if (IsDotNetCore)
@@ -259,6 +264,16 @@ namespace Htc.Vita.Core.Runtime
                 result = Environment.MachineName;
             }
             return result;
+        }
+
+        public static DateTime GetMaxTimeUtc()
+        {
+            return new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Utc).Subtract(TimeSpan.FromHours(13)); //for GMT +13:00
+        }
+
+        public static DateTime GetMinTimeUtc()
+        {
+            return new DateTime(0L, DateTimeKind.Utc).Add(TimeSpan.FromHours(12)); //for GMT -12:00
         }
 
         public static string GetProductName()
