@@ -212,8 +212,13 @@ namespace Htc.Vita.Core.Runtime
                             return false;
                         }
 
-                        Logger.GetInstance(typeof(Windows)).Debug($"Current user SID: [{currentUserSid}], process user SID: [{processUserSid}]");
-                        return currentUserSid.Equals(processUserSid);
+                        if (currentUserSid.Equals(processUserSid))
+                        {
+                            return true;
+                        }
+
+                        Logger.GetInstance(typeof(Windows)).Debug($"Process user SID: [{processUserSid}] is different from current user SID: [{currentUserSid}]");
+                        return false;
                     }
                 }
                 catch (Exception e)
