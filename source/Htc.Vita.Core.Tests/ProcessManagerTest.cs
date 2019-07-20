@@ -68,5 +68,25 @@ namespace Htc.Vita.Core.Tests
                 _output.WriteLine("Kill " + fileInfo.Name + " successfully on PID: " + process.Id);
             }
         }
+
+        [Fact]
+        public void ProcessManager_Default_3_IsCurrentUserProcess()
+        {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+            var fileInfo = new FileInfo("C:\\Windows\\System32\\notepad.exe");
+            Assert.True(fileInfo.Exists);
+            using (var process = Process.Start(fileInfo.FullName))
+            {
+                Assert.NotNull(process);
+                Assert.True(process.Id > 4);
+                _output.WriteLine("Start " + fileInfo.FullName + " successfully on PID: " + process.Id);
+                Assert.True(ProcessManager.IsCurrentUserProcess(process));
+                Assert.True(ProcessManager.KillProcessById(process.Id));
+                _output.WriteLine("Kill " + fileInfo.Name + " successfully on PID: " + process.Id);
+            }
+        }
     }
 }

@@ -139,7 +139,7 @@ namespace Htc.Vita.Core.Interop
         internal static extern bool GetTokenInformation(
                 /* _In_  HANDLE                  */ [In] SafeTokenHandle tokenHandle,
                 /* _In_  TOKEN_INFORMATION_CLASS */ [In] TokenInformationClass tokenInformationClass,
-                /* _Out_ LPVOID                  */ [In][Out] ref IntPtr tokenInformation,
+                /* _Out_ LPVOID                  */ [In][Out] IntPtr tokenInformation,
                 /* _In_  DWORD                   */ [In] uint tokenInformationLength,
                 /* _Out_ PDWORD                  */ [Out] out uint returnLength
         );

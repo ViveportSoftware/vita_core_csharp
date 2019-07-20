@@ -1181,6 +1181,17 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
+         * SID_AND_ATTRIBUTES structure
+         * https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-sid_and_attributes
+         */
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct SidAndAttributes
+        {
+            internal /* PSID  */ IntPtr Sid;
+            internal /* DWORD */ uint Attributes;
+        }
+
+        /**
          * STARTUPINFO structure
          * https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/ns-processthreadsapi-_startupinfow
          */
@@ -1216,6 +1227,16 @@ namespace Htc.Vita.Core.Interop
             internal /* DWORD */ int Count;
             internal /* LUID  */ long Luid;
             internal /* DWORD */ SePrivilege Attr;
+        }
+
+        /**
+         * TOKEN_USER structure
+         * https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-_token_user
+         */
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct TokenUser
+        {
+            internal /* SID_AND_ATTRIBUTES */ SidAndAttributes User;
         }
 
         /**

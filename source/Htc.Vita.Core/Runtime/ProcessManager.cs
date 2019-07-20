@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Htc.Vita.Core.Runtime
 {
@@ -62,6 +63,15 @@ namespace Htc.Vita.Core.Runtime
         public static string GetProcessPathById(int processId)
         {
             return Windows.GetPlatformProcessPathById(processId);
+        }
+
+        public static bool IsCurrentUserProcess(Process process)
+        {
+            if (process == null)
+            {
+                return false;
+            }
+            return Windows.IsCurrentUserProcessInPlatform(process);
         }
 
         public static bool KillProcessById(int processId)
