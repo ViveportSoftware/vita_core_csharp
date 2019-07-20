@@ -1037,7 +1037,7 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         internal struct DxgiOutputDescription
         {
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal /* WCHAR              */ string deviceName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal /* WCHAR[32]          */ string deviceName;
             internal /* RECT               */ Rectangle desktopCoordinates;
             internal /* BOOL               */ bool attachedToDesktop;
             internal /* DXGI_MODE_ROTATION */ DxgiModeRotation rotation;
