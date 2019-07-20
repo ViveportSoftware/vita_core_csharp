@@ -16,7 +16,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void Default_0_Trace_WithHostname()
         {
-            var hostname = "www.google.com";
+            const string hostname = "www.google.com";
             var hops = RouteTracer.Trace(hostname, 20, 5000);
             Assert.NotNull(hops);
             Assert.True(hops.Count > 0);
@@ -29,7 +29,7 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public void Default_0_Trace_WithIpAddress()
         {
-            var ipAddress = "8.8.8.8";
+            const string ipAddress = "8.8.8.8";
             var hops = RouteTracer.Trace(ipAddress, 20, 5000);
             Assert.NotNull(hops);
             Assert.True(hops.Count > 0);
