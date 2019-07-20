@@ -17,7 +17,6 @@ namespace Htc.Vita.Core.TestService
 
         internal static bool DoStart(string[] args)
         {
-            var result = false;
             lock (ServiceLock)
             {
                 if (_runningStatus == RunningStatus.Started)
@@ -41,15 +40,16 @@ namespace Htc.Vita.Core.TestService
                     Logger.GetInstance(typeof(DefaultService)).Info("processAsUser.Path: " + processAsUser.Path);
                     Logger.GetInstance(typeof(DefaultService)).Info("processAsUser.User: " + processAsUser.User);
                 }
+
+                _runningStatus = RunningStatus.Started;
             }
 
             Logger.GetInstance(typeof(DefaultService)).Info("Service started");
-            return result;
+            return true;
         }
 
         internal static bool DoStop()
         {
-            var result = false;
             lock (ServiceLock)
             {
                 if (_runningStatus == RunningStatus.Stopped)
@@ -61,10 +61,12 @@ namespace Htc.Vita.Core.TestService
                 Logger.GetInstance(typeof(DefaultService)).Info("Service stopping");
 
                 // TODO
+
+                _runningStatus = RunningStatus.Stopped;
             }
 
             Logger.GetInstance(typeof(DefaultService)).Info("Service stopped");
-            return result;
+            return true;
         }
 
         protected override void OnStart(string[] args)
