@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 using System.Text;
 using Htc.Vita.Core.Log;
 
@@ -138,6 +139,103 @@ namespace Htc.Vita.Core.Runtime
                 return null;
             }
 
+            internal static bool IsCurrentUserProcessInPlatform(Process process)
+            {
+                var tokenInformation = IntPtr.Zero;
+                try
+                {
+                    string currentUserSid;
+                    using (var windowsIdentity = WindowsIdentity.GetCurrent())
+                    {
+                        currentUserSid = windowsIdentity.User?.ToString() ?? string.Empty;
+                    }
+                    if (string.IsNullOrWhiteSpace(currentUserSid))
+                    {
+                        Logger.GetInstance(typeof(Windows)).Error("Can not get current user sid");
+                        return false;
+                    }
+
+                    using (var processHandle = new Interop.Windows.SafeProcessHandle(process))
+                    {
+                        Interop.Windows.SafeTokenHandle tokenHandle;
+                        var success = Interop.Windows.OpenProcessToken(
+                                processHandle,
+                                Interop.Windows.TokenAccessRight.Query | Interop.Windows.TokenAccessRight.Duplicate,
+                                out tokenHandle
+                        );
+                        if (!success)
+                        {
+                            Logger.GetInstance(typeof(Windows)).Error($"Can not open process token. error code: {Marshal.GetLastWin32Error()}");
+                        }
+
+                        var tokenInformationSize = 0U;
+                        success = Interop.Windows.GetTokenInformation(
+                                tokenHandle,
+                                Interop.Windows.TokenInformationClass.User,
+                                tokenInformation,
+                                tokenInformationSize,
+                                out tokenInformationSize
+                        );
+                        if (!success)
+                        {
+                            var win32Error = Marshal.GetLastWin32Error();
+                            if (win32Error != (int) Interop.Windows.Error.InsufficientBuffer)
+                            {
+                                Logger.GetInstance(typeof(Windows)).Error($"Can not get process token information size. error code: {win32Error}");
+                                return false;
+                            }
+                        }
+
+                        tokenInformation = Marshal.AllocHGlobal((int) tokenInformationSize);
+                        success = Interop.Windows.GetTokenInformation(
+                                tokenHandle,
+                                Interop.Windows.TokenInformationClass.User,
+                                tokenInformation,
+                                tokenInformationSize,
+                                out tokenInformationSize
+                        );
+                        if (!success)
+                        {
+                            Logger.GetInstance(typeof(Windows)).Error($"Can not get process token information. error code: {Marshal.GetLastWin32Error()}");
+                            return false;
+                        }
+
+                        var tokenUser = (Interop.Windows.TokenUser) Marshal.PtrToStructure(
+                                tokenInformation,
+                                typeof(Interop.Windows.TokenUser)
+                        );
+                        var processUserSid = string.Empty;
+                        success = Interop.Windows.ConvertSidToStringSidW(tokenUser.User.Sid, ref processUserSid);
+                        if (!success)
+                        {
+                            Logger.GetInstance(typeof(Windows)).Error($"Can not convert sid to string sid, error code: {Marshal.GetLastWin32Error()}");
+                            return false;
+                        }
+
+                        if (currentUserSid.Equals(processUserSid))
+                        {
+                            return true;
+                        }
+
+                        Logger.GetInstance(typeof(Windows)).Debug($"Process user SID: [{processUserSid}] is different from current user SID: [{currentUserSid}]");
+                        return false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(Windows)).Error($"Can not check if process is running under current user. {e.Message}");
+                }
+                finally
+                {
+                    if (tokenInformation != IntPtr.Zero)
+                    {
+                        Marshal.FreeHGlobal(tokenInformation);
+                    }
+                }
+
+                return false;
+            }
+
             internal static bool KillPlatformProcessById(int processId)
             {
                 return KillPlatformProcessById(processId, null);
@@ -258,7 +356,7 @@ namespace Htc.Vita.Core.Runtime
                             success = Interop.Windows.GetTokenInformation(
                                     newTokenHandle,
                                     Interop.Windows.TokenInformationClass.LinkedToken,
-                                    ref tokenInformation,
+                                    tokenInformation,
                                     tokenInformationSize,
                                     out tokenInformationSize
                             );
@@ -277,7 +375,7 @@ namespace Htc.Vita.Core.Runtime
                                 success = Interop.Windows.GetTokenInformation(
                                         newTokenHandle,
                                         Interop.Windows.TokenInformationClass.LinkedToken,
-                                        ref tokenInformation,
+                                        tokenInformation,
                                         tokenInformationSize,
                                         out tokenInformationSize
                                 );

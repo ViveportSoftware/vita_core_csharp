@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public static class Convert
+    public static class ConvertTest
     {
         [Fact]
         public static void Default_0_FromBase64String()

@@ -37,6 +37,80 @@ namespace Htc.Vita.Core.Interop
             /* DIGCF_DEVICEINTERFACE */ DeviceInterface = 0x00000010
         }
 
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-_display_devicew
+         */
+        [Flags]
+        internal enum DisplayDeviceStateFlags : uint
+        {
+            /*                                    */ None = 0,
+            /* DISPLAY_DEVICE_ATTACHED_TO_DESKTOP */ AttachedToDesktop = 0x00000001,
+            /* DISPLAY_DEVICE_MULTI_DRIVER        */ MultiDriver = 0x00000002,
+            /* DISPLAY_DEVICE_PRIMARY_DEVICE      */ PrimaryDevice = 0x00000004,
+            /* DISPLAY_DEVICE_MIRRORING_DRIVER    */ MirroringDriver = 0x00000008,
+            /* DISPLAY_DEVICE_VGA_COMPATIBLE      */ VgaCompatible = 0x00000010,
+            /* DISPLAY_DEVICE_REMOVABLE           */ Removable = 0x00000020,
+            /* DISPLAY_DEVICE_ACC_DRIVER          */ AccDriver = 0x00000040,
+            /* DISPLAY_DEVICE_RDPUDD              */ RdpUdd = 0x01000000,
+            /* DISPLAY_DEVICE_DISCONNECT          */ Disconnect = 0x02000000,
+            /* DISPLAY_DEVICE_REMOTE              */ Remote = 0x04000000,
+            /* DISPLAY_DEVICE_MODESPRUNED         */ ModesPruned = 0x08000000
+        }
+
+        /**
+         * DXGI_ERROR enumeration
+         * https://docs.microsoft.com/en-us/windows/win32/direct3ddxgi/dxgi-error
+         */
+        internal enum DxgiError : uint
+        {
+            /* S_OK                                     */ SOk = HResult.SOk,
+            /* DXGI_ERROR_INVALID_CALL                  */ InvalidCall = 0x887a0001,
+            /* DXGI_ERROR_NOT_FOUND                     */ NotFound = 0x887a0002,
+            /* DXGI_ERROR_MORE_DATA                     */ MoreData = 0x887a0003,
+            /* DXGI_ERROR_UNSUPPORTED                   */ Unsupported = 0x887a0004,
+            /* DXGI_ERROR_DEVICE_REMOVED                */ DeviceRemoved = 0x887a0005,
+            /* DXGI_ERROR_DEVICE_HUNG                   */ DeviceHung = 0x887a0006,
+            /* DXGI_ERROR_DEVICE_RESET                  */ DeviceReset = 0x887a0007,
+            /* DXGI_ERROR_WAS_STILL_DRAWING             */ WasStillDrawing = 0x887a000a,
+            /* DXGI_ERROR_FRAME_STATISTICS_DISJOINT     */ FrameStatisticsDisjoint = 0x887a000b,
+            /* DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE  */ GraphicsVidpnSourceInUse = 0x887a000c,
+            /* DXGI_ERROR_DRIVER_INTERNAL_ERROR         */ DriverInternalError = 0x887a0020,
+            /* DXGI_ERROR_NONEXCLUSIVE                  */ Nonexclusive = 0x887a0021,
+            /* DXGI_ERROR_NOT_CURRENTLY_AVAILABLE       */ NotCurrentlyAvailable = 0x887a0022,
+            /* DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED    */ RemoteClientDisconnected = 0x887a0023,
+            /* DXGI_ERROR_REMOTE_OUTOFMEMORY            */ RemoteOutOfMemory = 0x887a0024,
+            /* DXGI_ERROR_MODE_CHANGE_IN_PROGRESS       */ ModeChangeInProgress = 0x887a0025,
+            /* DXGI_ERROR_ACCESS_LOST                   */ AccessLost = 0x887a0026,
+            /* DXGI_ERROR_WAIT_TIMEOUT                  */ WaitTimeout = 0x887a0027,
+            /* DXGI_ERROR_SESSION_DISCONNECTED          */ SessionDisconnected = 0x887a0028,
+            /* DXGI_ERROR_RESTRICT_TO_OUTPUT_STALE      */ RestrictToOutputStale = 0x887a0029,
+            /* DXGI_ERROR_CANNOT_PROTECT_CONTENT        */ CannotProtectContent = 0x887a002a,
+            /* DXGI_ERROR_ACCESS_DENIED                 */ AccessDenied = 0x887a002b,
+            /* DXGI_ERROR_NAME_ALREADY_EXISTS           */ NameAlreadyExists = 0x887a002c,
+            /* DXGI_ERROR_SDK_COMPONENT_MISSING         */ SdkComponentMissing = 0x887a002d,
+            /* DXGI_ERROR_NOT_CURRENT                   */ NotCurrent = 0x887a002e,
+            /* DXGI_ERROR_HW_PROTECTION_OUTOFMEMORY     */ HwProtectionOutOfMemory = 0x887a0030,
+            /* DXGI_ERROR_DYNAMIC_CODE_POLICY_VIOLATION */ DynamicCodePolicyViolation = 0x887a0031,
+            /* DXGI_ERROR_NON_COMPOSITED_UI             */ NonCompositedUI = 0x887A0032,
+            /* DXGI_ERROR_CACHE_CORRUPT                 */ CacheCorrupt = 0x887a0033,
+            /* DXGI_ERROR_CACHE_FULL                    */ CacheFull = 0x887a0034,
+            /* DXGI_ERROR_CACHE_HASH_COLLISION          */ CacheHashCollision = 0x887a0035,
+            /* DXGI_ERROR_ALREADY_EXISTS                */ AlreadyExists = 0x887a0036
+        }
+
+        /**
+         * DXGI_MODE_ROTATION enumeration
+         * https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/bb173065(v=vs.85)
+         */
+        internal enum DxgiModeRotation
+        {
+            /* DXGI_MODE_ROTATION_UNSPECIFIED */ Unspecified = 0,
+            /* DXGI_MODE_ROTATION_IDENTITY    */ Identity = 1,
+            /* DXGI_MODE_ROTATION_ROTATE90    */ Rotate90 = 2,
+            /* DXGI_MODE_ROTATION_ROTATE180   */ Rotate180 = 3,
+            /* DXGI_MODE_ROTATION_ROTATE270   */ Rotate270 = 4
+        }
+
         internal enum Error
         {
             /* ERROR_SUCCESS                   (0,   0x0) */ Success = 0x0,
@@ -148,6 +222,21 @@ namespace Htc.Vita.Core.Interop
             /* GENERIC_EXECUTE */ Execute = 0x20000000,
             /* GENERIC_WRITE   */ Write = 0x40000000,
             /* GENERIC_READ    */ Read = 0x80000000
+        }
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/seccrypto/common-hresult-values
+         */
+        internal enum HResult : uint
+        {
+            /* S_OK           */ SOk = 0,
+            /* S_FALSE        */ SFalse = 1,
+            /* E_POINTER      */ EPointer = 0x80004003,
+            /* E_FAIL         */ EFail = 0x80004005,
+            /* E_UNEXPECTED   */ EUnexpected = 0x8000ffff,
+            /* E_ACCESSDENIED */ EAccessDenied = 0x80070005,
+            /* E_OUTOFMEMORY  */ EOutOfMemory = 0x8007000e,
+            /* E_INVALIDARG   */ EInvalidArg = 0x80070057
         }
 
         /**
@@ -909,27 +998,101 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
+         * DISPLAY_DEVICEW structure
+         * https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-_display_devicew
+         */
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        internal struct DisplayDeviceW
+        {
+            internal /* DWORD      */ int cb;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal /* WCHAR[32]  */ string deviceName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string deviceString;
+            internal /* DWORD      */ DisplayDeviceStateFlags stateFlags;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string deviceId;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string deviceKey;
+        }
+
+        /**
+         * DXGI_ADAPTER_DESC structure
+         * https://docs.microsoft.com/en-us/windows/win32/api/dxgi/ns-dxgi-dxgi_adapter_desc
+         */
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        internal struct DxgiAdapterDescription
+        {
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string description;
+            internal /* UINT       */ uint vendorId;
+            internal /* UINT       */ uint deviceId;
+            internal /* UINT       */ uint subSysId;
+            internal /* UINT       */ uint revision;
+            internal /* SIZE_T     */ UIntPtr dedicatedVideoMemory;
+            internal /* SIZE_T     */ UIntPtr dedicatedSystemMemory;
+            internal /* SIZE_T     */ UIntPtr sharedSystemMemory;
+            internal /* LUID       */ long adapterLuid;
+        }
+
+        /**
+         * DXGI_OUTPUT_DESC structure
+         * https://docs.microsoft.com/en-us/windows/win32/api/dxgi/ns-dxgi-dxgi_output_desc
+         */
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        internal struct DxgiOutputDescription
+        {
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal /* WCHAR[32]          */ string deviceName;
+            internal /* RECT               */ Rectangle desktopCoordinates;
+            internal /* BOOL               */ bool attachedToDesktop;
+            internal /* DXGI_MODE_ROTATION */ DxgiModeRotation rotation;
+            internal /* HMONITOR           */ IntPtr monitor;
+        }
+
+        /**
          * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidpi/ns-hidpi-_hidp_caps
          */
         [StructLayout(LayoutKind.Sequential)]
         internal struct HidDeviceCapability
         {
-            internal /* USAGE  */ ushort usage;
-            internal /* USAGE  */ ushort usagePage;
-            internal /* USHORT */ ushort inputReportByteLength;
-            internal /* USHORT */ ushort outputReportByteLength;
-            internal /* USHORT */ ushort featureReportByteLength;
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 17)] internal /* USHORT */ ushort[] reserved;
-            internal /* USHORT */ ushort numberLinkCollectionNodes;
-            internal /* USHORT */ ushort numberInputButtonCaps;
-            internal /* USHORT */ ushort numberInputValueCaps;
-            internal /* USHORT */ ushort numberInputDataIndices;
-            internal /* USHORT */ ushort numberOutputButtonCaps;
-            internal /* USHORT */ ushort numberOutputValueCaps;
-            internal /* USHORT */ ushort numberOutputDataIndices;
-            internal /* USHORT */ ushort numberFeatureButtonCaps;
-            internal /* USHORT */ ushort numberFeatureValueCaps;
-            internal /* USHORT */ ushort numberFeatureDataIndices;
+            internal /* USAGE      */ ushort usage;
+            internal /* USAGE      */ ushort usagePage;
+            internal /* USHORT     */ ushort inputReportByteLength;
+            internal /* USHORT     */ ushort outputReportByteLength;
+            internal /* USHORT     */ ushort featureReportByteLength;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 17)] internal /* USHORT[17] */ ushort[] reserved;
+            internal /* USHORT     */ ushort numberLinkCollectionNodes;
+            internal /* USHORT     */ ushort numberInputButtonCaps;
+            internal /* USHORT     */ ushort numberInputValueCaps;
+            internal /* USHORT     */ ushort numberInputDataIndices;
+            internal /* USHORT     */ ushort numberOutputButtonCaps;
+            internal /* USHORT     */ ushort numberOutputValueCaps;
+            internal /* USHORT     */ ushort numberOutputDataIndices;
+            internal /* USHORT     */ ushort numberFeatureButtonCaps;
+            internal /* USHORT     */ ushort numberFeatureValueCaps;
+            internal /* USHORT     */ ushort numberFeatureDataIndices;
+        }
+
+        /**
+         * MONITORINFOEXW structure
+         * https://docs.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-monitorinfoexw
+         */
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        internal struct MonitorInfoExW
+        {
+            internal /* DWORD     */ int size;
+            internal /* RECT      */ Rectangle rcMonitor;
+            internal /* RECT      */ Rectangle rcWork;
+            internal /* DWORD     */ uint flags;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal /* WCHAR[32] */ string DeviceName;
+        }
+
+        /**
+         * RECT structure
+         * https://docs.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect
+         */
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Rectangle
+        {
+            internal /* LONG */ int left;
+            internal /* LONG */ int top;
+            internal /* LONG */ int right;
+            internal /* LONG */ int bottom;
         }
 
         /**
@@ -937,12 +1100,12 @@ namespace Htc.Vita.Core.Interop
          * https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/ns-processthreadsapi-process_information
          */
         [StructLayout(LayoutKind.Sequential)]
-        public struct ProcessInformation
+        internal struct ProcessInformation
         {
-            public /* HANDLE */ IntPtr hProcess;
-            public /* HANDLE */ IntPtr hThread;
-            public /* DWORD  */ int dwProcessID;
-            public /* DWORD  */ int dwThreadID;
+            internal /* HANDLE */ IntPtr hProcess;
+            internal /* HANDLE */ IntPtr hThread;
+            internal /* DWORD  */ int dwProcessID;
+            internal /* DWORD  */ int dwThreadID;
         }
 
         /**
@@ -968,11 +1131,11 @@ namespace Htc.Vita.Core.Interop
          * https://msdn.microsoft.com/en-us/library/windows/desktop/aa379560.aspx
          */
         [StructLayout(LayoutKind.Sequential)]
-        public struct SecurityAttributes
+        internal struct SecurityAttributes
         {
-            public /* DWORD  */ int nLength;
-            public /* LPVOID */ IntPtr lpSecurityDescriptor;
-            public /* BOOL   */ bool bInheritHandle;
+            internal /* DWORD  */ int nLength;
+            internal /* LPVOID */ IntPtr lpSecurityDescriptor;
+            internal /* BOOL   */ bool bInheritHandle;
         }
 
         /**
@@ -1018,29 +1181,40 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
+         * SID_AND_ATTRIBUTES structure
+         * https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-sid_and_attributes
+         */
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct SidAndAttributes
+        {
+            internal /* PSID  */ IntPtr Sid;
+            internal /* DWORD */ uint Attributes;
+        }
+
+        /**
          * STARTUPINFO structure
          * https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/ns-processthreadsapi-_startupinfow
          */
         [StructLayout(LayoutKind.Sequential)]
         internal struct StartupInfo
         {
-            public /* DWORD  */ int cb;
-            public /* LPWSTR */ string lpReserved;
-            public /* LPWSTR */ string lpDesktop;
-            public /* LPWSTR */ string lpTitle;
-            public /* DWORD  */ int dwX;
-            public /* DWORD  */ int dwY;
-            public /* DWORD  */ int dwXSize;
-            public /* DWORD  */ int dwXCountChars;
-            public /* DWORD  */ int dwYCountChars;
-            public /* DWORD  */ int dwFillAttribute;
-            public /* DWORD  */ int dwFlags;
-            public /* WORD   */ short wShowWindow;
-            public /* WORD   */ short cbReserved2;
-            public /* LPBYTE */ IntPtr lpReserved2;
-            public /* HANDLE */ IntPtr hStdInput;
-            public /* HANDLE */ IntPtr hStdOutput;
-            public /* HANDLE */ IntPtr hStdError;
+            internal /* DWORD  */ int cb;
+            internal /* LPWSTR */ string lpReserved;
+            internal /* LPWSTR */ string lpDesktop;
+            internal /* LPWSTR */ string lpTitle;
+            internal /* DWORD  */ int dwX;
+            internal /* DWORD  */ int dwY;
+            internal /* DWORD  */ int dwXSize;
+            internal /* DWORD  */ int dwXCountChars;
+            internal /* DWORD  */ int dwYCountChars;
+            internal /* DWORD  */ int dwFillAttribute;
+            internal /* DWORD  */ int dwFlags;
+            internal /* WORD   */ short wShowWindow;
+            internal /* WORD   */ short cbReserved2;
+            internal /* LPBYTE */ IntPtr lpReserved2;
+            internal /* HANDLE */ IntPtr hStdInput;
+            internal /* HANDLE */ IntPtr hStdOutput;
+            internal /* HANDLE */ IntPtr hStdError;
         }
 
         /**
@@ -1053,6 +1227,16 @@ namespace Htc.Vita.Core.Interop
             internal /* DWORD */ int Count;
             internal /* LUID  */ long Luid;
             internal /* DWORD */ SePrivilege Attr;
+        }
+
+        /**
+         * TOKEN_USER structure
+         * https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-_token_user
+         */
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct TokenUser
+        {
+            internal /* SID_AND_ATTRIBUTES */ SidAndAttributes User;
         }
 
         /**
@@ -1109,11 +1293,11 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Explicit)]
         internal struct WinTrustDataUnionChoice
         {
-            [FieldOffset(0)] public /* struct WINTRUST_FILE_INFO_    */ IntPtr pFile;
-            [FieldOffset(0)] public /* struct WINTRUST_CATALOG_INFO_ */ IntPtr pCatalog;
-            [FieldOffset(0)] public /* struct WINTRUST_BLOB_INFO_    */ IntPtr pBlob;
-            [FieldOffset(0)] public /* struct WINTRUST_SGNR_INFO_    */ IntPtr pSgnr;
-            [FieldOffset(0)] public /* struct WINTRUST_CERT_INFO_    */ IntPtr pCert;
+            [FieldOffset(0)] internal /* struct WINTRUST_FILE_INFO_    */ IntPtr pFile;
+            [FieldOffset(0)] internal /* struct WINTRUST_CATALOG_INFO_ */ IntPtr pCatalog;
+            [FieldOffset(0)] internal /* struct WINTRUST_BLOB_INFO_    */ IntPtr pBlob;
+            [FieldOffset(0)] internal /* struct WINTRUST_SGNR_INFO_    */ IntPtr pSgnr;
+            [FieldOffset(0)] internal /* struct WINTRUST_CERT_INFO_    */ IntPtr pCert;
         }
 
         /**
