@@ -9,6 +9,7 @@ namespace Htc.Vita.Core.IO
             public string Description { get; set; } = "";
             public string Manufacturer { get; set; } = "";
             public string Path { get; set; } = "";
+            public string Product { get; set; } = "";
             public string ProductId { get; set; } = "";
             public string SerialNumber { get; set; } = "";
             public string VendorId { get; set; } = "";
