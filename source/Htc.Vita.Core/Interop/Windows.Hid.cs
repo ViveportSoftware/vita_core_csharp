@@ -62,6 +62,21 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
+         * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getmanufacturerstring
+         */
+        [DllImport(Libraries.WindowsHid,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool HidD_GetManufacturerString(
+                /* _In_  HANDLE */ [In] SafeFileHandle hidDeviceObject,
+                /* _Out_ PVOID  */ [In][Out] StringBuilder buffer,
+                /* _In_  ULONG  */ [In] uint bufferLength
+        );
+
+        /**
          * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getpreparseddata
          */
         [DllImport(Libraries.WindowsHid,
