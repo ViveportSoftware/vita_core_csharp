@@ -15,7 +15,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void Default_0_GetPropertiesInfo()
+        public void Default_0_GetPropertiesInfo()
         {
             if (!Runtime.Platform.IsWindows)
             {
@@ -42,6 +42,13 @@ namespace Htc.Vita.Core.Tests
             Assert.True(!string.IsNullOrEmpty(filePropertiesInfo.SubjectName));
             Assert.True(!string.IsNullOrEmpty(filePropertiesInfo.PublicKey));
             Assert.True(filePropertiesInfo.Verified);
+            Assert.NotEmpty(filePropertiesInfo.TimestampList);
+            var index = 0;
+            foreach (var time in filePropertiesInfo.TimestampList)
+            {
+                _output.WriteLine("filePropertiesInfo.TimestampList[{0}]: {1}", index, time);
+                index++;
+            }
             Assert.True(!string.IsNullOrEmpty(filePropertiesInfo.Version));
         }
 
@@ -63,6 +70,7 @@ namespace Htc.Vita.Core.Tests
             Assert.True(string.IsNullOrEmpty(filePropertiesInfo.SubjectName));
             Assert.True(string.IsNullOrEmpty(filePropertiesInfo.PublicKey));
             Assert.False(filePropertiesInfo.Verified);
+            Assert.Empty(filePropertiesInfo.TimestampList);
             _output.WriteLine("filePropertiesInfo.Version: " + filePropertiesInfo.Version);
         }
     }

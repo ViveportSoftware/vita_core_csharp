@@ -21,6 +21,7 @@ namespace Htc.Vita.Core.Diagnostics
         public string PublicKey { get; }
         public string SubjectDistinguishedName { get; }
         public string SubjectName { get; }
+        public List<DateTime> TimestampList { get; } = new List<DateTime>();
         public bool Verified { get; }
         public string Version { get; }
 
@@ -98,6 +99,11 @@ namespace Htc.Vita.Core.Diagnostics
             {
                 Logger.GetInstance(typeof(FilePropertiesInfo)).Warn("Can not find product version from file " + fileInfo.FullName);
                 ProductVersion = "0.0.0.0";
+            }
+
+            if (Verified)
+            {
+                TimestampList.AddRange(Authenticode.GetTimestampList(fileInfo));
             }
         }
 
