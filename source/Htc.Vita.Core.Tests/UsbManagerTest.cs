@@ -25,6 +25,7 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(deviceInfos);
             foreach (var deviceInfo in deviceInfos) {
                 _output.WriteLine("deviceInfo.Path: \"" + deviceInfo.Path + "\"");
+                _output.WriteLine("deviceInfo.Product: \"" + deviceInfo.Product + "\"");
                 _output.WriteLine("deviceInfo.SerialNumber: \"" + deviceInfo.SerialNumber + "\"");
                 Assert.False(string.IsNullOrWhiteSpace(deviceInfo.Path));
                 var productId = deviceInfo.ProductId;
@@ -59,6 +60,7 @@ namespace Htc.Vita.Core.Tests
             foreach (var deviceInfo in deviceInfos)
             {
                 _output.WriteLine("deviceInfo.Path: \"" + deviceInfo.Path + "\"");
+                _output.WriteLine("deviceInfo.Product: \"" + deviceInfo.Product + "\"");
                 _output.WriteLine("deviceInfo.SerialNumber: \"" + deviceInfo.SerialNumber + "\"");
                 Assert.False(string.IsNullOrWhiteSpace(deviceInfo.Path));
                 var productId = deviceInfo.ProductId;
@@ -99,6 +101,7 @@ namespace Htc.Vita.Core.Tests
             foreach (var deviceInfo in deviceInfos)
             {
                 _output.WriteLine("deviceInfo.Path: \"" + deviceInfo.Path + "\"");
+                _output.WriteLine("deviceInfo.Product: \"" + deviceInfo.Product + "\"");
                 _output.WriteLine("deviceInfo.SerialNumber: \"" + deviceInfo.SerialNumber + "\"");
                 Assert.False(string.IsNullOrWhiteSpace(deviceInfo.Path));
                 var productId = deviceInfo.ProductId;

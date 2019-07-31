@@ -48,6 +48,7 @@ namespace Htc.Vita.Core.TestProgram
                 Console.WriteLine($"deviceInfo[{index}].Description: \"{deviceInfo.Description}\"");
                 Console.WriteLine($"deviceInfo[{index}].Manufacturer: \"{deviceInfo.Manufacturer}\"");
                 Console.WriteLine($"deviceInfo[{index}].SerialNumber: \"{deviceInfo.SerialNumber}\"");
+                Console.WriteLine($"deviceInfo[{index}].Product: \"{deviceInfo.Product}\"");
                 var featureReport = UsbManager.GetHidFeatureReport(deviceInfo.Path, 0);
                 if (featureReport == null)
                 {
@@ -71,6 +72,7 @@ namespace Htc.Vita.Core.TestProgram
                 Console.WriteLine($"deviceInfo[{index}].Description: \"{deviceInfo.Description}\"");
                 Console.WriteLine($"deviceInfo[{index}].Manufacturer: \"{deviceInfo.Manufacturer}\"");
                 Console.WriteLine($"deviceInfo[{index}].SerialNumber: \"{deviceInfo.SerialNumber}\"");
+                Console.WriteLine($"deviceInfo[{index}].Product: \"{deviceInfo.Product}\"");
                 index++;
             }
             Console.ReadKey();

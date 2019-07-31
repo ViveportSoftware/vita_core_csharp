@@ -24,6 +24,152 @@ namespace Htc.Vita.Core.Interop
         internal const string SeShutdownName = "SeShutdownPrivilege";
 
         /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject
+         */
+        internal enum CertEncoding
+        {
+            /*                     */ None           =          0,
+            /* X509_ASN_ENCODING   */ X509Asn        = 0x00000001,
+            /* X509_NDR_ENCODING   */ X509Ndr        = 0x00000002,
+            /* PKCS_7_ASN_ENCODING */ Pkcs7Asn       = 0x00010000,
+            /* PKCS_7_NDR_ENCODING */ Pkcs7Ndr       = 0x00020000,
+            /*                     */ Pkcs7OrX509Asn = Pkcs7Asn
+                                                     | X509Asn
+        }
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptmsggetparam
+         */
+        internal enum CertMessageParameterType
+        {
+            /*                                              */ None                          =  0,
+            /* CMSG_TYPE_PARAM                              */ Type                          =  1,
+            /* CMSG_CONTENT_PARAM                           */ Content                       =  2,
+            /* CMSG_BARE_CONTENT_PARAM                      */ BareContent                   =  3,
+            /* CMSG_INNER_CONTENT_TYPE_PARAM                */ InnerContentType              =  4,
+            /* CMSG_SIGNER_COUNT_PARAM                      */ SignerCount                   =  5,
+            /* CMSG_SIGNER_INFO_PARAM                       */ SignerInfo                    =  6,
+            /* CMSG_SIGNER_CERT_INFO_PARAM                  */ SignerCertInfo                =  7,
+            /* CMSG_SIGNER_HASH_ALGORITHM_PARAM             */ SignerHashAlgorithm           =  8,
+            /* CMSG_SIGNER_AUTH_ATTR_PARAM                  */ SignerAuthAttr                =  9,
+            /* CMSG_SIGNER_UNAUTH_ATTR_PARAM                */ SignerUnauthAttr              = 10,
+            /* CMSG_CERT_COUNT_PARAM                        */ CertCount                     = 11,
+            /* CMSG_CERT_PARAM                              */ Cert                          = 12,
+            /* CMSG_CRL_COUNT_PARAM                         */ CrlCount                      = 13,
+            /* CMSG_CRL_PARAM                               */ Crl                           = 14,
+            /* CMSG_ENVELOPE_ALGORITHM_PARAM                */ EnvelopeAlgorithm             = 15,
+            /* CMSG_RECIPIENT_COUNT_PARAM                   */ RecipientCount                = 17,
+            /* CMSG_RECIPIENT_INDEX_PARAM                   */ RecipientIndex                = 18,
+            /* CMSG_RECIPIENT_INFO_PARAM                    */ RecipientInfo                 = 19,
+            /* CMSG_HASH_ALGORITHM_PARAM                    */ HashAlgorithm                 = 20,
+            /* CMSG_HASH_DATA_PARAM                         */ HashData                      = 21,
+            /* CMSG_COMPUTED_HASH_PARAM                     */ ComputedHash                  = 22,
+            /* CMSG_ENCRYPT_PARAM                           */ Encrypt                       = 26,
+            /* CMSG_ENCRYPTED_DIGEST                        */ EncryptedDigest               = 27,
+            /* CMSG_ENCODED_SIGNER                          */ EncodedSigner                 = 28,
+            /* CMSG_ENCODED_MESSAGE                         */ EncodedMessage                = 29,
+            /* CMSG_VERSION_PARAM                           */ Version                       = 30,
+            /* CMSG_ATTR_CERT_COUNT_PARAM                   */ AttrCertCount                 = 31,
+            /* CMSG_ATTR_CERT_PARAM                         */ AttrCert                      = 32,
+            /* CMSG_CMS_RECIPIENT_COUNT_PARAM               */ CmsRecipientCount             = 33,
+            /* CMSG_CMS_RECIPIENT_INDEX_PARAM               */ CmsRecipientIndex             = 34,
+            /* CMSG_CMS_RECIPIENT_ENCRYPTED_KEY_INDEX_PARAM */ CmsRecipientEncryptedKeyIndex = 35,
+            /* CMSG_CMS_RECIPIENT_INFO_PARAM                */ CmsRecipientInfo              = 36,
+            /* CMSG_UNPROTECTED_ATTR_PARAM                  */ UnprotectedAttr               = 37,
+            /* CMSG_SIGNER_CERT_ID_PARAM                    */ SignerCertId                  = 38,
+            /* CMSG_CMS_SIGNER_INFO_PARAM                   */ CmsSignerInfo                 = 39
+        }
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject
+         */
+        internal enum CertQueryContent
+        {
+            /*                                       */ None             =  0,
+            /* CERT_QUERY_CONTENT_CERT               */ Cert             =  1,
+            /* CERT_QUERY_CONTENT_CTL                */ Ctl              =  2,
+            /* CERT_QUERY_CONTENT_CRL                */ Crl              =  3,
+            /* CERT_QUERY_CONTENT_SERIALIZED_STORE   */ SerializedStore  =  4,
+            /* CERT_QUERY_CONTENT_SERIALIZED_CERT    */ SerializedCert   =  5,
+            /* CERT_QUERY_CONTENT_SERIALIZED_CTL     */ SerializedCtl    =  6,
+            /* CERT_QUERY_CONTENT_SERIALIZED_CRL     */ SerializedCrl    =  7,
+            /* CERT_QUERY_CONTENT_PKCS7_SIGNED       */ Pkcs7Signed      =  8,
+            /* CERT_QUERY_CONTENT_PKCS7_UNSIGNED     */ Pkcs7Unsigned    =  9,
+            /* CERT_QUERY_CONTENT_PKCS7_SIGNED_EMBED */ Pkcs7SignedEmbed = 10,
+            /* CERT_QUERY_CONTENT_PKCS10             */ Pkcs10           = 11,
+            /* CERT_QUERY_CONTENT_PFX                */ Pfx              = 12,
+            /* CERT_QUERY_CONTENT_CERT_PAIR          */ CertPair         = 13
+        }
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject
+         */
+        [Flags]
+        internal enum CertQueryContentFlag : uint
+        {
+            /* CERT_QUERY_CONTENT_FLAG_CERT               */ Cert             = 1 << CertQueryContent.Cert,
+            /* CERT_QUERY_CONTENT_FLAG_CTL                */ Ctl              = 1 << CertQueryContent.Ctl,
+            /* CERT_QUERY_CONTENT_FLAG_CRL                */ Crl              = 1 << CertQueryContent.Crl,
+            /* CERT_QUERY_CONTENT_FLAG_SERIALIZED_STORE   */ SerializedStore  = 1 << CertQueryContent.SerializedStore,
+            /* CERT_QUERY_CONTENT_FLAG_SERIALIZED_CERT    */ SerializedCert   = 1 << CertQueryContent.SerializedCert,
+            /* CERT_QUERY_CONTENT_FLAG_SERIALIZED_CTL     */ SerializedCtl    = 1 << CertQueryContent.SerializedCtl,
+            /* CERT_QUERY_CONTENT_FLAG_SERIALIZED_CRL     */ SerializedCrl    = 1 << CertQueryContent.SerializedCrl,
+            /* CERT_QUERY_CONTENT_FLAG_PKCS7_SIGNED       */ Pkcs7Signed      = 1 << CertQueryContent.Pkcs7Signed,
+            /* CERT_QUERY_CONTENT_FLAG_PKCS7_UNSIGNED     */ Pkcs7Unsigned    = 1 << CertQueryContent.Pkcs7Unsigned,
+            /* CERT_QUERY_CONTENT_FLAG_PKCS7_SIGNED_EMBED */ Pkcs7SignedEmbed = 1 << CertQueryContent.Pkcs7SignedEmbed,
+            /* CERT_QUERY_CONTENT_FLAG_PKCS10             */ Pkcs10           = 1 << CertQueryContent.Pkcs10,
+            /* CERT_QUERY_CONTENT_FLAG_PFX                */ Pfx              = 1 << CertQueryContent.Pfx,
+            /* CERT_QUERY_CONTENT_FLAG_CERT_PAIR          */ CertPair         = 1 << CertQueryContent.CertPair,
+            /* CERT_QUERY_CONTENT_FLAG_ALL                */ All              = Cert
+                                                                              | Ctl
+                                                                              | Crl
+                                                                              | SerializedStore
+                                                                              | SerializedCert
+                                                                              | SerializedCtl
+                                                                              | SerializedCrl
+                                                                              | Pkcs7Signed
+                                                                              | Pkcs7Unsigned
+                                                                              | Pkcs7SignedEmbed
+                                                                              | Pkcs10
+                                                                              | Pfx
+                                                                              | CertPair
+        }
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject
+         */
+        internal enum CertQueryFormat
+        {
+            /*                                         */ None               = 0,
+            /* CERT_QUERY_FORMAT_BINARY                */ Binary             = 1,
+            /* CERT_QUERY_FORMAT_BASE64_ENCODED        */ Base64Encoded      = 2,
+            /* CERT_QUERY_FORMAT_ASN_ASCII_HEX_ENCODED */ AsnAsciiHexEncoded = 3
+        }
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject
+         */
+        internal enum CertQueryFormatFlag : uint
+        {
+            /* CERT_QUERY_FORMAT_FLAG_BINARY                */ Binary             = 1 << CertQueryFormat.Binary,
+            /* CERT_QUERY_FORMAT_FLAG_BASE64_ENCODED        */ Base64Encoded      = 1 << CertQueryFormat.Base64Encoded,
+            /* CERT_QUERY_FORMAT_FLAG_ASN_ASCII_HEX_ENCODED */ AsnAsciiHexEncoded = 1 << CertQueryFormat.AsnAsciiHexEncoded,
+            /* CERT_QUERY_FORMAT_FLAG_ALL                   */ All                = Binary
+                                                                                  | Base64Encoded
+                                                                                  | AsnAsciiHexEncoded
+        }
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject
+         */
+        internal enum CertQueryObject
+        {
+            /*                        */ None = 0,
+            /* CERT_QUERY_OBJECT_FILE */ File = 1,
+            /* CERT_QUERY_OBJECT_BLOB */ Blob = 2
+        }
+
+        /**
          * DIGCF enumeration
          * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetclassdevsw
          */

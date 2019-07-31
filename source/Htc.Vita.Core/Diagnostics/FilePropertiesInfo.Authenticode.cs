@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.Pkcs;
 using Htc.Vita.Core.Interop;
 using Htc.Vita.Core.Log;
 
@@ -10,6 +12,131 @@ namespace Htc.Vita.Core.Diagnostics
     {
         internal static class Authenticode
         {
+            private const string OidRsaCounterSignature = "1.2.840.113549.1.9.6";
+            private const string OidRsaSigningTime = "1.2.840.113549.1.9.5";
+
+            internal static List<DateTime> GetTimestampList(FileInfo fileInfo)
+            {
+                var result = new List<DateTime>();
+                if (fileInfo == null || !fileInfo.Exists)
+                {
+                    return result;
+                }
+
+                Windows.CertEncoding certEncoding;
+                Windows.CertQueryContent certQueryContent;
+                Windows.CertQueryFormat certQueryFormat;
+                var certStore = IntPtr.Zero;
+                var cryptMsg = IntPtr.Zero;
+                var context = IntPtr.Zero;
+                var success = Windows.CryptQueryObject(
+                        Windows.CertQueryObject.File,
+                        Marshal.StringToHGlobalUni(fileInfo.FullName),
+                        Windows.CertQueryContentFlag.All,
+                        Windows.CertQueryFormatFlag.All,
+                        0,
+                        out certEncoding,
+                        out certQueryContent,
+                        out certQueryFormat,
+                        ref certStore,
+                        ref cryptMsg,
+                        ref context
+                );
+                if (!success)
+                {
+                    Logger.GetInstance(typeof(Authenticode)).Error($"Can not query crypt object for {fileInfo.FullName}, error code: {Marshal.GetLastWin32Error()}");
+                    return result;
+                }
+
+                var cbData = 0;
+                success = Windows.CryptMsgGetParam(
+                        cryptMsg,
+                        Windows.CertMessageParameterType.EncodedMessage,
+                        0,
+                        null,
+                        ref cbData
+                );
+                if (!success)
+                {
+                    Logger.GetInstance(typeof(Authenticode)).Error($"Can not get crypt message parameter size, error code: {Marshal.GetLastWin32Error()}");
+                    return result;
+                }
+
+                var data = new byte[cbData];
+                success = Windows.CryptMsgGetParam(
+                        cryptMsg,
+                        Windows.CertMessageParameterType.EncodedMessage,
+                        0,
+                        data,
+                        ref cbData
+                );
+                if (!success)
+                {
+                    Logger.GetInstance(typeof(Authenticode)).Error($"Can not get crypt message parameter, error code: {Marshal.GetLastWin32Error()}");
+                    return result;
+                }
+
+                try
+                {
+                    var signedCms = new SignedCms();
+                    signedCms.Decode(data);
+                    foreach (var signerInfo in signedCms.SignerInfos)
+                    {
+                        if (signerInfo == null)
+                        {
+                            continue;
+                        }
+
+                        foreach (var unsignedAttribute in signerInfo.UnsignedAttributes)
+                        {
+                            if (unsignedAttribute == null)
+                            {
+                                continue;
+                            }
+
+                            if (!OidRsaCounterSignature.Equals(unsignedAttribute.Oid.Value))
+                            {
+                                continue;
+                            }
+
+                            foreach (var counterSignerInfo in signerInfo.CounterSignerInfos)
+                            {
+                                if (counterSignerInfo == null)
+                                {
+                                    continue;
+                                }
+
+                                foreach (var signedAttribute in counterSignerInfo.SignedAttributes)
+                                {
+                                    if (!OidRsaSigningTime.Equals(signedAttribute.Oid.Value))
+                                    {
+                                        continue;
+                                    }
+
+                                    foreach (var value in signedAttribute.Values)
+                                    {
+                                        var pkcs9SigningTime = value as Pkcs9SigningTime;
+                                        if (pkcs9SigningTime == null)
+                                        {
+                                            continue;
+                                        }
+
+                                        result.Add(pkcs9SigningTime.SigningTime);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(Authenticode)).Error($"Can not parse timestamp: {e.Message}");
+                }
+
+                return result;
+            }
+
             internal static bool IsVerified(FileInfo fileInfo)
             {
                 if (fileInfo == null || !fileInfo.Exists)
