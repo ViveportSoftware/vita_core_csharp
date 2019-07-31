@@ -23,9 +23,9 @@ namespace Htc.Vita.Core.Diagnostics
                     return result;
                 }
 
-                var certContext = IntPtr.Zero;
-                var certStore = IntPtr.Zero;
-                var cryptMsg = IntPtr.Zero;
+                Windows.SafeCertContextHandle certContext = null;
+                Windows.SafeCertStoreHandle certStore = null;
+                Windows.SafeCryptMsgHandle cryptMsg = null;
                 byte[] encodedMessage = null;
                 try
                 {
@@ -41,9 +41,9 @@ namespace Htc.Vita.Core.Diagnostics
                             out certEncoding,
                             out certQueryContent,
                             out certQueryFormat,
-                            ref certStore,
-                            ref cryptMsg,
-                            ref certContext
+                            out certStore,
+                            out cryptMsg,
+                            out certContext
                     );
                     if (!success)
                     {
@@ -78,7 +78,6 @@ namespace Htc.Vita.Core.Diagnostics
                         Logger.GetInstance(typeof(Authenticode)).Error($"Can not get crypt message parameter, error code: {Marshal.GetLastWin32Error()}");
                         return result;
                     }
-
                 }
                 catch (Exception e)
                 {
@@ -86,21 +85,9 @@ namespace Htc.Vita.Core.Diagnostics
                 }
                 finally
                 {
-                    if (certContext != IntPtr.Zero)
-                    {
-                        Windows.CertFreeCertificateContext(certContext);
-                    }
-                    if (certStore != IntPtr.Zero)
-                    {
-                        Windows.CertCloseStore(
-                                certStore,
-                                Windows.CertCloseStoreFlag.Default
-                        );
-                    }
-                    if (cryptMsg != IntPtr.Zero)
-                    {
-                        Windows.CryptMsgClose(cryptMsg);
-                    }
+                    certContext?.Dispose();
+                    certStore?.Dispose();
+                    cryptMsg?.Dispose();
                 }
 
                 if (encodedMessage == null)

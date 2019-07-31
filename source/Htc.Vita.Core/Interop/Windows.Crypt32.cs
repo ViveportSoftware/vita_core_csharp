@@ -54,7 +54,7 @@ namespace Htc.Vita.Core.Interop
                 ExactSpelling = true,
                 SetLastError = true)]
         internal static extern bool CryptMsgGetParam(
-                /* _In_                                          HCRYPTMSG */ [In] IntPtr hCryptMsg,
+                /* _In_                                          HCRYPTMSG */ [In] SafeCryptMsgHandle hCryptMsg,
                 /* _In_                                          DWORD     */ [In] CertMessageParameterType dwParamType,
                 /* _In_                                          DWORD     */ [In] int dwIndex,
                 /* _Out_writes_bytes_to_opt_(*pcbData, *pcbData) void*     */ [In][Out] byte[] vData,
@@ -79,9 +79,9 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_opt_                     DWORD*       */ [Out] out CertEncoding pdwMsgAndCertEncodingType,
                 /* _Out_opt_                     DWORD*       */ [Out] out CertQueryContent pdwContentType,
                 /* _Out_opt_                     DWORD*       */ [Out] out CertQueryFormat pdwFormatType,
-                /* _Out_opt_                     HCERTSTORE*  */ [In][Out] ref IntPtr phCertStore,
-                /* _Out_opt_                     HCRYPTMSG*   */ [In][Out] ref IntPtr phMsg,
-                /* _Outptr_opt_result_maybenull_ const void** */ [In][Out] ref IntPtr ppvContext
+                /* _Out_opt_                     HCERTSTORE*  */ [Out] out SafeCertStoreHandle phCertStore,
+                /* _Out_opt_                     HCRYPTMSG*   */ [Out] out SafeCryptMsgHandle phMsg,
+                /* _Outptr_opt_result_maybenull_ const void** */ [Out] out SafeCertContextHandle ppvContext
         );
     }
 }
