@@ -23,63 +23,96 @@ namespace Htc.Vita.Core.Diagnostics
                     return result;
                 }
 
-                Windows.CertEncoding certEncoding;
-                Windows.CertQueryContent certQueryContent;
-                Windows.CertQueryFormat certQueryFormat;
+                var certContext = IntPtr.Zero;
                 var certStore = IntPtr.Zero;
                 var cryptMsg = IntPtr.Zero;
-                var context = IntPtr.Zero;
-                var success = Windows.CryptQueryObject(
-                        Windows.CertQueryObject.File,
-                        Marshal.StringToHGlobalUni(fileInfo.FullName),
-                        Windows.CertQueryContentFlag.All,
-                        Windows.CertQueryFormatFlag.All,
-                        0,
-                        out certEncoding,
-                        out certQueryContent,
-                        out certQueryFormat,
-                        ref certStore,
-                        ref cryptMsg,
-                        ref context
-                );
-                if (!success)
+                byte[] encodedMessage = null;
+                try
                 {
-                    Logger.GetInstance(typeof(Authenticode)).Error($"Can not query crypt object for {fileInfo.FullName}, error code: {Marshal.GetLastWin32Error()}");
-                    return result;
+                    Windows.CertEncoding certEncoding;
+                    Windows.CertQueryContent certQueryContent;
+                    Windows.CertQueryFormat certQueryFormat;
+                    var success = Windows.CryptQueryObject(
+                            Windows.CertQueryObject.File,
+                            Marshal.StringToHGlobalUni(fileInfo.FullName),
+                            Windows.CertQueryContentFlag.All,
+                            Windows.CertQueryFormatFlag.All,
+                            0,
+                            out certEncoding,
+                            out certQueryContent,
+                            out certQueryFormat,
+                            ref certStore,
+                            ref cryptMsg,
+                            ref certContext
+                    );
+                    if (!success)
+                    {
+                        Logger.GetInstance(typeof(Authenticode)).Error($"Can not query crypt object for {fileInfo.FullName}, error code: {Marshal.GetLastWin32Error()}");
+                        return result;
+                    }
+
+                    var cbData = 0;
+                    success = Windows.CryptMsgGetParam(
+                            cryptMsg,
+                            Windows.CertMessageParameterType.EncodedMessage,
+                            0,
+                            null,
+                            ref cbData
+                    );
+                    if (!success)
+                    {
+                        Logger.GetInstance(typeof(Authenticode)).Error($"Can not get crypt message parameter size, error code: {Marshal.GetLastWin32Error()}");
+                        return result;
+                    }
+
+                    encodedMessage = new byte[cbData];
+                    success = Windows.CryptMsgGetParam(
+                            cryptMsg,
+                            Windows.CertMessageParameterType.EncodedMessage,
+                            0,
+                            encodedMessage,
+                            ref cbData
+                    );
+                    if (!success)
+                    {
+                        Logger.GetInstance(typeof(Authenticode)).Error($"Can not get crypt message parameter, error code: {Marshal.GetLastWin32Error()}");
+                        return result;
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(Authenticode)).Error($"Can not extract encoded message. error: {e.Message}");
+                }
+                finally
+                {
+                    if (certContext != IntPtr.Zero)
+                    {
+                        Windows.CertFreeCertificateContext(certContext);
+                    }
+                    if (certStore != IntPtr.Zero)
+                    {
+                        Windows.CertCloseStore(
+                                certStore,
+                                Windows.CertCloseStoreFlag.Default
+                        );
+                    }
+                    if (cryptMsg != IntPtr.Zero)
+                    {
+                        Windows.CryptMsgClose(cryptMsg);
+                    }
                 }
 
-                var cbData = 0;
-                success = Windows.CryptMsgGetParam(
-                        cryptMsg,
-                        Windows.CertMessageParameterType.EncodedMessage,
-                        0,
-                        null,
-                        ref cbData
-                );
-                if (!success)
+                if (encodedMessage == null)
                 {
-                    Logger.GetInstance(typeof(Authenticode)).Error($"Can not get crypt message parameter size, error code: {Marshal.GetLastWin32Error()}");
-                    return result;
-                }
-
-                var data = new byte[cbData];
-                success = Windows.CryptMsgGetParam(
-                        cryptMsg,
-                        Windows.CertMessageParameterType.EncodedMessage,
-                        0,
-                        data,
-                        ref cbData
-                );
-                if (!success)
-                {
-                    Logger.GetInstance(typeof(Authenticode)).Error($"Can not get crypt message parameter, error code: {Marshal.GetLastWin32Error()}");
+                    Logger.GetInstance(typeof(Authenticode)).Error("Can not find available encoded message.");
                     return result;
                 }
 
                 try
                 {
                     var signedCms = new SignedCms();
-                    signedCms.Decode(data);
+                    signedCms.Decode(encodedMessage);
                     foreach (var signerInfo in signedCms.SignerInfos)
                     {
                         if (signerInfo == null)

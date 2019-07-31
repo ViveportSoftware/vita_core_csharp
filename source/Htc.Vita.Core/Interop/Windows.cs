@@ -19,6 +19,16 @@ namespace Htc.Vita.Core.Interop
         internal static readonly IntPtr /* WTS_CURRENT_SERVER_HANDLE */ WindowsTerminalServiceCurrentServerHandle = IntPtr.Zero;
 
         /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-certclosestore
+         */
+        internal enum CertCloseStoreFlag
+        {
+            /*                             */ Default =          0,
+            /* CERT_CLOSE_STORE_FORCE_FLAG */ Force   = 0x00000001,
+            /* CERT_CLOSE_STORE_CHECK_FLAG */ Check   = 0x00000002
+        }
+
+        /**
          * https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/privilege-constants
          */
         internal const string SeShutdownName = "SeShutdownPrivilege";

@@ -6,6 +6,46 @@ namespace Htc.Vita.Core.Interop
     internal static partial class Windows
     {
         /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-certfreecertificatecontext
+         */
+        [DllImport(Libraries.WindowsCrypt32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool CertFreeCertificateContext(
+                /* _In_opt_ PCCERT_CONTEXT */ [In] IntPtr pCertContext
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-certclosestore
+         */
+        [DllImport(Libraries.WindowsCrypt32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool CertCloseStore(
+                /* _In_opt_ HCERTSTORE */ [In] IntPtr hCertStore,
+                /* _In_     DWORD      */ [In] CertCloseStoreFlag dwFlags
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptmsgclose
+         */
+        [DllImport(Libraries.WindowsCrypt32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool CryptMsgClose(
+                /* _In_opt_ HCRYPTMSG */ [In] IntPtr hCryptMsg
+        );
+
+        /**
          * https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptmsggetparam
          */
         [DllImport(Libraries.WindowsCrypt32,
