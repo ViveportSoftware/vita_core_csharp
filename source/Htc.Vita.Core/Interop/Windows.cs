@@ -426,36 +426,36 @@ namespace Htc.Vita.Core.Interop
             /* IMAGE_FILE_MACHINE_MIPSFPU16   */ MipsFpu16  = 0x0466,
             /* IMAGE_FILE_MACHINE_AXP64       */ Axp64      = Alpha64,
             /* IMAGE_FILE_MACHINE_TRICORE     */ TriCore    = 0x0520,
-            /* IMAGE_FILE_MACHINE_CEF         */ Cef        = 0x0CEF,
-            /* IMAGE_FILE_MACHINE_EBC         */ Ebc        = 0x0EBC,
+            /* IMAGE_FILE_MACHINE_CEF         */ Cef        = 0x0cef,
+            /* IMAGE_FILE_MACHINE_EBC         */ Ebc        = 0x0ebc,
             /* IMAGE_FILE_MACHINE_AMD64       */ Amd64      = 0x8664,
             /* IMAGE_FILE_MACHINE_M32R        */ M32R       = 0x9041,
-            /* IMAGE_FILE_MACHINE_ARM64       */ Arm64      = 0xAA64,
-            /* IMAGE_FILE_MACHINE_CEE         */ Cee        = 0xC0EE
+            /* IMAGE_FILE_MACHINE_ARM64       */ Arm64      = 0xaa64,
+            /* IMAGE_FILE_MACHINE_CEE         */ Cee        = 0xc0ee
         }
 
-        internal enum NtStatus
+        internal enum NtStatus : uint
         {
-            /* STATUS_WAIT_0                       */ StatusWait0 = 0,
-            /* HIDP_STATUS_SUCCESS                 */ HidpStatusSuccess = 0x00110000,
-            /* HIDP_STATUS_NULL                    */ HidpStatusNull = unchecked((int)0x80110001),
-            /* HIDP_STATUS_INVALID_PREPARSED_DATA  */ HidpStatusInvalidPreparsedData = unchecked((int)0xc0110001),
-            /* HIDP_STATUS_INVALID_REPORT_TYPE     */ HidpStatusInvalidReportType = unchecked((int)0xc0110002),
-            /* HIDP_STATUS_INVALID_REPORT_LENGTH   */ HidpStatusInvalidReportLength = unchecked((int)0xc0110003),
-            /* HIDP_STATUS_USAGE_NOT_FOUND         */ HidpStatusUsageNotFound = unchecked((int)0xc0110004),
-            /* HIDP_STATUS_VALUE_OUT_OF_RANGE      */ HidpStatusValueOutOfRange = unchecked((int)0xc0110005),
-            /* HIDP_STATUS_BAD_LOG_PHY_VALUES      */ HidpStatusBadLogPhyValues = unchecked((int)0xc0110006),
-            /* HIDP_STATUS_BUFFER_TOO_SMALL        */ HidpStatusBufferTooSmall = unchecked((int)0xc0110007),
-            /* HIDP_STATUS_INTERNAL_ERROR          */ HidpStatusInternalError = unchecked((int)0xc0110008),
-            /* HIDP_STATUS_I8042_TRANS_UNKNOWN     */ HidpStatusI8042TransUnknown = unchecked((int)0xc0110009),
-            /* HIDP_STATUS_INCOMPATIBLE_REPORT_ID  */ HidpStatusIncompatibleReportId = unchecked((int)0xc011000a),
-            /* HIDP_STATUS_NOT_VALUE_ARRAY         */ HidpStatusNotValueArray = unchecked((int)0xc011000b),
-            /* HIDP_STATUS_IS_VALUE_ARRAY          */ HidpStatusIsValueArray = unchecked((int)0xc011000c),
-            /* HIDP_STATUS_DATA_INDEX_NOT_FOUND    */ HidpStatusDataIndexNotFound = unchecked((int)0xc011000d),
-            /* HIDP_STATUS_DATA_INDEX_OUT_OF_RANGE */ HidpStatusDataIndexOutOfRange = unchecked((int)0xc011000e),
-            /* HIDP_STATUS_BUTTON_NOT_PRESSED      */ HidpStatusButtonNotPressed = unchecked((int)0xc011000f),
-            /* HIDP_STATUS_REPORT_DOES_NOT_EXIST   */ HidpStatusReportDoesNotExist = unchecked((int)0xc0110010),
-            /* HIDP_STATUS_NOT_IMPLEMENTED         */ HidpStatusNotImplemented = unchecked((int)0xc0110020)
+            /* STATUS_WAIT_0                       */ StatusWait0                    =          0,
+            /* HIDP_STATUS_SUCCESS                 */ HidpStatusSuccess              = 0x00110000,
+            /* HIDP_STATUS_NULL                    */ HidpStatusNull                 = 0x80110001,
+            /* HIDP_STATUS_INVALID_PREPARSED_DATA  */ HidpStatusInvalidPreparsedData = 0xc0110001,
+            /* HIDP_STATUS_INVALID_REPORT_TYPE     */ HidpStatusInvalidReportType    = 0xc0110002,
+            /* HIDP_STATUS_INVALID_REPORT_LENGTH   */ HidpStatusInvalidReportLength  = 0xc0110003,
+            /* HIDP_STATUS_USAGE_NOT_FOUND         */ HidpStatusUsageNotFound        = 0xc0110004,
+            /* HIDP_STATUS_VALUE_OUT_OF_RANGE      */ HidpStatusValueOutOfRange      = 0xc0110005,
+            /* HIDP_STATUS_BAD_LOG_PHY_VALUES      */ HidpStatusBadLogPhyValues      = 0xc0110006,
+            /* HIDP_STATUS_BUFFER_TOO_SMALL        */ HidpStatusBufferTooSmall       = 0xc0110007,
+            /* HIDP_STATUS_INTERNAL_ERROR          */ HidpStatusInternalError        = 0xc0110008,
+            /* HIDP_STATUS_I8042_TRANS_UNKNOWN     */ HidpStatusI8042TransUnknown    = 0xc0110009,
+            /* HIDP_STATUS_INCOMPATIBLE_REPORT_ID  */ HidpStatusIncompatibleReportId = 0xc011000a,
+            /* HIDP_STATUS_NOT_VALUE_ARRAY         */ HidpStatusNotValueArray        = 0xc011000b,
+            /* HIDP_STATUS_IS_VALUE_ARRAY          */ HidpStatusIsValueArray         = 0xc011000c,
+            /* HIDP_STATUS_DATA_INDEX_NOT_FOUND    */ HidpStatusDataIndexNotFound    = 0xc011000d,
+            /* HIDP_STATUS_DATA_INDEX_OUT_OF_RANGE */ HidpStatusDataIndexOutOfRange  = 0xc011000e,
+            /* HIDP_STATUS_BUTTON_NOT_PRESSED      */ HidpStatusButtonNotPressed     = 0xc011000f,
+            /* HIDP_STATUS_REPORT_DOES_NOT_EXIST   */ HidpStatusReportDoesNotExist   = 0xc0110010,
+            /* HIDP_STATUS_NOT_IMPLEMENTED         */ HidpStatusNotImplemented       = 0xc0110020
         }
 
         /**
@@ -743,33 +743,33 @@ namespace Htc.Vita.Core.Interop
          * https://docs.microsoft.com/en-us/windows/desktop/api/shlobj_core/nf-shlobj_core-shchangenotify
          */
         [Flags]
-        internal enum ShellChangeNotifyEventId
+        internal enum ShellChangeNotifyEventId :uint
         {
-            /* SHCNE_RENAMEITEM       */ RenameItem = 0x00000001,
-            /* SHCNE_CREATE           */ Create = 0x00000002,
-            /* SHCNE_DELETE           */ Delete = 0x00000004,
-            /* SHCNE_MKDIR            */ MakeDirectory = 0x00000008,
-            /* SHCNE_RMDIR            */ RemoveDirectory = 0x00000010,
-            /* SHCNE_MEDIAINSERTED    */ MediaInserted = 0x00000020,
-            /* SHCNE_MEDIAREMOVED     */ MediaRemoved = 0x00000040,
-            /* SHCNE_DRIVEREMOVED     */ DriveRemoved = 0x00000080,
-            /* SHCNE_DRIVEADD         */ DriveAdd = 0x00000100,
-            /* SHCNE_NETSHARE         */ NetShare = 0x00000200,
-            /* SHCNE_NETUNSHARE       */ NetUnshare = 0x00000400,
-            /* SHCNE_ATTRIBUTES       */ Attributes = 0x00000800,
-            /* SHCNE_UPDATEDIR        */ UpdateDirectory = 0x00001000,
-            /* SHCNE_UPDATEITEM       */ UpdateItem = 0x00002000,
-            /* SHCNE_SERVERDISCONNECT */ ServerDisconnect = 0x00004000,
-            /* SHCNE_UPDATEIMAGE      */ UpdateImage = 0x00008000,
-            /* SHCNE_DRIVEADDGUI      */ DriveAddGui = 0x00010000,
-            /* SHCNE_RENAMEFOLDER     */ RenameFolder = 0x00020000,
-            /* SHCNE_FREESPACE        */ FreeSpace = 0x00040000,
-            /* SHCNE_EXTENDED_EVENT   */ ExtendedEvent = 0x04000000,
+            /* SHCNE_RENAMEITEM       */ RenameItem         = 0x00000001,
+            /* SHCNE_CREATE           */ Create             = 0x00000002,
+            /* SHCNE_DELETE           */ Delete             = 0x00000004,
+            /* SHCNE_MKDIR            */ MakeDirectory      = 0x00000008,
+            /* SHCNE_RMDIR            */ RemoveDirectory    = 0x00000010,
+            /* SHCNE_MEDIAINSERTED    */ MediaInserted      = 0x00000020,
+            /* SHCNE_MEDIAREMOVED     */ MediaRemoved       = 0x00000040,
+            /* SHCNE_DRIVEREMOVED     */ DriveRemoved       = 0x00000080,
+            /* SHCNE_DRIVEADD         */ DriveAdd           = 0x00000100,
+            /* SHCNE_NETSHARE         */ NetShare           = 0x00000200,
+            /* SHCNE_NETUNSHARE       */ NetUnshare         = 0x00000400,
+            /* SHCNE_ATTRIBUTES       */ Attributes         = 0x00000800,
+            /* SHCNE_UPDATEDIR        */ UpdateDirectory    = 0x00001000,
+            /* SHCNE_UPDATEITEM       */ UpdateItem         = 0x00002000,
+            /* SHCNE_SERVERDISCONNECT */ ServerDisconnect   = 0x00004000,
+            /* SHCNE_UPDATEIMAGE      */ UpdateImage        = 0x00008000,
+            /* SHCNE_DRIVEADDGUI      */ DriveAddGui        = 0x00010000,
+            /* SHCNE_RENAMEFOLDER     */ RenameFolder       = 0x00020000,
+            /* SHCNE_FREESPACE        */ FreeSpace          = 0x00040000,
+            /* SHCNE_EXTENDED_EVENT   */ ExtendedEvent      = 0x04000000,
             /* SHCNE_ASSOCCHANGED     */ AssociationChanged = 0x08000000,
-            /* SHCNE_DISKEVENTS       */ DiskEvents = 0x0002381F,
-            /* SHCNE_GLOBALEVENTS     */ GlobalEvents = 0x0C0581E0,
-            /* SHCNE_ALLEVENTS        */ AllEvents = 0x7FFFFFFF,
-            /* SHCNE_INTERRUPT        */ Interrupt = unchecked((int) 0x80000000)
+            /* SHCNE_DISKEVENTS       */ DiskEvents         = 0x0002381f,
+            /* SHCNE_GLOBALEVENTS     */ GlobalEvents       = 0x0c0581e0,
+            /* SHCNE_ALLEVENTS        */ AllEvents          = 0x7fffffff,
+            /* SHCNE_INTERRUPT        */ Interrupt          = 0x80000000
         }
 
         /**
@@ -874,16 +874,16 @@ namespace Htc.Vita.Core.Interop
          */
         internal enum SidType
         {
-            /* SidTypeUser           */ User = 1,
-            /* SidTypeGroup          */ Group,
-            /* SidTypeDomain         */ Domain,
-            /* SidTypeAlias          */ Alias,
-            /* SidTypeWellKnownGroup */ WellKnownGroup,
-            /* SidTypeDeletedAccount */ DeletedAccount,
-            /* SidTypeInvalid        */ Invalid,
-            /* SidTypeUnknown        */ Unknown,
-            /* SidTypeComputer       */ Computer,
-            /* SidTypeLabel          */ Label
+            /* SidTypeUser           */ User           =  1,
+            /* SidTypeGroup          */ Group          =  2,
+            /* SidTypeDomain         */ Domain         =  3,
+            /* SidTypeAlias          */ Alias          =  4,
+            /* SidTypeWellKnownGroup */ WellKnownGroup =  5,
+            /* SidTypeDeletedAccount */ DeletedAccount =  6,
+            /* SidTypeInvalid        */ Invalid        =  7,
+            /* SidTypeUnknown        */ Unknown        =  8,
+            /* SidTypeComputer       */ Computer       =  9,
+            /* SidTypeLabel          */ Label          = 10
         }
 
         /**
@@ -1002,7 +1002,7 @@ namespace Htc.Vita.Core.Interop
         internal enum TokenType : uint
         {
             /* TokenPrimary       */ TokenPrimary       = 1,
-            /* TokenImpersonation */ TokenImpersonation
+            /* TokenImpersonation */ TokenImpersonation = 2
         }
 
         /**
@@ -1079,10 +1079,10 @@ namespace Htc.Vita.Core.Interop
         internal enum WinTrustDataChoice : uint
         {
             /* WTD_CHOICE_FILE    */ File    = 1,
-            /* WTD_CHOICE_CATALOG */ Catalog,
-            /* WTD_CHOICE_BLOB    */ Blob,
-            /* WTD_CHOICE_SIGNER  */ Signer,
-            /* WTD_CHOICE_CERT    */ Cert
+            /* WTD_CHOICE_CATALOG */ Catalog = 2,
+            /* WTD_CHOICE_BLOB    */ Blob    = 3,
+            /* WTD_CHOICE_SIGNER  */ Signer  = 4,
+            /* WTD_CHOICE_CERT    */ Cert    = 5
         }
 
         /**
@@ -1138,9 +1138,9 @@ namespace Htc.Vita.Core.Interop
         internal enum WinTrustDataUI : uint
         {
             /* WTD_UI_ALL    */ All    = 1,
-            /* WTD_UI_NONE   */ None,
-            /* WTD_UI_NOBAD  */ NoBad,
-            /* WTD_UI_NOGOOD */ NoGood
+            /* WTD_UI_NONE   */ None   = 2,
+            /* WTD_UI_NOBAD  */ NoBad  = 3,
+            /* WTD_UI_NOGOOD */ NoGood = 4
         }
 
         /**
