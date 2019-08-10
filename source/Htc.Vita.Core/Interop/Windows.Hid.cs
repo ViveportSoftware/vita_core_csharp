@@ -20,20 +20,6 @@ namespace Htc.Vita.Core.Interop
                 IntPtr preparsedData
         );
 
-
-        /**
-         * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidpi/nf-hidpi-hidp_getcaps
-         */
-        [DllImport(Libraries.WindowsHid,
-                CallingConvention = CallingConvention.Winapi,
-                CharSet = CharSet.Unicode,
-                ExactSpelling = true,
-                SetLastError = true)]
-        internal static extern NtStatus HidP_GetCaps(
-                /* _In_  PHIDP_PREPARSED_DATA */ [In] IntPtr preparsedData,
-                /* _Out_ PHIDP_CAPS           */ [In][Out] ref HidDeviceCapability capabilities
-        );
-
         /**
          * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getfeature
          */
@@ -59,6 +45,22 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         internal static extern void HidD_GetHidGuid(
                 /* _Out_ LPGUID */ [In][Out] ref Guid hidGuid
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getindexedstring
+         */
+        [DllImport(Libraries.WindowsHid,
+            CallingConvention = CallingConvention.Winapi,
+            CharSet = CharSet.Unicode,
+            ExactSpelling = true,
+            SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool HidD_GetIndexedString(
+                /* _In_  HANDLE */ [In] SafeFileHandle hidDeviceObject,
+                /* _In_  ULONG  */ [In] uint stringIndex,
+                /* _Out_ PVOID  */ [In][Out] StringBuilder buffer,
+                /* _In_  ULONG  */ [In] uint bufferLength
         );
 
         /**
@@ -118,6 +120,19 @@ namespace Htc.Vita.Core.Interop
                 /* _In_  HANDLE */ [In] SafeFileHandle hidDeviceObject,
                 /* _Out_ PVOID  */ [In][Out] StringBuilder buffer,
                 /* _In_  ULONG  */ [In] uint bufferLength
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidpi/nf-hidpi-hidp_getcaps
+         */
+        [DllImport(Libraries.WindowsHid,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern NtStatus HidP_GetCaps(
+                /* _In_  PHIDP_PREPARSED_DATA */ [In] IntPtr preparsedData,
+                /* _Out_ PHIDP_CAPS           */ [In][Out] ref HidDeviceCapability capabilities
         );
     }
 }

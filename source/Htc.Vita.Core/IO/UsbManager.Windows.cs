@@ -100,10 +100,14 @@ namespace Htc.Vita.Core.IO
                                         ref deviceInfoData,
                                         Interop.Windows.SetupDeviceRegistryProperty.DeviceDesc
                                 ),
-                                Manufacturer = GetHidDeviceManufacturer(devicePath),
-                                Product = GetHidDeviceProduct(devicePath),
-                                SerialNumber = GetHidDeviceSerialNumber(devicePath)
+                                Manufacturer = GetHidDeviceIndexString(devicePath, 1),
+                                Product = GetHidDeviceIndexString(devicePath, 2),
+                                SerialNumber = GetHidDeviceIndexString(devicePath, 3)
                         };
+                        if (string.IsNullOrWhiteSpace(deviceInfo.Manufacturer))
+                        {
+                            deviceInfo.Manufacturer = GetHidDeviceManufacturer(devicePath);
+                        }
                         if (string.IsNullOrWhiteSpace(deviceInfo.Manufacturer))
                         {
                             deviceInfo.Manufacturer = GetUsbDeviceStringProperty(
@@ -111,6 +115,14 @@ namespace Htc.Vita.Core.IO
                                     ref deviceInfoData,
                                     Interop.Windows.SetupDeviceRegistryProperty.Mfg
                             );
+                        }
+                        if (string.IsNullOrWhiteSpace(deviceInfo.Product))
+                        {
+                            deviceInfo.Product = GetHidDeviceProduct(devicePath);
+                        }
+                        if (string.IsNullOrWhiteSpace(deviceInfo.SerialNumber))
+                        {
+                            deviceInfo.SerialNumber = GetHidDeviceSerialNumber(devicePath);
                         }
                         var hardwareIds = GetUsbDeviceMultiStringProperty(
                                 deviceInfoSetHandle,
@@ -140,6 +152,74 @@ namespace Htc.Vita.Core.IO
                     }
 
                     return deviceInfos;
+                }
+            }
+
+            private static string GetHidDeviceIndexString(string devicePath, uint index)
+            {
+                if (string.IsNullOrWhiteSpace(devicePath))
+                {
+                    return string.Empty;
+                }
+
+                var result = string.Empty;
+                using (var deviceHandle = Interop.Windows.CreateFileW(
+                        devicePath,
+                        Interop.Windows.GenericAccessRight.Read | Interop.Windows.GenericAccessRight.Write,
+                        Interop.Windows.FileShare.Read | Interop.Windows.FileShare.Write,
+                        IntPtr.Zero,
+                        Interop.Windows.FileCreationDisposition.OpenExisting,
+                        Interop.Windows.FileAttributeFlag.FlagOverlapped,
+                        IntPtr.Zero
+                ))
+                {
+                    if (deviceHandle == null || deviceHandle.IsInvalid)
+                    {
+                        return result;
+                    }
+
+                    SpinWait.SpinUntil(() => false, 1);
+
+                    var buffer = new StringBuilder(126);
+                    var success = Interop.Windows.HidD_GetIndexedString(
+                            deviceHandle,
+                            index,
+                            buffer,
+                            (uint)buffer.Capacity
+                    );
+                    if (success)
+                    {
+                        result = buffer.ToString();
+                    }
+                    else
+                    {
+                        var win32Error = Marshal.GetLastWin32Error();
+                        if (win32Error == (int)Interop.Windows.Error.FileNotFound)
+                        {
+                            Logger.GetInstance(typeof(Windows)).Debug($"The file on the device \"{devicePath}\" is not found");
+                        }
+                        if (win32Error == (int)Interop.Windows.Error.GenFailure)
+                        {
+                            Logger.GetInstance(typeof(Windows)).Debug($"The device \"{devicePath}\" is not functioning");
+                        }
+                        else if (win32Error == (int)Interop.Windows.Error.NotSupported)
+                        {
+                            Logger.GetInstance(typeof(Windows)).Debug($"The device \"{devicePath}\" does not support to get index string");
+                        }
+                        else if (win32Error == (int)Interop.Windows.Error.InvalidParameter)
+                        {
+                            Logger.GetInstance(typeof(Windows)).Debug($"Can not get USB HID index string with invalid parameter on the device \"{devicePath}\"");
+                        }
+                        else if (win32Error == (int)Interop.Windows.Error.DeviceNotConnected)
+                        {
+                            Logger.GetInstance(typeof(Windows)).Debug($"The device \"{devicePath}\" is not connected");
+                        }
+                        else
+                        {
+                            Logger.GetInstance(typeof(Windows)).Error($"Can not get USB HID index string on the device \"{devicePath}\", error code: {win32Error}");
+                        }
+                    }
+                    return result;
                 }
             }
 
@@ -363,7 +443,7 @@ namespace Htc.Vita.Core.IO
                 {
                     if (deviceHandle == null || deviceHandle.IsInvalid)
                     {
-                        Logger.GetInstance(typeof(Windows)).Error($"Can not get valid device handle for path: {devicePath}");
+                        Logger.GetInstance(typeof(Windows)).Debug($"Can not get valid device handle for path: {devicePath}");
                         return null;
                     }
 
