@@ -108,11 +108,13 @@ namespace Htc.Vita.Core.IO
 
                         if (string.IsNullOrWhiteSpace(devicePath))
                         {
+                            deviceIndex++;
                             continue;
                         }
                         if (!devicePath.Contains("VID_") && !devicePath.Contains("vid_"))
                         {
                             Logger.GetInstance(typeof(Windows)).Error($"Can not get valid HID device path: {devicePath}");
+                            deviceIndex++;
                             continue;
                         }
 
@@ -620,11 +622,13 @@ namespace Htc.Vita.Core.IO
 
                         if (string.IsNullOrWhiteSpace(devicePath))
                         {
+                            deviceIndex++;
                             continue;
                         }
                         if (!devicePath.Contains("VID_") && !devicePath.Contains("vid_"))
                         {
                             Logger.GetInstance(typeof(Windows)).Error($"Can not get valid USB device path: {devicePath}");
+                            deviceIndex++;
                             continue;
                         }
 
