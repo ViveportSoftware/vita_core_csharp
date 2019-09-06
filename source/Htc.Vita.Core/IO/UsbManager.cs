@@ -5,6 +5,8 @@ namespace Htc.Vita.Core.IO
 {
     public static partial class UsbManager
     {
+        private static readonly object InstancesLock = new object();
+
         public static List<DeviceInfo> GetHidDevices()
         {
             if (!Platform.IsWindows)
@@ -12,7 +14,10 @@ namespace Htc.Vita.Core.IO
                 return new List<DeviceInfo>();
             }
 
-            return Windows.GetHidDevicesInPlatform();
+            lock (InstancesLock)
+            {
+                return Windows.GetHidDevicesInPlatform();
+            }
         }
 
         public static byte[] GetHidFeatureReport(string devicePath, byte reportId)
@@ -22,7 +27,10 @@ namespace Htc.Vita.Core.IO
                 return null;
             }
 
-            return Windows.GetHidFeatureReportInPlatform(devicePath, reportId);
+            lock (InstancesLock)
+            {
+                return Windows.GetHidFeatureReportInPlatform(devicePath, reportId);
+            }
         }
 
         public static List<DeviceInfo> GetUsbDevices()
@@ -32,7 +40,10 @@ namespace Htc.Vita.Core.IO
                 return new List<DeviceInfo>();
             }
 
-            return Windows.GetUsbDevicesInPlatform();
+            lock (InstancesLock)
+            {
+                return Windows.GetUsbDevicesInPlatform();
+            }
         }
     }
 }

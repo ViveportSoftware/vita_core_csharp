@@ -92,6 +92,16 @@ namespace Htc.Vita.Core.IO
                         var devicePath = Marshal.PtrToStringUni(deviceInterfaceDetailData + 4);
                         Marshal.FreeHGlobal(deviceInterfaceDetailData);
 
+                        if (string.IsNullOrWhiteSpace(devicePath))
+                        {
+                            continue;
+                        }
+                        if (!devicePath.Contains("VID_") && !devicePath.Contains("vid_"))
+                        {
+                            Logger.GetInstance(typeof(Windows)).Error($"Can not get valid HID device path: {devicePath}");
+                            continue;
+                        }
+
                         var deviceInfo = new DeviceInfo
                         {
                                 Path = devicePath,
@@ -198,7 +208,7 @@ namespace Htc.Vita.Core.IO
                         {
                             Logger.GetInstance(typeof(Windows)).Debug($"The file on the device \"{devicePath}\" is not found");
                         }
-                        if (win32Error == (int)Interop.Windows.Error.GenFailure)
+                        else if (win32Error == (int)Interop.Windows.Error.GenFailure)
                         {
                             Logger.GetInstance(typeof(Windows)).Debug($"The device \"{devicePath}\" is not functioning");
                         }
@@ -583,6 +593,16 @@ namespace Htc.Vita.Core.IO
 
                         var devicePath = Marshal.PtrToStringUni(deviceInterfaceDetailData + 4);
                         Marshal.FreeHGlobal(deviceInterfaceDetailData);
+
+                        if (string.IsNullOrWhiteSpace(devicePath))
+                        {
+                            continue;
+                        }
+                        if (!devicePath.Contains("VID_") && !devicePath.Contains("vid_"))
+                        {
+                            Logger.GetInstance(typeof(Windows)).Error($"Can not get valid USB device path: {devicePath}");
+                            continue;
+                        }
 
                         var deviceInfo = new DeviceInfo
                         {
