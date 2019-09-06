@@ -292,7 +292,7 @@ namespace Htc.Vita.Core.IO
                         {
                             Logger.GetInstance(typeof(Windows)).Debug($"The file on the device \"{devicePath}\" is not found");
                         }
-                        if (win32Error == (int)Interop.Windows.Error.GenFailure)
+                        else if (win32Error == (int)Interop.Windows.Error.GenFailure)
                         {
                             Logger.GetInstance(typeof(Windows)).Debug($"The device \"{devicePath}\" is not functioning");
                         }
@@ -359,7 +359,7 @@ namespace Htc.Vita.Core.IO
                         {
                             Logger.GetInstance(typeof(Windows)).Debug($"The file on the device \"{devicePath}\" is not found");
                         }
-                        if (win32Error == (int)Interop.Windows.Error.GenFailure)
+                        else if (win32Error == (int)Interop.Windows.Error.GenFailure)
                         {
                             Logger.GetInstance(typeof(Windows)).Debug($"The device \"{devicePath}\" is not functioning");
                         }
@@ -426,7 +426,7 @@ namespace Htc.Vita.Core.IO
                         {
                             Logger.GetInstance(typeof(Windows)).Debug($"The file on the device \"{devicePath}\" is not found");
                         }
-                        if (win32Error == (int)Interop.Windows.Error.GenFailure)
+                        else if (win32Error == (int)Interop.Windows.Error.GenFailure)
                         {
                             Logger.GetInstance(typeof(Windows)).Debug($"The device \"{devicePath}\" is not functioning");
                         }
