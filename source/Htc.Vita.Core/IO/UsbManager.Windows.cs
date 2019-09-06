@@ -12,8 +12,22 @@ namespace Htc.Vita.Core.IO
     {
         internal static class Windows
         {
+            private const string DeviceListMapKeyHid = "hid";
+            private const string DeviceListMapKeyUsb = "usb";
+
+            private static readonly Dictionary<string, KeyValuePair<DateTime, List<DeviceInfo>>> DeviceListMap = new Dictionary<string, KeyValuePair<DateTime, List<DeviceInfo>>>();
+
             internal static List<DeviceInfo> GetHidDevicesInPlatform()
             {
+                if (DeviceListMap.ContainsKey(DeviceListMapKeyHid))
+                {
+                    var pair = DeviceListMap[DeviceListMapKeyHid];
+                    if ((DateTime.UtcNow - pair.Key).Duration() < TimeSpan.FromSeconds(5))
+                    {
+                        return pair.Value;
+                    }
+                }
+
                 var deviceInfos = new List<DeviceInfo>();
                 var classGuid = GetHidGuid();
                 using (var deviceInfoSetHandle = Interop.Windows.SetupDiGetClassDevsW(
@@ -161,6 +175,7 @@ namespace Htc.Vita.Core.IO
                         deviceIndex++;
                     }
 
+                    DeviceListMap[DeviceListMapKeyHid] = new KeyValuePair<DateTime, List<DeviceInfo>>(DateTime.UtcNow, deviceInfos);
                     return deviceInfos;
                 }
             }
@@ -516,6 +531,15 @@ namespace Htc.Vita.Core.IO
 
             internal static List<DeviceInfo> GetUsbDevicesInPlatform()
             {
+                if (DeviceListMap.ContainsKey(DeviceListMapKeyUsb))
+                {
+                    var pair = DeviceListMap[DeviceListMapKeyUsb];
+                    if ((DateTime.UtcNow - pair.Key).Duration() < TimeSpan.FromSeconds(5))
+                    {
+                        return pair.Value;
+                    }
+                }
+
                 var deviceInfos = new List<DeviceInfo>();
                 var classGuid = GetUsbGuid();
                 using (var deviceInfoSetHandle = Interop.Windows.SetupDiGetClassDevsW(
@@ -646,6 +670,7 @@ namespace Htc.Vita.Core.IO
                         deviceIndex++;
                     }
 
+                    DeviceListMap[DeviceListMapKeyUsb] = new KeyValuePair<DateTime, List<DeviceInfo>>(DateTime.UtcNow, deviceInfos);
                     return deviceInfos;
                 }
             }
