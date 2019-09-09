@@ -182,9 +182,30 @@ namespace Htc.Vita.Core.IO
                 }
             }
 
+            private static bool IsInDeviceWhiteList(string devicePath)
+            {
+                if (string.IsNullOrWhiteSpace(devicePath))
+                {
+                    return false;
+                }
+
+                var target = devicePath.ToLowerInvariant();
+                if (target.Contains("vid_28de"))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
             private static string GetHidDeviceIndexString(string devicePath, uint index)
             {
                 if (string.IsNullOrWhiteSpace(devicePath))
+                {
+                    return string.Empty;
+                }
+
+                if (!IsInDeviceWhiteList(devicePath))
                 {
                     return string.Empty;
                 }
