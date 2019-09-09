@@ -12,8 +12,22 @@ namespace Htc.Vita.Core.IO
     {
         internal static class Windows
         {
+            private const string DeviceListMapKeyHid = "hid";
+            private const string DeviceListMapKeyUsb = "usb";
+
+            private static readonly Dictionary<string, KeyValuePair<DateTime, List<DeviceInfo>>> DeviceListMap = new Dictionary<string, KeyValuePair<DateTime, List<DeviceInfo>>>();
+
             internal static List<DeviceInfo> GetHidDevicesInPlatform()
             {
+                if (DeviceListMap.ContainsKey(DeviceListMapKeyHid))
+                {
+                    var pair = DeviceListMap[DeviceListMapKeyHid];
+                    if ((DateTime.UtcNow - pair.Key).Duration() < TimeSpan.FromSeconds(5))
+                    {
+                        return pair.Value;
+                    }
+                }
+
                 var deviceInfos = new List<DeviceInfo>();
                 var classGuid = GetHidGuid();
                 using (var deviceInfoSetHandle = Interop.Windows.SetupDiGetClassDevsW(
@@ -92,6 +106,18 @@ namespace Htc.Vita.Core.IO
                         var devicePath = Marshal.PtrToStringUni(deviceInterfaceDetailData + 4);
                         Marshal.FreeHGlobal(deviceInterfaceDetailData);
 
+                        if (string.IsNullOrWhiteSpace(devicePath))
+                        {
+                            deviceIndex++;
+                            continue;
+                        }
+                        if (!devicePath.Contains("VID_") && !devicePath.Contains("vid_"))
+                        {
+                            Logger.GetInstance(typeof(Windows)).Error($"Can not get valid HID device path: {devicePath}");
+                            deviceIndex++;
+                            continue;
+                        }
+
                         var deviceInfo = new DeviceInfo
                         {
                                 Path = devicePath,
@@ -151,13 +177,35 @@ namespace Htc.Vita.Core.IO
                         deviceIndex++;
                     }
 
+                    DeviceListMap[DeviceListMapKeyHid] = new KeyValuePair<DateTime, List<DeviceInfo>>(DateTime.UtcNow, deviceInfos);
                     return deviceInfos;
                 }
+            }
+
+            private static bool IsInDeviceWhiteList(string devicePath)
+            {
+                if (string.IsNullOrWhiteSpace(devicePath))
+                {
+                    return false;
+                }
+
+                var target = devicePath.ToLowerInvariant();
+                if (target.Contains("vid_28de"))
+                {
+                    return true;
+                }
+
+                return false;
             }
 
             private static string GetHidDeviceIndexString(string devicePath, uint index)
             {
                 if (string.IsNullOrWhiteSpace(devicePath))
+                {
+                    return string.Empty;
+                }
+
+                if (!IsInDeviceWhiteList(devicePath))
                 {
                     return string.Empty;
                 }
@@ -198,7 +246,7 @@ namespace Htc.Vita.Core.IO
                         {
                             Logger.GetInstance(typeof(Windows)).Debug($"The file on the device \"{devicePath}\" is not found");
                         }
-                        if (win32Error == (int)Interop.Windows.Error.GenFailure)
+                        else if (win32Error == (int)Interop.Windows.Error.GenFailure)
                         {
                             Logger.GetInstance(typeof(Windows)).Debug($"The device \"{devicePath}\" is not functioning");
                         }
@@ -265,7 +313,7 @@ namespace Htc.Vita.Core.IO
                         {
                             Logger.GetInstance(typeof(Windows)).Debug($"The file on the device \"{devicePath}\" is not found");
                         }
-                        if (win32Error == (int)Interop.Windows.Error.GenFailure)
+                        else if (win32Error == (int)Interop.Windows.Error.GenFailure)
                         {
                             Logger.GetInstance(typeof(Windows)).Debug($"The device \"{devicePath}\" is not functioning");
                         }
@@ -332,7 +380,7 @@ namespace Htc.Vita.Core.IO
                         {
                             Logger.GetInstance(typeof(Windows)).Debug($"The file on the device \"{devicePath}\" is not found");
                         }
-                        if (win32Error == (int)Interop.Windows.Error.GenFailure)
+                        else if (win32Error == (int)Interop.Windows.Error.GenFailure)
                         {
                             Logger.GetInstance(typeof(Windows)).Debug($"The device \"{devicePath}\" is not functioning");
                         }
@@ -399,7 +447,7 @@ namespace Htc.Vita.Core.IO
                         {
                             Logger.GetInstance(typeof(Windows)).Debug($"The file on the device \"{devicePath}\" is not found");
                         }
-                        if (win32Error == (int)Interop.Windows.Error.GenFailure)
+                        else if (win32Error == (int)Interop.Windows.Error.GenFailure)
                         {
                             Logger.GetInstance(typeof(Windows)).Debug($"The device \"{devicePath}\" is not functioning");
                         }
@@ -506,6 +554,15 @@ namespace Htc.Vita.Core.IO
 
             internal static List<DeviceInfo> GetUsbDevicesInPlatform()
             {
+                if (DeviceListMap.ContainsKey(DeviceListMapKeyUsb))
+                {
+                    var pair = DeviceListMap[DeviceListMapKeyUsb];
+                    if ((DateTime.UtcNow - pair.Key).Duration() < TimeSpan.FromSeconds(5))
+                    {
+                        return pair.Value;
+                    }
+                }
+
                 var deviceInfos = new List<DeviceInfo>();
                 var classGuid = GetUsbGuid();
                 using (var deviceInfoSetHandle = Interop.Windows.SetupDiGetClassDevsW(
@@ -584,6 +641,18 @@ namespace Htc.Vita.Core.IO
                         var devicePath = Marshal.PtrToStringUni(deviceInterfaceDetailData + 4);
                         Marshal.FreeHGlobal(deviceInterfaceDetailData);
 
+                        if (string.IsNullOrWhiteSpace(devicePath))
+                        {
+                            deviceIndex++;
+                            continue;
+                        }
+                        if (!devicePath.Contains("VID_") && !devicePath.Contains("vid_"))
+                        {
+                            Logger.GetInstance(typeof(Windows)).Error($"Can not get valid USB device path: {devicePath}");
+                            deviceIndex++;
+                            continue;
+                        }
+
                         var deviceInfo = new DeviceInfo
                         {
                                 Path = devicePath,
@@ -626,6 +695,7 @@ namespace Htc.Vita.Core.IO
                         deviceIndex++;
                     }
 
+                    DeviceListMap[DeviceListMapKeyUsb] = new KeyValuePair<DateTime, List<DeviceInfo>>(DateTime.UtcNow, deviceInfos);
                     return deviceInfos;
                 }
             }
