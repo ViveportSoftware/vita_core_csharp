@@ -30,7 +30,7 @@ namespace Htc.Vita.Core.Runtime
 
             internal static void ExitInPlatform(ExitType exitType)
             {
-                using (var processHandle = new Interop.Windows.SafeProcessHandle(Process.GetCurrentProcess()))
+                using (var processHandle = new Interop.Windows.SafeProcessHandle(Process.GetCurrentProcess(), false))
                 {
                     Interop.Windows.SafeTokenHandle tokenHandle;
                     var success = Interop.Windows.OpenProcessToken(
