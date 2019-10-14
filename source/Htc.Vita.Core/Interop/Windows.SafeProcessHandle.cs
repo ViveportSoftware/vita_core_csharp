@@ -17,7 +17,7 @@ namespace Htc.Vita.Core.Interop
                 SetHandle(handle);
             }
 
-            internal SafeProcessHandle(Process process) : base(true)
+            internal SafeProcessHandle(Process process, bool ownsHandle) : base(ownsHandle)
             {
                 SetHandle(process.Handle);
             }

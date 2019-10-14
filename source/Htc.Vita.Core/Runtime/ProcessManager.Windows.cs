@@ -93,7 +93,7 @@ namespace Htc.Vita.Core.Runtime
                         }
                         catch (Win32Exception)
                         {
-                            using (var processHandle = new Interop.Windows.SafeProcessHandle(clientProcess))
+                            using (var processHandle = new Interop.Windows.SafeProcessHandle(clientProcess, false))
                             {
                                 var bufferSize = 256;
                                 while (true)
@@ -155,7 +155,7 @@ namespace Htc.Vita.Core.Runtime
                         return false;
                     }
 
-                    using (var processHandle = new Interop.Windows.SafeProcessHandle(process))
+                    using (var processHandle = new Interop.Windows.SafeProcessHandle(process, false))
                     {
                         Interop.Windows.SafeTokenHandle tokenHandle;
                         var success = Interop.Windows.OpenProcessToken(

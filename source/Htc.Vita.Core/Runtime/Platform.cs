@@ -176,7 +176,7 @@ namespace Htc.Vita.Core.Runtime
 
             try
             {
-                using (var processHandle = new Interop.Windows.SafeProcessHandle(Process.GetCurrentProcess()))
+                using (var processHandle = new Interop.Windows.SafeProcessHandle(Process.GetCurrentProcess(), false))
                 {
                     var processMachine = Interop.Windows.ImageFileMachine.Unknown;
                     var nativeMachine = Interop.Windows.ImageFileMachine.Unknown;
@@ -299,7 +299,7 @@ namespace Htc.Vita.Core.Runtime
             }
             try
             {
-                using (var processHandle = new Interop.Windows.SafeProcessHandle(Process.GetCurrentProcess()))
+                using (var processHandle = new Interop.Windows.SafeProcessHandle(Process.GetCurrentProcess(), false))
                 {
                     var isWow64 = false;
                     var success = Interop.Windows.IsWow64Process(
