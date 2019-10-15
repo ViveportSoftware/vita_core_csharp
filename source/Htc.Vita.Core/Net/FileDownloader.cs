@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
@@ -36,10 +36,10 @@ namespace Htc.Vita.Core.Net
             return instance;
         }
 
-        public Task<DownloadOperationResult> DownloadFileAsync(string url, string destPath, long size, Action<long> progressReporter,
+        public DownloadOperationResult DownloadFile(string url, FileInfo fileInfo, long size, Action<long> progressReporter,
             CancellationToken cancellationToken, List<string> hostList = null)
         {
-            return OnDownloadFileAsync(url, destPath, size, progressReporter, cancellationToken, hostList);
+            return OnDownloadFile(url, fileInfo, size, progressReporter, cancellationToken, hostList);
         }
 
         private static FileDownloader DoGetInstance(Type type)
@@ -81,7 +81,7 @@ namespace Htc.Vita.Core.Net
             return instance;
         }
         
-        protected abstract Task<DownloadOperationResult> OnDownloadFileAsync(string url, string destPath, long size, Action<long> progressReporter,
+        protected abstract DownloadOperationResult OnDownloadFile(string url, FileInfo fileInfo, long size, Action<long> progressReporter,
             CancellationToken cancellationToken, List<string> hostList = null);
 
         public enum DownloadStatus

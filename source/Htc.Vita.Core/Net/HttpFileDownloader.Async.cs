@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
 {
-    partial class HttpFileDownloader : FileDownloader
+    partial class HttpFileDownloader
     {
-        private HttpClient _httpClient;
-        private readonly object _httpClientInstanceLock = new object();
-
-        protected override DownloadOperationResult OnDownloadFile(string url, FileInfo fileInfo, long size, Action<long> progressReporter,
+        protected override async Task<DownloadOperationResult> OnDownloadFileAsync(string url, FileInfo fileInfo, long size, Action<long> progressReporter,
             CancellationToken cancellationToken, List<string> hostList = null)
         {
             var destPath = fileInfo.FullName;
@@ -97,8 +94,8 @@ namespace Htc.Vita.Core.Net
                     {
                         httpRequestMessage.Headers.Add("X-HTC-Expected-File-Size", size.ToString());
 
-                        using (var responseMessage = HttpClientInstance.SendAsync(
-                            httpRequestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken).Result)
+                        using (var responseMessage = await HttpClientInstance.SendAsync(
+                            httpRequestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false))
                         {
                             if (cancellationToken.IsCancellationRequested)
                             {
@@ -108,7 +105,7 @@ namespace Htc.Vita.Core.Net
                             if (!responseMessage.IsSuccessStatusCode) throw new HttpStatusErrorException(responseMessage.StatusCode,
                                 $"Server response error. HttpStatusCode: {responseMessage.StatusCode} Url: {fileUrl}");
 
-                            using (var urlStream = responseMessage.Content.ReadAsStreamAsync().Result)
+                            using (var urlStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false))
                             {
                                 using (var fileStream = new FileStream(destPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                                 {
@@ -149,36 +146,6 @@ namespace Htc.Vita.Core.Net
 
                     Logger.GetInstance(typeof(FileDownloader)).Error(
                         $"Exception. FileName: {destPath} Size: {size} FileUrl: {fileUrl} Trial: {trial} Error: {retStatus.Status} Exception: {exc}.");
-                }
-            }
-        }
-
-        private HttpClient HttpClientInstance
-        {
-            get
-            {
-                lock (_httpClientInstanceLock)
-                {
-                    if (_httpClient != null) return _httpClient;
-
-                    var handler = new HttpClientHandler
-                    {
-                        AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate,
-                        Proxy = WebProxyFactory.GetInstance().GetWebProxy()
-                    };
-
-                    _httpClient = new HttpClient(handler)
-                    {
-                        Timeout = TimeSpan.FromMilliseconds(DownloadConfig.ConnectionTimeoutInMilli),
-                    };
-
-                    WebUserAgent.Name = DownloadConfig.UserAgent;
-                    var userAgent = $"{WebUserAgent.GetModuleName()}/{WebUserAgent.GetModuleVersion()} ({WebUserAgent.GetModuleInstanceName()})";
-                    Console.WriteLine(userAgent);
-                    _httpClient.DefaultRequestHeaders.Add("User-Agent", userAgent);
-                    _httpClient.DefaultRequestHeaders.ExpectContinue = false;
-
-                    return _httpClient;
                 }
             }
         }

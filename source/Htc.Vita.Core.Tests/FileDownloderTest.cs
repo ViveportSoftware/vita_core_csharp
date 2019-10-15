@@ -40,9 +40,53 @@ namespace Htc.Vita.Core.Tests
             {
                 _output.WriteLine($"Start to download: {TestFileUrl}");
                 long progress = 0;
+                downloadResult = fileDownloader.DownloadFile(
+                    TestFileUrl,
+                    new FileInfo(TestFileDestPath),
+                    TestFileSize,
+                    incSize =>
+                    {
+                        progress += incSize;
+                        _output.WriteLine($"Download progress: {progress}");
+                    },
+                    CancellationToken.None);
+
+                if (downloadResult.Success)
+                {
+                    if (!FileVerifier.VerifyAsync(TestFileDestPath, TestFileSize, TestFileHash, TestFileHashAlgorithm,
+                        CancellationToken.None).Result)
+                    {
+                        downloadResult = FileDownloader.DownloadStatus.InternalError;
+                        continue;
+                    }
+                    break;
+                }
+                SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(1));
+            }
+            try
+            {
+                File.Delete(TestFileDestPath);
+            }
+            catch (Exception) {}
+
+            _output.WriteLine($"Download status: {downloadResult?.Status}");
+
+            Assert.NotNull(downloadResult);
+            Assert.Equal(FileDownloader.DownloadStatus.Success, downloadResult.Status);
+        }
+
+        [Fact]
+        public void FileDownloader_Default_2_DownloadFileAsync()
+        {
+            var fileDownloader = FileDownloader.GetInstance();
+            FileDownloader.DownloadOperationResult downloadResult = FileDownloader.DownloadStatus.Unknown;
+            for (var i = 0; i < 3; i++)
+            {
+                _output.WriteLine($"Start to download: {TestFileUrl}");
+                long progress = 0;
                 downloadResult = fileDownloader.DownloadFileAsync(
                     TestFileUrl,
-                    TestFileDestPath,
+                    new FileInfo(TestFileDestPath),
                     TestFileSize,
                     incSize =>
                     {
@@ -67,7 +111,7 @@ namespace Htc.Vita.Core.Tests
             {
                 File.Delete(TestFileDestPath);
             }
-            catch (Exception) {}
+            catch (Exception) { }
 
             _output.WriteLine($"Download status: {downloadResult?.Status}");
 
