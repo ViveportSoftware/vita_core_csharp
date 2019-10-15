@@ -12,11 +12,11 @@ namespace Htc.Vita.Core.Tests
     {
         private readonly ITestOutputHelper _output;
 
-        private static readonly string TestFileUrl = 
-            "https://htc-dev-viveportdesktop-download-test.s3-ap-southeast-1.amazonaws.com/download-test/2097152-8cb79ebe6c9962fe62d732aa905be396fd023540b5cbdd82a5e25a92bd4984b3.bin";
-        private static readonly long TestFileSize = 2097152;
-        private static readonly string TestFileHash = "8cb79ebe6c9962fe62d732aa905be396fd023540b5cbdd82a5e25a92bd4984b3";
-        private static readonly string TestFileDestPath = Path.Combine(Path.GetTempPath(), "2097152-8cb79ebe6c9962fe62d732aa905be396fd023540b5cbdd82a5e25a92bd4984b3.bin");
+        private static readonly string TestFileUrl =
+            "https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe";
+        private static readonly long TestFileSize = 14611496;
+        private static readonly string TestFileHash = "eb5f74215e4308d8f2b1d458e78f33050a779b9be19baaa2174de1be9be1b830";
+        private static readonly string TestFileDestPath = Path.Combine(Path.GetTempPath(), "VC_redist.x86.exe");
         private static readonly FileVerifier.HashAlgorithm TestFileHashAlgorithm = FileVerifier.HashAlgorithm.Sha256;
 
         public FileDownloaderTest(ITestOutputHelper output)
