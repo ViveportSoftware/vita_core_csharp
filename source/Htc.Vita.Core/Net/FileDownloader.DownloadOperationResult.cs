@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace Htc.Vita.Core.Download
+namespace Htc.Vita.Core.Net
 {
-    partial class DownloadManager
+    partial class FileDownloader
     {
         public class DownloadOperationResult
         {
-            public DownloadStatus Status { get; set; }
+            public Net.FileDownloader.DownloadStatus Status { get; set; }
             public Exception Exception { get; set; }
 
             public static explicit operator int(DownloadOperationResult status)
@@ -38,7 +38,7 @@ namespace Htc.Vita.Core.Download
 
             public DownloadOperationResult()
             {
-                Status = DownloadStatus.Success;
+                Status = Net.FileDownloader.DownloadStatus.Success;
             }
 
             public bool Success => Status == DownloadStatus.Success;

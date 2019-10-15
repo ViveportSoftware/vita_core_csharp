@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net;
 
-namespace Htc.Vita.Core.Download
+namespace Htc.Vita.Core.Net
 {
-    partial class DownloadManager
+    partial class HttpFileDownloader
     {
         public class HttpStatusErrorException : Exception
         {

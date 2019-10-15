@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Web;
 using Htc.Vita.Core.Log;
 
-namespace Htc.Vita.Core.Download
+namespace Htc.Vita.Core.Net
 {
-    partial class DownloadManager
+    partial class FileDownloader
     {
         public class MultipleHostHelper
         {
