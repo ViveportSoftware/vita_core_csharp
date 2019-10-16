@@ -54,7 +54,7 @@ namespace Htc.Vita.Core.Net
         {
             if (cancellationToken != null && ((CancellationToken)cancellationToken).IsCancellationRequested)
             {
-                return DownloadStatus.Cancel;
+                return DownloadStatus.Cancelled;
             }
 
             var exception = exc;

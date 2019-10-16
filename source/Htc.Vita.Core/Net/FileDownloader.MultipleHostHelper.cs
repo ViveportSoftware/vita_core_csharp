@@ -7,7 +7,7 @@ namespace Htc.Vita.Core.Net
 {
     partial class FileDownloader
     {
-        public class MultipleHostHelper
+        internal class MultipleHostHelper
         {
             private List<string> _hostList;
             private int _index = -1;

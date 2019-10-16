@@ -18,7 +18,7 @@ namespace Htc.Vita.Core.Net
             // WHEN DOWNLOAD IS PAUSED/CANCELED, REMAINING FILES STILL RUN THROUGH HERE, SO TRY TO SKIP IT ASAP.
             if (cancellationToken.IsCancellationRequested)
             {
-                return DownloadStatus.Cancel;
+                return DownloadStatus.Cancelled;
             }
 
             // PREPARE DESTINATION FOLDER
@@ -62,7 +62,7 @@ namespace Htc.Vita.Core.Net
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
-                        return DownloadStatus.Cancel;
+                        return DownloadStatus.Cancelled;
                     }
 
                     if (retStatus?.Status == DownloadStatus.OutOfFreeSpaceError ||
@@ -70,7 +70,7 @@ namespace Htc.Vita.Core.Net
                          !NetworkInterface.IsInternetAvailable()))
                     {
                         var errorMsg = retStatus?.Status == DownloadStatus.OutOfFreeSpaceError ? "Disk full error." : "No internet error.";
-                        Logger.GetInstance(typeof(FileDownloader)).Error($"{errorMsg} File: {destPath} T`rial: {trial}");
+                        Logger.GetInstance(typeof(FileDownloader)).Error($"{errorMsg} File: {destPath} Trial: {trial}");
 
                         return retStatus;
                     }
@@ -97,7 +97,7 @@ namespace Htc.Vita.Core.Net
                         {
                             if (cancellationToken.IsCancellationRequested)
                             {
-                                return DownloadStatus.Cancel;
+                                return DownloadStatus.Cancelled;
                             }
 
                             if (!responseMessage.IsSuccessStatusCode) throw new HttpStatusErrorException(responseMessage.StatusCode,
@@ -121,12 +121,12 @@ namespace Htc.Vita.Core.Net
 
                     if (cancellationToken.IsCancellationRequested)
                     {
-                        return DownloadStatus.Cancel;
+                        return DownloadStatus.Cancelled;
                     }
 
                     if (retStatus != null && retStatus.Cancel)
                     {
-                        return DownloadStatus.Cancel;
+                        return DownloadStatus.Cancelled;
                     }
 
                     Logger.GetInstance(typeof(FileDownloader)).Info($"File downloaded. File: {destPath} Size: {size} Trial: {trial}");
@@ -136,7 +136,7 @@ namespace Htc.Vita.Core.Net
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
-                        return DownloadStatus.Cancel;
+                        return DownloadStatus.Cancelled;
                     }
 
                     retStatus = DownloadErrorToOperationResult(exc, cancellationToken);

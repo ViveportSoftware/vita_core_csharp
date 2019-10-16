@@ -3,79 +3,74 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Htc.Vita.Core.Crypto;
-using Htc.Vita.Core.Log;
-using Htc.Vita.Core.Net;
 
 namespace Htc.Vita.Core.IO
 {
     public static class FileVerifier
     {
-        public static async Task<bool> VerifyAsync(FileInfo fileInfo, long size, string hash, HashAlgorithm hashAlgorithm, CancellationToken cancellationToken)
+        public static async Task<bool> VerifyAsync(FileInfo fileInfo, long size, string checksum, ChecksumType checksumType, CancellationToken cancellationToken)
         {
-            if (fileInfo.Exists)
+            if (fileInfo == null || !fileInfo.Exists || fileInfo.Length != size) return false;
+            
+            switch (checksumType)
             {
-                if (fileInfo.Length != size) return false;
+                case ChecksumType.Md5:
 
-                switch (hashAlgorithm)
-                {
-                    case HashAlgorithm.Md5:
+                    if (checksum.Length == 32)
+                    {
+                        return checksum == await Md5.GetInstance()
+                                   .GenerateInHexAsync(fileInfo, cancellationToken)
+                                   .ConfigureAwait(false);
+                    }
 
-                        if (hash.Length == 32)
-                        {
-                            return hash == await Md5.GetInstance()
-                                       .GenerateInHexAsync(fileInfo, cancellationToken)
-                                       .ConfigureAwait(false);
-                        }
+                    if (checksum.Length == 24)
+                    {
+                        return checksum == await Md5.GetInstance()
+                                   .GenerateInBase64Async(fileInfo, cancellationToken)
+                                   .ConfigureAwait(false);
+                    }
 
-                        if (hash.Length == 24)
-                        {
-                            return hash == await Md5.GetInstance()
-                                       .GenerateInBase64Async(fileInfo, cancellationToken)
-                                       .ConfigureAwait(false);
-                        }
+                    break;
+                case ChecksumType.Sha1:
 
-                        break;
-                    case HashAlgorithm.Sha1:
+                    if (checksum.Length == 40)
+                    {
+                        return checksum == await Sha1.GetInstance()
+                                   .GenerateInHexAsync(fileInfo, cancellationToken)
+                                   .ConfigureAwait(false);
+                    }
 
-                        if (hash.Length == 40)
-                        {
-                            return hash == await Sha1.GetInstance()
-                                       .GenerateInHexAsync(fileInfo, cancellationToken)
-                                       .ConfigureAwait(false);
-                        }
+                    if (checksum.Length == 28)
+                    {
+                        return checksum == await Sha1.GetInstance()
+                                   .GenerateInBase64Async(fileInfo, cancellationToken)
+                                   .ConfigureAwait(false);
+                    }
 
-                        if (hash.Length == 28)
-                        {
-                            return hash == await Sha1.GetInstance()
-                                       .GenerateInBase64Async(fileInfo, cancellationToken)
-                                       .ConfigureAwait(false);
-                        }
+                    break;
+                case ChecksumType.Sha256:
 
-                        break;
-                    case HashAlgorithm.Sha256:
+                    if (checksum.Length == 64)
+                    {
+                        return checksum == await Sha256.GetInstance()
+                                   .GenerateInHexAsync(fileInfo, cancellationToken)
+                                   .ConfigureAwait(false);
+                    }
 
-                        if (hash.Length == 64)
-                        {
-                            return hash == await Sha256.GetInstance()
-                                       .GenerateInHexAsync(fileInfo, cancellationToken)
-                                       .ConfigureAwait(false);
-                        }
+                    if (checksum.Length == 44)
+                    {
+                        return checksum == await Sha256.GetInstance()
+                                   .GenerateInBase64Async(fileInfo, cancellationToken)
+                                   .ConfigureAwait(false);
+                    }
 
-                        if (hash.Length == 44)
-                        {
-                            return hash == await Sha256.GetInstance()
-                                       .GenerateInBase64Async(fileInfo, cancellationToken)
-                                       .ConfigureAwait(false);
-                        }
-
-                        break;
-                }
+                    break;
             }
 
-            throw new NotSupportedException($"Not supported! path: {fileInfo.FullName} size: {size} hash: {hash} hashAlgorithm: {hashAlgorithm}");
+            throw new NotSupportedException($"Not supported! path: {fileInfo.FullName} size: {size} checksum: {checksum} checksumType: {checksumType}");
         }
 
-        public enum HashAlgorithm
+        public enum ChecksumType
         {
             Md5 = 0,
             Sha1 = 1,

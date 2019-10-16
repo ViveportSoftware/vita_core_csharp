@@ -23,8 +23,8 @@ namespace Htc.Vita.Core.Tests
             var filePath = Path.Combine(Path.GetTempPath(), $"__test_{Guid.NewGuid().ToString()}__");
             var fileInfo = new FileInfo(filePath);
             File.WriteAllText(filePath, Guid.NewGuid().ToString());
-            var hash = Md5.GetInstance().GenerateInBase64(fileInfo);
-            var verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, hash, FileVerifier.HashAlgorithm.Md5, CancellationToken.None).Result;
+            var checksum = Md5.GetInstance().GenerateInBase64(fileInfo);
+            var verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, checksum, FileVerifier.ChecksumType.Md5, CancellationToken.None).Result;
             Assert.True(verified);
             try { fileInfo.Delete(); } catch (Exception) { }
         }
@@ -35,8 +35,8 @@ namespace Htc.Vita.Core.Tests
             var filePath = Path.Combine(Path.GetTempPath(), $"__test_{Guid.NewGuid().ToString()}__");
             var fileInfo = new FileInfo(filePath);
             File.WriteAllText(filePath, Guid.NewGuid().ToString());
-            var hash = Md5.GetInstance().GenerateInHex(fileInfo);
-            var verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, hash, FileVerifier.HashAlgorithm.Md5, CancellationToken.None).Result;
+            var checksum = Md5.GetInstance().GenerateInHex(fileInfo);
+            var verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, checksum, FileVerifier.ChecksumType.Md5, CancellationToken.None).Result;
             Assert.True(verified);
             try { fileInfo.Delete(); } catch (Exception) { }
         }
@@ -47,8 +47,8 @@ namespace Htc.Vita.Core.Tests
             var filePath = Path.Combine(Path.GetTempPath(), $"__test_{Guid.NewGuid().ToString()}__");
             var fileInfo = new FileInfo(filePath);
             File.WriteAllText(filePath, Guid.NewGuid().ToString());
-            var hash = Sha1.GetInstance().GenerateInBase64(fileInfo);
-            var verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, hash, FileVerifier.HashAlgorithm.Sha1, CancellationToken.None).Result;
+            var checksum = Sha1.GetInstance().GenerateInBase64(fileInfo);
+            var verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, checksum, FileVerifier.ChecksumType.Sha1, CancellationToken.None).Result;
             Assert.True(verified);
             try { fileInfo.Delete(); } catch (Exception) { }
         }
@@ -59,8 +59,8 @@ namespace Htc.Vita.Core.Tests
             var filePath = Path.Combine(Path.GetTempPath(), $"__test_{Guid.NewGuid().ToString()}__");
             var fileInfo = new FileInfo(filePath);
             File.WriteAllText(filePath, Guid.NewGuid().ToString());
-            var hash = Sha1.GetInstance().GenerateInHex(fileInfo);
-            var verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, hash, FileVerifier.HashAlgorithm.Sha1, CancellationToken.None).Result;
+            var checksum = Sha1.GetInstance().GenerateInHex(fileInfo);
+            var verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, checksum, FileVerifier.ChecksumType.Sha1, CancellationToken.None).Result;
             Assert.True(verified);
             try { fileInfo.Delete(); } catch (Exception) { }
         }
@@ -71,8 +71,8 @@ namespace Htc.Vita.Core.Tests
             var filePath = Path.Combine(Path.GetTempPath(), $"__test_{Guid.NewGuid().ToString()}__");
             var fileInfo = new FileInfo(filePath);
             File.WriteAllText(filePath, Guid.NewGuid().ToString());
-            var hash = Sha256.GetInstance().GenerateInBase64(fileInfo);
-            var verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, hash, FileVerifier.HashAlgorithm.Sha256, CancellationToken.None).Result;
+            var checksum = Sha256.GetInstance().GenerateInBase64(fileInfo);
+            var verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, checksum, FileVerifier.ChecksumType.Sha256, CancellationToken.None).Result;
             Assert.True(verified);
             try { fileInfo.Delete(); } catch (Exception) { }
         }
@@ -83,8 +83,8 @@ namespace Htc.Vita.Core.Tests
             var filePath = Path.Combine(Path.GetTempPath(), $"__test_{Guid.NewGuid().ToString()}__");
             var fileInfo = new FileInfo(filePath);
             File.WriteAllText(filePath, Guid.NewGuid().ToString());
-            var hash = Sha256.GetInstance().GenerateInHex(fileInfo);
-            var verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, hash, FileVerifier.HashAlgorithm.Sha256, CancellationToken.None).Result;
+            var checksum = Sha256.GetInstance().GenerateInHex(fileInfo);
+            var verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, checksum, FileVerifier.ChecksumType.Sha256, CancellationToken.None).Result;
             Assert.True(verified);
             try { fileInfo.Delete(); } catch (Exception) { }
         }

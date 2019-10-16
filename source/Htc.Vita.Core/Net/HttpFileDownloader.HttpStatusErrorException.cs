@@ -5,7 +5,7 @@ namespace Htc.Vita.Core.Net
 {
     partial class HttpFileDownloader
     {
-        public class HttpStatusErrorException : Exception
+        internal class HttpStatusErrorException : Exception
         {
             public HttpStatusCode HttpStatusCode { get; set; }
 

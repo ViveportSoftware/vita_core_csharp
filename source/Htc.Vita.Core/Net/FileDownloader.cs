@@ -88,7 +88,7 @@ namespace Htc.Vita.Core.Net
         {
             Unknown = 0,
             Success = 1,
-            Cancel = 2,
+            Cancelled = 2,
             InternalError = 3,
             OutOfFreeSpaceError = 4,
             ServerResponseError = 5,
