@@ -42,7 +42,7 @@ namespace Htc.Vita.Core.Net
             }
 
             public bool Success => Status == DownloadStatus.Success;
-            public bool Cancel => Status == DownloadStatus.Cancel;
+            public bool Cancel => Status == DownloadStatus.Cancelled;
         }
 
         public class DownloadOperationResult<T> : DownloadOperationResult
