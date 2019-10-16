@@ -1,13 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using Htc.Vita.Core.Crypto;
 
 namespace Htc.Vita.Core.IO
 {
     public static partial class FileVerifier
     {
-        public static bool Verify(
+        public static async Task<bool> VerifyAsync(
                 FileInfo fileInfo,
                 long size,
                 string checksum,
@@ -22,14 +23,14 @@ namespace Htc.Vita.Core.IO
 
                     if (checksum.Length == 32)
                     {
-                        return checksum == Md5.GetInstance()
-                                   .GenerateInHex(fileInfo, cancellationToken);
+                        return checksum == await Md5.GetInstance()
+                                   .GenerateInHexAsync(fileInfo, cancellationToken).ConfigureAwait(false);
                     }
 
                     if (checksum.Length == 24)
                     {
-                        return checksum == Md5.GetInstance()
-                                   .GenerateInBase64(fileInfo, cancellationToken);
+                        return checksum == await Md5.GetInstance()
+                                   .GenerateInBase64Async(fileInfo, cancellationToken).ConfigureAwait(false);
                     }
 
                     break;
@@ -37,14 +38,14 @@ namespace Htc.Vita.Core.IO
 
                     if (checksum.Length == 40)
                     {
-                        return checksum == Sha1.GetInstance()
-                                   .GenerateInHex(fileInfo, cancellationToken);
+                        return checksum == await Sha1.GetInstance()
+                                   .GenerateInHexAsync(fileInfo, cancellationToken).ConfigureAwait(false);
                     }
 
                     if (checksum.Length == 28)
                     {
-                        return checksum == Sha1.GetInstance()
-                                   .GenerateInBase64(fileInfo, cancellationToken);
+                        return checksum == await Sha1.GetInstance()
+                                   .GenerateInBase64Async(fileInfo, cancellationToken).ConfigureAwait(false);
                     }
 
                     break;
@@ -52,27 +53,20 @@ namespace Htc.Vita.Core.IO
 
                     if (checksum.Length == 64)
                     {
-                        return checksum == Sha256.GetInstance()
-                                   .GenerateInHex(fileInfo, cancellationToken);
+                        return checksum == await Sha256.GetInstance()
+                                   .GenerateInHexAsync(fileInfo, cancellationToken).ConfigureAwait(false);
                     }
 
                     if (checksum.Length == 44)
                     {
-                        return checksum == Sha256.GetInstance()
-                                   .GenerateInBase64(fileInfo, cancellationToken);
+                        return checksum == await Sha256.GetInstance()
+                                   .GenerateInBase64Async(fileInfo, cancellationToken).ConfigureAwait(false);
                     }
 
                     break;
             }
 
             throw new NotSupportedException($"Not supported! path: {fileInfo.FullName} size: {size} checksum: {checksum} checksumType: {checksumType}");
-        }
-
-        public enum ChecksumType
-        {
-            Md5 = 0,
-            Sha1 = 1,
-            Sha256 = 2,
         }
     }
 }
