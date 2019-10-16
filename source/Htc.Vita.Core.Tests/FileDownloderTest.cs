@@ -53,7 +53,7 @@ namespace Htc.Vita.Core.Tests
 
                 if (downloadResult.Success)
                 {
-                    if (!FileVerifier.VerifyAsync(TestFileDestPath, TestFileSize, TestFileHash, TestFileHashAlgorithm,
+                    if (!FileVerifier.VerifyAsync(new FileInfo(TestFileDestPath), TestFileSize, TestFileHash, TestFileHashAlgorithm,
                         CancellationToken.None).Result)
                     {
                         downloadResult = FileDownloader.DownloadStatus.InternalError;
@@ -97,7 +97,7 @@ namespace Htc.Vita.Core.Tests
 
                 if (downloadResult.Success)
                 {
-                    if (!FileVerifier.VerifyAsync(TestFileDestPath, TestFileSize, TestFileHash, TestFileHashAlgorithm,
+                    if (!FileVerifier.VerifyAsync(new FileInfo(TestFileDestPath), TestFileSize, TestFileHash, TestFileHashAlgorithm,
                         CancellationToken.None).Result)
                     {
                         downloadResult = FileDownloader.DownloadStatus.InternalError;

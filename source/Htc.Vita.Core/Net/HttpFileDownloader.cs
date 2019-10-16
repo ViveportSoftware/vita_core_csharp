@@ -95,8 +95,6 @@ namespace Htc.Vita.Core.Net
 
                     using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, fileUrl))
                     {
-                        httpRequestMessage.Headers.Add("X-HTC-Expected-File-Size", size.ToString());
-
                         using (var responseMessage = HttpClientInstance.SendAsync(
                             httpRequestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken).Result)
                         {
