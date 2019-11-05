@@ -15,6 +15,7 @@ namespace Htc.Vita.Core.Diagnostics
 
         private const int ErrorPathCacheTimeInMilli = 1000 * 60 * 60;
 
+        public FileInfo Instance { get; }
         public string IssuerDistinguishedName { get; }
         public string IssuerName { get; }
         public string ProductVersion { get; }
@@ -36,6 +37,8 @@ namespace Htc.Vita.Core.Diagnostics
                 Logger.GetInstance(typeof(FilePropertiesInfo)).Warn("Can not find " + fileInfo.FullName + " to get properties");
                 return;
             }
+
+            Instance = fileInfo;
 
             X509Certificate certificate = null;
             try

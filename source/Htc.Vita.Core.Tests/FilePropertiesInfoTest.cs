@@ -33,6 +33,7 @@ namespace Htc.Vita.Core.Tests
             Assert.True(fileInfo.Exists);
             var filePropertiesInfo = FilePropertiesInfo.GetPropertiesInfo(fileInfo);
             Assert.NotNull(filePropertiesInfo);
+            Assert.True(!string.IsNullOrWhiteSpace(filePropertiesInfo.Instance.FullName));
             Assert.True(!string.IsNullOrEmpty(filePropertiesInfo.IssuerDistinguishedName));
             Assert.Contains("O=", filePropertiesInfo.IssuerDistinguishedName);
             Assert.True(!string.IsNullOrEmpty(filePropertiesInfo.IssuerName));
@@ -63,6 +64,7 @@ namespace Htc.Vita.Core.Tests
             Assert.True(fileInfo.Exists);
             var filePropertiesInfo = FilePropertiesInfo.GetPropertiesInfo(fileInfo);
             Assert.NotNull(filePropertiesInfo);
+            Assert.True(!string.IsNullOrWhiteSpace(filePropertiesInfo.Instance.FullName));
             Assert.True(string.IsNullOrEmpty(filePropertiesInfo.IssuerDistinguishedName));
             Assert.True(string.IsNullOrEmpty(filePropertiesInfo.IssuerName));
             _output.WriteLine("filePropertiesInfo.ProductVersion: " + filePropertiesInfo.ProductVersion);
