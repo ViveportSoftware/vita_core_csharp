@@ -8,6 +8,7 @@ namespace Htc.Vita.Core.Interop
         internal static readonly Guid /* GUID_DEVCLASS_USB                    */ DeviceClassUsb = new Guid("{36FC9E60-C465-11CF-8056-444553540000}");
         internal static readonly Guid /* GUID_DEVINTERFACE_HID                */ DeviceInterfaceHid = new Guid("{4D1E55B2-F16F-11CF-88CB-001111000030}");
         internal static readonly Guid /* GUID_DEVINTERFACE_USB_DEVICE         */ DeviceInterfaceUsbDevice = new Guid("{A5DCBF10-6530-11D2-901F-00C04FB951ED}");
+        internal static readonly Guid /* GUID_DEVINTERFACE_USB_HUB            */ DeviceInterfaceUsbHub = new Guid("{F18A0E88-C30C-11D0-8815-00A0C906BED8}");
         internal static readonly Guid /* DRIVER_ACTION_VERIFY                 */ DriverActionVerify = new Guid("{F750E6C3-38EE-11d1-85E5-00C04FC295EE}");
         internal static readonly Guid /* HTTPSPROV_ACTION                     */ HttpsProvAction = new Guid("{573E31F8-AABA-11d0-8CCB-00C04FC295EE}");
         internal static readonly Guid /* OFFICESIGN_ACTION_VERIFY             */ OfficeSignActionVerify = new Guid("{5555C2CD-17FB-11d1-85C4-00C04FC295EE}");
