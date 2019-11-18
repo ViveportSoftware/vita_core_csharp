@@ -45,5 +45,18 @@ namespace Htc.Vita.Core.IO
                 return Windows.GetUsbDevicesInPlatform();
             }
         }
+
+        public static List<DeviceInfo> GetUsbHubDevices()
+        {
+            if (!Platform.IsWindows)
+            {
+                return new List<DeviceInfo>();
+            }
+
+            lock (InstancesLock)
+            {
+                return Windows.GetUsbHubDevicesInPlatform();
+            }
+        }
     }
 }
