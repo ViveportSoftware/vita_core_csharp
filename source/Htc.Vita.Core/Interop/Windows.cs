@@ -460,6 +460,32 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
+         * Process access right enumeration
+         * https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
+         */
+        [Flags]
+        internal enum ProcessAccessRight : uint
+        {
+            /* PROCESS_TERMINATE                 */ Terminate                = 0x0001,
+            /* PROCESS_CREATE_THREAD             */ CreateThread             = 0x0002,
+            /* PROCESS_SET_SESSIONID             */ SetSessionId             = 0x0004,
+            /* PROCESS_VM_OPERATION              */ VMOperation              = 0x0008,
+            /* PROCESS_VM_READ                   */ VMRead                   = 0x0010,
+            /* PROCESS_VM_WRITE                  */ VMWrite                  = 0x0020,
+            /* PROCESS_DUP_HANDLE                */ DupHandle                = 0x0040,
+            /* PROCESS_CREATE_PROCESS            */ CreateProcess            = 0x0080,
+            /* PROCESS_SET_QUOTA                 */ SetQuota                 = 0x0100,
+            /* PROCESS_SET_INFORMATION           */ SetInformation           = 0x0200,
+            /* PROCESS_QUERY_INFORMATION         */ QueryInformation         = 0x0400,
+            /* PROCESS_SUSPEND_RESUME            */ SuspendResume            = 0x0800,
+            /* PROCESS_QUERY_LIMITED_INFORMATION */ QueryLimitedInformation  = 0x1000,
+            /* PROCESS_SET_LIMITED_INFORMATION   */ SetLimitedInformation    = 0x2000,
+            /* PROCESS_ALL_ACCESS                */ AllAccess                = StandardAccessRight.StandardRightsRequired
+                                                                             | StandardAccessRight.Synchronize
+                                                                             | 0xFFFF
+        }
+
+        /**
          * Process Creation enumeration
          * https://docs.microsoft.com/en-us/windows/desktop/ProcThread/process-creation-flags
          */
