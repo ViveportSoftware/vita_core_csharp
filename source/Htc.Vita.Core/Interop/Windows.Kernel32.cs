@@ -146,6 +146,17 @@ namespace Htc.Vita.Core.Interop
                 /* _In_ LPCTSTR */ [In] string lpFileName
         );
 
+        [DllImport(Libraries.WindowsKernel32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern SafeProcessHandle OpenProcess(
+                /* _In_ DWORD */ [In] ProcessAccessRight dwDesiredAccess,
+                /* _In_ BOOL  */ [In] bool bInheritHandle,
+                /* _In_ DWORD */ [In] uint dwProcessId
+        );
+
         /**
          * https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-queryfullprocessimagenamew
          */

@@ -135,6 +135,46 @@ namespace Htc.Vita.Core.Runtime
                 {
                     // skip
                 }
+                catch (Win32Exception)
+                {
+                    Logger.GetInstance(typeof(Windows)).Warn("Try to get process path with another method ...");
+
+                    using (var processHandle = Interop.Windows.OpenProcess(Interop.Windows.ProcessAccessRight.QueryLimitedInformation, false, (uint) processId))
+                    {
+                        var bufferSize = 256;
+                        while (true)
+                        {
+                            var fullPath = new StringBuilder(bufferSize);
+                            var success = Interop.Windows.QueryFullProcessImageNameW(
+                                    processHandle,
+                                    0,
+                                    fullPath,
+                                    ref bufferSize
+                            );
+                            if (success)
+                            {
+                                return fullPath.ToString(0, bufferSize);
+                            }
+
+                            var win32Error = Marshal.GetLastWin32Error();
+                            if (win32Error != (int)Interop.Windows.Error.InsufficientBuffer)
+                            {
+                                Logger.GetInstance(typeof(Windows)).Error("Can not get Windows process path, error code: " + win32Error);
+                                break;
+                            }
+
+                            if (bufferSize > 1024 * 30)
+                            {
+                                Logger.GetInstance(typeof(Windows)).Error("Can not get Windows process path under length of " + bufferSize);
+                                break;
+                            }
+
+                            bufferSize *= 2;
+                        }
+
+                        return null;
+                    }
+                }
 
                 return null;
             }
