@@ -10,7 +10,9 @@
 var configuration = Argument("configuration", "Debug");
 var revision = EnvironmentVariable("BUILD_NUMBER") ?? Argument("revision", "9999");
 var target = Argument("target", "Default");
-var unitTesting = EnvironmentVariable("UNIT_TESTING") ?? "ON";
+var buildWithDupFinder = EnvironmentVariable("BUILD_WITH_DUPFINDER") ?? "ON";
+var buildWithInspectCode = EnvironmentVariable("BUILD_WITH_INSPECTCODE") ?? "ON";
+var buildWithUnitTesting = EnvironmentVariable("BUILD_WITH_UNITTESTING") ?? "ON";
 
 
 //////////////////////////////////////////////////////////////////////
@@ -169,7 +171,7 @@ Task("Build-Assemblies")
 });
 
 Task("Prepare-Unit-Test-Data")
-    .WithCriteria(() => "ON".Equals(unitTesting))
+    .WithCriteria(() => "ON".Equals(buildWithUnitTesting))
     .IsDependentOn("Build-Assemblies")
     .Does(() =>
 {
@@ -184,7 +186,7 @@ Task("Prepare-Unit-Test-Data")
 });
 
 Task("Run-Unit-Tests-Under-AnyCPU")
-    .WithCriteria(() => "ON".Equals(unitTesting))
+    .WithCriteria(() => "ON".Equals(buildWithUnitTesting))
     .IsDependentOn("Prepare-Unit-Test-Data")
     .Does(() =>
 {
@@ -260,7 +262,7 @@ Task("Run-Unit-Tests-Under-AnyCPU")
 });
 
 Task("Run-Unit-Tests-Under-X86")
-    .WithCriteria(() => "ON".Equals(unitTesting))
+    .WithCriteria(() => "ON".Equals(buildWithUnitTesting))
     .IsDependentOn("Run-Unit-Tests-Under-AnyCPU")
     .Does(() =>
 {
@@ -323,6 +325,7 @@ Task("Run-Sonar-End")
 });
 
 Task("Run-DupFinder")
+    .WithCriteria(() => "ON".Equals(buildWithDupFinder))
     .IsDependentOn("Run-Sonar-End")
     .Does(() =>
 {
@@ -346,6 +349,7 @@ Task("Run-DupFinder")
 });
 
 Task("Run-InspectCode")
+    .WithCriteria(() => "ON".Equals(buildWithInspectCode))
     .IsDependentOn("Run-DupFinder")
     .Does(() =>
 {
