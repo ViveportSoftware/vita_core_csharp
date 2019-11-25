@@ -137,8 +137,6 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Win32Exception)
                 {
-                    Logger.GetInstance(typeof(Windows)).Warn("Try to get process path with another method ...");
-
                     using (var processHandle = Interop.Windows.OpenProcess(Interop.Windows.ProcessAccessRight.QueryLimitedInformation, false, (uint) processId))
                     {
                         var bufferSize = 256;
@@ -337,8 +335,7 @@ namespace Htc.Vita.Core.Runtime
                         );
                         if (!success)
                         {
-                            Logger.GetInstance(typeof(Windows))
-                                .Error($"Can not enumerate WTS session, error code: {Marshal.GetLastWin32Error()}");
+                            Logger.GetInstance(typeof(Windows)).Error($"Can not enumerate WTS session, error code: {Marshal.GetLastWin32Error()}");
                             return null;
                         }
                         if (sessionCount <= 0U)
