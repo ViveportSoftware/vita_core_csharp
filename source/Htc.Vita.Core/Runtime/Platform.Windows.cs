@@ -95,9 +95,13 @@ namespace Htc.Vita.Core.Runtime
                         path,
                         "Release"
                 );
+                if (release >= 528040)
+                {
+                    return ".NET Framework 4.8 or later";
+                }
                 if (release >= 461808)
                 {
-                    return ".NET Framework 4.7.2 or later";
+                    return ".NET Framework 4.7.2";
                 }
                 if (release >= 461308)
                 {

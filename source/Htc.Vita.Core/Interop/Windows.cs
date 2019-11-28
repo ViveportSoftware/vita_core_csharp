@@ -272,6 +272,7 @@ namespace Htc.Vita.Core.Interop
         {
             /* ERROR_SUCCESS                   (0,   0x0) */ Success             =   0x0,
             /* ERROR_FILE_NOT_FOUND            (2,   0x2) */ FileNotFound        =   0x2,
+            /* ERROR_INVALID_HANDLE            (6,   0x6) */ InvalidHandle       =   0x6,
             /* ERROR_INVALID_DATA             (13,   0xd) */ InvalidData         =   0xd,
             /* ERROR_BAD_LENGTH               (24,  0x18) */ BadLength           =  0x18,
             /* ERROR_GEN_FAILURE              (31,  0x1f) */ GenFailure          =  0x1f,
@@ -433,6 +434,35 @@ namespace Htc.Vita.Core.Interop
             /* IMAGE_FILE_MACHINE_M32R        */ M32R       = 0x9041,
             /* IMAGE_FILE_MACHINE_ARM64       */ Arm64      = 0xaa64,
             /* IMAGE_FILE_MACHINE_CEE         */ Cee        = 0xc0ee
+        }
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc
+         */
+        [Flags]
+        internal enum MemoryAllocationType : uint
+        {
+            /* MEM_COMMIT                     */ Commit                  = 0x00001000,
+            /* MEM_RESERVE                    */ Reserve                 = 0x00002000,
+            /* MEM_REPLACE_PLACEHOLDER        */ ReplacePlaceholder      = 0x00004000,
+            /* MEM_RESERVE_PLACEHOLDER        */ ReservePlaceholder      = 0x00040000,
+            /* MEM_RESET                      */ Reset                   = 0x00080000,
+            /* MEM_TOP_DOWN                   */ TopDown                 = 0x00100000,
+            /* MEM_WRITE_WATCH                */ WriteWatch              = 0x00200000,
+            /* MEM_PHYSICAL                   */ Physical                = 0x00400000,
+            /* MEM_ROTATE                     */ Rotate                  = 0x00800000,
+            /* MEM_DIFFERENT_IMAGE_BASE_OK    */ DifferentImageBaseOk    = 0x00800000,
+            /* MEM_RESET_UNDO                 */ ResetUndo               = 0x01000000,
+            /* MEM_LARGE_PAGES                */ PagesLarge              = 0x20000000,
+            /* MEM_4MB_PAGES                  */ Pages4MB                = 0x80000000,
+            /* MEM_64K_PAGES                  */ Pages64K                = PagesLarge
+                                                                         | Physical,
+            /* MEM_UNMAP_WITH_TRANSIENT_BOOST */ UnmaoWithTransientBoost = 0x00000001,
+            /* MEM_COALESCE_PLACEHOLDERS      */ CoalescePlaceholders    = 0x00000001,
+            /* MEM_PRESERVE_PLACEHOLDER       */ PreservePlaceholder     = 0x00000002,
+            /* MEM_DECOMMIT                   */ DeCommit                = 0x00004000,
+            /* MEM_RELEASE                    */ Release                 = 0x00008000,
+            /* MEM_FREE                       */ Free                    = 0x00010000
         }
 
         internal enum NtStatus : uint
@@ -932,6 +962,93 @@ namespace Htc.Vita.Core.Interop
             /* SYNCHRONIZE              */ Synchronize            = 0x00100000,
             /* STANDARD_RIGHTS_ALL      */ StandardRightsAll      = StandardRightsRequired
                                                                   | Synchronize
+        }
+
+        internal enum SystemInformationClass : uint
+        {
+            /* SystemBasicInformation                        */ SystemBasicInformation,
+            /* SystemProcessorInformation                    */ SystemProcessorInformation,
+            /* SystemPerformanceInformation                  */ SystemPerformanceInformation,
+            /* SystemTimeOfDayInformation                    */ SystemTimeOfDayInformation,
+            /* SystemPathInformation                         */ SystemPathInformation,
+            /* SystemProcessInformation                      */ SystemProcessInformation,
+            /* SystemCallCountInformation                    */ SystemCallCountInformation,
+            /* SystemDeviceInformation                       */ SystemDeviceInformation,
+            /* SystemProcessorPerformanceInformation         */ SystemProcessorPerformanceInformation,
+            /* SystemFlagsInformation                        */ SystemFlagsInformation,
+            /* SystemCallTimeInformation                     */ SystemCallTimeInformation,
+            /* SystemModuleInformation                       */ SystemModuleInformation,
+            /* SystemLocksInformation                        */ SystemLocksInformation,
+            /* SystemStackTraceInformation                   */ SystemStackTraceInformation,
+            /* SystemPagedPoolInformation                    */ SystemPagedPoolInformation,
+            /* SystemNonPagedPoolInformation                 */ SystemNonPagedPoolInformation,
+            /* SystemHandleInformation                       */ SystemHandleInformation,
+            /* SystemObjectInformation                       */ SystemObjectInformation,
+            /* SystemPageFileInformation                     */ SystemPageFileInformation,
+            /* SystemVdmInstemulInformation                  */ SystemVdmInstemulInformation,
+            /* SystemVdmBopInformation                       */ SystemVdmBopInformation,
+            /* SystemFileCacheInformation                    */ SystemFileCacheInformation,
+            /* SystemPoolTagInformation                      */ SystemPoolTagInformation,
+            /* SystemInterruptInformation                    */ SystemInterruptInformation,
+            /* SystemDpcBehaviorInformation                  */ SystemDpcBehaviorInformation,
+            /* SystemFullMemoryInformation                   */ SystemFullMemoryInformation,
+            /* SystemLoadGdiDriverInformation                */ SystemLoadGdiDriverInformation,
+            /* SystemUnloadGdiDriverInformation              */ SystemUnloadGdiDriverInformation,
+            /* SystemTimeAdjustmentInformation               */ SystemTimeAdjustmentInformation,
+            /* SystemSummaryMemoryInformation                */ SystemSummaryMemoryInformation,
+            /* SystemMirrorMemoryInformation                 */ SystemMirrorMemoryInformation,
+            /* SystemPerformanceTraceInformation             */ SystemPerformanceTraceInformation,
+            /* SystemObsolete0                               */ SystemObsolete0,
+            /* SystemExceptionInformation                    */ SystemExceptionInformation,
+            /* SystemCrashDumpStateInformation               */ SystemCrashDumpStateInformation,
+            /* SystemKernelDebuggerInformation               */ SystemKernelDebuggerInformation,
+            /* SystemContextSwitchInformation                */ SystemContextSwitchInformation,
+            /* SystemRegistryQuotaInformation                */ SystemRegistryQuotaInformation,
+            /* SystemExtendServiceTableInformation           */ SystemExtendServiceTableInformation,
+            /* SystemPrioritySeperation                      */ SystemPrioritySeperation,
+            /* SystemVerifierAddDriverInformation            */ SystemVerifierAddDriverInformation,
+            /* SystemVerifierRemoveDriverInformation         */ SystemVerifierRemoveDriverInformation,
+            /* SystemProcessorIdleInformation                */ SystemProcessorIdleInformation,
+            /* SystemLegacyDriverInformation                 */ SystemLegacyDriverInformation,
+            /* SystemCurrentTimeZoneInformation              */ SystemCurrentTimeZoneInformation,
+            /* SystemLookasideInformation                    */ SystemLookasideInformation,
+            /* SystemTimeSlipNotification                    */ SystemTimeSlipNotification,
+            /* SystemSessionCreate                           */ SystemSessionCreate,
+            /* SystemSessionDetach                           */ SystemSessionDetach,
+            /* SystemSessionInformation                      */ SystemSessionInformation,
+            /* SystemRangeStartInformation                   */ SystemRangeStartInformation,
+            /* SystemVerifierInformation                     */ SystemVerifierInformation,
+            /* SystemVerifierThunkExtend                     */ SystemVerifierThunkExtend,
+            /* SystemSessionProcessInformation               */ SystemSessionProcessInformation,
+            /* SystemLoadGdiDriverInSystemSpace              */ SystemLoadGdiDriverInSystemSpace,
+            /* SystemNumaProcessorMap                        */ SystemNumaProcessorMap,
+            /* SystemPrefetcherInformation                   */ SystemPrefetcherInformation,
+            /* SystemExtendedProcessInformation              */ SystemExtendedProcessInformation,
+            /* SystemRecommendedSharedDataAlignment          */ SystemRecommendedSharedDataAlignment,
+            /* SystemComPlusPackage                          */ SystemComPlusPackage,
+            /* SystemNumaAvailableMemory                     */ SystemNumaAvailableMemory,
+            /* SystemProcessorPowerInformation               */ SystemProcessorPowerInformation,
+            /* SystemEmulationBasicInformation               */ SystemEmulationBasicInformation,
+            /* SystemEmulationProcessorInformation           */ SystemEmulationProcessorInformation,
+            /* SystemExtendedHandleInformation               */ SystemExtendedHandleInformation,
+            /* SystemLostDelayedWriteInformation             */ SystemLostDelayedWriteInformation,
+            /* SystemBigPoolInformation                      */ SystemBigPoolInformation,
+            /* SystemSessionPoolTagInformation               */ SystemSessionPoolTagInformation,
+            /* SystemSessionMappedViewInformation            */ SystemSessionMappedViewInformation,
+            /* SystemHotpatchInformation                     */ SystemHotpatchInformation,
+            /* SystemObjectSecurityMode                      */ SystemObjectSecurityMode,
+            /* SystemWatchdogTimerHandler                    */ SystemWatchdogTimerHandler,
+            /* SystemWatchdogTimerInformation                */ SystemWatchdogTimerInformation,
+            /* SystemLogicalProcessorInformation             */ SystemLogicalProcessorInformation,
+            /* SystemWow64SharedInformation                  */ SystemWow64SharedInformation,
+            /* SystemRegisterFirmwareTableInformationHandler */ SystemRegisterFirmwareTableInformationHandler,
+            /* SystemFirmwareTableInformation                */ SystemFirmwareTableInformation,
+            /* SystemModuleInformationEx                     */ SystemModuleInformationEx,
+            /* SystemVerifierTriageInformation               */ SystemVerifierTriageInformation,
+            /* SystemSuperfetchInformation                   */ SystemSuperfetchInformation,
+            /* SystemMemoryListInformation                   */ SystemMemoryListInformation,
+            /* SystemFileCacheInformationEx                  */ SystemFileCacheInformationEx,
+            /* MaxSystemInfoClass                            */ MaxSystemInfoClass
         }
 
         /**

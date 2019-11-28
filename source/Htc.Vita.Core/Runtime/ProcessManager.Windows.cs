@@ -113,13 +113,13 @@ namespace Htc.Vita.Core.Runtime
                                     var win32Error = Marshal.GetLastWin32Error();
                                     if (win32Error != (int) Interop.Windows.Error.InsufficientBuffer)
                                     {
-                                        Logger.GetInstance(typeof(Windows)).Error("Can not get Windows process path, error code: " + win32Error);
+                                        Logger.GetInstance(typeof(Windows)).Error($"Can not get Windows process path from Process by id: {processId}, error code: {win32Error}");
                                         break;
                                     }
 
                                     if (bufferSize > 1024 * 30)
                                     {
-                                        Logger.GetInstance(typeof(Windows)).Error("Can not get Windows process path under length of " + bufferSize);
+                                        Logger.GetInstance(typeof(Windows)).Error($"Can not get Windows process path under length of {bufferSize}");
                                         break;
                                     }
 
@@ -137,8 +137,6 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Win32Exception)
                 {
-                    Logger.GetInstance(typeof(Windows)).Warn("Try to get process path with another method ...");
-
                     using (var processHandle = Interop.Windows.OpenProcess(Interop.Windows.ProcessAccessRight.QueryLimitedInformation, false, (uint) processId))
                     {
                         var bufferSize = 256;
@@ -157,15 +155,21 @@ namespace Htc.Vita.Core.Runtime
                             }
 
                             var win32Error = Marshal.GetLastWin32Error();
+                            if (win32Error == (int)Interop.Windows.Error.InvalidHandle)
+                            {
+                                Logger.GetInstance(typeof(Windows)).Debug($"Can not get Windows process path with valid handle by id: {processId}");
+                                break;
+                            }
+
                             if (win32Error != (int)Interop.Windows.Error.InsufficientBuffer)
                             {
-                                Logger.GetInstance(typeof(Windows)).Error("Can not get Windows process path, error code: " + win32Error);
+                                Logger.GetInstance(typeof(Windows)).Error($"Can not get Windows process path from process handle by id: {processId}, error code: {win32Error}");
                                 break;
                             }
 
                             if (bufferSize > 1024 * 30)
                             {
-                                Logger.GetInstance(typeof(Windows)).Error("Can not get Windows process path under length of " + bufferSize);
+                                Logger.GetInstance(typeof(Windows)).Error($"Can not get Windows process path under length of {bufferSize}");
                                 break;
                             }
 
@@ -337,8 +341,7 @@ namespace Htc.Vita.Core.Runtime
                         );
                         if (!success)
                         {
-                            Logger.GetInstance(typeof(Windows))
-                                .Error($"Can not enumerate WTS session, error code: {Marshal.GetLastWin32Error()}");
+                            Logger.GetInstance(typeof(Windows)).Error($"Can not enumerate WTS session, error code: {Marshal.GetLastWin32Error()}");
                             return null;
                         }
                         if (sessionCount <= 0U)
