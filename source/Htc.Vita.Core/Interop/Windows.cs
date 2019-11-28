@@ -436,35 +436,6 @@ namespace Htc.Vita.Core.Interop
             /* IMAGE_FILE_MACHINE_CEE         */ Cee        = 0xc0ee
         }
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc
-         */
-        [Flags]
-        internal enum MemoryAllocationType : uint
-        {
-            /* MEM_COMMIT                     */ Commit                  = 0x00001000,
-            /* MEM_RESERVE                    */ Reserve                 = 0x00002000,
-            /* MEM_REPLACE_PLACEHOLDER        */ ReplacePlaceholder      = 0x00004000,
-            /* MEM_RESERVE_PLACEHOLDER        */ ReservePlaceholder      = 0x00040000,
-            /* MEM_RESET                      */ Reset                   = 0x00080000,
-            /* MEM_TOP_DOWN                   */ TopDown                 = 0x00100000,
-            /* MEM_WRITE_WATCH                */ WriteWatch              = 0x00200000,
-            /* MEM_PHYSICAL                   */ Physical                = 0x00400000,
-            /* MEM_ROTATE                     */ Rotate                  = 0x00800000,
-            /* MEM_DIFFERENT_IMAGE_BASE_OK    */ DifferentImageBaseOk    = 0x00800000,
-            /* MEM_RESET_UNDO                 */ ResetUndo               = 0x01000000,
-            /* MEM_LARGE_PAGES                */ PagesLarge              = 0x20000000,
-            /* MEM_4MB_PAGES                  */ Pages4MB                = 0x80000000,
-            /* MEM_64K_PAGES                  */ Pages64K                = PagesLarge
-                                                                         | Physical,
-            /* MEM_UNMAP_WITH_TRANSIENT_BOOST */ UnmaoWithTransientBoost = 0x00000001,
-            /* MEM_COALESCE_PLACEHOLDERS      */ CoalescePlaceholders    = 0x00000001,
-            /* MEM_PRESERVE_PLACEHOLDER       */ PreservePlaceholder     = 0x00000002,
-            /* MEM_DECOMMIT                   */ DeCommit                = 0x00004000,
-            /* MEM_RELEASE                    */ Release                 = 0x00008000,
-            /* MEM_FREE                       */ Free                    = 0x00010000
-        }
-
         internal enum NtStatus : uint
         {
             /* STATUS_WAIT_0                       */ StatusWait0                    =          0,
