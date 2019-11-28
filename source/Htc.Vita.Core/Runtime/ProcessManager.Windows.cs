@@ -113,13 +113,13 @@ namespace Htc.Vita.Core.Runtime
                                     var win32Error = Marshal.GetLastWin32Error();
                                     if (win32Error != (int) Interop.Windows.Error.InsufficientBuffer)
                                     {
-                                        Logger.GetInstance(typeof(Windows)).Error("Can not get Windows process path, error code: " + win32Error);
+                                        Logger.GetInstance(typeof(Windows)).Error($"Can not get Windows process path from Process by id: {processId}, error code: {win32Error}");
                                         break;
                                     }
 
                                     if (bufferSize > 1024 * 30)
                                     {
-                                        Logger.GetInstance(typeof(Windows)).Error("Can not get Windows process path under length of " + bufferSize);
+                                        Logger.GetInstance(typeof(Windows)).Error($"Can not get Windows process path under length of {bufferSize}");
                                         break;
                                     }
 
@@ -157,13 +157,13 @@ namespace Htc.Vita.Core.Runtime
                             var win32Error = Marshal.GetLastWin32Error();
                             if (win32Error != (int)Interop.Windows.Error.InsufficientBuffer)
                             {
-                                Logger.GetInstance(typeof(Windows)).Error("Can not get Windows process path, error code: " + win32Error);
+                                Logger.GetInstance(typeof(Windows)).Error($"Can not get Windows process path from process handle by id: {processId}, error code: {win32Error}");
                                 break;
                             }
 
                             if (bufferSize > 1024 * 30)
                             {
-                                Logger.GetInstance(typeof(Windows)).Error("Can not get Windows process path under length of " + bufferSize);
+                                Logger.GetInstance(typeof(Windows)).Error($"Can not get Windows process path under length of {bufferSize}");
                                 break;
                             }
 
