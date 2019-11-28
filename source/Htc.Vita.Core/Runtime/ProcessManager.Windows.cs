@@ -111,12 +111,6 @@ namespace Htc.Vita.Core.Runtime
                                     }
 
                                     var win32Error = Marshal.GetLastWin32Error();
-                                    if (win32Error == (int) Interop.Windows.Error.InvalidHandle)
-                                    {
-                                        Logger.GetInstance(typeof(Windows)).Debug($"Can not get Windows process path with valid handle by id: {processId}");
-                                        break;
-                                    }
-
                                     if (win32Error != (int) Interop.Windows.Error.InsufficientBuffer)
                                     {
                                         Logger.GetInstance(typeof(Windows)).Error($"Can not get Windows process path from Process by id: {processId}, error code: {win32Error}");
@@ -161,6 +155,12 @@ namespace Htc.Vita.Core.Runtime
                             }
 
                             var win32Error = Marshal.GetLastWin32Error();
+                            if (win32Error == (int)Interop.Windows.Error.InvalidHandle)
+                            {
+                                Logger.GetInstance(typeof(Windows)).Debug($"Can not get Windows process path with valid handle by id: {processId}");
+                                break;
+                            }
+
                             if (win32Error != (int)Interop.Windows.Error.InsufficientBuffer)
                             {
                                 Logger.GetInstance(typeof(Windows)).Error($"Can not get Windows process path from process handle by id: {processId}, error code: {win32Error}");
