@@ -703,9 +703,9 @@ namespace Htc.Vita.Core.IO
 
             internal static List<DeviceInfo> GetUsbHubDevicesInPlatform()
             {
-                if (DeviceListMap.ContainsKey(DeviceListMapKeyUsb))
+                if (DeviceListMap.ContainsKey(DeviceListMapKeyUsbHub))
                 {
-                    var pair = DeviceListMap[DeviceListMapKeyUsb];
+                    var pair = DeviceListMap[DeviceListMapKeyUsbHub];
                     if ((DateTime.UtcNow - pair.Key).Duration() < TimeSpan.FromSeconds(5))
                     {
                         return pair.Value;
