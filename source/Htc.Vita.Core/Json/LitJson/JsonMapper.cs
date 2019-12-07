@@ -782,7 +782,10 @@ namespace Htc.Vita.Core.Json.LitJson
             if (obj is IDictionary) {
                 writer.WriteObjectStart ();
                 foreach (DictionaryEntry entry in (IDictionary) obj) {
-                    writer.WritePropertyName ((string) entry.Key);
+                    var propertyName = entry.Key is string ?
+                        (string) entry.Key
+                        : Convert.ToString(entry.Key, CultureInfo.InvariantCulture);
+                    writer.WritePropertyName (propertyName);
                     WriteValue (entry.Value, writer, writer_is_private,
                                 depth + 1);
                 }
