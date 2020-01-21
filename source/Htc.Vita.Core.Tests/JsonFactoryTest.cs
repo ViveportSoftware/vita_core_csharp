@@ -1054,6 +1054,27 @@ namespace Htc.Vita.Core.Tests
             _output.WriteLine("jsonObject: " + jsonObject);
         }
 
+        [Fact]
+        public void JsonObject_18_PutIfNotNull()
+        {
+            var jsonFactory = JsonFactory.GetInstance();
+            Assert.NotNull(jsonFactory);
+            var jsonObject = jsonFactory.CreateJsonObject();
+            Assert.NotNull(jsonObject);
+            jsonObject.PutIfNotNull("key1", (string) null)
+                    .PutIfNotNull("key2", "")
+                    .PutIfNotNull("key3", (JsonArray) null)
+                    .PutIfNotNull("key4", jsonFactory.CreateJsonArray())
+                    .PutIfNotNull("key5", (JsonObject) null)
+                    .PutIfNotNull("key6", jsonFactory.CreateJsonObject());
+            Assert.False(jsonObject.HasKey("key1"));
+            Assert.True(jsonObject.HasKey("key2"));
+            Assert.False(jsonObject.HasKey("key3"));
+            Assert.True(jsonObject.HasKey("key4"));
+            Assert.False(jsonObject.HasKey("key5"));
+            Assert.True(jsonObject.HasKey("key6"));
+        }
+
         public class TestClass1
         {
             public bool TestBool1 { get; set; }
