@@ -228,7 +228,7 @@ namespace Htc.Vita.Core.Json
                 }
                 else
                 {
-                    _jsonData.Add(value);
+                    _jsonData.Add(data);
                     var count = _jsonData.Count;
                     for (var i = count - 1; i > index; i--)
                     {
@@ -252,7 +252,7 @@ namespace Htc.Vita.Core.Json
                 }
                 else
                 {
-                    _jsonData.Add(value);
+                    _jsonData.Add(data);
                     var count = _jsonData.Count;
                     for (var i = count - 1; i > index; i--)
                     {
