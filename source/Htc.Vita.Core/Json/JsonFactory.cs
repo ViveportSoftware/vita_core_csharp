@@ -4,26 +4,37 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Json
 {
+    /// <summary>
+    /// Class JsonFactory.
+    /// </summary>
     public abstract class JsonFactory
     {
         private static Dictionary<string, JsonFactory> Instances { get; } = new Dictionary<string, JsonFactory>();
 
         private static readonly object InstancesLock = new object();
 
-        private static Type defaultType = typeof(LitJsonJsonFactory);
+        private static Type _defaultType = typeof(LitJsonJsonFactory);
 
+        /// <summary>
+        /// Registers the instance type.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public static void Register<T>() where T : JsonFactory
         {
-            defaultType = typeof(T);
-            Logger.GetInstance(typeof(JsonFactory)).Info("Registered default " + typeof(JsonFactory).Name + " type to " + defaultType);
+            _defaultType = typeof(T);
+            Logger.GetInstance(typeof(JsonFactory)).Info("Registered default " + typeof(JsonFactory).Name + " type to " + _defaultType);
         }
 
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <returns>JsonFactory.</returns>
         public static JsonFactory GetInstance()
         {
             JsonFactory instance;
             try
             {
-                instance = DoGetInstance(defaultType);
+                instance = DoGetInstance(_defaultType);
             }
             catch (Exception e)
             {
@@ -71,16 +82,30 @@ namespace Htc.Vita.Core.Json
             return instance;
         }
 
+        /// <summary>
+        /// Creates an empty JsonArray.
+        /// </summary>
+        /// <returns>JsonArray.</returns>
         public JsonArray CreateJsonArray()
         {
             return OnCreateJsonArray();
         }
 
+        /// <summary>
+        /// Creates an empty JsonObject.
+        /// </summary>
+        /// <returns>JsonObject.</returns>
         public JsonObject CreateJsonObject()
         {
             return OnCreateJsonObject();
         }
 
+        /// <summary>
+        /// Deserializes the object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="content">The content.</param>
+        /// <returns>T.</returns>
         public T DeserializeObject<T>(string content)
         {
             var result = default(T);
@@ -100,6 +125,11 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
+        /// <summary>
+        /// Serializes the object.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>System.String.</returns>
         public string SerializeObject(object content)
         {
             if (content == null)
@@ -119,6 +149,11 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
+        /// <summary>
+        /// Gets the JsonArray.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>JsonArray.</returns>
         public JsonArray GetJsonArray(string content)
         {
             if (string.IsNullOrWhiteSpace(content))
@@ -138,6 +173,11 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
+        /// <summary>
+        /// Gets the JsonObject.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>JsonObject.</returns>
         public JsonObject GetJsonObject(string content)
         {
             if (string.IsNullOrWhiteSpace(content))
@@ -157,11 +197,40 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
+        /// <summary>
+        /// Called when [creating an empty JsonArray].
+        /// </summary>
+        /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnCreateJsonArray();
+        /// <summary>
+        /// Called when [creating an empty JsonObject].
+        /// </summary>
+        /// <returns>JsonObject.</returns>
         protected abstract JsonObject OnCreateJsonObject();
+        /// <summary>
+        /// Called when [deserializing object].
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="content">The content.</param>
+        /// <returns>T.</returns>
         protected abstract T OnDeserializeObject<T>(string content);
+        /// <summary>
+        /// Called when [getting the JsonArray].
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnGetJsonArray(string content);
+        /// <summary>
+        /// Called when [getting the JsonObject].
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>JsonObject.</returns>
         protected abstract JsonObject OnGetJsonObject(string content);
+        /// <summary>
+        /// Called when [serializing object].
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>System.String.</returns>
         protected abstract string OnSerializeObject(object content);
     }
 }
