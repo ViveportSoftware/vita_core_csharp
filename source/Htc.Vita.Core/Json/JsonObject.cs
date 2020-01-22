@@ -288,6 +288,45 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
+        /// <summary>Puts the value if it is not null.</summary>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public JsonObject PutIfNotNull(string key, string value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            return Put(key, value);
+        }
+
+        /// <summary>Puts the value if it is not null.</summary>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public JsonObject PutIfNotNull(string key, JsonArray value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            return Put(key, value);
+        }
+
+        /// <summary>Puts the value if it is not null.</summary>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public JsonObject PutIfNotNull(string key, JsonObject value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            return Put(key, value);
+        }
+
         public string ToPrettyString()
         {
             var result = string.Empty;

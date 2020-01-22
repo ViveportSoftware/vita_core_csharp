@@ -767,6 +767,49 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
+        public static void JsonArray_25_AppendIfNotNull()
+        {
+            var jsonFactory = JsonFactory.GetInstance();
+            Assert.NotNull(jsonFactory);
+            var jsonArray = jsonFactory.CreateJsonArray();
+            Assert.NotNull(jsonArray);
+            jsonArray.AppendIfNotNull((string) null);
+            Assert.Equal(0, jsonArray.Size());
+            jsonArray.AppendIfNotNull("");
+            Assert.Equal(1, jsonArray.Size());
+            jsonArray.AppendIfNotNull((JsonArray) null);
+            Assert.Equal(1, jsonArray.Size());
+            jsonArray.AppendIfNotNull(jsonFactory.CreateJsonArray());
+            Assert.Equal(2, jsonArray.Size());
+            jsonArray.AppendIfNotNull((JsonObject) null);
+            Assert.Equal(2, jsonArray.Size());
+            jsonArray.AppendIfNotNull(jsonFactory.CreateJsonObject());
+            Assert.Equal(3, jsonArray.Size());
+        }
+
+        [Fact]
+        public static void JsonArray_26_InsertIfNotNull()
+        {
+            var jsonFactory = JsonFactory.GetInstance();
+            Assert.NotNull(jsonFactory);
+            var jsonArray = jsonFactory.CreateJsonArray();
+            Assert.NotNull(jsonArray);
+            jsonArray.InsertIfNotNull(0, (string)null);
+            Assert.Equal(0, jsonArray.Size());
+            jsonArray.InsertIfNotNull(0, "");
+            Assert.Equal(1, jsonArray.Size());
+            jsonArray.InsertIfNotNull(0, (JsonArray)null);
+            Assert.Equal(1, jsonArray.Size());
+            jsonArray.InsertIfNotNull(0, jsonFactory.CreateJsonArray());
+            Assert.Equal(2, jsonArray.Size());
+
+            jsonArray.InsertIfNotNull(0, (JsonObject)null);
+            Assert.Equal(2, jsonArray.Size());
+            jsonArray.InsertIfNotNull(0, jsonFactory.CreateJsonObject());
+            Assert.Equal(3, jsonArray.Size());
+        }
+
+        [Fact]
         public static void JsonObject_00_HasKey()
         {
             var jsonFactory = JsonFactory.GetInstance();
@@ -1052,6 +1095,27 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(jsonObject);
             jsonObject.Put("title", "Vive视频");
             _output.WriteLine("jsonObject: " + jsonObject);
+        }
+
+        [Fact]
+        public void JsonObject_18_PutIfNotNull()
+        {
+            var jsonFactory = JsonFactory.GetInstance();
+            Assert.NotNull(jsonFactory);
+            var jsonObject = jsonFactory.CreateJsonObject();
+            Assert.NotNull(jsonObject);
+            jsonObject.PutIfNotNull("key1", (string) null)
+                    .PutIfNotNull("key2", "")
+                    .PutIfNotNull("key3", (JsonArray) null)
+                    .PutIfNotNull("key4", jsonFactory.CreateJsonArray())
+                    .PutIfNotNull("key5", (JsonObject) null)
+                    .PutIfNotNull("key6", jsonFactory.CreateJsonObject());
+            Assert.False(jsonObject.HasKey("key1"));
+            Assert.True(jsonObject.HasKey("key2"));
+            Assert.False(jsonObject.HasKey("key3"));
+            Assert.True(jsonObject.HasKey("key4"));
+            Assert.False(jsonObject.HasKey("key5"));
+            Assert.True(jsonObject.HasKey("key6"));
         }
 
         public class TestClass1
