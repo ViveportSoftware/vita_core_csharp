@@ -29,6 +29,9 @@ namespace Htc.Vita.Core.Util
             return data;
         }
 
+        /// <summary>Converts to JsonObject with bool properties.</summary>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
         public static JsonObject ToJsonObject(this Dictionary<string, bool> data)
         {
             if (data == null)
@@ -49,6 +52,9 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
+        /// <summary>Converts to JsonObject with double properties.</summary>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
         public static JsonObject ToJsonObject(this Dictionary<string, double> data)
         {
             if (data == null)
@@ -69,6 +75,9 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
+        /// <summary>Converts to JsonObject with float properties.</summary>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
         public static JsonObject ToJsonObject(this Dictionary<string, float> data)
         {
             if (data == null)
@@ -89,6 +98,9 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
+        /// <summary>Converts to JsonObject with int properties.</summary>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
         public static JsonObject ToJsonObject(this Dictionary<string, int> data)
         {
             if (data == null)
@@ -109,6 +121,9 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
+        /// <summary>Converts to JsonObject with long properties.</summary>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
         public static JsonObject ToJsonObject(this Dictionary<string, long> data)
         {
             if (data == null)
@@ -129,6 +144,9 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
+        /// <summary>Converts to JsonObject with string properties.</summary>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
         public static JsonObject ToJsonObject(this Dictionary<string, string> data)
         {
             if (data == null)
@@ -149,6 +167,9 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
+        /// <summary>Converts to JsonObject with JsonArray properties.</summary>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
         public static JsonObject ToJsonObject(this Dictionary<string, JsonArray> data)
         {
             if (data == null)
@@ -169,6 +190,9 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
+        /// <summary>Converts to JsonObject with JsonObject properties.</summary>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
         public static JsonObject ToJsonObject(this Dictionary<string, JsonObject> data)
         {
             if (data == null)
