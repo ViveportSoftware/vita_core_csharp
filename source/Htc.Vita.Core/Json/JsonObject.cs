@@ -327,6 +327,53 @@ namespace Htc.Vita.Core.Json
             return Put(key, value);
         }
 
+        /// <summary>Puts the value if it is not null and not white space.</summary>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public JsonObject PutIfNotNullAndNotWhiteSpace(string key, string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return this;
+            }
+            return Put(key, value);
+        }
+
+        /// <summary>Puts the value if it is not null and not empty.</summary>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public JsonObject PutIfNotNullAndNotEmpty(string key, JsonArray value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            if (value.Size() <= 0)
+            {
+                return this;
+            }
+            return Put(key, value);
+        }
+
+        /// <summary>Puts the value if it is not null and not empty.</summary>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public JsonObject PutIfNotNullAndNotEmpty(string key, JsonObject value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            if (value.AllKeys().Count <= 0)
+            {
+                return this;
+            }
+            return Put(key, value);
+        }
+
         public string ToPrettyString()
         {
             var result = string.Empty;
