@@ -246,5 +246,19 @@ namespace Htc.Vita.Core.Tests
                 Assert.True(matched);
             }
         }
+
+        [Fact]
+        public static void Default_1_ApplyIfNotNullAndNotWhiteSpace()
+        {
+            var map = new Dictionary<string, string>();
+            map.ApplyIfNotNullAndNotWhiteSpace("key1", null)
+                    .ApplyIfNotNullAndNotWhiteSpace("key2", "")
+                    .ApplyIfNotNullAndNotWhiteSpace("key3", " ")
+                    .ApplyIfNotNullAndNotWhiteSpace("key4", "1");
+            Assert.False(map.ContainsKey("key1"));
+            Assert.False(map.ContainsKey("key2"));
+            Assert.False(map.ContainsKey("key3"));
+            Assert.True(map.ContainsKey("key4"));
+        }
     }
 }

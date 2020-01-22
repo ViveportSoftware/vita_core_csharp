@@ -5,6 +5,30 @@ namespace Htc.Vita.Core.Util
 {
     public static class DictionaryExtension
     {
+        /// <summary>Applies the value if it is not null and not white space.</summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static Dictionary<string, string> ApplyIfNotNullAndNotWhiteSpace(
+                this Dictionary<string, string> data,
+                string key,
+                string value)
+        {
+            if (data == null)
+            {
+                return null;
+            }
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return data;
+            }
+
+            data[key] = value;
+            return data;
+        }
+
         public static JsonObject ToJsonObject(this Dictionary<string, bool> data)
         {
             if (data == null)
