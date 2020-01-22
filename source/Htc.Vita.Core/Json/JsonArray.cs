@@ -117,6 +117,42 @@ namespace Htc.Vita.Core.Json
             return result;
         }
 
+        /// <summary>Appends the value if it is not null.</summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public JsonArray AppendIfNotNull(string value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            return Append(value);
+        }
+
+        /// <summary>Appends the value if it is not null.</summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public JsonArray AppendIfNotNull(JsonArray value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            return Append(value);
+        }
+
+        /// <summary>Appends the value if it is not null.</summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public JsonArray AppendIfNotNull(JsonObject value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            return Append(value);
+        }
+
         public JsonArray Insert(int index, bool value)
         {
             var result = this;
@@ -227,6 +263,33 @@ namespace Htc.Vita.Core.Json
                 Logger.GetInstance(typeof(JsonArray)).Error(e.ToString());
             }
             return result;
+        }
+
+        public JsonArray InsertIfNotNull(int index, string value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            return Insert(index, value);
+        }
+
+        public JsonArray InsertIfNotNull(int index, JsonArray value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            return Insert(index, value);
+        }
+
+        public JsonArray InsertIfNotNull(int index, JsonObject value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            return Insert(index, value);
         }
 
         public bool ParseBool(int index)

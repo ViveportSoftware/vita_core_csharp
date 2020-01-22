@@ -767,6 +767,49 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
+        public static void JsonArray_25_AppendIfNotNull()
+        {
+            var jsonFactory = JsonFactory.GetInstance();
+            Assert.NotNull(jsonFactory);
+            var jsonArray = jsonFactory.CreateJsonArray();
+            Assert.NotNull(jsonArray);
+            jsonArray.AppendIfNotNull((string) null);
+            Assert.Equal(0, jsonArray.Size());
+            jsonArray.AppendIfNotNull("");
+            Assert.Equal(1, jsonArray.Size());
+            jsonArray.AppendIfNotNull((JsonArray) null);
+            Assert.Equal(1, jsonArray.Size());
+            jsonArray.AppendIfNotNull(jsonFactory.CreateJsonArray());
+            Assert.Equal(2, jsonArray.Size());
+            jsonArray.AppendIfNotNull((JsonObject) null);
+            Assert.Equal(2, jsonArray.Size());
+            jsonArray.AppendIfNotNull(jsonFactory.CreateJsonObject());
+            Assert.Equal(3, jsonArray.Size());
+        }
+
+        [Fact]
+        public static void JsonArray_26_InsertIfNotNull()
+        {
+            var jsonFactory = JsonFactory.GetInstance();
+            Assert.NotNull(jsonFactory);
+            var jsonArray = jsonFactory.CreateJsonArray();
+            Assert.NotNull(jsonArray);
+            jsonArray.InsertIfNotNull(0, (string)null);
+            Assert.Equal(0, jsonArray.Size());
+            jsonArray.InsertIfNotNull(0, "");
+            Assert.Equal(1, jsonArray.Size());
+            jsonArray.InsertIfNotNull(0, (JsonArray)null);
+            Assert.Equal(1, jsonArray.Size());
+            jsonArray.InsertIfNotNull(0, jsonFactory.CreateJsonArray());
+            Assert.Equal(2, jsonArray.Size());
+
+            jsonArray.InsertIfNotNull(0, (JsonObject)null);
+            Assert.Equal(2, jsonArray.Size());
+            jsonArray.InsertIfNotNull(0, jsonFactory.CreateJsonObject());
+            Assert.Equal(3, jsonArray.Size());
+        }
+
+        [Fact]
         public static void JsonObject_00_HasKey()
         {
             var jsonFactory = JsonFactory.GetInstance();
