@@ -15,9 +15,6 @@ namespace Htc.Vita.Core.Json
         /// <seealso cref="JsonObject" />
         public class LitJsonJsonObject : JsonObject
         {
-            /// <summary>
-            /// The json data
-            /// </summary>
             private readonly JsonData _jsonData;
 
             /// <summary>

@@ -7,56 +7,76 @@ namespace Htc.Vita.Core.Json
 {
     public partial class LitJsonJsonFactory
     {
+        /// <summary>
+        /// Class LitJsonJsonArray.
+        /// Implements the <see cref="JsonArray" />
+        /// </summary>
+        /// <seealso cref="JsonArray" />
         public class LitJsonJsonArray : JsonArray
         {
             private readonly JsonData _jsonData;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="LitJsonJsonArray"/> class.
+            /// </summary>
+            /// <param name="jsonData">The json data.</param>
             public LitJsonJsonArray(JsonData jsonData)
             {
                 _jsonData = jsonData;
             }
 
+            /// <summary>
+            /// Gets the inner instance.
+            /// </summary>
+            /// <returns>JsonData.</returns>
             public JsonData GetInnerInstance()
             {
                 return _jsonData;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnAppendBool(bool value)
             {
                 _jsonData?.Add(value);
                 return this;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnAppendDouble(double value)
             {
                 _jsonData?.Add(value);
                 return this;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnAppendFloat(float value)
             {
                 _jsonData?.Add((double)value);
                 return this;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnAppendInt(int value)
             {
                 _jsonData?.Add(value);
                 return this;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnAppendLong(long value)
             {
                 _jsonData?.Add(value);
                 return this;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnAppendString(string value)
             {
                 _jsonData?.Add(value);
                 return this;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnAppendJsonArray(JsonArray value)
             {
                 if (value == null)
@@ -67,6 +87,7 @@ namespace Htc.Vita.Core.Json
                 return this;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnAppendJsonObject(JsonObject value)
             {
                 if (value == null)
@@ -77,6 +98,7 @@ namespace Htc.Vita.Core.Json
                 return this;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnInsertBool(int index, bool value)
             {
                 if (_jsonData == null)
@@ -100,6 +122,7 @@ namespace Htc.Vita.Core.Json
                 return this;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnInsertDouble(int index, double value)
             {
                 if (_jsonData == null)
@@ -123,6 +146,7 @@ namespace Htc.Vita.Core.Json
                 return this;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnInsertFloat(int index, float value)
             {
                 if (_jsonData == null)
@@ -146,6 +170,7 @@ namespace Htc.Vita.Core.Json
                 return this;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnInsertInt(int index, int value)
             {
                 if (_jsonData == null)
@@ -169,6 +194,7 @@ namespace Htc.Vita.Core.Json
                 return this;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnInsertLong(int index, long value)
             {
                 if (_jsonData == null)
@@ -192,6 +218,7 @@ namespace Htc.Vita.Core.Json
                 return this;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnInsertString(int index, string value)
             {
                 if (_jsonData == null)
@@ -215,6 +242,7 @@ namespace Htc.Vita.Core.Json
                 return this;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnInsertJsonArray(int index, JsonArray value)
             {
                 if (_jsonData == null || value == null)
@@ -239,6 +267,7 @@ namespace Htc.Vita.Core.Json
                 return this;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnInsertJsonObject(int index, JsonObject value)
             {
                 if (_jsonData == null || value == null)
@@ -263,6 +292,7 @@ namespace Htc.Vita.Core.Json
                 return this;
             }
 
+            /// <inheritdoc />
             protected override bool OnParseBool(int index, bool defaultValue)
             {
                 var result = defaultValue;
@@ -289,6 +319,7 @@ namespace Htc.Vita.Core.Json
                 return result;
             }
 
+            /// <inheritdoc />
             protected override double OnParseDouble(int index, double defaultValue)
             {
                 var result = defaultValue;
@@ -323,6 +354,7 @@ namespace Htc.Vita.Core.Json
                 return result;
             }
 
+            /// <inheritdoc />
             protected override float OnParseFloat(int index, float defaultValue)
             {
                 var result = defaultValue;
@@ -357,6 +389,7 @@ namespace Htc.Vita.Core.Json
                 return result;
             }
 
+            /// <inheritdoc />
             protected override int OnParseInt(int index, int defaultValue)
             {
                 var result = defaultValue;
@@ -383,6 +416,7 @@ namespace Htc.Vita.Core.Json
                 return result;
             }
 
+            /// <inheritdoc />
             protected override long OnParseLong(int index, long defaultValue)
             {
                 var result = defaultValue;
@@ -409,6 +443,7 @@ namespace Htc.Vita.Core.Json
                 return result;
             }
 
+            /// <inheritdoc />
             protected override string OnParseString(int index, string defaultValue)
             {
                 var result = defaultValue;
@@ -427,6 +462,7 @@ namespace Htc.Vita.Core.Json
                 return result;
             }
 
+            /// <inheritdoc />
             protected override JsonArray OnParseJsonArray(int index)
             {
                 if (_jsonData == null || _jsonData.Count <= index)
@@ -448,6 +484,7 @@ namespace Htc.Vita.Core.Json
                 return null;
             }
 
+            /// <inheritdoc />
             protected override JsonObject OnParseJsonObject(int index)
             {
                 if (_jsonData == null || _jsonData.Count <= index)
@@ -469,6 +506,7 @@ namespace Htc.Vita.Core.Json
                 return null;
             }
 
+            /// <inheritdoc />
             protected override int OnSize()
             {
                 if (_jsonData != null && _jsonData.IsArray)
@@ -478,6 +516,7 @@ namespace Htc.Vita.Core.Json
                 return 0;
             }
 
+            /// <inheritdoc />
             protected override string OnToPrettyString()
             {
                 var builder = new StringBuilder();
@@ -490,6 +529,7 @@ namespace Htc.Vita.Core.Json
                 return builder.ToString();
             }
 
+            /// <inheritdoc />
             public override string ToString()
             {
                 if (_jsonData != null)
