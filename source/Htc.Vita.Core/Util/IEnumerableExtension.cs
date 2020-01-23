@@ -3,12 +3,16 @@ using Htc.Vita.Core.Json;
 
 namespace Htc.Vita.Core.Util
 {
-    /// <summary>A helper class to provide some extension method to handle IEnumerable easily.</summary>
+    /// <summary>
+    /// A helper class to provide some extension method to handle IEnumerable easily.
+    /// </summary>
     public static class IEnumerableExtension
     {
-        /// <summary>Converts to JSON Array with bool element.</summary>
+        /// <summary>
+        /// Converts to JSON Array with bool element.
+        /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns></returns>
+        /// <returns>JsonArray.</returns>
         public static JsonArray ToJsonArray(this IEnumerable<bool> data)
         {
             if (data == null)
@@ -24,9 +28,11 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
-        /// <summary>Converts to JSON Array with double element.</summary>
+        /// <summary>
+        /// Converts to JSON Array with double element.
+        /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns></returns>
+        /// <returns>JsonArray.</returns>
         public static JsonArray ToJsonArray(this IEnumerable<double> data)
         {
             if (data == null)
@@ -42,9 +48,11 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
-        /// <summary>Converts to JSON Array with float element.</summary>
+        /// <summary>
+        /// Converts to JSON Array with float element.
+        /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns></returns>
+        /// <returns>JsonArray.</returns>
         public static JsonArray ToJsonArray(this IEnumerable<float> data)
         {
             if (data == null)
@@ -60,9 +68,11 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
-        /// <summary>Converts to JSON Array with int element.</summary>
+        /// <summary>
+        /// Converts to JSON Array with int element.
+        /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns></returns>
+        /// <returns>JsonArray.</returns>
         public static JsonArray ToJsonArray(this IEnumerable<int> data)
         {
             if (data == null)
@@ -78,9 +88,11 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
-        /// <summary>Converts to JSON Array with long element.</summary>
+        /// <summary>
+        /// Converts to JSON Array with long element.
+        /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns></returns>
+        /// <returns>JsonArray.</returns>
         public static JsonArray ToJsonArray(this IEnumerable<long> data)
         {
             if (data == null)
@@ -96,9 +108,11 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
-        /// <summary>Converts to JSON Array with string element.</summary>
+        /// <summary>
+        /// Converts to JSON Array with string element.
+        /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns></returns>
+        /// <returns>JsonArray.</returns>
         public static JsonArray ToJsonArray(this IEnumerable<string> data)
         {
             if (data == null)
@@ -114,9 +128,11 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
-        /// <summary>Converts to JSON Array with JsonArray element.</summary>
+        /// <summary>
+        /// Converts to JSON Array with JsonArray element.
+        /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns></returns>
+        /// <returns>JsonArray.</returns>
         public static JsonArray ToJsonArray(this IEnumerable<JsonArray> data)
         {
             if (data == null)
@@ -132,9 +148,11 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
-        /// <summary>Converts to JSON Array with string element.</summary>
+        /// <summary>
+        /// Converts to JSON Array with string element.
+        /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns></returns>
+        /// <returns>JsonArray.</returns>
         public static JsonArray ToJsonArray(this IEnumerable<JsonObject> data)
         {
             if (data == null)
