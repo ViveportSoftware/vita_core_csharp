@@ -1118,6 +1118,44 @@ namespace Htc.Vita.Core.Tests
             Assert.True(jsonObject.HasKey("key6"));
         }
 
+        [Fact]
+        public void JsonObject_19_PutIfNotNullAndNotWhiteSpace()
+        {
+            var jsonFactory = JsonFactory.GetInstance();
+            Assert.NotNull(jsonFactory);
+            var jsonObject = jsonFactory.CreateJsonObject();
+            Assert.NotNull(jsonObject);
+            jsonObject.PutIfNotNullAndNotWhiteSpace("key1", (string) null)
+                    .PutIfNotNullAndNotWhiteSpace("key2", "")
+                    .PutIfNotNullAndNotWhiteSpace("key3", " ")
+                    .PutIfNotNullAndNotWhiteSpace("key4", "1");
+            Assert.False(jsonObject.HasKey("key1"));
+            Assert.False(jsonObject.HasKey("key2"));
+            Assert.False(jsonObject.HasKey("key3"));
+            Assert.True(jsonObject.HasKey("key4"));
+        }
+
+        [Fact]
+        public void JsonObject_20_PutIfNotNullAndNotEmpty()
+        {
+            var jsonFactory = JsonFactory.GetInstance();
+            Assert.NotNull(jsonFactory);
+            var jsonObject = jsonFactory.CreateJsonObject();
+            Assert.NotNull(jsonObject);
+            jsonObject.PutIfNotNullAndNotEmpty("key1", (JsonArray) null)
+                    .PutIfNotNullAndNotEmpty("key2", jsonFactory.CreateJsonArray())
+                    .PutIfNotNullAndNotEmpty("key3", jsonFactory.GetJsonArray("[1]"))
+                    .PutIfNotNullAndNotEmpty("key4", (JsonObject) null)
+                    .PutIfNotNullAndNotEmpty("key5", jsonFactory.CreateJsonObject())
+                    .PutIfNotNullAndNotEmpty("key6", jsonFactory.GetJsonObject("{\"a\":\"1\"}"));
+            Assert.False(jsonObject.HasKey("key1"));
+            Assert.False(jsonObject.HasKey("key2"));
+            Assert.True(jsonObject.HasKey("key3"));
+            Assert.False(jsonObject.HasKey("key4"));
+            Assert.False(jsonObject.HasKey("key5"));
+            Assert.True(jsonObject.HasKey("key6"));
+        }
+
         public class TestClass1
         {
             public bool TestBool1 { get; set; }
