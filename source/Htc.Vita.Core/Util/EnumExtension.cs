@@ -5,8 +5,18 @@ using System.Linq;
 
 namespace Htc.Vita.Core.Util
 {
+    /// <summary>
+    /// Class EnumExtension.
+    /// </summary>
     public static class EnumExtension
     {
+        /// <summary>
+        /// Applies the flags into the value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value">The value.</param>
+        /// <param name="flags">The flags.</param>
+        /// <returns>T.</returns>
         public static T ApplyFlags<T>(this T value, T flags) where T : struct, IConvertible, IComparable, IFormattable
         {
             return value.SetFlagsStatus(flags, true);
@@ -25,11 +35,24 @@ namespace Htc.Vita.Core.Util
             }
         }
 
+        /// <summary>
+        /// Clears the flags from the value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value">The value.</param>
+        /// <param name="flags">The flags.</param>
+        /// <returns>T.</returns>
         public static T ClearFlags<T>(this T value, T flags) where T : struct, IConvertible, IComparable, IFormattable
         {
             return value.SetFlagsStatus(flags, false);
         }
 
+        /// <summary>
+        /// Gets the applied flags from the value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value">The value.</param>
+        /// <returns>IEnumerable&lt;T&gt;.</returns>
         public static IEnumerable<T> GetAppliedFlags<T>(this T value) where T : struct, IConvertible, IComparable, IFormattable
         {
             CheckIsEnum<T>(true);
@@ -42,6 +65,12 @@ namespace Htc.Vita.Core.Util
             }
         }
 
+        /// <summary>
+        /// Gets the description from the enumeration value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value">The value.</param>
+        /// <returns>System.String.</returns>
         public static string GetDescription<T>(this T value) where T : struct, IConvertible, IComparable, IFormattable
         {
             CheckIsEnum<T>(false);
@@ -59,6 +88,13 @@ namespace Htc.Vita.Core.Util
             return attr?.Description;
         }
 
+        /// <summary>
+        /// Determines whether the specified flags are applied into the value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value">The value.</param>
+        /// <param name="flag">The flag.</param>
+        /// <returns><c>true</c> if [is flag applied] [the specified flag]; otherwise, <c>false</c>.</returns>
         public static bool IsFlagApplied<T>(this T value, T flag) where T : struct, IConvertible, IComparable, IFormattable
         {
             CheckIsEnum<T>(true);
@@ -67,6 +103,13 @@ namespace Htc.Vita.Core.Util
             return (longValue & longFlag) != 0 && ((longValue | longFlag) == longFlag || (longValue | longFlag) == longValue);
         }
 
+        /// <summary>
+        /// Determines whether any of the specified flags is applied into the value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value">The value.</param>
+        /// <param name="flag">The flag.</param>
+        /// <returns><c>true</c> if [is flag applied any] [the specified flag]; otherwise, <c>false</c>.</returns>
         public static bool IsFlagAppliedAny<T>(this T value, T flag) where T : struct, IConvertible, IComparable, IFormattable
         {
             CheckIsEnum<T>(true);
@@ -75,6 +118,13 @@ namespace Htc.Vita.Core.Util
             return (longValue & longFlag) != 0;
         }
 
+        /// <summary>
+        /// Determines whether the specified flags are only applied into the value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value">The value.</param>
+        /// <param name="flag">The flag.</param>
+        /// <returns><c>true</c> if [is flag applied only] [the specified flag]; otherwise, <c>false</c>.</returns>
         public static bool IsFlagAppliedOnly<T>(this T value, T flag) where T : struct, IConvertible, IComparable, IFormattable
         {
             CheckIsEnum<T>(true);
@@ -83,6 +133,13 @@ namespace Htc.Vita.Core.Util
             return (longValue & longFlag) != 0 && (longValue & ~longFlag) == 0;
         }
 
+        /// <summary>
+        /// Keeps the flags from the value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value">The value.</param>
+        /// <param name="flags">The flags.</param>
+        /// <returns>T.</returns>
         public static T KeepFlags<T>(this T value, T flags) where T : struct, IConvertible, IComparable, IFormattable
         {
             CheckIsEnum<T>(true);
@@ -91,6 +148,14 @@ namespace Htc.Vita.Core.Util
             return (T)Enum.ToObject(typeof(T), longValue & longFlags);
         }
 
+        /// <summary>
+        /// Sets the flags status.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value">The value.</param>
+        /// <param name="flags">The flags.</param>
+        /// <param name="on">if set to <c>true</c> [on].</param>
+        /// <returns>T.</returns>
         public static T SetFlagsStatus<T>(this T value, T flags, bool on) where T : struct, IConvertible, IComparable, IFormattable
         {
             CheckIsEnum<T>(true);
