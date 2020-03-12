@@ -377,6 +377,45 @@ namespace Htc.Vita.Core.Json
         }
 
         /// <summary>
+        /// Parses the URI value.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>Uri.</returns>
+        public Uri ParseUri(string key)
+        {
+            var data = ParseString(key);
+            if (string.IsNullOrWhiteSpace(data))
+            {
+                return null;
+            }
+
+            Uri result = null;
+            try
+            {
+                result = new Uri(data);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Parses the URI value if key exists.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>Uri.</returns>
+        public Uri ParseUriIfKeyExists(string key)
+        {
+            if (!HasKey(key))
+            {
+                return null;
+            }
+            return ParseUri(key);
+        }
+
+        /// <summary>
         /// Parses the JsonArray value.
         /// </summary>
         /// <param name="key">The key.</param>
