@@ -1119,6 +1119,33 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
+        public void JsonObject_18_ParseIfKeyExists()
+        {
+            var jsonFactory = JsonFactory.GetInstance();
+            Assert.NotNull(jsonFactory);
+            var jsonObject = jsonFactory.CreateJsonObject();
+            Assert.NotNull(jsonObject);
+            jsonObject.PutIfNotNull("key1", (string)null)
+                    .PutIfNotNull("key2", "")
+                    .PutIfNotNull("key3", (JsonArray)null)
+                    .PutIfNotNull("key4", jsonFactory.CreateJsonArray())
+                    .PutIfNotNull("key5", (JsonObject)null)
+                    .PutIfNotNull("key6", jsonFactory.CreateJsonObject());
+            Assert.False(jsonObject.HasKey("key1"));
+            Assert.True(jsonObject.HasKey("key2"));
+            Assert.False(jsonObject.HasKey("key3"));
+            Assert.True(jsonObject.HasKey("key4"));
+            Assert.False(jsonObject.HasKey("key5"));
+            Assert.True(jsonObject.HasKey("key6"));
+            Assert.Null(jsonObject.ParseStringIfKeyExists("key1"));
+            Assert.NotNull(jsonObject.ParseStringIfKeyExists("key2"));
+            Assert.Null(jsonObject.ParseJsonArrayIfKeyExists("key3"));
+            Assert.NotNull(jsonObject.ParseJsonArrayIfKeyExists("key4"));
+            Assert.Null(jsonObject.ParseJsonObjectIfKeyExists("key5"));
+            Assert.NotNull(jsonObject.ParseJsonObjectIfKeyExists("key6"));
+        }
+
+        [Fact]
         public void JsonObject_19_PutIfNotNullAndNotWhiteSpace()
         {
             var jsonFactory = JsonFactory.GetInstance();
