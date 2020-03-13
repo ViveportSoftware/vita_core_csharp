@@ -1,4 +1,4 @@
-﻿using Htc.Vita.Core.IO;
+using Htc.Vita.Core.IO;
 using Htc.Vita.Core.Log;
 using Xunit;
 

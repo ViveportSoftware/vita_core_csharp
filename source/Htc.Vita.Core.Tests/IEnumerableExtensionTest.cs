@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Htc.Vita.Core.Json;
 using Htc.Vita.Core.Util;
 using Xunit;

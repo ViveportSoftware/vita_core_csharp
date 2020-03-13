@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Htc.Vita.Core.Runtime;
 
 namespace Htc.Vita.Core.IO

@@ -1,4 +1,4 @@
-﻿namespace Htc.Vita.Core.Net
+namespace Htc.Vita.Core.Net
 {
     public static partial class RouteTracer
     {

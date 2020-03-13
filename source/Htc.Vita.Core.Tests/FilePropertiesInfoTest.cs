@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using Htc.Vita.Core.Diagnostics;
 using Xunit;
 using Xunit.Abstractions;

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Htc.Vita.Core.Shell;
 using Xunit;
 using Xunit.Abstractions;

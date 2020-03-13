@@ -1,4 +1,4 @@
-﻿using Htc.Vita.Core.Shell;
+using Htc.Vita.Core.Shell;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using Htc.Vita.Core.Runtime;
 using Htc.Vita.Core.Shell;

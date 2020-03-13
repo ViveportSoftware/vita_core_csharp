@@ -1,4 +1,4 @@
-﻿namespace Htc.Vita.Core.Crypto
+namespace Htc.Vita.Core.Crypto
 {
     public class DefaultAesFactory : AesFactory
     {

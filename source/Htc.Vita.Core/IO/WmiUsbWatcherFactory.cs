@@ -1,4 +1,4 @@
-﻿namespace Htc.Vita.Core.IO
+namespace Htc.Vita.Core.IO
 {
     public partial class WmiUsbWatcherFactory : UsbWatcherFactory
     {

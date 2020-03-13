@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Htc.Vita.Core.Diagnostics;
 using Htc.Vita.Core.Log;
