@@ -4,6 +4,9 @@ using System.Runtime.CompilerServices;
 
 namespace Htc.Vita.Core.Log
 {
+    /// <summary>
+    /// Class Logger.
+    /// </summary>
     public abstract class Logger
     {
         private static Dictionary<string, Logger> Instances { get; } = new Dictionary<string, Logger>();
@@ -12,14 +15,27 @@ namespace Htc.Vita.Core.Log
 
         private static Type defaultType = typeof(ConsoleLogger);
 
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
+        /// <value>The name.</value>
         public string Name { get; } = string.Empty;
 
+        /// <summary>
+        /// Registers instance type.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public static void Register<T>() where T : Logger
         {
             defaultType = typeof(T);
             Console.Error.WriteLine("Registered default logger type to " + defaultType);
         }
 
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>Logger.</returns>
         public static Logger GetInstance(Type type)
         {
             var name = string.Empty;
@@ -30,11 +46,20 @@ namespace Htc.Vita.Core.Log
             return GetInstance(name);
         }
 
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <returns>Logger.</returns>
         public static Logger GetInstance()
         {
             return GetInstance("");
         }
 
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns>Logger.</returns>
         public static Logger GetInstance(string name)
         {
             Logger instance;
@@ -51,6 +76,12 @@ namespace Htc.Vita.Core.Log
             return instance;
         }
 
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="type">The type.</param>
+        /// <returns>Logger.</returns>
         public static Logger GetInstance<T>(Type type) where T : Logger
         {
             var name = string.Empty;
@@ -61,11 +92,22 @@ namespace Htc.Vita.Core.Log
             return GetInstance<T>(name);
         }
 
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>Logger.</returns>
         public static Logger GetInstance<T>() where T : Logger
         {
             return GetInstance<T>("");
         }
 
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name">The name.</param>
+        /// <returns>Logger.</returns>
         public static Logger GetInstance<T>(string name) where T : Logger
         {
             Logger instance;
@@ -119,6 +161,10 @@ namespace Htc.Vita.Core.Log
             return instance;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Logger"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
         protected Logger(string name)
         {
             if (!string.IsNullOrWhiteSpace(name))
@@ -127,6 +173,11 @@ namespace Htc.Vita.Core.Log
             }
         }
 
+        /// <summary>
+        /// Dump the specified message in debug level.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="tag">The tag.</param>
         public void Debug(string message, [CallerMemberName] string tag = "")
         {
             try
@@ -139,6 +190,12 @@ namespace Htc.Vita.Core.Log
             }
         }
 
+        /// <summary>
+        /// Dump the specified message in debug level.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="exception">The exception.</param>
+        /// <param name="tag">The tag.</param>
         public void Debug(string message, Exception exception, [CallerMemberName] string tag = "")
         {
             try
@@ -151,6 +208,11 @@ namespace Htc.Vita.Core.Log
             }
         }
 
+        /// <summary>
+        /// Dump the specified message in error level.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="tag">The tag.</param>
         public void Error(string message, [CallerMemberName] string tag = "")
         {
             try
@@ -163,6 +225,12 @@ namespace Htc.Vita.Core.Log
             }
         }
 
+        /// <summary>
+        /// Dump the specified message in error level.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="exception">The exception.</param>
+        /// <param name="tag">The tag.</param>
         public void Error(string message, Exception exception, [CallerMemberName] string tag = "")
         {
             try
@@ -175,6 +243,11 @@ namespace Htc.Vita.Core.Log
             }
         }
 
+        /// <summary>
+        /// Dump the specified message in fatal level.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="tag">The tag.</param>
         public void Fatal(string message, [CallerMemberName] string tag = "")
         {
             try
@@ -187,6 +260,12 @@ namespace Htc.Vita.Core.Log
             }
         }
 
+        /// <summary>
+        /// Dump the specified message in fatal level.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="exception">The exception.</param>
+        /// <param name="tag">The tag.</param>
         public void Fatal(string message, Exception exception, [CallerMemberName] string tag = "")
         {
             try
@@ -199,6 +278,11 @@ namespace Htc.Vita.Core.Log
             }
         }
 
+        /// <summary>
+        /// Dump the specified message in information level.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="tag">The tag.</param>
         public void Info(string message, [CallerMemberName] string tag = "")
         {
             try
@@ -211,6 +295,12 @@ namespace Htc.Vita.Core.Log
             }
         }
 
+        /// <summary>
+        /// Dump the specified message in information level.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="exception">The exception.</param>
+        /// <param name="tag">The tag.</param>
         public void Info(string message, Exception exception, [CallerMemberName] string tag = "")
         {
             try
@@ -223,6 +313,9 @@ namespace Htc.Vita.Core.Log
             }
         }
 
+        /// <summary>
+        /// Shuts down this instance.
+        /// </summary>
         public void Shutdown()
         {
             try
@@ -235,6 +328,11 @@ namespace Htc.Vita.Core.Log
             }
         }
 
+        /// <summary>
+        /// Dump the specified message in trace level.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="tag">The tag.</param>
         public void Trace(string message, [CallerMemberName] string tag = "")
         {
             try
@@ -247,6 +345,12 @@ namespace Htc.Vita.Core.Log
             }
         }
 
+        /// <summary>
+        /// Dump the specified message in trace level.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="exception">The exception.</param>
+        /// <param name="tag">The tag.</param>
         public void Trace(string message, Exception exception, [CallerMemberName] string tag = "")
         {
             try
@@ -259,6 +363,11 @@ namespace Htc.Vita.Core.Log
             }
         }
 
+        /// <summary>
+        /// Dump the specified message in warning level.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="tag">The tag.</param>
         public void Warn(string message, [CallerMemberName] string tag = "")
         {
             try
@@ -271,6 +380,12 @@ namespace Htc.Vita.Core.Log
             }
         }
 
+        /// <summary>
+        /// Dump the specified message in warning level.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="exception">The exception.</param>
+        /// <param name="tag">The tag.</param>
         public void Warn(string message, Exception exception, [CallerMemberName] string tag = "")
         {
             try
@@ -283,18 +398,87 @@ namespace Htc.Vita.Core.Log
             }
         }
 
+        /// <summary>
+        /// Called when dumping in debug level.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <param name="message">The message.</param>
         protected abstract void OnDebug(string tag, string message);
+        /// <summary>
+        /// Called when dumping in debug level.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="exception">The exception.</param>
         protected abstract void OnDebug(string tag, string message, Exception exception);
+        /// <summary>
+        /// Called when dumping in error level.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <param name="message">The message.</param>
         protected abstract void OnError(string tag, string message);
+        /// <summary>
+        /// Called when dumping in error level.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="exception">The exception.</param>
         protected abstract void OnError(string tag, string message, Exception exception);
+        /// <summary>
+        /// Called when dumping in fatal level.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <param name="message">The message.</param>
         protected abstract void OnFatal(string tag, string message);
+        /// <summary>
+        /// Called when dumping in fatal level.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="exception">The exception.</param>
         protected abstract void OnFatal(string tag, string message, Exception exception);
+        /// <summary>
+        /// Called when dumping in information level.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <param name="message">The message.</param>
         protected abstract void OnInfo(string tag, string message);
+        /// <summary>
+        /// Called when dumping in information level.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="exception">The exception.</param>
         protected abstract void OnInfo(string tag, string message, Exception exception);
+        /// <summary>
+        /// Called when shutting down.
+        /// </summary>
         protected abstract void OnShutdown();
+        /// <summary>
+        /// Called when dumping in trace level.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <param name="message">The message.</param>
         protected abstract void OnTrace(string tag, string message);
+        /// <summary>
+        /// Called when dumping in trace level.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="exception">The exception.</param>
         protected abstract void OnTrace(string tag, string message, Exception exception);
+        /// <summary>
+        /// Called when dumping in warning level.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <param name="message">The message.</param>
         protected abstract void OnWarn(string tag, string message);
+        /// <summary>
+        /// Called when dumping in warning level.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="exception">The exception.</param>
         protected abstract void OnWarn(string tag, string message, Exception exception);
     }
 }
