@@ -7,8 +7,17 @@ using Htc.Vita.Core.Runtime;
 
 namespace Htc.Vita.Core.Util
 {
+    /// <summary>
+    /// Class Extract.
+    /// </summary>
     public static partial class Extract
     {
+        /// <summary>
+        /// Extract resource from the file to icon.
+        /// </summary>
+        /// <param name="fromFile">The file.</param>
+        /// <param name="toIcon">The icon.</param>
+        /// <returns><c>true</c> if success, <c>false</c> otherwise.</returns>
         public static bool FromFileToIcon(
                 FileInfo fromFile,
                 FileInfo toIcon)
@@ -20,6 +29,13 @@ namespace Htc.Vita.Core.Util
             return Windows.FromFileToIconInPlatform(fromFile, toIcon);
         }
 
+        /// <summary>
+        /// Extract resource from the assembly to file by resource name.
+        /// </summary>
+        /// <param name="byResourceName">The resource name.</param>
+        /// <param name="toFile">The file.</param>
+        /// <param name="compressionType">Compression type.</param>
+        /// <returns><c>true</c> if success, <c>false</c> otherwise.</returns>
         public static bool FromAssemblyToFileByResourceName(
                 string byResourceName,
                 FileInfo toFile,
@@ -95,9 +111,18 @@ namespace Htc.Vita.Core.Util
             return false;
         }
 
+        /// <summary>
+        /// Enum CompressionType
+        /// </summary>
         public enum CompressionType
         {
+            /// <summary>
+            /// No compression
+            /// </summary>
             None,
+            /// <summary>
+            /// The GZip compression
+            /// </summary>
             Gzip
         }
     }
