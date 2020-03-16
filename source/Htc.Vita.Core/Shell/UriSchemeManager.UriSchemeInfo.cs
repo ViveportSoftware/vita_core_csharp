@@ -1,4 +1,4 @@
-﻿namespace Htc.Vita.Core.Shell
+namespace Htc.Vita.Core.Shell
 {
     public abstract partial class UriSchemeManager
     {

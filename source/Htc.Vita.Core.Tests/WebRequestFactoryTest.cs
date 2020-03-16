@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Htc.Vita.Core.Net;
 using Xunit;
 using Xunit.Abstractions;

@@ -1,4 +1,4 @@
-﻿namespace Htc.Vita.Core.Interop
+namespace Htc.Vita.Core.Interop
 {
     internal static class Libraries
     {

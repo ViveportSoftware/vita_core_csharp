@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Htc.Vita.Core.Crypto;
 using Xunit;
 using Xunit.Abstractions;

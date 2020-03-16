@@ -1,11 +1,19 @@
-﻿using System;
+using System;
 using System.Text;
 using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Util
 {
+    /// <summary>
+    /// Class Convert.
+    /// </summary>
     public static class Convert
     {
+        /// <summary>
+        /// Converts data from the Base64 string to byte array.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>System.Byte[].</returns>
         public static byte[] FromBase64String(string content)
         {
             if (string.IsNullOrEmpty(content))
@@ -25,6 +33,11 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
+        /// <summary>
+        /// Converts data from the hexadecimal string to byte array.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>System.Byte[].</returns>
         public static byte[] FromHexString(string content)
         {
             if (string.IsNullOrEmpty(content))
@@ -40,11 +53,22 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
+        /// <summary>
+        /// Converts data from string to bool.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>System.Boolean.</returns>
         public static bool ToBool(string content)
         {
             return ToBool(content, false);
         }
 
+        /// <summary>
+        /// Converts data from string to bool.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>System.Boolean.</returns>
         public static bool ToBool(string content, bool defaultValue)
         {
             if (string.IsNullOrWhiteSpace(content))
@@ -64,11 +88,22 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
+        /// <summary>
+        /// Converts data from string to double.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>System.Double.</returns>
         public static double ToDouble(string content)
         {
             return ToDouble(content, 0.0D);
         }
 
+        /// <summary>
+        /// Converts data from string to double.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>System.Double.</returns>
         public static double ToDouble(string content, double defaultValue)
         {
             if (string.IsNullOrWhiteSpace(content))
@@ -89,11 +124,22 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
+        /// <summary>
+        /// Converts data from string to int.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>System.Int32.</returns>
         public static int ToInt32(string content)
         {
             return ToInt32(content, 0);
         }
 
+        /// <summary>
+        /// Converts data from string to int.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>System.Int32.</returns>
         public static int ToInt32(string content, int defaultValue)
         {
             if (string.IsNullOrWhiteSpace(content))
@@ -113,11 +159,22 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
+        /// <summary>
+        /// Converts data from string to long.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>System.Int64.</returns>
         public static long ToInt64(string content)
         {
             return ToInt64(content, 0L);
         }
 
+        /// <summary>
+        /// Converts data from string to long.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>System.Int64.</returns>
         public static long ToInt64(string content, long defaultValue)
         {
             if (string.IsNullOrWhiteSpace(content))
@@ -137,6 +194,11 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
+        /// <summary>
+        /// Converts data from byte array to Base64 string.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        /// <returns>System.String.</returns>
         public static string ToBase64String(byte[] bytes)
         {
             if (bytes == null)
@@ -156,6 +218,11 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
+        /// <summary>
+        /// Converts data from byte array to hexadecimal string.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        /// <returns>System.String.</returns>
         public static string ToHexString(byte[] bytes)
         {
             if (bytes == null)
@@ -172,12 +239,22 @@ namespace Htc.Vita.Core.Util
             return buffer.ToString();
         }
 
+        /// <summary>
+        /// Converts data from timestamp string in millisecond to datetime.
+        /// </summary>
+        /// <param name="timestampStringInMilli">The timestamp string in millisecond.</param>
+        /// <returns>System.DateTime.</returns>
         public static DateTime ToDateTime(string timestampStringInMilli)
         {
             var timestamp = ToDouble(timestampStringInMilli);
             return new DateTime(1970, 1, 1).AddMilliseconds(timestamp);
         }
 
+        /// <summary>
+        /// Converts data from datetime to timestamp in millisecond.
+        /// </summary>
+        /// <param name="dateTime">The date time.</param>
+        /// <returns>System.Int64.</returns>
         public static long ToTimestampInMilli(DateTime dateTime)
         {
             return (long)(dateTime - new DateTime(1970, 1, 1)).TotalMilliseconds;

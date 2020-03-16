@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Htc.Vita.Core.Log;
 
@@ -77,6 +77,31 @@ namespace Htc.Vita.Core.Json
         }
 
         /// <summary>
+        /// Parses the bool if key exist.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>System.Boolean.</returns>
+        public bool ParseBoolIfKeyExist(string key)
+        {
+            return ParseBoolIfKeyExist(key, false);
+        }
+
+        /// <summary>
+        /// Parses the bool if key exist.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>System.Boolean.</returns>
+        public bool ParseBoolIfKeyExist(string key, bool defaultValue)
+        {
+            if (!HasKey(key))
+            {
+                return defaultValue;
+            }
+            return ParseBool(key, defaultValue);
+        }
+
+        /// <summary>
         /// Parses the double value.
         /// </summary>
         /// <param name="key">The key.</param>
@@ -104,6 +129,31 @@ namespace Htc.Vita.Core.Json
                 Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
+        }
+
+        /// <summary>
+        /// Parses the double value if key exist.
+        /// </summary>
+        /// <param name="key">The key if key exist.</param>
+        /// <returns>System.Double.</returns>
+        public double ParseDoubleIfKeyExists(string key)
+        {
+            return ParseDoubleIfKeyExists(key, 0.0D);
+        }
+
+        /// <summary>
+        /// Parses the double value if key exist.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>System.Double.</returns>
+        public double ParseDoubleIfKeyExists(string key, double defaultValue)
+        {
+            if (!HasKey(key))
+            {
+                return defaultValue;
+            }
+            return ParseDouble(key, defaultValue);
         }
 
         /// <summary>
@@ -137,6 +187,31 @@ namespace Htc.Vita.Core.Json
         }
 
         /// <summary>
+        /// Parses the float value if key exist.
+        /// </summary>
+        /// <param name="key">The key if key exist.</param>
+        /// <returns>System.Single.</returns>
+        public float ParseFloatIfKeyExists(string key)
+        {
+            return ParseFloatIfKeyExists(key, 0.0F);
+        }
+
+        /// <summary>
+        /// Parses the float value if key exist.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>System.Single.</returns>
+        public float ParseFloatIfKeyExists(string key, float defaultValue)
+        {
+            if (!HasKey(key))
+            {
+                return defaultValue;
+            }
+            return ParseFloat(key, defaultValue);
+        }
+
+        /// <summary>
         /// Parses the int value.
         /// </summary>
         /// <param name="key">The key.</param>
@@ -164,6 +239,31 @@ namespace Htc.Vita.Core.Json
                 Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
+        }
+
+        /// <summary>
+        /// Parses the int value if key exist.
+        /// </summary>
+        /// <param name="key">The key if key exist.</param>
+        /// <returns>System.Int32.</returns>
+        public int ParseIntIfKeyExists(string key)
+        {
+            return ParseIntIfKeyExists(key, 0);
+        }
+
+        /// <summary>
+        /// Parses the int value if key exist.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>System.Int32.</returns>
+        public int ParseIntIfKeyExists(string key, int defaultValue)
+        {
+            if (!HasKey(key))
+            {
+                return defaultValue;
+            }
+            return ParseInt(key, defaultValue);
         }
 
         /// <summary>
@@ -197,6 +297,31 @@ namespace Htc.Vita.Core.Json
         }
 
         /// <summary>
+        /// Parses the long value if key exist.
+        /// </summary>
+        /// <param name="key">The key if key exist.</param>
+        /// <returns>System.Int64.</returns>
+        public long ParseLongIfKeyExists(string key)
+        {
+            return ParseLongIfKeyExists(key, 0L);
+        }
+
+        /// <summary>
+        /// Parses the long value if key exist.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>System.Int64.</returns>
+        public long ParseLongIfKeyExists(string key, long defaultValue)
+        {
+            if (!HasKey(key))
+            {
+                return defaultValue;
+            }
+            return ParseLong(key, defaultValue);
+        }
+
+        /// <summary>
         /// Parses the string value.
         /// </summary>
         /// <param name="key">The key.</param>
@@ -227,6 +352,70 @@ namespace Htc.Vita.Core.Json
         }
 
         /// <summary>
+        /// Parses the string value if key exist.
+        /// </summary>
+        /// <param name="key">The key if key exist.</param>
+        /// <returns>System.String.</returns>
+        public string ParseStringIfKeyExists(string key)
+        {
+            return ParseStringIfKeyExists(key, null);
+        }
+
+        /// <summary>
+        /// Parses the string value if key exist.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>System.String.</returns>
+        public string ParseStringIfKeyExists(string key, string defaultValue)
+        {
+            if (!HasKey(key))
+            {
+                return defaultValue;
+            }
+            return ParseString(key, defaultValue);
+        }
+
+        /// <summary>
+        /// Parses the URI value.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>Uri.</returns>
+        public Uri ParseUri(string key)
+        {
+            var data = ParseString(key);
+            if (string.IsNullOrWhiteSpace(data))
+            {
+                return null;
+            }
+
+            Uri result = null;
+            try
+            {
+                result = new Uri(data);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Parses the URI value if key exists.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>Uri.</returns>
+        public Uri ParseUriIfKeyExists(string key)
+        {
+            if (!HasKey(key))
+            {
+                return null;
+            }
+            return ParseUri(key);
+        }
+
+        /// <summary>
         /// Parses the JsonArray value.
         /// </summary>
         /// <param name="key">The key.</param>
@@ -246,6 +435,20 @@ namespace Htc.Vita.Core.Json
         }
 
         /// <summary>
+        /// Parses the JsonArray value if key exist.
+        /// </summary>
+        /// <param name="key">The key if key exist.</param>
+        /// <returns>JsonArray.</returns>
+        public JsonArray ParseJsonArrayIfKeyExists(string key)
+        {
+            if (!HasKey(key))
+            {
+                return null;
+            }
+            return ParseJsonArray(key);
+        }
+
+        /// <summary>
         /// Parses the JsonObject value.
         /// </summary>
         /// <param name="key">The key.</param>
@@ -262,6 +465,20 @@ namespace Htc.Vita.Core.Json
                 Logger.GetInstance(typeof(JsonObject)).Error(e.ToString());
             }
             return result;
+        }
+
+        /// <summary>
+        /// Parses the JsonObject value if key exist.
+        /// </summary>
+        /// <param name="key">The key if key exist.</param>
+        /// <returns>JsonArray.</returns>
+        public JsonObject ParseJsonObjectIfKeyExists(string key)
+        {
+            if (!HasKey(key))
+            {
+                return null;
+            }
+            return ParseJsonObject(key);
         }
 
         /// <summary>

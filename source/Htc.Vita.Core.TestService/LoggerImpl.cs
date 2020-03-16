@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Net;

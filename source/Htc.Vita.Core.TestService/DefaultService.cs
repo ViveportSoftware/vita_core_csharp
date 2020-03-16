@@ -1,4 +1,4 @@
-﻿using System.ServiceProcess;
+using System.ServiceProcess;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Runtime;
 

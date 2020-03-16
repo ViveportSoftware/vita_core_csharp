@@ -1,4 +1,4 @@
-﻿namespace Htc.Vita.Core.Runtime
+namespace Htc.Vita.Core.Runtime
 {
     public abstract partial class ProcessWatcher
     {

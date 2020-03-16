@@ -1,4 +1,4 @@
-﻿namespace Htc.Vita.Core.Preference
+namespace Htc.Vita.Core.Preference
 {
     public partial class DefaultPreferenceFactory : PreferenceFactory
     {

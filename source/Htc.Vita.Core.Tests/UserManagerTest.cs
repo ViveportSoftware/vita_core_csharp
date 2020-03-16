@@ -1,4 +1,4 @@
-﻿using Htc.Vita.Core.Runtime;
+using Htc.Vita.Core.Runtime;
 using Xunit;
 using Xunit.Abstractions;
 

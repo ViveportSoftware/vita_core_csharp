@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Net;
 using Xunit;

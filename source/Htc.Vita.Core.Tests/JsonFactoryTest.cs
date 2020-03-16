@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Htc.Vita.Core.Json;
 using Htc.Vita.Core.Json.LitJson;
 using Xunit;
@@ -810,6 +810,17 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
+        public static void JsonArray_27_ParseUri()
+        {
+            var jsonFactory = JsonFactory.GetInstance();
+            Assert.NotNull(jsonFactory);
+            var jsonObject = jsonFactory.GetJsonArray("[\"http://localhost\"]");
+            Assert.NotNull(jsonObject);
+            var value = jsonObject.ParseUri(0);
+            Assert.NotNull(value);
+        }
+
+        [Fact]
         public static void JsonObject_00_HasKey()
         {
             var jsonFactory = JsonFactory.GetInstance();
@@ -1098,7 +1109,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public void JsonObject_18_PutIfNotNull()
+        public static void JsonObject_18_PutIfNotNull()
         {
             var jsonFactory = JsonFactory.GetInstance();
             Assert.NotNull(jsonFactory);
@@ -1116,6 +1127,46 @@ namespace Htc.Vita.Core.Tests
             Assert.True(jsonObject.HasKey("key4"));
             Assert.False(jsonObject.HasKey("key5"));
             Assert.True(jsonObject.HasKey("key6"));
+        }
+
+        [Fact]
+        public static void JsonObject_18_ParseIfKeyExists()
+        {
+            var jsonFactory = JsonFactory.GetInstance();
+            Assert.NotNull(jsonFactory);
+            var jsonObject = jsonFactory.CreateJsonObject();
+            Assert.NotNull(jsonObject);
+            jsonObject.PutIfNotNull("key1", (string)null)
+                    .PutIfNotNull("key2", "")
+                    .PutIfNotNull("key3", (JsonArray)null)
+                    .PutIfNotNull("key4", jsonFactory.CreateJsonArray())
+                    .PutIfNotNull("key5", (JsonObject)null)
+                    .PutIfNotNull("key6", jsonFactory.CreateJsonObject());
+            Assert.False(jsonObject.HasKey("key1"));
+            Assert.True(jsonObject.HasKey("key2"));
+            Assert.False(jsonObject.HasKey("key3"));
+            Assert.True(jsonObject.HasKey("key4"));
+            Assert.False(jsonObject.HasKey("key5"));
+            Assert.True(jsonObject.HasKey("key6"));
+            Assert.Null(jsonObject.ParseStringIfKeyExists("key1"));
+            Assert.NotNull(jsonObject.ParseStringIfKeyExists("key2"));
+            Assert.Null(jsonObject.ParseJsonArrayIfKeyExists("key3"));
+            Assert.NotNull(jsonObject.ParseJsonArrayIfKeyExists("key4"));
+            Assert.Null(jsonObject.ParseJsonObjectIfKeyExists("key5"));
+            Assert.NotNull(jsonObject.ParseJsonObjectIfKeyExists("key6"));
+        }
+
+        [Fact]
+        public static void JsonObject_19_ParseUri()
+        {
+            var jsonFactory = JsonFactory.GetInstance();
+            Assert.NotNull(jsonFactory);
+            var jsonObject = jsonFactory.GetJsonObject("{\"key\":\"http://localhost\"}");
+            Assert.NotNull(jsonObject);
+            var value = jsonObject.ParseUri("key");
+            Assert.NotNull(value);
+            value = jsonObject.ParseUriIfKeyExists("key2");
+            Assert.Null(value);
         }
 
         [Fact]

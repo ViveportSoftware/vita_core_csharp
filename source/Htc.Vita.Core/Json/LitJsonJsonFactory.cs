@@ -1,4 +1,4 @@
-﻿using Htc.Vita.Core.Json.LitJson;
+using Htc.Vita.Core.Json.LitJson;
 
 namespace Htc.Vita.Core.Json
 {

@@ -1,4 +1,4 @@
-﻿namespace Htc.Vita.Core.IO
+namespace Htc.Vita.Core.IO
 {
     public static partial class GraphicsDeviceManager
     {

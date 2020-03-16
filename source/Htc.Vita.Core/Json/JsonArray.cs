@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Json
@@ -579,6 +579,31 @@ namespace Htc.Vita.Core.Json
             try
             {
                 result = OnParseString(index, defaultValue);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(JsonArray)).Error(e.ToString());
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Parses the URI value.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <returns>Uri.</returns>
+        public Uri ParseUri(int index)
+        {
+            var data = ParseString(index);
+            if (string.IsNullOrWhiteSpace(data))
+            {
+                return null;
+            }
+
+            Uri result = null;
+            try
+            {
+                result = new Uri(data);
             }
             catch (Exception e)
             {

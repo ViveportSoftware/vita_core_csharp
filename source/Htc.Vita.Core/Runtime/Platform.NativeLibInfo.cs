@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Htc.Vita.Core.Runtime
 {

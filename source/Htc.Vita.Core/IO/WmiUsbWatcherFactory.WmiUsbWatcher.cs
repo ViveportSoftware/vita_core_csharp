@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Management;
 
 namespace Htc.Vita.Core.IO
