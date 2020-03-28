@@ -8,21 +8,45 @@ using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Runtime
 {
+    /// <summary>
+    /// Class Platform.
+    /// </summary>
     public static partial class Platform
     {
+        /// <summary>
+        /// Gets a value indicating whether this instance is running on .Net Core.
+        /// </summary>
+        /// <value><c>true</c> if this instance is is running on .Net Core; otherwise, <c>false</c>.</value>
         public static bool IsDotNetCore { get; } = CheckIsDotNetCore();
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is running on Linux.
+        /// </summary>
+        /// <value><c>true</c> if this instance is running on Linux; otherwise, <c>false</c>.</value>
         public static bool IsLinux { get; } = CheckIsLinux();
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is running on Mac OSX.
+        /// </summary>
+        /// <value><c>true</c> if this instance is running on Mac OSX; otherwise, <c>false</c>.</value>
         public static bool IsMacOsX { get; } = CheckIsMacOsX();
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is running on Mono.
+        /// </summary>
+        /// <value><c>true</c> if this instance is running on Mono; otherwise, <c>false</c>.</value>
         public static bool IsMono { get; } = CheckIsMono();
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is running on Windows.
+        /// </summary>
+        /// <value><c>true</c> if this instance is running on Windows; otherwise, <c>false</c>.</value>
         public static bool IsWindows { get; } = CheckIsWindows();
 
-        /**
-         * https://apisof.net/catalog/System.Runtime.Loader.AssemblyLoadContext
-         */
+        /// <summary>
+        /// Checks if the platform is .Net Core. See <see href="https://apisof.net/catalog/System.Runtime.Loader.AssemblyLoadContext"/>
+        /// </summary>
+        /// <returns><c>true</c> if the platform is .Net Core, <c>false</c> otherwise.</returns>
         public static bool CheckIsDotNetCore()
         {
             try
@@ -31,11 +55,15 @@ namespace Htc.Vita.Core.Runtime
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Platform)).Error("Can not detect if process is running on .NET Core runtime: " + e.Message);
+                Logger.GetInstance(typeof(Platform)).Error($"Can not detect if process is running on .NET Core runtime: {e.Message}");
             }
             return false;
         }
 
+        /// <summary>
+        /// Checks if the platform is Linux.
+        /// </summary>
+        /// <returns><c>true</c> if the platform is Linux, <c>false</c> otherwise.</returns>
         public static bool CheckIsLinux()
         {
             if (!File.Exists(@"/proc/sys/kernel/ostype"))
@@ -50,6 +78,10 @@ namespace Htc.Vita.Core.Runtime
             return true;
         }
 
+        /// <summary>
+        /// Checks if the platform is Mac OSX
+        /// </summary>
+        /// <returns><c>true</c> if the platform is Mac OSX, <c>false</c> otherwise.</returns>
         public static bool CheckIsMacOsX()
         {
             if (!File.Exists(@"/System/Library/CoreServices/SystemVersion.plist"))
@@ -59,9 +91,10 @@ namespace Htc.Vita.Core.Runtime
             return true;
         }
 
-        /**
-         * https://www.mono-project.com/docs/gui/winforms/porting-winforms-applications/
-         */
+        /// <summary>
+        /// Checks if the platform is Mono. See <see href="https://www.mono-project.com/docs/gui/winforms/porting-winforms-applications/"/>
+        /// </summary>
+        /// <returns><c>true</c> if the platform is Mono, <c>false</c> otherwise.</returns>
         public static bool CheckIsMono()
         {
             try
@@ -70,11 +103,15 @@ namespace Htc.Vita.Core.Runtime
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Platform)).Error("Can not detect if process is running on Mono runtime: " + e.Message);
+                Logger.GetInstance(typeof(Platform)).Error($"Can not detect if process is running on Mono runtime: {e.Message}");
             }
             return false;
         }
 
+        /// <summary>
+        /// Checks if the platform is Windows.
+        /// </summary>
+        /// <returns><c>true</c> if the platform is Windows, <c>false</c> otherwise.</returns>
         public static bool CheckIsWindows()
         {
             var windir = Environment.GetEnvironmentVariable("windir");
@@ -114,7 +151,7 @@ namespace Htc.Vita.Core.Runtime
             }
             if (result == ProcessArch.Unknown)
             {
-                Logger.GetInstance(typeof(Platform)).Error("Unknown imageFileMachine: " + imageFileMachine);
+                Logger.GetInstance(typeof(Platform)).Error($"Unknown imageFileMachine: {imageFileMachine}");
             }
             return result;
         }
@@ -130,9 +167,13 @@ namespace Htc.Vita.Core.Runtime
             {
                 return;
             }
-            Debug.WriteLine("[" + qualifiedName + "] " + message);
+            Debug.WriteLine($"[{qualifiedName}] {message}");
         }
 
+        /// <summary>
+        /// Detects the running operating system.
+        /// </summary>
+        /// <returns>Type.</returns>
         public static Type Detect()
         {
             if (CheckIsWindows())
@@ -154,6 +195,10 @@ namespace Htc.Vita.Core.Runtime
             return Type.Unknown;
         }
 
+        /// <summary>
+        /// Detects the running operating system architecture.
+        /// </summary>
+        /// <returns>OsArch.</returns>
         public static OsArch DetectOsArch()
         {
             if (IntPtr.Size == 8)
@@ -167,6 +212,10 @@ namespace Htc.Vita.Core.Runtime
             return OsArch.Unknown;
         }
 
+        /// <summary>
+        /// Detects the running process architecture.
+        /// </summary>
+        /// <returns>ProcessArch.</returns>
         public static ProcessArch DetectProcessArch()
         {
             if (!IsWindows)
@@ -188,8 +237,8 @@ namespace Htc.Vita.Core.Runtime
 
                     if (success)
                     {
-                        Logger.GetInstance(typeof(Platform)).Info("processMachine: " + processMachine);
-                        Logger.GetInstance(typeof(Platform)).Info("nativeMachine: " + nativeMachine);
+                        Logger.GetInstance(typeof(Platform)).Info($"processMachine: {processMachine}");
+                        Logger.GetInstance(typeof(Platform)).Info($"nativeMachine: {nativeMachine}");
                         if (processMachine != Interop.Windows.ImageFileMachine.Unknown)
                         {
                             return ConvertFrom(processMachine);
@@ -205,12 +254,16 @@ namespace Htc.Vita.Core.Runtime
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Platform)).Error("Can not detect process architecture: " + e.Message);
+                Logger.GetInstance(typeof(Platform)).Error($"Can not detect process architecture: {e.Message}");
             }
 
             return IntPtr.Size == 8 ? ProcessArch.X64 : ProcessArch.X86;
         }
 
+        /// <summary>
+        /// Exits the platform
+        /// </summary>
+        /// <param name="exitType">Type of the exit.</param>
         public static void Exit(ExitType exitType)
         {
             if (IsWindows)
@@ -219,11 +272,19 @@ namespace Htc.Vita.Core.Runtime
             }
         }
 
+        /// <summary>
+        /// Gets the epoch time.
+        /// </summary>
+        /// <returns>DateTime.</returns>
         public static DateTime GetEpochTime()
         {
             return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         }
 
+        /// <summary>
+        /// Gets the framework name.
+        /// </summary>
+        /// <returns>System.String.</returns>
         public static string GetFrameworkName()
         {
             if (IsDotNetCore)
@@ -241,6 +302,10 @@ namespace Htc.Vita.Core.Runtime
             return "Unknown framework";
         }
 
+        /// <summary>
+        /// Gets the machine identifier.
+        /// </summary>
+        /// <returns>System.String.</returns>
         public static string GetMachineId()
         {
             var result = GetMachineGuidFromRegistry();
@@ -256,6 +321,10 @@ namespace Htc.Vita.Core.Runtime
             return Registry.GetStringValue(Registry.Hive.LocalMachine, "SOFTWARE\\Microsoft\\Cryptography", "MachineGuid", "");
         }
 
+        /// <summary>
+        /// Gets the machine name.
+        /// </summary>
+        /// <returns>System.String.</returns>
         public static string GetMachineName()
         {
             var result = "UNKNOWN-MACHINE-NAME";
@@ -266,31 +335,55 @@ namespace Htc.Vita.Core.Runtime
             return result;
         }
 
+        /// <summary>
+        /// Gets the maximum time in UTC.
+        /// </summary>
+        /// <returns>DateTime.</returns>
         public static DateTime GetMaxTimeUtc()
         {
             return new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Utc).Subtract(TimeSpan.FromHours(13)); //for GMT +13:00
         }
 
+        /// <summary>
+        /// Gets the minimum time in UTC.
+        /// </summary>
+        /// <returns>DateTime.</returns>
         public static DateTime GetMinTimeUtc()
         {
             return new DateTime(0L, DateTimeKind.Utc).Add(TimeSpan.FromHours(12)); //for GMT -12:00
         }
 
+        /// <summary>
+        /// Gets the product name.
+        /// </summary>
+        /// <returns>System.String.</returns>
         public static string GetProductName()
         {
             return Windows.GetProductNameInPlatform();
         }
 
+        /// <summary>
+        /// Gets the system boot time.
+        /// </summary>
+        /// <returns>DateTime.</returns>
         public static DateTime GetSystemBootTime()
         {
             return DateTime.Now.Subtract(TimeSpan.FromMilliseconds(Environment.TickCount));
         }
 
+        /// <summary>
+        /// Gets the system boot time in UTC.
+        /// </summary>
+        /// <returns>DateTime.</returns>
         public static DateTime GetSystemBootTimeUtc()
         {
             return DateTime.UtcNow.Subtract(TimeSpan.FromMilliseconds(Environment.TickCount));
         }
 
+        /// <summary>
+        /// Check if the current process is 32-bit and running on 64-bit operating system.
+        /// </summary>
+        /// <returns><c>true</c> if the current process is 32-bit and running on 64-bit operating system, <c>false</c> otherwise.</returns>
         private static bool Is32BitProcessOn64BitSystem()
         {
             if (!IsWindows)
@@ -315,11 +408,16 @@ namespace Htc.Vita.Core.Runtime
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Platform)).Error("Can not detect if process is 32-bit on 64-bit Windows: " + e.Message);
+                Logger.GetInstance(typeof(Platform)).Error($"Can not detect if process is 32-bit on 64-bit Windows: {e.Message}");
             }
             return false;
         }
 
+        /// <summary>
+        /// Loads the native library.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns>NativeLibInfo.</returns>
         public static NativeLibInfo LoadNativeLib(string path)
         {
             var info = new NativeLibInfo();
@@ -358,34 +456,91 @@ namespace Htc.Vita.Core.Runtime
             Trace.WriteLine("[" + qualifiedName + "] " + message);
         }
 
+        /// <summary>
+        /// Enum ExitType
+        /// </summary>
         public enum ExitType
         {
+            /// <summary>
+            /// Logs off this platform.
+            /// </summary>
             Logoff,
+            /// <summary>
+            /// Shuts down this platform.
+            /// </summary>
             Shutdown,
+            /// <summary>
+            /// Reboots this platform.
+            /// </summary>
             Reboot
         }
 
+        /// <summary>
+        /// Enum OsArch
+        /// </summary>
         public enum OsArch
         {
+            /// <summary>
+            /// Unknown
+            /// </summary>
             Unknown = 0,
+            /// <summary>
+            /// 32-bit
+            /// </summary>
             Bit32 = 1,
+            /// <summary>
+            /// 64-bit
+            /// </summary>
             Bit64 = 2
         }
 
+        /// <summary>
+        /// Enum ProcessArch
+        /// </summary>
         public enum ProcessArch
         {
+            /// <summary>
+            /// Unknown
+            /// </summary>
             Unknown = 0,
+            /// <summary>
+            /// X86
+            /// </summary>
             X86 = 1,
+            /// <summary>
+            /// X64
+            /// </summary>
             X64 = 2,
+            /// <summary>
+            /// ARM32
+            /// </summary>
             Arm = 3,
+            /// <summary>
+            /// ARM64
+            /// </summary>
             Arm64 = 4
         }
 
+        /// <summary>
+        /// Enum Type
+        /// </summary>
         public enum Type
         {
+            /// <summary>
+            /// Unknown
+            /// </summary>
             Unknown = 0,
+            /// <summary>
+            /// Windows
+            /// </summary>
             Windows = 1,
+            /// <summary>
+            /// Linux
+            /// </summary>
             Linux = 2,
+            /// <summary>
+            /// MacOSX
+            /// </summary>
             MacOsX = 3
         }
     }
