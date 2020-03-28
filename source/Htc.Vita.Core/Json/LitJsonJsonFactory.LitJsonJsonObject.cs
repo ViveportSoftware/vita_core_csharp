@@ -426,7 +426,10 @@ namespace Htc.Vita.Core.Json
                 return builder.ToString();
             }
 
-            /// <inheritdoc />
+            /// <summary>
+            /// Converts to string.
+            /// </summary>
+            /// <returns>System.String.</returns>
             public override string ToString()
             {
                 if (_jsonData != null)

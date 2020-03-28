@@ -71,7 +71,7 @@ namespace Htc.Vita.Core.Util
 
                 if (!doesResourceExist)
                 {
-                    Logger.GetInstance(typeof(Extract)).Error("Can not find resource \"" + byResourceName);
+                    Logger.GetInstance(typeof(Extract)).Error($"Can not find resource \"{byResourceName}");
                     return false;
                 }
 
@@ -105,7 +105,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Extract)).Error("Can not extract resource \"" + byResourceName + "\" to \"" + toFile + "\": " + e.Message);
+                Logger.GetInstance(typeof(Extract)).Error($"Can not extract resource \"{byResourceName}\" to \"{toFile}\": {e.Message}");
             }
 
             return false;

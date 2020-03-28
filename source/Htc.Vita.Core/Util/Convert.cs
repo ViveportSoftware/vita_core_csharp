@@ -28,7 +28,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Convert)).Error("Fail converting base64 string \"" + content + "\" to byte array: " + e);
+                Logger.GetInstance(typeof(Convert)).Error($"Fail converting base64 string \"{content}\" to byte array: {e}");
             }
             return result;
         }
@@ -83,7 +83,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Convert)).Error("Fail parsing \"" + content + "\" to bool: " + e.Message);
+                Logger.GetInstance(typeof(Convert)).Error($"Fail parsing \"{content}\" to bool: {e.Message}");
             }
             return result;
         }
@@ -118,7 +118,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Convert)).Error("Fail parsing \"" + content + "\" to double: " + e.Message);
+                Logger.GetInstance(typeof(Convert)).Error($"Fail parsing \"{content}\" to double: {e.Message}");
             }
 
             return result;
@@ -154,7 +154,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Convert)).Error("Fail parsing \"" + content + "\" to int/int32: " + e.Message);
+                Logger.GetInstance(typeof(Convert)).Error($"Fail parsing \"{content}\" to int/int32: {e.Message}");
             }
             return result;
         }
@@ -189,7 +189,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Convert)).Error("Fail parsing \"" + content + "\" to long/int64: " + e.Message);
+                Logger.GetInstance(typeof(Convert)).Error($"Fail parsing \"{content}\" to long/int64: {e.Message}");
             }
             return result;
         }
@@ -213,7 +213,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Convert)).Error("Fail converting byte array to base64 string: " + e);
+                Logger.GetInstance(typeof(Convert)).Error($"Fail converting byte array to base64 string: {e}");
             }
             return result;
         }

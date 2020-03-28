@@ -8,17 +8,19 @@ namespace Htc.Vita.Core.Crypto
 {
     public partial class DefaultSha1
     {
+        /// <inheritdoc />
         protected override Task<string> OnGenerateInBase64Async(FileInfo file, CancellationToken cancellationToken)
         {
             return DoGenerateInBase64Async(file, cancellationToken);
         }
 
+        /// <inheritdoc />
         protected override Task<string> OnGenerateInHexAsync(FileInfo file, CancellationToken cancellationToken)
         {
             return DoGenerateInHexAsync(file, cancellationToken);
         }
 
-        public static async Task<string> DoGenerateInBase64Async(FileInfo file, CancellationToken cancellationToken)
+        private static async Task<string> DoGenerateInBase64Async(FileInfo file, CancellationToken cancellationToken)
         {
             return Convert.ToBase64String(await GenerateInBytesAsync(
                     file,
@@ -26,7 +28,7 @@ namespace Htc.Vita.Core.Crypto
             ).ConfigureAwait(false));
         }
 
-        public static async Task<string> DoGenerateInHexAsync(FileInfo file, CancellationToken cancellationToken)
+        private static async Task<string> DoGenerateInHexAsync(FileInfo file, CancellationToken cancellationToken)
         {
             return Convert.ToHexString(await GenerateInBytesAsync(
                     file,
