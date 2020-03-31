@@ -5,22 +5,69 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Crypto
 {
+    /// <summary>
+    /// Class Aes.
+    /// </summary>
     public abstract class Aes
     {
+        /// <summary>
+        /// Gets the 128-bit IV size in bit.
+        /// </summary>
+        /// <value>The 128-bit IV size in bit.</value>
         public static int IvSize128BitInBit { get; } = 128;
+        /// <summary>
+        /// Gets the 128-bit IV size in byte.
+        /// </summary>
+        /// <value>The 128-bit IV size in byte.</value>
         public static int IvSize128BitInByte { get; } = IvSize128BitInBit / 8;
+        /// <summary>
+        /// Gets the 128-bit key size in bit.
+        /// </summary>
+        /// <value>The 128-bit key size in bit.</value>
         public static int KeySize128BitInBit { get; } = 128;
+        /// <summary>
+        /// Gets the 128-bit key size in byte.
+        /// </summary>
+        /// <value>The 128-bit key size in byte.</value>
         public static int KeySize128BitInByte { get; } = KeySize128BitInBit / 8;
+        /// <summary>
+        /// Gets the 192-bit key size in bit.
+        /// </summary>
+        /// <value>The 192-bit key size in bit.</value>
         public static int KeySize192BitInBit { get; } = 192;
+        /// <summary>
+        /// Gets the 192-bit key size in byte.
+        /// </summary>
+        /// <value>The 192-bit key size in byte.</value>
         public static int KeySize192BitInByte { get; } = KeySize192BitInBit / 8;
+        /// <summary>
+        /// Gets the 256-bit key size in bit.
+        /// </summary>
+        /// <value>The 256-bit key size in bit.</value>
         public static int KeySize256BitInBit { get; } = 256;
+        /// <summary>
+        /// Gets the 256-bit key size in byte.
+        /// </summary>
+        /// <value>The 256-bit key size in byte.</value>
         public static int KeySize256BitInByte { get; } = KeySize256BitInBit / 8;
+        /// <summary>
+        /// Gets the 128-bit salt size in bit.
+        /// </summary>
+        /// <value>The 128-bit salt size in bit.</value>
         public static int SaltSize128BitInBit { get; } = 128;
+        /// <summary>
+        /// Gets the 128-bit salt size in byte.
+        /// </summary>
+        /// <value>The 128-bit salt size in byte.</value>
         public static int SaltSize128BitInByte { get; } = SaltSize128BitInBit / 8;
 
         private CipherMode _cipherMode = CipherMode.Cbc;
         private PaddingMode _paddingMode = PaddingMode.Pkcs7;
 
+        /// <summary>
+        /// Gets or sets the cipher.
+        /// </summary>
+        /// <value>The cipher.</value>
         public CipherMode Cipher
         {
             get { return _cipherMode; }
@@ -35,6 +82,10 @@ namespace Htc.Vita.Core.Crypto
             }
         }
 
+        /// <summary>
+        /// Gets or sets the padding.
+        /// </summary>
+        /// <value>The padding.</value>
         public PaddingMode Padding
         {
             get { return _paddingMode; }
@@ -49,6 +100,12 @@ namespace Htc.Vita.Core.Crypto
             }
         }
 
+        /// <summary>
+        /// Decrypts the specified input.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>System.Byte[].</returns>
         public byte[] Decrypt(byte[] input, string password)
         {
             if (input == null)
@@ -110,6 +167,13 @@ namespace Htc.Vita.Core.Crypto
             return result;
         }
 
+        /// <summary>
+        /// Decrypts the specified input.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="iv">The iv.</param>
+        /// <returns>System.Byte[].</returns>
         public byte[] Decrypt(byte[] input, byte[] key, byte[] iv)
         {
             if (input == null)
@@ -142,6 +206,12 @@ namespace Htc.Vita.Core.Crypto
             return result;
         }
 
+        /// <summary>
+        /// Encrypts the specified input.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>System.Byte[].</returns>
         public byte[] Encrypt(byte[] input, string password)
         {
             if (input == null)
@@ -189,6 +259,13 @@ namespace Htc.Vita.Core.Crypto
             return result;
         }
 
+        /// <summary>
+        /// Encrypts the specified input.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="iv">The iv.</param>
+        /// <returns>System.Byte[].</returns>
         public byte[] Encrypt(byte[] input, byte[] key, byte[] iv)
         {
             if (input == null)
@@ -221,16 +298,42 @@ namespace Htc.Vita.Core.Crypto
             return result;
         }
 
+        /// <summary>
+        /// Called when decrypting.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="iv">The iv.</param>
+        /// <returns>System.Byte[].</returns>
         protected abstract byte[] OnDecrypt(byte[] input, byte[] key, byte[] iv);
+        /// <summary>
+        /// Called when encrypting.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="iv">The iv.</param>
+        /// <returns>System.Byte[].</returns>
         protected abstract byte[] OnEncrypt(byte[] input, byte[] key, byte[] iv);
 
+        /// <summary>
+        /// Enum CipherMode
+        /// </summary>
         public enum CipherMode
         {
+            /// <summary>
+            /// CBC
+            /// </summary>
             Cbc
         }
 
+        /// <summary>
+        /// Enum PaddingMode
+        /// </summary>
         public enum PaddingMode
         {
+            /// <summary>
+            /// PKCS7
+            /// </summary>
             Pkcs7
         }
     }

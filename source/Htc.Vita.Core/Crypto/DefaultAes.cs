@@ -5,6 +5,11 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Crypto
 {
+    /// <summary>
+    /// Class DefaultAes.
+    /// Implements the <see cref="Aes" />
+    /// </summary>
+    /// <seealso cref="Aes" />
     public class DefaultAes : Aes
     {
         private static System.Security.Cryptography.CipherMode ConvertToImpl(CipherMode cipherMode)
@@ -13,7 +18,7 @@ namespace Htc.Vita.Core.Crypto
             {
                 return System.Security.Cryptography.CipherMode.CBC;
             }
-            Logger.GetInstance(typeof(DefaultAes)).Error("unknown cipher mode: " + cipherMode);
+            Logger.GetInstance(typeof(DefaultAes)).Error($"unknown cipher mode: {cipherMode}");
             return System.Security.Cryptography.CipherMode.CBC;
         }
 
@@ -23,10 +28,11 @@ namespace Htc.Vita.Core.Crypto
             {
                 return System.Security.Cryptography.PaddingMode.PKCS7;
             }
-            Logger.GetInstance(typeof(DefaultAes)).Error("unknown padding mode: " + paddingMode);
+            Logger.GetInstance(typeof(DefaultAes)).Error($"unknown padding mode: {paddingMode}");
             return System.Security.Cryptography.PaddingMode.PKCS7;
         }
 
+        /// <inheritdoc />
         protected override byte[] OnDecrypt(byte[] input, byte[] key, byte[] iv)
         {
             if (iv == null || iv.Length != IvSize128BitInByte)
@@ -70,6 +76,7 @@ namespace Htc.Vita.Core.Crypto
             }
         }
 
+        /// <inheritdoc />
         protected override byte[] OnEncrypt(byte[] input, byte[] key, byte[] iv)
         {
             if (iv == null || iv.Length != IvSize128BitInByte)
