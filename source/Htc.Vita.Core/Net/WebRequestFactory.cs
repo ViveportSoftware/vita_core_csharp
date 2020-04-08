@@ -5,36 +5,52 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
 {
+    /// <summary>
+    /// Class WebRequestFactory.
+    /// </summary>
     public abstract class WebRequestFactory
     {
         private static Dictionary<string, WebRequestFactory> Instances { get; } = new Dictionary<string, WebRequestFactory>();
 
         private static readonly object InstancesLock = new object();
 
-        private static Type defaultType = typeof(DefaultWebRequestFactory);
+        private static Type _defaultType = typeof(DefaultWebRequestFactory);
 
+        /// <summary>
+        /// Registers the instance type.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public static void Register<T>() where T : WebRequestFactory
         {
-            defaultType = typeof(T);
-            Logger.GetInstance(typeof(WebRequestFactory)).Info("Registered default " + typeof(WebRequestFactory).Name + " type to " + defaultType);
+            _defaultType = typeof(T);
+            Logger.GetInstance(typeof(WebRequestFactory)).Info($"Registered default {typeof(WebRequestFactory).Name} type to {_defaultType}");
         }
 
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <returns>WebRequestFactory.</returns>
         public static WebRequestFactory GetInstance()
         {
             WebRequestFactory instance;
             try
             {
-                instance = DoGetInstance(defaultType);
+                instance = DoGetInstance(_defaultType);
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(WebRequestFactory)).Fatal("Instance initialization error: " + e);
-                Logger.GetInstance(typeof(WebRequestFactory)).Info("Initializing " + typeof(DefaultWebRequestFactory).FullName + "...");
+                Logger.GetInstance(typeof(WebRequestFactory)).Fatal($"Instance initialization error: {e}");
+                Logger.GetInstance(typeof(WebRequestFactory)).Info($"Initializing {typeof(DefaultWebRequestFactory).FullName}...");
                 instance = new DefaultWebRequestFactory();
             }
             return instance;
         }
 
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>WebRequestFactory.</returns>
         public static WebRequestFactory GetInstance<T>() where T : WebRequestFactory
         {
             WebRequestFactory instance;
@@ -44,8 +60,8 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(WebRequestFactory)).Fatal("Instance initialization error: " + e);
-                Logger.GetInstance(typeof(WebRequestFactory)).Info("Initializing " + typeof(DefaultWebRequestFactory).FullName + "...");
+                Logger.GetInstance(typeof(WebRequestFactory)).Fatal($"Instance initialization error: {e}");
+                Logger.GetInstance(typeof(WebRequestFactory)).Info($"Initializing {typeof(DefaultWebRequestFactory).FullName}...");
                 instance = new DefaultWebRequestFactory();
             }
             return instance;
@@ -55,7 +71,7 @@ namespace Htc.Vita.Core.Net
         {
             if (type == null)
             {
-                throw new ArgumentException("Invalid arguments to get " + typeof(WebRequestFactory).Name + " instance");
+                throw new ArgumentException($"Invalid arguments to get {typeof(WebRequestFactory).Name} instance");
             }
 
             var key = type.FullName + "_";
@@ -66,7 +82,7 @@ namespace Htc.Vita.Core.Net
             }
             if (instance == null)
             {
-                Logger.GetInstance(typeof(WebRequestFactory)).Info("Initializing " + key + "...");
+                Logger.GetInstance(typeof(WebRequestFactory)).Info($"Initializing {key}...");
                 var constructor = type.GetConstructor(new Type[] { });
                 if (constructor != null)
                 {
@@ -75,7 +91,7 @@ namespace Htc.Vita.Core.Net
             }
             if (instance == null)
             {
-                Logger.GetInstance(typeof(WebRequestFactory)).Info("Initializing " + typeof(DefaultWebRequestFactory).FullName + "...");
+                Logger.GetInstance(typeof(WebRequestFactory)).Info($"Initializing {typeof(DefaultWebRequestFactory).FullName}...");
                 instance = new DefaultWebRequestFactory();
             }
             lock (InstancesLock)
@@ -88,6 +104,11 @@ namespace Htc.Vita.Core.Net
             return instance;
         }
 
+        /// <summary>
+        /// Gets the HTTP web request.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <returns>HttpWebRequest.</returns>
         public HttpWebRequest GetHttpWebRequest(Uri uri)
         {
             if (uri == null)
@@ -106,6 +127,11 @@ namespace Htc.Vita.Core.Net
             return result;
         }
 
+        /// <summary>
+        /// Called when getting HTTP web request.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <returns>HttpWebRequest.</returns>
         protected abstract HttpWebRequest OnGetHttpWebRequest(Uri uri);
     }
 }
