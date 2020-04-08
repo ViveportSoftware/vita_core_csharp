@@ -6,6 +6,11 @@ using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Net
 {
+    /// <summary>
+    /// Class DefaultWebProxyFactory.
+    /// Implements the <see cref="WebProxyFactory" />
+    /// </summary>
+    /// <seealso cref="WebProxyFactory" />
     public class DefaultWebProxyFactory : WebProxyFactory
     {
         private const string TestUrl = "https://www.microsoft.com/";
@@ -13,6 +18,7 @@ namespace Htc.Vita.Core.Net
 
         private static readonly Dictionary<string, KeyValuePair<WebProxyStatus, long>> WebProxyStatusMap = new Dictionary<string, KeyValuePair<WebProxyStatus, long>>();
 
+        /// <inheritdoc />
         protected override IWebProxy OnGetWebProxy()
         {
             var webProxyUri = ParseWebProxyUri(
@@ -41,7 +47,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(DefaultWebProxyFactory)).Error("Can not get web proxy status. error: " + e.Message);
+                Logger.GetInstance(typeof(DefaultWebProxyFactory)).Error($"Can not get web proxy status. error: {e.Message}");
             }
             if (webProxyStatus == WebProxyStatus.Working || webProxyStatus == WebProxyStatus.NotSet)
             {
@@ -50,6 +56,7 @@ namespace Htc.Vita.Core.Net
             return new WebProxy();
         }
 
+        /// <inheritdoc />
         protected override WebProxyStatus OnGetWebProxyStatus(IWebProxy webProxy)
         {
             Uri webProxyUri = null;
@@ -59,7 +66,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(DefaultWebProxyFactory)).Error("Can not get proxy uri. error: " + e.Message);
+                Logger.GetInstance(typeof(DefaultWebProxyFactory)).Error($"Can not get proxy uri. error: {e.Message}");
             }
             if (webProxyUri == null)
             {
@@ -106,7 +113,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(DefaultWebProxyFactory)).Warn("Can not process proxy test on uri: \"" + proxyUrl + "\", " + e.Message);
+                Logger.GetInstance(typeof(DefaultWebProxyFactory)).Warn($"Can not process proxy test on uri: \"{proxyUrl}\", {e.Message}");
             }
 
             WebProxyStatusMap[proxyUrl] = new KeyValuePair<WebProxyStatus, long>(
