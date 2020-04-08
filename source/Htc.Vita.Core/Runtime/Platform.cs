@@ -38,6 +38,12 @@ namespace Htc.Vita.Core.Runtime
         public static bool IsMono { get; } = CheckIsMono();
 
         /// <summary>
+        /// Gets a value indicating whether this instance is running on Unity.
+        /// </summary>
+        /// <value><c>true</c> if this instance is running on Unity; otherwise, <c>false</c>.</value>
+        public static bool IsUnity { get; } = CheckIsUnity();
+
+        /// <summary>
         /// Gets a value indicating whether this instance is running on Windows.
         /// </summary>
         /// <value><c>true</c> if this instance is running on Windows; otherwise, <c>false</c>.</value>
@@ -104,6 +110,23 @@ namespace Htc.Vita.Core.Runtime
             catch (Exception e)
             {
                 Logger.GetInstance(typeof(Platform)).Error($"Can not detect if process is running on Mono runtime: {e.Message}");
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Checks if the platform is Unity.
+        /// </summary>
+        /// <returns><c>true</c> if the platform is Unity, <c>false</c> otherwise.</returns>
+        public static bool CheckIsUnity()
+        {
+            try
+            {
+                return System.Type.GetType("UnityEngine.Debug,UnityEngine") != null;
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(Platform)).Error($"Can not detect if process is running on Unity: {e.Message}");
             }
             return false;
         }
