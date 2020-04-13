@@ -8,9 +8,6 @@ using Htc.Vita.Core.Interop;
 
 namespace Htc.Vita.Core.Util
 {
-    /// <summary>
-    /// Class Win32Registry.
-    /// </summary>
     public static partial class Win32Registry
     {
         /// <summary>
@@ -110,6 +107,7 @@ namespace Htc.Vita.Core.Util
                 return DoOpenSubKey(
                         subKeyName,
                         keyPermissionCheck,
+                        keyPermissionCheck != KeyPermissionCheck.ReadSubTree,
                         false
                 ) ?? DoCreateSubKey(
                         subKeyName,
@@ -146,6 +144,7 @@ namespace Htc.Vita.Core.Util
                 var subKey = DoOpenSubKey(
                         subKeyName,
                         KeyPermissionCheck.ReadWriteSubTree,
+                        true,
                         false
                 );
                 if (subKey != null)
@@ -279,6 +278,7 @@ namespace Htc.Vita.Core.Util
                 var subKey = DoOpenSubKey(
                         subKeyName,
                         KeyPermissionCheck.ReadWriteSubTree,
+                        true,
                         false
                 );
                 if (subKey != null)
@@ -593,6 +593,7 @@ namespace Htc.Vita.Core.Util
             private Key DoOpenSubKey(
                     string subKeyName,
                     KeyPermissionCheck keyPermissionCheck,
+                    bool writable,
                     bool throwOnAccessDenied)
             {
                 if (_handle == null)
@@ -607,7 +608,7 @@ namespace Htc.Vita.Core.Util
                         _handle,
                         normalizedSubKeyName,
                         0,
-                        ToRegistryKeyAccessRight(keyPermissionCheck) | ToRegistryKeyAccessRight(_view),
+                        ToRegistryKeyAccessRight(writable) | ToRegistryKeyAccessRight(_view),
                         out handle
                 );
                 if (errorCode == Windows.Error.Success && !handle.IsInvalid)
@@ -615,7 +616,7 @@ namespace Htc.Vita.Core.Util
                     return new Key(
                             handle,
                             _view,
-                            keyPermissionCheck == KeyPermissionCheck.ReadWriteSubTree,
+                            writable,
                             false
                     )
                     {
@@ -936,6 +937,7 @@ namespace Htc.Vita.Core.Util
                 return DoOpenSubKey(
                         subKeyName,
                         keyPermissionCheck,
+                        keyPermissionCheck == KeyPermissionCheck.ReadWriteSubTree,
                         true
                 );
             }

@@ -272,7 +272,7 @@ namespace Htc.Vita.Core.Interop
         internal static extern Error RegCreateKeyExW(
                 /* _In_       HKEY                  */ [In] SafeRegistryHandle hKey,
                 /* _In_       LPCWSTR               */ [In] string lpSubKey,
-                /* _Reserved_ DWORD                 */ [In] IntPtr Reserved,
+                /* _Reserved_ DWORD                 */ [In] IntPtr reserved,
                 /* _In_opt_   LPWSTR                */ [In] string lpClass,
                 /* _In_       DWORD                 */ [In] int dwOptions,
                 /* _In_       REGSAM                */ [In] RegistryKeyAccessRight samDesired,
@@ -293,7 +293,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_       LPCWSTR */ [In] string lpSubKey,
                 /* _In_       REGSAM  */ [In] RegistryKeyAccessRight samDesired,
-                /* _Reserved_ DWORD   */ [In] IntPtr Reserved
+                /* _Reserved_ DWORD   */ [In] IntPtr reserved
         );
 
         /**
@@ -388,10 +388,10 @@ namespace Htc.Vita.Core.Interop
          * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryvalueexw
          */
         [DllImport(Libraries.WindowsAdvapi32,
-            CallingConvention = CallingConvention.Winapi,
-            CharSet = CharSet.Unicode,
-            ExactSpelling = true,
-            SetLastError = true)]
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
         internal static extern Error RegQueryValueExW(
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_   LPCWSTR */ [In] string lpValueName,
@@ -446,7 +446,7 @@ namespace Htc.Vita.Core.Interop
         internal static extern Error RegSetValueExW(
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_   LPCWSTR */ [In] string lpValueName,
-                /* _Reserved_ DWORD   */ [In] int Reserved,
+                /* _Reserved_ DWORD   */ [In] int reserved,
                 /* _In_       DWORD   */ [In] RegistryValueType dwType,
                 /* _In_opt_   BYTE*   */ [In] ref int lpData,
                 /* _In_       DWORD   */ [In] int cbData
@@ -463,7 +463,7 @@ namespace Htc.Vita.Core.Interop
         internal static extern Error RegSetValueExW(
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_   LPCWSTR */ [In] string lpValueName,
-                /* _Reserved_ DWORD   */ [In] int Reserved,
+                /* _Reserved_ DWORD   */ [In] int reserved,
                 /* _In_       DWORD   */ [In] RegistryValueType dwType,
                 /* _In_opt_   BYTE*   */ [In] ref long lpData,
                 /* _In_       DWORD   */ [In] int cbData
@@ -480,7 +480,7 @@ namespace Htc.Vita.Core.Interop
         internal static extern Error RegSetValueExW(
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_   LPCWSTR */ [In] string lpValueName,
-                /* _Reserved_ DWORD   */ [In] int Reserved,
+                /* _Reserved_ DWORD   */ [In] int reserved,
                 /* _In_       DWORD   */ [In] RegistryValueType dwType,
                 /* _In_opt_   BYTE*   */ [In] string lpData,
                 /* _In_       DWORD   */ [In] int cbData
@@ -497,7 +497,7 @@ namespace Htc.Vita.Core.Interop
         internal static extern Error RegSetValueExW(
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_   LPCWSTR */ [In] string lpValueName,
-                /* _Reserved_ DWORD   */ [In] int Reserved,
+                /* _Reserved_ DWORD   */ [In] int reserved,
                 /* _In_       DWORD   */ [In] RegistryValueType dwType,
                 /* _In_opt_   BYTE*   */ [In] byte[] lpData,
                 /* _In_       DWORD   */ [In] int cbData
@@ -514,7 +514,7 @@ namespace Htc.Vita.Core.Interop
         internal static extern Error RegSetValueExW(
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_   LPCWSTR */ [In] string lpValueName,
-                /* _Reserved_ DWORD   */ [In] int Reserved,
+                /* _Reserved_ DWORD   */ [In] int reserved,
                 /* _In_       DWORD   */ [In] RegistryValueType dwType,
                 /* _In_opt_   BYTE*   */ [In] char[] lpData,
                 /* _In_       DWORD   */ [In] int cbData
