@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class Win32RegistryTest
+    public static class Win32RegistryTest
     {
         [Fact]
         public static void Default_0_OpenBaseKey()

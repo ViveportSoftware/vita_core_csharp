@@ -25,11 +25,12 @@ namespace Htc.Vita.Core.Util
                     { Hive.CurrentConfig, "HKEY_CURRENT_CONFIG" }
             };
 
+            private readonly KeyStateFlag _keyStateFlag;
+            private readonly View _view;
+
             private volatile Windows.SafeRegistryHandle _handle;
             private volatile string _name;
-            private volatile KeyStateFlag _keyStateFlag;
             private volatile KeyPermissionCheck _keyPermissionCheck;
-            private volatile View _view;
 
             public int SubKeyCount
             {
