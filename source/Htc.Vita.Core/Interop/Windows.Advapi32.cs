@@ -250,6 +250,277 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regclosekey
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error RegCloseKey(
+                /* _In_ HKEY */ [In] IntPtr hKey
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regcreatekeyexw
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error RegCreateKeyExW(
+                /* _In_       HKEY                  */ [In] SafeRegistryHandle hKey,
+                /* _In_       LPCWSTR               */ [In] string lpSubKey,
+                /* _Reserved_ DWORD                 */ [In] IntPtr Reserved,
+                /* _In_opt_   LPWSTR                */ [In] string lpClass,
+                /* _In_       DWORD                 */ [In] int dwOptions,
+                /* _In_       REGSAM                */ [In] RegistryKeyAccessRight samDesired,
+                /* _In_opt_   LPSECURITY_ATTRIBUTES */ [In][Out] ref SecurityAttributes lpSecurityAttributes,
+                /* _Out_      PHKEY                 */ [Out] out SafeRegistryHandle phkResult,
+                /* _Out_opt_  LPDWORD               */ [Out] out int lpdwDisposition
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regdeletekeyexw
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error RegDeleteKeyExW(
+                /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
+                /* _In_       LPCWSTR */ [In] string lpSubKey,
+                /* _In_       REGSAM  */ [In] RegistryKeyAccessRight samDesired,
+                /* _Reserved_ DWORD   */ [In] IntPtr Reserved
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regdeletevaluew
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error RegDeleteValueW(
+                /* _In_     HKEY    */ [In] SafeRegistryHandle hKey,
+                /* _In_opt_ LPCWSTR */ [In] string lpValueName
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regenumkeyexw
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error RegEnumKeyExW(
+                /* _In_        HKEY      */ [In] SafeRegistryHandle hKey,
+                /* _In_        DWORD     */ [In] uint index,
+                /* _Out_opt_   LPWSTR    */ [In] char[] lpName,
+                /* _Inout_     LPDWORD   */ [In][Out] ref int lpcbName,
+                /* _Reserved_  LPDWORD   */ [In] IntPtr reserved,
+                /* _Out_opt_   LPWSTR    */ [In][Out] StringBuilder lpClass,
+                /* _Inout_opt_ LPDWORD   */ [In][Out] ref uint lpcbClass,
+                /* _Out_opt_   PFILETIME */ [In][Out] IntPtr lpftLastWriteTime
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regopenkeyexw
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error RegOpenKeyExW(
+                /* _In_     HKEY    */ [In] SafeRegistryHandle hKey,
+                /* _In_opt_ LPCWSTR */ [In] string subKey,
+                /* _In_opt_ DWORD   */ [In] int ulOptions,
+                /* _In_     REGSAM  */ [In] RegistryKeyAccessRight samDesired,
+                /* _Out_    PHKEY   */ [Out] out SafeRegistryHandle hkResult
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryinfokeyw
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error RegQueryInfoKeyW(
+                /* _In_        HKEY      */ [In] SafeRegistryHandle hKey,
+                /* _Out_opt_   LPWSTR    */ [In][Out] StringBuilder lpClass,
+                /* _Inout_opt_ LPDWORD   */ [In][Out] ref uint lpcchClass,
+                /* _Reserved_  LPDWORD   */ [In] IntPtr lpReserved,
+                /* _Out_opt_   LPDWORD   */ [In][Out] ref uint lpcSubKeys,
+                /* _Out_opt_   LPDWORD   */ [In][Out] ref uint lpcbMaxSubKeyLen,
+                /* _Out_opt_   LPDWORD   */ [In][Out] ref uint lpcbMaxClassLen,
+                /* _Out_opt_   LPDWORD   */ [In][Out] ref uint lpcValues,
+                /* _Out_opt_   LPDWORD   */ [In][Out] ref uint lpcbMaxValueNameLen,
+                /* _Out_opt_   LPDWORD   */ [In][Out] ref uint lpcbMaxValueLen,
+                /* _Out_opt_   LPDWORD   */ [In][Out] IntPtr lpcbSecurityDescriptor,
+                /* _Out_opt_   PFILETIME */ [In][Out] IntPtr lpftLastWriteTime
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryvalueexw
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error RegQueryValueExW(
+                /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
+                /* _In_opt_   LPCWSTR */ [In] string lpValueName,
+                /* _Reserved_ LPDWORD */ [In] IntPtr lpReserved,
+                /* _Out_opt_  LPDWORD */ [In][Out] ref RegType lpType,
+                /* _Out_      LPBYTE  */ [Out] byte[] lpData,
+                /* _Out_opt_  LPDWORD */ [In][Out] ref uint lpcbData
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryvalueexw
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+            CallingConvention = CallingConvention.Winapi,
+            CharSet = CharSet.Unicode,
+            ExactSpelling = true,
+            SetLastError = true)]
+        internal static extern Error RegQueryValueExW(
+                /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
+                /* _In_opt_   LPCWSTR */ [In] string lpValueName,
+                /* _Reserved_ LPDWORD */ [In] IntPtr lpReserved,
+                /* _Out_opt_  LPDWORD */ [In][Out] ref RegType lpType,
+                /* _Out_      LPBYTE  */ [Out] char[] lpData,
+                /* _Out_opt_  LPDWORD */ [In][Out] ref uint lpcbData
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryvalueexw
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error RegQueryValueExW(
+                /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
+                /* _In_opt_   LPCWSTR */ [In] string lpValueName,
+                /* _Reserved_ LPDWORD */ [In] IntPtr lpReserved,
+                /* _Out_opt_  LPDWORD */ [In][Out] ref RegType lpType,
+                /* _Out_      LPBYTE  */ [In][Out] ref int lpData,
+                /* _Out_opt_  LPDWORD */ [In][Out] ref uint lpcbData
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryvalueexw
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error RegQueryValueExW(
+                /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
+                /* _In_opt_   LPCWSTR */ [In] string lpValueName,
+                /* _Reserved_ LPDWORD */ [In] IntPtr lpReserved,
+                /* _Out_opt_  LPDWORD */ [In][Out] ref RegType lpType,
+                /* _Out_      LPBYTE  */ [In][Out] ref long lpData,
+                /* _Out_opt_  LPDWORD */ [In][Out] ref uint lpcbData
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexw
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error RegSetValueExW(
+                /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
+                /* _In_opt_   LPCWSTR */ [In] string lpValueName,
+                /* _Reserved_ DWORD   */ [In] int Reserved,
+                /* _In_       DWORD   */ [In] RegType dwType,
+                /* _In_opt_   BYTE*   */ [In] ref int lpData,
+                /* _In_       DWORD   */ [In] int cbData
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexw
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+            CallingConvention = CallingConvention.Winapi,
+            CharSet = CharSet.Unicode,
+            ExactSpelling = true,
+            SetLastError = true)]
+        internal static extern Error RegSetValueExW(
+                /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
+                /* _In_opt_   LPCWSTR */ [In] string lpValueName,
+                /* _Reserved_ DWORD   */ [In] int Reserved,
+                /* _In_       DWORD   */ [In] RegType dwType,
+                /* _In_opt_   BYTE*   */ [In] ref long lpData,
+                /* _In_       DWORD   */ [In] int cbData
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexw
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error RegSetValueExW(
+                /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
+                /* _In_opt_   LPCWSTR */ [In] string lpValueName,
+                /* _Reserved_ DWORD   */ [In] int Reserved,
+                /* _In_       DWORD   */ [In] RegType dwType,
+                /* _In_opt_   BYTE*   */ [In] string lpData,
+                /* _In_       DWORD   */ [In] int cbData
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexw
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error RegSetValueExW(
+                /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
+                /* _In_opt_   LPCWSTR */ [In] string lpValueName,
+                /* _Reserved_ DWORD   */ [In] int Reserved,
+                /* _In_       DWORD   */ [In] RegType dwType,
+                /* _In_opt_   BYTE*   */ [In] byte[] lpData,
+                /* _In_       DWORD   */ [In] int cbData
+        );
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexw
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error RegSetValueExW(
+                /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
+                /* _In_opt_   LPCWSTR */ [In] string lpValueName,
+                /* _Reserved_ DWORD   */ [In] int Reserved,
+                /* _In_       DWORD   */ [In] RegType dwType,
+                /* _In_opt_   BYTE*   */ [In] char[] lpData,
+                /* _In_       DWORD   */ [In] int cbData
+        );
+
+        /**
          * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-startservicew
          */
         [DllImport(Libraries.WindowsAdvapi32,

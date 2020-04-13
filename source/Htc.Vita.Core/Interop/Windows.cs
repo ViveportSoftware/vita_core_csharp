@@ -270,20 +270,24 @@ namespace Htc.Vita.Core.Interop
 
         internal enum Error
         {
-            /* ERROR_SUCCESS                   (0,   0x0) */ Success             =   0x0,
-            /* ERROR_FILE_NOT_FOUND            (2,   0x2) */ FileNotFound        =   0x2,
-            /* ERROR_INVALID_HANDLE            (6,   0x6) */ InvalidHandle       =   0x6,
-            /* ERROR_INVALID_DATA             (13,   0xd) */ InvalidData         =   0xd,
-            /* ERROR_BAD_LENGTH               (24,  0x18) */ BadLength           =  0x18,
-            /* ERROR_GEN_FAILURE              (31,  0x1f) */ GenFailure          =  0x1f,
-            /* ERROR_NOT_SUPPORTED            (50,  0x32) */ NotSupported        =  0x32,
-            /* ERROR_INVALID_PARAMETER        (87,  0x57) */ InvalidParameter    =  0x57,
-            /* ERROR_INSUFFICIENT_BUFFER     (122,  0x7a) */ InsufficientBuffer  =  0x7a,
-            /* ERROR_INVALID_NAME            (123,  0x7b) */ InvalidName         =  0x7b,
-            /* ERROR_NO_MORE_ITEMS           (259, 0x103) */ NoMoreItems         = 0x103,
-            /* ERROR_SERVICE_DOES_NOT_EXIST (1060, 0x424) */ ServiceDoesNotExist = 0x424,
-            /* ERROR_DEVICE_NOT_CONNECTED   (1167, 0x48f) */ DeviceNotConnected  = 0x48f,
-            /* ERROR_NO_SUCH_LOGON_SESSION  (1312, 0x520) */ NoSuchLogonSession  = 0x520
+            /* ERROR_SUCCESS                    (0,   0x0) */ Success               =   0x0,
+            /* ERROR_FILE_NOT_FOUND             (2,   0x2) */ FileNotFound          =   0x2,
+            /* ERROR_ACCESS_DENIED              (5,   0x5) */ AccessDenied          =   0x5,
+            /* ERROR_INVALID_HANDLE             (6,   0x6) */ InvalidHandle         =   0x6,
+            /* ERROR_INVALID_DATA              (13,   0xd) */ InvalidData           =   0xd,
+            /* ERROR_BAD_LENGTH                (24,  0x18) */ BadLength             =  0x18,
+            /* ERROR_GEN_FAILURE               (31,  0x1f) */ GenFailure            =  0x1f,
+            /* ERROR_NOT_SUPPORTED             (50,  0x32) */ NotSupported          =  0x32,
+            /* ERROR_INVALID_PARAMETER         (87,  0x57) */ InvalidParameter      =  0x57,
+            /* ERROR_INSUFFICIENT_BUFFER      (122,  0x7a) */ InsufficientBuffer    =  0x7a,
+            /* ERROR_INVALID_NAME             (123,  0x7b) */ InvalidName           =  0x7b,
+            /* ERROR_FILENAME_EXCED_RANGE     (206,  0xce) */ FilenameExceedRange   =  0xce,
+            /* ERROR_MORE_DATA                (234,  0xea) */ MoreData              =  0xea,
+            /* ERROR_NO_MORE_ITEMS            (259, 0x103) */ NoMoreItems           = 0x103,
+            /* ERROR_SERVICE_DOES_NOT_EXIST  (1060, 0x424) */ ServiceDoesNotExist   = 0x424,
+            /* ERROR_DEVICE_NOT_CONNECTED    (1167, 0x48f) */ DeviceNotConnected    = 0x48f,
+            /* ERROR_NO_SUCH_LOGON_SESSION   (1312, 0x520) */ NoSuchLogonSession    = 0x520,
+            /* ERROR_BAD_IMPERSONATION_LEVEL (1346, 0x542) */ BadImpersonationLevel = 0x542
         }
 
         /**
@@ -524,6 +528,58 @@ namespace Htc.Vita.Core.Interop
             /* PROFILE_KERNEL                   */ ProfileKernel                = 0x20000000,
             /* PROFILE_SERVER                   */ ProfileServer                = 0x40000000,
             /* CREATE_IGNORE_SYSTEM_DEFAULT     */ CreateIgnoreSystemDefault    = 0x80000000
+        }
+
+        /**
+         * Registry Key Access Right enumeration
+         * https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-key-security-and-access-rights
+         */
+        [Flags]
+        internal enum RegistryKeyAccessRight : uint
+        {
+            /*                        */ None             = 0x0000,
+            /* KEY_QUERY_VALUE        */ QueryValue       = 0x0001,
+            /* KEY_SET_VALUE          */ SetValue         = 0x0002,
+            /* KEY_CREATE_SUB_KEY     */ CreateSubKey     = 0x0004,
+            /* KEY_ENUMERATE_SUB_KEYS */ EnumerateSubKeys = 0x0008,
+            /* KEY_NOTIFY             */ Notify           = 0x0010,
+            /* KEY_CREATE_LINK        */ CreateLink       = 0x0020,
+            /* KEY_WOW64_64KEY        */ Wow6464Key       = 0x0100,
+            /* KEY_WOW64_32KEY        */ Wow6432Key       = 0x0200,
+            /* KEY_WOW64_RES          */ Wow64Res         = 0x0300,
+            /* KEY_READ               */ Read             = ( StandardAccessRight.StandardRightsRead | QueryValue
+                                                                                                     | EnumerateSubKeys
+                                                                                                     | Notify )
+                                                          & ~StandardAccessRight.Synchronize,
+            /* KEY_WRITE              */ Write            = ( StandardAccessRight.StandardRightsWrite | SetValue
+                                                                                                      | CreateSubKey )
+                                                          & ~StandardAccessRight.Synchronize,
+            /* KEY_EXECUTE            */ Execute          = Read
+                                                          & ~StandardAccessRight.Synchronize,
+            /* KEY_ALL_ACCESS         */ AllAccess        = ( StandardAccessRight.StandardRightsAll | QueryValue
+                                                                                                    | SetValue
+                                                                                                    | CreateSubKey
+                                                                                                    | EnumerateSubKeys
+                                                                                                    | Notify
+                                                                                                    | CreateLink )
+                                                          & ~StandardAccessRight.Synchronize
+        }
+
+        /**
+         * https://docs.microsoft.com/en-us/windows/win32/sysinfo/predefined-keys
+         */
+        internal enum RegistryKey
+        {
+            /* HKEY_CLASSES_ROOT                */ ClassesRoot              = unchecked((int)0x80000000),
+            /* HKEY_CURRENT_USER                */ CurrentUser              = unchecked((int)0x80000001),
+            /* HKEY_LOCAL_MACHINE               */ LocalMachine             = unchecked((int)0x80000002),
+            /* HKEY_USERS                       */ Users                    = unchecked((int)0x80000003),
+            /* HKEY_PERFORMANCE_DATA            */ PerformanceData          = unchecked((int)0x80000004),
+            /* HKEY_CURRENT_CONFIG              */ CurrentConfig            = unchecked((int)0x80000005),
+            /* HKEY_DYN_DATA                    */ DynData                  = unchecked((int)0x80000006),
+            /* HKEY_CURRENT_USER_LOCAL_SETTINGS */ CurrentUserLocalSettings = unchecked((int)0x80000007),
+            /* HKEY_PERFORMANCE_TEXT            */ PerformanceText          = unchecked((int)0x80000050),
+            /* HKEY_PERFORMANCE_NLSTEXT         */ PerformanceNlsText       = unchecked((int)0x80000060)
         }
 
         /**
