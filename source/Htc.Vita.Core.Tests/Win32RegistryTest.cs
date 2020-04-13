@@ -811,5 +811,44 @@ namespace Htc.Vita.Core.Tests
                 }
             }
         }
+
+        [Fact]
+        public static void Key_8_GetValueNames()
+        {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+
+            var registryHive = Win32Registry.Hive.CurrentUser;
+            using (var baseKey = Win32Registry.Key.OpenBaseKey(registryHive))
+            {
+                var testKeyName = Util.Convert.ToTimestampInMilli(DateTime.UtcNow);
+                using (var subKey = baseKey.CreateSubKey($"SOFTWARE\\HTC\\Test\\Test-{testKeyName}-TestKey", Win32Registry.KeyPermissionCheck.ReadWriteSubTree))
+                {
+                    Assert.NotNull(subKey);
+                    subKey.SetValue($"Test-{testKeyName}-TestValueName0", $"Test-{testKeyName}-TestValueData0", Win32Registry.ValueKind.String);
+                    subKey.SetValue($"Test-{testKeyName}-TestValueName1", $"Test-{testKeyName}-TestValueData1", Win32Registry.ValueKind.String);
+                    subKey.SetValue($"Test-{testKeyName}-TestValueName2", $"Test-{testKeyName}-TestValueData2", Win32Registry.ValueKind.String);
+                    subKey.SetValue($"Test-{testKeyName}-TestValueName3", $"Test-{testKeyName}-TestValueData3", Win32Registry.ValueKind.String);
+                    subKey.SetValue($"Test-{testKeyName}-TestValueName4", $"Test-{testKeyName}-TestValueData4", Win32Registry.ValueKind.String);
+                    subKey.SetValue($"Test-{testKeyName}-TestValueName5", $"Test-{testKeyName}-TestValueData5", Win32Registry.ValueKind.String);
+                    subKey.SetValue($"Test-{testKeyName}-TestValueName6", $"Test-{testKeyName}-TestValueData6", Win32Registry.ValueKind.String);
+                    subKey.SetValue($"Test-{testKeyName}-TestValueName7", $"Test-{testKeyName}-TestValueData7", Win32Registry.ValueKind.String);
+                    subKey.SetValue($"Test-{testKeyName}-TestValueName8", $"Test-{testKeyName}-TestValueData8", Win32Registry.ValueKind.String);
+                    subKey.SetValue($"Test-{testKeyName}-TestValueName9", $"Test-{testKeyName}-TestValueData9", Win32Registry.ValueKind.String);
+                }
+                using (var subKey = baseKey.CreateSubKey($"SOFTWARE\\HTC\\Test\\Test-{testKeyName}-TestKey", Win32Registry.KeyPermissionCheck.ReadSubTree))
+                {
+                    Assert.NotNull(subKey);
+                    var valueNames = subKey.GetValueNames();
+                    Assert.True(valueNames.Length == 10);
+                    foreach (var valueName in valueNames)
+                    {
+                        Assert.StartsWith($"Test-{testKeyName}-TestValueName", valueName);
+                    }
+                }
+            }
+        }
     }
 }

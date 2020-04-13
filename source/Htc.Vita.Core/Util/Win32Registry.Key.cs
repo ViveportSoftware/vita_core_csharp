@@ -54,6 +54,23 @@ namespace Htc.Vita.Core.Util
                 }
             }
 
+            /// <summary>
+            /// Gets the value count.
+            /// </summary>
+            /// <value>The value count.</value>
+            /// <exception cref="ObjectDisposedException">Cannot access a closed registry key.</exception>
+            public int ValueCount
+            {
+                get
+                {
+                    if (_handle == null)
+                    {
+                        throw new ObjectDisposedException(_name, "Cannot access a closed registry key.");
+                    }
+                    return DoGetValueCount();
+                }
+            }
+
             private Key(
                     Windows.SafeRegistryHandle registryHandle,
                     View view,
@@ -117,6 +134,7 @@ namespace Htc.Vita.Core.Util
             /// <exception cref="ArgumentException">Cannot delete a subkey tree because the subkey does not exist.</exception>
             /// <exception cref="ObjectDisposedException">Cannot access a closed registry key.</exception>
             /// <exception cref="UnauthorizedAccessException">Cannot write to the registry key.</exception>
+            /// <exception cref="ArgumentException">Cannot delete a registry hive's subtree.</exception>
             public void DeleteSubKeyTree(
                     string subKeyName,
                     bool throwOnMissingSubKey)
@@ -551,6 +569,41 @@ namespace Htc.Vita.Core.Util
                 return data;
             }
 
+            private int DoGetValueCount()
+            {
+                var bufferSize = 0u;
+                var subKeyCount = 0u;
+                var maxSubKeyLen = 0u;
+                var maxClassLen = 0u;
+                var maxValueLen = 0u;
+                var maxValueNameLen = 0u;
+                var valueCount = 0u;
+                var errorCode = Windows.RegQueryInfoKeyW(
+                        _handle,
+                        null,
+                        ref bufferSize,
+                        IntPtr.Zero,
+                        ref subKeyCount,
+                        ref maxSubKeyLen,
+                        ref maxClassLen,
+                        ref valueCount,
+                        ref maxValueNameLen,
+                        ref maxValueLen,
+                        IntPtr.Zero,
+                        IntPtr.Zero
+                );
+
+                if (errorCode != Windows.Error.Success)
+                {
+                    ThrowException(
+                            errorCode,
+                            null
+                    );
+                }
+
+                return (int)valueCount;
+            }
+
             private ValueKind DoGetValueKind(string valueName)
             {
                 if (_handle == null)
@@ -581,6 +634,52 @@ namespace Htc.Vita.Core.Util
                     return ValueKind.None;
                 }
                 return (ValueKind)registryValueType;
+            }
+
+            private string[] DoGetValueNames(int valueCount)
+            {
+                if (_handle == null)
+                {
+                    throw new ObjectDisposedException(_name, "Cannot access a closed registry key.");
+                }
+
+                var valueNameList = new List<string>(valueCount);
+                var valueNameCharArray = new char[128];
+                var valueNameCharArrayLength = valueNameCharArray.Length;
+                Windows.Error result;
+
+                while ((result = Windows.RegEnumValueW(
+                        _handle,
+                        (uint)valueNameList.Count,
+                        valueNameCharArray,
+                        ref valueNameCharArrayLength,
+                        IntPtr.Zero,
+                        IntPtr.Zero,
+                        IntPtr.Zero,
+                        IntPtr.Zero)) != Windows.Error.NoMoreItems)
+                {
+                    if (result == Windows.Error.Success)
+                    {
+                        valueNameList.Add(new string(valueNameCharArray, 0, valueNameCharArrayLength));
+                    }
+                    else if (result == Windows.Error.MoreData)
+                    {
+                        var oldValueNameCharArray = valueNameCharArray;
+                        var oldValueNameCharArrayLength = oldValueNameCharArray.Length;
+                        valueNameCharArray = new char[checked(oldValueNameCharArrayLength * 2)];
+                    }
+                    else
+                    {
+                        ThrowException(
+                                result,
+                                null
+                        );
+                    }
+
+                    valueNameCharArrayLength = valueNameCharArray.Length;
+                }
+
+                return valueNameList.ToArray();
             }
 
             private Key DoOpenSubKey(
@@ -790,6 +889,20 @@ namespace Htc.Vita.Core.Util
                 return DoGetValueKind(valueName);
             }
 
+            /// <summary>
+            /// Gets the value names.
+            /// </summary>
+            /// <returns>System.String[].</returns>
+            public string[] GetValueNames()
+            {
+                var values = ValueCount;
+                if (values <= 0)
+                {
+                    return new string[0];
+                }
+                return DoGetValueNames(values);
+            }
+
             private bool IsSystemKey()
             {
                 return (_keyStateFlag & KeyStateFlag.SystemKey) != 0;
@@ -921,6 +1034,19 @@ namespace Htc.Vita.Core.Util
             /// Opens the subkey.
             /// </summary>
             /// <param name="subKeyName">The subkey name.</param>
+            /// <returns>Key.</returns>
+            public Key OpenSubKey(string subKeyName)
+            {
+                return OpenSubKey(
+                        subKeyName,
+                        KeyPermissionCheck.Default
+                );
+            }
+
+            /// <summary>
+            /// Opens the subkey.
+            /// </summary>
+            /// <param name="subKeyName">The subkey name.</param>
             /// <param name="keyPermissionCheck">The key permission check.</param>
             /// <returns>Key.</returns>
             public Key OpenSubKey(
@@ -944,6 +1070,7 @@ namespace Htc.Vita.Core.Util
             /// <exception cref="ArgumentNullException">value</exception>
             /// <exception cref="ArgumentException">Registry value names should not be greater than 16,383 characters. - valueName</exception>
             /// <exception cref="ArgumentException">The specified RegistryValueKind is an invalid value - valueKind</exception>
+            /// <exception cref="ArgumentException">value</exception>
             public void SetValue(
                     string valueName,
                     object value,

@@ -329,6 +329,25 @@ namespace Htc.Vita.Core.Interop
         );
 
         /**
+         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regenumvaluew
+         */
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error RegEnumValueW(
+                /* _In_        HKEY    */ [In] SafeRegistryHandle hKey,
+                /* _In_        DWORD   */ [In] uint dwIndex,
+                /* _Out_opt_   LPWSTR  */ [In] char[] lpValueName,
+                /* _Inout_     LPDWORD */ [In][Out] ref int lpcchValueName,
+                /* _Reserved_  LPDWORD */ [In] IntPtr lpReserved,
+                /* _Out_opt_   LPDWORD */ [In][Out] IntPtr lpType,
+                /* _Out_opt_   LPBYTE  */ [In][Out] IntPtr lpData,
+                /* _Inout_opt_ LPDWORD */ [In][Out] IntPtr lpcbData
+        );
+
+        /**
          * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regopenkeyexw
          */
         [DllImport(Libraries.WindowsAdvapi32,
@@ -456,10 +475,10 @@ namespace Htc.Vita.Core.Interop
          * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexw
          */
         [DllImport(Libraries.WindowsAdvapi32,
-            CallingConvention = CallingConvention.Winapi,
-            CharSet = CharSet.Unicode,
-            ExactSpelling = true,
-            SetLastError = true)]
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
         internal static extern Error RegSetValueExW(
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_   LPCWSTR */ [In] string lpValueName,
