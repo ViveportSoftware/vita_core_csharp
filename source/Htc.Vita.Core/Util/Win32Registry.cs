@@ -46,7 +46,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Registry)).Error($"Fail deleting key \"{keyName}\" from 32-bit registry: {e}");
+                Logger.GetInstance(typeof(Win32Registry)).Error($"Fail deleting key \"{keyName}\" from 32-bit registry: {e}");
             }
             return false;
         }
@@ -77,7 +77,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Registry)).Error($"Fail deleting key \"{keyName}\" from 64-bit registry: {e}");
+                Logger.GetInstance(typeof(Win32Registry)).Error($"Fail deleting key \"{keyName}\" from 64-bit registry: {e}");
             }
             return false;
         }
@@ -116,7 +116,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Registry)).Error($"Fail deleting value \"{valueName}\" from 32-bit registry: {e}");
+                Logger.GetInstance(typeof(Win32Registry)).Error($"Fail deleting value \"{valueName}\" from 32-bit registry: {e}");
             }
             return false;
         }
@@ -143,7 +143,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Registry)).Error($"Fail deleting value \"{valueName}\" from 64-bit registry: {e}");
+                Logger.GetInstance(typeof(Win32Registry)).Error($"Fail deleting value \"{valueName}\" from 64-bit registry: {e}");
             }
             return false;
         }
@@ -200,7 +200,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Registry)).Error($"Fail getting dword value with name \"{valueName}\" from 32-bit registry: {e.Message}");
+                Logger.GetInstance(typeof(Win32Registry)).Error($"Fail getting dword value with name \"{valueName}\" from 32-bit registry: {e.Message}");
             }
 
             return result;
@@ -258,7 +258,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Registry)).Error($"Fail getting dword value with name \"{valueName}\" from 64-bit registry: {e.Message}");
+                Logger.GetInstance(typeof(Win32Registry)).Error($"Fail getting dword value with name \"{valueName}\" from 64-bit registry: {e.Message}");
             }
 
             return result;
@@ -376,7 +376,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Registry)).Error($"Fail getting string value with name \"{valueName}\" from 32-bit registry: {e.Message}");
+                Logger.GetInstance(typeof(Win32Registry)).Error($"Fail getting string value with name \"{valueName}\" from 32-bit registry: {e.Message}");
             }
             return result;
         }
@@ -433,7 +433,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Registry)).Error($"Fail getting string value with name \"{valueName}\" from 64-bit registry: {e.Message}");
+                Logger.GetInstance(typeof(Win32Registry)).Error($"Fail getting string value with name \"{valueName}\" from 64-bit registry: {e.Message}");
             }
             return result;
         }
@@ -465,7 +465,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Registry)).Error($"Fail setting string value with name \"{valueName}\" to registry: {e.Message}");
+                Logger.GetInstance(typeof(Win32Registry)).Error($"Fail setting string value with name \"{valueName}\" to registry: {e.Message}");
             }
             return result;
         }
@@ -497,7 +497,7 @@ namespace Htc.Vita.Core.Util
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Registry)).Error($"Fail setting dword value with name \"{valueName}\" to registry: {e.Message}");
+                Logger.GetInstance(typeof(Win32Registry)).Error($"Fail setting dword value with name \"{valueName}\" to registry: {e.Message}");
             }
             return result;
         }

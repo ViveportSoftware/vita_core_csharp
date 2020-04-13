@@ -54,13 +54,6 @@ namespace Htc.Vita.Core.Util
                 }
             }
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="Key"/> class.
-            /// </summary>
-            /// <param name="registryHandle">The registry handle.</param>
-            /// <param name="view">The view.</param>
-            /// <param name="isWritable">Indicate if it is writable.</param>
-            /// <param name="isSystemKey">Indicate if it is a system key.</param>
             private Key(
                     Windows.SafeRegistryHandle registryHandle,
                     View view,
@@ -1007,21 +1000,6 @@ namespace Htc.Vita.Core.Util
                 }
 
                 return Windows.RegistryKeyAccessRight.Read | Windows.RegistryKeyAccessRight.Write;
-            }
-
-            private static Windows.RegistryKeyAccessRight ToRegistryKeyAccessRight(KeyPermissionCheck keyPermissionCheck)
-            {
-                if (keyPermissionCheck == KeyPermissionCheck.Default
-                        || keyPermissionCheck == KeyPermissionCheck.ReadSubTree)
-                {
-                    return Windows.RegistryKeyAccessRight.Read;
-                }
-                if (keyPermissionCheck == KeyPermissionCheck.ReadWriteSubTree)
-                {
-                    return Windows.RegistryKeyAccessRight.Read | Windows.RegistryKeyAccessRight.Write;
-                }
-
-                return Windows.RegistryKeyAccessRight.None;
             }
 
             private static Windows.RegistryKeyAccessRight ToRegistryKeyAccessRight(View view)
