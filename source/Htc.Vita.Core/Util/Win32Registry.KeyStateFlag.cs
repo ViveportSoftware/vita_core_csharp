@@ -2,7 +2,7 @@
 
 namespace Htc.Vita.Core.Util
 {
-    public partial class Win32Registry
+    public static partial class Win32Registry
     {
         [Flags]
         internal enum KeyStateFlag

@@ -531,6 +531,23 @@ namespace Htc.Vita.Core.Interop
         }
 
         /**
+         * https://docs.microsoft.com/en-us/windows/win32/sysinfo/predefined-keys
+         */
+        internal enum RegistryKey
+        {
+            /* HKEY_CLASSES_ROOT                */ ClassesRoot              = unchecked((int)0x80000000),
+            /* HKEY_CURRENT_USER                */ CurrentUser              = unchecked((int)0x80000001),
+            /* HKEY_LOCAL_MACHINE               */ LocalMachine             = unchecked((int)0x80000002),
+            /* HKEY_USERS                       */ Users                    = unchecked((int)0x80000003),
+            /* HKEY_PERFORMANCE_DATA            */ PerformanceData          = unchecked((int)0x80000004),
+            /* HKEY_CURRENT_CONFIG              */ CurrentConfig            = unchecked((int)0x80000005),
+            /* HKEY_DYN_DATA                    */ DynData                  = unchecked((int)0x80000006),
+            /* HKEY_CURRENT_USER_LOCAL_SETTINGS */ CurrentUserLocalSettings = unchecked((int)0x80000007),
+            /* HKEY_PERFORMANCE_TEXT            */ PerformanceText          = unchecked((int)0x80000050),
+            /* HKEY_PERFORMANCE_NLSTEXT         */ PerformanceNlsText       = unchecked((int)0x80000060)
+        }
+
+        /**
          * Registry Key Access Right enumeration
          * https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-key-security-and-access-rights
          */
@@ -546,7 +563,8 @@ namespace Htc.Vita.Core.Interop
             /* KEY_CREATE_LINK        */ CreateLink       = 0x0020,
             /* KEY_WOW64_64KEY        */ Wow6464Key       = 0x0100,
             /* KEY_WOW64_32KEY        */ Wow6432Key       = 0x0200,
-            /* KEY_WOW64_RES          */ Wow64Res         = 0x0300,
+            /* KEY_WOW64_RES          */ Wow64Res         = Wow6464Key
+                                                          | Wow6432Key,
             /* KEY_READ               */ Read             = ( StandardAccessRight.StandardRightsRead | QueryValue
                                                                                                      | EnumerateSubKeys
                                                                                                      | Notify )
@@ -563,23 +581,6 @@ namespace Htc.Vita.Core.Interop
                                                                                                     | Notify
                                                                                                     | CreateLink )
                                                           & ~StandardAccessRight.Synchronize
-        }
-
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/sysinfo/predefined-keys
-         */
-        internal enum RegistryKey
-        {
-            /* HKEY_CLASSES_ROOT                */ ClassesRoot              = unchecked((int)0x80000000),
-            /* HKEY_CURRENT_USER                */ CurrentUser              = unchecked((int)0x80000001),
-            /* HKEY_LOCAL_MACHINE               */ LocalMachine             = unchecked((int)0x80000002),
-            /* HKEY_USERS                       */ Users                    = unchecked((int)0x80000003),
-            /* HKEY_PERFORMANCE_DATA            */ PerformanceData          = unchecked((int)0x80000004),
-            /* HKEY_CURRENT_CONFIG              */ CurrentConfig            = unchecked((int)0x80000005),
-            /* HKEY_DYN_DATA                    */ DynData                  = unchecked((int)0x80000006),
-            /* HKEY_CURRENT_USER_LOCAL_SETTINGS */ CurrentUserLocalSettings = unchecked((int)0x80000007),
-            /* HKEY_PERFORMANCE_TEXT            */ PerformanceText          = unchecked((int)0x80000050),
-            /* HKEY_PERFORMANCE_NLSTEXT         */ PerformanceNlsText       = unchecked((int)0x80000060)
         }
 
         /**

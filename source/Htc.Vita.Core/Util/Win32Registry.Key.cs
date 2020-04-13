@@ -8,7 +8,7 @@ using Htc.Vita.Core.Interop;
 
 namespace Htc.Vita.Core.Util
 {
-    public partial class Win32Registry
+    public static partial class Win32Registry
     {
         public class Key : IDisposable
         {
