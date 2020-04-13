@@ -8,8 +8,16 @@ using Htc.Vita.Core.Interop;
 
 namespace Htc.Vita.Core.Util
 {
+    /// <summary>
+    /// Class Win32Registry.
+    /// </summary>
     public static partial class Win32Registry
     {
+        /// <summary>
+        /// Class Key.
+        /// Implements the <see cref="IDisposable" />
+        /// </summary>
+        /// <seealso cref="IDisposable" />
         public class Key : IDisposable
         {
             private const int MaxKeyLength = 255;
@@ -32,6 +40,11 @@ namespace Htc.Vita.Core.Util
             private volatile string _name;
             private volatile KeyPermissionCheck _keyPermissionCheck;
 
+            /// <summary>
+            /// Gets the subkey count.
+            /// </summary>
+            /// <value>The subkey count.</value>
+            /// <exception cref="ObjectDisposedException">Cannot access a closed registry key.</exception>
             public int SubKeyCount
             {
                 get
@@ -44,6 +57,13 @@ namespace Htc.Vita.Core.Util
                 }
             }
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Key"/> class.
+            /// </summary>
+            /// <param name="registryHandle">The registry handle.</param>
+            /// <param name="view">The view.</param>
+            /// <param name="isWritable">Indicate if it is writable.</param>
+            /// <param name="isSystemKey">Indicate if it is a system key.</param>
             private Key(
                     Windows.SafeRegistryHandle registryHandle,
                     View view,
@@ -64,6 +84,11 @@ namespace Htc.Vita.Core.Util
                 }
             }
 
+            /// <summary>
+            /// Creates the subkey.
+            /// </summary>
+            /// <param name="subKeyName">The subkey name.</param>
+            /// <returns>Key.</returns>
             public Key CreateSubKey(string subKeyName)
             {
                 return CreateSubKey(
@@ -72,6 +97,12 @@ namespace Htc.Vita.Core.Util
                 );
             }
 
+            /// <summary>
+            /// Creates the subkey.
+            /// </summary>
+            /// <param name="subKeyName">The subkey name.</param>
+            /// <param name="keyPermissionCheck">The key permission check.</param>
+            /// <returns>Key.</returns>
             public Key CreateSubKey(
                     string subKeyName,
                     KeyPermissionCheck keyPermissionCheck)
@@ -86,6 +117,15 @@ namespace Htc.Vita.Core.Util
                 );
             }
 
+            /// <summary>
+            /// Deletes the subkey tree.
+            /// </summary>
+            /// <param name="subKeyName">The subkey name.</param>
+            /// <param name="throwOnMissingSubKey">If set to <c>true</c>, throw on missing subkey.</param>
+            /// <exception cref="ArgumentException">Cannot delete a registry hive's subtree.</exception>
+            /// <exception cref="ArgumentException">Cannot delete a subkey tree because the subkey does not exist.</exception>
+            /// <exception cref="ObjectDisposedException">Cannot access a closed registry key.</exception>
+            /// <exception cref="UnauthorizedAccessException">Cannot write to the registry key.</exception>
             public void DeleteSubKeyTree(
                     string subKeyName,
                     bool throwOnMissingSubKey)
@@ -127,6 +167,11 @@ namespace Htc.Vita.Core.Util
                 }
             }
 
+            /// <summary>
+            /// Deletes the value.
+            /// </summary>
+            /// <param name="valueName">The value name.</param>
+            /// <param name="throwOnMissingValue">Tf set to <c>true</c>, throw on missing value.</param>
             public void DeleteValue(
                     string valueName,
                     bool throwOnMissingValue)
@@ -137,6 +182,9 @@ namespace Htc.Vita.Core.Util
                 );
             }
 
+            /// <summary>
+            /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            /// </summary>
             public void Dispose()
             {
                 if (_handle != null && !IsSystemKey())
@@ -542,7 +590,7 @@ namespace Htc.Vita.Core.Util
                 return (ValueKind)registryValueType;
             }
 
-            internal Key DoOpenSubKey(
+            private Key DoOpenSubKey(
                     string subKeyName,
                     KeyPermissionCheck keyPermissionCheck,
                     bool throwOnAccessDenied)
@@ -711,6 +759,10 @@ namespace Htc.Vita.Core.Util
                 }
             }
 
+            /// <summary>
+            /// Gets the subkey names.
+            /// </summary>
+            /// <returns>System.String[].</returns>
             public string[] GetSubKeyNames()
             {
                 var subKeyCount = SubKeyCount;
@@ -721,6 +773,11 @@ namespace Htc.Vita.Core.Util
                 return DoGetSubKeyNames(subKeyCount);
             }
 
+            /// <summary>
+            /// Gets the value.
+            /// </summary>
+            /// <param name="valueName">The value name.</param>
+            /// <returns>System.Object.</returns>
             public object GetValue(string valueName)
             {
                 return DoGetValue(
@@ -729,6 +786,11 @@ namespace Htc.Vita.Core.Util
                 );
             }
 
+            /// <summary>
+            /// Gets the value kind.
+            /// </summary>
+            /// <param name="valueName">The value name.</param>
+            /// <returns>ValueKind.</returns>
             public ValueKind GetValueKind(string valueName)
             {
                 return DoGetValueKind(valueName);
@@ -823,6 +885,11 @@ namespace Htc.Vita.Core.Util
                 return stringBuilder.ToString();
             }
 
+            /// <summary>
+            /// Opens the base key.
+            /// </summary>
+            /// <param name="hive">The hive.</param>
+            /// <returns>Key.</returns>
             public static Key OpenBaseKey(Hive hive)
             {
                 return OpenBaseKey(
@@ -831,6 +898,12 @@ namespace Htc.Vita.Core.Util
                 );
             }
 
+            /// <summary>
+            /// Opens the base key.
+            /// </summary>
+            /// <param name="hive">The hive.</param>
+            /// <param name="view">The view.</param>
+            /// <returns>Key.</returns>
             public static Key OpenBaseKey(
                     Hive hive,
                     View view)
@@ -850,6 +923,12 @@ namespace Htc.Vita.Core.Util
                 };
             }
 
+            /// <summary>
+            /// Opens the subkey.
+            /// </summary>
+            /// <param name="subKeyName">The subkey name.</param>
+            /// <param name="keyPermissionCheck">The key permission check.</param>
+            /// <returns>Key.</returns>
             public Key OpenSubKey(
                     string subKeyName,
                     KeyPermissionCheck keyPermissionCheck)
@@ -861,6 +940,15 @@ namespace Htc.Vita.Core.Util
                 );
             }
 
+            /// <summary>
+            /// Sets the value.
+            /// </summary>
+            /// <param name="valueName">The value name.</param>
+            /// <param name="value">The value.</param>
+            /// <param name="valueKind">The value kind.</param>
+            /// <exception cref="ArgumentNullException">value</exception>
+            /// <exception cref="ArgumentException">Registry value names should not be greater than 16,383 characters. - valueName</exception>
+            /// <exception cref="ArgumentException">The specified RegistryValueKind is an invalid value - valueKind</exception>
             public void SetValue(
                     string valueName,
                     object value,
