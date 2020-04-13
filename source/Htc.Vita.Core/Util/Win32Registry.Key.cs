@@ -361,7 +361,7 @@ namespace Htc.Vita.Core.Util
                 }
 
                 var data = defaultValue;
-                var registryValueType = Windows.RegType.None;
+                var registryValueType = Windows.RegistryValueType.None;
                 uint bufferSize = 0;
 
                 var errorCode = Windows.RegQueryValueExW(
@@ -377,7 +377,7 @@ namespace Htc.Vita.Core.Util
                     return data;
                 }
 
-                if (registryValueType == Windows.RegType.Dword)
+                if (registryValueType == Windows.RegistryValueType.DWord)
                 {
                     var buffer = 0;
                     Windows.RegQueryValueExW(
@@ -390,7 +390,7 @@ namespace Htc.Vita.Core.Util
                     );
                     data = buffer;
                 }
-                if (registryValueType == Windows.RegType.Qword && bufferSize == 8)
+                if (registryValueType == Windows.RegistryValueType.QWord && bufferSize == 8)
                 {
                     var buffer = 0L;
                     Windows.RegQueryValueExW(
@@ -403,9 +403,9 @@ namespace Htc.Vita.Core.Util
                     );
                     data = buffer;
                 }
-                if (registryValueType == Windows.RegType.None
-                        || registryValueType == Windows.RegType.Binary
-                        || registryValueType == Windows.RegType.DwordBigEndian)
+                if (registryValueType == Windows.RegistryValueType.None
+                        || registryValueType == Windows.RegistryValueType.Binary
+                        || registryValueType == Windows.RegistryValueType.DWordBigEndian)
                 {
                     var buffer = new byte[bufferSize];
                     Windows.RegQueryValueExW(
@@ -418,7 +418,7 @@ namespace Htc.Vita.Core.Util
                     );
                     data = buffer;
                 }
-                if (registryValueType == Windows.RegType.Sz)
+                if (registryValueType == Windows.RegistryValueType.String)
                 {
                     bufferSize = NormalizeStringBufferSize(bufferSize);
                     var buffer = new char[bufferSize / 2];
@@ -432,7 +432,7 @@ namespace Htc.Vita.Core.Util
                     );
                     data = ToStringFromBuffer(buffer);
                 }
-                if (registryValueType == Windows.RegType.ExpandSz)
+                if (registryValueType == Windows.RegistryValueType.ExpandString)
                 {
                     bufferSize = NormalizeStringBufferSize(bufferSize);
                     var buffer = new char[bufferSize / 2];
@@ -446,7 +446,7 @@ namespace Htc.Vita.Core.Util
                     );
                     data = Environment.ExpandEnvironmentVariables(ToStringFromBuffer(buffer));
                 }
-                if (registryValueType == Windows.RegType.MultiSz)
+                if (registryValueType == Windows.RegistryValueType.MultiString)
                 {
                     bufferSize = NormalizeStringBufferSize(bufferSize);
                     var buffer = new char[bufferSize / 2];
@@ -516,7 +516,7 @@ namespace Htc.Vita.Core.Util
                     throw new ObjectDisposedException(_name, "Cannot access a closed registry key.");
                 }
 
-                var registryValueType = Windows.RegType.None;
+                var registryValueType = Windows.RegistryValueType.None;
                 uint bufferSize = 0;
                 var errorCode = Windows.RegQueryValueExW(
                         _handle,
@@ -534,7 +534,7 @@ namespace Htc.Vita.Core.Util
                     );
                 }
 
-                if (!Enum.IsDefined(typeof(Windows.RegType), registryValueType))
+                if (!Enum.IsDefined(typeof(Windows.RegistryValueType), registryValueType))
                 {
                     return ValueKind.None;
                 }
@@ -610,7 +610,7 @@ namespace Htc.Vita.Core.Util
                                 _handle,
                                 valueName,
                                 0,
-                                Windows.RegType.Dword,
+                                Windows.RegistryValueType.DWord,
                                 ref data,
                                 4
                         );
@@ -625,7 +625,7 @@ namespace Htc.Vita.Core.Util
                                 _handle,
                                 valueName,
                                 0,
-                                Windows.RegType.Qword,
+                                Windows.RegistryValueType.QWord,
                                 ref data,
                                 8
                         );
@@ -638,7 +638,7 @@ namespace Htc.Vita.Core.Util
                                 _handle,
                                 valueName,
                                 0,
-                                ToRegistryType(valueKind),
+                                ToRegistryValueType(valueKind),
                                 data,
                                 data.Length
                         );
@@ -651,7 +651,7 @@ namespace Htc.Vita.Core.Util
                                 _handle,
                                 valueName,
                                 0,
-                                ToRegistryType(valueKind),
+                                ToRegistryValueType(valueKind),
                                 data,
                                 checked(data.Length * 2 + 2)
                         );
@@ -690,7 +690,7 @@ namespace Htc.Vita.Core.Util
                                 _handle,
                                 valueName,
                                 0,
-                                Windows.RegType.MultiSz,
+                                Windows.RegistryValueType.MultiString,
                                 data,
                                 sizeInBytes
                         );
@@ -938,9 +938,9 @@ namespace Htc.Vita.Core.Util
                 return (Windows.RegistryKeyAccessRight)view;
             }
 
-            private static Windows.RegType ToRegistryType(ValueKind valueKind)
+            private static Windows.RegistryValueType ToRegistryValueType(ValueKind valueKind)
             {
-                return (Windows.RegType)valueKind;
+                return (Windows.RegistryValueType)valueKind;
             }
 
             private static string ToStringFromBuffer(char[] buffer)

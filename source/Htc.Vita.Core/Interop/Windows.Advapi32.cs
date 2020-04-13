@@ -379,7 +379,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_   LPCWSTR */ [In] string lpValueName,
                 /* _Reserved_ LPDWORD */ [In] IntPtr lpReserved,
-                /* _Out_opt_  LPDWORD */ [In][Out] ref RegType lpType,
+                /* _Out_opt_  LPDWORD */ [In][Out] ref RegistryValueType lpType,
                 /* _Out_      LPBYTE  */ [Out] byte[] lpData,
                 /* _Out_opt_  LPDWORD */ [In][Out] ref uint lpcbData
         );
@@ -396,7 +396,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_   LPCWSTR */ [In] string lpValueName,
                 /* _Reserved_ LPDWORD */ [In] IntPtr lpReserved,
-                /* _Out_opt_  LPDWORD */ [In][Out] ref RegType lpType,
+                /* _Out_opt_  LPDWORD */ [In][Out] ref RegistryValueType lpType,
                 /* _Out_      LPBYTE  */ [Out] char[] lpData,
                 /* _Out_opt_  LPDWORD */ [In][Out] ref uint lpcbData
         );
@@ -413,7 +413,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_   LPCWSTR */ [In] string lpValueName,
                 /* _Reserved_ LPDWORD */ [In] IntPtr lpReserved,
-                /* _Out_opt_  LPDWORD */ [In][Out] ref RegType lpType,
+                /* _Out_opt_  LPDWORD */ [In][Out] ref RegistryValueType lpType,
                 /* _Out_      LPBYTE  */ [In][Out] ref int lpData,
                 /* _Out_opt_  LPDWORD */ [In][Out] ref uint lpcbData
         );
@@ -430,7 +430,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_   LPCWSTR */ [In] string lpValueName,
                 /* _Reserved_ LPDWORD */ [In] IntPtr lpReserved,
-                /* _Out_opt_  LPDWORD */ [In][Out] ref RegType lpType,
+                /* _Out_opt_  LPDWORD */ [In][Out] ref RegistryValueType lpType,
                 /* _Out_      LPBYTE  */ [In][Out] ref long lpData,
                 /* _Out_opt_  LPDWORD */ [In][Out] ref uint lpcbData
         );
@@ -447,7 +447,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_   LPCWSTR */ [In] string lpValueName,
                 /* _Reserved_ DWORD   */ [In] int Reserved,
-                /* _In_       DWORD   */ [In] RegType dwType,
+                /* _In_       DWORD   */ [In] RegistryValueType dwType,
                 /* _In_opt_   BYTE*   */ [In] ref int lpData,
                 /* _In_       DWORD   */ [In] int cbData
         );
@@ -464,7 +464,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_   LPCWSTR */ [In] string lpValueName,
                 /* _Reserved_ DWORD   */ [In] int Reserved,
-                /* _In_       DWORD   */ [In] RegType dwType,
+                /* _In_       DWORD   */ [In] RegistryValueType dwType,
                 /* _In_opt_   BYTE*   */ [In] ref long lpData,
                 /* _In_       DWORD   */ [In] int cbData
         );
@@ -481,7 +481,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_   LPCWSTR */ [In] string lpValueName,
                 /* _Reserved_ DWORD   */ [In] int Reserved,
-                /* _In_       DWORD   */ [In] RegType dwType,
+                /* _In_       DWORD   */ [In] RegistryValueType dwType,
                 /* _In_opt_   BYTE*   */ [In] string lpData,
                 /* _In_       DWORD   */ [In] int cbData
         );
@@ -498,7 +498,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_   LPCWSTR */ [In] string lpValueName,
                 /* _Reserved_ DWORD   */ [In] int Reserved,
-                /* _In_       DWORD   */ [In] RegType dwType,
+                /* _In_       DWORD   */ [In] RegistryValueType dwType,
                 /* _In_opt_   BYTE*   */ [In] byte[] lpData,
                 /* _In_       DWORD   */ [In] int cbData
         );
@@ -515,7 +515,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_   LPCWSTR */ [In] string lpValueName,
                 /* _Reserved_ DWORD   */ [In] int Reserved,
-                /* _In_       DWORD   */ [In] RegType dwType,
+                /* _In_       DWORD   */ [In] RegistryValueType dwType,
                 /* _In_opt_   BYTE*   */ [In] char[] lpData,
                 /* _In_       DWORD   */ [In] int cbData
         );

@@ -4,13 +4,13 @@
     {
         public enum ValueKind : uint
         {
-            None         = Interop.Windows.RegType.None,
-            String       = Interop.Windows.RegType.Sz,
-            ExpandString = Interop.Windows.RegType.ExpandSz,
-            Binary       = Interop.Windows.RegType.Binary,
-            DWord        = Interop.Windows.RegType.Dword,
-            MultiString  = Interop.Windows.RegType.MultiSz,
-            QWord        = Interop.Windows.RegType.Qword
+            None         = Interop.Windows.RegistryValueType.None,
+            String       = Interop.Windows.RegistryValueType.String,
+            ExpandString = Interop.Windows.RegistryValueType.ExpandString,
+            Binary       = Interop.Windows.RegistryValueType.Binary,
+            DWord        = Interop.Windows.RegistryValueType.DWord,
+            MultiString  = Interop.Windows.RegistryValueType.MultiString,
+            QWord        = Interop.Windows.RegistryValueType.QWord
         }
     }
 }

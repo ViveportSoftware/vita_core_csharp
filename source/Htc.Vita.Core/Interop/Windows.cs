@@ -585,22 +585,22 @@ namespace Htc.Vita.Core.Interop
         /**
          * https://docs.microsoft.com/en-us/windows/desktop/sysinfo/registry-value-types
          */
-        internal enum RegType : uint
+        internal enum RegistryValueType : uint
         {
             /* REG_NONE                       */ None                     =  0,
-            /* REG_SZ                         */ Sz                       =  1,
-            /* REG_EXPAND_SZ                  */ ExpandSz                 =  2,
+            /* REG_SZ                         */ String                   =  1,
+            /* REG_EXPAND_SZ                  */ ExpandString             =  2,
             /* REG_BINARY                     */ Binary                   =  3,
-            /* REG_DWORD                      */ Dword                    =  4,
-            /* REG_DWORD_LITTLE_ENDIAN        */ DwordLittleEndian        = Dword,
-            /* REG_DWORD_BIG_ENDIAN           */ DwordBigEndian           =  5,
+            /* REG_DWORD                      */ DWord                    =  4,
+            /* REG_DWORD_LITTLE_ENDIAN        */ DWordLittleEndian        = DWord,
+            /* REG_DWORD_BIG_ENDIAN           */ DWordBigEndian           =  5,
             /* REG_LINK                       */ Link                     =  6,
-            /* REG_MULTI_SZ                   */ MultiSz                  =  7,
+            /* REG_MULTI_SZ                   */ MultiString              =  7,
             /* REG_RESOURCE_LIST              */ ResourceList             =  8,
             /* REG_FULL_RESOURCE_DESCRIPTOR   */ FullResourceDescriptor   =  9,
             /* REG_RESOURCE_REQUIREMENTS_LIST */ ResourceRequirementsList = 10,
-            /* REG_QWORD                      */ Qword                    = 11,
-            /* REG_QWORD_LITTLE_ENDIAN        */ QwordLittleEndian        = Qword
+            /* REG_QWORD                      */ QWord                    = 11,
+            /* REG_QWORD_LITTLE_ENDIAN        */ QWordLittleEndian        = QWord
         }
 
         /**

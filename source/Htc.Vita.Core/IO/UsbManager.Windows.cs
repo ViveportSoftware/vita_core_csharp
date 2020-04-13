@@ -854,14 +854,14 @@ namespace Htc.Vita.Core.IO
                     ref Interop.Windows.SetupDeviceInfoData deviceInfoData,
                     Interop.Windows.SetupDeviceRegistryProperty property)
             {
-                var regType = Interop.Windows.RegType.None;
+                var registryValueType = Interop.Windows.RegistryValueType.None;
                 var bytes = GetUsbDeviceProperty(
                         deviceInfoSetHandle,
                         ref deviceInfoData,
                         property,
-                        ref regType
+                        ref registryValueType
                 );
-                if (bytes == null || bytes.Length == 0 || regType != Interop.Windows.RegType.MultiSz)
+                if (bytes == null || bytes.Length == 0 || registryValueType != Interop.Windows.RegistryValueType.MultiString)
                 {
                     return new string[] { };
                 }
@@ -875,7 +875,7 @@ namespace Htc.Vita.Core.IO
                     Interop.Windows.SafeDevInfoSetHandle deviceInfoSetHandle,
                     ref Interop.Windows.SetupDeviceInfoData deviceInfoData,
                     Interop.Windows.SetupDeviceRegistryProperty property,
-                    ref Interop.Windows.RegType regType)
+                    ref Interop.Windows.RegistryValueType regType)
             {
                 var requiredSize = 0U;
                 var success = Interop.Windows.SetupDiGetDeviceRegistryPropertyW(
@@ -928,14 +928,14 @@ namespace Htc.Vita.Core.IO
                     ref Interop.Windows.SetupDeviceInfoData deviceInfoData,
                     Interop.Windows.SetupDeviceRegistryProperty property)
             {
-                var regType = Interop.Windows.RegType.None;
+                var registryValueType = Interop.Windows.RegistryValueType.None;
                 var bytes = GetUsbDeviceProperty(
                         deviceInfoSetHandle,
                         ref deviceInfoData,
                         property,
-                        ref regType
+                        ref registryValueType
                 );
-                if (bytes == null || bytes.Length == 0 || regType != Interop.Windows.RegType.Sz)
+                if (bytes == null || bytes.Length == 0 || registryValueType != Interop.Windows.RegistryValueType.String)
                 {
                     return string.Empty;
                 }
