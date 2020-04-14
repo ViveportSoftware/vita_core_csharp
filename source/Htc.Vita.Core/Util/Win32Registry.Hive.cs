@@ -1,4 +1,4 @@
-﻿namespace Htc.Vita.Core.Util
+namespace Htc.Vita.Core.Util
 {
     public static partial class Win32Registry
     {
