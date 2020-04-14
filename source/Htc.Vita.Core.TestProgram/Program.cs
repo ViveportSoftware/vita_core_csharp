@@ -9,6 +9,8 @@ namespace Htc.Vita.Core.TestProgram
     {
         private static void Main()
         {
+            SecurityProtocolManager.ApplyAvailableProtocol();
+
             Console.WriteLine($"SecurityProtocolManager.GetAvailableProtocol(): {SecurityProtocolManager.GetAvailableProtocol()}");
             Console.ReadKey();
 
