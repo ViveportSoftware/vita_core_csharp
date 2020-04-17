@@ -31,8 +31,9 @@ namespace Htc.Vita.Core.Tests
         {
             var assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
             var fileName = "TestData.Sha1.txt";
-            var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            var destPath = Path.Combine(desktopPath, fileName);
+            var target = Environment.GetEnvironmentVariable("Temp");
+            Assert.NotNull(target);
+            var destPath = Path.Combine(target, fileName);
             var file = new FileInfo(destPath);
 
             var result = Extract.FromAssemblyToFileByResourceName(

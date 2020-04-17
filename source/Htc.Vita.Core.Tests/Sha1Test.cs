@@ -30,7 +30,7 @@ namespace Htc.Vita.Core.Tests
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
-            var path = @"%USERPROFILE%\TestData.Sha1.txt";
+            var path = @"%USERPROFILE%\.htc_test\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
@@ -44,7 +44,7 @@ namespace Htc.Vita.Core.Tests
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
-            var path = @"%USERPROFILE%\TestData.Sha1.txt";
+            var path = @"%USERPROFILE%\.htc_test\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
@@ -67,7 +67,7 @@ namespace Htc.Vita.Core.Tests
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
-            var path = @"%USERPROFILE%\TestData.Sha1.txt";
+            var path = @"%USERPROFILE%\.htc_test\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
@@ -81,7 +81,7 @@ namespace Htc.Vita.Core.Tests
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
-            var path = @"%USERPROFILE%\TestData.Sha1.txt";
+            var path = @"%USERPROFILE%\.htc_test\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
@@ -106,7 +106,7 @@ namespace Htc.Vita.Core.Tests
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
-            var path = @"%USERPROFILE%\TestData.Sha1.txt";
+            var path = @"%USERPROFILE%\.htc_test\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
@@ -120,7 +120,7 @@ namespace Htc.Vita.Core.Tests
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
-            var path = @"%USERPROFILE%\TestData.Sha1.txt";
+            var path = @"%USERPROFILE%\.htc_test\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
@@ -143,7 +143,7 @@ namespace Htc.Vita.Core.Tests
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
-            var path = @"%USERPROFILE%\TestData.Sha1.txt";
+            var path = @"%USERPROFILE%\.htc_test\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
@@ -157,7 +157,7 @@ namespace Htc.Vita.Core.Tests
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
-            var path = @"%USERPROFILE%\TestData.Sha1.txt";
+            var path = @"%USERPROFILE%\.htc_test\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
@@ -182,7 +182,7 @@ namespace Htc.Vita.Core.Tests
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
-            var path = @"%USERPROFILE%\TestData.Sha1.txt";
+            var path = @"%USERPROFILE%\.htc_test\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
@@ -197,7 +197,7 @@ namespace Htc.Vita.Core.Tests
         {
             var sha1 = Sha1.GetInstance();
             Assert.NotNull(sha1);
-            var path = @"%USERPROFILE%\TestData.Sha1.txt";
+            var path = @"%USERPROFILE%\.htc_test\TestData.Sha1.txt";
             if (!Runtime.Platform.IsWindows)
             {
                 path = @"%HOME%/TestData.Sha1.txt";
