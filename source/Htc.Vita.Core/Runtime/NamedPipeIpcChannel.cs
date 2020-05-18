@@ -21,11 +21,13 @@ namespace Htc.Vita.Core.Runtime
         {
             private const int PipeBufferSize = 512;
 
+            private readonly Dictionary<string, string> _translatedNameMap = new Dictionary<string, string>();
+
             private string _pipeName;
 
             public Client()
             {
-                _pipeName = Sha1.GetInstance().GenerateInHex("");
+                _pipeName = "";
             }
 
             protected override bool OnIsReady(Dictionary<string, string> options)
@@ -35,7 +37,7 @@ namespace Htc.Vita.Core.Runtime
                 {
                     shouldVerifyProvider = Util.Convert.ToBool(options[OptionVerifyProvider]);
                 }
-                using (var clientStream = new NamedPipeClientStream(_pipeName))
+                using (var clientStream = new NamedPipeClientStream(OnOverrideTranslateName(_pipeName)))
                 {
                     try
                     {
@@ -66,9 +68,28 @@ namespace Htc.Vita.Core.Runtime
                 return false;
             }
 
+            protected virtual string OnOverrideTranslateName(string name)
+            {
+                string translatedName = null;
+                if (_translatedNameMap.ContainsKey(name))
+                {
+                    translatedName = _translatedNameMap[name];
+                }
+
+                if (!string.IsNullOrWhiteSpace(translatedName))
+                {
+                    return translatedName;
+                }
+
+                translatedName = Sha1.GetInstance().GenerateInHex(name);
+                _translatedNameMap[name] = translatedName;
+
+                return translatedName;
+            }
+
             protected override string OnRequest(string input)
             {
-                using (var clientStream = new NamedPipeClientStream(_pipeName))
+                using (var clientStream = new NamedPipeClientStream(OnOverrideTranslateName(_pipeName)))
                 {
                     clientStream.Connect();
                     clientStream.ReadMode = PipeTransmissionMode.Message;
@@ -92,7 +113,7 @@ namespace Htc.Vita.Core.Runtime
             {
                 if (!string.IsNullOrWhiteSpace(name))
                 {
-                    _pipeName = Sha1.GetInstance().GenerateInHex(name);
+                    _pipeName = name;
                 }
                 return true;
             }
@@ -103,6 +124,8 @@ namespace Htc.Vita.Core.Runtime
             private const int PipeBufferSize = 512;
             private const int PipeThreadNumber = 10;
 
+            private readonly Dictionary<string, string> _translatedNameMap = new Dictionary<string, string>();
+
             private readonly Thread[] _workerThreads = new Thread[PipeThreadNumber];
 
             private bool _isRunning;
@@ -111,7 +134,7 @@ namespace Htc.Vita.Core.Runtime
 
             public Provider()
             {
-                _pipeName = Sha1.GetInstance().GenerateInHex("");
+                _pipeName = "";
             }
 
             protected override bool OnIsRunning()
@@ -123,14 +146,14 @@ namespace Htc.Vita.Core.Runtime
             {
                 if (!string.IsNullOrWhiteSpace(name))
                 {
-                    _pipeName = Sha1.GetInstance().GenerateInHex(name);
+                    _pipeName = name;
                 }
                 return true;
             }
 
             protected override bool OnStart()
             {
-                Logger.GetInstance(typeof(Provider)).Info("Channel name: " + _pipeName);
+                Logger.GetInstance(typeof(Provider)).Info("Channel name: " + OnOverrideTranslateName(_pipeName));
 
                 if (_isRunning)
                 {
@@ -161,7 +184,7 @@ namespace Htc.Vita.Core.Runtime
                 var runningThreadNumber = PipeThreadNumber;
                 while (runningThreadNumber > 0)
                 {
-                    ConnectSelfToBreakConnectionWaiting(_pipeName, runningThreadNumber / 2 + 1);
+                    ConnectSelfToBreakConnectionWaiting(OnOverrideTranslateName(_pipeName), runningThreadNumber / 2 + 1);
 
                     for (var i = 0; i < PipeThreadNumber; i++)
                     {
@@ -207,7 +230,7 @@ namespace Htc.Vita.Core.Runtime
                 {
 #if NET45
                     using (var serverStream = new NamedPipeServerStream(
-                            _pipeName,
+                            OnOverrideTranslateName(_pipeName),
                             PipeDirection.InOut,
                             PipeThreadNumber,
                             PipeTransmissionMode.Message,
@@ -218,7 +241,7 @@ namespace Htc.Vita.Core.Runtime
                     ))
 #else
                     using (var serverStream = new NamedPipeServerStream(
-                            _pipeName,
+                            OnOverrideTranslateName(_pipeName),
                             PipeDirection.InOut,
                             PipeThreadNumber,
                             PipeTransmissionMode.Message,
@@ -275,6 +298,25 @@ namespace Htc.Vita.Core.Runtime
                 {
                     Logger.GetInstance(typeof(Provider)).Error("Error happened on thread[" + threadId + "]: " + e.Message);
                 }
+            }
+
+            protected virtual string OnOverrideTranslateName(string name)
+            {
+                string translatedName = null;
+                if (_translatedNameMap.ContainsKey(name))
+                {
+                    translatedName = _translatedNameMap[name];
+                }
+
+                if (!string.IsNullOrWhiteSpace(translatedName))
+                {
+                    return translatedName;
+                }
+
+                translatedName = Sha1.GetInstance().GenerateInHex(name);
+                _translatedNameMap[name] = translatedName;
+
+                return translatedName;
             }
 
             private static void ConnectSelfToBreakConnectionWaiting(string pipeName, int times)
