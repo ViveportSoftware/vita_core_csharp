@@ -317,7 +317,7 @@ namespace Htc.Vita.Core.Runtime
                             inputBuffer = new byte[inputBuffer.Length];
                         }
                         while (!clientStream.IsMessageComplete);
-                        Logger.GetInstance(typeof(Provider)).Info("Dump return: \"" + FilterOutInvalidChars(inputBuilder.ToString()) + "\"");
+                        // Logger.GetInstance(typeof(Provider)).Info("Dump return: \"" + FilterOutInvalidChars(inputBuilder.ToString()) + "\"");
                     }
                 }
             }
