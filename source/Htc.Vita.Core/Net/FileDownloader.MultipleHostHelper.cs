@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Web;
 using Htc.Vita.Core.Log;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Net
 {
@@ -51,7 +51,7 @@ namespace Htc.Vita.Core.Net
                         ? uri.Path
                         : $"{uriDownload.Path.TrimEnd('/')}{uri.Path}";
 
-                    var query = HttpUtility.ParseQueryString(uri.Query);
+                    var query = HttpUtilityLite.ParseQueryString(uri.Query);
                     uriDownload.Query = query.ToString();
 
                     return uriDownload.ToString();
