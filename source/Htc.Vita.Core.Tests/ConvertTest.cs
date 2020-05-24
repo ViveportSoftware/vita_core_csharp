@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Text;
 using Xunit;
 
@@ -70,6 +71,38 @@ namespace Htc.Vita.Core.Tests
             var time = string.Empty + Util.Convert.ToTimestampInMilli(new DateTime(2017, 8, 26));
             Assert.True(time.Length == 13);
             Assert.StartsWith("15037", time);
+        }
+
+        [Fact]
+        public static void Default_5_ToTypeByDescription()
+        {
+            const string data = "test_description_5";
+            var type = Util.Convert.ToTypeByDescription<TestStatus>(data);
+            Assert.Equal(TestStatus.TestStatus0, type);
+        }
+
+        [Fact]
+        public static void Default_6_ToTypeByName()
+        {
+            const string data = "TestStatus1";
+            var type = Util.Convert.ToTypeByName<TestStatus>(data);
+            Assert.Equal(TestStatus.TestStatus1, type);
+        }
+
+        public enum TestStatus
+        {
+            [Description("test_description_5")]
+            TestStatus0,
+            [Description("test_description_4")]
+            TestStatus1,
+            [Description("test_description_3")]
+            TestStatus2,
+            [Description("test_description_2")]
+            TestStatus3,
+            [Description("test_description_1")]
+            TestStatus4,
+            [Description("test_description_0")]
+            TestStatus5
         }
     }
 }

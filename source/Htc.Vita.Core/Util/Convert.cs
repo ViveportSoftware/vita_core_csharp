@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text;
 using Htc.Vita.Core.Log;
 
@@ -258,6 +259,40 @@ namespace Htc.Vita.Core.Util
         public static long ToTimestampInMilli(DateTime dateTime)
         {
             return (long)(dateTime - new DateTime(1970, 1, 1)).TotalMilliseconds;
+        }
+
+        /// <summary>
+        /// Converts data by description.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data">The data.</param>
+        /// <returns>T.</returns>
+        public static T ToTypeByDescription<T>(string data) where T : struct, IConvertible, IComparable, IFormattable
+        {
+            if (string.IsNullOrWhiteSpace(data))
+            {
+                return default(T);
+            }
+
+            return ((T[])Enum.GetValues(typeof(T)))
+                    .FirstOrDefault(item => item.GetDescription().Equals(data));
+        }
+
+        /// <summary>
+        /// Converts data by name.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data">The data.</param>
+        /// <returns>T.</returns>
+        public static T ToTypeByName<T>(string data) where T : struct, IConvertible, IComparable, IFormattable
+        {
+            if (string.IsNullOrWhiteSpace(data))
+            {
+                return default(T);
+            }
+
+            return ((T[])Enum.GetValues(typeof(T)))
+                    .FirstOrDefault(item => item.ToString().Equals(data));
         }
     }
 }
