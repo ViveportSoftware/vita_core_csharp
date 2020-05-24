@@ -6,31 +6,40 @@ using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Crypto
 {
+    /// <summary>
+    /// Class DefaultMd5.
+    /// Implements the <see cref="Md5" />
+    /// </summary>
+    /// <seealso cref="Md5" />
     public partial class DefaultMd5 : Md5
     {
         private const int BufferSizeInByte = 1024 * 128;
 
+        /// <inheritdoc />
         protected override string OnGenerateInBase64(FileInfo file, CancellationToken cancellationToken)
         {
             return DoGenerateInBase64(file, cancellationToken);
         }
 
+        /// <inheritdoc />
         protected override string OnGenerateInBase64(string content)
         {
             return DoGenerateInBase64(content);
         }
 
+        /// <inheritdoc />
         protected override string OnGenerateInHex(FileInfo file, CancellationToken cancellationToken)
         {
             return DoGenerateInHex(file, cancellationToken);
         }
 
+        /// <inheritdoc />
         protected override string OnGenerateInHex(string content)
         {
             return DoGenerateInHex(content);
         }
 
-        public static string DoGenerateInBase64(FileInfo file, CancellationToken cancellationToken)
+        private static string DoGenerateInBase64(FileInfo file, CancellationToken cancellationToken)
         {
             return Convert.ToBase64String(GenerateInBytes(
                     file,
@@ -38,7 +47,7 @@ namespace Htc.Vita.Core.Crypto
             ));
         }
 
-        public static string DoGenerateInBase64(string content)
+        private static string DoGenerateInBase64(string content)
         {
             using (var digest = MD5.Create())
             {
@@ -46,7 +55,7 @@ namespace Htc.Vita.Core.Crypto
             }
         }
 
-        public static string DoGenerateInHex(FileInfo file, CancellationToken cancellationToken)
+        private static string DoGenerateInHex(FileInfo file, CancellationToken cancellationToken)
         {
             return Convert.ToHexString(GenerateInBytes(
                     file,
@@ -54,7 +63,7 @@ namespace Htc.Vita.Core.Crypto
             ));
         }
 
-        public static string DoGenerateInHex(string content)
+        private static string DoGenerateInHex(string content)
         {
             using (var digest = MD5.Create())
             {

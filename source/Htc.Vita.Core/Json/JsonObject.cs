@@ -759,128 +759,128 @@ namespace Htc.Vita.Core.Json
         }
 
         /// <summary>
-        /// Called when [getting all the keys in JsonObject].
+        /// Called when getting all the keys in JsonObject.
         /// </summary>
         /// <returns>ICollection&lt;System.String&gt;.</returns>
         protected abstract ICollection<string> OnAllKeys();
         /// <summary>
-        /// Called when [determining whether JsonObject has the specified key].
+        /// Called when determining whether JsonObject has the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns><c>true</c> if JsonObject has the specified key ; otherwise, <c>false</c>.</returns>
         protected abstract bool OnHasKey(string key);
         /// <summary>
-        /// Called when [parsing the bool value].
+        /// Called when parsing the bool value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Boolean.</returns>
         protected abstract bool OnParseBool(string key, bool defaultValue);
         /// <summary>
-        /// Called when [parsing the double value].
+        /// Called when parsing the double value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Double.</returns>
         protected abstract double OnParseDouble(string key, double defaultValue);
         /// <summary>
-        /// Called when [parsing the float value].
+        /// Called when parsing the float value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Single.</returns>
         protected abstract float OnParseFloat(string key, float defaultValue);
         /// <summary>
-        /// Called when [parsing the int value].
+        /// Called when parsing the int value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int32.</returns>
         protected abstract int OnParseInt(string key, int defaultValue);
         /// <summary>
-        /// Called when [parsing the long value].
+        /// Called when parsing the long value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int64.</returns>
         protected abstract long OnParseLong(string key, long defaultValue);
         /// <summary>
-        /// Called when [parsing the string value].
+        /// Called when parsing the string value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.String.</returns>
         protected abstract string OnParseString(string key, string defaultValue);
         /// <summary>
-        /// Called when [parsing the JsonArray value].
+        /// Called when parsing the JsonArray value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnParseJsonArray(string key);
         /// <summary>
-        /// Called when [parsing the JsonObject value].
+        /// Called when parsing the JsonObject value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns>JsonObject.</returns>
         protected abstract JsonObject OnParseJsonObject(string key);
         /// <summary>
-        /// Called when [putting the bool value].
+        /// Called when putting the bool value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
         protected abstract JsonObject OnPutBool(string key, bool value);
         /// <summary>
-        /// Called when [putting the double value].
+        /// Called when putting the double value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
         protected abstract JsonObject OnPutDouble(string key, double value);
         /// <summary>
-        /// Called when [putting the float value].
+        /// Called when putting the float value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
         protected abstract JsonObject OnPutFloat(string key, float value);
         /// <summary>
-        /// Called when [putting the int value].
+        /// Called when putting the int value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
         protected abstract JsonObject OnPutInt(string key, int value);
         /// <summary>
-        /// Called when [putting the long value].
+        /// Called when putting the long value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
         protected abstract JsonObject OnPutLong(string key, long value);
         /// <summary>
-        /// Called when [putting the string value].
+        /// Called when putting the string value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
         protected abstract JsonObject OnPutString(string key, string value);
         /// <summary>
-        /// Called when [putting the JsonArray value].
+        /// Called when putting the JsonArray value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
         protected abstract JsonObject OnPutJsonArray(string key, JsonArray value);
         /// <summary>
-        /// Called when [putting the JsonObject value].
+        /// Called when putting the JsonObject value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
         protected abstract JsonObject OnPutJsonObject(string key, JsonObject value);
         /// <summary>
-        /// Called when [converting to pretty-print string].
+        /// Called when converting to pretty-print string.
         /// </summary>
         /// <returns>System.String.</returns>
         protected abstract string OnToPrettyString();

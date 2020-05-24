@@ -22,7 +22,7 @@ namespace Htc.Vita.Core.Json
         public static void Register<T>() where T : JsonFactory
         {
             _defaultType = typeof(T);
-            Logger.GetInstance(typeof(JsonFactory)).Info("Registered default " + typeof(JsonFactory).Name + " type to " + _defaultType);
+            Logger.GetInstance(typeof(JsonFactory)).Info($"Registered default {nameof(JsonFactory)} type to {_defaultType}");
         }
 
         /// <summary>
@@ -38,8 +38,8 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(JsonFactory)).Fatal("Instance initialization error: " + e);
-                Logger.GetInstance(typeof(JsonFactory)).Info("Initializing " + typeof(LitJsonJsonFactory).FullName + "...");
+                Logger.GetInstance(typeof(JsonFactory)).Fatal($"Instance initialization error: {e}");
+                Logger.GetInstance(typeof(JsonFactory)).Info($"Initializing {typeof(LitJsonJsonFactory).FullName}...");
                 instance = new LitJsonJsonFactory();
             }
             return instance;
@@ -49,7 +49,7 @@ namespace Htc.Vita.Core.Json
         {
             if (type == null)
             {
-                throw new ArgumentException("Invalid arguments to get " + typeof(JsonFactory).Name + " instance");
+                throw new ArgumentException($"Invalid arguments to get {nameof(JsonFactory)} instance");
             }
 
             var key = type.FullName + "_";
@@ -60,7 +60,7 @@ namespace Htc.Vita.Core.Json
             }
             if (instance == null)
             {
-                Logger.GetInstance(typeof(JsonFactory)).Info("Initializing " + key + "...");
+                Logger.GetInstance(typeof(JsonFactory)).Info($"Initializing {key}...");
                 var constructor = type.GetConstructor(new Type[] { });
                 if (constructor != null)
                 {
@@ -69,7 +69,7 @@ namespace Htc.Vita.Core.Json
             }
             if (instance == null)
             {
-                Logger.GetInstance(typeof(JsonFactory)).Info("Initializing " + typeof(LitJsonJsonFactory).FullName + "...");
+                Logger.GetInstance(typeof(JsonFactory)).Info($"Initializing {typeof(LitJsonJsonFactory).FullName}...");
                 instance = new LitJsonJsonFactory();
             }
             lock (InstancesLock)
@@ -120,7 +120,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(JsonFactory)).Fatal("Deserializing object error: " + e);
+                Logger.GetInstance(typeof(JsonFactory)).Fatal($"Deserializing object error: {e}");
             }
             return result;
         }
@@ -144,7 +144,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(JsonFactory)).Fatal("Serializing object error: " + e);
+                Logger.GetInstance(typeof(JsonFactory)).Fatal($"Serializing object error: {e}");
             }
             return result;
         }
@@ -168,7 +168,7 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(JsonFactory)).Fatal("Getting json array error: " + e);
+                Logger.GetInstance(typeof(JsonFactory)).Fatal($"Getting json array error: {e}");
             }
             return result;
         }
@@ -192,42 +192,42 @@ namespace Htc.Vita.Core.Json
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(JsonFactory)).Fatal("Getting json object error: " + e);
+                Logger.GetInstance(typeof(JsonFactory)).Fatal($"Getting json object error: {e}");
             }
             return result;
         }
 
         /// <summary>
-        /// Called when [creating an empty JsonArray].
+        /// Called when creating an empty JsonArray.
         /// </summary>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnCreateJsonArray();
         /// <summary>
-        /// Called when [creating an empty JsonObject].
+        /// Called when creating an empty JsonObject.
         /// </summary>
         /// <returns>JsonObject.</returns>
         protected abstract JsonObject OnCreateJsonObject();
         /// <summary>
-        /// Called when [deserializing object].
+        /// Called when deserializing object.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="content">The content.</param>
         /// <returns>T.</returns>
         protected abstract T OnDeserializeObject<T>(string content);
         /// <summary>
-        /// Called when [getting the JsonArray].
+        /// Called when getting the JsonArray.
         /// </summary>
         /// <param name="content">The content.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnGetJsonArray(string content);
         /// <summary>
-        /// Called when [getting the JsonObject].
+        /// Called when getting the JsonObject.
         /// </summary>
         /// <param name="content">The content.</param>
         /// <returns>JsonObject.</returns>
         protected abstract JsonObject OnGetJsonObject(string content);
         /// <summary>
-        /// Called when [serializing object].
+        /// Called when serializing object.
         /// </summary>
         /// <param name="content">The content.</param>
         /// <returns>System.String.</returns>

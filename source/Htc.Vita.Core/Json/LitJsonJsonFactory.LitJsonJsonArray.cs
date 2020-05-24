@@ -314,7 +314,7 @@ namespace Htc.Vita.Core.Json
                 }
                 catch (Exception)
                 {
-                    Logger.GetInstance(typeof(LitJsonJsonArray)).Error("Can not parse bool value by index: " + index);
+                    Logger.GetInstance(typeof(LitJsonJsonArray)).Error($"Can not parse bool value by index: {index}");
                 }
                 return result;
             }
@@ -349,7 +349,7 @@ namespace Htc.Vita.Core.Json
                 }
                 catch (Exception)
                 {
-                    Logger.GetInstance(typeof(LitJsonJsonArray)).Error("Can not parse double value by index: " + index);
+                    Logger.GetInstance(typeof(LitJsonJsonArray)).Error($"Can not parse double value by index: {index}");
                 }
                 return result;
             }
@@ -384,7 +384,7 @@ namespace Htc.Vita.Core.Json
                 }
                 catch (Exception)
                 {
-                    Logger.GetInstance(typeof(LitJsonJsonArray)).Error("Can not parse float value by index: " + index);
+                    Logger.GetInstance(typeof(LitJsonJsonArray)).Error($"Can not parse float value by index: {index}");
                 }
                 return result;
             }
@@ -411,7 +411,7 @@ namespace Htc.Vita.Core.Json
                 }
                 catch (Exception)
                 {
-                    Logger.GetInstance(typeof(LitJsonJsonArray)).Error("Can not parse int value by index: " + index);
+                    Logger.GetInstance(typeof(LitJsonJsonArray)).Error($"Can not parse int value by index: {index}");
                 }
                 return result;
             }
@@ -438,7 +438,7 @@ namespace Htc.Vita.Core.Json
                 }
                 catch (Exception)
                 {
-                    Logger.GetInstance(typeof(LitJsonJsonArray)).Error("Can not parse long value by index: " + index);
+                    Logger.GetInstance(typeof(LitJsonJsonArray)).Error($"Can not parse long value by index: {index}");
                 }
                 return result;
             }
@@ -457,7 +457,7 @@ namespace Htc.Vita.Core.Json
                 }
                 catch (Exception)
                 {
-                    Logger.GetInstance(typeof(LitJsonJsonArray)).Error("Can not parse string value by index: " + index);
+                    Logger.GetInstance(typeof(LitJsonJsonArray)).Error($"Can not parse string value by index: {index}");
                 }
                 return result;
             }
@@ -479,7 +479,7 @@ namespace Htc.Vita.Core.Json
                 }
                 catch (Exception)
                 {
-                    Logger.GetInstance(typeof(LitJsonJsonArray)).Error("Can not parse JsonArray by index: " + index);
+                    Logger.GetInstance(typeof(LitJsonJsonArray)).Error($"Can not parse JsonArray by index: {index}");
                 }
                 return null;
             }
@@ -501,7 +501,7 @@ namespace Htc.Vita.Core.Json
                 }
                 catch (Exception)
                 {
-                    Logger.GetInstance(typeof(LitJsonJsonArray)).Error("Can not parse JsonObject by index: " + index);
+                    Logger.GetInstance(typeof(LitJsonJsonArray)).Error($"Can not parse JsonObject by index: {index}");
                 }
                 return null;
             }

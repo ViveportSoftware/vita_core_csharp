@@ -669,7 +669,7 @@ namespace Htc.Vita.Core.Json
             {
                 return result;
             }
-            Logger.GetInstance(typeof(JsonArray)).Fatal("Size abnormal: " + result);
+            Logger.GetInstance(typeof(JsonArray)).Fatal($"Size abnormal: {result}");
             return 0;
         }
 
@@ -693,170 +693,170 @@ namespace Htc.Vita.Core.Json
         }
 
         /// <summary>
-        /// Called when [appending the bool value].
+        /// Called when appending the bool value.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnAppendBool(bool value);
         /// <summary>
-        /// Called when [appending the double value].
+        /// Called when appending the double value.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnAppendDouble(double value);
         /// <summary>
-        /// Called when [appending the float value].
+        /// Called when appending the float value.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnAppendFloat(float value);
         /// <summary>
-        /// Called when [appending the int value].
+        /// Called when appending the int value.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnAppendInt(int value);
         /// <summary>
-        /// Called when [appending the long value].
+        /// Called when appending the long value.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnAppendLong(long value);
         /// <summary>
-        /// Called when [appending the string value].
+        /// Called when appending the string value.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnAppendString(string value);
         /// <summary>
-        /// Called when [appending the JsonArray value].
+        /// Called when appending the JsonArray value.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnAppendJsonArray(JsonArray value);
         /// <summary>
-        /// Called when [appending the JsonObject value].
+        /// Called when appending the JsonObject value.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnAppendJsonObject(JsonObject value);
         /// <summary>
-        /// Called when [inserting the specific bool value by index].
+        /// Called when inserting the specific bool value by index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnInsertBool(int index, bool value);
         /// <summary>
-        /// Called when [inserting the specific double value by index].
+        /// Called when inserting the specific double value by index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnInsertDouble(int index, double value);
         /// <summary>
-        /// Called when [inserting the specific float value by index].
+        /// Called when inserting the specific float value by index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnInsertFloat(int index, float value);
         /// <summary>
-        /// Called when [inserting the specific int value by index].
+        /// Called when inserting the specific int value by index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnInsertInt(int index, int value);
         /// <summary>
-        /// Called when [inserting the specific long value by index].
+        /// Called when inserting the specific long value by index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnInsertLong(int index, long value);
         /// <summary>
-        /// Called when [inserting the specific string value by index].
+        /// Called when inserting the specific string value by index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnInsertString(int index, string value);
         /// <summary>
-        /// Called when [inserting the specific JsonArray value by index].
+        /// Called when inserting the specific JsonArray value by index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnInsertJsonArray(int index, JsonArray value);
         /// <summary>
-        /// Called when [inserting the specific JsonObject value by index].
+        /// Called when inserting the specific JsonObject value by index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnInsertJsonObject(int index, JsonObject value);
         /// <summary>
-        /// Called when [parsing the bool value].
+        /// Called when parsing the bool value.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">if set to <c>true</c> [default value].</param>
         /// <returns>System.Boolean.</returns>
         protected abstract bool OnParseBool(int index, bool defaultValue);
         /// <summary>
-        /// Called when [parsing the double value].
+        /// Called when parsing the double value.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Double.</returns>
         protected abstract double OnParseDouble(int index, double defaultValue);
         /// <summary>
-        /// Called when [parsing the float value].
+        /// Called when parsing the float value.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Single.</returns>
         protected abstract float OnParseFloat(int index, float defaultValue);
         /// <summary>
-        /// Called when [parsing the int value].
+        /// Called when parsing the int value.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int32.</returns>
         protected abstract int OnParseInt(int index, int defaultValue);
         /// <summary>
-        /// Called when [parsing the long value].
+        /// Called when parsing the long value.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int64.</returns>
         protected abstract long OnParseLong(int index, long defaultValue);
         /// <summary>
-        /// Called when [parsing the string value].
+        /// Called when parsing the string value.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.String.</returns>
         protected abstract string OnParseString(int index, string defaultValue);
         /// <summary>
-        /// Called when [parsing the JsonArray value].
+        /// Called when parsing the JsonArray value.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns>JsonArray.</returns>
         protected abstract JsonArray OnParseJsonArray(int index);
         /// <summary>
-        /// Called when [parsing the JsonObject value].
+        /// Called when parsing the JsonObject value.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns>JsonObject.</returns>
         protected abstract JsonObject OnParseJsonObject(int index);
         /// <summary>
-        /// Called when [getting the element size of this instance].
+        /// Called when getting the element size of this instance.
         /// </summary>
         /// <returns>System.Int32.</returns>
         protected abstract int OnSize();
         /// <summary>
-        /// Called when [converting to pretty-print string].
+        /// Called when converting to pretty-print string.
         /// </summary>
         /// <returns>System.String.</returns>
         protected abstract string OnToPrettyString();
