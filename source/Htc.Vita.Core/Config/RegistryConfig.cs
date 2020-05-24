@@ -5,11 +5,19 @@ using Microsoft.Win32;
 
 namespace Htc.Vita.Core.Config
 {
+    /// <summary>
+    /// Class RegistryConfig.
+    /// Implements the <see cref="Config" />
+    /// </summary>
+    /// <seealso cref="Config" />
     public class RegistryConfig : Config
     {
         private readonly Dictionary<string, string> _map;
         private const string KeyPath = "SOFTWARE\\HTC\\Vita\\Config";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RegistryConfig"/> class.
+        /// </summary>
         public RegistryConfig()
         {
             _map = new Dictionary<string, string>();
@@ -49,11 +57,13 @@ namespace Htc.Vita.Core.Config
             return properties;
         }
 
+        /// <inheritdoc />
         protected override bool OnHasKey(string key)
         {
             return _map != null && _map.ContainsKey(key);
         }
 
+        /// <inheritdoc />
         protected override string OnGet(string key)
         {
             string result = null;
