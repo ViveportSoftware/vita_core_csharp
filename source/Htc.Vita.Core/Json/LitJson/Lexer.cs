@@ -1,4 +1,5 @@
 #region Header
+#pragma warning disable 1587 // XML comment is not placed on a valid language element
 /**
  * Lexer.cs
  *   JSON lexer implementation based on a finite state machine.
@@ -6,6 +7,7 @@
  * The authors disclaim copyright to this source code. For more details, see
  * the COPYING file included with this distribution.
  **/
+#pragma warning restore 1587 // XML comment is not placed on a valid language element
 #endregion
 
 

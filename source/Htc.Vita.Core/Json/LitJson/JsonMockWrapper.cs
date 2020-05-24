@@ -1,4 +1,5 @@
 #region Header
+#pragma warning disable 1587 // XML comment is not placed on a valid language element
 /**
  * JsonMockWrapper.cs
  *   Mock object implementing IJsonWrapper, to facilitate actions like
@@ -7,9 +8,11 @@
  * The authors disclaim copyright to this source code. For more details, see
  * the COPYING file included with this distribution.
  **/
+#pragma warning restore 1587 // XML comment is not placed on a valid language element
 #endregion
 
 
+#pragma warning disable 1591 // Missing XML comment for publicly visible type or member
 using System;
 using System.Collections;
 using System.Collections.Specialized;
@@ -103,3 +106,4 @@ namespace Htc.Vita.Core.Json.LitJson
         void IOrderedDictionary.RemoveAt (int i) {}
     }
 }
+#pragma warning restore 1591 // Missing XML comment for publicly visible type or member

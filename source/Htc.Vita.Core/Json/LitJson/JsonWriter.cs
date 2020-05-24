@@ -1,4 +1,5 @@
 #region Header
+#pragma warning disable 1587 // XML comment is not placed on a valid language element
 /**
  * JsonWriter.cs
  *   Stream-like facility to output JSON text.
@@ -6,9 +7,11 @@
  * The authors disclaim copyright to this source code. For more details, see
  * the COPYING file included with this distribution.
  **/
+#pragma warning restore 1587 // XML comment is not placed on a valid language element
 #endregion
 
 
+#pragma warning disable 1591 // Missing XML comment for publicly visible type or member
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -474,3 +477,4 @@ namespace Htc.Vita.Core.Json.LitJson
         }
     }
 }
+#pragma warning restore 1591 // Missing XML comment for publicly visible type or member
