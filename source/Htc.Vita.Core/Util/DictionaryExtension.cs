@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Net;
+using System.Text;
 using Htc.Vita.Core.Json;
 
 namespace Htc.Vita.Core.Util
@@ -32,6 +34,41 @@ namespace Htc.Vita.Core.Util
 
             data[key] = value;
             return data;
+        }
+
+        /// <summary>
+        /// Converts to encoded URI query parameters.
+        /// </summary>
+        /// <param name="queryParams">The query parameters.</param>
+        /// <returns>System.String.</returns>
+        public static string ToEncodedUriQueryParameters(this Dictionary<string, string> queryParams)
+        {
+            if (queryParams == null)
+            {
+                return null;
+            }
+
+            var stringBuilder = new StringBuilder();
+            var isFirst = true;
+            foreach (var key in queryParams.Keys)
+            {
+                if (!isFirst)
+                {
+                    stringBuilder.Append("&");
+                }
+
+                var param = queryParams[key];
+                if (string.IsNullOrEmpty(param))
+                {
+                    continue;
+                }
+
+                stringBuilder.Append(WebUtility.UrlEncode(key))
+                        .Append("=")
+                        .Append(WebUtility.UrlEncode(param));
+                isFirst = false;
+            }
+            return stringBuilder.ToString();
         }
 
         /// <summary>

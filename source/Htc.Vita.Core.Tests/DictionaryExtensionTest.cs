@@ -260,5 +260,21 @@ namespace Htc.Vita.Core.Tests
             Assert.False(map.ContainsKey("key3"));
             Assert.True(map.ContainsKey("key4"));
         }
+
+        [Fact]
+        public static void Default_2_ToEncodedUriQueryParameters()
+        {
+            var map = new Dictionary<string, string>
+            {
+                    ["a"] = "1",
+                    ["b"] = "2",
+                    ["c"] = "3"
+            };
+            var encodedUriQueryParameters = map.ToEncodedUriQueryParameters();
+            Assert.Contains("a=1", encodedUriQueryParameters);
+            Assert.Contains("b=2", encodedUriQueryParameters);
+            Assert.Contains("c=3", encodedUriQueryParameters);
+            Assert.Contains("&", encodedUriQueryParameters);
+        }
     }
 }
