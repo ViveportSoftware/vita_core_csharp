@@ -52,15 +52,15 @@ namespace Htc.Vita.Core.Util
             var isFirst = true;
             foreach (var key in queryParams.Keys)
             {
-                if (!isFirst)
-                {
-                    stringBuilder.Append("&");
-                }
-
                 var param = queryParams[key];
                 if (string.IsNullOrEmpty(param))
                 {
                     continue;
+                }
+
+                if (!isFirst)
+                {
+                    stringBuilder.Append("&");
                 }
 
                 stringBuilder.Append(WebUtility.UrlEncode(key))
