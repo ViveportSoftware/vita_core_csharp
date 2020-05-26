@@ -57,6 +57,12 @@ namespace Htc.Vita.Core.Net
                     continue;
                 }
 
+                if (result.ContainsKey(address))
+                {
+                    Logger.GetInstance(typeof(NetworkInterface)).Warn($"Duplicate IP Address: {address}");
+                    continue;
+                }
+
                 result.Add(address, broadcastAddress);
             }
 
@@ -83,6 +89,12 @@ namespace Htc.Vita.Core.Net
 
                     if (unicastAddress.Address.AddressFamily != AddressFamily.InterNetwork)
                     {
+                        continue;
+                    }
+
+                    if (result.ContainsKey(unicastAddress.Address))
+                    {
+                        Logger.GetInstance(typeof(NetworkInterface)).Warn($"Duplicate IP Address: {unicastAddress.Address}");
                         continue;
                     }
 
