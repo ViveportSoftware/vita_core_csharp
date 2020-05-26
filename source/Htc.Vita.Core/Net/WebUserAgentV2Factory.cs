@@ -41,7 +41,7 @@ namespace Htc.Vita.Core.Net
         public static void Register<T>() where T : WebUserAgentV2Factory
         {
             _defaultType = typeof(T);
-            Logger.GetInstance(typeof(WebUserAgentV2Factory)).Info($"Registered default {typeof(WebUserAgentV2Factory).Name} type to {_defaultType}");
+            Logger.GetInstance(typeof(WebUserAgentV2Factory)).Info($"Registered default {nameof(WebUserAgentV2Factory)} type to {_defaultType}");
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Htc.Vita.Core.Net
         {
             if (type == null)
             {
-                throw new ArgumentException($"Invalid arguments to get {typeof(WebUserAgentV2Factory).Name} instance");
+                throw new ArgumentException($"Invalid arguments to get {nameof(WebUserAgentV2Factory)} instance");
             }
 
             var key = $"{type.FullName}_";

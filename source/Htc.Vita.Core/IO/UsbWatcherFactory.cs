@@ -10,12 +10,12 @@ namespace Htc.Vita.Core.IO
 
         private static readonly object InstancesLock = new object();
 
-        private static Type defaultType = typeof(WmiUsbWatcherFactory);
+        private static Type _defaultType = typeof(WmiUsbWatcherFactory);
 
         public static void Register<T>() where T : UsbWatcherFactory
         {
-            defaultType = typeof(T);
-            Logger.GetInstance(typeof(UsbWatcherFactory)).Info("Registered default " + typeof(UsbWatcherFactory).Name + " type to " + defaultType);
+            _defaultType = typeof(T);
+            Logger.GetInstance(typeof(UsbWatcherFactory)).Info("Registered default " + nameof(UsbWatcherFactory) + " type to " + _defaultType);
         }
 
         public static UsbWatcherFactory GetInstance()
@@ -23,7 +23,7 @@ namespace Htc.Vita.Core.IO
             UsbWatcherFactory instance;
             try
             {
-                instance = DoGetInstance(defaultType);
+                instance = DoGetInstance(_defaultType);
             }
             catch (Exception e)
             {
@@ -54,7 +54,7 @@ namespace Htc.Vita.Core.IO
         {
             if (type == null)
             {
-                throw new ArgumentException("Invalid arguments to get " + typeof(UsbWatcherFactory).Name + " instance");
+                throw new ArgumentException("Invalid arguments to get " + nameof(UsbWatcherFactory) + " instance");
             }
 
             var key = type.FullName + "_";
