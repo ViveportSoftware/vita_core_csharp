@@ -8,8 +8,17 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
 {
+    /// <summary>
+    /// Class NetworkInterface.
+    /// </summary>
     public static class NetworkInterface
     {
+        /// <summary>
+        /// Gets the broadcast address for IPv4.
+        /// </summary>
+        /// <param name="address">The address.</param>
+        /// <param name="subnetMask">The subnet mask.</param>
+        /// <returns>IPAddress.</returns>
         public static IPAddress GetIPv4BroadcastAddress(
                 IPAddress address,
                 IPAddress subnetMask)
@@ -34,6 +43,10 @@ namespace Htc.Vita.Core.Net
             return new IPAddress(broadcastAddressInBytes);
         }
 
+        /// <summary>
+        /// Gets the local IPv4 address map with broadcast address.
+        /// </summary>
+        /// <returns>Dictionary&lt;IPAddress, IPAddress&gt;.</returns>
         public static Dictionary<IPAddress, IPAddress> GetLocalIPv4AddressesWithBroadcastAddress()
         {
             var result = new Dictionary<IPAddress, IPAddress>();
@@ -69,6 +82,10 @@ namespace Htc.Vita.Core.Net
             return result;
         }
 
+        /// <summary>
+        /// Gets the local IPv4 address map with subnet mask.
+        /// </summary>
+        /// <returns>Dictionary&lt;IPAddress, IPAddress&gt;.</returns>
         public static Dictionary<IPAddress, IPAddress> GetLocalIPv4AddressesWithSubnetMask()
         {
             var result = new Dictionary<IPAddress, IPAddress>();
@@ -108,6 +125,13 @@ namespace Htc.Vita.Core.Net
             return result;
         }
 
+        /// <summary>
+        /// Determines whether the first address and the second address are in the same IPv4 subnet.
+        /// </summary>
+        /// <param name="firstAddress">The first address.</param>
+        /// <param name="secondAddress">The second address.</param>
+        /// <param name="subnetMask">The subnet mask.</param>
+        /// <returns><c>true</c> if [is in same i PV4 subnet] [the specified first address]; otherwise, <c>false</c>.</returns>
         public static bool IsInSameIPv4Subnet(
                 IPAddress firstAddress,
                 IPAddress secondAddress,
@@ -147,11 +171,19 @@ namespace Htc.Vita.Core.Net
             return result;
         }
 
+        /// <summary>
+        /// Determines whether the network is available.
+        /// </summary>
+        /// <returns><c>true</c> if the network is available; otherwise, <c>false</c>.</returns>
         public static bool IsNetworkAvailable()
         {
             return System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
         }
 
+        /// <summary>
+        /// Determines whether the internet is available.
+        /// </summary>
+        /// <returns><c>true</c> if the internet is available; otherwise, <c>false</c>.</returns>
         public static bool IsInternetAvailable()
         {
             if (!IsNetworkAvailable())
