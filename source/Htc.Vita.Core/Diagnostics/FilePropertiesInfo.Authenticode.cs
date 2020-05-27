@@ -222,11 +222,11 @@ namespace Htc.Vita.Core.Diagnostics
                     }
                     else if (result == (uint)Windows.TrustError.SubjectNotTrusted)
                     {
-                        Logger.GetInstance(typeof(FilePropertiesInfo)).Warn("Can not trust " + fileInfo.FullName);
+                        Logger.GetInstance(typeof(FilePropertiesInfo)).Warn($"Can not trust {fileInfo.FullName}");
                     }
                     else
                     {
-                        Logger.GetInstance(typeof(FilePropertiesInfo)).Error("WinVerifyTrust result: 0x" + result.ToString("X"));
+                        Logger.GetInstance(typeof(FilePropertiesInfo)).Error($"WinVerifyTrust result: 0x{result:X}");
                     }
                 }
 
