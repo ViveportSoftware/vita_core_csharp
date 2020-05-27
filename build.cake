@@ -421,38 +421,6 @@ Task("Sign-Assemblies")
     );
     lastSignTimestamp = DateTime.Now;
 
-    file = string.Format("./temp/{0}/{1}/bin/netcoreapp2.1/{1}.dll", configuration, product);
-
-    if (totalTimeInMilli < signIntervalInMilli)
-    {
-        System.Threading.Thread.Sleep(signIntervalInMilli - (int)totalTimeInMilli);
-    }
-    Sign(
-            file,
-            new SignToolSignSettings
-            {
-                    TimeStampUri = signSha1Uri,
-                    CertPath = signKey,
-                    Password = signPass
-            }
-    );
-    lastSignTimestamp = DateTime.Now;
-
-    System.Threading.Thread.Sleep(signIntervalInMilli);
-    Sign(
-            file,
-            new SignToolSignSettings
-            {
-                    AppendSignature = true,
-                    TimeStampUri = signSha256Uri,
-                    DigestAlgorithm = SignToolDigestAlgorithm.Sha256,
-                    TimeStampDigestAlgorithm = SignToolDigestAlgorithm.Sha256,
-                    CertPath = signKey,
-                    Password = signPass
-            }
-    );
-    lastSignTimestamp = DateTime.Now;
-
     file = string.Format("./temp/{0}/{1}/bin/netstandard2.0/{1}.dll", configuration, product);
 
     if (totalTimeInMilli < signIntervalInMilli)
