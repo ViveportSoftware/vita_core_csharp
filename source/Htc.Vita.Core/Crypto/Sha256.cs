@@ -94,7 +94,7 @@ namespace Htc.Vita.Core.Crypto
         /// <returns>System.String.</returns>
         public string GenerateInBase64(FileInfo file)
         {
-            return GenerateInBase64(file, new CancellationToken());
+            return GenerateInBase64(file, CancellationToken.None);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Htc.Vita.Core.Crypto
         /// <returns>System.String.</returns>
         public string GenerateInHex(FileInfo file)
         {
-            return GenerateInHex(file, new CancellationToken());
+            return GenerateInHex(file, CancellationToken.None);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Htc.Vita.Core.Crypto
         /// <returns><c>true</c> if valid, <c>false</c> otherwise.</returns>
         public bool ValidateInAll(FileInfo file, string checksum)
         {
-            return ValidateInAll(file, checksum, new CancellationToken());
+            return ValidateInAll(file, checksum, CancellationToken.None);
         }
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace Htc.Vita.Core.Crypto
         /// <returns><c>true</c> if valid, <c>false</c> otherwise.</returns>
         public bool ValidateInBase64(FileInfo file, string checksum)
         {
-            return ValidateInBase64(file, checksum, new CancellationToken());
+            return ValidateInBase64(file, checksum, CancellationToken.None);
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace Htc.Vita.Core.Crypto
         /// <returns><c>true</c> if valid, <c>false</c> otherwise.</returns>
         public bool ValidateInHex(FileInfo file, string checksum)
         {
-            return ValidateInHex(file, checksum, new CancellationToken());
+            return ValidateInHex(file, checksum, CancellationToken.None);
         }
 
         /// <summary>

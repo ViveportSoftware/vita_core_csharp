@@ -44,7 +44,7 @@ namespace Htc.Vita.Core.Crypto
                 using (var readStream = file.OpenRead())
                 {
                     int length;
-                    while ((length = await readStream.ReadAsync(buffer, 0, buffer.Length).ConfigureAwait(false)) > 0)
+                    while ((length = await readStream.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false)) > 0)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         digest.TransformBlock(
