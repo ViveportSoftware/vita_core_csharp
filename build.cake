@@ -342,6 +342,7 @@ Task("Run-DupFinder")
                 {
                         ShowStats = true,
                         ShowText = true,
+                        SkipOutputAnalysis = true,
                         OutputFile = new FilePath(reportReSharperDupFinder.ToString() + "/" + product + ".xml"),
                         ThrowExceptionOnFindingDuplicates = false
                 }
@@ -365,6 +366,7 @@ Task("Run-InspectCode")
                 new InspectCodeSettings()
                 {
                         SolutionWideAnalysis = true,
+                        SkipOutputAnalysis = true,
                         OutputFile = new FilePath(reportReSharperInspectCode.ToString() + "/" + product + ".xml"),
                         ThrowExceptionOnFindingViolations = false
                 }
