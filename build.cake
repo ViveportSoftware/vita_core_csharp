@@ -368,6 +368,7 @@ Task("Run-InspectCode")
                         SolutionWideAnalysis = true,
                         SkipOutputAnalysis = true,
                         OutputFile = new FilePath(reportReSharperInspectCode.ToString() + "/" + product + ".xml"),
+                        Verbosity = InspectCodeVerbosity.Off,
                         ThrowExceptionOnFindingViolations = false
                 }
         );
