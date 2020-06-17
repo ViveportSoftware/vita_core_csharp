@@ -15,7 +15,7 @@ namespace Htc.Vita.Core.Crypto
         /// <returns>Task&lt;System.String&gt;.</returns>
         public Task<string> GenerateInBase64Async(FileInfo file)
         {
-            return GenerateInBase64Async(file, new CancellationToken());
+            return GenerateInBase64Async(file, CancellationToken.None);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Htc.Vita.Core.Crypto
         /// <returns>Task&lt;System.String&gt;.</returns>
         public Task<string> GenerateInHexAsync(FileInfo file)
         {
-            return GenerateInHexAsync(file, new CancellationToken());
+            return GenerateInHexAsync(file, CancellationToken.None);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Htc.Vita.Core.Crypto
         /// <returns>Task&lt;System.Boolean&gt;.</returns>
         public Task<bool> ValidateInAllAsync(FileInfo file, string checksum)
         {
-            return ValidateInAllAsync(file, checksum, new CancellationToken());
+            return ValidateInAllAsync(file, checksum, CancellationToken.None);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Htc.Vita.Core.Crypto
         /// <returns>Task&lt;System.Boolean&gt;.</returns>
         public Task<bool> ValidateInBase64Async(FileInfo file, string checksum)
         {
-            return ValidateInBase64Async(file, checksum, new CancellationToken());
+            return ValidateInBase64Async(file, checksum, CancellationToken.None);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Htc.Vita.Core.Crypto
         /// <returns>Task&lt;System.Boolean&gt;.</returns>
         public Task<bool> ValidateInHexAsync(FileInfo file, string checksum)
         {
-            return ValidateInHexAsync(file, checksum, new CancellationToken());
+            return ValidateInHexAsync(file, checksum, CancellationToken.None);
         }
 
         /// <summary>

@@ -6,16 +6,27 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
 {
+    /// <summary>
+    /// Class Dns.
+    /// </summary>
     public abstract class Dns
     {
         private static Dictionary<string, Dns> Instances { get; } = new Dictionary<string, Dns>();
 
         private static readonly object InstancesLock = new object();
 
-        private static Type defaultType = typeof(DefaultDns);
+        private static Type _defaultType = typeof(DefaultDns);
 
+        /// <summary>
+        /// Gets the resolver.
+        /// </summary>
+        /// <value>The resolver.</value>
         public string Resolver { get; } = string.Empty;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Dns"/> class.
+        /// </summary>
+        /// <param name="resolver">The resolver.</param>
         protected Dns(string resolver)
         {
             if (!string.IsNullOrWhiteSpace(resolver))
@@ -24,12 +35,20 @@ namespace Htc.Vita.Core.Net
             }
         }
 
+        /// <summary>
+        /// Registers the instance type.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public static void Register<T>() where T : Dns
         {
-            defaultType = typeof(T);
-            Logger.GetInstance(typeof(Dns)).Info("Registered default " + typeof(Dns).Name + " type to " + defaultType);
+            _defaultType = typeof(T);
+            Logger.GetInstance(typeof(Dns)).Info($"Registered default {nameof(Dns)} type to {_defaultType}");
         }
 
+        /// <summary>
+        /// Flushes the cache.
+        /// </summary>
+        /// <returns><c>true</c> if flushing the cache successfully, <c>false</c> otherwise.</returns>
         public bool FlushCache()
         {
             var result = false;
@@ -44,6 +63,11 @@ namespace Htc.Vita.Core.Net
             return result;
         }
 
+        /// <summary>
+        /// Flushes the cache.
+        /// </summary>
+        /// <param name="hostName">The host name.</param>
+        /// <returns><c>true</c> if flushing the cache successfully, <c>false</c> otherwise.</returns>
         public bool FlushCache(string hostName)
         {
             if (string.IsNullOrWhiteSpace(hostName))
@@ -63,32 +87,52 @@ namespace Htc.Vita.Core.Net
             return result;
         }
 
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <returns>Dns.</returns>
         public static Dns GetInstance()
         {
             return GetInstance("");
         }
 
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <param name="resolver">The resolver.</param>
+        /// <returns>Dns.</returns>
         public static Dns GetInstance(string resolver)
         {
             Dns instance;
             try
             {
-                instance = DoGetInstance(defaultType, resolver);
+                instance = DoGetInstance(_defaultType, resolver);
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Dns)).Fatal("Instance initialization error: " + e);
-                Logger.GetInstance(typeof(Dns)).Info("Initializing " + typeof(DefaultDns).FullName + "...");
+                Logger.GetInstance(typeof(Dns)).Fatal($"Instance initialization error: {e}");
+                Logger.GetInstance(typeof(Dns)).Info($"Initializing {typeof(DefaultDns).FullName}...");
                 instance = new DefaultDns(resolver);
             }
             return instance;
         }
 
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>Dns.</returns>
         public static Dns GetInstance<T>() where T : Dns
         {
             return GetInstance<T>("");
         }
 
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="resolver">The resolver.</param>
+        /// <returns>Dns.</returns>
         public static Dns GetInstance<T>(string resolver) where T : Dns
         {
             Dns instance;
@@ -98,8 +142,8 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Dns)).Fatal("Instance initialization error " + e);
-                Logger.GetInstance(typeof(Dns)).Info("Initializing " + typeof(DefaultDns).FullName + "...");
+                Logger.GetInstance(typeof(Dns)).Fatal($"Instance initialization error {e}");
+                Logger.GetInstance(typeof(Dns)).Info($"Initializing {typeof(DefaultDns).FullName}...");
                 instance = new DefaultDns(resolver);
             }
             return instance;
@@ -109,10 +153,10 @@ namespace Htc.Vita.Core.Net
         {
             if (type == null || resolver == null)
             {
-                throw new ArgumentException("Invalid arguments to get " + typeof(Dns).Name + " instance");
+                throw new ArgumentException($"Invalid arguments to get {nameof(Dns)} instance");
             }
 
-            var key = type.FullName + "_" + resolver;
+            var key = $"{type.FullName}_{resolver}";
             Dns instance = null;
             if (Instances.ContainsKey(key))
             {
@@ -120,7 +164,7 @@ namespace Htc.Vita.Core.Net
             }
             if (instance == null)
             {
-                Logger.GetInstance(typeof(Dns)).Info("Initializing " + key + "...");
+                Logger.GetInstance(typeof(Dns)).Info($"Initializing {key}...");
                 var constructor = type.GetConstructor(new[] { typeof(string) });
                 if (constructor != null)
                 {
@@ -129,7 +173,7 @@ namespace Htc.Vita.Core.Net
             }
             if (instance == null)
             {
-                Logger.GetInstance(typeof(Dns)).Info("Initializing " + typeof(DefaultDns).FullName + "[" + resolver + "]...");
+                Logger.GetInstance(typeof(Dns)).Info($"Initializing {typeof(DefaultDns).FullName}[{resolver}]...");
                 instance = new DefaultDns(resolver);
             }
             lock (InstancesLock)
@@ -142,6 +186,11 @@ namespace Htc.Vita.Core.Net
             return instance;
         }
 
+        /// <summary>
+        /// Gets the host addresses.
+        /// </summary>
+        /// <param name="hostNameOrAddress">The host name or address.</param>
+        /// <returns>IPAddress[].</returns>
         public IPAddress[] GetHostAddresses(string hostNameOrAddress)
         {
             if (string.IsNullOrWhiteSpace(hostNameOrAddress))
@@ -162,6 +211,11 @@ namespace Htc.Vita.Core.Net
             return result ?? new IPAddress[] { };
         }
 
+        /// <summary>
+        /// Gets the host entry.
+        /// </summary>
+        /// <param name="ipAddress">The ip address.</param>
+        /// <returns>IPHostEntry.</returns>
         public IPHostEntry GetHostEntry(IPAddress ipAddress)
         {
             if (ipAddress == null)
@@ -186,6 +240,11 @@ namespace Htc.Vita.Core.Net
             return result;
         }
 
+        /// <summary>
+        /// Gets the host entry.
+        /// </summary>
+        /// <param name="hostNameOrAddress">The host name or address.</param>
+        /// <returns>IPHostEntry.</returns>
         public IPHostEntry GetHostEntry(string hostNameOrAddress)
         {
             if (string.IsNullOrWhiteSpace(hostNameOrAddress))
@@ -205,10 +264,34 @@ namespace Htc.Vita.Core.Net
             return result;
         }
 
+        /// <summary>
+        /// Called when flushing cache.
+        /// </summary>
+        /// <returns><c>true</c> if flushing the cache successfully, <c>false</c> otherwise.</returns>
         protected abstract bool OnFlushCache();
+        /// <summary>
+        /// Called when flushing cache.
+        /// </summary>
+        /// <param name="hostName">Name of the host.</param>
+        /// <returns><c>true</c> if flushing the cache successfully, <c>false</c> otherwise.</returns>
         protected abstract bool OnFlushCache(string hostName);
+        /// <summary>
+        /// Called when getting host addresses.
+        /// </summary>
+        /// <param name="hostNameOrAddress">The host name or address.</param>
+        /// <returns>IPAddress[].</returns>
         protected abstract IPAddress[] OnGetHostAddresses(string hostNameOrAddress);
+        /// <summary>
+        /// Called when getting host entry.
+        /// </summary>
+        /// <param name="ipAddress">The ip address.</param>
+        /// <returns>IPHostEntry.</returns>
         protected abstract IPHostEntry OnGetHostEntry(IPAddress ipAddress);
+        /// <summary>
+        /// Called when getting host entry.
+        /// </summary>
+        /// <param name="hostNameOrAddress">The host name or address.</param>
+        /// <returns>IPHostEntry.</returns>
         protected abstract IPHostEntry OnGetHostEntry(string hostNameOrAddress);
     }
 }

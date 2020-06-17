@@ -14,6 +14,12 @@ namespace Htc.Vita.Core.Runtime
     public static partial class Platform
     {
         /// <summary>
+        /// Gets a value indicating whether this instance is running on Android.
+        /// </summary>
+        /// <value><c>true</c> if this instance is running on Android; otherwise, <c>false</c>.</value>
+        public static bool IsAndroid { get; } = CheckIsAndroid();
+
+        /// <summary>
         /// Gets a value indicating whether this instance is running on .Net Core.
         /// </summary>
         /// <value><c>true</c> if this instance is is running on .Net Core; otherwise, <c>false</c>.</value>
@@ -48,6 +54,20 @@ namespace Htc.Vita.Core.Runtime
         /// </summary>
         /// <value><c>true</c> if this instance is running on Windows; otherwise, <c>false</c>.</value>
         public static bool IsWindows { get; } = CheckIsWindows();
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is running on Android.
+        /// </summary>
+        /// <value><c>true</c> if this instance is running on Android; otherwise, <c>false</c>.</value>
+        public static bool CheckIsAndroid()
+        {
+            // TODO should add more checking rule
+#if UNITY_ANDROID
+            return true;
+#else
+            return false;
+#endif
+        }
 
         /// <summary>
         /// Checks if the platform is .Net Core. See <see href="https://apisof.net/catalog/System.Runtime.Loader.AssemblyLoadContext"/>

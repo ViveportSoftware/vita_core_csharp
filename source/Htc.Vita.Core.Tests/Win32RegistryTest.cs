@@ -317,11 +317,11 @@ namespace Htc.Vita.Core.Tests
             registryView = Win32Registry.View.Default;
             using (var baseKey = Win32Registry.Key.OpenBaseKey(registryHive, registryView))
             {
-                using (var subKey = baseKey.OpenSubKey("Software\\Clients", Win32Registry.KeyPermissionCheck.ReadSubTree))
+                using (var subKey = baseKey.OpenSubKey("Software\\Microsoft", Win32Registry.KeyPermissionCheck.ReadSubTree))
                 {
                     Assert.NotNull(subKey);
                 }
-                using (var subKey = baseKey.OpenSubKey("Software\\Clients2", Win32Registry.KeyPermissionCheck.ReadSubTree))
+                using (var subKey = baseKey.OpenSubKey("Software\\Microsoft2", Win32Registry.KeyPermissionCheck.ReadSubTree))
                 {
                     Assert.Null(subKey);
                 }
@@ -329,11 +329,11 @@ namespace Htc.Vita.Core.Tests
             registryView = Win32Registry.View.Registry32;
             using (var baseKey = Win32Registry.Key.OpenBaseKey(registryHive, registryView))
             {
-                using (var subKey = baseKey.OpenSubKey("Software\\Clients", Win32Registry.KeyPermissionCheck.ReadSubTree))
+                using (var subKey = baseKey.OpenSubKey("Software\\Microsoft", Win32Registry.KeyPermissionCheck.ReadSubTree))
                 {
                     Assert.NotNull(subKey);
                 }
-                using (var subKey = baseKey.OpenSubKey("Software\\Clients2", Win32Registry.KeyPermissionCheck.ReadSubTree))
+                using (var subKey = baseKey.OpenSubKey("Software\\Microsoft2", Win32Registry.KeyPermissionCheck.ReadSubTree))
                 {
                     Assert.Null(subKey);
                 }
@@ -341,11 +341,11 @@ namespace Htc.Vita.Core.Tests
             registryView = Win32Registry.View.Registry64;
             using (var baseKey = Win32Registry.Key.OpenBaseKey(registryHive, registryView))
             {
-                using (var subKey = baseKey.OpenSubKey("Software\\Clients", Win32Registry.KeyPermissionCheck.ReadSubTree))
+                using (var subKey = baseKey.OpenSubKey("Software\\Microsoft", Win32Registry.KeyPermissionCheck.ReadSubTree))
                 {
                     Assert.NotNull(subKey);
                 }
-                using (var subKey = baseKey.OpenSubKey("Software\\Clients2", Win32Registry.KeyPermissionCheck.ReadSubTree))
+                using (var subKey = baseKey.OpenSubKey("Software\\Microsoft2", Win32Registry.KeyPermissionCheck.ReadSubTree))
                 {
                     Assert.Null(subKey);
                 }

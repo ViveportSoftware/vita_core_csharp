@@ -20,7 +20,13 @@ namespace Htc.Vita.Core.Crypto
             return DoGenerateInHexAsync(file, cancellationToken);
         }
 
-        private static async Task<string> DoGenerateInBase64Async(FileInfo file, CancellationToken cancellationToken)
+        /// <summary>
+        /// Does generate the checksum value in Base64 form asynchronously.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task&lt;System.String&gt;.</returns>
+        public static async Task<string> DoGenerateInBase64Async(FileInfo file, CancellationToken cancellationToken)
         {
             return Convert.ToBase64String(await GenerateInBytesAsync(
                     file,
@@ -28,7 +34,13 @@ namespace Htc.Vita.Core.Crypto
             ).ConfigureAwait(false));
         }
 
-        private static async Task<string> DoGenerateInHexAsync(FileInfo file, CancellationToken cancellationToken)
+        /// <summary>
+        /// Does generate the checksum value in hexadecimal form asynchronously.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task&lt;System.String&gt;.</returns>
+        public static async Task<string> DoGenerateInHexAsync(FileInfo file, CancellationToken cancellationToken)
         {
             return Convert.ToHexString(await GenerateInBytesAsync(
                     file,
@@ -44,7 +56,7 @@ namespace Htc.Vita.Core.Crypto
                 using (var readStream = file.OpenRead())
                 {
                     int length;
-                    while ((length = await readStream.ReadAsync(buffer, 0, buffer.Length).ConfigureAwait(false)) > 0)
+                    while ((length = await readStream.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false)) > 0)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         digest.TransformBlock(
