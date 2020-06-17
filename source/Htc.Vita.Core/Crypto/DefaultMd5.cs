@@ -39,7 +39,13 @@ namespace Htc.Vita.Core.Crypto
             return DoGenerateInHex(content);
         }
 
-        private static string DoGenerateInBase64(FileInfo file, CancellationToken cancellationToken)
+        /// <summary>
+        /// Does generate the checksum value in Base64 form.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>System.String.</returns>
+        public static string DoGenerateInBase64(FileInfo file, CancellationToken cancellationToken)
         {
             return Convert.ToBase64String(GenerateInBytes(
                     file,
@@ -47,7 +53,12 @@ namespace Htc.Vita.Core.Crypto
             ));
         }
 
-        private static string DoGenerateInBase64(string content)
+        /// <summary>
+        /// Does generate the checksum value in Base64 form.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>System.String.</returns>
+        public static string DoGenerateInBase64(string content)
         {
             using (var digest = MD5.Create())
             {
@@ -55,7 +66,13 @@ namespace Htc.Vita.Core.Crypto
             }
         }
 
-        private static string DoGenerateInHex(FileInfo file, CancellationToken cancellationToken)
+        /// <summary>
+        /// Does generate the checksum value in hexadecimal form.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>System.String.</returns>
+        public static string DoGenerateInHex(FileInfo file, CancellationToken cancellationToken)
         {
             return Convert.ToHexString(GenerateInBytes(
                     file,
@@ -63,7 +80,12 @@ namespace Htc.Vita.Core.Crypto
             ));
         }
 
-        private static string DoGenerateInHex(string content)
+        /// <summary>
+        /// Does generate the checksum value in hexadecimal form.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>System.String.</returns>
+        public static string DoGenerateInHex(string content)
         {
             using (var digest = MD5.Create())
             {
