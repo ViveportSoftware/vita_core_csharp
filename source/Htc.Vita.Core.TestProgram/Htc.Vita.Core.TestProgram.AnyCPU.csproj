@@ -5,16 +5,11 @@
     <RootNamespace>Htc.Vita.Core.TestProgram</RootNamespace>
     <AssemblyName>Htc.Vita.Core.TestProgram</AssemblyName>
     <TargetFramework>net45</TargetFramework>
+    <DebugType>portable</DebugType>
     <IntermediateOutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\obj\AnyCPU</IntermediateOutputPath>
     <OutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\bin\AnyCPU</OutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>6</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\generated\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />

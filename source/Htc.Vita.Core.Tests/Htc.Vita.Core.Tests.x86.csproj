@@ -4,6 +4,7 @@
     <RootNamespace>Htc.Vita.Core.Tests</RootNamespace>
     <AssemblyName>Htc.Vita.Core.Tests</AssemblyName>
     <TargetFramework>net452</TargetFramework>
+    <DebugType>portable</DebugType>
     <IntermediateOutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\obj\x86</IntermediateOutputPath>
     <OutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\bin\x86</OutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
