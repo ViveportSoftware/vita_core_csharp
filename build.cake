@@ -227,7 +227,6 @@ Task("Run-Unit-Tests-Under-AnyCPU")
         {
                 MergeByHash = true,
                 NoDefaultFilters = true,
-                OldStyle = true,
                 Register = "user",
                 SkipAutoProps = true
         }.WithFilter("+[*]*")
