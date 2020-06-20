@@ -1,4 +1,5 @@
 #addin "nuget:?package=Cake.Coveralls&version=0.10.1"
+#addin "nuget:?package=Cake.Coverlet&version=2.4.2"
 #addin "nuget:?package=Cake.Git&version=0.21.0"
 #addin "nuget:?package=Cake.ReSharperReports&version=0.11.1"
 #addin "nuget:?package=Cake.Sonar&version=1.1.25"
@@ -268,8 +269,22 @@ Task("Run-Unit-Tests-Under-AnyCPU-2")
                             }
                     );
             },
-            new FilePath(reportOpenCoverDirAnyCPU.ToString() + "/" + product + ".OpenCover.xml"),
+            new FilePath(reportOpenCoverDirAnyCPU.ToString() + "/" + product + ".OpenCover.old.xml"),
             openCoverSettings
+    );
+
+    DotNetCoreTest(
+            "./source/" + product + ".Tests/" + product + ".Tests.AnyCPU.csproj",
+            new DotNetCoreTestSettings
+            {
+            },
+            new CoverletSettings
+            {
+                    CollectCoverage = true,
+                    CoverletOutputFormat = CoverletOutputFormat.opencover,
+                    CoverletOutputDirectory = reportOpenCoverDirAnyCPU,
+                    CoverletOutputName = product + ".OpenCover.xml"
+            }
     );
 });
 
