@@ -245,34 +245,6 @@ Task("Run-Unit-Tests-Under-AnyCPU-2")
     .Does(() =>
 {
     CreateDirectory(reportOpenCoverDirAnyCPU);
-    var openCoverSettings = new OpenCoverSettings
-    {
-            MergeByHash = true,
-            NoDefaultFilters = true,
-            Register = "user",
-            SkipAutoProps = true
-    }.WithFilter("+[*]*")
-    .WithFilter("-[xunit.*]*")
-    .WithFilter("-[*.NunitTest]*")
-    .WithFilter("-[*.Tests]*")
-    .WithFilter("-[*.XunitTest]*");
-    OpenCover(
-            tool =>
-            {
-                    tool.XUnit2(
-                            "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/net452/*.Tests.dll",
-                            new XUnit2Settings
-                            {
-                                    Parallelism = ParallelismOption.None,
-                                    OutputDirectory = reportXUnitDirAnyCPU,
-                                    ShadowCopy = false
-                            }
-                    );
-            },
-            new FilePath(reportOpenCoverDirAnyCPU.ToString() + "/" + product + ".OpenCover.old.xml"),
-            openCoverSettings
-    );
-
     DotNetCoreTest(
             "./source/" + product + ".Tests/" + product + ".Tests.AnyCPU.csproj",
             new DotNetCoreTestSettings
