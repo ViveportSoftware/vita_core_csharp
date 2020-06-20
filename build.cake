@@ -190,7 +190,7 @@ Task("Prepare-Unit-Test-Data")
     }
 });
 
-Task("Run-Unit-Tests-Under-AnyCPU")
+Task("Run-Unit-Tests-Under-AnyCPU-1")
     .WithCriteria(() => "ON".Equals(buildWithUnitTesting))
     .IsDependentOn("Prepare-Unit-Test-Data")
     .Does(() =>
@@ -222,34 +222,6 @@ Task("Run-Unit-Tests-Under-AnyCPU")
                 .WithFilter("-:*.Tests")
                 .WithFilter("-:*.XunitTest")
         );
-        CreateDirectory(reportOpenCoverDirAnyCPU);
-        var openCoverSettings = new OpenCoverSettings
-        {
-                MergeByHash = true,
-                NoDefaultFilters = true,
-                Register = "user",
-                SkipAutoProps = true
-        }.WithFilter("+[*]*")
-        .WithFilter("-[xunit.*]*")
-        .WithFilter("-[*.NunitTest]*")
-        .WithFilter("-[*.Tests]*")
-        .WithFilter("-[*.XunitTest]*");
-        OpenCover(
-                tool =>
-                {
-                        tool.XUnit2(
-                                "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/net452/*.Tests.dll",
-                                new XUnit2Settings
-                                {
-                                        Parallelism = ParallelismOption.None,
-                                        OutputDirectory = reportXUnitDirAnyCPU,
-                                        ShadowCopy = false
-                                }
-                        );
-                },
-                new FilePath(reportOpenCoverDirAnyCPU.ToString() + "/" + product + ".OpenCover.xml"),
-                openCoverSettings
-        );
     }
     else
     {
@@ -266,9 +238,44 @@ Task("Run-Unit-Tests-Under-AnyCPU")
     }
 });
 
+Task("Run-Unit-Tests-Under-AnyCPU-2")
+    .WithCriteria(() => "ON".Equals(buildWithUnitTesting))
+    .IsDependentOn("Run-Unit-Tests-Under-AnyCPU-1")
+    .Does(() =>
+{
+    CreateDirectory(reportOpenCoverDirAnyCPU);
+    var openCoverSettings = new OpenCoverSettings
+    {
+            MergeByHash = true,
+            NoDefaultFilters = true,
+            Register = "user",
+            SkipAutoProps = true
+    }.WithFilter("+[*]*")
+    .WithFilter("-[xunit.*]*")
+    .WithFilter("-[*.NunitTest]*")
+    .WithFilter("-[*.Tests]*")
+    .WithFilter("-[*.XunitTest]*");
+    OpenCover(
+            tool =>
+            {
+                    tool.XUnit2(
+                            "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/net452/*.Tests.dll",
+                            new XUnit2Settings
+                            {
+                                    Parallelism = ParallelismOption.None,
+                                    OutputDirectory = reportXUnitDirAnyCPU,
+                                    ShadowCopy = false
+                            }
+                    );
+            },
+            new FilePath(reportOpenCoverDirAnyCPU.ToString() + "/" + product + ".OpenCover.xml"),
+            openCoverSettings
+    );
+});
+
 Task("Run-Unit-Tests-Under-X86")
     .WithCriteria(() => "ON".Equals(buildWithUnitTesting))
-    .IsDependentOn("Run-Unit-Tests-Under-AnyCPU")
+    .IsDependentOn("Run-Unit-Tests-Under-AnyCPU-2")
     .Does(() =>
 {
     CreateDirectory(reportXUnitDirX86);
