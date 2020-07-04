@@ -91,10 +91,10 @@ Task("Display-Config")
     .IsDependentOn("Fetch-Git-Commit-ID")
     .Does(() =>
 {
-    Information($"Build target: {target}");
+    Information($"Build target:        {target}");
     Information($"Build configuration: {configuration}");
-    Information($"Build commitId: {commitId}");
-    Information($"Build version: {buildVersion}");
+    Information($"Build commitId:      {commitId}");
+    Information($"Build version:       {buildVersion}");
 });
 
 Task("Clean-Workspace")
@@ -386,14 +386,14 @@ Task("Sign-Assemblies")
             Convert.FromBase64String(signKeyEnc)
     );
 
-    var targets = new[]
+    var targetPlatforms = new[]
     {
             "net45",
             "netstandard2.0"
     };
-    foreach (var target in targets)
+    foreach (var targetPlatform in targetPlatforms)
     {
-        var file = $"./temp/{configuration}/{product}/bin/{target}/{product}.dll";
+        var file = $"./temp/{configuration}/{product}/bin/{targetPlatform}/{product}.dll";
 
         var totalTimeInMilli = (DateTime.Now - lastSignTimestamp).TotalMilliseconds;
         if (totalTimeInMilli < signIntervalInMilli)
