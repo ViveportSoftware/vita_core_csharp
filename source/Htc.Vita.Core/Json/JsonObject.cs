@@ -53,7 +53,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.Boolean.</returns>
         public bool ParseBool(string key)
         {
-            return ParseBool(key, false);
+            return ParseBool(
+                    key,
+                    false
+            );
         }
 
         /// <summary>
@@ -62,12 +65,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Boolean.</returns>
-        public bool ParseBool(string key, bool defaultValue)
+        public bool ParseBool(
+                string key,
+                bool defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseBool(key, defaultValue);
+                result = OnParseBool(
+                        key,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -83,7 +91,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.Boolean.</returns>
         public bool ParseBoolIfKeyExist(string key)
         {
-            return ParseBoolIfKeyExist(key, false);
+            return ParseBoolIfKeyExist(
+                    key,
+                    false
+            );
         }
 
         /// <summary>
@@ -92,13 +103,18 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Boolean.</returns>
-        public bool ParseBoolIfKeyExist(string key, bool defaultValue)
+        public bool ParseBoolIfKeyExist(
+                string key,
+                bool defaultValue)
         {
             if (!HasKey(key))
             {
                 return defaultValue;
             }
-            return ParseBool(key, defaultValue);
+            return ParseBool(
+                    key,
+                    defaultValue
+            );
         }
 
         /// <summary>
@@ -108,7 +124,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.Double.</returns>
         public double ParseDouble(string key)
         {
-            return ParseDouble(key, 0.0D);
+            return ParseDouble(
+                    key,
+                    0.0D
+            );
         }
 
         /// <summary>
@@ -117,12 +136,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Double.</returns>
-        public double ParseDouble(string key, double defaultValue)
+        public double ParseDouble(
+                string key,
+                double defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseDouble(key, defaultValue);
+                result = OnParseDouble(
+                        key,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -138,7 +162,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.Double.</returns>
         public double ParseDoubleIfKeyExists(string key)
         {
-            return ParseDoubleIfKeyExists(key, 0.0D);
+            return ParseDoubleIfKeyExists(
+                    key,
+                    0.0D
+            );
         }
 
         /// <summary>
@@ -147,13 +174,18 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Double.</returns>
-        public double ParseDoubleIfKeyExists(string key, double defaultValue)
+        public double ParseDoubleIfKeyExists(
+                string key,
+                double defaultValue)
         {
             if (!HasKey(key))
             {
                 return defaultValue;
             }
-            return ParseDouble(key, defaultValue);
+            return ParseDouble(
+                    key,
+                    defaultValue
+            );
         }
 
         /// <summary>
@@ -163,7 +195,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.Single.</returns>
         public float ParseFloat(string key)
         {
-            return ParseFloat(key, 0.0F);
+            return ParseFloat(
+                    key,
+                    0.0F
+            );
         }
 
         /// <summary>
@@ -172,12 +207,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Single.</returns>
-        public float ParseFloat(string key, float defaultValue)
+        public float ParseFloat(
+                string key,
+                float defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseFloat(key, defaultValue);
+                result = OnParseFloat(
+                        key,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -193,7 +233,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.Single.</returns>
         public float ParseFloatIfKeyExists(string key)
         {
-            return ParseFloatIfKeyExists(key, 0.0F);
+            return ParseFloatIfKeyExists(
+                    key,
+                    0.0F
+            );
         }
 
         /// <summary>
@@ -202,13 +245,18 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Single.</returns>
-        public float ParseFloatIfKeyExists(string key, float defaultValue)
+        public float ParseFloatIfKeyExists(
+                string key,
+                float defaultValue)
         {
             if (!HasKey(key))
             {
                 return defaultValue;
             }
-            return ParseFloat(key, defaultValue);
+            return ParseFloat(
+                    key,
+                    defaultValue
+            );
         }
 
         /// <summary>
@@ -218,7 +266,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.Int32.</returns>
         public int ParseInt(string key)
         {
-            return ParseInt(key, 0);
+            return ParseInt(
+                    key,
+                    0
+            );
         }
 
         /// <summary>
@@ -227,12 +278,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int32.</returns>
-        public int ParseInt(string key, int defaultValue)
+        public int ParseInt(
+                string key,
+                int defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseInt(key, defaultValue);
+                result = OnParseInt(
+                        key,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -248,7 +304,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.Int32.</returns>
         public int ParseIntIfKeyExists(string key)
         {
-            return ParseIntIfKeyExists(key, 0);
+            return ParseIntIfKeyExists(
+                    key,
+                    0
+            );
         }
 
         /// <summary>
@@ -257,13 +316,18 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int32.</returns>
-        public int ParseIntIfKeyExists(string key, int defaultValue)
+        public int ParseIntIfKeyExists(
+                string key,
+                int defaultValue)
         {
             if (!HasKey(key))
             {
                 return defaultValue;
             }
-            return ParseInt(key, defaultValue);
+            return ParseInt(
+                    key,
+                    defaultValue
+            );
         }
 
         /// <summary>
@@ -273,7 +337,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.Int64.</returns>
         public long ParseLong(string key)
         {
-            return ParseLong(key, 0L);
+            return ParseLong(
+                    key,
+                    0L
+            );
         }
 
         /// <summary>
@@ -282,12 +349,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int64.</returns>
-        public long ParseLong(string key, long defaultValue)
+        public long ParseLong(
+                string key,
+                long defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseLong(key, defaultValue);
+                result = OnParseLong(
+                        key,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -303,7 +375,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.Int64.</returns>
         public long ParseLongIfKeyExists(string key)
         {
-            return ParseLongIfKeyExists(key, 0L);
+            return ParseLongIfKeyExists(
+                    key,
+                    0L
+            );
         }
 
         /// <summary>
@@ -312,13 +387,18 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int64.</returns>
-        public long ParseLongIfKeyExists(string key, long defaultValue)
+        public long ParseLongIfKeyExists(
+                string key,
+                long defaultValue)
         {
             if (!HasKey(key))
             {
                 return defaultValue;
             }
-            return ParseLong(key, defaultValue);
+            return ParseLong(
+                    key,
+                    defaultValue
+            );
         }
 
         /// <summary>
@@ -328,7 +408,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.String.</returns>
         public string ParseString(string key)
         {
-            return ParseString(key, null);
+            return ParseString(
+                    key,
+                    null
+            );
         }
 
         /// <summary>
@@ -337,12 +420,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.String.</returns>
-        public string ParseString(string key, string defaultValue)
+        public string ParseString(
+                string key,
+                string defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseString(key, defaultValue);
+                result = OnParseString(
+                        key,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -358,7 +446,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.String.</returns>
         public string ParseStringIfKeyExists(string key)
         {
-            return ParseStringIfKeyExists(key, null);
+            return ParseStringIfKeyExists(
+                    key,
+                    null
+            );
         }
 
         /// <summary>
@@ -367,13 +458,18 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.String.</returns>
-        public string ParseStringIfKeyExists(string key, string defaultValue)
+        public string ParseStringIfKeyExists(
+                string key,
+                string defaultValue)
         {
             if (!HasKey(key))
             {
                 return defaultValue;
             }
-            return ParseString(key, defaultValue);
+            return ParseString(
+                    key,
+                    defaultValue
+            );
         }
 
         /// <summary>
@@ -487,12 +583,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        public JsonObject Put(string key, bool value)
+        public JsonObject Put(
+                string key,
+                bool value)
         {
             var result = this;
             try
             {
-                result = OnPutBool(key, value);
+                result = OnPutBool(
+                        key,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -507,12 +608,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        public JsonObject Put(string key, double value)
+        public JsonObject Put(
+                string key,
+                double value)
         {
             var result = this;
             try
             {
-                result = OnPutDouble(key, value);
+                result = OnPutDouble(
+                        key,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -527,12 +633,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        public JsonObject Put(string key, float value)
+        public JsonObject Put(
+                string key,
+                float value)
         {
             var result = this;
             try
             {
-                result = OnPutFloat(key, value);
+                result = OnPutFloat(
+                        key,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -547,12 +658,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        public JsonObject Put(string key, int value)
+        public JsonObject Put(
+                string key,
+                int value)
         {
             var result = this;
             try
             {
-                result = OnPutInt(key, value);
+                result = OnPutInt(
+                        key,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -567,12 +683,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        public JsonObject Put(string key, long value)
+        public JsonObject Put(
+                string key,
+                long value)
         {
             var result = this;
             try
             {
-                result = OnPutLong(key, value);
+                result = OnPutLong(
+                        key,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -587,12 +708,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        public JsonObject Put(string key, string value)
+        public JsonObject Put(
+                string key,
+                string value)
         {
             var result = this;
             try
             {
-                result = OnPutString(key, value);
+                result = OnPutString(
+                        key,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -607,12 +733,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        public JsonObject Put(string key, JsonArray value)
+        public JsonObject Put(
+                string key,
+                JsonArray value)
         {
             var result = this;
             try
             {
-                result = OnPutJsonArray(key, value);
+                result = OnPutJsonArray(
+                        key,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -627,12 +758,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        public JsonObject Put(string key, JsonObject value)
+        public JsonObject Put(
+                string key,
+                JsonObject value)
         {
             var result = this;
             try
             {
-                result = OnPutJsonObject(key, value);
+                result = OnPutJsonObject(
+                        key,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -647,13 +783,18 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        public JsonObject PutIfNotNull(string key, string value)
+        public JsonObject PutIfNotNull(
+                string key,
+                string value)
         {
             if (value == null)
             {
                 return this;
             }
-            return Put(key, value);
+            return Put(
+                    key,
+                    value
+            );
         }
 
         /// <summary>
@@ -662,13 +803,18 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        public JsonObject PutIfNotNull(string key, JsonArray value)
+        public JsonObject PutIfNotNull(
+                string key,
+                JsonArray value)
         {
             if (value == null)
             {
                 return this;
             }
-            return Put(key, value);
+            return Put(
+                    key,
+                    value
+            );
         }
 
         /// <summary>
@@ -677,13 +823,18 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        public JsonObject PutIfNotNull(string key, JsonObject value)
+        public JsonObject PutIfNotNull(
+                string key,
+                JsonObject value)
         {
             if (value == null)
             {
                 return this;
             }
-            return Put(key, value);
+            return Put(
+                    key,
+                    value
+            );
         }
 
         /// <summary>
@@ -692,13 +843,18 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        public JsonObject PutIfNotNullAndNotWhiteSpace(string key, string value)
+        public JsonObject PutIfNotNullAndNotWhiteSpace(
+                string key,
+                string value)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
                 return this;
             }
-            return Put(key, value);
+            return Put(
+                    key,
+                    value
+            );
         }
 
         /// <summary>
@@ -707,7 +863,9 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        public JsonObject PutIfNotNullAndNotEmpty(string key, JsonArray value)
+        public JsonObject PutIfNotNullAndNotEmpty(
+                string key,
+                JsonArray value)
         {
             if (value == null)
             {
@@ -717,7 +875,10 @@ namespace Htc.Vita.Core.Json
             {
                 return this;
             }
-            return Put(key, value);
+            return Put(
+                    key,
+                    value
+            );
         }
 
         /// <summary>
@@ -726,7 +887,9 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        public JsonObject PutIfNotNullAndNotEmpty(string key, JsonObject value)
+        public JsonObject PutIfNotNullAndNotEmpty(
+                string key,
+                JsonObject value)
         {
             if (value == null)
             {
@@ -736,7 +899,10 @@ namespace Htc.Vita.Core.Json
             {
                 return this;
             }
-            return Put(key, value);
+            return Put(
+                    key,
+                    value
+            );
         }
 
         /// <summary>
@@ -775,42 +941,60 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Boolean.</returns>
-        protected abstract bool OnParseBool(string key, bool defaultValue);
+        protected abstract bool OnParseBool(
+                string key,
+                bool defaultValue
+        );
         /// <summary>
         /// Called when parsing the double value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Double.</returns>
-        protected abstract double OnParseDouble(string key, double defaultValue);
+        protected abstract double OnParseDouble(
+                string key,
+                double defaultValue
+        );
         /// <summary>
         /// Called when parsing the float value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Single.</returns>
-        protected abstract float OnParseFloat(string key, float defaultValue);
+        protected abstract float OnParseFloat(
+                string key,
+                float defaultValue
+        );
         /// <summary>
         /// Called when parsing the int value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int32.</returns>
-        protected abstract int OnParseInt(string key, int defaultValue);
+        protected abstract int OnParseInt(
+                string key,
+                int defaultValue
+        );
         /// <summary>
         /// Called when parsing the long value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int64.</returns>
-        protected abstract long OnParseLong(string key, long defaultValue);
+        protected abstract long OnParseLong(
+                string key,
+                long defaultValue
+        );
         /// <summary>
         /// Called when parsing the string value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.String.</returns>
-        protected abstract string OnParseString(string key, string defaultValue);
+        protected abstract string OnParseString(
+                string key,
+                string defaultValue
+        );
         /// <summary>
         /// Called when parsing the JsonArray value.
         /// </summary>
@@ -829,56 +1013,80 @@ namespace Htc.Vita.Core.Json
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        protected abstract JsonObject OnPutBool(string key, bool value);
+        protected abstract JsonObject OnPutBool(
+                string key,
+                bool value
+        );
         /// <summary>
         /// Called when putting the double value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        protected abstract JsonObject OnPutDouble(string key, double value);
+        protected abstract JsonObject OnPutDouble(
+                string key,
+                double value
+        );
         /// <summary>
         /// Called when putting the float value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        protected abstract JsonObject OnPutFloat(string key, float value);
+        protected abstract JsonObject OnPutFloat(
+                string key,
+                float value
+        );
         /// <summary>
         /// Called when putting the int value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        protected abstract JsonObject OnPutInt(string key, int value);
+        protected abstract JsonObject OnPutInt(
+                string key,
+                int value
+        );
         /// <summary>
         /// Called when putting the long value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        protected abstract JsonObject OnPutLong(string key, long value);
+        protected abstract JsonObject OnPutLong(
+                string key,
+                long value
+        );
         /// <summary>
         /// Called when putting the string value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        protected abstract JsonObject OnPutString(string key, string value);
+        protected abstract JsonObject OnPutString(
+                string key,
+                string value
+        );
         /// <summary>
         /// Called when putting the JsonArray value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        protected abstract JsonObject OnPutJsonArray(string key, JsonArray value);
+        protected abstract JsonObject OnPutJsonArray(
+                string key,
+                JsonArray value
+        );
         /// <summary>
         /// Called when putting the JsonObject value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonObject.</returns>
-        protected abstract JsonObject OnPutJsonObject(string key, JsonObject value);
+        protected abstract JsonObject OnPutJsonObject(
+                string key,
+                JsonObject value
+        );
         /// <summary>
         /// Called when converting to pretty-print string.
         /// </summary>
