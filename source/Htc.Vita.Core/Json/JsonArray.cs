@@ -203,6 +203,56 @@ namespace Htc.Vita.Core.Json
         }
 
         /// <summary>
+        /// Appends the specific value if it is not null and not white space.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>JsonArray.</returns>
+        public JsonArray AppendIfNotNullAndNotWhiteSpace(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return this;
+            }
+            return Append(value);
+        }
+
+        /// <summary>
+        /// Appends the specific value if it is not null and not empty.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>JsonArray.</returns>
+        public JsonArray AppendIfNotNullAndNotEmpty(JsonArray value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            if (value.Size() <= 0)
+            {
+                return this;
+            }
+            return Append(value);
+        }
+
+        /// <summary>
+        /// Appends the specific value if it is not null and not empty.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>JsonArray.</returns>
+        public JsonArray AppendIfNotNullAndNotEmpty(JsonObject value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            if (value.AllKeys().Count <= 0)
+            {
+                return this;
+            }
+            return Append(value);
+        }
+
+        /// <summary>
         /// Inserts the specific value by index.
         /// </summary>
         /// <param name="index">The index.</param>
@@ -401,6 +451,59 @@ namespace Htc.Vita.Core.Json
         public JsonArray InsertIfNotNull(int index, JsonObject value)
         {
             if (value == null)
+            {
+                return this;
+            }
+            return Insert(index, value);
+        }
+
+        /// <summary>
+        /// Inserts the specific value if it is not null and not white space.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>JsonArray.</returns>
+        public JsonArray InsertIfNotNullAndNotWhiteSpace(int index, string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return this;
+            }
+            return Insert(index, value);
+        }
+
+        /// <summary>
+        /// Inserts the specific value if it is not null and not empty.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>JsonArray.</returns>
+        public JsonArray InsertIfNotNullAndNotEmpty(int index, JsonArray value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            if (value.Size() <= 0)
+            {
+                return this;
+            }
+            return Insert(index, value);
+        }
+
+        /// <summary>
+        /// Inserts the specific value if it is not null and not empty.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>JsonArray.</returns>
+        public JsonArray InsertIfNotNullAndNotEmpty(int index, JsonObject value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            if (value.AllKeys().Count <= 0)
             {
                 return this;
             }
