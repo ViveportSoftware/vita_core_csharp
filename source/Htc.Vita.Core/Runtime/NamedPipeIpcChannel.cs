@@ -282,41 +282,48 @@ namespace Htc.Vita.Core.Runtime
                     {
                         while (!_shouldStopWorkers)
                         {
-                            if (serverStream.IsConnected)
+                            try
                             {
-                                serverStream.Disconnect();
-                            }
-                            serverStream.WaitForConnection();
+                                if (serverStream.IsConnected)
+                                {
+                                    serverStream.Disconnect();
+                                }
+                                serverStream.WaitForConnection();
 
-                            var outputBuilder = new StringBuilder();
-                            var outputBuffer = new byte[PipeBufferSize];
-                            do
-                            {
-                                serverStream.Read(outputBuffer, 0, outputBuffer.Length);
-                                var outputChunk = Encoding.UTF8.GetString(outputBuffer);
-                                outputBuilder.Append(outputChunk);
-                                outputBuffer = new byte[outputBuffer.Length];
-                            }
-                            while (!serverStream.IsMessageComplete);
-                            var channel = new IpcChannel
-                            {
+                                var outputBuilder = new StringBuilder();
+                                var outputBuffer = new byte[PipeBufferSize];
+                                do
+                                {
+                                    serverStream.Read(outputBuffer, 0, outputBuffer.Length);
+                                    var outputChunk = Encoding.UTF8.GetString(outputBuffer);
+                                    outputBuilder.Append(outputChunk);
+                                    outputBuffer = new byte[outputBuffer.Length];
+                                }
+                                while (!serverStream.IsMessageComplete);
+                                var channel = new IpcChannel
+                                {
                                     Output = FilterOutInvalidChars(outputBuilder.ToString())
-                            };
-                            if (!string.IsNullOrEmpty(channel.Output))
-                            {
-                                if (OnMessageHandled == null)
+                                };
+                                if (!string.IsNullOrEmpty(channel.Output))
                                 {
-                                    Logger.GetInstance(typeof(Provider)).Error("Can not find OnMessageHandled delegates to handle messages");
+                                    if (OnMessageHandled == null)
+                                    {
+                                        Logger.GetInstance(typeof(Provider)).Error("Can not find OnMessageHandled delegates to handle messages");
+                                    }
+                                    else
+                                    {
+                                        OnMessageHandled(channel, GetClientSignature(serverStream));
+                                    }
                                 }
-                                else
+                                if (!string.IsNullOrEmpty(channel.Input))
                                 {
-                                    OnMessageHandled(channel, GetClientSignature(serverStream));
+                                    var inputBytes = Encoding.UTF8.GetBytes(channel.Input);
+                                    serverStream.Write(inputBytes, 0, inputBytes.Length);
                                 }
                             }
-                            if (!string.IsNullOrEmpty(channel.Input))
+                            catch (IOException e)
                             {
-                                var inputBytes = Encoding.UTF8.GetBytes(channel.Input);
-                                serverStream.Write(inputBytes, 0, inputBytes.Length);
+                                Logger.GetInstance(typeof(Provider)).Error($"IOException happened on thread[{threadId}]: {e.Message}");
                             }
                         }
                         if (serverStream.IsConnected)
