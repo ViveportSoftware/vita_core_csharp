@@ -146,7 +146,7 @@ namespace Htc.Vita.Core.Runtime
         public class Provider : IpcChannel.Provider
         {
             private const int PipeBufferSize = 512;
-            private const int PipeThreadNumber = 10;
+            private const int PipeThreadNumber = 16;
 
             private readonly Dictionary<string, string> _translatedNameMap = new Dictionary<string, string>();
 
@@ -183,7 +183,7 @@ namespace Htc.Vita.Core.Runtime
             /// <inheritdoc />
             protected override bool OnStart()
             {
-                Logger.GetInstance(typeof(Provider)).Info($"Channel name: {OnOverrideTranslateName(_pipeName)}");
+                Logger.GetInstance(typeof(Provider)).Info($"Channel name: {OnOverrideTranslateName(_pipeName)}, thread number: {PipeThreadNumber}");
 
                 if (_isRunning)
                 {
