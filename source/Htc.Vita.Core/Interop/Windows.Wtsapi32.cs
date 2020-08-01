@@ -1,13 +1,12 @@
 using System;
 using System.Runtime.InteropServices;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtscloseserver
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtscloseserver")]
         [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -17,9 +16,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_ HANDLE */ [In] IntPtr hServer
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsenumerateprocessesw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsenumerateprocessesw")]
         [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -34,9 +31,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_ DWORD*             */ [In][Out] ref uint pCount
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsenumeratesessionsw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsenumeratesessionsw")]
         [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -51,9 +46,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_ DWORD*             */ [In][Out] ref uint pCount
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsfreememory
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsfreememory")]
         [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -63,9 +56,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_ PVOID */ [In] IntPtr pMemory
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsopenserverw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsopenserverw")]
         [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -75,9 +66,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_ LPTSTR */ [In] string pServerName
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsquerysessioninformationw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsquerysessioninformationw")]
         [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -92,9 +81,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_ DWORD*         */ [In][Out] ref uint pBytesReturned
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsqueryusertoken
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsqueryusertoken")]
         [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -106,9 +93,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_ PHANDLE */ [Out] out SafeTokenHandle token
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsterminateprocess
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsterminateprocess")]
         [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,

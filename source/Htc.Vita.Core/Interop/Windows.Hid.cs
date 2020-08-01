@@ -1,15 +1,14 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using Htc.Vita.Core.Util;
 using Microsoft.Win32.SafeHandles;
 
 namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        /**
-         * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_freepreparseddata
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_freepreparseddata")]
         [DllImport(Libraries.WindowsHid,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -20,9 +19,7 @@ namespace Htc.Vita.Core.Interop
                 IntPtr preparsedData
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getfeature
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getfeature")]
         [DllImport(Libraries.WindowsHid,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -35,9 +32,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_  ULONG  */ [In] uint reportBufferLength
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_gethidguid
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_gethidguid")]
         [DllImport(Libraries.WindowsHid,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -47,9 +42,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_ LPGUID */ [In][Out] ref Guid hidGuid
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getindexedstring
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getindexedstring")]
         [DllImport(Libraries.WindowsHid,
             CallingConvention = CallingConvention.Winapi,
             CharSet = CharSet.Unicode,
@@ -63,9 +56,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_  ULONG  */ [In] uint bufferLength
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getmanufacturerstring
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getmanufacturerstring")]
         [DllImport(Libraries.WindowsHid,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -78,9 +69,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_  ULONG  */ [In] uint bufferLength
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getpreparseddata
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getpreparseddata")]
         [DllImport(Libraries.WindowsHid,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -92,9 +81,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_ PHIDP_PREPARSED_DATA */ [In][Out] ref IntPtr preparsedData
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getproductstring
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getproductstring")]
         [DllImport(Libraries.WindowsHid,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -107,9 +94,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_  ULONG  */ [In] uint bufferLength
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getserialnumberstring
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getserialnumberstring")]
         [DllImport(Libraries.WindowsHid,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -122,9 +107,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_  ULONG  */ [In] uint bufferLength
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidpi/nf-hidpi-hidp_getcaps
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidpi/nf-hidpi-hidp_getcaps")]
         [DllImport(Libraries.WindowsHid,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,

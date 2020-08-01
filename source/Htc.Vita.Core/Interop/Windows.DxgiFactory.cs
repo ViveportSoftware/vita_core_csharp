@@ -44,8 +44,8 @@ namespace Htc.Vita.Core.Interop
                     {
                         IDxgiAdapter iDxgiAdapter;
                         var dxgiError = _dxgiFactory.EnumAdapters(
-                            index,
-                            out iDxgiAdapter
+                                index,
+                                out iDxgiAdapter
                         );
                         if (dxgiError != DxgiError.SOk)
                         {
@@ -58,7 +58,7 @@ namespace Htc.Vita.Core.Interop
                 }
                 catch (Exception e)
                 {
-                    Logger.GetInstance(typeof(DxgiFactory)).Error("Can not enumerate DXGI adapters. error: " + e.Message);
+                    Logger.GetInstance(typeof(DxgiFactory)).Error($"Can not enumerate DXGI adapters. error: {e.Message}");
                 }
 
                 return result;
@@ -76,7 +76,7 @@ namespace Htc.Vita.Core.Interop
 
                 if (dxgiError != DxgiError.SOk)
                 {
-                    Logger.GetInstance(typeof(DxgiFactory)).Error("Can not create DXGI factory. error: " + dxgiError);
+                    Logger.GetInstance(typeof(DxgiFactory)).Error($"Can not create DXGI factory. error: {dxgiError}");
                     return null;
                 }
 

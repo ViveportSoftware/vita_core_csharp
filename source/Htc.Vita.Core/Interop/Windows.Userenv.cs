@@ -1,13 +1,12 @@
 using System;
 using System.Runtime.InteropServices;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/userenv/nf-userenv-createenvironmentblock
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/userenv/nf-userenv-createenvironmentblock")]
         [DllImport(Libraries.WindowsUserenv,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -20,9 +19,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_  BOOL   */ [In] bool bInherit
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/userenv/nf-userenv-destroyenvironmentblock
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/userenv/nf-userenv-destroyenvironmentblock")]
         [DllImport(Libraries.WindowsUserenv,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,

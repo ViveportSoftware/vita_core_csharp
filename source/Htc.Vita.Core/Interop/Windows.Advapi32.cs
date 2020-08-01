@@ -1,14 +1,13 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/securitybaseapi/nf-securitybaseapi-adjusttokenprivileges
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/securitybaseapi/nf-securitybaseapi-adjusttokenprivileges")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -23,9 +22,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_opt_ PDWORD            */ [In][Out] IntPtr returnLength
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-changeserviceconfigw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-changeserviceconfigw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -46,9 +43,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_opt_  LPCTSTR   */ [In] string lpDisplayName
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-closeservicehandle
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-closeservicehandle")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -59,9 +54,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_ SC_HANDLE */ [In] IntPtr hScObject
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/sddl/nf-sddl-convertsidtostringsidw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/sddl/nf-sddl-convertsidtostringsidw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -73,9 +66,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_ LPTSTR* */ [In][Out] ref string sid
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/sddl/nf-sddl-convertstringsidtosidw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/sddl/nf-sddl-convertstringsidtosidw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -87,9 +78,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_ PSID*   */ [In][Out] IntPtr pSid
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/nf-processthreadsapi-createprocessasuserw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/nf-processthreadsapi-createprocessasuserw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -110,9 +99,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_       LPPROCESS_INFORMATION */ [Out] out ProcessInformation lpProcessInformation
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/securitybaseapi/nf-securitybaseapi-duplicatetokenex
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/securitybaseapi/nf-securitybaseapi-duplicatetokenex")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -128,9 +115,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Outptr_ PHANDLE                      */ [Out] out SafeTokenHandle newToken
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/securitybaseapi/nf-securitybaseapi-gettokeninformation
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/securitybaseapi/nf-securitybaseapi-gettokeninformation")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -144,9 +129,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_ PDWORD                  */ [Out] out uint returnLength
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-lookupaccountsidw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-lookupaccountsidw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -163,9 +146,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_     PSID_NAME_USE */ [In][Out] ref SidType peUse
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-lookupprivilegevaluew
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-lookupprivilegevaluew")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -177,9 +158,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_    PLUID   */ [In][Out] ref long lpLuid
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/nf-processthreadsapi-openprocesstoken
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/nf-processthreadsapi-openprocesstoken")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -191,9 +170,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_ PHANDLE */ [Out] out SafeTokenHandle tokenHandle
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-openscmanagerw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-openscmanagerw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -205,9 +182,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_     DWORD   */ [In] ServiceControlManagerAccessRight dwDesiredAccess
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-openservicew
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-openservicew")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -219,9 +194,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_ DWORD     */ [In] ServiceAccessRight dwDesiredAccess
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-queryserviceconfigw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-queryserviceconfigw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -235,9 +208,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_     LPDWORD                */ [In][Out] ref uint pcbBytesNeeded
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-queryservicestatus
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-queryservicestatus")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -249,9 +220,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_ LPSERVICE_STATUS */ [In][Out] ref ServiceStatus lpServiceStatus
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regclosekey
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regclosekey")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -261,9 +230,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_ HKEY */ [In] IntPtr hKey
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regcreatekeyexw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regcreatekeyexw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -281,9 +248,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_opt_  LPDWORD               */ [Out] out int lpdwDisposition
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regdeletekeyexw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regdeletekeyexw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -296,9 +261,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Reserved_ DWORD   */ [In] IntPtr reserved
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regdeletevaluew
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regdeletevaluew")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -309,9 +272,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_opt_ LPCWSTR */ [In] string lpValueName
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regenumkeyexw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regenumkeyexw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -328,9 +289,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_opt_   PFILETIME */ [In][Out] IntPtr lpftLastWriteTime
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regenumvaluew
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regenumvaluew")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -347,9 +306,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Inout_opt_ LPDWORD */ [In][Out] IntPtr lpcbData
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regopenkeyexw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regopenkeyexw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -363,9 +320,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_    PHKEY   */ [Out] out SafeRegistryHandle hkResult
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryinfokeyw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryinfokeyw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -386,9 +341,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_opt_   PFILETIME */ [In][Out] IntPtr lpftLastWriteTime
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryvalueexw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryvalueexw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -403,9 +356,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_opt_  LPDWORD */ [In][Out] ref uint lpcbData
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryvalueexw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryvalueexw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -420,9 +371,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_opt_  LPDWORD */ [In][Out] ref uint lpcbData
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryvalueexw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryvalueexw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -437,9 +386,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_opt_  LPDWORD */ [In][Out] ref uint lpcbData
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryvalueexw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryvalueexw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -454,9 +401,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_opt_  LPDWORD */ [In][Out] ref uint lpcbData
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -471,9 +416,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_       DWORD   */ [In] int cbData
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -488,9 +431,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_       DWORD   */ [In] int cbData
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -505,9 +446,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_       DWORD   */ [In] int cbData
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -522,9 +461,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_       DWORD   */ [In] int cbData
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -539,9 +476,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_       DWORD   */ [In] int cbData
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-startservicew
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-startservicew")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,

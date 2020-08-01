@@ -1,13 +1,12 @@
 using System;
 using System.Runtime.InteropServices;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdidestroydeviceinfolist
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdidestroydeviceinfolist")]
         [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -18,9 +17,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_ HDEVINFO */ [In] IntPtr deviceInfoSet
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdienumdeviceinterfaces
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdienumdeviceinterfaces")]
         [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -35,9 +32,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_          PSP_DEVICE_INTERFACE_DATA */ [In][Out] ref SetupDeviceInterfaceData deviceInterfaceData
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetclassdevsw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetclassdevsw")]
         [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -50,9 +45,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_           DWORD  */ [In] DeviceInfoGetClassFlag flags
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetdeviceinterfacedetailw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetdeviceinterfacedetailw")]
         [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -68,9 +61,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_opt_ PSP_DEVINFO_DATA                 */ [In][Out] IntPtr deviceInfoData
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetdeviceinterfacedetailw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetdeviceinterfacedetailw")]
         [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -86,9 +77,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_opt_ PSP_DEVINFO_DATA                 */ [In][Out] ref SetupDeviceInfoData deviceInfoData
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetdeviceregistrypropertyw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetdeviceregistrypropertyw")]
         [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -105,9 +94,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_opt_ PDWORD           */ [In][Out] ref uint requiredSize
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetdeviceregistrypropertyw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetdeviceregistrypropertyw")]
         [DllImport(Libraries.WindowsSetupapi,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,

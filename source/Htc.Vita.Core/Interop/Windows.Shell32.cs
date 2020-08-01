@@ -1,13 +1,12 @@
 using System;
 using System.Runtime.InteropServices;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/shlobj_core/nf-shlobj_core-shchangenotify
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/shlobj_core/nf-shlobj_core-shchangenotify")]
         [DllImport(Libraries.WindowsShell32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
