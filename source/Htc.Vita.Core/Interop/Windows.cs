@@ -304,6 +304,7 @@ namespace Htc.Vita.Core.Interop
             /* FILE_ATTRIBUTE_VIRTUAL               */ AttributeVirtual            = 0x00010000,
             /* FILE_ATTRIBUTE_NO_SCRUB_DATA         */ AttributeNoScrubData        = 0x00020000,
             /* FILE_ATTRIBUTE_RECALL_ON_OPEN        */ AttributeRecallOnOpen       = 0x00040000,
+            /* FILE_FLAG_FIRST_PIPE_INSTANCE        */ FlagFirstPipeInstance       = 0x00080000,
             /* FILE_FLAG_OPEN_NO_RECALL             */ FlagOpenNoRecall            = 0x00100000,
             /* FILE_FLAG_OPEN_REPARSE_POINT         */ FlagOpenReparsePoint        = 0x00200000,
             /* FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS */ AttributeRecallOnDataAccess = 0x00400000,
