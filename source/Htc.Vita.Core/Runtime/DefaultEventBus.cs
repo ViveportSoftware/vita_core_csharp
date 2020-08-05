@@ -120,22 +120,21 @@ namespace Htc.Vita.Core.Runtime
                 Type eventType,
                 IEventListener eventListener)
         {
-            List<IEventListener> listenerList;
             lock (listenerListMap)
             {
                 if (!listenerListMap.ContainsKey(eventType))
                 {
                     return true;
                 }
-                listenerList = listenerListMap[eventType];
-            }
-            if (listenerList == null)
-            {
-                return true;
-            }
-            if (listenerList.Contains(eventListener))
-            {
-                listenerList.Remove(eventListener);
+                var listenerList = listenerListMap[eventType];
+                if (listenerList == null)
+                {
+                    return true;
+                }
+                if (listenerList.Contains(eventListener))
+                {
+                    listenerList.Remove(eventListener);
+                }
             }
 
             return true;
