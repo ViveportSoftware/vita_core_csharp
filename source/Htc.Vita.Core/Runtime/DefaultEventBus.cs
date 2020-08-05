@@ -20,20 +20,23 @@ namespace Htc.Vita.Core.Runtime
                 Type eventType,
                 IEventListener eventListener)
         {
-            List<IEventListener> listenerList = null;
-            if (listenerListMap.ContainsKey(eventType))
+            lock (listenerListMap)
             {
-                listenerList = listenerListMap[eventType];
+                List<IEventListener> listenerList = null;
+                if (listenerListMap.ContainsKey(eventType))
+                {
+                    listenerList = listenerListMap[eventType];
+                }
+                if (listenerList == null)
+                {
+                    listenerList = new List<IEventListener>();
+                }
+                if (!listenerList.Contains(eventListener))
+                {
+                    listenerList.Add(eventListener);
+                }
+                listenerListMap[eventType] = listenerList;
             }
-            if (listenerList == null)
-            {
-                listenerList = new List<IEventListener>();
-            }
-            if (!listenerList.Contains(eventListener))
-            {
-                listenerList.Add(eventListener);
-            }
-            listenerListMap[eventType] = listenerList;
 
             return true;
         }
@@ -42,11 +45,15 @@ namespace Htc.Vita.Core.Runtime
                 Type eventType,
                 IEventData eventData)
         {
-            if (!listenerListMap.ContainsKey(eventType))
+            List<IEventListener> listenerList;
+            lock (listenerListMap)
             {
-                return this;
+                if (!listenerListMap.ContainsKey(eventType))
+                {
+                    return this;
+                }
+                listenerList = listenerListMap[eventType];
             }
-            var listenerList = listenerListMap[eventType];
             if (listenerList == null)
             {
                 return this;
@@ -113,11 +120,15 @@ namespace Htc.Vita.Core.Runtime
                 Type eventType,
                 IEventListener eventListener)
         {
-            if (!listenerListMap.ContainsKey(eventType))
+            List<IEventListener> listenerList;
+            lock (listenerListMap)
             {
-                return true;
+                if (!listenerListMap.ContainsKey(eventType))
+                {
+                    return true;
+                }
+                listenerList = listenerListMap[eventType];
             }
-            var listenerList = listenerListMap[eventType];
             if (listenerList == null)
             {
                 return true;

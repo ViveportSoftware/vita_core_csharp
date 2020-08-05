@@ -46,7 +46,7 @@ namespace Htc.Vita.Core.Tests
             var myEventData = new MyEventData();
             Assert.NotNull(eventBus.Trigger<MyEventData>(myEventData));
 
-            SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(2));
+            SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(1));
 
             Assert.True(myEventListener0.IsEventProcessed());
             Assert.True(myEventListener1.IsEventProcessed());
@@ -66,7 +66,7 @@ namespace Htc.Vita.Core.Tests
             var otherEventData = new OtherEventData();
             Assert.NotNull(eventBus.Trigger<MyEventData>(otherEventData));
 
-            SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(2));
+            SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(1));
 
             Assert.False(myEventListener0.IsEventProcessed());
             Assert.False(myEventListener1.IsEventProcessed());
@@ -86,12 +86,32 @@ namespace Htc.Vita.Core.Tests
             var mySubEventData = new MySubEventData();
             Assert.NotNull(eventBus.Trigger<MyEventData>(mySubEventData));
 
-            SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(2));
+            SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(1));
 
             Assert.True(myEventListener0.IsEventProcessed());
             Assert.True(myEventListener1.IsEventProcessed());
             Assert.True(eventBus.UnregisterListener<MyEventData>(myEventListener0));
             Assert.True(eventBus.UnregisterListener<MyEventData>(myEventListener1));
+        }
+
+        [Fact]
+        public static void Default_3_Trigger_AfterUnregisterListener()
+        {
+            var eventBus = EventBus.GetInstance();
+            Assert.NotNull(eventBus);
+            var myEventListener0 = new MyEventListener();
+            var myEventListener1 = new MyEventListener();
+            Assert.True(eventBus.RegisterListener<MyEventData>(myEventListener0));
+            Assert.True(eventBus.RegisterListener<MyEventData>(myEventListener1));
+            Assert.True(eventBus.UnregisterListener<MyEventData>(myEventListener0));
+            Assert.True(eventBus.UnregisterListener<MyEventData>(myEventListener1));
+            var myEventData = new MyEventData();
+            Assert.NotNull(eventBus.Trigger<MyEventData>(myEventData));
+
+            SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(1));
+
+            Assert.False(myEventListener0.IsEventProcessed());
+            Assert.False(myEventListener1.IsEventProcessed());
         }
 
         public class MyEventData : EventBus.EventData
