@@ -43,7 +43,6 @@ namespace Htc.Vita.Core.Tests
             var myEventListener1 = new MyEventListener();
             Assert.True(eventBus.RegisterListener<MyEventData>(myEventListener0));
             Assert.True(eventBus.RegisterListener<MyEventData>(myEventListener1));
-            var dateTime = DateTime.UtcNow;
             var myEventData = new MyEventData();
             Assert.NotNull(eventBus.Trigger<MyEventData>(myEventData));
 
@@ -64,7 +63,6 @@ namespace Htc.Vita.Core.Tests
             var myEventListener1 = new MyEventListener();
             Assert.True(eventBus.RegisterListener<MyEventData>(myEventListener0));
             Assert.True(eventBus.RegisterListener<MyEventData>(myEventListener1));
-            var dateTime = DateTime.UtcNow;
             var otherEventData = new OtherEventData();
             Assert.NotNull(eventBus.Trigger<MyEventData>(otherEventData));
 
@@ -85,7 +83,6 @@ namespace Htc.Vita.Core.Tests
             var myEventListener1 = new MyEventListener();
             Assert.True(eventBus.RegisterListener<MyEventData>(myEventListener0));
             Assert.True(eventBus.RegisterListener<MyEventData>(myEventListener1));
-            var dateTime = DateTime.UtcNow;
             var mySubEventData = new MySubEventData();
             Assert.NotNull(eventBus.Trigger<MyEventData>(mySubEventData));
 
