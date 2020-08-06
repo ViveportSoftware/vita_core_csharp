@@ -1,4 +1,4 @@
-#addin "nuget:?package=Cake.Coveralls&version=0.10.1"
+#addin "nuget:?package=Cake.Coveralls&version=0.10.2"
 #addin "nuget:?package=Cake.Coverlet&version=2.4.2"
 #addin "nuget:?package=Cake.Git&version=0.22.0"
 #addin "nuget:?package=Cake.ReSharperReports&version=0.11.1"
