@@ -141,6 +141,11 @@ namespace Htc.Vita.Core.Runtime
                 return this;
             }
 
+            if (!(eventData is T))
+            {
+                return this;
+            }
+
             EventBus result = null;
             try
             {
