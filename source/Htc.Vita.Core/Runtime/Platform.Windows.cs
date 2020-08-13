@@ -84,9 +84,7 @@ namespace Htc.Vita.Core.Runtime
                 }
             }
 
-            /**
-             * https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed
-             */
+            [ExternalReference("https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed")]
             internal static string GetFrameworkNameInPlatform()
             {
                 const string path = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\";

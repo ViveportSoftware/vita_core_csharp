@@ -1,13 +1,12 @@
 using System;
 using System.Runtime.InteropServices;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/dxgi/nf-dxgi-createdxgifactory
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/dxgi/nf-dxgi-createdxgifactory")]
         [DllImport(Libraries.WindowsDxgi,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,

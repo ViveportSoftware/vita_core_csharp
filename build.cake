@@ -1,5 +1,6 @@
-#addin "nuget:?package=Cake.Coveralls&version=0.10.1"
-#addin "nuget:?package=Cake.Git&version=0.21.0"
+#addin "nuget:?package=Cake.Coveralls&version=0.10.2"
+#addin "nuget:?package=Cake.Coverlet&version=2.4.2"
+#addin "nuget:?package=Cake.Git&version=0.22.0"
 #addin "nuget:?package=Cake.ReSharperReports&version=0.11.1"
 #addin "nuget:?package=Cake.Sonar&version=1.1.25"
 
@@ -26,18 +27,19 @@ var commitId = "SNAPSHOT";
 var product = "Htc.Vita.Core";
 var companyName = "HTC";
 var version = "0.10.5";
-var semanticVersion = string.Format("{0}.{1}", version, revision);
-var ciVersion = string.Format("{0}.{1}", version, "0");
+var semanticVersion = $"{version}.{revision}";
+var ciVersion = $"{version}.0";
+var buildVersion = "Release".Equals(configuration) ? semanticVersion : $"{ciVersion}-CI{revision}";
 
 // Define copyright
-var copyright = string.Format("Copyright © 2017 - {0}", DateTime.Now.Year);
+var copyright = $"Copyright © 2017 - {DateTime.Now.Year}";
 
 // Define timestamp for signing
 var lastSignTimestamp = DateTime.Now;
 var signIntervalInMilli = 1000 * 5;
 
 // Define path
-var solutionFile = File(string.Format("./source/{0}.sln", product));
+var solutionFile = File($"./source/{product}.sln");
 
 // Define directories.
 var distDir = Directory("./dist");
@@ -89,17 +91,10 @@ Task("Display-Config")
     .IsDependentOn("Fetch-Git-Commit-ID")
     .Does(() =>
 {
-    Information("Build target: {0}", target);
-    Information("Build configuration: {0}", configuration);
-    Information("Build commitId: {0}", commitId);
-    if ("Release".Equals(configuration))
-    {
-        Information("Build version: {0}", semanticVersion);
-    }
-    else
-    {
-        Information("Build version: {0}-CI{1}", ciVersion, revision);
-    }
+    Information($"Build target:        {target}");
+    Information($"Build configuration: {configuration}");
+    Information($"Build commitId:      {commitId}");
+    Information($"Build version:       {buildVersion}");
 });
 
 Task("Clean-Workspace")
@@ -116,7 +111,7 @@ Task("Restore-NuGet-Packages")
     .IsDependentOn("Clean-Workspace")
     .Does(() =>
 {
-    NuGetRestore(string.Format("./source/{0}.sln", product));
+    NuGetRestore(new FilePath($"./source/{product}.sln"));
 });
 
 Task("Generate-AssemblyInfo")
@@ -124,22 +119,17 @@ Task("Generate-AssemblyInfo")
     .Does(() =>
 {
     CreateDirectory(generatedDir);
-    var file = "./source/generated/SharedAssemblyInfo.cs";
-    var assemblyVersion = semanticVersion;
-    if (!"Release".Equals(configuration))
-    {
-        assemblyVersion = ciVersion;
-    }
+    var assemblyVersion = "Release".Equals(configuration) ? semanticVersion : ciVersion;
     CreateAssemblyInfo(
-            file,
+            new FilePath("./source/generated/SharedAssemblyInfo.cs"),
             new AssemblyInfoSettings
             {
                     Company = companyName,
                     Copyright = copyright,
-                    Product = string.Format("{0} : {1}", product, commitId),
-                    Version = version,
                     FileVersion = assemblyVersion,
-                    InformationalVersion = assemblyVersion
+                    InformationalVersion = assemblyVersion,
+                    Product = $"{product} : {commitId}",
+                    Version = version
             }
     );
 });
@@ -150,12 +140,13 @@ Task("Run-Sonar-Begin")
     .Does(() =>
 {
     SonarBegin(
-            new SonarBeginSettings {
-                    Url = "https://sonarcloud.io",
-                    Login = sonarcloudApiKey,
+            new SonarBeginSettings
+            {
                     Key = "ViveportSoftware_vita_core_csharp",
+                    Login = sonarcloudApiKey,
+                    OpenCoverReportsPath = "**/*.OpenCover.xml",
                     Organization = "viveportsoftware",
-                    OpenCoverReportsPath = "**/*.OpenCover.xml"
+                    Url = "https://sonarcloud.io"
             }
     );
 });
@@ -164,11 +155,13 @@ Task("Build-Assemblies")
     .IsDependentOn("Run-Sonar-Begin")
     .Does(() =>
 {
-    var settings = new DotNetCoreBuildSettings
-    {
-            Configuration = configuration
-    };
-    DotNetCoreBuild("./source/", settings);
+    DotNetCoreBuild(
+            "./source/",
+            new DotNetCoreBuildSettings
+            {
+                    Configuration = configuration
+            }
+    );
 });
 
 Task("Prepare-Unit-Test-Data")
@@ -182,37 +175,46 @@ Task("Prepare-Unit-Test-Data")
     }
     if (!FileExists(testDataDir + File("TestData.Md5.txt")))
     {
-        CopyFileToDirectory("source/" + product + ".Tests/TestData.Md5.txt", testDataDir);
+        CopyFileToDirectory(
+                $"source/{product}.Tests/TestData.Md5.txt",
+                testDataDir
+        );
     }
     if (!FileExists(testDataDir + File("TestData.Sha1.txt")))
     {
-        CopyFileToDirectory("source/" + product + ".Tests/TestData.Sha1.txt", testDataDir);
+        CopyFileToDirectory(
+                $"source/{product}.Tests/TestData.Sha1.txt",
+                testDataDir
+        );
     }
 });
 
-Task("Run-Unit-Tests-Under-AnyCPU")
+Task("Run-Unit-Tests-Under-AnyCPU-1")
     .WithCriteria(() => "ON".Equals(buildWithUnitTesting))
     .IsDependentOn("Prepare-Unit-Test-Data")
     .Does(() =>
 {
     CreateDirectory(reportXUnitDirAnyCPU);
+    var testFilePattern = $"./temp/{configuration}/{product}.Tests/bin/AnyCPU/net452/*.Tests.dll";
+    var xUnit2Settings = new XUnit2Settings
+    {
+            HtmlReport = true,
+            NUnitReport = true,
+            OutputDirectory = reportXUnitDirAnyCPU,
+            Parallelism = ParallelismOption.None
+    };
+
     if(IsRunningOnWindows())
     {
         DotCoverAnalyse(
                 tool =>
                 {
                         tool.XUnit2(
-                                "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/net452/*.Tests.dll",
-                                new XUnit2Settings
-                                {
-                                        Parallelism = ParallelismOption.None,
-                                        HtmlReport = true,
-                                        NUnitReport = true,
-                                        OutputDirectory = reportXUnitDirAnyCPU
-                                }
+                                testFilePattern,
+                                xUnit2Settings
                         );
                 },
-                new FilePath(reportDotCoverDirAnyCPU.ToString() + "/" + product + ".html"),
+                new FilePath($"{reportDotCoverDirAnyCPU.ToString()}/{product}.html"),
                 new DotCoverAnalyseSettings
                 {
                         ReportType = DotCoverReportType.HTML
@@ -222,74 +224,64 @@ Task("Run-Unit-Tests-Under-AnyCPU")
                 .WithFilter("-:*.Tests")
                 .WithFilter("-:*.XunitTest")
         );
-        CreateDirectory(reportOpenCoverDirAnyCPU);
-        var openCoverSettings = new OpenCoverSettings
-        {
-                MergeByHash = true,
-                NoDefaultFilters = true,
-                Register = "user",
-                SkipAutoProps = true
-        }.WithFilter("+[*]*")
-        .WithFilter("-[xunit.*]*")
-        .WithFilter("-[*.NunitTest]*")
-        .WithFilter("-[*.Tests]*")
-        .WithFilter("-[*.XunitTest]*");
-        OpenCover(
-                tool =>
-                {
-                        tool.XUnit2(
-                                "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/net452/*.Tests.dll",
-                                new XUnit2Settings
-                                {
-                                        Parallelism = ParallelismOption.None,
-                                        OutputDirectory = reportXUnitDirAnyCPU,
-                                        ShadowCopy = false
-                                }
-                        );
-                },
-                new FilePath(reportOpenCoverDirAnyCPU.ToString() + "/" + product + ".OpenCover.xml"),
-                openCoverSettings
-        );
     }
     else
     {
         XUnit2(
-                "./temp/" + configuration + "/" + product + ".Tests/bin/AnyCPU/net452/*.Tests.dll",
-                new XUnit2Settings
-                {
-                        Parallelism = ParallelismOption.None,
-                        HtmlReport = true,
-                        NUnitReport = true,
-                        OutputDirectory = reportXUnitDirAnyCPU
-                }
+                testFilePattern,
+                xUnit2Settings
         );
     }
 });
 
+Task("Run-Unit-Tests-Under-AnyCPU-2")
+    .WithCriteria(() => "ON".Equals(buildWithUnitTesting))
+    .IsDependentOn("Run-Unit-Tests-Under-AnyCPU-1")
+    .Does(() =>
+{
+    CreateDirectory(reportOpenCoverDirAnyCPU);
+    DotNetCoreTest(
+            $"./source/{product}.Tests/{product}.Tests.AnyCPU.csproj",
+            new DotNetCoreTestSettings
+            {
+            },
+            new CoverletSettings
+            {
+                    CollectCoverage = true,
+                    CoverletOutputDirectory = reportOpenCoverDirAnyCPU,
+                    CoverletOutputFormat = CoverletOutputFormat.opencover,
+                    CoverletOutputName = $"{product}.OpenCover.xml"
+            }
+    );
+});
+
 Task("Run-Unit-Tests-Under-X86")
     .WithCriteria(() => "ON".Equals(buildWithUnitTesting))
-    .IsDependentOn("Run-Unit-Tests-Under-AnyCPU")
+    .IsDependentOn("Run-Unit-Tests-Under-AnyCPU-2")
     .Does(() =>
 {
     CreateDirectory(reportXUnitDirX86);
+    var testFilePattern = $"./temp/{configuration}/{product}.Tests/bin/x86/net452/*.Tests.dll";
+    var xUnit2Settings = new XUnit2Settings
+    {
+            HtmlReport = true,
+            NUnitReport = true,
+            OutputDirectory = reportXUnitDirX86,
+            Parallelism = ParallelismOption.None,
+            UseX86 = true
+    };
+
     if(IsRunningOnWindows())
     {
         DotCoverAnalyse(
                 tool =>
                 {
                         tool.XUnit2(
-                                "./temp/" + configuration + "/" + product + ".Tests/bin/x86/net452/*.Tests.dll",
-                                new XUnit2Settings
-                                {
-                                        Parallelism = ParallelismOption.None,
-                                        HtmlReport = true,
-                                        NUnitReport = true,
-                                        UseX86 = true,
-                                        OutputDirectory = reportXUnitDirX86
-                                }
+                                testFilePattern,
+                                xUnit2Settings
                         );
                 },
-                new FilePath(reportDotCoverDirX86.ToString() + "/" + product + ".html"),
+                new FilePath($"{reportDotCoverDirX86.ToString()}/{product}.html"),
                 new DotCoverAnalyseSettings
                 {
                         ReportType = DotCoverReportType.HTML
@@ -303,15 +295,8 @@ Task("Run-Unit-Tests-Under-X86")
     else
     {
         XUnit2(
-                "./temp/" + configuration + "/" + product + ".Tests/bin/x86/net452/*.Tests.dll",
-                new XUnit2Settings
-                {
-                        Parallelism = ParallelismOption.None,
-                        HtmlReport = true,
-                        NUnitReport = true,
-                        UseX86 = true,
-                        OutputDirectory = reportXUnitDirX86
-                }
+                testFilePattern,
+                xUnit2Settings
         );
     }
 });
@@ -324,7 +309,7 @@ Task("Run-Sonar-End")
     SonarEnd(
             new SonarEndSettings
             {
-                    Login = sonarcloudApiKey,
+                    Login = sonarcloudApiKey
             }
     );
 });
@@ -337,20 +322,24 @@ Task("Run-DupFinder")
     if(IsRunningOnWindows())
     {
         DupFinder(
-                string.Format("./source/{0}.sln", product),
-                new DupFinderSettings()
+                new FilePath($"./source/{product}.sln"),
+                new DupFinderSettings
                 {
+                        OutputFile = new FilePath($"{reportReSharperDupFinder.ToString()}/{product}.xml"),
                         ShowStats = true,
                         ShowText = true,
                         SkipOutputAnalysis = true,
-                        OutputFile = new FilePath(reportReSharperDupFinder.ToString() + "/" + product + ".xml"),
                         ThrowExceptionOnFindingDuplicates = false
                 }
         );
         ReSharperReports(
-                new FilePath(reportReSharperDupFinder.ToString() + "/" + product + ".xml"),
-                new FilePath(reportReSharperDupFinder.ToString() + "/" + product + ".html")
+                new FilePath($"{reportReSharperDupFinder.ToString()}/{product}.xml"),
+                new FilePath($"{reportReSharperDupFinder.ToString()}/{product}.html")
         );
+    }
+    else
+    {
+        Warning($"DupFinder is only available on Windows");
     }
 });
 
@@ -362,20 +351,24 @@ Task("Run-InspectCode")
     if(IsRunningOnWindows())
     {
         InspectCode(
-                string.Format("./source/{0}.sln", product),
-                new InspectCodeSettings()
+                new FilePath($"./source/{product}.sln"),
+                new InspectCodeSettings
                 {
-                        SolutionWideAnalysis = true,
+                        OutputFile = new FilePath($"{reportReSharperInspectCode.ToString()}/{product}.xml"),
                         SkipOutputAnalysis = true,
-                        OutputFile = new FilePath(reportReSharperInspectCode.ToString() + "/" + product + ".xml"),
-                        Verbosity = InspectCodeVerbosity.Off,
-                        ThrowExceptionOnFindingViolations = false
+                        SolutionWideAnalysis = true,
+                        ThrowExceptionOnFindingViolations = false,
+                        Verbosity = InspectCodeVerbosity.Off
                 }
         );
         ReSharperReports(
-                new FilePath(reportReSharperInspectCode.ToString() + "/" + product + ".xml"),
-                new FilePath(reportReSharperInspectCode.ToString() + "/" + product + ".html")
+                new FilePath($"{reportReSharperInspectCode.ToString()}/{product}.xml"),
+                new FilePath($"{reportReSharperInspectCode.ToString()}/{product}.html")
         );
+    }
+    else
+    {
+        Warning($"InspectCode is only available on Windows");
     }
 });
 
@@ -385,76 +378,54 @@ Task("Sign-Assemblies")
     .Does(() =>
 {
     var currentSignTimestamp = DateTime.Now;
-    Information("Last timestamp:    " + lastSignTimestamp);
-    Information("Current timestamp: " + currentSignTimestamp);
-    var totalTimeInMilli = (DateTime.Now - lastSignTimestamp).TotalMilliseconds;
-
+    Information($"Last timestamp:    {lastSignTimestamp}");
+    Information($"Current timestamp: {currentSignTimestamp}");
     var signKey = "./temp/key.pfx";
-    System.IO.File.WriteAllBytes(signKey, Convert.FromBase64String(signKeyEnc));
+    System.IO.File.WriteAllBytes(
+            signKey,
+            Convert.FromBase64String(signKeyEnc)
+    );
 
-    var file = string.Format("./temp/{0}/{1}/bin/net45/{1}.dll", configuration, product);
-
-    if (totalTimeInMilli < signIntervalInMilli)
+    var targetPlatforms = new[]
     {
-        System.Threading.Thread.Sleep(signIntervalInMilli - (int)totalTimeInMilli);
-    }
-    Sign(
-            file,
-            new SignToolSignSettings
-            {
-                    TimeStampUri = signSha1Uri,
-                    CertPath = signKey,
-                    Password = signPass
-            }
-    );
-    lastSignTimestamp = DateTime.Now;
-
-    System.Threading.Thread.Sleep(signIntervalInMilli);
-    Sign(
-            file,
-            new SignToolSignSettings
-            {
-                    AppendSignature = true,
-                    TimeStampUri = signSha256Uri,
-                    DigestAlgorithm = SignToolDigestAlgorithm.Sha256,
-                    TimeStampDigestAlgorithm = SignToolDigestAlgorithm.Sha256,
-                    CertPath = signKey,
-                    Password = signPass
-            }
-    );
-    lastSignTimestamp = DateTime.Now;
-
-    file = string.Format("./temp/{0}/{1}/bin/netstandard2.0/{1}.dll", configuration, product);
-
-    if (totalTimeInMilli < signIntervalInMilli)
+            "net45",
+            "netstandard2.0"
+    };
+    foreach (var targetPlatform in targetPlatforms)
     {
-        System.Threading.Thread.Sleep(signIntervalInMilli - (int)totalTimeInMilli);
-    }
-    Sign(
-            file,
-            new SignToolSignSettings
-            {
-                    TimeStampUri = signSha1Uri,
-                    CertPath = signKey,
-                    Password = signPass
-            }
-    );
-    lastSignTimestamp = DateTime.Now;
+        var file = $"./temp/{configuration}/{product}/bin/{targetPlatform}/{product}.dll";
 
-    System.Threading.Thread.Sleep(signIntervalInMilli);
-    Sign(
-            file,
-            new SignToolSignSettings
-            {
-                    AppendSignature = true,
-                    TimeStampUri = signSha256Uri,
-                    DigestAlgorithm = SignToolDigestAlgorithm.Sha256,
-                    TimeStampDigestAlgorithm = SignToolDigestAlgorithm.Sha256,
-                    CertPath = signKey,
-                    Password = signPass
-            }
-    );
-    lastSignTimestamp = DateTime.Now;
+        var totalTimeInMilli = (DateTime.Now - lastSignTimestamp).TotalMilliseconds;
+        if (totalTimeInMilli < signIntervalInMilli)
+        {
+            System.Threading.Thread.Sleep(signIntervalInMilli - (int)totalTimeInMilli);
+        }
+        Sign(
+                file,
+                new SignToolSignSettings
+                {
+                        CertPath = signKey,
+                        Password = signPass,
+                        TimeStampUri = signSha1Uri
+                }
+        );
+        lastSignTimestamp = DateTime.Now;
+
+        System.Threading.Thread.Sleep(signIntervalInMilli);
+        Sign(
+                file,
+                new SignToolSignSettings
+                {
+                        AppendSignature = true,
+                        CertPath = signKey,
+                        DigestAlgorithm = SignToolDigestAlgorithm.Sha256,
+                        Password = signPass,
+                        TimeStampDigestAlgorithm = SignToolDigestAlgorithm.Sha256,
+                        TimeStampUri = signSha256Uri
+                }
+        );
+        lastSignTimestamp = DateTime.Now;
+    }
 });
 
 Task("Build-NuGet-Package")
@@ -462,24 +433,19 @@ Task("Build-NuGet-Package")
     .Does(() =>
 {
     CreateDirectory(nugetDir);
-    var nugetPackVersion = semanticVersion;
-    if (!"Release".Equals(configuration))
-    {
-        nugetPackVersion = string.Format("{0}-CI{1}", ciVersion, revision);
-    }
-    Information("Pack version: {0}", nugetPackVersion);
-    var settings = new DotNetCorePackSettings
-    {
-            Configuration = configuration,
-            OutputDirectory = nugetDir,
-            NoBuild = true,
-            ArgumentCustomization = (args) =>
+    DotNetCorePack(
+            $"./source/{product}/",
+            new DotNetCorePackSettings
             {
-                    return args.Append("/p:Version={0}", nugetPackVersion);
+                    ArgumentCustomization = (args) =>
+                    {
+                            return args.Append($"/p:Version={buildVersion}");
+                    },
+                    Configuration = configuration,
+                    NoBuild = true,
+                    OutputDirectory = nugetDir
             }
-    };
-
-    DotNetCorePack("./source/" + product + "/", settings);
+    );
 });
 
 Task("Update-Coverage-Report")
@@ -488,8 +454,8 @@ Task("Update-Coverage-Report")
     .Does(() =>
 {
     CoverallsIo(
-            reportOpenCoverDirAnyCPU.ToString() + "/" + product + ".OpenCover.xml",
-            new CoverallsIoSettings()
+            new FilePath($"{reportOpenCoverDirAnyCPU.ToString()}/{product}.OpenCover.xml"),
+            new CoverallsIoSettings
             {
                     RepoToken = coverallsApiKey
             }
@@ -501,19 +467,12 @@ Task("Publish-NuGet-Package")
     .IsDependentOn("Update-Coverage-Report")
     .Does(() =>
 {
-    var nugetPushVersion = semanticVersion;
-    if (!"Release".Equals(configuration))
-    {
-        nugetPushVersion = string.Format("{0}-CI{1}", ciVersion, revision);
-    }
-    Information("Publish version: {0}", nugetPushVersion);
-    var package = string.Format("./dist/{0}/nuget/{1}.{2}.nupkg", configuration, product, nugetPushVersion);
     NuGetPush(
-            package,
+            new FilePath($"./dist/{configuration}/nuget/{product}.{buildVersion}.nupkg"),
             new NuGetPushSettings
             {
-                    Source = nugetSource,
-                    ApiKey = nugetApiKey
+                    ApiKey = nugetApiKey,
+                    Source = nugetSource
             }
     );
 });

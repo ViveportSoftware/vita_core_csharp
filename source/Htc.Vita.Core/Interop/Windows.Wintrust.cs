@@ -1,13 +1,12 @@
 using System;
 using System.Runtime.InteropServices;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/nf-wintrust-winverifytrust
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/nf-wintrust-winverifytrust")]
         [DllImport(Libraries.WindowsWintrust,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,

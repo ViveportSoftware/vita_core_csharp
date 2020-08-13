@@ -1,13 +1,12 @@
 using System;
 using System.Runtime.InteropServices;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-enumdisplaydevicesw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-enumdisplaydevicesw")]
         [DllImport(Libraries.WindowsUser32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -20,9 +19,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_    DWORD            */ [In] uint dwFlags
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-exitwindowsex
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-exitwindowsex")]
         [DllImport(Libraries.WindowsUser32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,
@@ -33,9 +30,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_ DWORD */ [In] uint dwReason
         );
 
-        /**
-         * https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmonitorinfow
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmonitorinfow")]
         [DllImport(Libraries.WindowsUser32,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,

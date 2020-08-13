@@ -46,7 +46,7 @@ namespace Htc.Vita.Core.Interop
                 }
                 catch (Exception e)
                 {
-                    Logger.GetInstance(typeof(DxgiOutput)).Error("Can not get DXGI output description. error: " + e.Message);
+                    Logger.GetInstance(typeof(DxgiOutput)).Error($"Can not get DXGI output description. error: {e.Message}");
                 }
 
                 return new DxgiOutputDescription();

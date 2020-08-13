@@ -44,8 +44,8 @@ namespace Htc.Vita.Core.Interop
                     {
                         IDxgiOutput iDxgiOutput;
                         var dxgiError = _dxgiAdapter.EnumOutputs(
-                            index,
-                            out iDxgiOutput
+                                index,
+                                out iDxgiOutput
                         );
                         if (dxgiError != DxgiError.SOk)
                         {
@@ -58,7 +58,7 @@ namespace Htc.Vita.Core.Interop
                 }
                 catch (Exception e)
                 {
-                    Logger.GetInstance(typeof(DxgiAdapter)).Error("Can not enumerate DXGI outputs. error: " + e.Message);
+                    Logger.GetInstance(typeof(DxgiAdapter)).Error($"Can not enumerate DXGI outputs. error: {e.Message}");
                 }
 
                 return result;
@@ -82,7 +82,7 @@ namespace Htc.Vita.Core.Interop
                 }
                 catch (Exception e)
                 {
-                    Logger.GetInstance(typeof(DxgiAdapter)).Error("Can not get DXGI adapter description. error: " + e.Message);
+                    Logger.GetInstance(typeof(DxgiAdapter)).Error($"Can not get DXGI adapter description. error: {e.Message}");
                 }
 
                 return new DxgiAdapterDescription();

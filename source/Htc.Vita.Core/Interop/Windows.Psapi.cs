@@ -1,14 +1,13 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        /**
-         * https://docs.microsoft.com/en-us/windows/desktop/api/psapi/nf-psapi-getmodulefilenameexw
-         */
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/psapi/nf-psapi-getmodulefilenameexw")]
         [DllImport(Libraries.WindowsPsapi,
                 CallingConvention = CallingConvention.Winapi,
                 CharSet = CharSet.Unicode,

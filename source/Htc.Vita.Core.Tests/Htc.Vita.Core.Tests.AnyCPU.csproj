@@ -4,18 +4,14 @@
     <RootNamespace>Htc.Vita.Core.Tests</RootNamespace>
     <AssemblyName>Htc.Vita.Core.Tests</AssemblyName>
     <TargetFramework>net452</TargetFramework>
+    <DebugType>portable</DebugType>
     <IntermediateOutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\obj\AnyCPU</IntermediateOutputPath>
     <OutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\bin\AnyCPU</OutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>6</LangVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-  </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="coverlet.msbuild" Version="2.9.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
   </ItemGroup>

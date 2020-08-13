@@ -15,8 +15,16 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Runtime
 {
+    /// <summary>
+    /// Class NamedPipeIpcChannel.
+    /// </summary>
     public class NamedPipeIpcChannel
     {
+        /// <summary>
+        /// Class Client.
+        /// Implements the <see cref="IpcChannel.Client" />
+        /// </summary>
+        /// <seealso cref="IpcChannel.Client" />
         public class Client : IpcChannel.Client
         {
             private const int PipeBufferSize = 512;
@@ -25,11 +33,15 @@ namespace Htc.Vita.Core.Runtime
 
             private string _pipeName;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Client" /> class.
+            /// </summary>
             public Client()
             {
                 _pipeName = "";
             }
 
+            /// <inheritdoc />
             protected override bool OnIsReady(Dictionary<string, string> options)
             {
                 var shouldVerifyProvider = false;
@@ -68,6 +80,11 @@ namespace Htc.Vita.Core.Runtime
                 return false;
             }
 
+            /// <summary>
+            /// Called when overriding translating name.
+            /// </summary>
+            /// <param name="name">The name.</param>
+            /// <returns>System.String.</returns>
             protected virtual string OnOverrideTranslateName(string name)
             {
                 string translatedName = null;
@@ -87,6 +104,7 @@ namespace Htc.Vita.Core.Runtime
                 return translatedName;
             }
 
+            /// <inheritdoc />
             protected override string OnRequest(string input)
             {
                 using (var clientStream = new NamedPipeClientStream(OnOverrideTranslateName(_pipeName)))
@@ -109,6 +127,7 @@ namespace Htc.Vita.Core.Runtime
                 }
             }
 
+            /// <inheritdoc />
             protected override bool OnSetName(string name)
             {
                 if (!string.IsNullOrWhiteSpace(name))
@@ -119,10 +138,15 @@ namespace Htc.Vita.Core.Runtime
             }
         }
 
+        /// <summary>
+        /// Class Provider.
+        /// Implements the <see cref="IpcChannel.Provider" />
+        /// </summary>
+        /// <seealso cref="IpcChannel.Provider" />
         public class Provider : IpcChannel.Provider
         {
             private const int PipeBufferSize = 512;
-            private const int PipeThreadNumber = 10;
+            private const int PipeThreadNumber = 16;
 
             private readonly Dictionary<string, string> _translatedNameMap = new Dictionary<string, string>();
 
@@ -132,16 +156,21 @@ namespace Htc.Vita.Core.Runtime
             private bool _shouldStopWorkers;
             private string _pipeName;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Provider" /> class.
+            /// </summary>
             public Provider()
             {
                 _pipeName = "";
             }
 
+            /// <inheritdoc />
             protected override bool OnIsRunning()
             {
                 return _isRunning;
             }
 
+            /// <inheritdoc />
             protected override bool OnSetName(string name)
             {
                 if (!string.IsNullOrWhiteSpace(name))
@@ -151,9 +180,10 @@ namespace Htc.Vita.Core.Runtime
                 return true;
             }
 
+            /// <inheritdoc />
             protected override bool OnStart()
             {
-                Logger.GetInstance(typeof(Provider)).Info("Channel name: " + OnOverrideTranslateName(_pipeName));
+                Logger.GetInstance(typeof(Provider)).Info($"Channel name: {OnOverrideTranslateName(_pipeName)}, thread number: {PipeThreadNumber}");
 
                 if (_isRunning)
                 {
@@ -173,6 +203,7 @@ namespace Htc.Vita.Core.Runtime
                 return true;
             }
 
+            /// <inheritdoc />
             protected override bool OnStop()
             {
                 if (!_isRunning)
@@ -251,41 +282,48 @@ namespace Htc.Vita.Core.Runtime
                     {
                         while (!_shouldStopWorkers)
                         {
-                            if (serverStream.IsConnected)
+                            try
                             {
-                                serverStream.Disconnect();
-                            }
-                            serverStream.WaitForConnection();
+                                if (serverStream.IsConnected)
+                                {
+                                    serverStream.Disconnect();
+                                }
+                                serverStream.WaitForConnection();
 
-                            var outputBuilder = new StringBuilder();
-                            var outputBuffer = new byte[PipeBufferSize];
-                            do
-                            {
-                                serverStream.Read(outputBuffer, 0, outputBuffer.Length);
-                                var outputChunk = Encoding.UTF8.GetString(outputBuffer);
-                                outputBuilder.Append(outputChunk);
-                                outputBuffer = new byte[outputBuffer.Length];
-                            }
-                            while (!serverStream.IsMessageComplete);
-                            var channel = new IpcChannel
-                            {
+                                var outputBuilder = new StringBuilder();
+                                var outputBuffer = new byte[PipeBufferSize];
+                                do
+                                {
+                                    serverStream.Read(outputBuffer, 0, outputBuffer.Length);
+                                    var outputChunk = Encoding.UTF8.GetString(outputBuffer);
+                                    outputBuilder.Append(outputChunk);
+                                    outputBuffer = new byte[outputBuffer.Length];
+                                }
+                                while (!serverStream.IsMessageComplete);
+                                var channel = new IpcChannel
+                                {
                                     Output = FilterOutInvalidChars(outputBuilder.ToString())
-                            };
-                            if (!string.IsNullOrEmpty(channel.Output))
-                            {
-                                if (OnMessageHandled == null)
+                                };
+                                if (!string.IsNullOrEmpty(channel.Output))
                                 {
-                                    Logger.GetInstance(typeof(Provider)).Error("Can not find OnMessageHandled delegates to handle messages");
+                                    if (OnMessageHandled == null)
+                                    {
+                                        Logger.GetInstance(typeof(Provider)).Error("Can not find OnMessageHandled delegates to handle messages");
+                                    }
+                                    else
+                                    {
+                                        OnMessageHandled(channel, GetClientSignature(serverStream));
+                                    }
                                 }
-                                else
+                                if (!string.IsNullOrEmpty(channel.Input))
                                 {
-                                    OnMessageHandled(channel, GetClientSignature(serverStream));
+                                    var inputBytes = Encoding.UTF8.GetBytes(channel.Input);
+                                    serverStream.Write(inputBytes, 0, inputBytes.Length);
                                 }
                             }
-                            if (!string.IsNullOrEmpty(channel.Input))
+                            catch (IOException e)
                             {
-                                var inputBytes = Encoding.UTF8.GetBytes(channel.Input);
-                                serverStream.Write(inputBytes, 0, inputBytes.Length);
+                                Logger.GetInstance(typeof(Provider)).Error($"IOException happened on thread[{threadId}]: {e.Message}");
                             }
                         }
                         if (serverStream.IsConnected)
@@ -296,10 +334,15 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    Logger.GetInstance(typeof(Provider)).Error("Error happened on thread[" + threadId + "]: " + e.Message);
+                    Logger.GetInstance(typeof(Provider)).Error($"Error happened on thread[{threadId}]: {e.Message}");
                 }
             }
 
+            /// <summary>
+            /// Called when overriding translating name.
+            /// </summary>
+            /// <param name="name">The name.</param>
+            /// <returns>System.String.</returns>
             protected virtual string OnOverrideTranslateName(string name)
             {
                 string translatedName = null;
@@ -359,7 +402,7 @@ namespace Htc.Vita.Core.Runtime
                             inputBuffer = new byte[inputBuffer.Length];
                         }
                         while (!clientStream.IsMessageComplete);
-                        // Logger.GetInstance(typeof(Provider)).Info("Dump return: \"" + FilterOutInvalidChars(inputBuilder.ToString()) + "\"");
+                        // Logger.GetInstance(typeof(Provider)).Info($"Dump return: \"{FilterOutInvalidChars(inputBuilder.ToString())}\"");
                     }
                 }
             }
@@ -383,7 +426,7 @@ namespace Htc.Vita.Core.Runtime
             var processId = 0u;
             if (!Windows.GetNamedPipeServerProcessId(pipeStream.SafePipeHandle, ref processId))
             {
-                Logger.GetInstance(typeof(NamedPipeIpcChannel)).Error("Can not get named pipe server process id, error code: " + Marshal.GetLastWin32Error());
+                Logger.GetInstance(typeof(NamedPipeIpcChannel)).Error($"Can not get named pipe server process id, error code: {Marshal.GetLastWin32Error()}");
                 return false;
             }
             string processPath = null;
@@ -396,7 +439,7 @@ namespace Htc.Vita.Core.Runtime
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(NamedPipeIpcChannel)).Error("Can not get named pipe server process path: " + e.Message);
+                Logger.GetInstance(typeof(NamedPipeIpcChannel)).Error($"Can not get named pipe server process path: {e.Message}");
             }
             if (processPath == null)
             {
@@ -415,7 +458,7 @@ namespace Htc.Vita.Core.Runtime
             var processId = 0u;
             if (!Windows.GetNamedPipeClientProcessId(pipeStream.SafePipeHandle, ref processId))
             {
-                Logger.GetInstance(typeof(NamedPipeIpcChannel)).Error("Can not get named pipe client process id, error code: " + Marshal.GetLastWin32Error());
+                Logger.GetInstance(typeof(NamedPipeIpcChannel)).Error($"Can not get named pipe client process id, error code: {Marshal.GetLastWin32Error()}");
                 return null;
             }
 

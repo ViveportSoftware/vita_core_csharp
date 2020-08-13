@@ -203,17 +203,72 @@ namespace Htc.Vita.Core.Json
         }
 
         /// <summary>
+        /// Appends the specific value if it is not null and not white space.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>JsonArray.</returns>
+        public JsonArray AppendIfNotNullAndNotWhiteSpace(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return this;
+            }
+            return Append(value);
+        }
+
+        /// <summary>
+        /// Appends the specific value if it is not null and not empty.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>JsonArray.</returns>
+        public JsonArray AppendIfNotNullAndNotEmpty(JsonArray value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            if (value.Size() <= 0)
+            {
+                return this;
+            }
+            return Append(value);
+        }
+
+        /// <summary>
+        /// Appends the specific value if it is not null and not empty.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>JsonArray.</returns>
+        public JsonArray AppendIfNotNullAndNotEmpty(JsonObject value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            if (value.AllKeys().Count <= 0)
+            {
+                return this;
+            }
+            return Append(value);
+        }
+
+        /// <summary>
         /// Inserts the specific value by index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        public JsonArray Insert(int index, bool value)
+        public JsonArray Insert(
+                int index,
+                bool value)
         {
             var result = this;
             try
             {
-                result = OnInsertBool(index, value);
+                result = OnInsertBool(
+                        index,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -228,12 +283,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        public JsonArray Insert(int index, double value)
+        public JsonArray Insert(
+                int index,
+                double value)
         {
             var result = this;
             try
             {
-                result = OnInsertDouble(index, value);
+                result = OnInsertDouble(
+                        index,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -248,12 +308,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        public JsonArray Insert(int index, float value)
+        public JsonArray Insert(
+                int index,
+                float value)
         {
             var result = this;
             try
             {
-                result = OnInsertFloat(index, value);
+                result = OnInsertFloat(
+                        index,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -268,12 +333,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        public JsonArray Insert(int index, int value)
+        public JsonArray Insert(
+                int index,
+                int value)
         {
             var result = this;
             try
             {
-                result = OnInsertInt(index, value);
+                result = OnInsertInt(
+                        index,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -288,12 +358,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        public JsonArray Insert(int index, long value)
+        public JsonArray Insert(
+                int index,
+                long value)
         {
             var result = this;
             try
             {
-                result = OnInsertLong(index, value);
+                result = OnInsertLong(
+                        index,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -308,12 +383,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        public JsonArray Insert(int index, string value)
+        public JsonArray Insert(
+                int index,
+                string value)
         {
             var result = this;
             try
             {
-                result = OnInsertString(index, value);
+                result = OnInsertString(
+                        index,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -328,12 +408,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        public JsonArray Insert(int index, JsonArray value)
+        public JsonArray Insert(
+                int index,
+                JsonArray value)
         {
             var result = this;
             try
             {
-                result = OnInsertJsonArray(index, value);
+                result = OnInsertJsonArray(
+                        index,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -348,12 +433,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        public JsonArray Insert(int index, JsonObject value)
+        public JsonArray Insert(
+                int index,
+                JsonObject value)
         {
             var result = this;
             try
             {
-                result = OnInsertJsonObject(index, value);
+                result = OnInsertJsonObject(
+                        index,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -368,13 +458,18 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        public JsonArray InsertIfNotNull(int index, string value)
+        public JsonArray InsertIfNotNull(
+                int index,
+                string value)
         {
             if (value == null)
             {
                 return this;
             }
-            return Insert(index, value);
+            return Insert(
+                    index,
+                    value
+            );
         }
 
         /// <summary>
@@ -383,13 +478,18 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        public JsonArray InsertIfNotNull(int index, JsonArray value)
+        public JsonArray InsertIfNotNull(
+                int index,
+                JsonArray value)
         {
             if (value == null)
             {
                 return this;
             }
-            return Insert(index, value);
+            return Insert(
+                    index,
+                    value
+            );
         }
 
         /// <summary>
@@ -398,13 +498,86 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        public JsonArray InsertIfNotNull(int index, JsonObject value)
+        public JsonArray InsertIfNotNull(
+                int index,
+                JsonObject value)
         {
             if (value == null)
             {
                 return this;
             }
-            return Insert(index, value);
+            return Insert(
+                    index,
+                    value
+            );
+        }
+
+        /// <summary>
+        /// Inserts the specific value if it is not null and not white space.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>JsonArray.</returns>
+        public JsonArray InsertIfNotNullAndNotWhiteSpace(
+                int index,
+                string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return this;
+            }
+            return Insert(
+                    index,
+                    value
+            );
+        }
+
+        /// <summary>
+        /// Inserts the specific value if it is not null and not empty.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>JsonArray.</returns>
+        public JsonArray InsertIfNotNullAndNotEmpty(
+                int index,
+                JsonArray value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            if (value.Size() <= 0)
+            {
+                return this;
+            }
+            return Insert(
+                    index,
+                    value
+            );
+        }
+
+        /// <summary>
+        /// Inserts the specific value if it is not null and not empty.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>JsonArray.</returns>
+        public JsonArray InsertIfNotNullAndNotEmpty(
+                int index,
+                JsonObject value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            if (value.AllKeys().Count <= 0)
+            {
+                return this;
+            }
+            return Insert(
+                    index,
+                    value
+            );
         }
 
         /// <summary>
@@ -414,7 +587,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.Boolean.</returns>
         public bool ParseBool(int index)
         {
-            return ParseBool(index, false);
+            return ParseBool(
+                    index,
+                    false
+            );
         }
 
         /// <summary>
@@ -423,12 +599,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Boolean.</returns>
-        public bool ParseBool(int index, bool defaultValue)
+        public bool ParseBool(
+                int index,
+                bool defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseBool(index, defaultValue);
+                result = OnParseBool(
+                        index,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -444,7 +625,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.Double.</returns>
         public double ParseDouble(int index)
         {
-            return ParseDouble(index, 0.0D);
+            return ParseDouble(
+                    index,
+                    0.0D
+            );
         }
 
         /// <summary>
@@ -453,12 +637,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Double.</returns>
-        public double ParseDouble(int index, double defaultValue)
+        public double ParseDouble(
+                int index,
+                double defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseDouble(index, defaultValue);
+                result = OnParseDouble(
+                        index,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -474,7 +663,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.Single.</returns>
         public float ParseFloat(int index)
         {
-            return ParseFloat(index, 0.0F);
+            return ParseFloat(
+                    index,
+                    0.0F
+            );
         }
 
         /// <summary>
@@ -483,12 +675,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Single.</returns>
-        public float ParseFloat(int index, float defaultValue)
+        public float ParseFloat(
+                int index,
+                float defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseFloat(index, defaultValue);
+                result = OnParseFloat(
+                        index,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -504,7 +701,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.Int32.</returns>
         public int ParseInt(int index)
         {
-            return ParseInt(index, 0);
+            return ParseInt(
+                    index,
+                    0
+            );
         }
 
         /// <summary>
@@ -513,12 +713,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int32.</returns>
-        public int ParseInt(int index, int defaultValue)
+        public int ParseInt(
+                int index,
+                int defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseInt(index, defaultValue);
+                result = OnParseInt(
+                        index,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -534,7 +739,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.Int64.</returns>
         public long ParseLong(int index)
         {
-            return ParseLong(index, 0L);
+            return ParseLong(
+                    index,
+                    0L
+            );
         }
 
         /// <summary>
@@ -543,12 +751,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int64.</returns>
-        public long ParseLong(int index, long defaultValue)
+        public long ParseLong(
+                int index,
+                long defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseLong(index, defaultValue);
+                result = OnParseLong(
+                        index,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -564,7 +777,10 @@ namespace Htc.Vita.Core.Json
         /// <returns>System.String.</returns>
         public string ParseString(int index)
         {
-            return ParseString(index, null);
+            return ParseString(
+                    index,
+                    null
+            );
         }
 
         /// <summary>
@@ -573,12 +789,17 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.String.</returns>
-        public string ParseString(int index, string defaultValue)
+        public string ParseString(
+                int index,
+                string defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseString(index, defaultValue);
+                result = OnParseString(
+                        index,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -746,98 +967,140 @@ namespace Htc.Vita.Core.Json
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        protected abstract JsonArray OnInsertBool(int index, bool value);
+        protected abstract JsonArray OnInsertBool(
+                int index,
+                bool value
+        );
         /// <summary>
         /// Called when inserting the specific double value by index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        protected abstract JsonArray OnInsertDouble(int index, double value);
+        protected abstract JsonArray OnInsertDouble(
+                int index,
+                double value
+        );
         /// <summary>
         /// Called when inserting the specific float value by index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        protected abstract JsonArray OnInsertFloat(int index, float value);
+        protected abstract JsonArray OnInsertFloat(
+                int index,
+                float value
+        );
         /// <summary>
         /// Called when inserting the specific int value by index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        protected abstract JsonArray OnInsertInt(int index, int value);
+        protected abstract JsonArray OnInsertInt(
+                int index,
+                int value
+        );
         /// <summary>
         /// Called when inserting the specific long value by index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        protected abstract JsonArray OnInsertLong(int index, long value);
+        protected abstract JsonArray OnInsertLong(
+                int index,
+                long value
+        );
         /// <summary>
         /// Called when inserting the specific string value by index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        protected abstract JsonArray OnInsertString(int index, string value);
+        protected abstract JsonArray OnInsertString(
+                int index,
+                string value
+        );
         /// <summary>
         /// Called when inserting the specific JsonArray value by index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        protected abstract JsonArray OnInsertJsonArray(int index, JsonArray value);
+        protected abstract JsonArray OnInsertJsonArray(
+                int index,
+                JsonArray value
+        );
         /// <summary>
         /// Called when inserting the specific JsonObject value by index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         /// <returns>JsonArray.</returns>
-        protected abstract JsonArray OnInsertJsonObject(int index, JsonObject value);
+        protected abstract JsonArray OnInsertJsonObject(
+                int index,
+                JsonObject value
+        );
         /// <summary>
         /// Called when parsing the bool value.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">if set to <c>true</c> [default value].</param>
         /// <returns>System.Boolean.</returns>
-        protected abstract bool OnParseBool(int index, bool defaultValue);
+        protected abstract bool OnParseBool(
+                int index,
+                bool defaultValue
+        );
         /// <summary>
         /// Called when parsing the double value.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Double.</returns>
-        protected abstract double OnParseDouble(int index, double defaultValue);
+        protected abstract double OnParseDouble(
+                int index,
+                double defaultValue
+        );
         /// <summary>
         /// Called when parsing the float value.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Single.</returns>
-        protected abstract float OnParseFloat(int index, float defaultValue);
+        protected abstract float OnParseFloat(
+                int index,
+                float defaultValue
+        );
         /// <summary>
         /// Called when parsing the int value.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int32.</returns>
-        protected abstract int OnParseInt(int index, int defaultValue);
+        protected abstract int OnParseInt(
+                int index,
+                int defaultValue
+        );
         /// <summary>
         /// Called when parsing the long value.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int64.</returns>
-        protected abstract long OnParseLong(int index, long defaultValue);
+        protected abstract long OnParseLong(
+                int index,
+                long defaultValue
+        );
         /// <summary>
         /// Called when parsing the string value.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.String.</returns>
-        protected abstract string OnParseString(int index, string defaultValue);
+        protected abstract string OnParseString(
+                int index,
+                string defaultValue
+        );
         /// <summary>
         /// Called when parsing the JsonArray value.
         /// </summary>

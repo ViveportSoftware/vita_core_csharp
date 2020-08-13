@@ -5,16 +5,11 @@
     <RootNamespace>Htc.Vita.Core.TestService</RootNamespace>
     <AssemblyName>Htc.Vita.Core.TestService</AssemblyName>
     <TargetFrameworks>net45</TargetFrameworks>
+    <DebugType>portable</DebugType>
     <IntermediateOutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\obj\AnyCPU</IntermediateOutputPath>
     <OutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\bin\AnyCPU</OutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>6</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\generated\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
