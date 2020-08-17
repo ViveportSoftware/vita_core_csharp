@@ -77,7 +77,7 @@ namespace Htc.Vita.Core.Crypto
                 {
                     return;
                 }
-                Logger.GetInstance(typeof(Aes)).Info("set cipher mode to " + value);
+                Logger.GetInstance(typeof(Aes)).Info($"set cipher mode to {value}");
                 _cipherMode = value;
             }
         }
@@ -95,7 +95,7 @@ namespace Htc.Vita.Core.Crypto
                 {
                     return;
                 }
-                Logger.GetInstance(typeof(Aes)).Info("set padding mode to " + value);
+                Logger.GetInstance(typeof(Aes)).Info($"set padding mode to {value}");
                 _paddingMode = value;
             }
         }
@@ -149,7 +149,9 @@ namespace Htc.Vita.Core.Crypto
                     }
                 }
 
-                using (var deriveBytes = new Rfc2898DeriveBytes(password, salt))
+                using (var deriveBytes = new Rfc2898DeriveBytes(
+                        password,
+                        salt))
                 {
                     var key = deriveBytes.GetBytes(KeySize256BitInByte);
                     var iv = deriveBytes.GetBytes(IvSize128BitInByte);
@@ -162,7 +164,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Aes)).Fatal("Decrypt input with password error: " + e);
+                Logger.GetInstance(typeof(Aes)).Fatal($"Decrypt input with password error: {e}");
             }
             return result;
         }
@@ -174,34 +176,41 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="key">The key.</param>
         /// <param name="iv">The iv.</param>
         /// <returns>System.Byte[].</returns>
-        public byte[] Decrypt(byte[] input, byte[] key, byte[] iv)
+        public byte[] Decrypt(
+                byte[] input,
+                byte[] key,
+                byte[] iv)
         {
             if (input == null)
             {
-                Logger.GetInstance(typeof(Aes)).Warn("Can not find input to encrypt");
+                Logger.GetInstance(typeof(Aes)).Warn("Can not find input to decrypt");
                 return null;
             }
 
             if (key == null)
             {
-                Logger.GetInstance(typeof(Aes)).Warn("Can not find key to encrypt");
+                Logger.GetInstance(typeof(Aes)).Warn("Can not find key to decrypt");
                 return null;
             }
 
             if (iv == null)
             {
-                Logger.GetInstance(typeof(Aes)).Warn("Can not find iv to encrypt");
+                Logger.GetInstance(typeof(Aes)).Warn("Can not find iv to decrypt");
                 return null;
             }
 
             byte[] result = null;
             try
             {
-                result = OnDecrypt(input, key, iv);
+                result = OnDecrypt(
+                        input,
+                        key,
+                        iv
+                );
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Aes)).Fatal("Encrypt input with key and iv error: " + e);
+                Logger.GetInstance(typeof(Aes)).Fatal($"Decrypt input with key and iv error: {e}");
             }
             return result;
         }
@@ -212,7 +221,9 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="input">The input.</param>
         /// <param name="password">The password.</param>
         /// <returns>System.Byte[].</returns>
-        public byte[] Encrypt(byte[] input, string password)
+        public byte[] Encrypt(
+                byte[] input,
+                string password)
         {
             if (input == null)
             {
@@ -227,7 +238,9 @@ namespace Htc.Vita.Core.Crypto
             }
 
             byte[] result = null;
-            using (var deriveBytes = new Rfc2898DeriveBytes(password, SaltSize128BitInByte))
+            using (var deriveBytes = new Rfc2898DeriveBytes(
+                    password,
+                    SaltSize128BitInByte))
             {
                 var salt = deriveBytes.Salt;
                 var key = deriveBytes.GetBytes(KeySize256BitInByte);
@@ -253,7 +266,7 @@ namespace Htc.Vita.Core.Crypto
                 }
                 catch (Exception e)
                 {
-                    Logger.GetInstance(typeof(Aes)).Fatal("Encrypt input with password error: " + e);
+                    Logger.GetInstance(typeof(Aes)).Fatal($"Encrypt input with password error: {e}");
                 }
             }
             return result;
@@ -266,7 +279,10 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="key">The key.</param>
         /// <param name="iv">The iv.</param>
         /// <returns>System.Byte[].</returns>
-        public byte[] Encrypt(byte[] input, byte[] key, byte[] iv)
+        public byte[] Encrypt(
+                byte[] input,
+                byte[] key,
+                byte[] iv)
         {
             if (input == null)
             {
@@ -289,11 +305,15 @@ namespace Htc.Vita.Core.Crypto
             byte[] result = null;
             try
             {
-                result = OnEncrypt(input, key, iv);
+                result = OnEncrypt(
+                        input,
+                        key,
+                        iv
+                );
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Aes)).Fatal("Encrypt input with key and iv error: " + e);
+                Logger.GetInstance(typeof(Aes)).Fatal($"Encrypt input with key and iv error: {e}");
             }
             return result;
         }
@@ -305,7 +325,11 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="key">The key.</param>
         /// <param name="iv">The iv.</param>
         /// <returns>System.Byte[].</returns>
-        protected abstract byte[] OnDecrypt(byte[] input, byte[] key, byte[] iv);
+        protected abstract byte[] OnDecrypt(
+                byte[] input,
+                byte[] key,
+                byte[] iv
+        );
         /// <summary>
         /// Called when encrypting.
         /// </summary>
@@ -313,7 +337,11 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="key">The key.</param>
         /// <param name="iv">The iv.</param>
         /// <returns>System.Byte[].</returns>
-        protected abstract byte[] OnEncrypt(byte[] input, byte[] key, byte[] iv);
+        protected abstract byte[] OnEncrypt(
+                byte[] input,
+                byte[] key,
+                byte[] iv
+        );
 
         /// <summary>
         /// Enum CipherMode
