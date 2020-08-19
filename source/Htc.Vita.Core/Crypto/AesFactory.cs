@@ -52,7 +52,7 @@ namespace Htc.Vita.Core.Crypto
                 throw new ArgumentException($"Invalid arguments to get {nameof(AesFactory)} instance");
             }
 
-            var key = type.FullName + "_";
+            var key = $"{type.FullName}_";
             AesFactory instance = null;
             if (Instances.ContainsKey(key))
             {
@@ -76,7 +76,10 @@ namespace Htc.Vita.Core.Crypto
             {
                 if (!Instances.ContainsKey(key))
                 {
-                    Instances.Add(key, instance);
+                    Instances.Add(
+                            key,
+                            instance
+                    );
                 }
             }
             return instance;
@@ -88,7 +91,10 @@ namespace Htc.Vita.Core.Crypto
         /// <returns>Aes.</returns>
         public Aes Get()
         {
-            return Get(Aes.CipherMode.Cbc, Aes.PaddingMode.Pkcs7);
+            return Get(
+                    Aes.CipherMode.Cbc,
+                    Aes.PaddingMode.Pkcs7
+            );
         }
 
         /// <summary>
@@ -97,12 +103,17 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="cipherMode">The cipher mode.</param>
         /// <param name="paddingMode">The padding mode.</param>
         /// <returns>Aes.</returns>
-        public Aes Get(Aes.CipherMode cipherMode, Aes.PaddingMode paddingMode)
+        public Aes Get(
+                Aes.CipherMode cipherMode,
+                Aes.PaddingMode paddingMode)
         {
             Aes result = null;
             try
             {
-                result = OnGet(cipherMode, paddingMode);
+                result = OnGet(
+                        cipherMode,
+                        paddingMode
+                );
             }
             catch (Exception e)
             {
@@ -117,6 +128,9 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="cipherMode">The cipher mode.</param>
         /// <param name="paddingMode">The padding mode.</param>
         /// <returns>Aes.</returns>
-        protected abstract Aes OnGet(Aes.CipherMode cipherMode, Aes.PaddingMode paddingMode);
+        protected abstract Aes OnGet(
+                Aes.CipherMode cipherMode,
+                Aes.PaddingMode paddingMode
+        );
     }
 }

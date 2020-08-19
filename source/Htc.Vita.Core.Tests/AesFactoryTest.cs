@@ -1,5 +1,6 @@
 using System.Text;
 using Htc.Vita.Core.Crypto;
+using Htc.Vita.Core.Util;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -56,7 +57,7 @@ namespace Htc.Vita.Core.Tests
             var inputInBytes = Encoding.UTF8.GetBytes(plain);
             var outputInBytes = aes.Encrypt(inputInBytes, password);
             Assert.NotNull(outputInBytes);
-            var outputInHex = Util.Convert.ToHexString(outputInBytes);
+            var outputInHex = Convert.ToHexString(outputInBytes);
             _output.WriteLine("outputInHex: " + outputInHex);
         }
 
@@ -77,6 +78,23 @@ namespace Htc.Vita.Core.Tests
             var decryptedInBytes = aesDecryptor.Decrypt(encryptedInBytes, password);
             var decrypted = Encoding.UTF8.GetString(decryptedInBytes);
             Assert.Equal(plain, decrypted);
+        }
+
+        [Fact]
+        public static void Aes_2_Decrypt_WithDataFromJava()
+        {
+            var aesFactory = AesFactory.GetInstance();
+            Assert.NotNull(aesFactory);
+            var aesDecryptor = aesFactory.Get();
+            Assert.NotNull(aesDecryptor);
+            const string encodedString = "ef02a816e71965c02f8a182cbf0f6c97427e9a23a3f4170db856b5e883ed502c";
+            var encodedData = Convert.FromHexString(encodedString);
+            Assert.NotNull(encodedData);
+            const string password = "p@ssword";
+            var decodedData = aesDecryptor.Decrypt(encodedData, password);
+            Assert.NotNull(decodedData);
+            var decodedString = Encoding.UTF8.GetString(decodedData);
+            Assert.Equal("test data", decodedString);
         }
     }
 }

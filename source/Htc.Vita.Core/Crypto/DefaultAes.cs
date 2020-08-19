@@ -33,7 +33,10 @@ namespace Htc.Vita.Core.Crypto
         }
 
         /// <inheritdoc />
-        protected override byte[] OnDecrypt(byte[] input, byte[] key, byte[] iv)
+        protected override byte[] OnDecrypt(
+                byte[] input,
+                byte[] key,
+                byte[] iv)
         {
             if (iv == null || iv.Length != IvSize128BitInByte)
             {
@@ -58,11 +61,16 @@ namespace Htc.Vita.Core.Crypto
                 aes.Mode = ConvertToImpl(Cipher);
                 aes.Padding = ConvertToImpl(Padding);
 
-                using (var decryptor = aes.CreateDecryptor(key, iv))
+                using (var decryptor = aes.CreateDecryptor(
+                        key,
+                        iv))
                 {
                     using (var memoryStream = new MemoryStream())
                     {
-                        using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Write))
+                        using (var cryptoStream = new CryptoStream(
+                                memoryStream,
+                                decryptor,
+                                CryptoStreamMode.Write))
                         {
                             cryptoStream.Write(
                                     input,
@@ -77,7 +85,10 @@ namespace Htc.Vita.Core.Crypto
         }
 
         /// <inheritdoc />
-        protected override byte[] OnEncrypt(byte[] input, byte[] key, byte[] iv)
+        protected override byte[] OnEncrypt(
+                byte[] input,
+                byte[] key,
+                byte[] iv)
         {
             if (iv == null || iv.Length != IvSize128BitInByte)
             {
@@ -102,11 +113,16 @@ namespace Htc.Vita.Core.Crypto
                 aes.Mode = ConvertToImpl(Cipher);
                 aes.Padding = ConvertToImpl(Padding);
 
-                using (var encryptor = aes.CreateEncryptor(key, iv))
+                using (var encryptor = aes.CreateEncryptor(
+                        key,
+                        iv))
                 {
                     using (var memoryStream = new MemoryStream())
                     {
-                        using (var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
+                        using (var cryptoStream = new CryptoStream(
+                                memoryStream,
+                                encryptor,
+                                CryptoStreamMode.Write))
                         {
                             cryptoStream.Write(
                                     input,

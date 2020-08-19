@@ -257,32 +257,32 @@ namespace Htc.Vita.Core.Runtime
                         )
                 );
 
-                try
+                while (!_shouldStopWorkers)
                 {
-#if NET45
-                    using (var serverStream = new NamedPipeServerStream(
-                            OnOverrideTranslateName(_pipeName),
-                            PipeDirection.InOut,
-                            PipeThreadNumber,
-                            PipeTransmissionMode.Message,
-                            PipeOptions.None,
-                            /* default */ 0,
-                            /* default */ 0,
-                            pipeSecurity
-                    ))
-#else
-                    using (var serverStream = new NamedPipeServerStream(
-                            OnOverrideTranslateName(_pipeName),
-                            PipeDirection.InOut,
-                            PipeThreadNumber,
-                            PipeTransmissionMode.Message,
-                            PipeOptions.None
-                    ))
-#endif
+                    try
                     {
-                        while (!_shouldStopWorkers)
+#if NET45
+                        using (var serverStream = new NamedPipeServerStream(
+                                OnOverrideTranslateName(_pipeName),
+                                PipeDirection.InOut,
+                                PipeThreadNumber,
+                                PipeTransmissionMode.Message,
+                                PipeOptions.None,
+                                /* default */ 0,
+                                /* default */ 0,
+                                pipeSecurity
+                        ))
+#else
+                        using (var serverStream = new NamedPipeServerStream(
+                                OnOverrideTranslateName(_pipeName),
+                                PipeDirection.InOut,
+                                PipeThreadNumber,
+                                PipeTransmissionMode.Message,
+                                PipeOptions.None
+                        ))
+#endif
                         {
-                            try
+                            while (!_shouldStopWorkers)
                             {
                                 if (serverStream.IsConnected)
                                 {
@@ -321,20 +321,16 @@ namespace Htc.Vita.Core.Runtime
                                     serverStream.Write(inputBytes, 0, inputBytes.Length);
                                 }
                             }
-                            catch (IOException e)
+                            if (serverStream.IsConnected)
                             {
-                                Logger.GetInstance(typeof(Provider)).Error($"IOException happened on thread[{threadId}]: {e.Message}");
+                                serverStream.Disconnect();
                             }
                         }
-                        if (serverStream.IsConnected)
-                        {
-                            serverStream.Disconnect();
-                        }
                     }
-                }
-                catch (Exception e)
-                {
-                    Logger.GetInstance(typeof(Provider)).Error($"Error happened on thread[{threadId}]: {e.Message}");
+                    catch (Exception e)
+                    {
+                        Logger.GetInstance(typeof(Provider)).Error($"Error happened on thread[{threadId}]: {e.Message}");
+                    }
                 }
             }
 
