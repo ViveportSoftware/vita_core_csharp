@@ -257,77 +257,80 @@ namespace Htc.Vita.Core.Runtime
                         )
                 );
 
-                try
+                while (!_shouldStopWorkers)
                 {
-#if NET45
-                    using (var serverStream = new NamedPipeServerStream(
-                            OnOverrideTranslateName(_pipeName),
-                            PipeDirection.InOut,
-                            PipeThreadNumber,
-                            PipeTransmissionMode.Message,
-                            PipeOptions.None,
-                            /* default */ 0,
-                            /* default */ 0,
-                            pipeSecurity
-                    ))
-#else
-                    using (var serverStream = new NamedPipeServerStream(
-                            OnOverrideTranslateName(_pipeName),
-                            PipeDirection.InOut,
-                            PipeThreadNumber,
-                            PipeTransmissionMode.Message,
-                            PipeOptions.None
-                    ))
-#endif
+                    try
                     {
-                        while (!_shouldStopWorkers)
+#if NET45
+                        using (var serverStream = new NamedPipeServerStream(
+                                OnOverrideTranslateName(_pipeName),
+                                PipeDirection.InOut,
+                                PipeThreadNumber,
+                                PipeTransmissionMode.Message,
+                                PipeOptions.None,
+                                /* default */ 0,
+                                /* default */ 0,
+                                pipeSecurity
+                        ))
+#else
+                        using (var serverStream = new NamedPipeServerStream(
+                                OnOverrideTranslateName(_pipeName),
+                                PipeDirection.InOut,
+                                PipeThreadNumber,
+                                PipeTransmissionMode.Message,
+                                PipeOptions.None
+                        ))
+#endif
                         {
+                            while (!_shouldStopWorkers)
+                            {
+                                if (serverStream.IsConnected)
+                                {
+                                    serverStream.Disconnect();
+                                }
+                                serverStream.WaitForConnection();
+
+                                var outputBuilder = new StringBuilder();
+                                var outputBuffer = new byte[PipeBufferSize];
+                                do
+                                {
+                                    serverStream.Read(outputBuffer, 0, outputBuffer.Length);
+                                    var outputChunk = Encoding.UTF8.GetString(outputBuffer);
+                                    outputBuilder.Append(outputChunk);
+                                    outputBuffer = new byte[outputBuffer.Length];
+                                }
+                                while (!serverStream.IsMessageComplete);
+                                var channel = new IpcChannel
+                                {
+                                    Output = FilterOutInvalidChars(outputBuilder.ToString())
+                                };
+                                if (!string.IsNullOrEmpty(channel.Output))
+                                {
+                                    if (OnMessageHandled == null)
+                                    {
+                                        Logger.GetInstance(typeof(Provider)).Error("Can not find OnMessageHandled delegates to handle messages");
+                                    }
+                                    else
+                                    {
+                                        OnMessageHandled(channel, GetClientSignature(serverStream));
+                                    }
+                                }
+                                if (!string.IsNullOrEmpty(channel.Input))
+                                {
+                                    var inputBytes = Encoding.UTF8.GetBytes(channel.Input);
+                                    serverStream.Write(inputBytes, 0, inputBytes.Length);
+                                }
+                            }
                             if (serverStream.IsConnected)
                             {
                                 serverStream.Disconnect();
                             }
-                            serverStream.WaitForConnection();
-
-                            var outputBuilder = new StringBuilder();
-                            var outputBuffer = new byte[PipeBufferSize];
-                            do
-                            {
-                                serverStream.Read(outputBuffer, 0, outputBuffer.Length);
-                                var outputChunk = Encoding.UTF8.GetString(outputBuffer);
-                                outputBuilder.Append(outputChunk);
-                                outputBuffer = new byte[outputBuffer.Length];
-                            }
-                            while (!serverStream.IsMessageComplete);
-                            var channel = new IpcChannel
-                            {
-                                    Output = FilterOutInvalidChars(outputBuilder.ToString())
-                            };
-                            if (!string.IsNullOrEmpty(channel.Output))
-                            {
-                                if (OnMessageHandled == null)
-                                {
-                                    Logger.GetInstance(typeof(Provider)).Error("Can not find OnMessageHandled delegates to handle messages");
-                                }
-                                else
-                                {
-                                    OnMessageHandled(channel, GetClientSignature(serverStream));
-                                }
-                            }
-                            if (!string.IsNullOrEmpty(channel.Input))
-                            {
-                                var inputBytes = Encoding.UTF8.GetBytes(channel.Input);
-                                serverStream.Write(inputBytes, 0, inputBytes.Length);
-                            }
-                        }
-                        if (serverStream.IsConnected)
-                        {
-                            serverStream.Disconnect();
                         }
                     }
-                }
-                catch (Exception e)
-                {
-                    Logger.GetInstance(typeof(Provider)).Error($"Error happened on thread[{threadId}]: {e.Message}");
+                    catch (Exception e)
+                    {
+                        Logger.GetInstance(typeof(Provider)).Error($"Error happened on thread[{threadId}]: {e.Message}");
+                    }
                 }
             }
 
