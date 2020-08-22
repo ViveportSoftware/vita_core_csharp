@@ -1,8 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using Htc.Vita.Core.Log;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Crypto
 {
@@ -11,23 +11,22 @@ namespace Htc.Vita.Core.Crypto
     /// </summary>
     public abstract partial class Sha1
     {
-        private static Dictionary<string, Sha1> Instances { get; } = new Dictionary<string, Sha1>();
-
-        private static readonly object InstancesLock = new object();
-
-        private static Type _defaultType = typeof(DefaultSha1);
-
         private const int Base64Length = 28; // "2jmj7l5rSw0yVb/vlWAYkK/YBwk="
         private const int HexLength = 40;    // "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+
+        static Sha1()
+        {
+            TypeRegistry.RegisterDefault<Sha1, DefaultSha1>();
+        }
 
         /// <summary>
         /// Registers the instance type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public static void Register<T>() where T : Sha1
+        public static void Register<T>()
+                where T : Sha1, new()
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(Sha1)).Info($"Registered default {nameof(Sha1)} type to {_defaultType}");
+            TypeRegistry.Register<Sha1, T>();
         }
 
         /// <summary>
@@ -36,55 +35,18 @@ namespace Htc.Vita.Core.Crypto
         /// <returns>Sha1.</returns>
         public static Sha1 GetInstance()
         {
-            Sha1 instance;
-            try
-            {
-                instance = DoGetInstance(_defaultType);
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(Sha1)).Fatal($"Instance initialization error: {e}");
-                Logger.GetInstance(typeof(Sha1)).Info($"Initializing {typeof(DefaultSha1).FullName}...");
-                instance = new DefaultSha1();
-            }
-            return instance;
+            return TypeRegistry.GetInstance<Sha1>();
         }
 
-        private static Sha1 DoGetInstance(Type type)
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>Sha1.</returns>
+        public static Sha1 GetInstance<T>()
+                where T : Sha1, new()
         {
-            if (type == null)
-            {
-                throw new ArgumentException($"Invalid arguments to get {nameof(Sha1)} instance");
-            }
-
-            var key = $"{type.FullName}_";
-            Sha1 instance = null;
-            if (Instances.ContainsKey(key))
-            {
-                instance = Instances[key];
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(Sha1)).Info($"Initializing {key}...");
-                var constructor = type.GetConstructor(new Type[] { });
-                if (constructor != null)
-                {
-                    instance = (Sha1)constructor.Invoke(new object[] { });
-                }
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(Sha1)).Info($"Initializing {typeof(DefaultSha1).FullName}...");
-                instance = new DefaultSha1();
-            }
-            lock (InstancesLock)
-            {
-                if (!Instances.ContainsKey(key))
-                {
-                    Instances.Add(key, instance);
-                }
-            }
-            return instance;
+            return TypeRegistry.GetInstance<Sha1, T>();
         }
 
         /// <summary>
@@ -94,7 +56,10 @@ namespace Htc.Vita.Core.Crypto
         /// <returns>System.String.</returns>
         public string GenerateInBase64(FileInfo file)
         {
-            return GenerateInBase64(file, CancellationToken.None);
+            return GenerateInBase64(
+                    file,
+                    CancellationToken.None
+            );
         }
 
         /// <summary>
@@ -103,7 +68,9 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>System.String.</returns>
-        public string GenerateInBase64(FileInfo file, CancellationToken cancellationToken)
+        public string GenerateInBase64(
+                FileInfo file,
+                CancellationToken cancellationToken)
         {
             if (file == null || !file.Exists)
             {
@@ -113,7 +80,10 @@ namespace Htc.Vita.Core.Crypto
             var result = string.Empty;
             try
             {
-                result = OnGenerateInBase64(file, cancellationToken);
+                result = OnGenerateInBase64(
+                        file,
+                        cancellationToken
+                );
             }
             catch (OperationCanceledException)
             {
@@ -157,7 +127,10 @@ namespace Htc.Vita.Core.Crypto
         /// <returns>System.String.</returns>
         public string GenerateInHex(FileInfo file)
         {
-            return GenerateInHex(file, CancellationToken.None);
+            return GenerateInHex(
+                    file,
+                    CancellationToken.None
+            );
         }
 
         /// <summary>
@@ -166,7 +139,9 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>System.String.</returns>
-        public string GenerateInHex(FileInfo file, CancellationToken cancellationToken)
+        public string GenerateInHex(
+                FileInfo file,
+                CancellationToken cancellationToken)
         {
             if (file == null || !file.Exists)
             {
@@ -176,7 +151,10 @@ namespace Htc.Vita.Core.Crypto
             var result = string.Empty;
             try
             {
-                result = OnGenerateInHex(file, cancellationToken);
+                result = OnGenerateInHex(
+                        file,
+                        cancellationToken
+                );
             }
             catch (OperationCanceledException)
             {
@@ -219,9 +197,15 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="checksum">The checksum.</param>
         /// <returns><c>true</c> if valid, <c>false</c> otherwise.</returns>
-        public bool ValidateInAll(FileInfo file, string checksum)
+        public bool ValidateInAll(
+                FileInfo file,
+                string checksum)
         {
-            return ValidateInAll(file, checksum, CancellationToken.None);
+            return ValidateInAll(
+                    file,
+                    checksum,
+                    CancellationToken.None
+            );
         }
 
         /// <summary>
@@ -231,7 +215,10 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="checksum">The checksum.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns><c>true</c> if valid, <c>false</c> otherwise.</returns>
-        public bool ValidateInAll(FileInfo file, string checksum, CancellationToken cancellationToken)
+        public bool ValidateInAll(
+                FileInfo file,
+                string checksum,
+                CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(checksum))
             {
@@ -240,11 +227,19 @@ namespace Htc.Vita.Core.Crypto
 
             if (checksum.Length == Base64Length)
             {
-                return ValidateInBase64(file, checksum, cancellationToken);
+                return ValidateInBase64(
+                        file,
+                        checksum,
+                        cancellationToken
+                );
             }
             if (checksum.Length == HexLength)
             {
-                return ValidateInHex(file, checksum, cancellationToken);
+                return ValidateInHex(
+                        file,
+                        checksum,
+                        cancellationToken
+                );
             }
             return false;
         }
@@ -255,7 +250,9 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="content">The content.</param>
         /// <param name="checksum">The checksum.</param>
         /// <returns><c>true</c> if valid, <c>false</c> otherwise.</returns>
-        public bool ValidateInAll(string content, string checksum)
+        public bool ValidateInAll(
+                string content,
+                string checksum)
         {
             if (string.IsNullOrWhiteSpace(checksum))
             {
@@ -264,9 +261,15 @@ namespace Htc.Vita.Core.Crypto
 
             if (checksum.Length == HexLength)
             {
-                return ValidateInHex(content, checksum);
+                return ValidateInHex(
+                        content,
+                        checksum
+                );
             }
-            return ValidateInBase64(content, checksum);
+            return ValidateInBase64(
+                    content,
+                    checksum
+            );
         }
 
         /// <summary>
@@ -275,9 +278,15 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="checksum">The checksum.</param>
         /// <returns><c>true</c> if valid, <c>false</c> otherwise.</returns>
-        public bool ValidateInBase64(FileInfo file, string checksum)
+        public bool ValidateInBase64(
+                FileInfo file,
+                string checksum)
         {
-            return ValidateInBase64(file, checksum, CancellationToken.None);
+            return ValidateInBase64(
+                    file,
+                    checksum,
+                    CancellationToken.None
+            );
         }
 
         /// <summary>
@@ -287,7 +296,10 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="checksum">The checksum.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns><c>true</c> if valid, <c>false</c> otherwise.</returns>
-        public bool ValidateInBase64(FileInfo file, string checksum, CancellationToken cancellationToken)
+        public bool ValidateInBase64(
+                FileInfo file,
+                string checksum,
+                CancellationToken cancellationToken)
         {
             if (file == null || !file.Exists || string.IsNullOrWhiteSpace(checksum))
             {
@@ -297,7 +309,10 @@ namespace Htc.Vita.Core.Crypto
             var result = false;
             try
             {
-                result = checksum.Equals(OnGenerateInBase64(file, cancellationToken));
+                result = checksum.Equals(OnGenerateInBase64(
+                        file,
+                        cancellationToken
+                ));
             }
             catch (OperationCanceledException)
             {
@@ -316,7 +331,9 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="content">The content.</param>
         /// <param name="checksum">The checksum.</param>
         /// <returns><c>true</c> if valid, <c>false</c> otherwise.</returns>
-        public bool ValidateInBase64(string content, string checksum)
+        public bool ValidateInBase64(
+                string content,
+                string checksum)
         {
             if (content == null || string.IsNullOrWhiteSpace(checksum))
             {
@@ -341,9 +358,15 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="checksum">The checksum.</param>
         /// <returns><c>true</c> if valid, <c>false</c> otherwise.</returns>
-        public bool ValidateInHex(FileInfo file, string checksum)
+        public bool ValidateInHex(
+                FileInfo file,
+                string checksum)
         {
-            return ValidateInHex(file, checksum, CancellationToken.None);
+            return ValidateInHex(
+                    file,
+                    checksum,
+                    CancellationToken.None
+            );
         }
 
         /// <summary>
@@ -353,7 +376,10 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="checksum">The checksum.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns><c>true</c> if form, <c>false</c> otherwise.</returns>
-        public bool ValidateInHex(FileInfo file, string checksum, CancellationToken cancellationToken)
+        public bool ValidateInHex(
+                FileInfo file,
+                string checksum,
+                CancellationToken cancellationToken)
         {
             if (file == null || !file.Exists || string.IsNullOrWhiteSpace(checksum))
             {
@@ -363,7 +389,10 @@ namespace Htc.Vita.Core.Crypto
             var result = false;
             try
             {
-                result = checksum.ToLowerInvariant().Equals(OnGenerateInHex(file, cancellationToken));
+                result = checksum.ToLowerInvariant().Equals(OnGenerateInHex(
+                        file,
+                        cancellationToken
+                ));
             }
             catch (OperationCanceledException)
             {
@@ -382,7 +411,9 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="content">The content.</param>
         /// <param name="checksum">The checksum.</param>
         /// <returns><c>true</c> if valid, <c>false</c> otherwise.</returns>
-        public bool ValidateInHex(string content, string checksum)
+        public bool ValidateInHex(
+                string content,
+                string checksum)
         {
             if (content == null || string.IsNullOrWhiteSpace(checksum))
             {
@@ -407,7 +438,10 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>System.String.</returns>
-        protected abstract string OnGenerateInBase64(FileInfo file, CancellationToken cancellationToken);
+        protected abstract string OnGenerateInBase64(
+                FileInfo file,
+                CancellationToken cancellationToken
+        );
         /// <summary>
         /// Called when generating the checksum in Base64 form.
         /// </summary>
@@ -420,7 +454,10 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>System.String.</returns>
-        protected abstract string OnGenerateInHex(FileInfo file, CancellationToken cancellationToken);
+        protected abstract string OnGenerateInHex(
+                FileInfo file,
+                CancellationToken cancellationToken
+        );
         /// <summary>
         /// Called when generating the checksum in hexadecimal form.
         /// </summary>

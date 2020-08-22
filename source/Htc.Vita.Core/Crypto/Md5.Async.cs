@@ -103,7 +103,7 @@ namespace Htc.Vita.Core.Crypto
         }
 
         /// <summary>
-        /// Validates the in all asynchronous.
+        /// Validates the file in all checksum form asynchronously.
         /// </summary>
         /// <param name="file">The file.</param>
         /// <param name="checksum">The checksum.</param>
