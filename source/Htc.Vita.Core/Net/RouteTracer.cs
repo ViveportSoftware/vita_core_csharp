@@ -6,9 +6,22 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
 {
+    /// <summary>
+    /// Class RouteTracer.
+    /// </summary>
     public static partial class RouteTracer
     {
-        public static List<Hop> Trace(string hostNameOrIpAddress, int maxHop, int timeoutInMilli)
+        /// <summary>
+        /// Traces the specified host name or ip address.
+        /// </summary>
+        /// <param name="hostNameOrIpAddress">The host name or ip address.</param>
+        /// <param name="maxHop">The maximum hop.</param>
+        /// <param name="timeoutInMilli">The timeout in millisecond.</param>
+        /// <returns>List&lt;Hop&gt;.</returns>
+        public static List<Hop> Trace(
+                string hostNameOrIpAddress,
+                int maxHop,
+                int timeoutInMilli)
         {
             var result = new List<Hop>();
             if (string.IsNullOrWhiteSpace(hostNameOrIpAddress))
@@ -33,7 +46,10 @@ namespace Htc.Vita.Core.Net
                 currentTimeoutInMilli = 1;
             }
 
-            var pingOptions = new PingOptions(1, true);
+            var pingOptions = new PingOptions(
+                    1,
+                    true
+            );
             var pingReplyTime = new Stopwatch();
 
             try
@@ -43,7 +59,12 @@ namespace Htc.Vita.Core.Net
                     while (true)
                     {
                         pingReplyTime.Start();
-                        var reply = ping.Send(hostNameOrIpAddress, currentTimeoutInMilli, new byte[] { 0 }, pingOptions);
+                        var reply = ping.Send(
+                                hostNameOrIpAddress,
+                                currentTimeoutInMilli,
+                                new byte[] { 0 },
+                                pingOptions
+                        );
                         pingReplyTime.Stop();
 
                         result.Add(new Hop
@@ -66,7 +87,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(RouteTracer)).Error("Can not trace route: " + e.Message);
+                Logger.GetInstance(typeof(RouteTracer)).Error($"Can not trace route: {e.Message}");
             }
 
             return result;
