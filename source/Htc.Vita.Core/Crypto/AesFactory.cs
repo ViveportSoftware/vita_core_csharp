@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using Htc.Vita.Core.Log;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Crypto
 {
@@ -9,20 +9,19 @@ namespace Htc.Vita.Core.Crypto
     /// </summary>
     public abstract class AesFactory
     {
-        private static Dictionary<string, AesFactory> Instances { get; } = new Dictionary<string, AesFactory>();
-
-        private static readonly object InstancesLock = new object();
-
-        private static Type _defaultType = typeof(DefaultAesFactory);
+        static AesFactory()
+        {
+            TypeRegistry.RegisterDefault<AesFactory, DefaultAesFactory>();
+        }
 
         /// <summary>
-        /// Registers instance type.
+        /// Registers the instance type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public static void Register<T>() where T : AesFactory
+        public static void Register<T>()
+                where T : AesFactory, new()
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(AesFactory)).Info($"Registered default {nameof(AesFactory)} type to {_defaultType}");
+            TypeRegistry.Register<AesFactory, T>();
         }
 
         /// <summary>
@@ -31,58 +30,18 @@ namespace Htc.Vita.Core.Crypto
         /// <returns>AesFactory.</returns>
         public static AesFactory GetInstance()
         {
-            AesFactory instance;
-            try
-            {
-                instance = DoGetInstance(_defaultType);
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(AesFactory)).Fatal($"Instance initialization error: {e}");
-                Logger.GetInstance(typeof(AesFactory)).Info($"Initializing {typeof(DefaultAesFactory).FullName}...");
-                instance = new DefaultAesFactory();
-            }
-            return instance;
+            return TypeRegistry.GetInstance<AesFactory>();
         }
 
-        private static AesFactory DoGetInstance(Type type)
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>AesFactory.</returns>
+        public static AesFactory GetInstance<T>()
+                where T : AesFactory, new()
         {
-            if (type == null)
-            {
-                throw new ArgumentException($"Invalid arguments to get {nameof(AesFactory)} instance");
-            }
-
-            var key = $"{type.FullName}_";
-            AesFactory instance = null;
-            if (Instances.ContainsKey(key))
-            {
-                instance = Instances[key];
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(AesFactory)).Info($"Initializing {key}...");
-                var constructor = type.GetConstructor(new Type[] { });
-                if (constructor != null)
-                {
-                    instance = (AesFactory)constructor.Invoke(new object[] { });
-                }
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(AesFactory)).Info($"Initializing {typeof(DefaultAesFactory).FullName}...");
-                instance = new DefaultAesFactory();
-            }
-            lock (InstancesLock)
-            {
-                if (!Instances.ContainsKey(key))
-                {
-                    Instances.Add(
-                            key,
-                            instance
-                    );
-                }
-            }
-            return instance;
+            return TypeRegistry.GetInstance<AesFactory, T>();
         }
 
         /// <summary>
