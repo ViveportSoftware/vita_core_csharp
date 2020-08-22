@@ -12,8 +12,9 @@ namespace Htc.Vita.Core.Config
     /// <seealso cref="Config" />
     public class RegistryConfig : Config
     {
-        private readonly Dictionary<string, string> _map;
         private const string KeyPath = "SOFTWARE\\HTC\\Vita\\Config";
+
+        private readonly Dictionary<string, string> _map;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RegistryConfig"/> class.
@@ -21,11 +22,25 @@ namespace Htc.Vita.Core.Config
         public RegistryConfig()
         {
             _map = new Dictionary<string, string>();
-            _map = AppendByStringValue(_map, RegistryHive.LocalMachine, KeyPath, RegistryView.Registry32);
-            _map = AppendByStringValue(_map, RegistryHive.LocalMachine, KeyPath, RegistryView.Registry64);
+            _map = AppendByStringValue(
+                    _map,
+                    RegistryHive.LocalMachine,
+                    KeyPath,
+                    RegistryView.Registry32
+            );
+            _map = AppendByStringValue(
+                    _map,
+                    RegistryHive.LocalMachine,
+                    KeyPath,
+                    RegistryView.Registry64
+            );
         }
 
-        private static Dictionary<string, string> AppendByStringValue(Dictionary<string, string> properties, RegistryHive root, string keyPath, RegistryView view)
+        private static Dictionary<string, string> AppendByStringValue(
+                Dictionary<string, string> properties,
+                RegistryHive root,
+                string keyPath,
+                RegistryView view)
         {
             if (properties == null || string.IsNullOrEmpty(keyPath))
             {
@@ -33,9 +48,13 @@ namespace Htc.Vita.Core.Config
             }
             try
             {
-                using (var baseKey = RegistryKey.OpenBaseKey(root, view))
+                using (var baseKey = RegistryKey.OpenBaseKey(
+                        root,
+                        view))
                 {
-                    using (var subKey = baseKey.OpenSubKey(keyPath, RegistryKeyPermissionCheck.ReadSubTree))
+                    using (var subKey = baseKey.OpenSubKey(
+                            keyPath,
+                            RegistryKeyPermissionCheck.ReadSubTree))
                     {
                         if (subKey != null)
                         {
@@ -43,7 +62,10 @@ namespace Htc.Vita.Core.Config
                             {
                                 if (subKey.GetValueKind(valueName) == RegistryValueKind.String)
                                 {
-                                    properties.Add(valueName, (string)subKey.GetValue(valueName));
+                                    properties.Add(
+                                            valueName,
+                                            (string)subKey.GetValue(valueName)
+                                    );
                                 }
                             }
                         }
@@ -52,7 +74,7 @@ namespace Htc.Vita.Core.Config
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(RegistryConfig)).Error("Getting registry string value error: " + e.Message);
+                Logger.GetInstance(typeof(RegistryConfig)).Error($"Getting registry string value error: {e.Message}");
             }
             return properties;
         }
