@@ -1,7 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Net;
 using Htc.Vita.Core.Log;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Net
 {
@@ -10,20 +10,19 @@ namespace Htc.Vita.Core.Net
     /// </summary>
     public abstract class WebProxyFactory
     {
-        private static Dictionary<string, WebProxyFactory> Instances { get; } = new Dictionary<string, WebProxyFactory>();
-
-        private static readonly object InstancesLock = new object();
-
-        private static Type _defaultType = typeof(DefaultWebProxyFactory);
+        static WebProxyFactory()
+        {
+            TypeRegistry.RegisterDefault<WebProxyFactory, DefaultWebProxyFactory>();
+        }
 
         /// <summary>
         /// Registers the instance type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public static void Register<T>() where T : WebProxyFactory
+        public static void Register<T>()
+                where T : WebProxyFactory, new()
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(WebProxyFactory)).Info($"Registered default {typeof(WebProxyFactory).Name} type to {_defaultType}");
+            TypeRegistry.Register<WebProxyFactory, T>();
         }
 
         /// <summary>
@@ -32,18 +31,7 @@ namespace Htc.Vita.Core.Net
         /// <returns>WebProxyFactory.</returns>
         public static WebProxyFactory GetInstance()
         {
-            WebProxyFactory instance;
-            try
-            {
-                instance = DoGetInstance(_defaultType);
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(WebProxyFactory)).Fatal($"Instance initialization error: {e}");
-                Logger.GetInstance(typeof(WebProxyFactory)).Info($"Initializing {typeof(DefaultWebProxyFactory).FullName}...");
-                instance = new DefaultWebProxyFactory();
-            }
-            return instance;
+            return TypeRegistry.GetInstance<WebProxyFactory>();
         }
 
         /// <summary>
@@ -51,57 +39,10 @@ namespace Htc.Vita.Core.Net
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns>WebProxyFactory.</returns>
-        public static WebProxyFactory GetInstance<T>() where T : WebProxyFactory
+        public static WebProxyFactory GetInstance<T>()
+                where T : WebProxyFactory, new()
         {
-            WebProxyFactory instance;
-            try
-            {
-                instance = DoGetInstance(typeof(T));
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(WebProxyFactory)).Fatal($"Instance initialization error: {e}");
-                Logger.GetInstance(typeof(WebProxyFactory)).Info($"Initializing {typeof(DefaultWebProxyFactory).FullName}...");
-                instance = new DefaultWebProxyFactory();
-            }
-            return instance;
-        }
-
-        private static WebProxyFactory DoGetInstance(Type type)
-        {
-            if (type == null)
-            {
-                throw new ArgumentException($"Invalid arguments to get {typeof(WebProxyFactory).Name} instance");
-            }
-
-            var key = $"{type.FullName}_";
-            WebProxyFactory instance = null;
-            if (Instances.ContainsKey(key))
-            {
-                instance = Instances[key];
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(WebProxyFactory)).Info($"Initializing {key}...");
-                var constructor = type.GetConstructor(new Type[] { });
-                if (constructor != null)
-                {
-                    instance = (WebProxyFactory)constructor.Invoke(new object[] { });
-                }
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(WebProxyFactory)).Info($"Initializing {typeof(DefaultWebProxyFactory).FullName}...");
-                instance = new DefaultWebProxyFactory();
-            }
-            lock (InstancesLock)
-            {
-                if (!Instances.ContainsKey(key))
-                {
-                    Instances.Add(key, instance);
-                }
-            }
-            return instance;
+            return TypeRegistry.GetInstance<WebProxyFactory, T>();
         }
 
         /// <summary>
