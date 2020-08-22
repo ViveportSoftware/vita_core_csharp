@@ -31,51 +31,99 @@ namespace Htc.Vita.Core.Log
         }
 
         /// <inheritdoc />
-        protected override void OnDebug(string tag, string message)
+        protected override void OnDebug(
+                string tag,
+                string message)
         {
-            _buffer.Clear().Append(Name).Append(tag).Append(message);
+            _buffer.Clear()
+                    .Append(Name)
+                    .Append(tag)
+                    .Append(message);
         }
 
         /// <inheritdoc />
-        protected override void OnDebug(string tag, string message, Exception exception)
+        protected override void OnDebug(
+                string tag,
+                string message,
+                Exception exception)
         {
-            _buffer.Clear().Append(Name).Append(tag).Append(message).Append(exception);
+            _buffer.Clear()
+                    .Append(Name)
+                    .Append(tag)
+                    .Append(message)
+                    .Append(exception);
         }
 
         /// <inheritdoc />
-        protected override void OnError(string tag, string message)
+        protected override void OnError(
+                string tag,
+                string message)
         {
-            _buffer.Clear().Append(Name).Append(tag).Append(message);
+            _buffer.Clear()
+                    .Append(Name)
+                    .Append(tag)
+                    .Append(message);
         }
 
         /// <inheritdoc />
-        protected override void OnError(string tag, string message, Exception exception)
+        protected override void OnError(
+                string tag,
+                string message,
+                Exception exception)
         {
-            _buffer.Clear().Append(Name).Append(tag).Append(message).Append(exception);
+            _buffer.Clear()
+                    .Append(Name)
+                    .Append(tag)
+                    .Append(message)
+                    .Append(exception);
         }
 
         /// <inheritdoc />
-        protected override void OnFatal(string tag, string message)
+        protected override void OnFatal(
+                string tag,
+                string message)
         {
-            _buffer.Clear().Append(Name).Append(tag).Append(message);
+            _buffer.Clear()
+                    .Append(Name)
+                    .Append(tag)
+                    .Append(message);
         }
 
         /// <inheritdoc />
-        protected override void OnFatal(string tag, string message, Exception exception)
+        protected override void OnFatal(
+                string tag,
+                string message,
+                Exception exception)
         {
-            _buffer.Clear().Append(Name).Append(tag).Append(message).Append(exception);
+            _buffer.Clear()
+                    .Append(Name)
+                    .Append(tag)
+                    .Append(message)
+                    .Append(exception);
         }
 
         /// <inheritdoc />
-        protected override void OnInfo(string tag, string message)
+        protected override void OnInfo(
+                string tag,
+                string message)
         {
-            _buffer.Clear().Append(Name).Append(tag).Append(message);
+            _buffer.Clear()
+                    .Append(Name)
+                    .Append(tag)
+                    .Append(message);
         }
 
         /// <inheritdoc />
-        protected override void OnInfo(string tag, string message, Exception exception)
+        protected override void OnInfo(
+                string tag,
+                string message,
+                Exception exception)
         {
-            _buffer.Clear().Append(Name).Append(tag).Append(message).Append(exception);
+            _buffer.Clear()
+                    .Append(Name)
+                    .Append(tag)
+                    .Append(message)
+                    .Append(exception);
         }
 
         /// <inheritdoc />
@@ -85,27 +133,51 @@ namespace Htc.Vita.Core.Log
         }
 
         /// <inheritdoc />
-        protected override void OnTrace(string tag, string message)
+        protected override void OnTrace(
+                string tag,
+                string message)
         {
-            _buffer.Clear().Append(Name).Append(tag).Append(message);
+            _buffer.Clear()
+                    .Append(Name)
+                    .Append(tag)
+                    .Append(message);
         }
 
         /// <inheritdoc />
-        protected override void OnTrace(string tag, string message, Exception exception)
+        protected override void OnTrace(
+                string tag,
+                string message,
+                Exception exception)
         {
-            _buffer.Clear().Append(Name).Append(tag).Append(message).Append(exception);
+            _buffer.Clear()
+                    .Append(Name)
+                    .Append(tag)
+                    .Append(message)
+                    .Append(exception);
         }
 
         /// <inheritdoc />
-        protected override void OnWarn(string tag, string message)
+        protected override void OnWarn(
+                string tag,
+                string message)
         {
-            _buffer.Clear().Append(Name).Append(tag).Append(message);
+            _buffer.Clear()
+                    .Append(Name)
+                    .Append(tag)
+                    .Append(message);
         }
 
         /// <inheritdoc />
-        protected override void OnWarn(string tag, string message, Exception exception)
+        protected override void OnWarn(
+                string tag,
+                string message,
+                Exception exception)
         {
-            _buffer.Clear().Append(Name).Append(tag).Append(message).Append(exception);
+            _buffer.Clear()
+                    .Append(Name)
+                    .Append(tag)
+                    .Append(message)
+                    .Append(exception);
         }
     }
 }
