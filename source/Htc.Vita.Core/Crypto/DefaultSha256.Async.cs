@@ -9,15 +9,25 @@ namespace Htc.Vita.Core.Crypto
     public partial class DefaultSha256
     {
         /// <inheritdoc />
-        protected override Task<string> OnGenerateInBase64Async(FileInfo file, CancellationToken cancellationToken)
+        protected override Task<string> OnGenerateInBase64Async(
+                FileInfo file,
+                CancellationToken cancellationToken)
         {
-            return DoGenerateInBase64Async(file, cancellationToken);
+            return DoGenerateInBase64Async(
+                    file,
+                    cancellationToken
+            );
         }
 
         /// <inheritdoc />
-        protected override Task<string> OnGenerateInHexAsync(FileInfo file, CancellationToken cancellationToken)
+        protected override Task<string> OnGenerateInHexAsync(
+                FileInfo file,
+                CancellationToken cancellationToken)
         {
-            return DoGenerateInHexAsync(file, cancellationToken);
+            return DoGenerateInHexAsync(
+                    file,
+                    cancellationToken
+            );
         }
 
         /// <summary>
@@ -26,7 +36,9 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;System.String&gt;.</returns>
-        public static async Task<string> DoGenerateInBase64Async(FileInfo file, CancellationToken cancellationToken)
+        public static async Task<string> DoGenerateInBase64Async(
+                FileInfo file,
+                CancellationToken cancellationToken)
         {
             return Convert.ToBase64String(await GenerateInBytesAsync(
                     file,
@@ -40,7 +52,9 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;System.String&gt;.</returns>
-        public static async Task<string> DoGenerateInHexAsync(FileInfo file, CancellationToken cancellationToken)
+        public static async Task<string> DoGenerateInHexAsync(
+                FileInfo file,
+                CancellationToken cancellationToken)
         {
             return Convert.ToHexString(await GenerateInBytesAsync(
                     file,
@@ -48,7 +62,9 @@ namespace Htc.Vita.Core.Crypto
             ).ConfigureAwait(false));
         }
 
-        private static async Task<byte[]> GenerateInBytesAsync(FileInfo file, CancellationToken cancellationToken)
+        private static async Task<byte[]> GenerateInBytesAsync(
+                FileInfo file,
+                CancellationToken cancellationToken)
         {
             var buffer = new byte[BufferSizeInByte];
             using (var digest = SHA256.Create())
@@ -56,7 +72,11 @@ namespace Htc.Vita.Core.Crypto
                 using (var readStream = file.OpenRead())
                 {
                     int length;
-                    while ((length = await readStream.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false)) > 0)
+                    while ((length = await readStream.ReadAsync(
+                            buffer,
+                            0,
+                            buffer.Length,
+                            cancellationToken).ConfigureAwait(false)) > 0)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         digest.TransformBlock(
