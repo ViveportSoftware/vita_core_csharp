@@ -5,13 +5,25 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Runtime
 {
+    /// <summary>
+    /// Class WmiProcessWatcher.
+    /// Implements the <see cref="ProcessWatcher" />
+    /// </summary>
+    /// <seealso cref="ProcessWatcher" />
     public class WmiProcessWatcher : ProcessWatcher
     {
         private readonly List<ManagementEventWatcher> _eventWatchers;
         private string _targetProcessName;
 
+        /// <summary>
+        /// Gets the WMI instance events.
+        /// </summary>
+        /// <value>The WMI instance events.</value>
         protected Dictionary<EventType, string> WmiInstanceEvents { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WmiProcessWatcher"/> class.
+        /// </summary>
         public WmiProcessWatcher()
         {
             _eventWatchers = new List<ManagementEventWatcher>();
@@ -23,11 +35,20 @@ namespace Htc.Vita.Core.Runtime
             };
         }
 
+        /// <summary>
+        /// Gets the name of the target process.
+        /// </summary>
+        /// <returns>System.String.</returns>
         protected string GetTargetProcessName()
         {
             return _targetProcessName;
         }
 
+        /// <summary>
+        /// Called when getting WMI query.
+        /// </summary>
+        /// <param name="eventType">Type of the event.</param>
+        /// <returns>System.String.</returns>
         protected virtual string OnGetWmiQuery(EventType eventType)
         {
             var queryTarget = string.Empty;
@@ -39,6 +60,7 @@ namespace Htc.Vita.Core.Runtime
             return $@"SELECT * FROM {WmiInstanceEvents[eventType]} WITHIN 5 WHERE TargetInstance ISA 'Win32_Process'{queryTarget}";
         }
 
+        /// <inheritdoc />
         protected override bool OnIsRunning()
         {
             return _eventWatchers.Count > 0;
@@ -98,7 +120,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception exception)
                 {
-                    Logger.GetInstance(typeof(WmiProcessWatcher)).Error("Can not process arrived target instance: " + exception.Message);
+                    Logger.GetInstance(typeof(WmiProcessWatcher)).Error($"Can not process arrived target instance: {exception.Message}");
                 }
                 finally
                 {
@@ -115,7 +137,7 @@ namespace Htc.Vita.Core.Runtime
             }
             catch (Exception exception)
             {
-                Logger.GetInstance(typeof(WmiProcessWatcher)).Error("Can not process arrived management event: " + exception.Message);
+                Logger.GetInstance(typeof(WmiProcessWatcher)).Error($"Can not process arrived management event: {exception.Message}");
             }
             finally
             {
@@ -126,6 +148,7 @@ namespace Htc.Vita.Core.Runtime
             }
         }
 
+        /// <inheritdoc />
         protected override bool OnStart()
         {
             if (_eventWatchers.Count > 0)
@@ -143,7 +166,7 @@ namespace Htc.Vita.Core.Runtime
                 }
 
                 var wmiQuery = OnGetWmiQuery((EventType) eventTypeValue);
-                Logger.GetInstance(typeof(WmiProcessWatcher)).Info("WMI query: " + wmiQuery);
+                Logger.GetInstance(typeof(WmiProcessWatcher)).Info($"WMI query: {wmiQuery}");
                 var eventWatcher = new ManagementEventWatcher(wmiQuery);
                 eventWatcher.EventArrived += OnManagementEventArrived;
                 try
@@ -161,6 +184,7 @@ namespace Htc.Vita.Core.Runtime
             return true;
         }
 
+        /// <inheritdoc />
         protected override bool OnStop()
         {
             foreach (var eventWatcher in _eventWatchers)
@@ -171,7 +195,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Exception e)
                 {
-                    Logger.GetInstance(typeof(WmiProcessWatcher)).Error("Can not stop management event watcher: " + e.Message);
+                    Logger.GetInstance(typeof(WmiProcessWatcher)).Error($"Can not stop management event watcher: {e.Message}");
                 }
                 eventWatcher.Dispose();
             }
@@ -180,6 +204,11 @@ namespace Htc.Vita.Core.Runtime
             return true;
         }
 
+        /// <summary>
+        /// Sets the name of the target process.
+        /// </summary>
+        /// <param name="targetProcessName">Name of the target process.</param>
+        /// <returns>WmiProcessWatcher.</returns>
         public WmiProcessWatcher SetTargetProcessName(string targetProcessName)
         {
             _targetProcessName = targetProcessName;
