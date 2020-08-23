@@ -67,14 +67,14 @@ namespace Htc.Vita.Core.Runtime
                             }
                             else
                             {
-                                Logger.GetInstance(typeof(Windows)).Warn("Can not translate sid type " + sidType + " to username.");
+                                Logger.GetInstance(typeof(Windows)).Warn($"Can not translate sid type \"{sidType}\" to username.");
                             }
                         }
                     }
                 }
                 catch (Exception e)
                 {
-                    Logger.GetInstance(typeof(Windows)).Error("Can not get Windows username: " + e.Message);
+                    Logger.GetInstance(typeof(Windows)).Error($"Can not get Windows username: {e.Message}");
                 }
 
                 return result;
@@ -175,12 +175,12 @@ namespace Htc.Vita.Core.Runtime
                         }
                         else
                         {
-                            Logger.GetInstance(typeof(UserManager)).Error("Can not enumerate WTS session, error code: " + Marshal.GetLastWin32Error());
+                            Logger.GetInstance(typeof(UserManager)).Error($"Can not enumerate WTS session, error code: {Marshal.GetLastWin32Error()}");
                         }
                     }
                     catch (Exception e)
                     {
-                        Logger.GetInstance(typeof(Windows)).Error("Can not get Windows user list: " + e.Message);
+                        Logger.GetInstance(typeof(Windows)).Error($"Can not get Windows user list: {e.Message}");
                     }
 
                     return results;

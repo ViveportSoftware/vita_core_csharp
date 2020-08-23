@@ -4,8 +4,15 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Runtime
 {
+    /// <summary>
+    /// Class UserManager.
+    /// </summary>
     public static partial class UserManager
     {
+        /// <summary>
+        /// Gets the first active user.
+        /// </summary>
+        /// <returns>System.String.</returns>
         public static string GetFirstActiveUser()
         {
             var result = Windows.GetFirstActiveUser(null);
