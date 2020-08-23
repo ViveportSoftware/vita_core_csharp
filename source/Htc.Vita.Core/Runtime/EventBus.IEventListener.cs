@@ -15,7 +15,8 @@ namespace Htc.Vita.Core.Runtime
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <seealso cref="IEventListener" />
-        public interface IEventListener<in T> : IEventListener where T : IEventData
+        public interface IEventListener<in T> : IEventListener
+                where T : IEventData
         {
             /// <summary>
             /// Processes the event.
