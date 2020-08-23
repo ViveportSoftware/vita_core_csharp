@@ -10,7 +10,10 @@ namespace Htc.Vita.Core.Preference
         /// <inheritdoc />
         protected override Preferences OnLoadPreferences(string label)
         {
-            return new DefaultPreferences("", label).Initialize();
+            return new DefaultPreferences(
+                    "",
+                    label
+            ).Initialize();
         }
     }
 }

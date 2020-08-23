@@ -20,7 +20,9 @@ namespace Htc.Vita.Core.Preference
             /// </summary>
             /// <param name="category">The category.</param>
             /// <param name="label">The label.</param>
-            public DefaultPreferences(string category, string label) : base(label)
+            public DefaultPreferences(
+                    string category,
+                    string label) : base(label)
             {
                 _storage = new Storage(category, Label);
             }
@@ -52,57 +54,84 @@ namespace Htc.Vita.Core.Preference
             }
 
             /// <inheritdoc />
-            protected override bool OnParseBool(string key, bool defaultValue)
+            protected override bool OnParseBool(
+                    string key,
+                    bool defaultValue)
             {
                 if (!_properties.ContainsKey(key))
                 {
                     return defaultValue;
                 }
-                return Util.Convert.ToBool(_properties[key], defaultValue);
+                return Util.Convert.ToBool(
+                        _properties[key],
+                        defaultValue
+                );
             }
 
             /// <inheritdoc />
-            protected override double OnParseDouble(string key, double defaultValue)
+            protected override double OnParseDouble(
+                    string key,
+                    double defaultValue)
             {
                 if (!_properties.ContainsKey(key))
                 {
                     return defaultValue;
                 }
-                return Util.Convert.ToDouble(_properties[key], defaultValue);
+                return Util.Convert.ToDouble(
+                        _properties[key],
+                        defaultValue
+                );
             }
 
             /// <inheritdoc />
-            protected override float OnParseFloat(string key, float defaultValue)
+            protected override float OnParseFloat(
+                    string key,
+                    float defaultValue)
             {
                 if (!_properties.ContainsKey(key))
                 {
                     return defaultValue;
                 }
-                return (float)Util.Convert.ToDouble(_properties[key], defaultValue);
+                return (float)Util.Convert.ToDouble(
+                        _properties[key],
+                        defaultValue
+                );
             }
 
             /// <inheritdoc />
-            protected override int OnParseInt(string key, int defaultValue)
+            protected override int OnParseInt(
+                    string key,
+                    int defaultValue)
             {
                 if (!_properties.ContainsKey(key))
                 {
                     return defaultValue;
                 }
-                return Util.Convert.ToInt32(_properties[key], defaultValue);
+                return Util.Convert.ToInt32(
+                        _properties[key],
+                        defaultValue
+                );
             }
 
             /// <inheritdoc />
-            protected override long OnParseLong(string key, long defaultValue)
+            protected override long OnParseLong(
+                    string key,
+                    long defaultValue)
             {
                 if (!_properties.ContainsKey(key))
                 {
                     return defaultValue;
                 }
-                return Util.Convert.ToInt64(_properties[key], defaultValue);
+                return Util.Convert.ToInt64(
+                        _properties[key],
+                        defaultValue
+                );
             }
 
             /// <inheritdoc />
-            protected override string OnParseString(string key, string defaultValue)
+            protected override string OnParseString(
+                    string key,
+                    string defaultValue)
             {
                 if (!_properties.ContainsKey(key))
                 {
@@ -112,42 +141,54 @@ namespace Htc.Vita.Core.Preference
             }
 
             /// <inheritdoc />
-            protected override Preferences OnPutBool(string key, bool value)
+            protected override Preferences OnPutBool(
+                    string key,
+                    bool value)
             {
-                _properties[key] = "" + value;
+                _properties[key] = $"{value}";
                 return this;
             }
 
             /// <inheritdoc />
-            protected override Preferences OnPutDouble(string key, double value)
+            protected override Preferences OnPutDouble(
+                    string key,
+                    double value)
             {
-                _properties[key] = "" + value;
+                _properties[key] = $"{value}";
                 return this;
             }
 
             /// <inheritdoc />
-            protected override Preferences OnPutFloat(string key, float value)
+            protected override Preferences OnPutFloat(
+                    string key,
+                    float value)
             {
-                _properties[key] = "" + value;
+                _properties[key] = $"{value}";
                 return this;
             }
 
             /// <inheritdoc />
-            protected override Preferences OnPutInt(string key, int value)
+            protected override Preferences OnPutInt(
+                    string key,
+                    int value)
             {
-                _properties[key] = "" + value;
+                _properties[key] = $"{value}";
                 return this;
             }
 
             /// <inheritdoc />
-            protected override Preferences OnPutLong(string key, long value)
+            protected override Preferences OnPutLong(
+                    string key,
+                    long value)
             {
-                _properties[key] = "" + value;
+                _properties[key] = $"{value}";
                 return this;
             }
 
             /// <inheritdoc />
-            protected override Preferences OnPutString(string key, string value)
+            protected override Preferences OnPutString(
+                    string key,
+                    string value)
             {
                 _properties[key] = value;
                 return this;

@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using Htc.Vita.Core.Log;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Preference
 {
@@ -9,20 +7,19 @@ namespace Htc.Vita.Core.Preference
     /// </summary>
     public abstract partial class PreferenceFactory
     {
-        private static Dictionary<string, PreferenceFactory> Instances { get; } = new Dictionary<string, PreferenceFactory>();
-
-        private static readonly object InstancesLock = new object();
-
-        private static Type _defaultType = typeof(DefaultPreferenceFactory);
+        static PreferenceFactory()
+        {
+            TypeRegistry.RegisterDefault<PreferenceFactory, DefaultPreferenceFactory>();
+        }
 
         /// <summary>
         /// Registers the instance type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public static void Register<T>() where T : PreferenceFactory
+        public static void Register<T>()
+                where T : PreferenceFactory, new()
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(PreferenceFactory)).Info($"Registered default {typeof(PreferenceFactory).Name} type to {_defaultType}");
+            TypeRegistry.Register<PreferenceFactory, T>();
         }
 
         /// <summary>
@@ -31,18 +28,7 @@ namespace Htc.Vita.Core.Preference
         /// <returns>PreferenceFactory.</returns>
         public static PreferenceFactory GetInstance()
         {
-            PreferenceFactory instance;
-            try
-            {
-                instance = DoGetInstance(_defaultType);
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(PreferenceFactory)).Fatal($"Instance initialization error: {e}");
-                Logger.GetInstance(typeof(PreferenceFactory)).Info($"Initializing {typeof(DefaultPreferenceFactory).FullName}...");
-                instance = new DefaultPreferenceFactory();
-            }
-            return instance;
+            return TypeRegistry.GetInstance<PreferenceFactory>();
         }
 
         /// <summary>
@@ -50,57 +36,10 @@ namespace Htc.Vita.Core.Preference
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns>PreferenceFactory.</returns>
-        public static PreferenceFactory GetInstance<T>() where T : PreferenceFactory
+        public static PreferenceFactory GetInstance<T>()
+                where T : PreferenceFactory, new()
         {
-            PreferenceFactory instance;
-            try
-            {
-                instance = DoGetInstance(typeof(T));
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(PreferenceFactory)).Fatal($"Instance initialization error: {e}");
-                Logger.GetInstance(typeof(PreferenceFactory)).Info($"Initializing {typeof(DefaultPreferenceFactory).FullName}...");
-                instance = new DefaultPreferenceFactory();
-            }
-            return instance;
-        }
-
-        private static PreferenceFactory DoGetInstance(Type type)
-        {
-            if (type == null)
-            {
-                throw new ArgumentException($"Invalid arguments to get {typeof(PreferenceFactory).Name} instance");
-            }
-
-            var key = $"{type.FullName}_";
-            PreferenceFactory instance = null;
-            if (Instances.ContainsKey(key))
-            {
-                instance = Instances[key];
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(PreferenceFactory)).Info($"Initializing {key}...");
-                var constructor = type.GetConstructor(new Type[] { });
-                if (constructor != null)
-                {
-                    instance = (PreferenceFactory)constructor.Invoke(new object[] { });
-                }
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(PreferenceFactory)).Info($"Initializing {typeof(DefaultPreferenceFactory).FullName}...");
-                instance = new DefaultPreferenceFactory();
-            }
-            lock (InstancesLock)
-            {
-                if (!Instances.ContainsKey(key))
-                {
-                    Instances.Add(key, instance);
-                }
-            }
-            return instance;
+            return TypeRegistry.GetInstance<PreferenceFactory, T>();
         }
 
         /// <summary>
