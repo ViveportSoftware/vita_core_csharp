@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Htc.Vita.Core.Diagnostics;
 using Htc.Vita.Core.Log;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Runtime
 {
@@ -31,20 +32,19 @@ namespace Htc.Vita.Core.Runtime
             /// </summary>
             public static readonly string OptionVerifyProvider = "option_verify_provider";
 
-            private static Dictionary<string, Client> Instances { get; } = new Dictionary<string, Client>();
-
-            private static readonly object InstancesLock = new object();
-
-            private static Type _defaultType = typeof(NamedPipeIpcChannel.Client);
+            static Client()
+            {
+                TypeRegistry.RegisterDefault<Client, NamedPipeIpcChannel.Client>();
+            }
 
             /// <summary>
-            /// Registers this instance.
+            /// Registers the instance type.
             /// </summary>
             /// <typeparam name="T"></typeparam>
-            public static void Register<T>() where T : Client
+            public static void Register<T>()
+                    where T : Client, new()
             {
-                _defaultType = typeof(T);
-                Logger.GetInstance(typeof(Client)).Info($"Registered default {nameof(Client)} type to {_defaultType}");
+                TypeRegistry.Register<Client, T>();
             }
 
             /// <summary>
@@ -53,18 +53,7 @@ namespace Htc.Vita.Core.Runtime
             /// <returns>Client.</returns>
             public static Client GetInstance()
             {
-                Client instance;
-                try
-                {
-                    instance = DoGetInstance(_defaultType);
-                }
-                catch (Exception e)
-                {
-                    Logger.GetInstance(typeof(Client)).Fatal($"Instance initialization error {e}");
-                    Logger.GetInstance(typeof(Client)).Info($"Initializing {typeof(NamedPipeIpcChannel.Client).FullName}...");
-                    instance = new NamedPipeIpcChannel.Client();
-                }
-                return instance;
+                return TypeRegistry.GetInstance<Client>();
             }
 
             /// <summary>
@@ -72,57 +61,10 @@ namespace Htc.Vita.Core.Runtime
             /// </summary>
             /// <typeparam name="T"></typeparam>
             /// <returns>Client.</returns>
-            public static Client GetInstance<T>() where T : Client
+            public static Client GetInstance<T>()
+                    where T : Client, new()
             {
-                Client instance;
-                try
-                {
-                    instance = DoGetInstance(typeof(T));
-                }
-                catch (Exception e)
-                {
-                    Logger.GetInstance(typeof(Client)).Fatal($"Instance initialization error: {e}");
-                    Logger.GetInstance(typeof(Client)).Info($"Initializing {typeof(NamedPipeIpcChannel.Client).FullName}...");
-                    instance = new NamedPipeIpcChannel.Client();
-                }
-                return instance;
-            }
-
-            private static Client DoGetInstance(Type type)
-            {
-                if (type == null)
-                {
-                    throw new ArgumentException($"Invalid arguments to get {nameof(Client)} instance");
-                }
-
-                var key = $"{type.FullName}_";
-                Client instance = null;
-                if (Instances.ContainsKey(key))
-                {
-                    instance = Instances[key];
-                }
-                if (instance == null)
-                {
-                    Logger.GetInstance(typeof(Client)).Info($"Initializing {key}...");
-                    var constructor = type.GetConstructor(new Type[] { });
-                    if (constructor != null)
-                    {
-                        instance = (Client)constructor.Invoke(new object[] { });
-                    }
-                }
-                if (instance == null)
-                {
-                    Logger.GetInstance(typeof(Client)).Info($"Initializing {typeof(NamedPipeIpcChannel.Client).FullName}...");
-                    instance = new NamedPipeIpcChannel.Client();
-                }
-                lock (InstancesLock)
-                {
-                    if (!Instances.ContainsKey(key))
-                    {
-                        Instances.Add(key, instance);
-                    }
-                }
-                return instance;
+                return TypeRegistry.GetInstance<Client, T>();
             }
 
             /// <summary>
@@ -227,20 +169,19 @@ namespace Htc.Vita.Core.Runtime
             /// <value>The on message handled.</value>
             public Action<IpcChannel, FilePropertiesInfo> OnMessageHandled { protected get; set; }
 
-            private static Dictionary<string, Provider> Instances { get; } = new Dictionary<string, Provider>();
-
-            private static readonly object InstancesLock = new object();
-
-            private static Type _defaultType = typeof(NamedPipeIpcChannel.Provider);
+            static Provider()
+            {
+                TypeRegistry.RegisterDefault<Provider, NamedPipeIpcChannel.Provider>();
+            }
 
             /// <summary>
-            /// Registers this instance.
+            /// Registers the instance type.
             /// </summary>
             /// <typeparam name="T"></typeparam>
-            public static void Register<T>() where T : Provider
+            public static void Register<T>()
+                    where T : Provider, new()
             {
-                _defaultType = typeof(T);
-                Logger.GetInstance(typeof(Provider)).Info($"Registered default {nameof(Provider)} type to {_defaultType}");
+                TypeRegistry.Register<Provider, T>();
             }
 
             /// <summary>
@@ -249,18 +190,7 @@ namespace Htc.Vita.Core.Runtime
             /// <returns>Provider.</returns>
             public static Provider GetInstance()
             {
-                Provider instance;
-                try
-                {
-                    instance = DoGetInstance(_defaultType);
-                }
-                catch (Exception e)
-                {
-                    Logger.GetInstance(typeof(Provider)).Fatal($"Instance initialization error {e}");
-                    Logger.GetInstance(typeof(Provider)).Info($"Initializing {typeof(NamedPipeIpcChannel.Provider).FullName}...");
-                    instance = new NamedPipeIpcChannel.Provider();
-                }
-                return instance;
+                return TypeRegistry.GetInstance<Provider>();
             }
 
             /// <summary>
@@ -268,57 +198,10 @@ namespace Htc.Vita.Core.Runtime
             /// </summary>
             /// <typeparam name="T"></typeparam>
             /// <returns>Provider.</returns>
-            public static Provider GetInstance<T>() where T : Provider
+            public static Provider GetInstance<T>()
+                    where T : Provider, new()
             {
-                Provider instance;
-                try
-                {
-                    instance = DoGetInstance(typeof(T));
-                }
-                catch (Exception e)
-                {
-                    Logger.GetInstance(typeof(Provider)).Fatal($"Instance initialization error: {e}");
-                    Logger.GetInstance(typeof(Provider)).Info($"Initializing {typeof(NamedPipeIpcChannel.Provider).FullName}...");
-                    instance = new NamedPipeIpcChannel.Provider();
-                }
-                return instance;
-            }
-
-            private static Provider DoGetInstance(Type type)
-            {
-                if (type == null)
-                {
-                    throw new ArgumentException($"Invalid arguments to get {nameof(Provider)} instance");
-                }
-
-                var key = $"{type.FullName}_";
-                Provider instance = null;
-                if (Instances.ContainsKey(key))
-                {
-                    instance = Instances[key];
-                }
-                if (instance == null)
-                {
-                    Logger.GetInstance(typeof(Provider)).Info($"Initializing {key}...");
-                    var constructor = type.GetConstructor(new Type[] { });
-                    if (constructor != null)
-                    {
-                        instance = (Provider)constructor.Invoke(new object[] { });
-                    }
-                }
-                if (instance == null)
-                {
-                    Logger.GetInstance(typeof(Provider)).Info($"Initializing {typeof(NamedPipeIpcChannel.Provider).FullName}...");
-                    instance = new NamedPipeIpcChannel.Provider();
-                }
-                lock (InstancesLock)
-                {
-                    if (!Instances.ContainsKey(key))
-                    {
-                        Instances.Add(key, instance);
-                    }
-                }
-                return instance;
+                return TypeRegistry.GetInstance<Provider, T>();
             }
 
             /// <summary>
