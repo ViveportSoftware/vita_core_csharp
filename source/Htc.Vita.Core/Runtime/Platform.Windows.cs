@@ -30,7 +30,9 @@ namespace Htc.Vita.Core.Runtime
 
             internal static void ExitInPlatform(ExitType exitType)
             {
-                using (var processHandle = new Interop.Windows.SafeProcessHandle(Process.GetCurrentProcess(), false))
+                using (var processHandle = new Interop.Windows.SafeProcessHandle(
+                        Process.GetCurrentProcess(),
+                        false))
                 {
                     Interop.Windows.SafeTokenHandle tokenHandle;
                     var success = Interop.Windows.OpenProcessToken(
@@ -40,7 +42,7 @@ namespace Htc.Vita.Core.Runtime
                     );
                     if (!success)
                     {
-                        Logger.GetInstance(typeof(Platform)).Error("Can not open process token, error code: " + Marshal.GetLastWin32Error());
+                        Logger.GetInstance(typeof(Platform)).Error($"Can not open process token, error code: {Marshal.GetLastWin32Error()}");
                         return;
                     }
 
@@ -55,7 +57,7 @@ namespace Htc.Vita.Core.Runtime
                     );
                     if (!success)
                     {
-                        Logger.GetInstance(typeof(Platform)).Error("Can not lookup privilege value, error code: " + Marshal.GetLastWin32Error());
+                        Logger.GetInstance(typeof(Platform)).Error($"Can not lookup privilege value, error code: {Marshal.GetLastWin32Error()}");
                         return;
                     }
 
@@ -69,7 +71,7 @@ namespace Htc.Vita.Core.Runtime
                     );
                     if (!success)
                     {
-                        Logger.GetInstance(typeof(Platform)).Error("Can not adjust token privileges, error code: " + Marshal.GetLastWin32Error());
+                        Logger.GetInstance(typeof(Platform)).Error($"Can not adjust token privileges, error code: {Marshal.GetLastWin32Error()}");
                         return;
                     }
 
@@ -79,7 +81,7 @@ namespace Htc.Vita.Core.Runtime
                     );
                     if (!success)
                     {
-                        Logger.GetInstance(typeof(Platform)).Error("Can not exit Windows, error code: " + Marshal.GetLastWin32Error());
+                        Logger.GetInstance(typeof(Platform)).Error($"Can not exit Windows, error code: {Marshal.GetLastWin32Error()}");
                     }
                 }
             }
@@ -133,7 +135,7 @@ namespace Htc.Vita.Core.Runtime
                 {
                     return ".NET Framework 4.5";
                 }
-                return "Unknown .NET Framework (release " + release + ")";
+                return $"Unknown .NET Framework (release {release})";
             }
 
             internal static string GetProductNameInPlatform()
