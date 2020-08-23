@@ -7,6 +7,11 @@ using Microsoft.Win32;
 
 namespace Htc.Vita.Core.Shell
 {
+    /// <summary>
+    /// Class RegistryUriSchemeManager.
+    /// Implements the <see cref="UriSchemeManager" />
+    /// </summary>
+    /// <seealso cref="UriSchemeManager" />
     public class RegistryUriSchemeManager : UriSchemeManager
     {
         private static readonly HashSet<string> ProtocolCommandPathWhitelist = new HashSet<string>();
@@ -35,10 +40,13 @@ namespace Htc.Vita.Core.Shell
                 return null;
             }
 
-            return protocol + "_" + fileName;
+            return $"{protocol}_{fileName}";
         }
 
-        protected override UriSchemeInfo OnGetSystemUriScheme(string schemeName, Dictionary<string, string> options)
+        /// <inheritdoc />
+        protected override UriSchemeInfo OnGetSystemUriScheme(
+                string schemeName,
+                Dictionary<string, string> options)
         {
             var shouldAcceptWhitelistOnly = false;
             if (options.ContainsKey(OptionAcceptWhitelistOnly))
@@ -47,7 +55,7 @@ namespace Htc.Vita.Core.Shell
             }
             var uriSchemeInfo = new UriSchemeInfo
             {
-                Name = schemeName
+                    Name = schemeName
             };
 
             var realSchemeName = GetRealSchemeNameFromHkcu(schemeName);
@@ -56,7 +64,9 @@ namespace Htc.Vita.Core.Shell
                 realSchemeName = schemeName;
             }
 
-            using (var baseKey = RegistryKey.OpenBaseKey(RegistryHive.ClassesRoot, RegistryView.Default))
+            using (var baseKey = RegistryKey.OpenBaseKey(
+                    RegistryHive.ClassesRoot,
+                    RegistryView.Default))
             {
                 var commandPair = GetCommandPair(
                         baseKey,
@@ -77,10 +87,14 @@ namespace Htc.Vita.Core.Shell
 
         private static string GetRealSchemeNameFromHkcu(string schemeName)
         {
-            using (var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default))
+            using (var baseKey = RegistryKey.OpenBaseKey(
+                    RegistryHive.CurrentUser,
+                    RegistryView.Default))
             {
-                var relativeKeyPath = "Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\" + schemeName + "\\UserChoice";
-                using (var subKey = baseKey.OpenSubKey(relativeKeyPath, RegistryKeyPermissionCheck.ReadSubTree))
+                var relativeKeyPath = $"Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\{schemeName}\\UserChoice";
+                using (var subKey = baseKey.OpenSubKey(
+                        relativeKeyPath,
+                        RegistryKeyPermissionCheck.ReadSubTree))
                 {
                     const string valueName = "ProgId";
                     var value = subKey?.GetValue(valueName);
@@ -99,15 +113,19 @@ namespace Htc.Vita.Core.Shell
             return null;
         }
 
-        private static string GetDefaultIconPath(RegistryKey baseKey, string schemeName)
+        private static string GetDefaultIconPath(
+                RegistryKey baseKey,
+                string schemeName)
         {
             if (baseKey == null || string.IsNullOrWhiteSpace(schemeName))
             {
                 return null;
             }
 
-            var relativeKeyPath = schemeName + "\\DefaultIcon";
-            using (var subKey = baseKey.OpenSubKey(relativeKeyPath, RegistryKeyPermissionCheck.ReadSubTree))
+            var relativeKeyPath = $"{schemeName}\\DefaultIcon";
+            using (var subKey = baseKey.OpenSubKey(
+                    relativeKeyPath,
+                    RegistryKeyPermissionCheck.ReadSubTree))
             {
                 var value = subKey?.GetValue(null);
                 if (value == null)
@@ -136,8 +154,10 @@ namespace Htc.Vita.Core.Shell
                 return empty;
             }
 
-            var relativeKeyPath = realSchemeName + "\\Shell\\open\\command";
-            using (var subKey = baseKey.OpenSubKey(relativeKeyPath, RegistryKeyPermissionCheck.ReadSubTree))
+            var relativeKeyPath = $"{realSchemeName}\\Shell\\open\\command";
+            using (var subKey = baseKey.OpenSubKey(
+                    relativeKeyPath,
+                    RegistryKeyPermissionCheck.ReadSubTree))
             {
                 if (subKey == null)
                 {
@@ -166,7 +186,7 @@ namespace Htc.Vita.Core.Shell
                 );
                 if (whitelistOnly && !ProtocolCommandPathWhitelist.Contains(key))
                 {
-                    Logger.GetInstance(typeof(RegistryUriSchemeManager)).Warn("The command \"" + commandPath + "\" is not in " + schemeName + " whitelist");
+                    Logger.GetInstance(typeof(RegistryUriSchemeManager)).Warn($"The command \"{commandPath}\" is not in {schemeName} whitelist");
                     return empty;
                 }
 
@@ -183,10 +203,17 @@ namespace Htc.Vita.Core.Shell
 
             if (launcherCommand.StartsWith("\"")) // separate by double quote
             {
-                var secondDoubleQuoteIndex = launcherCommand.IndexOf("\"", 1, StringComparison.Ordinal);
+                var secondDoubleQuoteIndex = launcherCommand.IndexOf(
+                        "\"",
+                        1,
+                        StringComparison.Ordinal
+                );
                 if (secondDoubleQuoteIndex < 0)
                 {
-                    return new KeyValuePair<string, string>(launcherCommand.Substring(1), "");
+                    return new KeyValuePair<string, string>(
+                            launcherCommand.Substring(1),
+                            ""
+                    );
                 }
                 return new KeyValuePair<string, string>(
                         launcherCommand.Substring(1, secondDoubleQuoteIndex - 1),
@@ -194,10 +221,16 @@ namespace Htc.Vita.Core.Shell
                 );
             }
 
-            var spaceIndex = launcherCommand.IndexOf(" ", StringComparison.Ordinal); // separate by space
+            var spaceIndex = launcherCommand.IndexOf(
+                    " ",
+                    StringComparison.Ordinal
+            ); // separate by space
             if (spaceIndex < 0)
             {
-                return new KeyValuePair<string, string>(launcherCommand, "");
+                return new KeyValuePair<string, string>(
+                        launcherCommand,
+                        ""
+                );
             }
             return new KeyValuePair<string, string>(
                     launcherCommand.Substring(0, spaceIndex - 0),
