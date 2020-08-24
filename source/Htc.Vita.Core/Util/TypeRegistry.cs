@@ -53,7 +53,7 @@ namespace Htc.Vita.Core.Util
         /// <summary>
         /// Gets the instance.
         /// </summary>
-        /// <typeparam name="TBaseClass">The type of the t base class.</typeparam>
+        /// <typeparam name="TBaseClass">The base class type.</typeparam>
         /// <returns>TBaseClass.</returns>
         public static TBaseClass GetInstance<TBaseClass>()
                 where TBaseClass : class

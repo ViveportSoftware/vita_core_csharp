@@ -450,7 +450,10 @@ namespace Htc.Vita.Core.Json
                         PrettyPrint = true,
                         IndentValue = 2
                 };
-                JsonMapper.ToJson(_jsonData, writer);
+                JsonMapper.ToJson(
+                        _jsonData,
+                        writer
+                );
                 return builder.ToString();
             }
 
