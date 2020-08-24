@@ -18,7 +18,7 @@ namespace Htc.Vita.Core.Runtime
                     {
                             ServiceName = serviceName,
                             ErrorCode = (int)Interop.Windows.Error.InvalidName,
-                            ErrorMessage = "Service name \"" + serviceName + "\" is invalid"
+                            ErrorMessage = $"Service name \"{serviceName}\" is invalid"
                     };
                 }
 
@@ -35,7 +35,7 @@ namespace Htc.Vita.Core.Runtime
                         {
                                 ServiceName = serviceName,
                                 ErrorCode = errorCode,
-                                ErrorMessage = "Can not open Windows service controller manager, error code: " + errorCode
+                                ErrorMessage = $"Can not open Windows service controller manager, error code: {errorCode}"
                         };
                     }
 
@@ -56,7 +56,7 @@ namespace Htc.Vita.Core.Runtime
                         {
                             var errorCode = Marshal.GetLastWin32Error();
                             serviceInfo.ErrorCode = errorCode;
-                            serviceInfo.ErrorMessage = "Can not open Windows service \"" + serviceName + "\", error code: " + errorCode;
+                            serviceInfo.ErrorMessage = $"Can not open Windows service \"{serviceName}\", error code: {errorCode}";
                         }
                         else
                         {
@@ -77,7 +77,7 @@ namespace Htc.Vita.Core.Runtime
                             {
                                 var errorCode = Marshal.GetLastWin32Error();
                                 serviceInfo.ErrorCode = errorCode;
-                                serviceInfo.ErrorMessage = "Can not change Windows service \"" + serviceName + "\" config, error code: " + errorCode;
+                                serviceInfo.ErrorMessage = $"Can not change Windows service \"{serviceName}\" config, error code: {errorCode}";
                             }
 
                             serviceInfo = UpdateCurrentState(serviceHandle, serviceInfo);
@@ -104,7 +104,7 @@ namespace Htc.Vita.Core.Runtime
                     if (managerHandle == null || managerHandle.IsInvalid)
                     {
                         var errorCode = Marshal.GetLastWin32Error();
-                        Logger.GetInstance(typeof(Windows)).Error("Can not open Windows service controller manager, error code: " + errorCode);
+                        Logger.GetInstance(typeof(Windows)).Error($"Can not open Windows service controller manager, error code: {errorCode}");
                         return false;
                     }
 
@@ -122,7 +122,7 @@ namespace Htc.Vita.Core.Runtime
                         var errorCode = Marshal.GetLastWin32Error();
                         if (errorCode != (int)Interop.Windows.Error.ServiceDoesNotExist)
                         {
-                            Logger.GetInstance(typeof(Windows)).Error("Can not open Windows service \"" + serviceName + "\", error code: " + errorCode);
+                            Logger.GetInstance(typeof(Windows)).Error($"Can not open Windows service \"{serviceName}\", error code: {errorCode}");
                         }
                         return false;
                     }
@@ -143,7 +143,7 @@ namespace Htc.Vita.Core.Runtime
                 {
                     return StartType.Disabled;
                 }
-                Logger.GetInstance(typeof(Windows)).Error("Can not convert Windows service start type " + startType + ". Use Automatic as fallback type");
+                Logger.GetInstance(typeof(Windows)).Error($"Can not convert Windows service start type {startType}. Use Automatic as fallback type");
                 return StartType.Automatic;
             }
 
@@ -177,7 +177,7 @@ namespace Htc.Vita.Core.Runtime
                 {
                     return CurrentState.StopPending;
                 }
-                Logger.GetInstance(typeof(Windows)).Error("Can not convert Windows service current state " + currentState + ". Use Unknown as fallback state");
+                Logger.GetInstance(typeof(Windows)).Error($"Can not convert Windows service current state {currentState}. Use Unknown as fallback state");
                 return CurrentState.Unknown;
             }
 
@@ -195,7 +195,7 @@ namespace Htc.Vita.Core.Runtime
                 {
                     return Interop.Windows.ServiceStartType.AutoStart;
                 }
-                Logger.GetInstance(typeof(Windows)).Error("Can not convert service start type " + startType + " in Windows. Use Interop.Windows.ServiceStartType.AutoStart as fallback type");
+                Logger.GetInstance(typeof(Windows)).Error($"Can not convert service start type {startType} in Windows. Use Interop.Windows.ServiceStartType.AutoStart as fallback type");
                 return Interop.Windows.ServiceStartType.AutoStart;
             }
 
@@ -207,7 +207,7 @@ namespace Htc.Vita.Core.Runtime
                     {
                             ServiceName = serviceName,
                             ErrorCode = (int)Interop.Windows.Error.InvalidName,
-                            ErrorMessage = "Service name \"" + serviceName + "\" is invalid"
+                            ErrorMessage = $"Service name \"{serviceName}\" is invalid"
                     };
                 }
 
@@ -224,7 +224,7 @@ namespace Htc.Vita.Core.Runtime
                         {
                                 ServiceName = serviceName,
                                 ErrorCode = errorCode,
-                                ErrorMessage = "Can not open Windows service controller manager, error code: " + errorCode
+                                ErrorMessage = $"Can not open Windows service controller manager, error code: {errorCode}"
                         };
                     }
 
@@ -242,7 +242,7 @@ namespace Htc.Vita.Core.Runtime
                         {
                             var errorCode = Marshal.GetLastWin32Error();
                             serviceInfo.ErrorCode = errorCode;
-                            serviceInfo.ErrorMessage = "Can not open Windows service \"" + serviceName + "\", error code: " + errorCode;
+                            serviceInfo.ErrorMessage = $"Can not open Windows service \"{serviceName}\", error code: {errorCode}";
                         }
                         else
                         {
@@ -269,12 +269,12 @@ namespace Htc.Vita.Core.Runtime
                                 {
                                     var errorCode = Marshal.GetLastWin32Error();
                                     serviceInfo.ErrorCode = errorCode;
-                                    serviceInfo.ErrorMessage = "Can not query Windows service \"" + serviceName + "\" config, error code: " + errorCode;
+                                    serviceInfo.ErrorMessage = $"Can not query Windows service \"{serviceName}\" config, error code: {errorCode}";
                                 }
                             }
                             catch (Exception e)
                             {
-                                Logger.GetInstance(typeof(Windows)).Error("Can not query Windows service \"" + serviceName + "\" start type: " + e.Message);
+                                Logger.GetInstance(typeof(Windows)).Error($"Can not query Windows service \"{serviceName}\" start type: {e.Message}");
                             }
                             finally
                             {
@@ -297,7 +297,7 @@ namespace Htc.Vita.Core.Runtime
                     {
                             ServiceName = serviceName,
                             ErrorCode = (int)Interop.Windows.Error.InvalidName,
-                            ErrorMessage = "Service name \"" + serviceName + "\" is invalid"
+                            ErrorMessage = $"Service name \"{serviceName}\" is invalid"
                     };
                 }
 
@@ -314,7 +314,7 @@ namespace Htc.Vita.Core.Runtime
                         {
                                 ServiceName = serviceName,
                                 ErrorCode = errorCode,
-                                ErrorMessage = "Can not open Windows service controller manager, error code: " + errorCode
+                                ErrorMessage = $"Can not open Windows service controller manager, error code: {errorCode}"
                         };
                     }
 
@@ -332,7 +332,7 @@ namespace Htc.Vita.Core.Runtime
                         {
                             var errorCode = Marshal.GetLastWin32Error();
                             serviceInfo.ErrorCode = errorCode;
-                            serviceInfo.ErrorMessage = "Can not open Windows service \"" + serviceName + "\", error code: " + errorCode;
+                            serviceInfo.ErrorMessage = $"Can not open Windows service \"{serviceName}\", error code: {errorCode}";
                         }
                         else
                         {
@@ -349,7 +349,7 @@ namespace Htc.Vita.Core.Runtime
                             {
                                 var errorCode = Marshal.GetLastWin32Error();
                                 serviceInfo.ErrorCode = errorCode;
-                                serviceInfo.ErrorMessage = "Can not start Windows service \"" + serviceName + "\", error code: " + errorCode;
+                                serviceInfo.ErrorMessage = $"Can not start Windows service \"{serviceName}\", error code: {errorCode}";
                             }
 
                             serviceInfo = UpdateCurrentState(serviceHandle, serviceInfo);
@@ -382,7 +382,7 @@ namespace Htc.Vita.Core.Runtime
                 {
                     var errorCode = Marshal.GetLastWin32Error();
                     serviceInfo.ErrorCode = errorCode;
-                    serviceInfo.ErrorMessage = "Can not query Windows service \"" + serviceInfo.ServiceName + "\" status, error code: " + errorCode;
+                    serviceInfo.ErrorMessage = $"Can not query Windows service \"{serviceInfo.ServiceName}\" status, error code: {errorCode}";
                 }
 
                 return serviceInfo;

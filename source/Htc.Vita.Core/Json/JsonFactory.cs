@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using Htc.Vita.Core.Log;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Json
 {
@@ -9,20 +9,19 @@ namespace Htc.Vita.Core.Json
     /// </summary>
     public abstract class JsonFactory
     {
-        private static Dictionary<string, JsonFactory> Instances { get; } = new Dictionary<string, JsonFactory>();
-
-        private static readonly object InstancesLock = new object();
-
-        private static Type _defaultType = typeof(LitJsonJsonFactory);
+        static JsonFactory()
+        {
+            TypeRegistry.RegisterDefault<JsonFactory, LitJsonJsonFactory>();
+        }
 
         /// <summary>
         /// Registers the instance type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public static void Register<T>() where T : JsonFactory
+        public static void Register<T>()
+                where T : JsonFactory, new()
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(JsonFactory)).Info($"Registered default {nameof(JsonFactory)} type to {_defaultType}");
+            TypeRegistry.Register<JsonFactory, T>();
         }
 
         /// <summary>
@@ -31,55 +30,18 @@ namespace Htc.Vita.Core.Json
         /// <returns>JsonFactory.</returns>
         public static JsonFactory GetInstance()
         {
-            JsonFactory instance;
-            try
-            {
-                instance = DoGetInstance(_defaultType);
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(JsonFactory)).Fatal($"Instance initialization error: {e}");
-                Logger.GetInstance(typeof(JsonFactory)).Info($"Initializing {typeof(LitJsonJsonFactory).FullName}...");
-                instance = new LitJsonJsonFactory();
-            }
-            return instance;
+            return TypeRegistry.GetInstance<JsonFactory>();
         }
 
-        private static JsonFactory DoGetInstance(Type type)
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>JsonFactory.</returns>
+        public static JsonFactory GetInstance<T>()
+                where T : JsonFactory, new()
         {
-            if (type == null)
-            {
-                throw new ArgumentException($"Invalid arguments to get {nameof(JsonFactory)} instance");
-            }
-
-            var key = type.FullName + "_";
-            JsonFactory instance = null;
-            if (Instances.ContainsKey(key))
-            {
-                instance = Instances[key];
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(JsonFactory)).Info($"Initializing {key}...");
-                var constructor = type.GetConstructor(new Type[] { });
-                if (constructor != null)
-                {
-                    instance = (JsonFactory)constructor.Invoke(new object[] { });
-                }
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(JsonFactory)).Info($"Initializing {typeof(LitJsonJsonFactory).FullName}...");
-                instance = new LitJsonJsonFactory();
-            }
-            lock (InstancesLock)
-            {
-                if (!Instances.ContainsKey(key))
-                {
-                    Instances.Add(key, instance);
-                }
-            }
-            return instance;
+            return TypeRegistry.GetInstance<JsonFactory, T>();
         }
 
         /// <summary>

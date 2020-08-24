@@ -106,7 +106,10 @@ namespace Htc.Vita.Core.Preference
         /// <returns>The value.</returns>
         public bool ParseBool(string key)
         {
-            return ParseBool(key, false);
+            return ParseBool(
+                    key,
+                    false
+            );
         }
 
         /// <summary>
@@ -115,12 +118,17 @@ namespace Htc.Vita.Core.Preference
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>The value.</returns>
-        public bool ParseBool(string key, bool defaultValue)
+        public bool ParseBool(
+                string key,
+                bool defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseBool(key, defaultValue);
+                result = OnParseBool(
+                        key,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -136,7 +144,10 @@ namespace Htc.Vita.Core.Preference
         /// <returns>System.Double.</returns>
         public double ParseDouble(string key)
         {
-            return ParseDouble(key, 0.0D);
+            return ParseDouble(
+                    key,
+                    0.0D
+            );
         }
 
         /// <summary>
@@ -145,12 +156,17 @@ namespace Htc.Vita.Core.Preference
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Double.</returns>
-        public double ParseDouble(string key, double defaultValue)
+        public double ParseDouble(
+                string key,
+                double defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseDouble(key, defaultValue);
+                result = OnParseDouble(
+                        key,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -175,12 +191,17 @@ namespace Htc.Vita.Core.Preference
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Single.</returns>
-        public float ParseFloat(string key, float defaultValue)
+        public float ParseFloat(
+                string key,
+                float defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseFloat(key, defaultValue);
+                result = OnParseFloat(
+                        key,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -196,7 +217,10 @@ namespace Htc.Vita.Core.Preference
         /// <returns>System.Int32.</returns>
         public int ParseInt(string key)
         {
-            return ParseInt(key, 0);
+            return ParseInt(
+                    key,
+                    0
+            );
         }
 
         /// <summary>
@@ -205,12 +229,17 @@ namespace Htc.Vita.Core.Preference
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int32.</returns>
-        public int ParseInt(string key, int defaultValue)
+        public int ParseInt(
+                string key,
+                int defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseInt(key, defaultValue);
+                result = OnParseInt(
+                        key,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -226,7 +255,10 @@ namespace Htc.Vita.Core.Preference
         /// <returns>System.Int64.</returns>
         public long ParseLong(string key)
         {
-            return ParseLong(key, 0L);
+            return ParseLong(
+                    key,
+                    0L
+            );
         }
 
         /// <summary>
@@ -235,12 +267,17 @@ namespace Htc.Vita.Core.Preference
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int64.</returns>
-        public long ParseLong(string key, long defaultValue)
+        public long ParseLong(
+                string key,
+                long defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseLong(key, defaultValue);
+                result = OnParseLong(
+                        key,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -256,7 +293,10 @@ namespace Htc.Vita.Core.Preference
         /// <returns>System.String.</returns>
         public string ParseString(string key)
         {
-            return ParseString(key, null);
+            return ParseString(
+                    key,
+                    null
+            );
         }
 
         /// <summary>
@@ -265,12 +305,17 @@ namespace Htc.Vita.Core.Preference
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.String.</returns>
-        public string ParseString(string key, string defaultValue)
+        public string ParseString(
+                string key,
+                string defaultValue)
         {
             var result = defaultValue;
             try
             {
-                result = OnParseString(key, defaultValue);
+                result = OnParseString(
+                        key,
+                        defaultValue
+                );
             }
             catch (Exception e)
             {
@@ -285,12 +330,17 @@ namespace Htc.Vita.Core.Preference
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>Preferences.</returns>
-        public Preferences Put(string key, bool value)
+        public Preferences Put(
+                string key,
+                bool value)
         {
             var result = this;
             try
             {
-                result = OnPutBool(key, value);
+                result = OnPutBool(
+                        key,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -305,12 +355,17 @@ namespace Htc.Vita.Core.Preference
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>Preferences.</returns>
-        public Preferences Put(string key, double value)
+        public Preferences Put(
+                string key,
+                double value)
         {
             var result = this;
             try
             {
-                result = OnPutDouble(key, value);
+                result = OnPutDouble(
+                        key,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -325,12 +380,17 @@ namespace Htc.Vita.Core.Preference
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>Preferences.</returns>
-        public Preferences Put(string key, float value)
+        public Preferences Put(
+                string key,
+                float value)
         {
             var result = this;
             try
             {
-                result = OnPutFloat(key, value);
+                result = OnPutFloat(
+                        key,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -345,12 +405,17 @@ namespace Htc.Vita.Core.Preference
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>Preferences.</returns>
-        public Preferences Put(string key, int value)
+        public Preferences Put(
+                string key,
+                int value)
         {
             var result = this;
             try
             {
-                result = OnPutInt(key, value);
+                result = OnPutInt(
+                        key,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -365,12 +430,17 @@ namespace Htc.Vita.Core.Preference
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>Preferences.</returns>
-        public Preferences Put(string key, long value)
+        public Preferences Put(
+                string key,
+                long value)
         {
             var result = this;
             try
             {
-                result = OnPutLong(key, value);
+                result = OnPutLong(
+                        key,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -385,12 +455,17 @@ namespace Htc.Vita.Core.Preference
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>Preferences.</returns>
-        public Preferences Put(string key, string value)
+        public Preferences Put(
+                string key,
+                string value)
         {
             var result = this;
             try
             {
-                result = OnPutString(key, value);
+                result = OnPutString(
+                        key,
+                        value
+                );
             }
             catch (Exception e)
             {
@@ -426,84 +501,120 @@ namespace Htc.Vita.Core.Preference
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Boolean.</returns>
-        protected abstract bool OnParseBool(string key, bool defaultValue);
+        protected abstract bool OnParseBool(
+                string key,
+                bool defaultValue
+        );
         /// <summary>
         /// Called when parsing double value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Double.</returns>
-        protected abstract double OnParseDouble(string key, double defaultValue);
+        protected abstract double OnParseDouble(
+                string key,
+                double defaultValue
+        );
         /// <summary>
         /// Called when parsing float value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Single.</returns>
-        protected abstract float OnParseFloat(string key, float defaultValue);
+        protected abstract float OnParseFloat(
+                string key,
+                float defaultValue
+        );
         /// <summary>
         /// Called when parsing int value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int32.</returns>
-        protected abstract int OnParseInt(string key, int defaultValue);
+        protected abstract int OnParseInt(
+                string key,
+                int defaultValue
+        );
         /// <summary>
         /// Called when parsing long value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int64.</returns>
-        protected abstract long OnParseLong(string key, long defaultValue);
+        protected abstract long OnParseLong(
+                string key,
+                long defaultValue
+        );
         /// <summary>
         /// Called when parsing string value.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.String.</returns>
-        protected abstract string OnParseString(string key, string defaultValue);
+        protected abstract string OnParseString(
+                string key,
+                string defaultValue
+        );
         /// <summary>
         /// Called when putting the value with the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">if set to <c>true</c> [value].</param>
         /// <returns>Preferences.</returns>
-        protected abstract Preferences OnPutBool(string key, bool value);
+        protected abstract Preferences OnPutBool(
+                string key,
+                bool value
+        );
         /// <summary>
         /// Called when putting the value with the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>Preferences.</returns>
-        protected abstract Preferences OnPutDouble(string key, double value);
+        protected abstract Preferences OnPutDouble(
+                string key,
+                double value
+        );
         /// <summary>
         /// Called when putting the value with the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>Preferences.</returns>
-        protected abstract Preferences OnPutFloat(string key, float value);
+        protected abstract Preferences OnPutFloat(
+                string key,
+                float value
+        );
         /// <summary>
         /// Called when putting the value with the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>Preferences.</returns>
-        protected abstract Preferences OnPutInt(string key, int value);
+        protected abstract Preferences OnPutInt(
+                string key,
+                int value
+        );
         /// <summary>
         /// Called when putting the value with the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>Preferences.</returns>
-        protected abstract Preferences OnPutLong(string key, long value);
+        protected abstract Preferences OnPutLong(
+                string key,
+                long value
+        );
         /// <summary>
         /// Called when putting the value with the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns>Preferences.</returns>
-        protected abstract Preferences OnPutString(string key, string value);
+        protected abstract Preferences OnPutString(
+                string key,
+                string value
+        );
         /// <summary>
         /// Called when saving.
         /// </summary>

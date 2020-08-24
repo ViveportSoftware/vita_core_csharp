@@ -16,9 +16,14 @@ namespace Htc.Vita.Core.Crypto
         private const int BufferSizeInByte = 1024 * 128;
 
         /// <inheritdoc />
-        protected override string OnGenerateInBase64(FileInfo file, CancellationToken cancellationToken)
+        protected override string OnGenerateInBase64(
+                FileInfo file,
+                CancellationToken cancellationToken)
         {
-            return DoGenerateInBase64(file, cancellationToken);
+            return DoGenerateInBase64(
+                    file,
+                    cancellationToken
+            );
         }
 
         /// <inheritdoc />
@@ -28,9 +33,14 @@ namespace Htc.Vita.Core.Crypto
         }
 
         /// <inheritdoc />
-        protected override string OnGenerateInHex(FileInfo file, CancellationToken cancellationToken)
+        protected override string OnGenerateInHex(
+                FileInfo file,
+                CancellationToken cancellationToken)
         {
-            return DoGenerateInHex(file, cancellationToken);
+            return DoGenerateInHex(
+                    file,
+                    cancellationToken
+            );
         }
 
         /// <inheritdoc />
@@ -45,7 +55,9 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>System.String.</returns>
-        public static string DoGenerateInBase64(FileInfo file, CancellationToken cancellationToken)
+        public static string DoGenerateInBase64(
+                FileInfo file,
+                CancellationToken cancellationToken)
         {
             return Convert.ToBase64String(GenerateInBytes(
                     file,
@@ -72,7 +84,9 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>System.String.</returns>
-        public static string DoGenerateInHex(FileInfo file, CancellationToken cancellationToken)
+        public static string DoGenerateInHex(
+                FileInfo file,
+                CancellationToken cancellationToken)
         {
             return Convert.ToHexString(GenerateInBytes(
                     file,
@@ -93,7 +107,9 @@ namespace Htc.Vita.Core.Crypto
             }
         }
 
-        private static byte[] GenerateInBytes(FileInfo file, CancellationToken cancellationToken)
+        private static byte[] GenerateInBytes(
+                FileInfo file,
+                CancellationToken cancellationToken)
         {
             var buffer = new byte[BufferSizeInByte];
             using (var digest = MD5.Create())
@@ -101,7 +117,10 @@ namespace Htc.Vita.Core.Crypto
                 using (var readStream = file.OpenRead())
                 {
                     int length;
-                    while ((length = readStream.Read(buffer, 0, buffer.Length)) > 0)
+                    while ((length = readStream.Read(
+                            buffer,
+                            0,
+                            buffer.Length)) > 0)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         digest.TransformBlock(

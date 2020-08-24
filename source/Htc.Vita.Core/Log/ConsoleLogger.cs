@@ -18,79 +18,99 @@ namespace Htc.Vita.Core.Log
         }
 
         /// <inheritdoc />
-        protected override void OnDebug(string tag, string message)
+        protected override void OnDebug(
+                string tag,
+                string message)
         {
-            Console.WriteLine("[" + Name + "][Debug][" + tag + "] " + message);
+            OnDebug(
+                    tag,
+                    message,
+                    null
+            );
         }
 
         /// <inheritdoc />
-        protected override void OnDebug(string tag, string message, Exception exception)
+        protected override void OnDebug(
+                string tag,
+                string message,
+                Exception exception)
         {
-            if (exception == null)
-            {
-                Console.WriteLine("[" + Name + "][Debug][" + tag + "] " + message);
-            }
-            else
-            {
-                Console.WriteLine("[" + Name + "][Debug][" + tag + "] " + message + ", " + exception.StackTrace);
-            }
+            Console.WriteLine(exception == null
+                    ? $"[{Name}][Debug][{tag}] {message}"
+                    : $"[{Name}][Debug][{tag}] {message}, {exception.StackTrace}"
+            );
         }
 
         /// <inheritdoc />
-        protected override void OnError(string tag, string message)
+        protected override void OnError(
+                string tag,
+                string message)
         {
-            Console.WriteLine("[" + Name + "][Error][" + tag + "] " + message);
+            OnError(
+                    tag,
+                    message,
+                    null
+            );
         }
 
         /// <inheritdoc />
-        protected override void OnError(string tag, string message, Exception exception)
+        protected override void OnError(
+                string tag,
+                string message,
+                Exception exception)
         {
-            if (exception == null)
-            {
-                Console.WriteLine("[" + Name + "][Error][" + tag + "] " + message);
-            }
-            else
-            {
-                Console.WriteLine("[" + Name + "][Error][" + tag + "] " + message + ", " + exception.StackTrace);
-            }
+            Console.WriteLine(exception == null
+                    ? $"[{Name}][Error][{tag}] {message}"
+                    : $"[{Name}][Error][{tag}] {message}, {exception.StackTrace}"
+            );
         }
 
         /// <inheritdoc />
-        protected override void OnFatal(string tag, string message)
+        protected override void OnFatal(
+                string tag,
+                string message)
         {
-            Console.WriteLine("[" + Name + "][Fatal][" + tag + "] " + message);
+            OnFatal(
+                    tag,
+                    message,
+                    null
+            );
         }
 
         /// <inheritdoc />
-        protected override void OnFatal(string tag, string message, Exception exception)
+        protected override void OnFatal(
+                string tag,
+                string message,
+                Exception exception)
         {
-            if (exception == null)
-            {
-                Console.WriteLine("[" + Name + "][Fatal][" + tag + "] " + message);
-            }
-            else
-            {
-                Console.WriteLine("[" + Name + "][Fatal][" + tag + "] " + message + ", " + exception.StackTrace);
-            }
+            Console.WriteLine(exception == null
+                    ? $"[{Name}][Fatal][{tag}] {message}"
+                    : $"[{Name}][Fatal][{tag}] {message}, {exception.StackTrace}"
+            );
         }
 
         /// <inheritdoc />
-        protected override void OnInfo(string tag, string message)
+        protected override void OnInfo(
+                string tag,
+                string message)
         {
-            Console.WriteLine("[" + Name + "][Info][" + tag + "] " + message);
+            OnInfo(
+                    tag,
+                    message,
+                    null
+            );
         }
 
         /// <inheritdoc />
-        protected override void OnInfo(string tag, string message, Exception exception)
+        protected override void OnInfo(
+                string tag,
+                string message,
+                Exception exception)
         {
-            if (exception == null)
-            {
-                Console.WriteLine("[" + Name + "][Info][" + tag + "] " + message);
-            }
-            else
-            {
-                Console.WriteLine("[" + Name + "][Info][" + tag + "] " + message + ", " + exception.StackTrace);
-            }
+            Console.WriteLine(exception == null
+                    ? $"[{Name}][Info][{tag}] {message}"
+                    : $"[{Name}][Info][{tag}] {message}, {exception.StackTrace}"
+            );
         }
 
         /// <inheritdoc />
@@ -100,41 +120,51 @@ namespace Htc.Vita.Core.Log
         }
 
         /// <inheritdoc />
-        protected override void OnTrace(string tag, string message)
+        protected override void OnTrace(
+                string tag,
+                string message)
         {
-            Console.WriteLine("[" + Name + "][Trace][" + tag + "] " + message);
+            OnTrace(
+                    tag,
+                    message,
+                    null
+            );
         }
 
         /// <inheritdoc />
-        protected override void OnTrace(string tag, string message, Exception exception)
+        protected override void OnTrace(
+                string tag,
+                string message,
+                Exception exception)
         {
-            if (exception == null)
-            {
-                Console.WriteLine("[" + Name + "][Trace][" + tag + "] " + message);
-            }
-            else
-            {
-                Console.WriteLine("[" + Name + "][Trace][" + tag + "] " + message + ", " + exception.StackTrace);
-            }
+            Console.WriteLine(exception == null
+                    ? $"[{Name}][Trace][{tag}] {message}"
+                    : $"[{Name}][Trace][{tag}] {message}, {exception.StackTrace}"
+            );
         }
 
         /// <inheritdoc />
-        protected override void OnWarn(string tag, string message)
+        protected override void OnWarn(
+                string tag,
+                string message)
         {
-            Console.WriteLine("[" + Name + "][Warn][" + tag + "] " + message);
+            OnWarn(
+                    tag,
+                    message,
+                    null
+            );
         }
 
         /// <inheritdoc />
-        protected override void OnWarn(string tag, string message, Exception exception)
+        protected override void OnWarn(
+                string tag,
+                string message,
+                Exception exception)
         {
-            if (exception == null)
-            {
-                Console.WriteLine("[" + Name + "][Warn][" + tag + "] " + message);
-            }
-            else
-            {
-                Console.WriteLine("[" + Name + "][Warn][" + tag + "] " + message + ", " + exception.StackTrace);
-            }
+            Console.WriteLine(exception == null
+                    ? $"[{Name}][Warn][{tag}] {message}"
+                    : $"[{Name}][Warn][{tag}] {message}, {exception.StackTrace}"
+            );
         }
     }
 }

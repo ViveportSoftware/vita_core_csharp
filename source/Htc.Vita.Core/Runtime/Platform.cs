@@ -268,7 +268,9 @@ namespace Htc.Vita.Core.Runtime
 
             try
             {
-                using (var processHandle = new Interop.Windows.SafeProcessHandle(Process.GetCurrentProcess(), false))
+                using (var processHandle = new Interop.Windows.SafeProcessHandle(
+                        Process.GetCurrentProcess(),
+                        false))
                 {
                     var processMachine = Interop.Windows.ImageFileMachine.Unknown;
                     var nativeMachine = Interop.Windows.ImageFileMachine.Unknown;
@@ -321,7 +323,15 @@ namespace Htc.Vita.Core.Runtime
         /// <returns>DateTime.</returns>
         public static DateTime GetEpochTime()
         {
-            return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return new DateTime(
+                    1970,
+                    1,
+                    1,
+                    0,
+                    0,
+                    0,
+                    DateTimeKind.Utc
+            );
         }
 
         /// <summary>
@@ -361,7 +371,12 @@ namespace Htc.Vita.Core.Runtime
 
         private static string GetMachineGuidFromRegistry()
         {
-            return Registry.GetStringValue(Registry.Hive.LocalMachine, "SOFTWARE\\Microsoft\\Cryptography", "MachineGuid", "");
+            return Registry.GetStringValue(
+                    Registry.Hive.LocalMachine,
+                    "SOFTWARE\\Microsoft\\Cryptography",
+                    "MachineGuid",
+                    ""
+            );
         }
 
         /// <summary>
@@ -384,7 +399,16 @@ namespace Htc.Vita.Core.Runtime
         /// <returns>DateTime.</returns>
         public static DateTime GetMaxTimeUtc()
         {
-            return new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Utc).Subtract(TimeSpan.FromHours(13)); //for GMT +13:00
+            return new DateTime(
+                    9999,
+                    12,
+                    31,
+                    23,
+                    59,
+                    59,
+                    999,
+                    DateTimeKind.Utc
+            ).Subtract(TimeSpan.FromHours(13)); //for GMT +13:00
         }
 
         /// <summary>
@@ -393,7 +417,10 @@ namespace Htc.Vita.Core.Runtime
         /// <returns>DateTime.</returns>
         public static DateTime GetMinTimeUtc()
         {
-            return new DateTime(0L, DateTimeKind.Utc).Add(TimeSpan.FromHours(12)); //for GMT -12:00
+            return new DateTime(
+                    0L,
+                    DateTimeKind.Utc
+            ).Add(TimeSpan.FromHours(12)); //for GMT -12:00
         }
 
         /// <summary>
@@ -435,7 +462,9 @@ namespace Htc.Vita.Core.Runtime
             }
             try
             {
-                using (var processHandle = new Interop.Windows.SafeProcessHandle(Process.GetCurrentProcess(), false))
+                using (var processHandle = new Interop.Windows.SafeProcessHandle(
+                        Process.GetCurrentProcess(),
+                        false))
                 {
                     var isWow64 = false;
                     var success = Interop.Windows.IsWow64Process(
@@ -496,7 +525,7 @@ namespace Htc.Vita.Core.Runtime
             {
                 return;
             }
-            Trace.WriteLine("[" + qualifiedName + "] " + message);
+            Trace.WriteLine($"[{qualifiedName}] {message}");
         }
 
         /// <summary>

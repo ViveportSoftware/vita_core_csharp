@@ -15,7 +15,10 @@ namespace Htc.Vita.Core.Crypto
         /// <returns>Task&lt;System.String&gt;.</returns>
         public Task<string> GenerateInBase64Async(FileInfo file)
         {
-            return GenerateInBase64Async(file, CancellationToken.None);
+            return GenerateInBase64Async(
+                    file,
+                    CancellationToken.None
+            );
         }
 
         /// <summary>
@@ -24,7 +27,9 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;System.String&gt;.</returns>
-        public async Task<string> GenerateInBase64Async(FileInfo file, CancellationToken cancellationToken)
+        public async Task<string> GenerateInBase64Async(
+                FileInfo file,
+                CancellationToken cancellationToken)
         {
             if (file == null || !file.Exists)
             {
@@ -34,7 +39,10 @@ namespace Htc.Vita.Core.Crypto
             var result = string.Empty;
             try
             {
-                result = await OnGenerateInBase64Async(file, cancellationToken).ConfigureAwait(false);
+                result = await OnGenerateInBase64Async(
+                        file,
+                        cancellationToken
+                ).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
@@ -42,7 +50,7 @@ namespace Htc.Vita.Core.Crypto
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Sha256)).Fatal("Generating checksum in base64 in async error: " + e);
+                Logger.GetInstance(typeof(Sha256)).Fatal($"Generating checksum in base64 in async error: {e}");
             }
             return result;
         }
@@ -54,7 +62,10 @@ namespace Htc.Vita.Core.Crypto
         /// <returns>Task&lt;System.String&gt;.</returns>
         public Task<string> GenerateInHexAsync(FileInfo file)
         {
-            return GenerateInHexAsync(file, CancellationToken.None);
+            return GenerateInHexAsync(
+                    file,
+                    CancellationToken.None
+            );
         }
 
         /// <summary>
@@ -63,7 +74,9 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;System.String&gt;.</returns>
-        public async Task<string> GenerateInHexAsync(FileInfo file, CancellationToken cancellationToken)
+        public async Task<string> GenerateInHexAsync(
+                FileInfo file,
+                CancellationToken cancellationToken)
         {
             if (file == null || !file.Exists)
             {
@@ -73,7 +86,10 @@ namespace Htc.Vita.Core.Crypto
             var result = string.Empty;
             try
             {
-                result = await OnGenerateInHexAsync(file, cancellationToken).ConfigureAwait(false);
+                result = await OnGenerateInHexAsync(
+                        file,
+                        cancellationToken
+                ).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
@@ -92,9 +108,15 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="checksum">The checksum.</param>
         /// <returns>Task&lt;System.Boolean&gt;.</returns>
-        public Task<bool> ValidateInAllAsync(FileInfo file, string checksum)
+        public Task<bool> ValidateInAllAsync(
+                FileInfo file,
+                string checksum)
         {
-            return ValidateInAllAsync(file, checksum, CancellationToken.None);
+            return ValidateInAllAsync(
+                    file,
+                    checksum,
+                    CancellationToken.None
+            );
         }
 
         /// <summary>
@@ -104,7 +126,10 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="checksum">The checksum.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;System.Boolean&gt;.</returns>
-        public async Task<bool> ValidateInAllAsync(FileInfo file, string checksum, CancellationToken cancellationToken)
+        public async Task<bool> ValidateInAllAsync(
+                FileInfo file,
+                string checksum,
+                CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(checksum))
             {
@@ -113,11 +138,19 @@ namespace Htc.Vita.Core.Crypto
 
             if (checksum.Length == Base64Length)
             {
-                return await ValidateInBase64Async(file, checksum, cancellationToken).ConfigureAwait(false);
+                return await ValidateInBase64Async(
+                        file,
+                        checksum,
+                        cancellationToken
+                ).ConfigureAwait(false);
             }
             if (checksum.Length == HexLength)
             {
-                return await ValidateInHexAsync(file, checksum, cancellationToken).ConfigureAwait(false);
+                return await ValidateInHexAsync(
+                        file,
+                        checksum,
+                        cancellationToken
+                ).ConfigureAwait(false);
             }
             return false;
         }
@@ -128,9 +161,15 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="checksum">The checksum.</param>
         /// <returns>Task&lt;System.Boolean&gt;.</returns>
-        public Task<bool> ValidateInBase64Async(FileInfo file, string checksum)
+        public Task<bool> ValidateInBase64Async(
+                FileInfo file,
+                string checksum)
         {
-            return ValidateInBase64Async(file, checksum, CancellationToken.None);
+            return ValidateInBase64Async(
+                    file,
+                    checksum,
+                    CancellationToken.None
+            );
         }
 
         /// <summary>
@@ -140,7 +179,10 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="checksum">The checksum.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;System.Boolean&gt;.</returns>
-        public async Task<bool> ValidateInBase64Async(FileInfo file, string checksum, CancellationToken cancellationToken)
+        public async Task<bool> ValidateInBase64Async(
+                FileInfo file,
+                string checksum,
+                CancellationToken cancellationToken)
         {
             if (file == null || !file.Exists || string.IsNullOrWhiteSpace(checksum))
             {
@@ -150,7 +192,10 @@ namespace Htc.Vita.Core.Crypto
             var result = false;
             try
             {
-                result = checksum.Equals(await OnGenerateInBase64Async(file, cancellationToken).ConfigureAwait(false));
+                result = checksum.Equals(await OnGenerateInBase64Async(
+                        file,
+                        cancellationToken
+                ).ConfigureAwait(false));
             }
             catch (OperationCanceledException)
             {
@@ -169,9 +214,15 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="checksum">The checksum.</param>
         /// <returns>Task&lt;System.Boolean&gt;.</returns>
-        public Task<bool> ValidateInHexAsync(FileInfo file, string checksum)
+        public Task<bool> ValidateInHexAsync(
+                FileInfo file,
+                string checksum)
         {
-            return ValidateInHexAsync(file, checksum, CancellationToken.None);
+            return ValidateInHexAsync(
+                    file,
+                    checksum,
+                    CancellationToken.None
+            );
         }
 
         /// <summary>
@@ -181,7 +232,10 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="checksum">The checksum.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;System.Boolean&gt;.</returns>
-        public async Task<bool> ValidateInHexAsync(FileInfo file, string checksum, CancellationToken cancellationToken)
+        public async Task<bool> ValidateInHexAsync(
+                FileInfo file,
+                string checksum,
+                CancellationToken cancellationToken)
         {
             if (file == null || !file.Exists || string.IsNullOrWhiteSpace(checksum))
             {
@@ -191,7 +245,10 @@ namespace Htc.Vita.Core.Crypto
             var result = false;
             try
             {
-                result = checksum.ToLowerInvariant().Equals(await OnGenerateInHexAsync(file, cancellationToken).ConfigureAwait(false));
+                result = checksum.ToLowerInvariant().Equals(await OnGenerateInHexAsync(
+                        file,
+                        cancellationToken
+                ).ConfigureAwait(false));
             }
             catch (OperationCanceledException)
             {
@@ -210,13 +267,19 @@ namespace Htc.Vita.Core.Crypto
         /// <param name="file">The file.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;System.String&gt;.</returns>
-        protected abstract Task<string> OnGenerateInBase64Async(FileInfo file, CancellationToken cancellationToken);
+        protected abstract Task<string> OnGenerateInBase64Async(
+                FileInfo file,
+                CancellationToken cancellationToken
+        );
         /// <summary>
         /// Called when generating the checksum in hexadecimal form asynchronously.
         /// </summary>
         /// <param name="file">The file.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;System.String&gt;.</returns>
-        protected abstract Task<string> OnGenerateInHexAsync(FileInfo file, CancellationToken cancellationToken);
+        protected abstract Task<string> OnGenerateInHexAsync(
+                FileInfo file,
+                CancellationToken cancellationToken
+        );
     }
 }

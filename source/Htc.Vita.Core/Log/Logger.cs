@@ -13,7 +13,7 @@ namespace Htc.Vita.Core.Log
 
         private static readonly object InstancesLock = new object();
 
-        private static Type defaultType = typeof(ConsoleLogger);
+        private static Type _defaultType = typeof(ConsoleLogger);
 
         /// <summary>
         /// Gets the name.
@@ -22,13 +22,13 @@ namespace Htc.Vita.Core.Log
         public string Name { get; } = string.Empty;
 
         /// <summary>
-        /// Registers instance type.
+        /// Registers the instance type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         public static void Register<T>() where T : Logger
         {
-            defaultType = typeof(T);
-            Console.Error.WriteLine("Registered default logger type to " + defaultType);
+            _defaultType = typeof(T);
+            Console.Error.WriteLine($"Registered default {nameof(Logger)} type to {_defaultType}");
         }
 
         /// <summary>
@@ -65,12 +65,12 @@ namespace Htc.Vita.Core.Log
             Logger instance;
             try
             {
-                instance = DoGetInstance(defaultType, name);
+                instance = DoGetInstance(_defaultType, name);
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine("[Fatal][Logger.GetInstance] " + e);
-                Console.Error.WriteLine("Initializing " + typeof(ConsoleLogger).FullName + "...");
+                Console.Error.WriteLine($"[Fatal][Logger.GetInstance] {e}");
+                Console.Error.WriteLine($"Initializing {typeof(ConsoleLogger).FullName}...");
                 instance = new ConsoleLogger(name);
             }
             return instance;
@@ -82,7 +82,8 @@ namespace Htc.Vita.Core.Log
         /// <typeparam name="T"></typeparam>
         /// <param name="type">The type.</param>
         /// <returns>Logger.</returns>
-        public static Logger GetInstance<T>(Type type) where T : Logger
+        public static Logger GetInstance<T>(Type type)
+                where T : Logger
         {
             var name = string.Empty;
             if (type != null)
@@ -97,7 +98,8 @@ namespace Htc.Vita.Core.Log
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns>Logger.</returns>
-        public static Logger GetInstance<T>() where T : Logger
+        public static Logger GetInstance<T>()
+                where T : Logger
         {
             return GetInstance<T>("");
         }
@@ -108,7 +110,8 @@ namespace Htc.Vita.Core.Log
         /// <typeparam name="T"></typeparam>
         /// <param name="name">The name.</param>
         /// <returns>Logger.</returns>
-        public static Logger GetInstance<T>(string name) where T : Logger
+        public static Logger GetInstance<T>(string name)
+                where T : Logger
         {
             Logger instance;
             try
@@ -117,21 +120,23 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine("[Fatal][Logger.GetInstance<T>] " + e);
-                Console.Error.WriteLine("Initializing " + typeof(ConsoleLogger).FullName + "...");
+                Console.Error.WriteLine($"[Fatal][Logger.GetInstance<T>] {e}");
+                Console.Error.WriteLine($"Initializing {typeof(ConsoleLogger).FullName}...");
                 instance = new ConsoleLogger(name);
             }
             return instance;
         }
 
-        private static Logger DoGetInstance(Type type, string name)
+        private static Logger DoGetInstance(
+                Type type,
+                string name)
         {
             if (type == null || name == null)
             {
                 throw new ArgumentException("Invalid arguments to get logger instance");
             }
 
-            var key = type.FullName + "_" + name;
+            var key = $"{type.FullName}_{name}";
             Logger instance = null;
             if (Instances.ContainsKey(key))
             {
@@ -139,7 +144,7 @@ namespace Htc.Vita.Core.Log
             }
             if (instance == null)
             {
-                Console.Error.WriteLine("Initializing " + key + "...");
+                Console.Error.WriteLine($"Initializing {key}...");
                 var constructor = type.GetConstructor(new[] { typeof(string) });
                 if (constructor != null)
                 {
@@ -148,7 +153,7 @@ namespace Htc.Vita.Core.Log
             }
             if (instance == null)
             {
-                Console.Error.WriteLine("Initializing " + typeof(ConsoleLogger).FullName + "[" + name + "]...");
+                Console.Error.WriteLine($"Initializing {typeof(ConsoleLogger).FullName}[{name}]...");
                 instance = new ConsoleLogger(name);
             }
             lock (InstancesLock)
@@ -178,15 +183,20 @@ namespace Htc.Vita.Core.Log
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="tag">The tag.</param>
-        public void Debug(string message, [CallerMemberName] string tag = "")
+        public void Debug(
+                string message,
+                [CallerMemberName] string tag = "")
         {
             try
             {
-                OnDebug(tag, message);
+                OnDebug(
+                        tag,
+                        message
+                );
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine("[Fatal][Logger.Debug] " + e);
+                Console.Error.WriteLine($"[Fatal][Logger.Debug] {e}");
             }
         }
 
@@ -196,15 +206,22 @@ namespace Htc.Vita.Core.Log
         /// <param name="message">The message.</param>
         /// <param name="exception">The exception.</param>
         /// <param name="tag">The tag.</param>
-        public void Debug(string message, Exception exception, [CallerMemberName] string tag = "")
+        public void Debug(
+                string message,
+                Exception exception,
+                [CallerMemberName] string tag = "")
         {
             try
             {
-                OnDebug(tag, message, exception);
+                OnDebug(
+                        tag,
+                        message,
+                        exception
+                );
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine("[Fatal][Logger.Debug] " + e);
+                Console.Error.WriteLine($"[Fatal][Logger.Debug] {e}");
             }
         }
 
@@ -213,15 +230,20 @@ namespace Htc.Vita.Core.Log
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="tag">The tag.</param>
-        public void Error(string message, [CallerMemberName] string tag = "")
+        public void Error(
+                string message,
+                [CallerMemberName] string tag = "")
         {
             try
             {
-                OnError(tag, message);
+                OnError(
+                        tag,
+                        message
+                );
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine("[Fatal][Logger.Error] " + e);
+                Console.Error.WriteLine($"[Fatal][Logger.Error] {e}");
             }
         }
 
@@ -231,15 +253,22 @@ namespace Htc.Vita.Core.Log
         /// <param name="message">The message.</param>
         /// <param name="exception">The exception.</param>
         /// <param name="tag">The tag.</param>
-        public void Error(string message, Exception exception, [CallerMemberName] string tag = "")
+        public void Error(
+                string message,
+                Exception exception,
+                [CallerMemberName] string tag = "")
         {
             try
             {
-                OnError(tag, message, exception);
+                OnError(
+                        tag,
+                        message,
+                        exception
+                );
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine("[Fatal][Logger.Error] " + e);
+                Console.Error.WriteLine($"[Fatal][Logger.Error] {e}");
             }
         }
 
@@ -248,15 +277,20 @@ namespace Htc.Vita.Core.Log
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="tag">The tag.</param>
-        public void Fatal(string message, [CallerMemberName] string tag = "")
+        public void Fatal(
+                string message,
+                [CallerMemberName] string tag = "")
         {
             try
             {
-                OnFatal(tag, message);
+                OnFatal(
+                        tag,
+                        message
+                );
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine("[Fatal][Logger.Fatal] " + e);
+                Console.Error.WriteLine($"[Fatal][Logger.Fatal] {e}");
             }
         }
 
@@ -266,15 +300,22 @@ namespace Htc.Vita.Core.Log
         /// <param name="message">The message.</param>
         /// <param name="exception">The exception.</param>
         /// <param name="tag">The tag.</param>
-        public void Fatal(string message, Exception exception, [CallerMemberName] string tag = "")
+        public void Fatal(
+                string message,
+                Exception exception,
+                [CallerMemberName] string tag = "")
         {
             try
             {
-                OnFatal(tag, message, exception);
+                OnFatal(
+                        tag,
+                        message,
+                        exception
+                );
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine("[Fatal][Logger.Fatal] " + e);
+                Console.Error.WriteLine($"[Fatal][Logger.Fatal] {e}");
             }
         }
 
@@ -283,15 +324,20 @@ namespace Htc.Vita.Core.Log
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="tag">The tag.</param>
-        public void Info(string message, [CallerMemberName] string tag = "")
+        public void Info(
+                string message,
+                [CallerMemberName] string tag = "")
         {
             try
             {
-                OnInfo(tag, message);
+                OnInfo(
+                        tag,
+                        message
+                );
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine("[Fatal][Logger.Info] " + e);
+                Console.Error.WriteLine($"[Fatal][Logger.Info] {e}");
             }
         }
 
@@ -301,15 +347,22 @@ namespace Htc.Vita.Core.Log
         /// <param name="message">The message.</param>
         /// <param name="exception">The exception.</param>
         /// <param name="tag">The tag.</param>
-        public void Info(string message, Exception exception, [CallerMemberName] string tag = "")
+        public void Info(
+                string message,
+                Exception exception,
+                [CallerMemberName] string tag = "")
         {
             try
             {
-                OnInfo(tag, message, exception);
+                OnInfo(
+                        tag,
+                        message,
+                        exception
+                );
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine("[Fatal][Logger.Info] " + e);
+                Console.Error.WriteLine($"[Fatal][Logger.Info] {e}");
             }
         }
 
@@ -324,7 +377,7 @@ namespace Htc.Vita.Core.Log
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine("[Fatal][Logger.Shutdown] " + e);
+                Console.Error.WriteLine($"[Fatal][Logger.Shutdown] {e}");
             }
         }
 
@@ -333,15 +386,20 @@ namespace Htc.Vita.Core.Log
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="tag">The tag.</param>
-        public void Trace(string message, [CallerMemberName] string tag = "")
+        public void Trace(
+                string message,
+                [CallerMemberName] string tag = "")
         {
             try
             {
-                OnTrace(tag, message);
+                OnTrace(
+                        tag,
+                        message
+                );
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine("[Fatal][Logger.Trace] " + e);
+                Console.Error.WriteLine($"[Fatal][Logger.Trace] {e}");
             }
         }
 
@@ -351,15 +409,22 @@ namespace Htc.Vita.Core.Log
         /// <param name="message">The message.</param>
         /// <param name="exception">The exception.</param>
         /// <param name="tag">The tag.</param>
-        public void Trace(string message, Exception exception, [CallerMemberName] string tag = "")
+        public void Trace(
+                string message,
+                Exception exception,
+                [CallerMemberName] string tag = "")
         {
             try
             {
-                OnTrace(tag, message, exception);
+                OnTrace(
+                        tag,
+                        message,
+                        exception
+                );
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine("[Fatal][Logger.Trace] " + e);
+                Console.Error.WriteLine($"[Fatal][Logger.Trace] {e}");
             }
         }
 
@@ -368,15 +433,20 @@ namespace Htc.Vita.Core.Log
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="tag">The tag.</param>
-        public void Warn(string message, [CallerMemberName] string tag = "")
+        public void Warn(
+                string message,
+                [CallerMemberName] string tag = "")
         {
             try
             {
-                OnWarn(tag, message);
+                OnWarn(
+                        tag,
+                        message
+                );
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine("[Fatal][Logger.Warn] " + e);
+                Console.Error.WriteLine($"[Fatal][Logger.Warn] {e}");
             }
         }
 
@@ -386,15 +456,22 @@ namespace Htc.Vita.Core.Log
         /// <param name="message">The message.</param>
         /// <param name="exception">The exception.</param>
         /// <param name="tag">The tag.</param>
-        public void Warn(string message, Exception exception, [CallerMemberName] string tag = "")
+        public void Warn(
+                string message,
+                Exception exception,
+                [CallerMemberName] string tag = "")
         {
             try
             {
-                OnWarn(tag, message, exception);
+                OnWarn(
+                        tag,
+                        message,
+                        exception
+                );
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine("[Fatal][Logger.Warn] " + e);
+                Console.Error.WriteLine($"[Fatal][Logger.Warn] {e}");
             }
         }
 
@@ -403,53 +480,81 @@ namespace Htc.Vita.Core.Log
         /// </summary>
         /// <param name="tag">The tag.</param>
         /// <param name="message">The message.</param>
-        protected abstract void OnDebug(string tag, string message);
+        protected abstract void OnDebug(
+                string tag,
+                string message
+        );
         /// <summary>
         /// Called when dumping in debug level.
         /// </summary>
         /// <param name="tag">The tag.</param>
         /// <param name="message">The message.</param>
         /// <param name="exception">The exception.</param>
-        protected abstract void OnDebug(string tag, string message, Exception exception);
+        protected abstract void OnDebug(
+                string tag,
+                string message,
+                Exception exception
+        );
         /// <summary>
         /// Called when dumping in error level.
         /// </summary>
         /// <param name="tag">The tag.</param>
         /// <param name="message">The message.</param>
-        protected abstract void OnError(string tag, string message);
+        protected abstract void OnError(
+                string tag,
+                string message
+        );
         /// <summary>
         /// Called when dumping in error level.
         /// </summary>
         /// <param name="tag">The tag.</param>
         /// <param name="message">The message.</param>
         /// <param name="exception">The exception.</param>
-        protected abstract void OnError(string tag, string message, Exception exception);
+        protected abstract void OnError(
+                string tag,
+                string message,
+                Exception exception
+        );
         /// <summary>
         /// Called when dumping in fatal level.
         /// </summary>
         /// <param name="tag">The tag.</param>
         /// <param name="message">The message.</param>
-        protected abstract void OnFatal(string tag, string message);
+        protected abstract void OnFatal(
+                string tag,
+                string message
+        );
         /// <summary>
         /// Called when dumping in fatal level.
         /// </summary>
         /// <param name="tag">The tag.</param>
         /// <param name="message">The message.</param>
         /// <param name="exception">The exception.</param>
-        protected abstract void OnFatal(string tag, string message, Exception exception);
+        protected abstract void OnFatal(
+                string tag,
+                string message,
+                Exception exception
+        );
         /// <summary>
         /// Called when dumping in information level.
         /// </summary>
         /// <param name="tag">The tag.</param>
         /// <param name="message">The message.</param>
-        protected abstract void OnInfo(string tag, string message);
+        protected abstract void OnInfo(
+                string tag,
+                string message
+        );
         /// <summary>
         /// Called when dumping in information level.
         /// </summary>
         /// <param name="tag">The tag.</param>
         /// <param name="message">The message.</param>
         /// <param name="exception">The exception.</param>
-        protected abstract void OnInfo(string tag, string message, Exception exception);
+        protected abstract void OnInfo(
+                string tag,
+                string message,
+                Exception exception
+        );
         /// <summary>
         /// Called when shutting down.
         /// </summary>
@@ -459,26 +564,40 @@ namespace Htc.Vita.Core.Log
         /// </summary>
         /// <param name="tag">The tag.</param>
         /// <param name="message">The message.</param>
-        protected abstract void OnTrace(string tag, string message);
+        protected abstract void OnTrace(
+                string tag,
+                string message
+        );
         /// <summary>
         /// Called when dumping in trace level.
         /// </summary>
         /// <param name="tag">The tag.</param>
         /// <param name="message">The message.</param>
         /// <param name="exception">The exception.</param>
-        protected abstract void OnTrace(string tag, string message, Exception exception);
+        protected abstract void OnTrace(
+                string tag,
+                string message,
+                Exception exception
+        );
         /// <summary>
         /// Called when dumping in warning level.
         /// </summary>
         /// <param name="tag">The tag.</param>
         /// <param name="message">The message.</param>
-        protected abstract void OnWarn(string tag, string message);
+        protected abstract void OnWarn(
+                string tag,
+                string message
+        );
         /// <summary>
         /// Called when dumping in warning level.
         /// </summary>
         /// <param name="tag">The tag.</param>
         /// <param name="message">The message.</param>
         /// <param name="exception">The exception.</param>
-        protected abstract void OnWarn(string tag, string message, Exception exception);
+        protected abstract void OnWarn(
+                string tag,
+                string message,
+                Exception exception
+        );
     }
 }

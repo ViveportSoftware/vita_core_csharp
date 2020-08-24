@@ -24,7 +24,7 @@ namespace Htc.Vita.Core.Config
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(AppSettingsConfig)).Fatal("Getting app setting error: " + e);
+                Logger.GetInstance(typeof(AppSettingsConfig)).Fatal($"Getting app setting error: {e}");
             }
         }
 

@@ -1,102 +1,71 @@
-using System;
-using System.Collections.Generic;
-using Htc.Vita.Core.Log;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Runtime
 {
+    /// <summary>
+    /// Class ProcessWatcherFactory.
+    /// </summary>
     public abstract class ProcessWatcherFactory
     {
-        private static Dictionary<string, ProcessWatcherFactory> Instances { get; } = new Dictionary<string, ProcessWatcherFactory>();
-
-        private static readonly object InstancesLock = new object();
-
-        private static Type defaultType = typeof(WmiProcessWatcherFactory);
-
-        public static void Register<T>() where T : ProcessWatcherFactory
+        static ProcessWatcherFactory()
         {
-            defaultType = typeof(T);
-            Logger.GetInstance(typeof(ProcessWatcherFactory)).Info("Registered default " + typeof(ProcessWatcherFactory).Name + " type to " + defaultType);
+            TypeRegistry.RegisterDefault<ProcessWatcherFactory, WmiProcessWatcherFactory>();
         }
 
+        /// <summary>
+        /// Registers the instance type.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public static void Register<T>()
+                where T : ProcessWatcherFactory, new()
+        {
+            TypeRegistry.Register<ProcessWatcherFactory, T>();
+        }
+
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <returns>ProcessWatcherFactory.</returns>
         public static ProcessWatcherFactory GetInstance()
         {
-            ProcessWatcherFactory instance;
-            try
-            {
-                instance = DoGetInstance(defaultType);
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(ProcessWatcherFactory)).Fatal("Instance initialization error: " + e);
-                Logger.GetInstance(typeof(ProcessWatcherFactory)).Info("Initializing " + typeof(WmiProcessWatcherFactory).FullName + "...");
-                instance = new WmiProcessWatcherFactory();
-            }
-            return instance;
+            return TypeRegistry.GetInstance<ProcessWatcherFactory>();
         }
 
-        public static ProcessWatcherFactory GetInstance<T>() where T : ProcessWatcherFactory
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>ProcessWatcherFactory.</returns>
+        public static ProcessWatcherFactory GetInstance<T>()
+                where T : ProcessWatcherFactory, new()
         {
-            ProcessWatcherFactory instance;
-            try
-            {
-                instance = DoGetInstance(typeof(T));
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(ProcessWatcherFactory)).Fatal("Instance initialization error: " + e);
-                Logger.GetInstance(typeof(ProcessWatcherFactory)).Info("Initializing " + typeof(WmiProcessWatcherFactory).FullName + "...");
-                instance = new WmiProcessWatcherFactory();
-            }
-            return instance;
+            return TypeRegistry.GetInstance<ProcessWatcherFactory, T>();
         }
 
-        private static ProcessWatcherFactory DoGetInstance(Type type)
-        {
-            if (type == null)
-            {
-                throw new ArgumentException("Invalid arguments to get " + typeof(ProcessWatcherFactory).Name + " instance");
-            }
-
-            var key = type.FullName + "_";
-            ProcessWatcherFactory instance = null;
-            if (Instances.ContainsKey(key))
-            {
-                instance = Instances[key];
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(ProcessWatcherFactory)).Info("Initializing " + key + "...");
-                var constructor = type.GetConstructor(new Type[] { });
-                if (constructor != null)
-                {
-                    instance = (ProcessWatcherFactory)constructor.Invoke(new object[] { });
-                }
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(ProcessWatcherFactory)).Info("Initializing " + typeof(WmiProcessWatcherFactory).FullName + "...");
-                instance = new WmiProcessWatcherFactory();
-            }
-            lock (InstancesLock)
-            {
-                if (!Instances.ContainsKey(key))
-                {
-                    Instances.Add(key, instance);
-                }
-            }
-            return instance;
-        }
-
+        /// <summary>
+        /// Creates the process watcher.
+        /// </summary>
+        /// <returns>ProcessWatcher.</returns>
         public ProcessWatcher CreateProcessWatcher()
         {
             return CreateProcessWatcher(null);
         }
 
+        /// <summary>
+        /// Creates the process watcher.
+        /// </summary>
+        /// <param name="targetProcessName">Name of the target process.</param>
+        /// <returns>ProcessWatcher.</returns>
         public ProcessWatcher CreateProcessWatcher(string targetProcessName)
         {
             return OnCreateProcessWatcher(targetProcessName);
         }
 
+        /// <summary>
+        /// Called when creating process watcher.
+        /// </summary>
+        /// <param name="targetProcessName">Name of the target process.</param>
+        /// <returns>ProcessWatcher.</returns>
         protected abstract ProcessWatcher OnCreateProcessWatcher(string targetProcessName);
     }
 }

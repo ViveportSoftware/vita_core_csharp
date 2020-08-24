@@ -52,7 +52,9 @@ namespace Htc.Vita.Core.Json
             }
 
             /// <inheritdoc />
-            protected override bool OnParseBool(string key, bool defaultValue)
+            protected override bool OnParseBool(
+                    string key,
+                    bool defaultValue)
             {
                 var result = defaultValue;
                 if (_jsonData == null)
@@ -86,7 +88,9 @@ namespace Htc.Vita.Core.Json
             }
 
             /// <inheritdoc />
-            protected override double OnParseDouble(string key, double defaultValue)
+            protected override double OnParseDouble(
+                    string key,
+                    double defaultValue)
             {
                 var result = defaultValue;
                 if (_jsonData == null)
@@ -128,7 +132,9 @@ namespace Htc.Vita.Core.Json
             }
 
             /// <inheritdoc />
-            protected override float OnParseFloat(string key, float defaultValue)
+            protected override float OnParseFloat(
+                    string key,
+                    float defaultValue)
             {
                 var result = defaultValue;
                 if (_jsonData == null)
@@ -170,7 +176,9 @@ namespace Htc.Vita.Core.Json
             }
 
             /// <inheritdoc />
-            protected override int OnParseInt(string key, int defaultValue)
+            protected override int OnParseInt(
+                    string key,
+                    int defaultValue)
             {
                 var result = defaultValue;
                 if (_jsonData == null)
@@ -204,7 +212,9 @@ namespace Htc.Vita.Core.Json
             }
 
             /// <inheritdoc />
-            protected override long OnParseLong(string key, long defaultValue)
+            protected override long OnParseLong(
+                    string key,
+                    long defaultValue)
             {
                 var result = defaultValue;
                 if (_jsonData == null)
@@ -238,7 +248,9 @@ namespace Htc.Vita.Core.Json
             }
 
             /// <inheritdoc />
-            protected override string OnParseString(string key, string defaultValue)
+            protected override string OnParseString(
+                    string key,
+                    string defaultValue)
             {
                 var result = defaultValue;
                 if (_jsonData == null)
@@ -326,7 +338,9 @@ namespace Htc.Vita.Core.Json
             }
 
             /// <inheritdoc />
-            protected override JsonObject OnPutBool(string key, bool value)
+            protected override JsonObject OnPutBool(
+                    string key,
+                    bool value)
             {
                 if (_jsonData == null)
                 {
@@ -337,7 +351,9 @@ namespace Htc.Vita.Core.Json
             }
 
             /// <inheritdoc />
-            protected override JsonObject OnPutDouble(string key, double value)
+            protected override JsonObject OnPutDouble(
+                    string key,
+                    double value)
             {
                 if (_jsonData == null)
                 {
@@ -348,7 +364,9 @@ namespace Htc.Vita.Core.Json
             }
 
             /// <inheritdoc />
-            protected override JsonObject OnPutFloat(string key, float value)
+            protected override JsonObject OnPutFloat(
+                    string key,
+                    float value)
             {
                 if (_jsonData == null)
                 {
@@ -359,7 +377,9 @@ namespace Htc.Vita.Core.Json
             }
 
             /// <inheritdoc />
-            protected override JsonObject OnPutInt(string key, int value)
+            protected override JsonObject OnPutInt(
+                    string key,
+                    int value)
             {
                 if (_jsonData == null)
                 {
@@ -370,7 +390,9 @@ namespace Htc.Vita.Core.Json
             }
 
             /// <inheritdoc />
-            protected override JsonObject OnPutLong(string key, long value)
+            protected override JsonObject OnPutLong(
+                    string key,
+                    long value)
             {
                 if (_jsonData == null)
                 {
@@ -381,7 +403,9 @@ namespace Htc.Vita.Core.Json
             }
 
             /// <inheritdoc />
-            protected override JsonObject OnPutString(string key, string value)
+            protected override JsonObject OnPutString(
+                    string key,
+                    string value)
             {
                 if (_jsonData == null)
                 {
@@ -392,7 +416,9 @@ namespace Htc.Vita.Core.Json
             }
 
             /// <inheritdoc />
-            protected override JsonObject OnPutJsonArray(string key, JsonArray value)
+            protected override JsonObject OnPutJsonArray(
+                    string key,
+                    JsonArray value)
             {
                 if (_jsonData == null)
                 {
@@ -403,7 +429,9 @@ namespace Htc.Vita.Core.Json
             }
 
             /// <inheritdoc />
-            protected override JsonObject OnPutJsonObject(string key, JsonObject value)
+            protected override JsonObject OnPutJsonObject(
+                    string key,
+                    JsonObject value)
             {
                 if (_jsonData == null)
                 {
@@ -422,7 +450,10 @@ namespace Htc.Vita.Core.Json
                         PrettyPrint = true,
                         IndentValue = 2
                 };
-                JsonMapper.ToJson(_jsonData, writer);
+                JsonMapper.ToJson(
+                        _jsonData,
+                        writer
+                );
                 return builder.ToString();
             }
 

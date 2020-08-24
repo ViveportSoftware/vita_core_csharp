@@ -1,7 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Net;
 using Htc.Vita.Core.Log;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Net
 {
@@ -10,20 +10,19 @@ namespace Htc.Vita.Core.Net
     /// </summary>
     public abstract class WebRequestFactory
     {
-        private static Dictionary<string, WebRequestFactory> Instances { get; } = new Dictionary<string, WebRequestFactory>();
-
-        private static readonly object InstancesLock = new object();
-
-        private static Type _defaultType = typeof(DefaultWebRequestFactory);
+        static WebRequestFactory()
+        {
+            TypeRegistry.RegisterDefault<WebRequestFactory, DefaultWebRequestFactory>();
+        }
 
         /// <summary>
         /// Registers the instance type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public static void Register<T>() where T : WebRequestFactory
+        public static void Register<T>()
+                where T : WebRequestFactory, new()
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(WebRequestFactory)).Info($"Registered default {typeof(WebRequestFactory).Name} type to {_defaultType}");
+            TypeRegistry.Register<WebRequestFactory, T>();
         }
 
         /// <summary>
@@ -32,18 +31,7 @@ namespace Htc.Vita.Core.Net
         /// <returns>WebRequestFactory.</returns>
         public static WebRequestFactory GetInstance()
         {
-            WebRequestFactory instance;
-            try
-            {
-                instance = DoGetInstance(_defaultType);
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(WebRequestFactory)).Fatal($"Instance initialization error: {e}");
-                Logger.GetInstance(typeof(WebRequestFactory)).Info($"Initializing {typeof(DefaultWebRequestFactory).FullName}...");
-                instance = new DefaultWebRequestFactory();
-            }
-            return instance;
+            return TypeRegistry.GetInstance<WebRequestFactory>();
         }
 
         /// <summary>
@@ -51,57 +39,10 @@ namespace Htc.Vita.Core.Net
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns>WebRequestFactory.</returns>
-        public static WebRequestFactory GetInstance<T>() where T : WebRequestFactory
+        public static WebRequestFactory GetInstance<T>()
+                where T : WebRequestFactory, new()
         {
-            WebRequestFactory instance;
-            try
-            {
-                instance = DoGetInstance(typeof(T));
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(WebRequestFactory)).Fatal($"Instance initialization error: {e}");
-                Logger.GetInstance(typeof(WebRequestFactory)).Info($"Initializing {typeof(DefaultWebRequestFactory).FullName}...");
-                instance = new DefaultWebRequestFactory();
-            }
-            return instance;
-        }
-
-        private static WebRequestFactory DoGetInstance(Type type)
-        {
-            if (type == null)
-            {
-                throw new ArgumentException($"Invalid arguments to get {typeof(WebRequestFactory).Name} instance");
-            }
-
-            var key = type.FullName + "_";
-            WebRequestFactory instance = null;
-            if (Instances.ContainsKey(key))
-            {
-                instance = Instances[key];
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(WebRequestFactory)).Info($"Initializing {key}...");
-                var constructor = type.GetConstructor(new Type[] { });
-                if (constructor != null)
-                {
-                    instance = (WebRequestFactory)constructor.Invoke(new object[] { });
-                }
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(WebRequestFactory)).Info($"Initializing {typeof(DefaultWebRequestFactory).FullName}...");
-                instance = new DefaultWebRequestFactory();
-            }
-            lock (InstancesLock)
-            {
-                if (!Instances.ContainsKey(key))
-                {
-                    Instances.Add(key, instance);
-                }
-            }
-            return instance;
+            return TypeRegistry.GetInstance<WebRequestFactory, T>();
         }
 
         /// <summary>

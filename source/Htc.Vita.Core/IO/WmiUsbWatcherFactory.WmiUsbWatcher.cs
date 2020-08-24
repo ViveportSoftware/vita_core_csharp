@@ -5,6 +5,11 @@ namespace Htc.Vita.Core.IO
 {
     public partial class WmiUsbWatcherFactory
     {
+        /// <summary>
+        /// Class WmiUsbWatcher.
+        /// Implements the <see cref="UsbWatcher" />
+        /// </summary>
+        /// <seealso cref="UsbWatcher" />
         public class WmiUsbWatcher : UsbWatcher
         {
             private readonly WqlEventQuery _connectEventQuery;
@@ -13,6 +18,9 @@ namespace Htc.Vita.Core.IO
             private ManagementEventWatcher _connectEventWatcher;
             private ManagementEventWatcher _disconnectEventWatcher;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="WmiUsbWatcher"/> class.
+            /// </summary>
             public WmiUsbWatcher()
             {
                 _connectEventQuery = new WqlEventQuery
@@ -29,6 +37,7 @@ namespace Htc.Vita.Core.IO
                 };
             }
 
+            /// <inheritdoc />
             protected override void OnDispose()
             {
                 _connectEventWatcher?.Dispose();
@@ -37,11 +46,13 @@ namespace Htc.Vita.Core.IO
                 _disconnectEventWatcher = null;
             }
 
+            /// <inheritdoc />
             protected override bool OnIsRunning()
             {
                 return _connectEventWatcher != null || _disconnectEventWatcher != null;
             }
 
+            /// <inheritdoc />
             protected override bool OnStart()
             {
                 if (OnIsRunning())
@@ -60,6 +71,7 @@ namespace Htc.Vita.Core.IO
                 return OnIsRunning();
             }
 
+            /// <inheritdoc />
             protected override bool OnStop()
             {
                 if (_connectEventWatcher != null)
@@ -81,12 +93,16 @@ namespace Htc.Vita.Core.IO
                 return !OnIsRunning();
             }
 
-            private void OnDeviceConnectedEventArrived(object sender, EventArrivedEventArgs e)
+            private void OnDeviceConnectedEventArrived(
+                    object sender,
+                    EventArrivedEventArgs e)
             {
                 NotifyDeviceConnected();
             }
 
-            private void OnDeviceDisconnectedEventArrived(object sender, EventArrivedEventArgs e)
+            private void OnDeviceDisconnectedEventArrived(
+                    object sender,
+                    EventArrivedEventArgs e)
             {
                 NotifyDeviceDisconnected();
             }

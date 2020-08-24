@@ -7,7 +7,10 @@ namespace Htc.Vita.Core.Preference
         /// <inheritdoc />
         protected override Task<Preferences> OnLoadPreferencesAsync(string label)
         {
-            return new DefaultPreferences("", label).InitializeAsync();
+            return new DefaultPreferences(
+                    "",
+                    label
+            ).InitializeAsync();
         }
     }
 }

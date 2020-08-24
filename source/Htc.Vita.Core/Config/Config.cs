@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using Htc.Vita.Core.Log;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Config
 {
@@ -9,20 +9,19 @@ namespace Htc.Vita.Core.Config
     /// </summary>
     public abstract class Config
     {
-        private static Dictionary<string, Config> Instances { get; } = new Dictionary<string, Config>();
-
-        private static readonly object InstancesLock = new object();
-
-        private static Type _defaultType = typeof(AppSettingsConfig);
+        static Config()
+        {
+            TypeRegistry.RegisterDefault<Config, AppSettingsConfig>();
+        }
 
         /// <summary>
         /// Registers the instance type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public static void Register<T>() where T : Config
+        public static void Register<T>()
+                where T : Config, new()
         {
-            _defaultType = typeof(T);
-            Logger.GetInstance(typeof(Config)).Info("Registered default " + nameof(Config) + " type to " + _defaultType);
+            TypeRegistry.Register<Config, T>();
         }
 
         /// <summary>
@@ -31,18 +30,7 @@ namespace Htc.Vita.Core.Config
         /// <returns>Config.</returns>
         public static Config GetInstance()
         {
-            Config instance;
-            try
-            {
-                instance = DoGetInstance(_defaultType);
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(Config)).Fatal("Instance initialization error: " + e);
-                Logger.GetInstance(typeof(Config)).Info("Initializing " + typeof(AppSettingsConfig).FullName + "...");
-                instance = new AppSettingsConfig();
-            }
-            return instance;
+            return TypeRegistry.GetInstance<Config>();
         }
 
         /// <summary>
@@ -50,57 +38,10 @@ namespace Htc.Vita.Core.Config
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns>Config.</returns>
-        public static Config GetInstance<T>() where T : Config
+        public static Config GetInstance<T>()
+                where T : Config, new()
         {
-            Config instance;
-            try
-            {
-                instance = DoGetInstance(typeof(T));
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(Config)).Fatal("Instance initialization error: " + e);
-                Logger.GetInstance(typeof(Config)).Info("Initializing " + typeof(AppSettingsConfig).FullName + "...");
-                instance = new AppSettingsConfig();
-            }
-            return instance;
-        }
-
-        private static Config DoGetInstance(Type type)
-        {
-            if (type == null)
-            {
-                throw new ArgumentException("Invalid arguments to get " + nameof(Config) + " instance");
-            }
-
-            var key = type.FullName + "_";
-            Config instance = null;
-            if (Instances.ContainsKey(key))
-            {
-                instance = Instances[key];
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(Config)).Info("Initializing " + key + "...");
-                var constructor = type.GetConstructor(new Type[] { });
-                if (constructor != null)
-                {
-                    instance = (Config)constructor.Invoke(new object[] { });
-                }
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(Config)).Info("Initializing " + typeof(AppSettingsConfig).FullName + "...");
-                instance = new AppSettingsConfig();
-            }
-            lock (InstancesLock)
-            {
-                if (!Instances.ContainsKey(key))
-                {
-                    Instances.Add(key, instance);
-                }
-            }
-            return instance;
+            return TypeRegistry.GetInstance<Config, T>();
         }
 
         /// <summary>

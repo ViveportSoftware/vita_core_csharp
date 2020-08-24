@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Htc.Vita.Core.Net
 {
+    /// <summary>
+    /// Class WebUserAgent.
+    /// </summary>
     public class WebUserAgent
     {
         private const string Chrome43 = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36";
@@ -15,38 +18,59 @@ namespace Htc.Vita.Core.Net
         private readonly StringBuilder _optionalSection = new StringBuilder();
 
         private static readonly Assembly ModuleAssembly = Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
-        private static string name = DefaultName;
 
+        private static string _name = DefaultName;
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>The name.</value>
         public static string Name
         {
-            get { return name; }
+            get { return _name; }
             set
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    name = value;
+                    _name = value;
                 }
             }
         }
 
+        /// <summary>
+        /// Act as Chrome.
+        /// </summary>
+        /// <returns>WebUserAgent.</returns>
         public WebUserAgent AsChrome()
         {
             _mandatorySection.Clear().Append(Chrome43);
             return this;
         }
 
+        /// <summary>
+        /// Act as Firefox.
+        /// </summary>
+        /// <returns>WebUserAgent.</returns>
         public WebUserAgent AsFirefox()
         {
             _mandatorySection.Clear().Append(Firefox35);
             return this;
         }
 
+        /// <summary>
+        /// Act as IE.
+        /// </summary>
+        /// <returns>WebUserAgent.</returns>
         public WebUserAgent AsIe()
         {
             _mandatorySection.Clear().Append(Msie11);
             return this;
         }
 
+        /// <summary>
+        /// Resets this instance.
+        /// </summary>
+        /// <returns>WebUserAgent.</returns>
         public WebUserAgent Reset()
         {
             _mandatorySection.Clear();
@@ -54,6 +78,11 @@ namespace Htc.Vita.Core.Net
             return this;
         }
 
+        /// <summary>
+        /// Appends the specified part.
+        /// </summary>
+        /// <param name="part">The part.</param>
+        /// <returns>WebUserAgent.</returns>
         public WebUserAgent Append(string part)
         {
             if (string.IsNullOrWhiteSpace(part))
@@ -62,11 +91,15 @@ namespace Htc.Vita.Core.Net
             }
             if (_optionalSection.Length > 0)
             {
-                _optionalSection.Append(" " + part + ";");
+                _optionalSection.Append($" {part};");
             }
             return this;
         }
 
+        /// <summary>
+        /// Returns a <see cref="string" /> that represents this instance.
+        /// </summary>
+        /// <returns>A <see cref="string" /> that represents this instance.</returns>
         public override string ToString()
         {
             if (_mandatorySection.Length > 0)
@@ -84,14 +117,22 @@ namespace Htc.Vita.Core.Net
                         GetModuleInstanceName()
                 ));
             }
-            return _mandatorySection + " " + _optionalSection;
+            return $"{_mandatorySection} {_optionalSection}";
         }
 
+        /// <summary>
+        /// Gets the module name.
+        /// </summary>
+        /// <returns>System.String.</returns>
         public static string GetModuleName()
         {
             return Name;
         }
 
+        /// <summary>
+        /// Gets the module version.
+        /// </summary>
+        /// <returns>System.String.</returns>
         public static string GetModuleVersion()
         {
             var result = "0.0.0.0";
@@ -115,6 +156,10 @@ namespace Htc.Vita.Core.Net
             return result;
         }
 
+        /// <summary>
+        /// Gets the module instance name.
+        /// </summary>
+        /// <returns>System.String.</returns>
         public static string GetModuleInstanceName()
         {
             var result = "UnknownInstance";
