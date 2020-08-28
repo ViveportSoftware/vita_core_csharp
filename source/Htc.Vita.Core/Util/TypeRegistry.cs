@@ -27,21 +27,21 @@ namespace Htc.Vita.Core.Util
 
             var key = $"{concreteClassType.FullName}_";
             var instance = default(TBaseClass);
-            if (Instances.ContainsKey(key))
-            {
-                instance = Instances[key] as TBaseClass;
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(TypeRegistry)).Info($"Initializing {key}...");
-                var constructor = concreteClassType.GetConstructor(new Type[] { });
-                if (constructor != null)
-                {
-                    instance = (TBaseClass)constructor.Invoke(new object[] { });
-                }
-            }
             lock (InstancesLock)
             {
+                if (Instances.ContainsKey(key))
+                {
+                    instance = Instances[key] as TBaseClass;
+                }
+                if (instance == null)
+                {
+                    Logger.GetInstance(typeof(TypeRegistry)).Info($"Initializing {key}...");
+                    var constructor = concreteClassType.GetConstructor(new Type[] { });
+                    if (constructor != null)
+                    {
+                        instance = (TBaseClass)constructor.Invoke(new object[] { });
+                    }
+                }
                 if (!Instances.ContainsKey(key))
                 {
                     Instances.Add(key, instance);

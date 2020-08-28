@@ -158,26 +158,26 @@ namespace Htc.Vita.Core.Net
 
             var key = $"{type.FullName}_{resolver}";
             Dns instance = null;
-            if (Instances.ContainsKey(key))
-            {
-                instance = Instances[key];
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(Dns)).Info($"Initializing {key}...");
-                var constructor = type.GetConstructor(new[] { typeof(string) });
-                if (constructor != null)
-                {
-                    instance = (Dns)constructor.Invoke(new object[] { resolver });
-                }
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(Dns)).Info($"Initializing {typeof(DefaultDns).FullName}[{resolver}]...");
-                instance = new DefaultDns(resolver);
-            }
             lock (InstancesLock)
             {
+                if (Instances.ContainsKey(key))
+                {
+                    instance = Instances[key];
+                }
+                if (instance == null)
+                {
+                    Logger.GetInstance(typeof(Dns)).Info($"Initializing {key}...");
+                    var constructor = type.GetConstructor(new[] { typeof(string) });
+                    if (constructor != null)
+                    {
+                        instance = (Dns)constructor.Invoke(new object[] { resolver });
+                    }
+                }
+                if (instance == null)
+                {
+                    Logger.GetInstance(typeof(Dns)).Info($"Initializing {typeof(DefaultDns).FullName}[{resolver}]...");
+                    instance = new DefaultDns(resolver);
+                }
                 if (!Instances.ContainsKey(key))
                 {
                     Instances.Add(key, instance);
