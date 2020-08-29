@@ -1224,17 +1224,26 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         internal struct DisplayDeviceW : IEquatable<DisplayDeviceW>
         {
-                                                                  internal /* DWORD      */ int cb;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]  internal /* WCHAR[32]  */ string deviceName;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string deviceString;
-                                                                  internal /* DWORD      */ DisplayDeviceStateFlags stateFlags;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string deviceId;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string deviceKey;
+                                                                  internal          /* DWORD      */ int cb;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]  internal readonly /* WCHAR[32]  */ string deviceName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal readonly /* WCHAR[128] */ string deviceString;
+                                                                  internal readonly /* DWORD      */ DisplayDeviceStateFlags stateFlags;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal readonly /* WCHAR[128] */ string deviceId;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal readonly /* WCHAR[128] */ string deviceKey;
+
+            public static bool operator ==(DisplayDeviceW left, DisplayDeviceW right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(DisplayDeviceW left, DisplayDeviceW right)
+            {
+                return !Equals(left, right);
+            }
 
             public bool Equals(DisplayDeviceW other)
             {
-                return cb == other.cb
-                        && deviceName == other.deviceName
+                return deviceName == other.deviceName
                         && deviceString == other.deviceString
                         && stateFlags == other.stateFlags
                         && deviceId == other.deviceId
@@ -1254,8 +1263,7 @@ namespace Htc.Vita.Core.Interop
             {
                 unchecked
                 {
-                    var hashCode = cb;
-                    hashCode = (hashCode * 397) ^ (deviceName != null ? deviceName.GetHashCode() : 0);
+                    var hashCode = (deviceName != null ? deviceName.GetHashCode() : 0);
                     hashCode = (hashCode * 397) ^ (deviceString != null ? deviceString.GetHashCode() : 0);
                     hashCode = (hashCode * 397) ^ (int) stateFlags;
                     hashCode = (hashCode * 397) ^ (deviceId != null ? deviceId.GetHashCode() : 0);
