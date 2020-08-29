@@ -6,8 +6,16 @@ using Htc.Vita.Core.Runtime;
 
 namespace Htc.Vita.Core.Shell
 {
+    /// <summary>
+    /// Class ShellLink.
+    /// </summary>
     public static partial class ShellLink
     {
+        /// <summary>
+        /// Creates the specified file link.
+        /// </summary>
+        /// <param name="fileLinkInfo">The file link information.</param>
+        /// <returns><c>true</c> if creating the file link successfully, <c>false</c> otherwise.</returns>
         public static bool Create(FileLinkInfo fileLinkInfo)
         {
             if (!Platform.IsWindows)
@@ -47,7 +55,7 @@ namespace Htc.Vita.Core.Shell
             var type = Type.GetTypeFromCLSID(guid);
             if (type == null)
             {
-                Logger.GetInstance(typeof(ShellLink)).Error("Can not find type class from system with CLSID: " + guid);
+                Logger.GetInstance(typeof(ShellLink)).Error($"Can not find type class from system with CLSID: {guid}");
                 return false;
             }
 
@@ -58,7 +66,7 @@ namespace Htc.Vita.Core.Shell
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(ShellLink)).Error("Can not create wshShell class from system with CLSID: " + guid + ", " + e.Message);
+                Logger.GetInstance(typeof(ShellLink)).Error($"Can not create wshShell class from system with CLSID: {guid}, {e.Message}");
             }
             if (wshShell == null)
             {
@@ -80,7 +88,7 @@ namespace Htc.Vita.Core.Shell
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(ShellLink)).Error("Can not create wshShortcut class from wshShell: " + e.Message);
+                Logger.GetInstance(typeof(ShellLink)).Error($"Can not create wshShortcut class from wshShell: {e.Message}");
             }
             finally
             {
@@ -119,7 +127,7 @@ namespace Htc.Vita.Core.Shell
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(ShellLink)).Error("Can not create shortcut: " + e.Message);
+                Logger.GetInstance(typeof(ShellLink)).Error($"Can not create shortcut: {e.Message}");
             }
             finally
             {
