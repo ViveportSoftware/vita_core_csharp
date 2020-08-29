@@ -1416,13 +1416,52 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-monitorinfoexw",
                 Description = "MONITORINFOEXW structure")]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        internal struct MonitorInfoExW
+        internal struct MonitorInfoExW : IEquatable<MonitorInfoExW>
         {
-                                                                 internal /* DWORD     */ int size;
-                                                                 internal /* RECT      */ Rectangle rcMonitor;
-                                                                 internal /* RECT      */ Rectangle rcWork;
-                                                                 internal /* DWORD     */ uint flags;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal /* WCHAR[32] */ string DeviceName;
+                                                                 internal          /* DWORD     */ int size;
+                                                                 internal readonly /* RECT      */ Rectangle rcMonitor;
+                                                                 internal readonly /* RECT      */ Rectangle rcWork;
+                                                                 internal readonly /* DWORD     */ uint flags;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal readonly /* WCHAR[32] */ string DeviceName;
+
+            public static bool operator ==(MonitorInfoExW left, MonitorInfoExW right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(MonitorInfoExW left, MonitorInfoExW right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(MonitorInfoExW other)
+            {
+                return rcMonitor.Equals(other.rcMonitor)
+                        && rcWork.Equals(other.rcWork)
+                        && flags == other.flags
+                        && DeviceName == other.DeviceName;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is MonitorInfoExW && Equals((MonitorInfoExW) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    var hashCode = rcMonitor.GetHashCode();
+                    hashCode = (hashCode * 397) ^ rcWork.GetHashCode();
+                    hashCode = (hashCode * 397) ^ (int) flags;
+                    hashCode = (hashCode * 397) ^ (DeviceName != null ? DeviceName.GetHashCode() : 0);
+                    return hashCode;
+                }
+            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect",
