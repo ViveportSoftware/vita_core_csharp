@@ -1222,42 +1222,173 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-_display_devicew",
                 Description = "DISPLAY_DEVICEW structure")]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        internal struct DisplayDeviceW
+        internal struct DisplayDeviceW : IEquatable<DisplayDeviceW>
         {
-                                                                  internal /* DWORD      */ int cb;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]  internal /* WCHAR[32]  */ string deviceName;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string deviceString;
-                                                                  internal /* DWORD      */ DisplayDeviceStateFlags stateFlags;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string deviceId;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string deviceKey;
+                                                                  internal          /* DWORD      */ int cb;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]  internal readonly /* WCHAR[32]  */ string deviceName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal readonly /* WCHAR[128] */ string deviceString;
+                                                                  internal readonly /* DWORD      */ DisplayDeviceStateFlags stateFlags;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal readonly /* WCHAR[128] */ string deviceId;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal readonly /* WCHAR[128] */ string deviceKey;
+
+            public static bool operator ==(DisplayDeviceW left, DisplayDeviceW right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(DisplayDeviceW left, DisplayDeviceW right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(DisplayDeviceW other)
+            {
+                return deviceName == other.deviceName
+                        && deviceString == other.deviceString
+                        && stateFlags == other.stateFlags
+                        && deviceId == other.deviceId
+                        && deviceKey == other.deviceKey;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is DisplayDeviceW && Equals((DisplayDeviceW) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    var hashCode = (deviceName != null ? deviceName.GetHashCode() : 0);
+                    hashCode = (hashCode * 397) ^ (deviceString != null ? deviceString.GetHashCode() : 0);
+                    hashCode = (hashCode * 397) ^ (int) stateFlags;
+                    hashCode = (hashCode * 397) ^ (deviceId != null ? deviceId.GetHashCode() : 0);
+                    hashCode = (hashCode * 397) ^ (deviceKey != null ? deviceKey.GetHashCode() : 0);
+                    return hashCode;
+                }
+            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/dxgi/ns-dxgi-dxgi_adapter_desc",
                 Description = "DXGI_ADAPTER_DESC structure")]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        internal struct DxgiAdapterDescription
+        internal struct DxgiAdapterDescription : IEquatable<DxgiAdapterDescription>
         {
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string description;
-            internal /* UINT       */ uint vendorId;
-            internal /* UINT       */ uint deviceId;
-            internal /* UINT       */ uint subSysId;
-            internal /* UINT       */ uint revision;
-            internal /* SIZE_T     */ UIntPtr dedicatedVideoMemory;
-            internal /* SIZE_T     */ UIntPtr dedicatedSystemMemory;
-            internal /* SIZE_T     */ UIntPtr sharedSystemMemory;
-            internal /* LUID       */ long adapterLuid;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal readonly /* WCHAR[128] */ string description;
+                                                                  internal readonly /* UINT       */ uint vendorId;
+                                                                  internal readonly /* UINT       */ uint deviceId;
+                                                                  internal readonly /* UINT       */ uint subSysId;
+                                                                  internal readonly /* UINT       */ uint revision;
+                                                                  internal readonly /* SIZE_T     */ UIntPtr dedicatedVideoMemory;
+                                                                  internal readonly /* SIZE_T     */ UIntPtr dedicatedSystemMemory;
+                                                                  internal readonly /* SIZE_T     */ UIntPtr sharedSystemMemory;
+                                                                  internal readonly /* LUID       */ long adapterLuid;
+
+            public static bool operator ==(DxgiAdapterDescription left, DxgiAdapterDescription right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(DxgiAdapterDescription left, DxgiAdapterDescription right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(DxgiAdapterDescription other)
+            {
+                return description == other.description
+                        && vendorId == other.vendorId
+                        && deviceId == other.deviceId
+                        && subSysId == other.subSysId
+                        && revision == other.revision
+                        && dedicatedVideoMemory.Equals(other.dedicatedVideoMemory)
+                        && dedicatedSystemMemory.Equals(other.dedicatedSystemMemory)
+                        && sharedSystemMemory.Equals(other.sharedSystemMemory)
+                        && adapterLuid == other.adapterLuid;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is DxgiAdapterDescription && Equals((DxgiAdapterDescription) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    var hashCode = (description != null ? description.GetHashCode() : 0);
+                    hashCode = (hashCode * 397) ^ (int) vendorId;
+                    hashCode = (hashCode * 397) ^ (int) deviceId;
+                    hashCode = (hashCode * 397) ^ (int) subSysId;
+                    hashCode = (hashCode * 397) ^ (int) revision;
+                    hashCode = (hashCode * 397) ^ dedicatedVideoMemory.GetHashCode();
+                    hashCode = (hashCode * 397) ^ dedicatedSystemMemory.GetHashCode();
+                    hashCode = (hashCode * 397) ^ sharedSystemMemory.GetHashCode();
+                    hashCode = (hashCode * 397) ^ adapterLuid.GetHashCode();
+                    return hashCode;
+                }
+            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/dxgi/ns-dxgi-dxgi_output_desc",
                 Description = "DXGI_OUTPUT_DESC structure")]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        internal struct DxgiOutputDescription
+        internal struct DxgiOutputDescription : IEquatable<DxgiOutputDescription>
         {
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal /* WCHAR[32]          */ string deviceName;
-                                                                 internal /* RECT               */ Rectangle desktopCoordinates;
-                                                                 internal /* BOOL               */ bool attachedToDesktop;
-                                                                 internal /* DXGI_MODE_ROTATION */ DxgiModeRotation rotation;
-                                                                 internal /* HMONITOR           */ IntPtr monitor;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal readonly /* WCHAR[32]          */ string deviceName;
+                                                                 internal readonly /* RECT               */ Rectangle desktopCoordinates;
+                                                                 internal readonly /* BOOL               */ bool attachedToDesktop;
+                                                                 internal readonly /* DXGI_MODE_ROTATION */ DxgiModeRotation rotation;
+                                                                 internal readonly /* HMONITOR           */ IntPtr monitor;
+
+            public static bool operator ==(DxgiOutputDescription left, DxgiOutputDescription right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(DxgiOutputDescription left, DxgiOutputDescription right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(DxgiOutputDescription other)
+            {
+                return deviceName == other.deviceName
+                        && desktopCoordinates.Equals(other.desktopCoordinates)
+                        && attachedToDesktop == other.attachedToDesktop
+                        && rotation == other.rotation
+                        && monitor.Equals(other.monitor);
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is DxgiOutputDescription && Equals((DxgiOutputDescription) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    var hashCode = (deviceName != null ? deviceName.GetHashCode() : 0);
+                    hashCode = (hashCode * 397) ^ desktopCoordinates.GetHashCode();
+                    hashCode = (hashCode * 397) ^ attachedToDesktop.GetHashCode();
+                    hashCode = (hashCode * 397) ^ (int) rotation;
+                    hashCode = (hashCode * 397) ^ monitor.GetHashCode();
+                    return hashCode;
+                }
+            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidpi/ns-hidpi-_hidp_caps")]
@@ -1285,13 +1416,52 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-monitorinfoexw",
                 Description = "MONITORINFOEXW structure")]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        internal struct MonitorInfoExW
+        internal struct MonitorInfoExW : IEquatable<MonitorInfoExW>
         {
-                                                                 internal /* DWORD     */ int size;
-                                                                 internal /* RECT      */ Rectangle rcMonitor;
-                                                                 internal /* RECT      */ Rectangle rcWork;
-                                                                 internal /* DWORD     */ uint flags;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal /* WCHAR[32] */ string DeviceName;
+                                                                 internal          /* DWORD     */ int size;
+                                                                 internal readonly /* RECT      */ Rectangle rcMonitor;
+                                                                 internal readonly /* RECT      */ Rectangle rcWork;
+                                                                 internal readonly /* DWORD     */ uint flags;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal readonly /* WCHAR[32] */ string DeviceName;
+
+            public static bool operator ==(MonitorInfoExW left, MonitorInfoExW right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(MonitorInfoExW left, MonitorInfoExW right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(MonitorInfoExW other)
+            {
+                return rcMonitor.Equals(other.rcMonitor)
+                        && rcWork.Equals(other.rcWork)
+                        && flags == other.flags
+                        && DeviceName == other.DeviceName;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is MonitorInfoExW && Equals((MonitorInfoExW) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    var hashCode = rcMonitor.GetHashCode();
+                    hashCode = (hashCode * 397) ^ rcWork.GetHashCode();
+                    hashCode = (hashCode * 397) ^ (int) flags;
+                    hashCode = (hashCode * 397) ^ (DeviceName != null ? DeviceName.GetHashCode() : 0);
+                    return hashCode;
+                }
+            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect",

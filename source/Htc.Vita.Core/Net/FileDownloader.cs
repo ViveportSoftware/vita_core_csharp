@@ -51,27 +51,26 @@ namespace Htc.Vita.Core.Net
 
             var key = type.FullName + "_";
             FileDownloader instance = null;
-            if (Instances.ContainsKey(key))
-            {
-                instance = Instances[key];
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(FileDownloader)).Info("Initializing " + key + "...");
-                var constructor = type.GetConstructor(new Type[] { });
-                if (constructor != null)
-                {
-                    instance = (FileDownloader)constructor.Invoke(new object[] { });
-                }
-            }
-            if (instance == null)
-            {
-                Logger.GetInstance(typeof(FileDownloader)).Info("Initializing " + typeof(HttpFileDownloader).FullName + "...");
-                instance = new HttpFileDownloader();
-            }
-
             lock (InstanceLock)
             {
+                if (Instances.ContainsKey(key))
+                {
+                    instance = Instances[key];
+                }
+                if (instance == null)
+                {
+                    Logger.GetInstance(typeof(FileDownloader)).Info("Initializing " + key + "...");
+                    var constructor = type.GetConstructor(new Type[] { });
+                    if (constructor != null)
+                    {
+                        instance = (FileDownloader)constructor.Invoke(new object[] { });
+                    }
+                }
+                if (instance == null)
+                {
+                    Logger.GetInstance(typeof(FileDownloader)).Info("Initializing " + typeof(HttpFileDownloader).FullName + "...");
+                    instance = new HttpFileDownloader();
+                }
                 if (!Instances.ContainsKey(key))
                 {
                     Instances.Add(key, instance);

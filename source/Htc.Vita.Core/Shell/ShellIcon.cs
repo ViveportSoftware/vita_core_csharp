@@ -5,8 +5,15 @@ using Htc.Vita.Core.Runtime;
 
 namespace Htc.Vita.Core.Shell
 {
+    /// <summary>
+    /// Class ShellIcon.
+    /// </summary>
     public static class ShellIcon
     {
+        /// <summary>
+        /// Flushes the cache.
+        /// </summary>
+        /// <returns><c>true</c> if flushing the cache successfully, <c>false</c> otherwise.</returns>
         public static bool FlushCache()
         {
             if (!Platform.IsWindows)

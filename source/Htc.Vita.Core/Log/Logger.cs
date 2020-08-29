@@ -138,26 +138,26 @@ namespace Htc.Vita.Core.Log
 
             var key = $"{type.FullName}_{name}";
             Logger instance = null;
-            if (Instances.ContainsKey(key))
-            {
-                instance = Instances[key];
-            }
-            if (instance == null)
-            {
-                Console.Error.WriteLine($"Initializing {key}...");
-                var constructor = type.GetConstructor(new[] { typeof(string) });
-                if (constructor != null)
-                {
-                    instance = (Logger)constructor.Invoke(new object[] { name });
-                }
-            }
-            if (instance == null)
-            {
-                Console.Error.WriteLine($"Initializing {typeof(ConsoleLogger).FullName}[{name}]...");
-                instance = new ConsoleLogger(name);
-            }
             lock (InstancesLock)
             {
+                if (Instances.ContainsKey(key))
+                {
+                    instance = Instances[key];
+                }
+                if (instance == null)
+                {
+                    Console.Error.WriteLine($"Initializing {key}...");
+                    var constructor = type.GetConstructor(new[] { typeof(string) });
+                    if (constructor != null)
+                    {
+                        instance = (Logger)constructor.Invoke(new object[] { name });
+                    }
+                }
+                if (instance == null)
+                {
+                    Console.Error.WriteLine($"Initializing {typeof(ConsoleLogger).FullName}[{name}]...");
+                    instance = new ConsoleLogger(name);
+                }
                 if (!Instances.ContainsKey(key))
                 {
                     Instances.Add(key, instance);
