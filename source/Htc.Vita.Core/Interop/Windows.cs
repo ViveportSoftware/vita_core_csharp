@@ -1341,13 +1341,54 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/dxgi/ns-dxgi-dxgi_output_desc",
                 Description = "DXGI_OUTPUT_DESC structure")]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        internal struct DxgiOutputDescription
+        internal struct DxgiOutputDescription : IEquatable<DxgiOutputDescription>
         {
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal /* WCHAR[32]          */ string deviceName;
-                                                                 internal /* RECT               */ Rectangle desktopCoordinates;
-                                                                 internal /* BOOL               */ bool attachedToDesktop;
-                                                                 internal /* DXGI_MODE_ROTATION */ DxgiModeRotation rotation;
-                                                                 internal /* HMONITOR           */ IntPtr monitor;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal readonly /* WCHAR[32]          */ string deviceName;
+                                                                 internal readonly /* RECT               */ Rectangle desktopCoordinates;
+                                                                 internal readonly /* BOOL               */ bool attachedToDesktop;
+                                                                 internal readonly /* DXGI_MODE_ROTATION */ DxgiModeRotation rotation;
+                                                                 internal readonly /* HMONITOR           */ IntPtr monitor;
+
+            public static bool operator ==(DxgiOutputDescription left, DxgiOutputDescription right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(DxgiOutputDescription left, DxgiOutputDescription right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(DxgiOutputDescription other)
+            {
+                return deviceName == other.deviceName
+                        && desktopCoordinates.Equals(other.desktopCoordinates)
+                        && attachedToDesktop == other.attachedToDesktop
+                        && rotation == other.rotation
+                        && monitor.Equals(other.monitor);
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is DxgiOutputDescription && Equals((DxgiOutputDescription) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    var hashCode = (deviceName != null ? deviceName.GetHashCode() : 0);
+                    hashCode = (hashCode * 397) ^ desktopCoordinates.GetHashCode();
+                    hashCode = (hashCode * 397) ^ attachedToDesktop.GetHashCode();
+                    hashCode = (hashCode * 397) ^ (int) rotation;
+                    hashCode = (hashCode * 397) ^ monitor.GetHashCode();
+                    return hashCode;
+                }
+            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidpi/ns-hidpi-_hidp_caps")]
