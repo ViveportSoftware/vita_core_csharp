@@ -1222,7 +1222,7 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-_display_devicew",
                 Description = "DISPLAY_DEVICEW structure")]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        internal struct DisplayDeviceW
+        internal struct DisplayDeviceW : IEquatable<DisplayDeviceW>
         {
                                                                   internal /* DWORD      */ int cb;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]  internal /* WCHAR[32]  */ string deviceName;
@@ -1230,6 +1230,39 @@ namespace Htc.Vita.Core.Interop
                                                                   internal /* DWORD      */ DisplayDeviceStateFlags stateFlags;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string deviceId;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string deviceKey;
+
+            public bool Equals(DisplayDeviceW other)
+            {
+                return cb == other.cb
+                        && deviceName == other.deviceName
+                        && deviceString == other.deviceString
+                        && stateFlags == other.stateFlags
+                        && deviceId == other.deviceId
+                        && deviceKey == other.deviceKey;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is DisplayDeviceW && Equals((DisplayDeviceW) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    var hashCode = cb;
+                    hashCode = (hashCode * 397) ^ (deviceName != null ? deviceName.GetHashCode() : 0);
+                    hashCode = (hashCode * 397) ^ (deviceString != null ? deviceString.GetHashCode() : 0);
+                    hashCode = (hashCode * 397) ^ (int) stateFlags;
+                    hashCode = (hashCode * 397) ^ (deviceId != null ? deviceId.GetHashCode() : 0);
+                    hashCode = (hashCode * 397) ^ (deviceKey != null ? deviceKey.GetHashCode() : 0);
+                    return hashCode;
+                }
+            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/dxgi/ns-dxgi-dxgi_adapter_desc",
