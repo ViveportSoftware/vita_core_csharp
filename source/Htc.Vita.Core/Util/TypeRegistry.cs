@@ -7,7 +7,7 @@ namespace Htc.Vita.Core.Util
     /// <summary>
     /// Class TypeRegistry.
     /// </summary>
-    public class TypeRegistry
+    public static class TypeRegistry
     {
         private static readonly Dictionary<Type, Type> AbstractClassTypeWithConcreteClassType = new Dictionary<Type, Type>();
         private static readonly object InstancesLock = new object();
