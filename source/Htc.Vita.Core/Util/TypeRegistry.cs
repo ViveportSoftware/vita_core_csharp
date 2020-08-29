@@ -92,17 +92,18 @@ namespace Htc.Vita.Core.Util
             var baseClass = typeof(TBaseClass);
             var subClass = typeof(TSubClass);
 
-            if (AbstractClassTypeWithConcreteClassType.ContainsKey(baseClass))
+            if (!AbstractClassTypeWithConcreteClassType.ContainsKey(baseClass))
             {
-                var oldSubClass = AbstractClassTypeWithConcreteClassType[baseClass];
-                if (oldSubClass == subClass)
-                {
-                    return;
-                }
+                AbstractClassTypeWithConcreteClassType.Add(baseClass, subClass);
+                Logger.GetInstance(typeof(TypeRegistry)).Info($"Registered {baseClass.Name} type to {subClass.FullName}");
+                return;
             }
 
-            AbstractClassTypeWithConcreteClassType.Add(baseClass, subClass);
-            Logger.GetInstance(typeof(TypeRegistry)).Info($"Registered {baseClass.Name} type to {subClass.FullName}");
+            if (subClass != AbstractClassTypeWithConcreteClassType[baseClass])
+            {
+                AbstractClassTypeWithConcreteClassType[baseClass] = subClass;
+                Logger.GetInstance(typeof(TypeRegistry)).Info($"Registered {baseClass.Name} type to {subClass.FullName}");
+            }
         }
 
         /// <summary>
