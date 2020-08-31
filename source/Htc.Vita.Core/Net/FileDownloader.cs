@@ -16,7 +16,13 @@ namespace Htc.Vita.Core.Net
 
         public static void Register<T>() where T : FileDownloader
         {
-            _defaultType = typeof(T);
+            var type = typeof(T);
+            if (_defaultType == type)
+            {
+                return;
+            }
+
+            _defaultType = type;
             Logger.GetInstance(typeof(FileDownloader)).Info("Registered default file downloader type to " + _defaultType);
         }
 

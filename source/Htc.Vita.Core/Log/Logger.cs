@@ -27,7 +27,13 @@ namespace Htc.Vita.Core.Log
         /// <typeparam name="T"></typeparam>
         public static void Register<T>() where T : Logger
         {
-            _defaultType = typeof(T);
+            var type = typeof(T);
+            if (_defaultType == type)
+            {
+                return;
+            }
+
+            _defaultType = type;
             Console.Error.WriteLine($"Registered default {nameof(Logger)} type to {_defaultType}");
         }
 

@@ -41,7 +41,13 @@ namespace Htc.Vita.Core.Net
         /// <typeparam name="T"></typeparam>
         public static void Register<T>() where T : Dns
         {
-            _defaultType = typeof(T);
+            var type = typeof(T);
+            if (_defaultType == type)
+            {
+                return;
+            }
+
+            _defaultType = type;
             Logger.GetInstance(typeof(Dns)).Info($"Registered default {nameof(Dns)} type to {_defaultType}");
         }
 
