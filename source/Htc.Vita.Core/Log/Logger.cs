@@ -16,6 +16,12 @@ namespace Htc.Vita.Core.Log
         private static Type _defaultType = typeof(ConsoleLogger);
 
         /// <summary>
+        /// Gets or sets the log level.
+        /// </summary>
+        /// <value>The log level.</value>
+        public static Level LogLevel { get; set; } = Level.Trace;
+
+        /// <summary>
         /// Gets the name.
         /// </summary>
         /// <value>The name.</value>
@@ -173,7 +179,7 @@ namespace Htc.Vita.Core.Log
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Logger"/> class.
+        /// Initializes a new instance of the <see cref="Logger" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         protected Logger(string name)
@@ -193,6 +199,11 @@ namespace Htc.Vita.Core.Log
                 string message,
                 [CallerMemberName] string tag = "")
         {
+            if (LogLevel > Level.Debug)
+            {
+                return;
+            }
+
             try
             {
                 OnDebug(
@@ -217,6 +228,11 @@ namespace Htc.Vita.Core.Log
                 Exception exception,
                 [CallerMemberName] string tag = "")
         {
+            if (LogLevel > Level.Debug)
+            {
+                return;
+            }
+
             try
             {
                 OnDebug(
@@ -240,6 +256,11 @@ namespace Htc.Vita.Core.Log
                 string message,
                 [CallerMemberName] string tag = "")
         {
+            if (LogLevel > Level.Error)
+            {
+                return;
+            }
+
             try
             {
                 OnError(
@@ -264,6 +285,11 @@ namespace Htc.Vita.Core.Log
                 Exception exception,
                 [CallerMemberName] string tag = "")
         {
+            if (LogLevel > Level.Error)
+            {
+                return;
+            }
+
             try
             {
                 OnError(
@@ -287,6 +313,11 @@ namespace Htc.Vita.Core.Log
                 string message,
                 [CallerMemberName] string tag = "")
         {
+            if (LogLevel > Level.Fatal)
+            {
+                return;
+            }
+
             try
             {
                 OnFatal(
@@ -311,6 +342,11 @@ namespace Htc.Vita.Core.Log
                 Exception exception,
                 [CallerMemberName] string tag = "")
         {
+            if (LogLevel > Level.Fatal)
+            {
+                return;
+            }
+
             try
             {
                 OnFatal(
@@ -334,6 +370,11 @@ namespace Htc.Vita.Core.Log
                 string message,
                 [CallerMemberName] string tag = "")
         {
+            if (LogLevel > Level.Info)
+            {
+                return;
+            }
+
             try
             {
                 OnInfo(
@@ -358,6 +399,11 @@ namespace Htc.Vita.Core.Log
                 Exception exception,
                 [CallerMemberName] string tag = "")
         {
+            if (LogLevel > Level.Info)
+            {
+                return;
+            }
+
             try
             {
                 OnInfo(
@@ -396,6 +442,11 @@ namespace Htc.Vita.Core.Log
                 string message,
                 [CallerMemberName] string tag = "")
         {
+            if (LogLevel > Level.Trace)
+            {
+                return;
+            }
+
             try
             {
                 OnTrace(
@@ -420,6 +471,11 @@ namespace Htc.Vita.Core.Log
                 Exception exception,
                 [CallerMemberName] string tag = "")
         {
+            if (LogLevel > Level.Trace)
+            {
+                return;
+            }
+
             try
             {
                 OnTrace(
@@ -443,6 +499,11 @@ namespace Htc.Vita.Core.Log
                 string message,
                 [CallerMemberName] string tag = "")
         {
+            if (LogLevel > Level.Warn)
+            {
+                return;
+            }
+
             try
             {
                 OnWarn(
@@ -467,6 +528,11 @@ namespace Htc.Vita.Core.Log
                 Exception exception,
                 [CallerMemberName] string tag = "")
         {
+            if (LogLevel > Level.Warn)
+            {
+                return;
+            }
+
             try
             {
                 OnWarn(
@@ -605,5 +671,36 @@ namespace Htc.Vita.Core.Log
                 string message,
                 Exception exception
         );
+
+        /// <summary>
+        /// Enum Level
+        /// </summary>
+        public enum Level
+        {
+            /// <summary>
+            /// The trace level
+            /// </summary>
+            Trace,
+            /// <summary>
+            /// The debug level
+            /// </summary>
+            Debug,
+            /// <summary>
+            /// The information level
+            /// </summary>
+            Info,
+            /// <summary>
+            /// The warning level
+            /// </summary>
+            Warn,
+            /// <summary>
+            /// The error level
+            /// </summary>
+            Error,
+            /// <summary>
+            /// The fatal level
+            /// </summary>
+            Fatal
+        }
     }
 }
