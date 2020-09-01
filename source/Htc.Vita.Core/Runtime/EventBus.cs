@@ -108,7 +108,7 @@ namespace Htc.Vita.Core.Runtime
         /// <param name="eventListener">The event listener.</param>
         /// <returns><c>true</c> if unregistering the listener successfully, <c>false</c> otherwise.</returns>
         public bool UnregisterListener<T>(IEventListener eventListener)
-                where  T : IEventData
+                where T : IEventData
         {
             if (eventListener == null)
             {
