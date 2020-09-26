@@ -13,6 +13,7 @@ Package-time dependencies: none
 Run-time dependencies:
 
 * .NET Framework 4.5
+* .NET Standard 2.0
 
 Test-time dependencies:
 
