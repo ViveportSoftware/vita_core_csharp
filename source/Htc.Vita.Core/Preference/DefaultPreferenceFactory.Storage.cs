@@ -37,7 +37,7 @@ namespace Htc.Vita.Core.Preference
                 {
                     return "";
                 }
-                return Path.Combine(path, category, label + ".pref");
+                return Path.Combine(path, category, $"{label}.pref");
             }
 
             internal Dictionary<string, string> LoadFromFile()
