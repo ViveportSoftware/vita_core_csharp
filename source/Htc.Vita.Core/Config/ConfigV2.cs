@@ -1,17 +1,18 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Config
 {
     /// <summary>
-    /// Class Config.
+    /// Class ConfigV2.
     /// </summary>
-    public abstract class Config
+    public abstract class ConfigV2
     {
-        static Config()
+        static ConfigV2()
         {
-            TypeRegistry.RegisterDefault<Config, AppSettingsConfig>();
+            TypeRegistry.RegisterDefault<ConfigV2, DummyConfigV2>();
         }
 
         /// <summary>
@@ -19,36 +20,55 @@ namespace Htc.Vita.Core.Config
         /// </summary>
         /// <typeparam name="T"></typeparam>
         public static void Register<T>()
-                where T : Config, new()
+                where T : ConfigV2, new()
         {
-            TypeRegistry.Register<Config, T>();
+            TypeRegistry.Register<ConfigV2, T>();
         }
 
         /// <summary>
         /// Gets the instance.
         /// </summary>
-        /// <returns>Config.</returns>
-        public static Config GetInstance()
+        /// <returns>ConfigV2.</returns>
+        public static ConfigV2 GetInstance()
         {
-            return TypeRegistry.GetInstance<Config>();
+            return TypeRegistry.GetInstance<ConfigV2>();
         }
 
         /// <summary>
         /// Gets the instance.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <returns>Config.</returns>
-        public static Config GetInstance<T>()
-                where T : Config, new()
+        /// <returns>ConfigV2.</returns>
+        public static ConfigV2 GetInstance<T>()
+                where T : ConfigV2, new()
         {
-            return TypeRegistry.GetInstance<Config, T>();
+            return TypeRegistry.GetInstance<ConfigV2, T>();
         }
 
         /// <summary>
-        /// Determines whether Config has the specified key.
+        /// Get all keys.
+        /// </summary>
+        /// <returns>ISet&lt;System.String&gt;.</returns>
+        public ISet<string> AllKeys()
+        {
+            ISet<string> result = null;
+            try
+            {
+                result = OnAllKeys();
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(ConfigV2)).Error(e.ToString());
+            }
+            return result ?? new HashSet<string>();
+        }
+
+
+        /// <summary>
+        /// Determines whether ConfigV2 has the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
-        /// <returns><c>true</c> if Config has the specified key; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if ConfigV2 has the specified key; otherwise, <c>false</c>.</returns>
         public bool HasKey(string key)
         {
             var result = false;
@@ -58,7 +78,7 @@ namespace Htc.Vita.Core.Config
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Config)).Error(e.ToString());
+                Logger.GetInstance(typeof(ConfigV2)).Error(e.ToString());
             }
             return result;
         }
@@ -95,7 +115,7 @@ namespace Htc.Vita.Core.Config
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(Config)).Error(e.ToString());
+                Logger.GetInstance(typeof(ConfigV2)).Error(e.ToString());
             }
 
             return result ?? defaultValue;
@@ -160,6 +180,35 @@ namespace Htc.Vita.Core.Config
         }
 
         /// <summary>
+        /// Gets the float value.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>System.Single.</returns>
+        public float GetFloat(string key)
+        {
+            return GetFloat(
+                    key,
+                    0.0F
+            );
+        }
+
+        /// <summary>
+        /// Gets the float value.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>System.Single.</returns>
+        public float GetFloat(
+                string key,
+                float defaultValue)
+        {
+            return (float) Util.Convert.ToDouble(
+                    Get(key),
+                    defaultValue
+            );
+        }
+
+        /// <summary>
         /// Gets the int value.
         /// </summary>
         /// <param name="key">The key.</param>
@@ -217,6 +266,11 @@ namespace Htc.Vita.Core.Config
             );
         }
 
+        /// <summary>
+        /// Called when getting all keys.
+        /// </summary>
+        /// <returns>ISet&lt;System.String&gt;.</returns>
+        protected abstract ISet<string> OnAllKeys();
         /// <summary>
         /// Called when determining whether Config has the specified key.
         /// </summary>
