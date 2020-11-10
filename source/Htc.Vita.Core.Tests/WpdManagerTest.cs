@@ -27,6 +27,8 @@ namespace Htc.Vita.Core.Tests
             {
                 _output.WriteLine("deviceInfo.Path: \"" + deviceInfo.Path + "\"");
                 _output.WriteLine("deviceInfo.Product: \"" + deviceInfo.Product + "\"");
+                _output.WriteLine("deviceInfo.ProductId: \"" + deviceInfo.ProductId + "\"");
+                _output.WriteLine("deviceInfo.VendorId: \"" + deviceInfo.VendorId + "\"");
                 _output.WriteLine("deviceInfo.SerialNumber: \"" + deviceInfo.SerialNumber + "\"");
                 Assert.False(string.IsNullOrWhiteSpace(deviceInfo.Path));
                 Assert.False(string.IsNullOrWhiteSpace(deviceInfo.Description));

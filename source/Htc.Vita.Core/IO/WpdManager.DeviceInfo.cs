@@ -30,10 +30,20 @@ namespace Htc.Vita.Core.IO
             /// <value>The product name.</value>
             public string Product { get; set; } = "";
             /// <summary>
+            /// Gets or sets the product identifier.
+            /// </summary>
+            /// <value>The product identifier.</value>
+            public string ProductId { get; set; } = "";
+            /// <summary>
             /// Gets or sets the serial number.
             /// </summary>
             /// <value>The serial number.</value>
             public string SerialNumber { get; set; } = "";
+            /// <summary>
+            /// Gets or sets the vendor identifier.
+            /// </summary>
+            /// <value>The vendor identifier.</value>
+            public string VendorId { get; set; } = "";
             /// <summary>
             /// Gets or sets the optional values.
             /// </summary>
