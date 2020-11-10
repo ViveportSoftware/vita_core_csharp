@@ -1,15 +1,24 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
+        internal const string ComInterfaceClsidPortableDeviceManager = "0af10cec-2ecd-4b92-9581-34f6ae0637f3";
         internal const string ComInterfaceDxgiAdapter = "2411e7e1-12ac-4ccf-bd14-9798e8534dc0";
         internal const string ComInterfaceDxgiFactory = "7b7166ec-21c7-44ae-b21a-c9ae321ae369";
         internal const string ComInterfaceDxgiObject = "aec22fb8-76f3-4639-9be0-28eb43a67a2e";
         internal const string ComInterfaceDxgiOutput = "ae02eedb-c735-4690-8d52-5a8dc20213aa";
+        internal const string ComInterfaceIPortableDeviceManager = "a1567595-4c2f-4574-a6fa-ecef917b9a40";
+
+        [ComImport]
+        [Guid(ComInterfaceClsidPortableDeviceManager)]
+        internal class ClsidPortableDeviceManager
+        {
+        }
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
@@ -190,6 +199,47 @@ namespace Htc.Vita.Core.Interop
             [PreserveSig]
             DxgiError GetDesc(
                     /* _Out_ DXGI_OUTPUT_DESC*  */ [Out] out DxgiOutputDescription desc
+            );
+        }
+
+        [ComImport]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [Guid(ComInterfaceIPortableDeviceManager)]
+        internal interface IPortableDeviceManager
+        {
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getdevices")]
+            [PreserveSig]
+            HResult GetDevices(
+                    /* __RPC__deref_opt_inout_opt LPWSTR* */ [In][MarshalAs(UnmanagedType.LPArray)] IntPtr[] pPnPDeviceIDs,
+                    /* __RPC__inout               DWORD*  */ [In][Out] ref uint pcPnPDeviceIDs
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-refreshdevicelist")]
+            [PreserveSig]
+            HResult RefreshDeviceList();
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getdevicefriendlyname")]
+            [PreserveSig]
+            HResult GetDeviceFriendlyName(
+                    /* __RPC__in        LPCWSTR */ [In] string pszPnPDeviceId,
+                    /* __RPC__inout_opt WCHAR*  */ [In][Out] StringBuilder pDeviceFriendlyName,
+                    /* __RPC__inout     DWORD*  */ [In][Out] ref uint pcchDeviceFriendlyName
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getdevicedescription")]
+            [PreserveSig]
+            HResult GetDeviceDescription(
+                    /* __RPC__in        LPCWSTR */ [In] string pszPnPDeviceId,
+                    /* __RPC__inout_opt WCHAR*  */ [In][Out] StringBuilder pDeviceDescription,
+                    /* __RPC__inout     DWORD*  */ [In][Out] ref uint pcchDeviceDescription
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getdevicemanufacturer")]
+            [PreserveSig]
+            HResult GetDeviceManufacturer(
+                    /* __RPC__in        LPCWSTR */ [In] string pszPnPDeviceId,
+                    /* __RPC__inout_opt WCHAR*  */ [In][Out] StringBuilder pDeviceManufacturer,
+                    /* __RPC__inout     DWORD*  */ [In][Out] ref uint pcchDeviceManufacturer
             );
         }
     }

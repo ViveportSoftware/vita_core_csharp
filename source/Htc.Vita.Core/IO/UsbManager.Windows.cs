@@ -528,7 +528,7 @@ namespace Htc.Vita.Core.IO
                     );
                     if (!success)
                     {
-                        Logger.GetInstance(typeof(Windows)).Error($"Can not get valid feature report for path: {devicePath}");
+                        Logger.GetInstance(typeof(Windows)).Debug($"Can not get valid feature report for path: {devicePath}, length: {result.Length}");
                         return null;
                     }
 
@@ -643,6 +643,11 @@ namespace Htc.Vita.Core.IO
                         Marshal.FreeHGlobal(deviceInterfaceDetailData);
 
                         if (string.IsNullOrWhiteSpace(devicePath))
+                        {
+                            deviceIndex++;
+                            continue;
+                        }
+                        if (devicePath.Contains("ROOT_HUB") || devicePath.Contains("root_hub"))
                         {
                             deviceIndex++;
                             continue;
@@ -791,6 +796,11 @@ namespace Htc.Vita.Core.IO
                         Marshal.FreeHGlobal(deviceInterfaceDetailData);
 
                         if (string.IsNullOrWhiteSpace(devicePath))
+                        {
+                            deviceIndex++;
+                            continue;
+                        }
+                        if (devicePath.Contains("ROOT_HUB") || devicePath.Contains("root_hub"))
                         {
                             deviceIndex++;
                             continue;
