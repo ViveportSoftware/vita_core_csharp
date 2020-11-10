@@ -47,7 +47,14 @@ namespace Htc.Vita.Core.Interop
                 if (hResult != HResult.SOk
                         && hResult != HResult.EWin32InsufficientBuffer)
                 {
-                    Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device description (1). HResult: " + hResult);
+                    if (hResult == HResult.EWin32InvalidData)
+                    {
+                        Logger.GetInstance(typeof(PortableDeviceManager)).Debug($"The device {deviceId} does not support description");
+                    }
+                    else
+                    {
+                        Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device description (1). HResult: " + hResult);
+                    }
                     return result;
                 }
 
@@ -83,7 +90,11 @@ namespace Htc.Vita.Core.Interop
                 if (hResult != HResult.SOk
                         && hResult != HResult.EWin32InsufficientBuffer)
                 {
-                    if (hResult != HResult.EWin32InvalidData)
+                    if (hResult == HResult.EWin32InvalidData)
+                    {
+                        Logger.GetInstance(typeof(PortableDeviceManager)).Debug($"The device {deviceId} does not support friendly name");
+                    }
+                    else
                     {
                         Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device friendly name (1). HResult: " + hResult);
                     }
