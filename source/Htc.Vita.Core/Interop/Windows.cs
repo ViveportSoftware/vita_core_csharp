@@ -357,13 +357,15 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/seccrypto/common-hresult-values")]
         internal enum HResult : uint
         {
-            /* S_OK                                          */ SOk                      =          0,
-            /* S_FALSE                                       */ SFalse                   =          1,
+            /* S_OK                                          */ SOk                      =        0x0,
+            /* S_FALSE                                       */ SFalse                   =        0x1,
             /* E_POINTER                                     */ EPointer                 = 0x80004003,
             /* E_FAIL                                        */ EFail                    = 0x80004005,
             /* E_UNEXPECTED                                  */ EUnexpected              = 0x8000ffff,
             /* E_ACCESSDENIED                                */ EAccessDenied            = 0x80070000
                                                                                          | Error.AccessDenied,
+            /* E_HANDLE                                      */ EHandle                  = 0x80070000
+                                                                                         | Error.InvalidHandle,
             /* HRESULT_FROM_WIN32(ERROR_INVALID_DATA)        */ EWin32InvalidData        = 0x80070000
                                                                                          | Error.InvalidData,
             /* E_OUTOFMEMORY                                 */ EOutOfMemory             = 0x80070000
