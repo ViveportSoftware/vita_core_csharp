@@ -21,6 +21,18 @@ namespace Htc.Vita.Core.TestProgram
             Console.WriteLine("Platform.DetectProcessArch(): " + Platform.DetectProcessArch());
             Console.ReadKey();
 
+            var wpdDeviceInfos = WpdManager.GetDevices();
+            var index = 0;
+            foreach (var wpdDeviceInfo in wpdDeviceInfos)
+            {
+                Console.WriteLine($"wpdDeviceInfo[{index}].Path: \"{wpdDeviceInfo.Path}\"");
+                Console.WriteLine($"wpdDeviceInfo[{index}].Description: \"{wpdDeviceInfo.Description}\"");
+                Console.WriteLine($"wpdDeviceInfo[{index}].Manufacturer: \"{wpdDeviceInfo.Manufacturer}\"");
+                Console.WriteLine($"wpdDeviceInfo[{index}].Product: \"{wpdDeviceInfo.Product}\"");
+                Console.WriteLine($"wpdDeviceInfo[{index}].SerialNumber: \"{wpdDeviceInfo.SerialNumber}\"");
+                index++;
+            }
+
             using (var usbWatcher = UsbWatcherFactory.GetInstance().CreateUsbWatcher())
             {
                 usbWatcher.OnDeviceConnected += OnUsbDeviceConnected;
@@ -40,56 +52,56 @@ namespace Htc.Vita.Core.TestProgram
                 Console.ReadKey();
             }
 
-            var deviceInfos = UsbManager.GetHidDevices();
-            var index = 0;
-            foreach (var deviceInfo in deviceInfos)
+            var hidDeviceInfos = UsbManager.GetHidDevices();
+            index = 0;
+            foreach (var hidDeviceInfo in hidDeviceInfos)
             {
-                Console.WriteLine($"deviceInfo[{index}].Path: \"{deviceInfo.Path}\"");
-                Console.WriteLine($"deviceInfo[{index}].VendorId: \"{deviceInfo.VendorId}\"");
-                Console.WriteLine($"deviceInfo[{index}].ProductId: \"{deviceInfo.ProductId}\"");
-                Console.WriteLine($"deviceInfo[{index}].Description: \"{deviceInfo.Description}\"");
-                Console.WriteLine($"deviceInfo[{index}].Manufacturer: \"{deviceInfo.Manufacturer}\"");
-                Console.WriteLine($"deviceInfo[{index}].SerialNumber: \"{deviceInfo.SerialNumber}\"");
-                Console.WriteLine($"deviceInfo[{index}].Product: \"{deviceInfo.Product}\"");
-                var featureReport = UsbManager.GetHidFeatureReport(deviceInfo.Path, 0);
+                Console.WriteLine($"hidDeviceInfo[{index}].Path: \"{hidDeviceInfo.Path}\"");
+                Console.WriteLine($"hidDeviceInfo[{index}].VendorId: \"{hidDeviceInfo.VendorId}\"");
+                Console.WriteLine($"hidDeviceInfo[{index}].ProductId: \"{hidDeviceInfo.ProductId}\"");
+                Console.WriteLine($"hidDeviceInfo[{index}].Description: \"{hidDeviceInfo.Description}\"");
+                Console.WriteLine($"hidDeviceInfo[{index}].Manufacturer: \"{hidDeviceInfo.Manufacturer}\"");
+                Console.WriteLine($"hidDeviceInfo[{index}].SerialNumber: \"{hidDeviceInfo.SerialNumber}\"");
+                Console.WriteLine($"hidDeviceInfo[{index}].Product: \"{hidDeviceInfo.Product}\"");
+                var featureReport = UsbManager.GetHidFeatureReport(hidDeviceInfo.Path, 0);
                 if (featureReport == null)
                 {
-                    Console.WriteLine($"deviceInfo[{index}].featureReport is null");
+                    Console.WriteLine($"hidDeviceInfo[{index}].featureReport is null");
                 }
                 else
                 {
-                    Console.WriteLine($"deviceInfo[{index}].featureReport is {Util.Convert.ToHexString(featureReport)}");
+                    Console.WriteLine($"hidDeviceInfo[{index}].featureReport is {Util.Convert.ToHexString(featureReport)}");
                 }
                 index++;
             }
             Console.ReadKey();
 
-            deviceInfos = UsbManager.GetUsbDevices();
+            var usbDeviceInfos = UsbManager.GetUsbDevices();
             index = 0;
-            foreach (var deviceInfo in deviceInfos)
+            foreach (var usbDeviceInfo in usbDeviceInfos)
             {
-                Console.WriteLine($"deviceInfo[{index}].Path: \"{deviceInfo.Path}\"");
-                Console.WriteLine($"deviceInfo[{index}].VendorId: \"{deviceInfo.VendorId}\"");
-                Console.WriteLine($"deviceInfo[{index}].ProductId: \"{deviceInfo.ProductId}\"");
-                Console.WriteLine($"deviceInfo[{index}].Description: \"{deviceInfo.Description}\"");
-                Console.WriteLine($"deviceInfo[{index}].Manufacturer: \"{deviceInfo.Manufacturer}\"");
-                Console.WriteLine($"deviceInfo[{index}].SerialNumber: \"{deviceInfo.SerialNumber}\"");
-                Console.WriteLine($"deviceInfo[{index}].Product: \"{deviceInfo.Product}\"");
+                Console.WriteLine($"usbDeviceInfo[{index}].Path: \"{usbDeviceInfo.Path}\"");
+                Console.WriteLine($"usbDeviceInfo[{index}].VendorId: \"{usbDeviceInfo.VendorId}\"");
+                Console.WriteLine($"usbDeviceInfo[{index}].ProductId: \"{usbDeviceInfo.ProductId}\"");
+                Console.WriteLine($"usbDeviceInfo[{index}].Description: \"{usbDeviceInfo.Description}\"");
+                Console.WriteLine($"usbDeviceInfo[{index}].Manufacturer: \"{usbDeviceInfo.Manufacturer}\"");
+                Console.WriteLine($"usbDeviceInfo[{index}].SerialNumber: \"{usbDeviceInfo.SerialNumber}\"");
+                Console.WriteLine($"usbDeviceInfo[{index}].Product: \"{usbDeviceInfo.Product}\"");
                 index++;
             }
             Console.ReadKey();
 
-            deviceInfos = UsbManager.GetUsbHubDevices();
+            var usbHubDeviceInfos = UsbManager.GetUsbHubDevices();
             index = 0;
-            foreach (var deviceInfo in deviceInfos)
+            foreach (var usbHubDeviceInfo in usbHubDeviceInfos)
             {
-                Console.WriteLine($"deviceInfo[{index}].Path: \"{deviceInfo.Path}\"");
-                Console.WriteLine($"deviceInfo[{index}].VendorId: \"{deviceInfo.VendorId}\"");
-                Console.WriteLine($"deviceInfo[{index}].ProductId: \"{deviceInfo.ProductId}\"");
-                Console.WriteLine($"deviceInfo[{index}].Description: \"{deviceInfo.Description}\"");
-                Console.WriteLine($"deviceInfo[{index}].Manufacturer: \"{deviceInfo.Manufacturer}\"");
-                Console.WriteLine($"deviceInfo[{index}].SerialNumber: \"{deviceInfo.SerialNumber}\"");
-                Console.WriteLine($"deviceInfo[{index}].Product: \"{deviceInfo.Product}\"");
+                Console.WriteLine($"usbHubDeviceInfo[{index}].Path: \"{usbHubDeviceInfo.Path}\"");
+                Console.WriteLine($"usbHubDeviceInfo[{index}].VendorId: \"{usbHubDeviceInfo.VendorId}\"");
+                Console.WriteLine($"usbHubDeviceInfo[{index}].ProductId: \"{usbHubDeviceInfo.ProductId}\"");
+                Console.WriteLine($"usbHubDeviceInfo[{index}].Description: \"{usbHubDeviceInfo.Description}\"");
+                Console.WriteLine($"usbHubDeviceInfo[{index}].Manufacturer: \"{usbHubDeviceInfo.Manufacturer}\"");
+                Console.WriteLine($"usbHubDeviceInfo[{index}].SerialNumber: \"{usbHubDeviceInfo.SerialNumber}\"");
+                Console.WriteLine($"usbHubDeviceInfo[{index}].Product: \"{usbHubDeviceInfo.Product}\"");
                 index++;
             }
             Console.ReadKey();

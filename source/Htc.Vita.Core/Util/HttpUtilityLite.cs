@@ -1,4 +1,4 @@
-﻿using System.Collections.Specialized;
+using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 
 namespace Htc.Vita.Core.Util

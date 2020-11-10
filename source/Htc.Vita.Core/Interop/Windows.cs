@@ -261,6 +261,7 @@ namespace Htc.Vita.Core.Interop
             /* ERROR_NO_MORE_ITEMS            (259, 0x103) */ NoMoreItems           = 0x103,
             /* ERROR_SERVICE_DOES_NOT_EXIST  (1060, 0x424) */ ServiceDoesNotExist   = 0x424,
             /* ERROR_DEVICE_NOT_CONNECTED    (1167, 0x48f) */ DeviceNotConnected    = 0x48f,
+            /* ERROR_NOT_FOUND               (1168, 0x490) */ NotFound              = 0x490,
             /* ERROR_NO_SUCH_LOGON_SESSION   (1312, 0x520) */ NoSuchLogonSession    = 0x520,
             /* ERROR_BAD_IMPERSONATION_LEVEL (1346, 0x542) */ BadImpersonationLevel = 0x542
         }
@@ -355,14 +356,18 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/seccrypto/common-hresult-values")]
         internal enum HResult : uint
         {
-            /* S_OK           */ SOk           =          0,
-            /* S_FALSE        */ SFalse        =          1,
-            /* E_POINTER      */ EPointer      = 0x80004003,
-            /* E_FAIL         */ EFail         = 0x80004005,
-            /* E_UNEXPECTED   */ EUnexpected   = 0x8000ffff,
-            /* E_ACCESSDENIED */ EAccessDenied = 0x80070005,
-            /* E_OUTOFMEMORY  */ EOutOfMemory  = 0x8007000e,
-            /* E_INVALIDARG   */ EInvalidArg   = 0x80070057
+            /* S_OK                                          */ SOk                      =          0,
+            /* S_FALSE                                       */ SFalse                   =          1,
+            /* E_POINTER                                     */ EPointer                 = 0x80004003,
+            /* E_FAIL                                        */ EFail                    = 0x80004005,
+            /* E_UNEXPECTED                                  */ EUnexpected              = 0x8000ffff,
+            /* E_ACCESSDENIED                                */ EAccessDenied            = 0x80070005,
+            /* E_OUTOFMEMORY                                 */ EOutOfMemory             = 0x8007000e,
+            /* E_INVALIDARG                                  */ EInvalidArg              = 0x80070057,
+            /* HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER) */ EWin32InsufficientBuffer = 0x80070000
+                                                                                         | Error.InsufficientBuffer,
+            /* HRESULT_FROM_WIN32(ERROR_NOT_FOUND)           */ EWin32NotFound           = 0x80070000
+                                                                                         | Error.NotFound
         }
 
         [ExternalReference("https://docs.microsoft.com/zh-tw/windows/desktop/SysInfo/image-file-machine-constants")]

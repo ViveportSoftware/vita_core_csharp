@@ -267,7 +267,8 @@ namespace Htc.Vita.Core.Util
         /// <typeparam name="T"></typeparam>
         /// <param name="data">The data.</param>
         /// <returns>T.</returns>
-        public static T ToTypeByDescription<T>(string data) where T : struct, IConvertible, IComparable, IFormattable
+        public static T ToTypeByDescription<T>(string data)
+                where T : struct, IConvertible, IComparable, IFormattable
         {
             if (string.IsNullOrWhiteSpace(data))
             {
@@ -284,7 +285,8 @@ namespace Htc.Vita.Core.Util
         /// <typeparam name="T"></typeparam>
         /// <param name="data">The data.</param>
         /// <returns>T.</returns>
-        public static T ToTypeByName<T>(string data) where T : struct, IConvertible, IComparable, IFormattable
+        public static T ToTypeByName<T>(string data)
+                where T : struct, IConvertible, IComparable, IFormattable
         {
             if (string.IsNullOrWhiteSpace(data))
             {

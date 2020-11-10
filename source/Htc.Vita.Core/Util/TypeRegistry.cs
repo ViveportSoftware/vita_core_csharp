@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Htc.Vita.Core.Log;
 
@@ -10,9 +10,7 @@ namespace Htc.Vita.Core.Util
     public static class TypeRegistry
     {
         private static readonly Dictionary<Type, Type> AbstractClassTypeWithConcreteClassType = new Dictionary<Type, Type>();
-        private static readonly object InstancesLock = new object();
-
-        private static Dictionary<string, object> Instances { get; } = new Dictionary<string, object>();
+        private static readonly Dictionary<string, object> Instances = new Dictionary<string, object>();
 
         private static TBaseClass DoGetInstance<TBaseClass>(
                 Type abstractClassType,
@@ -27,7 +25,7 @@ namespace Htc.Vita.Core.Util
 
             var key = $"{concreteClassType.FullName}_";
             var instance = default(TBaseClass);
-            lock (InstancesLock)
+            lock (Instances)
             {
                 if (Instances.ContainsKey(key))
                 {
@@ -128,7 +126,10 @@ namespace Htc.Vita.Core.Util
                 return;
             }
 
-            AbstractClassTypeWithConcreteClassType.Add(baseClass, subClass);
+            AbstractClassTypeWithConcreteClassType.Add(
+                    baseClass,
+                    subClass
+            );
         }
     }
 }
