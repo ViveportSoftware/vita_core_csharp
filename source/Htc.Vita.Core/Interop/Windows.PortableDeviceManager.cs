@@ -83,7 +83,10 @@ namespace Htc.Vita.Core.Interop
                 if (hResult != HResult.SOk
                         && hResult != HResult.EWin32InsufficientBuffer)
                 {
-                    Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device friendly name (1). HResult: " + hResult);
+                    if (hResult != HResult.EWin32InvalidData)
+                    {
+                        Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device friendly name (1). HResult: " + hResult);
+                    }
                     return result;
                 }
 
