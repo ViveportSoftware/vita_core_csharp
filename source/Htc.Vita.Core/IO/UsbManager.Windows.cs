@@ -679,6 +679,7 @@ namespace Htc.Vita.Core.IO
                                 ref deviceInfoData,
                                 Interop.Windows.SetupDeviceRegistryProperty.HardwareId
                         );
+                        // USB\VID_2833&PID_0182&REV_0419
                         var regex = new Regex("^(\\w{3})\\\\VID_([0-9A-F]{4})&PID_([0-9A-F]{4})", RegexOptions.IgnoreCase);
                         foreach (var hardwareId in hardwareIds)
                         {
@@ -832,6 +833,7 @@ namespace Htc.Vita.Core.IO
                                 ref deviceInfoData,
                                 Interop.Windows.SetupDeviceRegistryProperty.HardwareId
                         );
+                        // USB\VID_2833&PID_0182&REV_0419
                         var regex = new Regex("^(\\w{3})\\\\VID_([0-9A-F]{4})&PID_([0-9A-F]{4})", RegexOptions.IgnoreCase);
                         foreach (var hardwareId in hardwareIds)
                         {

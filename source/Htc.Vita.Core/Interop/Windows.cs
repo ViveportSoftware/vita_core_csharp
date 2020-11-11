@@ -250,6 +250,7 @@ namespace Htc.Vita.Core.Interop
             /* ERROR_ACCESS_DENIED              (5,   0x5) */ AccessDenied          =   0x5,
             /* ERROR_INVALID_HANDLE             (6,   0x6) */ InvalidHandle         =   0x6,
             /* ERROR_INVALID_DATA              (13,   0xd) */ InvalidData           =   0xd,
+            /* ERROR_OUTOFMEMORY               (14,   0xe) */ OutOfMemory           =   0xe,
             /* ERROR_BAD_LENGTH                (24,  0x18) */ BadLength             =  0x18,
             /* ERROR_GEN_FAILURE               (31,  0x1f) */ GenFailure            =  0x1f,
             /* ERROR_NOT_SUPPORTED             (50,  0x32) */ NotSupported          =  0x32,
@@ -356,14 +357,21 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/seccrypto/common-hresult-values")]
         internal enum HResult : uint
         {
-            /* S_OK                                          */ SOk                      =          0,
-            /* S_FALSE                                       */ SFalse                   =          1,
+            /* S_OK                                          */ SOk                      =        0x0,
+            /* S_FALSE                                       */ SFalse                   =        0x1,
             /* E_POINTER                                     */ EPointer                 = 0x80004003,
             /* E_FAIL                                        */ EFail                    = 0x80004005,
             /* E_UNEXPECTED                                  */ EUnexpected              = 0x8000ffff,
-            /* E_ACCESSDENIED                                */ EAccessDenied            = 0x80070005,
-            /* E_OUTOFMEMORY                                 */ EOutOfMemory             = 0x8007000e,
-            /* E_INVALIDARG                                  */ EInvalidArg              = 0x80070057,
+            /* E_ACCESSDENIED                                */ EAccessDenied            = 0x80070000
+                                                                                         | Error.AccessDenied,
+            /* E_HANDLE                                      */ EHandle                  = 0x80070000
+                                                                                         | Error.InvalidHandle,
+            /* HRESULT_FROM_WIN32(ERROR_INVALID_DATA)        */ EWin32InvalidData        = 0x80070000
+                                                                                         | Error.InvalidData,
+            /* E_OUTOFMEMORY                                 */ EOutOfMemory             = 0x80070000
+                                                                                         | Error.OutOfMemory,
+            /* E_INVALIDARG                                  */ EInvalidArg              = 0x80070000
+                                                                                         | Error.InvalidParameter,
             /* HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER) */ EWin32InsufficientBuffer = 0x80070000
                                                                                          | Error.InsufficientBuffer,
             /* HRESULT_FROM_WIN32(ERROR_NOT_FOUND)           */ EWin32NotFound           = 0x80070000

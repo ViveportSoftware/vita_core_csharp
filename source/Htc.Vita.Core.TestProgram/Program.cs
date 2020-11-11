@@ -29,6 +29,8 @@ namespace Htc.Vita.Core.TestProgram
                 Console.WriteLine($"wpdDeviceInfo[{index}].Description: \"{wpdDeviceInfo.Description}\"");
                 Console.WriteLine($"wpdDeviceInfo[{index}].Manufacturer: \"{wpdDeviceInfo.Manufacturer}\"");
                 Console.WriteLine($"wpdDeviceInfo[{index}].Product: \"{wpdDeviceInfo.Product}\"");
+                Console.WriteLine($"wpdDeviceInfo[{index}].ProductId: \"{wpdDeviceInfo.ProductId}\"");
+                Console.WriteLine($"wpdDeviceInfo[{index}].VendorId: \"{wpdDeviceInfo.VendorId}\"");
                 Console.WriteLine($"wpdDeviceInfo[{index}].SerialNumber: \"{wpdDeviceInfo.SerialNumber}\"");
                 index++;
             }
