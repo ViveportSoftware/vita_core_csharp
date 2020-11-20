@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.ServiceProcess;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Runtime;
@@ -42,6 +43,9 @@ namespace Htc.Vita.Core.TestService
                 }
 
                 _runningStatus = RunningStatus.Started;
+
+                var isElevatedProcess = ProcessManager.IsElevatedProcess(Process.GetCurrentProcess());
+                Logger.GetInstance(typeof(DefaultService)).Info("Service is running as an elevated process: " + isElevatedProcess);
             }
 
             Logger.GetInstance(typeof(DefaultService)).Info("Service started");

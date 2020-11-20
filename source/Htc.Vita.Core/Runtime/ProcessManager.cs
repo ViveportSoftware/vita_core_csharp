@@ -74,6 +74,15 @@ namespace Htc.Vita.Core.Runtime
             return Windows.IsCurrentUserProcessInPlatform(process);
         }
 
+        public static bool IsElevatedProcess(Process process)
+        {
+            if (process == null)
+            {
+                return false;
+            }
+            return Windows.IsElevatedProcessInPlatform(process);
+        }
+
         public static bool KillProcessById(int processId)
         {
             return Windows.KillPlatformProcessById(processId);

@@ -1603,6 +1603,13 @@ namespace Htc.Vita.Core.Interop
             internal /* HANDLE */ IntPtr hStdError;
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-token_elevation",
+                Description = "TOKEN_ELEVATION structure")]
+        internal struct TokenElevation
+        {
+            internal /* DWORD */ uint TokenIsElevated;
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ns-winnt-_token_privileges",
                 Description = "TOKEN_PRIVILEGES structure")]
         [StructLayout(LayoutKind.Sequential, Pack = 1)]

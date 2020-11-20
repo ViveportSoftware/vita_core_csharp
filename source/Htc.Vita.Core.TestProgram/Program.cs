@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Htc.Vita.Core.IO;
 using Htc.Vita.Core.Net;
 using Htc.Vita.Core.Runtime;
@@ -19,6 +20,9 @@ namespace Htc.Vita.Core.TestProgram
             Console.ReadKey();
 
             Console.WriteLine("Platform.DetectProcessArch(): " + Platform.DetectProcessArch());
+            Console.ReadKey();
+
+            Console.WriteLine("ProcessManager.IsElevatedProcess(Process.GetCurrentProcess()): " + ProcessManager.IsElevatedProcess(Process.GetCurrentProcess()));
             Console.ReadKey();
 
             var wpdDeviceInfos = WpdManager.GetDevices();
