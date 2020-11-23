@@ -23,6 +23,7 @@ namespace Htc.Vita.Core.Tests
             {
                 Assert.False(string.IsNullOrWhiteSpace(key));
             }
+            Assert.Equal("testValue", queryStringMap["testKey"]);
         }
     }
 }
