@@ -51,8 +51,13 @@ namespace Htc.Vita.Core.Net
                         ? uri.Path
                         : $"{uriDownload.Path.TrimEnd('/')}{uri.Path}";
 
-                    var query = HttpUtilityLite.ParseQueryString(uri.Query);
-                    uriDownload.Query = query.ToString();
+                    var queries = HttpUtilityLite.ParseQueryString(uri.Query);
+                    var queryList = new List<string>();
+                    foreach (var item in queries.AllKeys)
+                    {
+                        queryList.Add($"{item}={queries[item]}");
+                    }
+                    uriDownload.Query = string.Join("&", queryList);
 
                     return uriDownload.ToString();
                 }
