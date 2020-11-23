@@ -30,6 +30,8 @@ namespace Htc.Vita.Core.Tests
                     {
                         Logger.GetInstance(typeof(GraphicsDeviceManagerTest)).Info($"graphicsAdapterInfo[{index}].DisplayList[{index1}].MonitorList[{index2}].Name: {graphicsMonitorInfo.Name}");
                         Logger.GetInstance(typeof(GraphicsDeviceManagerTest)).Info($"graphicsAdapterInfo[{index}].DisplayList[{index1}].MonitorList[{index2}].Description: {graphicsMonitorInfo.Description}");
+                        Logger.GetInstance(typeof(GraphicsDeviceManagerTest)).Info($"graphicsAdapterInfo[{index}].DisplayList[{index1}].MonitorList[{index2}].DeviceId: {graphicsMonitorInfo.DeviceId}");
+                        Logger.GetInstance(typeof(GraphicsDeviceManagerTest)).Info($"graphicsAdapterInfo[{index}].DisplayList[{index1}].MonitorList[{index2}].DeviceKey: {graphicsMonitorInfo.DeviceKey}");
                         index2++;
                     }
                     index1++;

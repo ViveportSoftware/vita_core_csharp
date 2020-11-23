@@ -280,6 +280,80 @@ namespace Htc.Vita.Core.Runtime
                 return false;
             }
 
+            internal static bool IsElevatedProcessInPlatform(Process process)
+            {
+                var tokenInformation = IntPtr.Zero;
+                try
+                {
+                    using (var processHandle = new Interop.Windows.SafeProcessHandle(process, false))
+                    {
+                        Interop.Windows.SafeTokenHandle tokenHandle;
+                        var success = Interop.Windows.OpenProcessToken(
+                                processHandle,
+                                Interop.Windows.TokenAccessRight.Query,
+                                out tokenHandle
+                        );
+                        if (!success)
+                        {
+                            Logger.GetInstance(typeof(Windows)).Error($"Can not open process token. error code: {Marshal.GetLastWin32Error()}");
+                        }
+
+                        var tokenInformationSize = 0U;
+                        success = Interop.Windows.GetTokenInformation(
+                                tokenHandle,
+                                Interop.Windows.TokenInformationClass.Elevation,
+                                tokenInformation,
+                                tokenInformationSize,
+                                out tokenInformationSize
+                        );
+                        if (!success)
+                        {
+                            var win32Error = Marshal.GetLastWin32Error();
+                            if (win32Error != (int)Interop.Windows.Error.BadLength
+                                    && win32Error != (int)Interop.Windows.Error.InsufficientBuffer)
+                            {
+                                Logger.GetInstance(typeof(Windows)).Error($"Can not get process token information size. error code: {win32Error}.");
+                                return false;
+                            }
+                        }
+
+                        tokenInformation = Marshal.AllocHGlobal((int)tokenInformationSize);
+                        success = Interop.Windows.GetTokenInformation(
+                                tokenHandle,
+                                Interop.Windows.TokenInformationClass.Elevation,
+                                tokenInformation,
+                                tokenInformationSize,
+                                out tokenInformationSize
+                        );
+                        if (!success)
+                        {
+                            Logger.GetInstance(typeof(Windows)).Error($"Can not get process token information. error code: {Marshal.GetLastWin32Error()}");
+                            return false;
+                        }
+
+                        var tokenElevation = (Interop.Windows.TokenElevation)Marshal.PtrToStructure(
+                                tokenInformation,
+                                typeof(Interop.Windows.TokenElevation)
+                        );
+
+                        return tokenElevation.TokenIsElevated != 0;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(Windows)).Error($"Can not check if process is elevated. {e.Message}");
+                }
+                finally
+                {
+                    if (tokenInformation != IntPtr.Zero)
+                    {
+                        Marshal.FreeHGlobal(tokenInformation);
+                    }
+                }
+
+                return false;
+            }
+
             internal static bool KillPlatformProcessById(int processId)
             {
                 return KillPlatformProcessById(processId, null);

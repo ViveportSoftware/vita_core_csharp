@@ -181,7 +181,9 @@ namespace Htc.Vita.Core.Interop
         {
             /*                                    */ None              =          0,
             /* DISPLAY_DEVICE_ATTACHED_TO_DESKTOP */ AttachedToDesktop = 0x00000001,
+            /* DISPLAY_DEVICE_ACTIVE              */ Active            = AttachedToDesktop,
             /* DISPLAY_DEVICE_MULTI_DRIVER        */ MultiDriver       = 0x00000002,
+            /* DISPLAY_DEVICE_ATTACHED            */ Attached          = MultiDriver,
             /* DISPLAY_DEVICE_PRIMARY_DEVICE      */ PrimaryDevice     = 0x00000004,
             /* DISPLAY_DEVICE_MIRRORING_DRIVER    */ MirroringDriver   = 0x00000008,
             /* DISPLAY_DEVICE_VGA_COMPATIBLE      */ VgaCompatible     = 0x00000010,
@@ -241,6 +243,13 @@ namespace Htc.Vita.Core.Interop
             /* DXGI_MODE_ROTATION_ROTATE90    */ Rotate90    = 2,
             /* DXGI_MODE_ROTATION_ROTATE180   */ Rotate180   = 3,
             /* DXGI_MODE_ROTATION_ROTATE270   */ Rotate270   = 4
+        }
+
+        [Flags]
+        internal enum EnumDisplayDeviceFlag : uint
+        {
+            /* None                          */ None                   =          0,
+            /* EDD_GET_DEVICE_INTERFACE_NAME */ GetDeviceInterfaceName = 0x00000001
         }
 
         internal enum Error
@@ -1592,6 +1601,13 @@ namespace Htc.Vita.Core.Interop
             internal /* HANDLE */ IntPtr hStdInput;
             internal /* HANDLE */ IntPtr hStdOutput;
             internal /* HANDLE */ IntPtr hStdError;
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-token_elevation",
+                Description = "TOKEN_ELEVATION structure")]
+        internal struct TokenElevation
+        {
+            internal /* DWORD */ uint TokenIsElevated;
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ns-winnt-_token_privileges",

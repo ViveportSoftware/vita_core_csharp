@@ -72,7 +72,8 @@ namespace Htc.Vita.Core.IO
 
                                     try
                                     {
-                                        for (uint adapterId = 0; Interop.Windows.EnumDisplayDevicesW(null, adapterId, ref displayDevice, 0); adapterId++)
+                                        var enumDisplayDeviceFlag = Interop.Windows.EnumDisplayDeviceFlag.None;
+                                        for (uint adapterId = 0; Interop.Windows.EnumDisplayDevicesW(null, adapterId, ref displayDevice, enumDisplayDeviceFlag); adapterId++)
                                         {
                                             var adapterDeviceName = displayDevice.deviceName;
                                             if (string.IsNullOrWhiteSpace(adapterDeviceName))
@@ -85,12 +86,14 @@ namespace Htc.Vita.Core.IO
                                                 continue;
                                             }
 
-                                            for (uint monitorId = 0; Interop.Windows.EnumDisplayDevicesW(adapterDeviceName, monitorId, ref displayDevice, 0); monitorId++)
+                                            for (uint monitorId = 0; Interop.Windows.EnumDisplayDevicesW(adapterDeviceName, monitorId, ref displayDevice, enumDisplayDeviceFlag); monitorId++)
                                             {
                                                 graphicsDisplayInfo.MonitorList.Add(new GraphicsMonitorInfo
                                                 {
                                                         Name = displayDevice.deviceName,
-                                                        Description = displayDevice.deviceString
+                                                        Description = displayDevice.deviceString,
+                                                        DeviceId = displayDevice.deviceId,
+                                                        DeviceKey = displayDevice.deviceKey
                                                 });
                                             }
                                         }

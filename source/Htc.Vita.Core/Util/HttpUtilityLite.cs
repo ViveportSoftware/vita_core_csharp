@@ -30,6 +30,10 @@ namespace Htc.Vita.Core.Util
                     continue;
                 }
 
+                if (string.IsNullOrEmpty(pair[0]))
+                {
+                    continue;
+                }
                 result.Add(pair[0], string.Empty);
             }
             return result;

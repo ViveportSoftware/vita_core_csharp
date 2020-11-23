@@ -26,6 +26,8 @@ namespace Htc.Vita.Core.Tests
             foreach (var deviceInfo in deviceInfos)
             {
                 _output.WriteLine("deviceInfo.Path: \"" + deviceInfo.Path + "\"");
+                _output.WriteLine("deviceInfo.Manufacturer: \"" + deviceInfo.Manufacturer + "\"");
+                _output.WriteLine("deviceInfo.Description: \"" + deviceInfo.Description + "\"");
                 _output.WriteLine("deviceInfo.Product: \"" + deviceInfo.Product + "\"");
                 _output.WriteLine("deviceInfo.ProductId: \"" + deviceInfo.ProductId + "\"");
                 _output.WriteLine("deviceInfo.VendorId: \"" + deviceInfo.VendorId + "\"");
