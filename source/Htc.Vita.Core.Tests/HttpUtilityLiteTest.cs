@@ -1,7 +1,5 @@
-﻿using Htc.Vita.Core.Net;
 using Htc.Vita.Core.Util;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
