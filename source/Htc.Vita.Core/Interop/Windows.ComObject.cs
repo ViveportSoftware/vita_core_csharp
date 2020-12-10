@@ -8,10 +8,10 @@ namespace Htc.Vita.Core.Interop
     internal static partial class Windows
     {
         internal const string ComInterfaceClsidPortableDeviceManager = "0af10cec-2ecd-4b92-9581-34f6ae0637f3";
-        internal const string ComInterfaceDxgiAdapter = "2411e7e1-12ac-4ccf-bd14-9798e8534dc0";
-        internal const string ComInterfaceDxgiFactory = "7b7166ec-21c7-44ae-b21a-c9ae321ae369";
-        internal const string ComInterfaceDxgiObject = "aec22fb8-76f3-4639-9be0-28eb43a67a2e";
-        internal const string ComInterfaceDxgiOutput = "ae02eedb-c735-4690-8d52-5a8dc20213aa";
+        internal const string ComInterfaceIDxgiAdapter = "2411e7e1-12ac-4ccf-bd14-9798e8534dc0";
+        internal const string ComInterfaceIDxgiFactory = "7b7166ec-21c7-44ae-b21a-c9ae321ae369";
+        internal const string ComInterfaceIDxgiObject = "aec22fb8-76f3-4639-9be0-28eb43a67a2e";
+        internal const string ComInterfaceIDxgiOutput = "ae02eedb-c735-4690-8d52-5a8dc20213aa";
         internal const string ComInterfaceIPortableDeviceManager = "a1567595-4c2f-4574-a6fa-ecef917b9a40";
 
         [ComImport]
@@ -22,7 +22,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceDxgiAdapter)]
+        [Guid(ComInterfaceIDxgiAdapter)]
         internal interface IDxgiAdapter
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/dxgi/nf-dxgi-idxgiobject-setprivatedata",
@@ -75,7 +75,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceDxgiFactory)]
+        [Guid(ComInterfaceIDxgiFactory)]
         internal interface IDxgiFactory
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/dxgi/nf-dxgi-idxgiobject-setprivatedata",
@@ -122,7 +122,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceDxgiObject)]
+        [Guid(ComInterfaceIDxgiObject)]
         internal interface IDxgiObject
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/dxgi/nf-dxgi-idxgiobject-setprivatedata")]
@@ -158,7 +158,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceDxgiOutput)]
+        [Guid(ComInterfaceIDxgiOutput)]
         internal interface IDxgiOutput
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/dxgi/nf-dxgi-idxgiobject-setprivatedata",
