@@ -241,6 +241,26 @@ namespace Htc.Vita.Core.Interop
                 return false;
             }
 
+            internal bool SetProxySettings(BitsJobProxySettings proxySettings)
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                var bitsResult = _backgroundCopyJob.SetProxySettings(
+                        proxySettings.Usage,
+                        proxySettings.ProxyList,
+                        proxySettings.ProxyBypassList
+                );
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return true;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot set job proxy settings. error: {bitsResult}");
+                return false;
+            }
+
             internal bool Suspend()
             {
                 if (_backgroundCopyJob == null)

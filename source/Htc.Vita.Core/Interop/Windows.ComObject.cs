@@ -227,6 +227,44 @@ namespace Htc.Vita.Core.Interop
             BitsResult GetNotifyInterface(
                     /* __RPC__deref_out_opt IUnknown** */ [Out][MarshalAs(UnmanagedType.IUnknown)] out object pVal
             );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setminimumretrydelay")]
+            [PreserveSig]
+            BitsResult SetMinimumRetryDelay(
+                    /* ULONG */ [In] uint seconds
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getminimumretrydelay")]
+            [PreserveSig]
+            BitsResult GetMinimumRetryDelay(
+                    /* __RPC__out ULONG* */ [Out] out uint seconds
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnoprogresstimeout")]
+            [PreserveSig]
+            BitsResult SetNoProgressTimeout(
+                    /* ULONG */ [In] uint seconds
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getnoprogresstimeout")]
+            [PreserveSig]
+            BitsResult GetNoProgressTimeout(
+                    /* __RPC__out ULONG* */ [Out] out uint seconds
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-geterrorcount")]
+            [PreserveSig]
+            BitsResult GetErrorCount(
+                    /* __RPC__out ULONG* */ [Out] out uint errors
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setproxysettings")]
+            [PreserveSig]
+            BitsResult SetProxySettings(
+                    /*                      BG_JOB_PROXY_USAGE */ [In] BitsJobProxyUsage proxyUsage,
+                    /* __RPC__in_opt_string const WCHAR*       */ [In] string proxyList,
+                    /* __RPC__in_opt_string const WCHAR*       */ [In] string proxyBypassList
+            );
         }
 
         [ComImport]

@@ -37,6 +37,16 @@ namespace Htc.Vita.Core.Interop
             /* BG_JOB_PRIORITY_LOW        */ Low        = 3
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_proxy_usage",
+                Description = "BG_JOB_PROXY_USAGE enumeration")]
+        internal enum BitsJobProxyUsage
+        {
+            /* BG_JOB_PROXY_USAGE_PRECONFIG  */ Preconfig,
+            /* BG_JOB_PROXY_USAGE_NO_PROXY   */ NoProxy,
+            /* BG_JOB_PROXY_USAGE_OVERRIDE   */ Override,
+            /* BG_JOB_PROXY_USAGE_AUTODETECT */ Autodetect
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_state",
                 Description = "BG_JOB_STATE enumeration")]
         internal enum BitsJobState

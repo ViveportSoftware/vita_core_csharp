@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Htc.Vita.Core.Interop;
+using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
 {
@@ -13,6 +15,7 @@ namespace Htc.Vita.Core.Net
         public class BitsFileTransferJob : FileTransferJob
         {
             private readonly Windows.BitsJob _bitsJob;
+            private Uri _lastRemotePath;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="BitsFileTransferJob"/> class.
@@ -32,9 +35,38 @@ namespace Htc.Vita.Core.Net
                 return _bitsJob;
             }
 
+            private static Uri GetProxyUri(Uri remoteUri)
+            {
+                var webProxyFactory = WebProxyFactory.GetInstance();
+                var webProxy = webProxyFactory.GetWebProxy();
+                var webProxyStatus = webProxyFactory.GetWebProxyStatus(webProxy);
+                if (webProxyStatus != WebProxyFactory.WebProxyStatus.Working)
+                {
+                    return null;
+                }
+
+                if (remoteUri == null)
+                {
+                    return null;
+                }
+
+                return webProxy.GetProxy(remoteUri);
+            }
+
             /// <inheritdoc />
             protected override bool OnAddItem(FileTransferItem item)
             {
+                if (item == null)
+                {
+                    return false;
+                }
+
+                var remotePath = item.RemotePath;
+                if (remotePath != null)
+                {
+                    _lastRemotePath = remotePath;
+                }
+
                 return _bitsJob?.AddFile(ConvertFrom(item)) ?? false;
             }
 
@@ -143,7 +175,24 @@ namespace Htc.Vita.Core.Net
             /// <inheritdoc />
             protected override bool OnResume()
             {
-                return _bitsJob?.Resume() ?? false;
+                if (_bitsJob == null)
+                {
+                    return false;
+                }
+
+                var proxyUri = GetProxyUri(_lastRemotePath);
+                if (proxyUri != null)
+                {
+                    Logger.GetInstance(typeof(BitsFileTransferJob)).Debug($"Try to use proxy: {proxyUri}");
+                    var proxySettings = new Windows.BitsJobProxySettings
+                    {
+                            Usage = Windows.BitsJobProxyUsage.Override,
+                            ProxyList = proxyUri.ToString().TrimEnd('/')
+                    };
+                    _bitsJob.SetProxySettings(proxySettings);
+                }
+
+                return _bitsJob.Resume();
             }
 
             /// <inheritdoc />
