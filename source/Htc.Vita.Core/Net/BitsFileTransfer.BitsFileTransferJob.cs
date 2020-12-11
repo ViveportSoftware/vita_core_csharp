@@ -23,6 +23,12 @@ namespace Htc.Vita.Core.Net
             }
 
             /// <inheritdoc />
+            protected override bool OnAddItem(FileTransferItem item)
+            {
+                return _bitsJob?.AddFile(ConvertFrom(item)) ?? false;
+            }
+
+            /// <inheritdoc />
             protected override bool OnCancel()
             {
                 return _bitsJob?.Cancel() ?? false;

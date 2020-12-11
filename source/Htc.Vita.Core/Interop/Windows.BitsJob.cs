@@ -15,6 +15,37 @@ namespace Htc.Vita.Core.Interop
                 _backgroundCopyJob = backgroundCopyJob;
             }
 
+            internal bool AddFile(BitsFileInfo file)
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                var localName = file.LocalName;
+                if (string.IsNullOrWhiteSpace(localName))
+                {
+                    return false;
+                }
+
+                var remoteName = file.RemoteName;
+                if (string.IsNullOrWhiteSpace(remoteName))
+                {
+                    return false;
+                }
+
+                var bitsResult = _backgroundCopyJob.AddFile(
+                        remoteName,
+                        localName
+                );
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return true;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot add single file. error: {bitsResult}");
+                return false;
+            }
+
             internal bool Cancel()
             {
                 if (_backgroundCopyJob == null)

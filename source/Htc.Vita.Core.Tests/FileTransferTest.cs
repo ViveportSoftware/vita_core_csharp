@@ -1,6 +1,9 @@
+using System;
+using System.IO;
 using Htc.Vita.Core.Net;
 using Xunit;
 using Xunit.Abstractions;
+using Convert = Htc.Vita.Core.Util.Convert;
 
 namespace Htc.Vita.Core.Tests
 {
@@ -77,6 +80,33 @@ namespace Htc.Vita.Core.Tests
                 }
                 Assert.True(job.Cancel());
             }
+        }
+
+        [Fact]
+        public void Default_4_AddItem()
+        {
+            var fileTransfer = FileTransfer.GetInstance();
+            Assert.NotNull(fileTransfer);
+            var timestamp = Convert.ToTimestampInMilli(DateTime.UtcNow);
+            string jobId;
+            const string jobName = "NewDownloadTest-2";
+            using (var job = fileTransfer.RequestNewDownloadJob(jobName))
+            {
+                Assert.NotNull(job);
+                jobId = job.GetId();
+                Assert.False(string.IsNullOrWhiteSpace(jobId));
+                Assert.Equal(jobName, job.GetDisplayName());
+                Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
+                Assert.Contains(jobId, fileTransfer.GetJobIdList());
+                Assert.False(job.AddItem(new FileTransfer.FileTransferItem()));
+                Assert.True(job.AddItem(new FileTransfer.FileTransferItem
+                {
+                        LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
+                        RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
+                }));
+                Assert.True(job.Cancel());
+            }
+            Assert.DoesNotContain(jobId, fileTransfer.GetJobIdList());
         }
     }
 }

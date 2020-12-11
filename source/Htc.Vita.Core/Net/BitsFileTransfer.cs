@@ -20,6 +20,15 @@ namespace Htc.Vita.Core.Net
             _bitsManager = Windows.BitsManager.GetInstance();
         }
 
+        internal static Windows.BitsFileInfo ConvertFrom(FileTransferItem data)
+        {
+            return new Windows.BitsFileInfo
+            {
+                    LocalName = data.LocalPath.ToString(),
+                    RemoteName = data.RemotePath.ToString()
+            };
+        }
+
         internal static Windows.BitsJobType ConvertFrom(FileTransferType data)
         {
             if (data == FileTransferType.Download)

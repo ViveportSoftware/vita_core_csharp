@@ -13,6 +13,30 @@ namespace Htc.Vita.Core.Net
         public abstract class FileTransferJob : IDisposable
         {
             /// <summary>
+            /// Adds the item.
+            /// </summary>
+            /// <param name="item">The item.</param>
+            /// <returns><c>true</c> if the item is added successfully, <c>false</c> otherwise.</returns>
+            public bool AddItem(FileTransferItem item)
+            {
+                if (item?.LocalPath == null || item.RemotePath == null)
+                {
+                    return false;
+                }
+
+                var result = false;
+                try
+                {
+                    result = OnAddItem(item);
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(FileTransferJob)).Error(e.ToString());
+                }
+                return result;
+            }
+
+            /// <summary>
             /// Cancels this job.
             /// </summary>
             /// <returns><c>true</c> if canceling this job successfully, <c>false</c> otherwise.</returns>
@@ -90,6 +114,12 @@ namespace Htc.Vita.Core.Net
                 return result;
             }
 
+            /// <summary>
+            /// Called when adding the item.
+            /// </summary>
+            /// <param name="item">The item.</param>
+            /// <returns><c>true</c> if the item is added successfully, <c>false</c> otherwise.</returns>
+            protected abstract bool OnAddItem(FileTransferItem item);
             /// <summary>
             /// Called when canceling this job.
             /// </summary>
