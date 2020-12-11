@@ -15,6 +15,23 @@ namespace Htc.Vita.Core.TestProgram
             Console.WriteLine($"SecurityProtocolManager.GetAvailableProtocol(): {SecurityProtocolManager.GetAvailableProtocol()}");
             Console.ReadKey();
 
+            var jobIdList = FileTransfer.GetInstance().GetJobIdList();
+            if (jobIdList.Count > 0)
+            {
+                foreach (var jobId in jobIdList)
+                {
+                    using (var job = FileTransfer.GetInstance().GetJob(jobId))
+                    {
+                        Console.WriteLine($"job[{jobId}] name: {job.GetDisplayName()}, state: {job.GetState()}");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Do not find existing transfer job");
+            }
+            Console.ReadKey();
+
             Console.WriteLine("NetworkInterface.IsNetworkAvailable(): " + NetworkInterface.IsNetworkAvailable());
             Console.WriteLine("NetworkInterface.IsInternetAvailable(): " + NetworkInterface.IsInternetAvailable());
             Console.ReadKey();
