@@ -61,6 +61,17 @@ namespace Htc.Vita.Core.Net
         }
 
         /// <inheritdoc />
+        protected override FileTransferJob OnGetJob(string jobId)
+        {
+            var bitsJob = _bitsManager?.GetJob(jobId);
+            if (bitsJob == null)
+            {
+                return null;
+            }
+            return new BitsFileTransferJob(bitsJob);
+        }
+
+        /// <inheritdoc />
         protected override List<string> OnGetJobIdList()
         {
             return _bitsManager?.GetJobIdList();

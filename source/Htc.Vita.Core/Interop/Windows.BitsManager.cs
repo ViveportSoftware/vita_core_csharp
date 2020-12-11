@@ -73,6 +73,39 @@ namespace Htc.Vita.Core.Interop
                 return null;
             }
 
+            internal BitsJob GetJob(string id)
+            {
+                Guid guid;
+                var success = Guid.TryParse(
+                        id,
+                        out guid
+                );
+                return success ? GetJob(guid) : null;
+            }
+
+            internal BitsJob GetJob(Guid id)
+            {
+                IBackgroundCopyJob iBackgroundCopyJob;
+                var bitsError = _backgroundCopyManager.GetJob(
+                        ref id,
+                        out iBackgroundCopyJob
+                );
+                if (bitsError == BitsResult.SOk)
+                {
+                    return new BitsJob(iBackgroundCopyJob);
+                }
+                if (bitsError == BitsResult.EAccessDenied)
+                {
+                    Logger.GetInstance(typeof(BitsManager)).Warn("Can not get job. Please check your running permission");
+                }
+                if (bitsError == BitsResult.ENotFound)
+                {
+                    Logger.GetInstance(typeof(BitsManager)).Error("Can not find available job");
+                }
+
+                return null;
+            }
+
             internal List<string> GetJobIdList()
             {
                 return GetJobIdList(false);

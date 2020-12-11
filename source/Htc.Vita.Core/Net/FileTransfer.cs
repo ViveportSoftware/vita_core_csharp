@@ -46,6 +46,30 @@ namespace Htc.Vita.Core.Net
         }
 
         /// <summary>
+        /// Gets the job.
+        /// </summary>
+        /// <param name="jobId">The job identifier.</param>
+        /// <returns>FileTransferJob.</returns>
+        public FileTransferJob GetJob(string jobId)
+        {
+            if (string.IsNullOrWhiteSpace(jobId))
+            {
+                return null;
+            }
+
+            FileTransferJob result = null;
+            try
+            {
+                result = OnGetJob(jobId);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(FileTransfer)).Error(e.ToString());
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Gets the job identifier list.
         /// </summary>
         /// <returns>List&lt;System.String&gt;.</returns>
@@ -106,6 +130,12 @@ namespace Htc.Vita.Core.Net
             return result;
         }
 
+        /// <summary>
+        /// Called when getting job.
+        /// </summary>
+        /// <param name="jobId">The job identifier.</param>
+        /// <returns>FileTransferJob.</returns>
+        protected abstract FileTransferJob OnGetJob(string jobId);
         /// <summary>
         /// Called when getting job identifier list.
         /// </summary>

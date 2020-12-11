@@ -54,5 +54,29 @@ namespace Htc.Vita.Core.Tests
             }
             Assert.DoesNotContain(jobId, fileTransfer.GetJobIdList());
         }
+
+        [Fact]
+        public void Default_3_GetJob()
+        {
+            var fileTransfer = FileTransfer.GetInstance();
+            Assert.NotNull(fileTransfer);
+            const string jobName = "NewDownloadTest-1";
+            using (var job = fileTransfer.RequestNewDownloadJob(jobName))
+            {
+                Assert.NotNull(job);
+                var jobId = job.GetId();
+                Assert.False(string.IsNullOrWhiteSpace(jobId));
+                Assert.Equal(jobName, job.GetDisplayName());
+                Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
+                using (var job2 = fileTransfer.GetJob(jobId))
+                {
+                    Assert.NotNull(job2);
+                    var jobId2 = job2.GetId();
+                    Assert.False(string.IsNullOrWhiteSpace(jobId2));
+                    Assert.Equal(jobId, jobId2);
+                }
+                Assert.True(job.Cancel());
+            }
+        }
     }
 }
