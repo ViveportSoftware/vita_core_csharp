@@ -98,6 +98,24 @@ namespace Htc.Vita.Core.Net
             }
 
             /// <summary>
+            /// Gets the error.
+            /// </summary>
+            /// <returns>FileTransferError.</returns>
+            public FileTransferError GetError()
+            {
+                FileTransferError result = null;
+                try
+                {
+                    result = OnGetError();
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(FileTransferJob)).Error(e.ToString());
+                }
+                return result;
+            }
+
+            /// <summary>
             /// Gets the identifier.
             /// </summary>
             /// <returns>System.String.</returns>
@@ -272,6 +290,11 @@ namespace Htc.Vita.Core.Net
             /// </summary>
             /// <returns>System.String.</returns>
             protected abstract string OnGetDisplayName();
+            /// <summary>
+            /// Called when getting the error.
+            /// </summary>
+            /// <returns>FileTransferError.</returns>
+            protected abstract FileTransferError OnGetError();
             /// <summary>
             /// Called when getting the identifier.
             /// </summary>

@@ -95,6 +95,28 @@ namespace Htc.Vita.Core.Net
             }
 
             /// <inheritdoc />
+            protected override FileTransferError OnGetError()
+            {
+                if (_bitsJob == null)
+                {
+                    return null;
+                }
+
+                using (var bitsError = _bitsJob.GetError())
+                {
+                    if (bitsError == null)
+                    {
+                        return null;
+                    }
+
+                    return new FileTransferError
+                    {
+                            ErrorDescription = bitsError.GetErrorDescription()
+                    };
+                }
+            }
+
+            /// <inheritdoc />
             protected override string OnGetId()
             {
                 return _bitsJob?.GetId();

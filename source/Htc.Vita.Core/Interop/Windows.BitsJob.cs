@@ -108,6 +108,27 @@ namespace Htc.Vita.Core.Interop
                 return null;
             }
 
+            internal BitsError GetError()
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                IBackgroundCopyError iBackgroundCopyError;
+                var bitsResult = _backgroundCopyJob.GetError(out iBackgroundCopyError);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return new BitsError(iBackgroundCopyError);
+                }
+
+                if (bitsResult != BitsResult.EErrorInformationUnavailable)
+                {
+                    Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job error. error: {bitsResult}");
+                }
+                return null;
+            }
+
             internal BitsFiles GetFiles()
             {
                 if (_backgroundCopyJob == null)

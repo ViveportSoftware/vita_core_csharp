@@ -304,7 +304,16 @@ namespace Htc.Vita.Core.Tests
 
         private static void OnFileTransferOnJobError(string jobId)
         {
-            Logger.GetInstance(typeof(FileTransferTest)).Info($"job[{jobId}] is error");
+            using (var errorJob = FileTransfer.GetInstance().GetJob(jobId))
+            {
+                if (errorJob == null)
+                {
+                    Logger.GetInstance(typeof(FileTransferTest)).Warn($"Can not find error for job[{jobId}]");
+                    return;
+                }
+
+                Logger.GetInstance(typeof(FileTransferTest)).Error($"job[{jobId}] error: {errorJob.GetError()?.ErrorDescription}");
+            }
         }
     }
 }

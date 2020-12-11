@@ -20,6 +20,21 @@ namespace Htc.Vita.Core.Interop
         internal static readonly IntPtr /* INVALID_HANDLE_VALUE      */ InvalidHandleValue = new IntPtr(-1);
         internal static readonly IntPtr /* WTS_CURRENT_SERVER_HANDLE */ WindowsTerminalServiceCurrentServerHandle = IntPtr.Zero;
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_error_context",
+                Description = "BG_ERROR_CONTEXT enumeration")]
+        internal enum BitsErrorContext
+        {
+            /* BG_ERROR_CONTEXT_NONE                        */ None                      = 0,
+            /* BG_ERROR_CONTEXT_UNKNOWN                     */ Unknown                   = 1,
+            /* BG_ERROR_CONTEXT_GENERAL_QUEUE_MANAGER       */ GeneralQueueManager       = 2,
+            /* BG_ERROR_CONTEXT_QUEUE_MANAGER_NOTIFICATION  */ QueueManagerNotification  = 3,
+            /* BG_ERROR_CONTEXT_LOCAL_FILE                  */ LocalFile                 = 4,
+            /* BG_ERROR_CONTEXT_REMOTE_FILE                 */ RemoteFile                = 5,
+            /* BG_ERROR_CONTEXT_GENERAL_TRANSPORT           */ GeneralTransport          = 6,
+            /* BG_ERROR_CONTEXT_REMOTE_APPLICATION          */ RemoteApplication         = 7,
+            /* BG_ERROR_CONTEXT_SERVER_CERTIFICATE_CALLBACK */ ServerCertificateCallback = 8
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopymanager-enumjobs")]
         internal enum BitsJobEnumOwnerScope
         {

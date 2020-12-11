@@ -65,6 +65,32 @@ namespace Htc.Vita.Core.Interop
         [Guid(ComInterfaceIBackgroundCopyError)]
         internal interface IBackgroundCopyError
         {
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyerror-geterror")]
+            [PreserveSig]
+            BitsResult GetError(
+                    /* __RPC__out BG_ERROR_CONTEXT* */ [Out] out BitsErrorContext pContext,
+                    /* __RPC__out HRESULT*          */ [Out] out HResult pCode
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyerror-getfile")]
+            [PreserveSig]
+            BitsResult GetFile(
+                    /* __RPC__deref_out_opt IBackgroundCopyFile** */ [Out] out IBackgroundCopyFile pVal
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyerror-geterrordescription")]
+            [PreserveSig]
+            BitsResult GetErrorDescription(
+                    /*                      DWORD   */ [In] uint languageId,
+                    /* __RPC__deref_out_opt LPWSTR* */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string pErrorDescription
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyerror-geterrorcontextdescription")]
+            [PreserveSig]
+            BitsResult GetErrorContextDescription(
+                    /*                      DWORD   */ [In] uint languageId,
+                    /* __RPC__deref_out_opt LPWSTR* */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string pContextDescription
+            );
         }
 
         [ComImport]
