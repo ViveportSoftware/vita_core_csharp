@@ -20,6 +20,59 @@ namespace Htc.Vita.Core.Interop
         internal static readonly IntPtr /* INVALID_HANDLE_VALUE      */ InvalidHandleValue = new IntPtr(-1);
         internal static readonly IntPtr /* WTS_CURRENT_SERVER_HANDLE */ WindowsTerminalServiceCurrentServerHandle = IntPtr.Zero;
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopymanager-enumjobs")]
+        internal enum BitsJobEnumOwnerScope
+        {
+            /*                       */ CurrentUser = 0,
+            /* BG_JOB_ENUM_ALL_USERS */ AllUsers    = 1
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_type",
+                Description = "BG_JOB_TYPE enumeration")]
+        internal enum BitsJobType
+        {
+            /* BG_JOB_TYPE_DOWNLOAD     */ Download    = 0,
+            /* BG_JOB_TYPE_UPLOAD       */ Upload      = 1,
+            /* BG_JOB_TYPE_UPLOAD_REPLY */ UploadReply = 2
+        }
+
+        internal enum BitsResult : uint
+        {
+            /* S_OK                                              */ SOk                                   = HResult.SOk,
+            /* S_FALSE                                           */ SFalse                                = HResult.SFalse,
+            /* BG_S_ERROR_CONTEXT_NONE                           */ SErrorContextNone                     = 0x00200006,
+            /* BG_S_PARTIAL_COMPLETE                             */ SPartialComplete                      = 0x00200017,
+            /* BG_S_UNABLE_TO_DELETE_FILES                       */ SUnableToDeleteFiles                  = 0x0020001a,
+            /* E_NOTIMPL                                         */ ENotImpl                              = HResult.ENotImpl,
+            /* E_ACCESSDENIED                                    */ EAccessDenied                         = HResult.EAccessDenied,
+            /* E_OUTOFMEMORY                                     */ EOutOfMemory                          = HResult.EOutOfMemory,
+            /* E_INVALIDARG                                      */ EInvalidArg                           = HResult.EInvalidArg,
+            /* HRESULT_FROM_WIN32(ERROR_RESOURCE_LANG_NOT_FOUND) */ EWin32ResourceLangNotFound            = HResult.EWin32ResourceLangNotFound,
+            /* BG_E_NOT_FOUND                                    */ ENotFound                             = 0x80200001,
+            /* BG_E_INVALID_STATE                                */ EInvalidState                         = 0x80200002,
+            /* BG_E_EMPTY                                        */ EEmpty                                = 0x80200003,
+            /* BG_E_FILE_NOT_AVAILABLE                           */ EFileNotAvailable                     = 0x80200004,
+            /* BG_E_PROTOCOL_NOT_AVAILABLE                       */ EProtocolNotAvailable                 = 0x80200005,
+            /* BG_E_ERROR_CONTEXT_UNKNOWN                        */ EErrorContextUnknown                  = 0x80200007,
+            /* BG_E_ERROR_CONTEXT_GENERAL_QUEUE_MANAGER          */ EErrorContextGeneralQueueManager      = 0x80200008,
+            /* BG_E_ERROR_CONTEXT_LOCAL_FILE                     */ EErrorContextLocalFile                = 0x80200009,
+            /* BG_E_ERROR_CONTEXT_REMOTE_FILE                    */ EErrorContextRemoteFile               = 0x8020000a,
+            /* BG_E_ERROR_CONTEXT_GENERAL_TRANSPORT              */ EErrorContextGeneralTransport         = 0x8020000b,
+            /* BG_E_ERROR_CONTEXT_QUEUE_MANAGER_NOTIFICATION     */ EErrorContextQueueManagerNotification = 0x8020000c,
+            /* BG_E_DESTINATION_LOCKED                           */ EDestinationLocked                    = 0x8020000d,
+            /* BG_E_VOLUME_CHANGED                               */ EVolumeChanged                        = 0x8020000e,
+            /* BG_E_ERROR_INFORMATION_UNAVAILABLE                */ EErrorInformationUnavailable          = 0x8020000f,
+            /* BG_E_NEW_OWNER_DIFF_MAPPING                       */ ENewOwnerDiffMapping                  = 0x80200015,
+            /* BG_E_NEW_OWNER_NO_FILE_ACCESS                     */ ENewOwnerNoFileAccess                 = 0x80200016,
+            /* BG_E_PROXY_LIST_TOO_LARGE                         */ EProxyListTooLarge                    = 0x80200018,
+            /* BG_E_PROXY_BYPASS_LIST_TOO_LARGE                  */ EProxyBypassListTooLarge              = 0x80200019,
+            /* BG_E_TOO_MANY_FILES                               */ ETooManyFiles                         = 0x8020001c,
+            /* BG_E_STRING_TOO_LONG                              */ EStringTooLong                        = 0x80200021,
+            /* BG_E_TOO_MANY_JOBS_PER_USER                       */ ETooManyJobsPerUser                   = 0x80200049,
+            /* BG_E_TOO_MANY_JOBS_PER_MACHINE                    */ ETooManyJobsPerMachine                = 0x80200050,
+            /* BG_E_TOO_MANY_FILES_IN_JOB                        */ ETooManyFilesInJob                    = 0x80200051
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-certclosestore")]
         internal enum CertCloseStoreFlag
         {
@@ -273,7 +326,8 @@ namespace Htc.Vita.Core.Interop
             /* ERROR_DEVICE_NOT_CONNECTED    (1167, 0x48f) */ DeviceNotConnected    = 0x48f,
             /* ERROR_NOT_FOUND               (1168, 0x490) */ NotFound              = 0x490,
             /* ERROR_NO_SUCH_LOGON_SESSION   (1312, 0x520) */ NoSuchLogonSession    = 0x520,
-            /* ERROR_BAD_IMPERSONATION_LEVEL (1346, 0x542) */ BadImpersonationLevel = 0x542
+            /* ERROR_BAD_IMPERSONATION_LEVEL (1346, 0x542) */ BadImpersonationLevel = 0x542,
+            /* ERROR_RESOURCE_LANG_NOT_FOUND (1815, 0x717) */ ResourceLangNotFound  = 0x717
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-exitwindowsex")]
@@ -366,25 +420,28 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/seccrypto/common-hresult-values")]
         internal enum HResult : uint
         {
-            /* S_OK                                          */ SOk                      =        0x0,
-            /* S_FALSE                                       */ SFalse                   =        0x1,
-            /* E_POINTER                                     */ EPointer                 = 0x80004003,
-            /* E_FAIL                                        */ EFail                    = 0x80004005,
-            /* E_UNEXPECTED                                  */ EUnexpected              = 0x8000ffff,
-            /* E_ACCESSDENIED                                */ EAccessDenied            = 0x80070000
-                                                                                         | Error.AccessDenied,
-            /* E_HANDLE                                      */ EHandle                  = 0x80070000
-                                                                                         | Error.InvalidHandle,
-            /* HRESULT_FROM_WIN32(ERROR_INVALID_DATA)        */ EWin32InvalidData        = 0x80070000
-                                                                                         | Error.InvalidData,
-            /* E_OUTOFMEMORY                                 */ EOutOfMemory             = 0x80070000
-                                                                                         | Error.OutOfMemory,
-            /* E_INVALIDARG                                  */ EInvalidArg              = 0x80070000
-                                                                                         | Error.InvalidParameter,
-            /* HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER) */ EWin32InsufficientBuffer = 0x80070000
-                                                                                         | Error.InsufficientBuffer,
-            /* HRESULT_FROM_WIN32(ERROR_NOT_FOUND)           */ EWin32NotFound           = 0x80070000
-                                                                                         | Error.NotFound
+            /* S_OK                                              */ SOk                        =        0x0,
+            /* S_FALSE                                           */ SFalse                     =        0x1,
+            /* E_NOTIMPL                                         */ ENotImpl                   = 0x80004001,
+            /* E_POINTER                                         */ EPointer                   = 0x80004003,
+            /* E_FAIL                                            */ EFail                      = 0x80004005,
+            /* E_UNEXPECTED                                      */ EUnexpected                = 0x8000ffff,
+            /* E_ACCESSDENIED                                    */ EAccessDenied              = 0x80070000
+                                                                                               | Error.AccessDenied,
+            /* E_HANDLE                                          */ EHandle                    = 0x80070000
+                                                                                               | Error.InvalidHandle,
+            /* HRESULT_FROM_WIN32(ERROR_INVALID_DATA)            */ EWin32InvalidData          = 0x80070000
+                                                                                               | Error.InvalidData,
+            /* E_OUTOFMEMORY                                     */ EOutOfMemory               = 0x80070000
+                                                                                               | Error.OutOfMemory,
+            /* E_INVALIDARG                                      */ EInvalidArg                = 0x80070000
+                                                                                               | Error.InvalidParameter,
+            /* HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER)     */ EWin32InsufficientBuffer   = 0x80070000
+                                                                                               | Error.InsufficientBuffer,
+            /* HRESULT_FROM_WIN32(ERROR_NOT_FOUND)               */ EWin32NotFound             = 0x80070000
+                                                                                               | Error.NotFound,
+            /* HRESULT_FROM_WIN32(ERROR_RESOURCE_LANG_NOT_FOUND) */ EWin32ResourceLangNotFound = 0x80070000
+                                                                                               | Error.ResourceLangNotFound
         }
 
         [ExternalReference("https://docs.microsoft.com/zh-tw/windows/desktop/SysInfo/image-file-machine-constants")]
@@ -1239,6 +1296,15 @@ namespace Htc.Vita.Core.Interop
         {
             /* WTD_UICONTEXT_EXECUTE */ Execute,
             /* WTD_UICONTEXT_INSTALL */ Install
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_file_info",
+                Description = "BG_FILE_INFO structure")]
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        internal struct BitsFileInfo
+        {
+            internal /* LPWSTR */ string RemoteName;
+            internal /* LPWSTR */ string LocalName;
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-_display_devicew",

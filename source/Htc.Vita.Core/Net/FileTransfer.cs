@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Net
@@ -41,5 +44,29 @@ namespace Htc.Vita.Core.Net
         {
             return TypeRegistry.GetInstance<FileTransfer, T>();
         }
+
+        /// <summary>
+        /// Gets the job identifier list.
+        /// </summary>
+        /// <returns>List&lt;System.String&gt;.</returns>
+        public List<string> GetJobIdList()
+        {
+            List<string> result = null;
+            try
+            {
+                result = OnGetJobIdList();
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(FileTransfer)).Error(e.ToString());
+            }
+            return result ?? new List<string>();
+        }
+
+        /// <summary>
+        /// Called when getting job identifier list.
+        /// </summary>
+        /// <returns>List&lt;System.String&gt;.</returns>
+        protected abstract List<string> OnGetJobIdList();
     }
 }

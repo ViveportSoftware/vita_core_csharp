@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Htc.Vita.Core.Interop;
 
 namespace Htc.Vita.Core.Net
@@ -17,6 +18,12 @@ namespace Htc.Vita.Core.Net
         public BitsFileTransfer()
         {
             _bitsManager = Windows.BitsManager.GetInstance();
+        }
+
+        /// <inheritdoc />
+        protected override List<string> OnGetJobIdList()
+        {
+            return _bitsManager?.GetJobIdList();
         }
     }
 }
