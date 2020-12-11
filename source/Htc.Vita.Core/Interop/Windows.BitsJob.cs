@@ -109,6 +109,23 @@ namespace Htc.Vita.Core.Interop
                 return null;
             }
 
+            internal BitsJobPriority GetPriority()
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                BitsJobPriority jobPriority;
+                var bitsResult = _backgroundCopyJob.GetPriority(out jobPriority);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return jobPriority;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job priority. error: {bitsResult}");
+                return BitsJobPriority.Foreground;
+            }
+
             internal new BitsJobType GetType()
             {
                 if (_backgroundCopyJob == null)
@@ -124,6 +141,22 @@ namespace Htc.Vita.Core.Interop
                 }
                 Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job type. error: {bitsResult}");
                 return BitsJobType.Download;
+            }
+
+            internal bool SetPriority(BitsJobPriority priority)
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                var bitsResult = _backgroundCopyJob.SetPriority(priority);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return true;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot set job priority to \"{priority}\". error: {bitsResult}");
+                return false;
             }
         }
     }

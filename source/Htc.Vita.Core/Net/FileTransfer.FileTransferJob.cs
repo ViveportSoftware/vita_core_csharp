@@ -97,6 +97,24 @@ namespace Htc.Vita.Core.Net
             }
 
             /// <summary>
+            /// Gets the priority.
+            /// </summary>
+            /// <returns>FileTransferPriority.</returns>
+            public FileTransferPriority GetPriority()
+            {
+                var result = FileTransferPriority.Unknown;
+                try
+                {
+                    result = OnGetPriority();
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(FileTransferJob)).Error(e.ToString());
+                }
+                return result;
+            }
+
+            /// <summary>
             /// Gets the transfer type.
             /// </summary>
             /// <returns>FileTransferType.</returns>
@@ -106,6 +124,30 @@ namespace Htc.Vita.Core.Net
                 try
                 {
                     result = OnGetTransferType();
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(FileTransferJob)).Error(e.ToString());
+                }
+                return result;
+            }
+
+            /// <summary>
+            /// Sets the priority.
+            /// </summary>
+            /// <param name="priority">The priority.</param>
+            /// <returns><c>true</c> if setting the priority successfully, <c>false</c> otherwise.</returns>
+            public bool SetPriority(FileTransferPriority priority)
+            {
+                if (priority == FileTransferPriority.Unknown)
+                {
+                    return false;
+                }
+
+                var result = false;
+                try
+                {
+                    result = OnSetPriority(priority);
                 }
                 catch (Exception e)
                 {
@@ -140,10 +182,21 @@ namespace Htc.Vita.Core.Net
             /// <returns>System.String.</returns>
             protected abstract string OnGetId();
             /// <summary>
+            /// Called when getting the priority.
+            /// </summary>
+            /// <returns>FileTransferPriority.</returns>
+            protected abstract FileTransferPriority OnGetPriority();
+            /// <summary>
             /// Called when getting the transfer type.
             /// </summary>
             /// <returns>FileTransferType.</returns>
             protected abstract FileTransferType OnGetTransferType();
+            /// <summary>
+            /// Called when setting the priority.
+            /// </summary>
+            /// <param name="priority">The priority.</param>
+            /// <returns><c>true</c> if setting priority successfully, <c>false</c> otherwise.</returns>
+            protected abstract bool OnSetPriority(FileTransferPriority priority);
         }
     }
 }

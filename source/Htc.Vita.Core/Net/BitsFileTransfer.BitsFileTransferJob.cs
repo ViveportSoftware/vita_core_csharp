@@ -53,6 +53,17 @@ namespace Htc.Vita.Core.Net
             }
 
             /// <inheritdoc />
+            protected override FileTransferPriority OnGetPriority()
+            {
+                if (_bitsJob == null)
+                {
+                    return FileTransferPriority.Unknown;
+                }
+
+                return ConvertFrom(_bitsJob.GetPriority());
+            }
+
+            /// <inheritdoc />
             protected override FileTransferType OnGetTransferType()
             {
                 if (_bitsJob == null)
@@ -61,6 +72,12 @@ namespace Htc.Vita.Core.Net
                 }
 
                 return ConvertFrom(_bitsJob.GetType());
+            }
+
+            /// <inheritdoc />
+            protected override bool OnSetPriority(FileTransferPriority priority)
+            {
+                return _bitsJob?.SetPriority(ConvertFrom(priority)) ?? false;
             }
         }
     }

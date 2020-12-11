@@ -27,6 +27,16 @@ namespace Htc.Vita.Core.Interop
             /* BG_JOB_ENUM_ALL_USERS */ AllUsers    = 1
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_priority",
+                Description = "BG_JOB_PRIORITY enumeration")]
+        internal enum BitsJobPriority
+        {
+            /* BG_JOB_PRIORITY_FOREGROUND */ Foreground = 0,
+            /* BG_JOB_PRIORITY_HIGH       */ High       = 1,
+            /* BG_JOB_PRIORITY_NORMAL     */ Normal     = 2,
+            /* BG_JOB_PRIORITY_LOW        */ Low        = 3
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_state",
                 Description = "BG_JOB_STATE enumeration")]
         internal enum BitsJobState

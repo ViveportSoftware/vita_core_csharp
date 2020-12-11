@@ -133,6 +133,30 @@ namespace Htc.Vita.Core.Interop
             BitsResult GetDisplayName(
                     /* __RPC__deref_out_opt LPWSTR* */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string pVal
             );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setdescription")]
+            [PreserveSig]
+            BitsResult SetDescription(
+                    /* __RPC__in LPCWSTR */ [In] string val
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getdescription")]
+            [PreserveSig]
+            BitsResult GetDescription(
+                    /* __RPC__deref_out_opt LPWSTR* */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string pVal
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setpriority")]
+            [PreserveSig]
+            BitsResult SetPriority(
+                    /* BG_JOB_PRIORITY */ [In] BitsJobPriority val
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getpriority")]
+            [PreserveSig]
+            BitsResult GetPriority(
+                    /* __RPC__out BG_JOB_PRIORITY* */ [Out] out BitsJobPriority pVal
+            );
         }
 
         [ComImport]

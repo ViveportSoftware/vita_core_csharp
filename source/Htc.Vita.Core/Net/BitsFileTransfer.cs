@@ -29,6 +29,31 @@ namespace Htc.Vita.Core.Net
             };
         }
 
+        internal static Windows.BitsJobPriority ConvertFrom(FileTransferPriority data)
+        {
+            if (data == FileTransferPriority.Foreground)
+            {
+                return Windows.BitsJobPriority.Foreground;
+            }
+
+            if (data == FileTransferPriority.High)
+            {
+                return Windows.BitsJobPriority.High;
+            }
+
+            if (data == FileTransferPriority.Normal)
+            {
+                return Windows.BitsJobPriority.Normal;
+            }
+
+            if (data == FileTransferPriority.Low)
+            {
+                return Windows.BitsJobPriority.Low;
+            }
+
+            return Windows.BitsJobPriority.Foreground;
+        }
+
         internal static Windows.BitsJobType ConvertFrom(FileTransferType data)
         {
             if (data == FileTransferType.Download)
@@ -47,6 +72,31 @@ namespace Htc.Vita.Core.Net
             }
 
             return Windows.BitsJobType.Download;
+        }
+
+        internal static FileTransferPriority ConvertFrom(Windows.BitsJobPriority data)
+        {
+            if (data == Windows.BitsJobPriority.Foreground)
+            {
+                return FileTransferPriority.Foreground;
+            }
+
+            if (data == Windows.BitsJobPriority.High)
+            {
+                return FileTransferPriority.High;
+            }
+
+            if (data == Windows.BitsJobPriority.Normal)
+            {
+                return FileTransferPriority.Normal;
+            }
+
+            if (data == Windows.BitsJobPriority.Low)
+            {
+                return FileTransferPriority.Low;
+            }
+
+            return FileTransferPriority.Unknown;
         }
 
         internal static FileTransferType ConvertFrom(Windows.BitsJobType data)
