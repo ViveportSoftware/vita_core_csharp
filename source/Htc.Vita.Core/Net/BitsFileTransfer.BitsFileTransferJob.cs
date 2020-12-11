@@ -86,9 +86,21 @@ namespace Htc.Vita.Core.Net
             }
 
             /// <inheritdoc />
+            protected override bool OnResume()
+            {
+                return _bitsJob?.Resume() ?? false;
+            }
+
+            /// <inheritdoc />
             protected override bool OnSetPriority(FileTransferPriority priority)
             {
                 return _bitsJob?.SetPriority(ConvertFrom(priority)) ?? false;
+            }
+
+            /// <inheritdoc />
+            protected override bool OnSuspend()
+            {
+                return _bitsJob?.Suspend() ?? false;
             }
         }
     }

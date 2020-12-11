@@ -160,6 +160,22 @@ namespace Htc.Vita.Core.Interop
                 return BitsJobType.Download;
             }
 
+            internal bool Resume()
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                var bitsResult = _backgroundCopyJob.Resume();
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return true;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot resume job. error: {bitsResult}");
+                return false;
+            }
+
             internal bool SetPriority(BitsJobPriority priority)
             {
                 if (_backgroundCopyJob == null)
@@ -173,6 +189,22 @@ namespace Htc.Vita.Core.Interop
                     return true;
                 }
                 Logger.GetInstance(typeof(BitsJob)).Error($"Cannot set job priority to \"{priority}\". error: {bitsResult}");
+                return false;
+            }
+
+            internal bool Suspend()
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                var bitsResult = _backgroundCopyJob.Suspend();
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return true;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot suspend job. error: {bitsResult}");
                 return false;
             }
         }

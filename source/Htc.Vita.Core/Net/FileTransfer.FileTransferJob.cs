@@ -151,6 +151,24 @@ namespace Htc.Vita.Core.Net
             }
 
             /// <summary>
+            /// Resumes this job.
+            /// </summary>
+            /// <returns><c>true</c> if resuming this job successfully, <c>false</c> otherwise.</returns>
+            public bool Resume()
+            {
+                var result = false;
+                try
+                {
+                    result = OnResume();
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(FileTransferJob)).Error(e.ToString());
+                }
+                return result;
+            }
+
+            /// <summary>
             /// Sets the priority.
             /// </summary>
             /// <param name="priority">The priority.</param>
@@ -166,6 +184,24 @@ namespace Htc.Vita.Core.Net
                 try
                 {
                     result = OnSetPriority(priority);
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(FileTransferJob)).Error(e.ToString());
+                }
+                return result;
+            }
+
+            /// <summary>
+            /// Suspends this job.
+            /// </summary>
+            /// <returns><c>true</c> if suspending this job successfully, <c>false</c> otherwise.</returns>
+            public bool Suspend()
+            {
+                var result = false;
+                try
+                {
+                    result = OnSuspend();
                 }
                 catch (Exception e)
                 {
@@ -215,11 +251,21 @@ namespace Htc.Vita.Core.Net
             /// <returns>FileTransferType.</returns>
             protected abstract FileTransferType OnGetTransferType();
             /// <summary>
+            /// Called when resuming this job.
+            /// </summary>
+            /// <returns><c>true</c> if resuming this job successfully, <c>false</c> otherwise.</returns>
+            protected abstract bool OnResume();
+            /// <summary>
             /// Called when setting the priority.
             /// </summary>
             /// <param name="priority">The priority.</param>
             /// <returns><c>true</c> if setting priority successfully, <c>false</c> otherwise.</returns>
             protected abstract bool OnSetPriority(FileTransferPriority priority);
+            /// <summary>
+            /// Called when suspending this job.
+            /// </summary>
+            /// <returns><c>true</c> if suspending this job successfully, <c>false</c> otherwise.</returns>
+            protected abstract bool OnSuspend();
         }
     }
 }
