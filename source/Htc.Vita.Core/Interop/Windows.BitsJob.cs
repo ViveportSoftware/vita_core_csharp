@@ -62,6 +62,22 @@ namespace Htc.Vita.Core.Interop
                 return false;
             }
 
+            internal bool Complete()
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                var bitsResult = _backgroundCopyJob.Complete();
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return true;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot complete job. error: {bitsResult}");
+                return false;
+            }
+
             public void Dispose()
             {
                 if (_backgroundCopyJob == null)
@@ -89,6 +105,23 @@ namespace Htc.Vita.Core.Interop
                     return displayName;
                 }
                 Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job display name. error: {bitsResult}");
+                return null;
+            }
+
+            internal BitsFiles GetFiles()
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                IEnumBackgroundCopyFiles iEnumBackgroundCopyFiles;
+                var bitsResult = _backgroundCopyJob.EnumFiles(out iEnumBackgroundCopyFiles);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return new BitsFiles(iEnumBackgroundCopyFiles);
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job files. error: {bitsResult}");
                 return null;
             }
 

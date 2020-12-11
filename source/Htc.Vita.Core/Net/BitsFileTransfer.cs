@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using Htc.Vita.Core.Interop;
+using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
 {
@@ -72,6 +75,41 @@ namespace Htc.Vita.Core.Net
             }
 
             return Windows.BitsJobType.Download;
+        }
+
+        internal static FileTransferItem ConvertFrom(Windows.BitsFile data)
+        {
+            if (data == null)
+            {
+                return null;
+            }
+
+            var localName = data.GetLocalName();
+            if (string.IsNullOrWhiteSpace(localName))
+            {
+                return null;
+            }
+
+            var remoteName = data.GetRemoteName();
+            if (string.IsNullOrWhiteSpace(remoteName))
+            {
+                return null;
+            }
+
+            try
+            {
+                return new FileTransferItem
+                {
+                        LocalPath = new FileInfo(localName),
+                        RemotePath = new Uri(remoteName)
+                };
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(BitsFileTransfer)).Error(e.ToString());
+            }
+
+            return null;
         }
 
         internal static FileTransferPriority ConvertFrom(Windows.BitsJobPriority data)

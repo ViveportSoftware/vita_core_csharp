@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Net;
 using Xunit;
 using Xunit.Abstractions;
@@ -222,6 +224,71 @@ namespace Htc.Vita.Core.Tests
                 Assert.True(job.Cancel());
             }
             Assert.DoesNotContain(jobId, fileTransfer.GetJobIdList());
+        }
+
+        [Fact]
+        public void Default_8_Complete()
+        {
+            var fileTransfer = FileTransfer.GetInstance();
+            Assert.NotNull(fileTransfer);
+
+            var localPathSet = new HashSet<FileInfo>();
+            var timestamp = Convert.ToTimestampInMilli(DateTime.UtcNow);
+            string jobId;
+            const string jobName = "NewDownloadTest-6";
+            using (var job = fileTransfer.RequestNewDownloadJob(jobName))
+            {
+                Assert.NotNull(job);
+                jobId = job.GetId();
+                Assert.False(string.IsNullOrWhiteSpace(jobId));
+                Assert.Equal(jobName, job.GetDisplayName());
+                Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
+                Assert.Contains(jobId, fileTransfer.GetJobIdList());
+                Assert.True(job.AddItem(new FileTransfer.FileTransferItem
+                {
+                        LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
+                        RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
+                }));
+                var priority = job.GetPriority();
+                Assert.NotEqual(FileTransfer.FileTransferPriority.Unknown, priority);
+                if (priority != FileTransfer.FileTransferPriority.Foreground)
+                {
+                    Assert.True(job.SetPriority(FileTransfer.FileTransferPriority.Foreground));
+                }
+                priority = job.GetPriority();
+                Assert.Equal(FileTransfer.FileTransferPriority.Foreground, priority);
+                var state = job.GetState();
+                Assert.Equal(FileTransfer.FileTransferState.Suspended, state);
+                Assert.True(job.Resume());
+                while (true)
+                {
+                    state = job.GetState();
+                    Logger.GetInstance(typeof(FileTransferTest)).Info("transfer state: " + state);
+                    Assert.NotEqual(FileTransfer.FileTransferState.Error, state);
+                    if (state == FileTransfer.FileTransferState.Transferred)
+                    {
+                        var itemList = job.GetItemList();
+                        Assert.NotEmpty(itemList);
+                        foreach (var item in itemList)
+                        {
+                            var localPath = item.LocalPath;
+                            Assert.NotNull(localPath);
+                            localPathSet.Add(localPath);
+                        }
+                        break;
+                    }
+                    SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(3));
+                }
+                Assert.True(job.Complete());
+                state = job.GetState();
+                Assert.Equal(FileTransfer.FileTransferState.Acknowledged, state);
+            }
+            Assert.DoesNotContain(jobId, fileTransfer.GetJobIdList());
+            foreach (var localPath in localPathSet)
+            {
+                Logger.GetInstance(typeof(FileTransferTest)).Info("local path: " + localPath);
+                Assert.True(localPath.Exists);
+            }
         }
     }
 }

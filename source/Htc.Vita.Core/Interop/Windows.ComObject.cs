@@ -10,6 +10,7 @@ namespace Htc.Vita.Core.Interop
         internal const string ComInterfaceClsidBackgroundCopyManager = "4991d34b-80a1-4291-83b6-3328366b9097";
         internal const string ComInterfaceClsidPortableDeviceManager = "0af10cec-2ecd-4b92-9581-34f6ae0637f3";
         internal const string ComInterfaceIBackgroundCopyError = "19c613a0-fcb8-4f28-81ae-897c3d078f81";
+        internal const string ComInterfaceIBackgroundCopyFile = "01b7bd23-fb88-4a77-8490-5891d3e4653a";
         internal const string ComInterfaceIBackgroundCopyJob = "37668d37-507e-4160-9316-26306d150b12";
         internal const string ComInterfaceIBackgroundCopyManager = "5ce34c0d-0dc9-4c1f-897c-daa1b78cee7c";
         internal const string ComInterfaceIDxgiAdapter = "2411e7e1-12ac-4ccf-bd14-9798e8534dc0";
@@ -37,6 +38,24 @@ namespace Htc.Vita.Core.Interop
         [Guid(ComInterfaceIBackgroundCopyError)]
         internal interface IBackgroundCopyError
         {
+        }
+
+        [ComImport]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [Guid(ComInterfaceIBackgroundCopyFile)]
+        internal interface IBackgroundCopyFile
+        {
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyfile-getremotename")]
+            [PreserveSig]
+            BitsResult GetRemoteName(
+                    /* __RPC__deref_out_opt LPWSTR* */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string pVal
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyfile-getlocalname")]
+            [PreserveSig]
+            BitsResult GetLocalName(
+                    /* __RPC__deref_out_opt LPWSTR* */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string pVal
+            );
         }
 
         [ComImport]
@@ -375,6 +394,35 @@ namespace Htc.Vita.Core.Interop
         [Guid(ComInterfaceIEnumBackgroundCopyFiles)]
         internal interface IEnumBackgroundCopyFiles
         {
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ienumbackgroundcopyfiles-next")]
+            [PreserveSig]
+            BitsResult Next(
+                    /*                        ULONG                 */ [In] uint celt, // only allow 1 item at once
+                    /* __RPC__out_ecount_part IBackgroundCopyFile** */ [Out] out IBackgroundCopyFile rgelt,
+                    /* __RPC__inout_opt       ULONG*                */ [Out] out uint pceltFetched
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ienumbackgroundcopyfiles-skip")]
+            [PreserveSig]
+            BitsResult Skip(
+                    /* ULONG */ [In] uint celt
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ienumbackgroundcopyfiles-reset")]
+            [PreserveSig]
+            BitsResult Reset();
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ienumbackgroundcopyfiles-clone")]
+            [PreserveSig]
+            BitsResult Clone(
+                    /* __RPC__deref_out_opt IEnumBackgroundCopyFiles** */ [Out] out IEnumBackgroundCopyFiles ppenum
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ienumbackgroundcopyfiles-getcount")]
+            [PreserveSig]
+            BitsResult GetCount(
+                    /* __RPC__out ULONG* */ [Out] out uint puCount
+            );
         }
 
         [ComImport]

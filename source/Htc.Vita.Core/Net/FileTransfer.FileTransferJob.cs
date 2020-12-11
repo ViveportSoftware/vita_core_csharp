@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
@@ -54,6 +55,24 @@ namespace Htc.Vita.Core.Net
                 return result;
             }
 
+            /// <summary>
+            /// Completes this job.
+            /// </summary>
+            /// <returns><c>true</c> if completing this job successfully, <c>false</c> otherwise.</returns>
+            public bool Complete()
+            {
+                var result = false;
+                try
+                {
+                    result = OnComplete();
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(FileTransferJob)).Error(e.ToString());
+                }
+                return result;
+            }
+
             /// <inheritdoc />
             public void Dispose()
             {
@@ -94,6 +113,24 @@ namespace Htc.Vita.Core.Net
                     Logger.GetInstance(typeof(FileTransferJob)).Error(e.ToString());
                 }
                 return result;
+            }
+
+            /// <summary>
+            /// Gets the item list.
+            /// </summary>
+            /// <returns>List&lt;FileTransferItem&gt;.</returns>
+            public List<FileTransferItem> GetItemList()
+            {
+                List<FileTransferItem> result = null;
+                try
+                {
+                    result = OnGetItemList();
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(FileTransferJob)).Error(e.ToString());
+                }
+                return result ?? new List<FileTransferItem>();
             }
 
             /// <summary>
@@ -222,6 +259,11 @@ namespace Htc.Vita.Core.Net
             /// <returns><c>true</c> if canceling this job successfully, <c>false</c> otherwise.</returns>
             protected abstract bool OnCancel();
             /// <summary>
+            /// Called when completing this job.
+            /// </summary>
+            /// <returns><c>true</c> if completing this job successfully, <c>false</c> otherwise.</returns>
+            protected abstract bool OnComplete();
+            /// <summary>
             /// Called when disposing.
             /// </summary>
             protected abstract void OnDispose();
@@ -235,6 +277,11 @@ namespace Htc.Vita.Core.Net
             /// </summary>
             /// <returns>System.String.</returns>
             protected abstract string OnGetId();
+            /// <summary>
+            /// Called when getting the item list.
+            /// </summary>
+            /// <returns>List&lt;FileTransferItem&gt;.</returns>
+            protected abstract List<FileTransferItem> OnGetItemList();
             /// <summary>
             /// Called when getting the priority.
             /// </summary>

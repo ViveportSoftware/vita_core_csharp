@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Htc.Vita.Core.Interop;
 
 namespace Htc.Vita.Core.Net
@@ -22,6 +23,15 @@ namespace Htc.Vita.Core.Net
                 _bitsJob = bitsJob as Windows.BitsJob;
             }
 
+            /// <summary>
+            /// Gets the inner instance.
+            /// </summary>
+            /// <returns>Windows.BitsJob.</returns>
+            internal Windows.BitsJob GetInnerInstance()
+            {
+                return _bitsJob;
+            }
+
             /// <inheritdoc />
             protected override bool OnAddItem(FileTransferItem item)
             {
@@ -32,6 +42,12 @@ namespace Htc.Vita.Core.Net
             protected override bool OnCancel()
             {
                 return _bitsJob?.Cancel() ?? false;
+            }
+
+            /// <inheritdoc />
+            protected override bool OnComplete()
+            {
+                return _bitsJob?.Complete() ?? false;
             }
 
             /// <inheritdoc />
@@ -50,6 +66,45 @@ namespace Htc.Vita.Core.Net
             protected override string OnGetId()
             {
                 return _bitsJob?.GetId();
+            }
+
+            /// <inheritdoc />
+            protected override List<FileTransferItem> OnGetItemList()
+            {
+                if (_bitsJob == null)
+                {
+                    return null;
+                }
+
+                using (var files = _bitsJob.GetFiles())
+                {
+                    if (files == null)
+                    {
+                        return null;
+                    }
+
+                    var result = new List<FileTransferItem>();
+                    var fileCount = files.GetCount();
+                    for (var i = 0u; i < fileCount; i++)
+                    {
+                        using (var file = files.GetFile(i))
+                        {
+                            if (file == null)
+                            {
+                                continue;
+                            }
+
+                            var item = ConvertFrom(file);
+                            if (item == null)
+                            {
+                                continue;
+                            }
+
+                            result.Add(item);
+                        }
+                    }
+                    return result;
+                }
             }
 
             /// <inheritdoc />
