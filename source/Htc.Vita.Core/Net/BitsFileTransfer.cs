@@ -99,6 +99,56 @@ namespace Htc.Vita.Core.Net
             return FileTransferPriority.Unknown;
         }
 
+        internal static FileTransferState ConvertFrom(Windows.BitsJobState data)
+        {
+            if (data == Windows.BitsJobState.Acknowledged)
+            {
+                return FileTransferState.Acknowledged;
+            }
+
+            if (data == Windows.BitsJobState.Cancelled)
+            {
+                return FileTransferState.Cancelled;
+            }
+
+            if (data == Windows.BitsJobState.Connecting)
+            {
+                return FileTransferState.Connecting;
+            }
+
+            if (data == Windows.BitsJobState.Error)
+            {
+                return FileTransferState.Error;
+            }
+
+            if (data == Windows.BitsJobState.Queued)
+            {
+                return FileTransferState.Queued;
+            }
+
+            if (data == Windows.BitsJobState.Suspended)
+            {
+                return FileTransferState.Suspended;
+            }
+
+            if (data == Windows.BitsJobState.Transferred)
+            {
+                return FileTransferState.Transferred;
+            }
+
+            if (data == Windows.BitsJobState.Transferring)
+            {
+                return FileTransferState.Transferring;
+            }
+
+            if (data == Windows.BitsJobState.TransientError)
+            {
+                return FileTransferState.TransientError;
+            }
+
+            return FileTransferState.Unknown;
+        }
+
         internal static FileTransferType ConvertFrom(Windows.BitsJobType data)
         {
             if (data == Windows.BitsJobType.Download)

@@ -64,6 +64,17 @@ namespace Htc.Vita.Core.Net
             }
 
             /// <inheritdoc />
+            protected override FileTransferState OnGetState()
+            {
+                if (_bitsJob == null)
+                {
+                    return FileTransferState.Unknown;
+                }
+
+                return ConvertFrom(_bitsJob.GetState());
+            }
+
+            /// <inheritdoc />
             protected override FileTransferType OnGetTransferType()
             {
                 if (_bitsJob == null)

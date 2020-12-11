@@ -115,6 +115,24 @@ namespace Htc.Vita.Core.Net
             }
 
             /// <summary>
+            /// Gets the state.
+            /// </summary>
+            /// <returns>FileTransferState.</returns>
+            public FileTransferState GetState()
+            {
+                var result = FileTransferState.Unknown;
+                try
+                {
+                    result = OnGetState();
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(FileTransferJob)).Error(e.ToString());
+                }
+                return result;
+            }
+
+            /// <summary>
             /// Gets the transfer type.
             /// </summary>
             /// <returns>FileTransferType.</returns>
@@ -186,6 +204,11 @@ namespace Htc.Vita.Core.Net
             /// </summary>
             /// <returns>FileTransferPriority.</returns>
             protected abstract FileTransferPriority OnGetPriority();
+            /// <summary>
+            /// Called when getting the state.
+            /// </summary>
+            /// <returns>FileTransferState.</returns>
+            protected abstract FileTransferState OnGetState();
             /// <summary>
             /// Called when getting the transfer type.
             /// </summary>

@@ -126,6 +126,23 @@ namespace Htc.Vita.Core.Interop
                 return BitsJobPriority.Foreground;
             }
 
+            internal BitsJobState GetState()
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                BitsJobState jobState;
+                var bitsResult = _backgroundCopyJob.GetState(out jobState);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return jobState;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job state. error: {bitsResult}");
+                return BitsJobState.Error;
+            }
+
             internal new BitsJobType GetType()
             {
                 if (_backgroundCopyJob == null)

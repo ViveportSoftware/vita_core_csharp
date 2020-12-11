@@ -142,5 +142,41 @@ namespace Htc.Vita.Core.Tests
             }
             Assert.DoesNotContain(jobId, fileTransfer.GetJobIdList());
         }
+
+        [Fact]
+        public void Default_6_GetState()
+        {
+            var fileTransfer = FileTransfer.GetInstance();
+            Assert.NotNull(fileTransfer);
+            var timestamp = Convert.ToTimestampInMilli(DateTime.UtcNow);
+            string jobId;
+            const string jobName = "NewDownloadTest-4";
+            using (var job = fileTransfer.RequestNewDownloadJob(jobName))
+            {
+                Assert.NotNull(job);
+                jobId = job.GetId();
+                Assert.False(string.IsNullOrWhiteSpace(jobId));
+                Assert.Equal(jobName, job.GetDisplayName());
+                Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
+                Assert.Contains(jobId, fileTransfer.GetJobIdList());
+                Assert.True(job.AddItem(new FileTransfer.FileTransferItem
+                {
+                        LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
+                        RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
+                }));
+                var priority = job.GetPriority();
+                Assert.NotEqual(FileTransfer.FileTransferPriority.Unknown, priority);
+                if (priority != FileTransfer.FileTransferPriority.Foreground)
+                {
+                    Assert.True(job.SetPriority(FileTransfer.FileTransferPriority.Foreground));
+                }
+                priority = job.GetPriority();
+                Assert.Equal(FileTransfer.FileTransferPriority.Foreground, priority);
+                var state = job.GetState();
+                Assert.Equal(FileTransfer.FileTransferState.Suspended, state);
+                Assert.True(job.Cancel());
+            }
+            Assert.DoesNotContain(jobId, fileTransfer.GetJobIdList());
+        }
     }
 }
