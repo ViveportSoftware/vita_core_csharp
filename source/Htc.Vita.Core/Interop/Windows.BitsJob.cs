@@ -91,6 +91,23 @@ namespace Htc.Vita.Core.Interop
                 }
             }
 
+            internal string GetDescription()
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                string description;
+                var bitsResult = _backgroundCopyJob.GetDescription(out description);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return description;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job description. error: {bitsResult}");
+                return null;
+            }
+
             internal string GetDisplayName()
             {
                 if (_backgroundCopyJob == null)
@@ -129,6 +146,23 @@ namespace Htc.Vita.Core.Interop
                 return null;
             }
 
+            internal uint GetErrorCount()
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                uint errorCount;
+                var bitsResult = _backgroundCopyJob.GetErrorCount(out errorCount);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return errorCount;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job error count. error: {bitsResult}");
+                return 0;
+            }
+
             internal BitsFiles GetFiles()
             {
                 if (_backgroundCopyJob == null)
@@ -163,6 +197,74 @@ namespace Htc.Vita.Core.Interop
                 return null;
             }
 
+            internal uint GetMinimumRetryDelay()
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                uint minimumRetryDelay;
+                var bitsResult = _backgroundCopyJob.GetMinimumRetryDelay(out minimumRetryDelay);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return minimumRetryDelay;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job minimum retry delay. error: {bitsResult}");
+                return 0;
+            }
+
+            internal uint GetNoProgressTimeout()
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                uint noProgressTimeout;
+                var bitsResult = _backgroundCopyJob.GetNoProgressTimeout(out noProgressTimeout);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return noProgressTimeout;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job no progress timeout. error: {bitsResult}");
+                return 0;
+            }
+
+            internal BitsNotifyFlag GetNotifyFlags()
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                BitsNotifyFlag notifyFlag;
+                var bitsResult = _backgroundCopyJob.GetNotifyFlags(out notifyFlag);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return notifyFlag;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job notify flags. error: {bitsResult}");
+                return BitsNotifyFlag.None;
+            }
+
+            internal string GetOwner()
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                string owner;
+                var bitsResult = _backgroundCopyJob.GetOwner(out owner);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return owner;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job owner. error: {bitsResult}");
+                return null;
+            }
+
             internal BitsJobPriority GetPriority()
             {
                 if (_backgroundCopyJob == null)
@@ -180,6 +282,51 @@ namespace Htc.Vita.Core.Interop
                 return BitsJobPriority.Foreground;
             }
 
+            internal BitsJobProgress GetProgress()
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                BitsJobProgress jobProgress;
+                var bitsResult = _backgroundCopyJob.GetProgress(out jobProgress);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return jobProgress;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job progress. error: {bitsResult}");
+                return new BitsJobProgress();
+            }
+
+            internal BitsJobProxySettings GetProxySettings()
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                BitsJobProxyUsage usage;
+                string proxyList;
+                string proxyPassList;
+                var bitsResult = _backgroundCopyJob.GetProxySettings(
+                        out usage,
+                        out proxyList,
+                        out proxyPassList
+                );
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return new BitsJobProxySettings
+                    {
+                            ProxyList = proxyList,
+                            ProxyBypassList = proxyPassList,
+                            Usage = usage
+                    };
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job proxy settings. error: {bitsResult}");
+                return null;
+            }
+
             internal BitsJobState GetState()
             {
                 if (_backgroundCopyJob == null)
@@ -195,6 +342,23 @@ namespace Htc.Vita.Core.Interop
                 }
                 Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job state. error: {bitsResult}");
                 return BitsJobState.Error;
+            }
+
+            internal BitsJobTimes GetTimes()
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                BitsJobTimes jobTimes;
+                var bitsResult = _backgroundCopyJob.GetTimes(out jobTimes);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return jobTimes;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job times. error: {bitsResult}");
+                return new BitsJobTimes();
             }
 
             internal new BitsJobType GetType()
@@ -227,6 +391,88 @@ namespace Htc.Vita.Core.Interop
                     return true;
                 }
                 Logger.GetInstance(typeof(BitsJob)).Error($"Cannot resume job. error: {bitsResult}");
+                return false;
+            }
+
+            internal bool SetDescription(string description)
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                var realDescription = description ?? string.Empty;
+                var bitsResult = _backgroundCopyJob.SetDescription(realDescription);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return true;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot set job description to \"{realDescription}\". error: {bitsResult}");
+                return false;
+            }
+
+            internal bool SetDisplayName(string displayName)
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                var realDisplayName = displayName ?? string.Empty;
+                var bitsResult = _backgroundCopyJob.SetDisplayName(realDisplayName);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return true;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot set job display name to \"{realDisplayName}\". error: {bitsResult}");
+                return false;
+            }
+
+            internal bool SetMinimumRetryDelay(uint minimumRetryDelay)
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                var bitsResult = _backgroundCopyJob.SetMinimumRetryDelay(minimumRetryDelay);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return true;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot set job minimum retry delay to \"{minimumRetryDelay}\". error: {bitsResult}");
+                return false;
+            }
+
+            internal bool SetNoProgressTimeout(uint noProgressTimeout)
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                var bitsResult = _backgroundCopyJob.SetNoProgressTimeout(noProgressTimeout);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return true;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot set job no progress timeout to \"{noProgressTimeout}\". error: {bitsResult}");
+                return false;
+            }
+
+            internal bool SetNotifyFlags(BitsNotifyFlag notifyFlags)
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                var bitsResult = _backgroundCopyJob.SetNotifyFlags(notifyFlags);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return true;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot set job notify flags to \"{notifyFlags}\". error: {bitsResult}");
                 return false;
             }
 

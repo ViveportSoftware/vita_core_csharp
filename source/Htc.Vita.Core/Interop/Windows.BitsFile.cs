@@ -45,6 +45,23 @@ namespace Htc.Vita.Core.Interop
                 return null;
             }
 
+            internal BitsFileProgress GetProgress()
+            {
+                if (_backgroundCopyFile == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsFile), $"Cannot access a closed {nameof(IBackgroundCopyFile)}.");
+                }
+
+                BitsFileProgress fileProgress;
+                var bitsResult = _backgroundCopyFile.GetProgress(out fileProgress);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return fileProgress;
+                }
+                Logger.GetInstance(typeof(BitsFile)).Error($"Cannot get progress. error: {bitsResult}");
+                return new BitsFileProgress();
+            }
+
             internal string GetRemoteName()
             {
                 if (_backgroundCopyFile == null)

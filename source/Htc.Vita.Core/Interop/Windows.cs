@@ -1370,6 +1370,16 @@ namespace Htc.Vita.Core.Interop
             internal /* LPWSTR */ string LocalName;
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_file_progress",
+                Description = "BG_FILE_PROGRESS structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct BitsFileProgress
+        {
+            internal /* UINT64 */ ulong BytesTotal;
+            internal /* UINT64 */ ulong BytesTransferred;
+            internal /* BOOL   */ bool Completed;
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_job_progress",
                 Description = "BG_JOB_PROGRESS structure")]
         [StructLayout(LayoutKind.Sequential)]

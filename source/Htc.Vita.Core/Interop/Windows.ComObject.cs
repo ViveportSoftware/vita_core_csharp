@@ -91,6 +91,12 @@ namespace Htc.Vita.Core.Interop
                     /*                      DWORD   */ [In] uint languageId,
                     /* __RPC__deref_out_opt LPWSTR* */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string pContextDescription
             );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyerror-getprotocol")]
+            [PreserveSig]
+            BitsResult GetProtocol(
+                    /* __RPC__deref_out_opt LPWSTR* */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string pProtocol
+            );
         }
 
         [ComImport]
@@ -108,6 +114,12 @@ namespace Htc.Vita.Core.Interop
             [PreserveSig]
             BitsResult GetLocalName(
                     /* __RPC__deref_out_opt LPWSTR* */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string pVal
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyfile-getprogress")]
+            [PreserveSig]
+            BitsResult GetProgress(
+                    /* __RPC__out BG_FILE_PROGRESS* */ [Out] out BitsFileProgress pVal
             );
         }
 
@@ -291,6 +303,18 @@ namespace Htc.Vita.Core.Interop
                     /* __RPC__in_opt_string const WCHAR*       */ [In] string proxyList,
                     /* __RPC__in_opt_string const WCHAR*       */ [In] string proxyBypassList
             );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getproxysettings")]
+            [PreserveSig]
+            BitsResult GetProxySettings(
+                    /* __RPC__out           BG_JOB_PROXY_USAGE* */ [Out] out BitsJobProxyUsage pProxyUsage,
+                    /* __RPC__deref_out_opt LPWSTR*             */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string pProxyList,
+                    /* __RPC__deref_out_opt LPWSTR*             */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-takeownership")]
+            [PreserveSig]
+            BitsResult TakeOwnership();
         }
 
         [ComImport]
@@ -319,6 +343,14 @@ namespace Htc.Vita.Core.Interop
             BitsResult EnumJobs(
                     /*                      DWORD                     */ [In] BitsJobEnumOwnerScope dwFlags,
                     /* __RPC__deref_out_opt IEnumBackgroundCopyJobs** */ [Out] out IEnumBackgroundCopyJobs ppEnum
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopymanager-geterrordescription")]
+            [PreserveSig]
+            HResult GetErrorDescription(
+                    /*                      HRESULT */ [In] BitsResult hResult,
+                    /*                      DWORD   */ [In] uint languageId,
+                    /* __RPC__deref_out_opt LPWSTR* */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string errorDescription
             );
         }
 
