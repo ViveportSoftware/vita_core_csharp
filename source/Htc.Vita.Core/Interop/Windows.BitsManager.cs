@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Htc.Vita.Core.Log;
+using Convert = Htc.Vita.Core.Util.Convert;
 
 namespace Htc.Vita.Core.Interop
 {
@@ -14,6 +15,37 @@ namespace Htc.Vita.Core.Interop
             internal BitsManager(IBackgroundCopyManager backgroundCopyManager)
             {
                 _backgroundCopyManager = backgroundCopyManager;
+            }
+
+            internal BitsJob CreateJob(
+                    string displayName,
+                    BitsJobType jobType)
+            {
+                if (_backgroundCopyManager == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsManager), $"Cannot access a closed {nameof(IBackgroundCopyManager)}.");
+                }
+
+                var realDisplayName = displayName;
+                if (string.IsNullOrEmpty(realDisplayName))
+                {
+                    realDisplayName = $"Untitled-{Convert.ToTimestampInMilli(DateTime.UtcNow)}";
+                }
+
+                Guid jobId;
+                IBackgroundCopyJob job;
+                var bitsError = _backgroundCopyManager.CreateJob(
+                        realDisplayName,
+                        jobType,
+                        out jobId,
+                        out job
+                );
+                if (bitsError != BitsResult.SOk)
+                {
+                    throw new InvalidOperationException($"Cannot create new {nameof(IBackgroundCopyJob)}");
+                }
+
+                return new BitsJob(job);
             }
 
             public void Dispose()

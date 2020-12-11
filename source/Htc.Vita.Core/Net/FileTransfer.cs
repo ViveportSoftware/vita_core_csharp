@@ -8,7 +8,7 @@ namespace Htc.Vita.Core.Net
     /// <summary>
     /// Class FileTransfer.
     /// </summary>
-    public abstract class FileTransfer
+    public abstract partial class FileTransfer
     {
         static FileTransfer()
         {
@@ -64,9 +64,85 @@ namespace Htc.Vita.Core.Net
         }
 
         /// <summary>
+        /// Requests the new download job.
+        /// </summary>
+        /// <param name="jobName">The job name.</param>
+        /// <returns>FileTransferJob.</returns>
+        public FileTransferJob RequestNewDownloadJob(string jobName)
+        {
+            return RequestNewJob(
+                    jobName,
+                    FileTransferType.Download
+            );
+        }
+
+        /// <summary>
+        /// Requests the new job.
+        /// </summary>
+        /// <param name="jobName">The job name.</param>
+        /// <param name="fileTransferType">The file transfer type.</param>
+        /// <returns>FileTransferJob.</returns>
+        internal FileTransferJob RequestNewJob(
+                string jobName,
+                FileTransferType fileTransferType)
+        {
+            if (fileTransferType == FileTransferType.Unknown)
+            {
+                return null;
+            }
+
+            FileTransferJob result = null;
+            try
+            {
+                result = OnRequestNewJob(
+                        jobName,
+                        fileTransferType
+                );
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(FileTransfer)).Error(e.ToString());
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Called when getting job identifier list.
         /// </summary>
         /// <returns>List&lt;System.String&gt;.</returns>
         protected abstract List<string> OnGetJobIdList();
+        /// <summary>
+        /// Called when requesting new job.
+        /// </summary>
+        /// <param name="jobName">The job name.</param>
+        /// <param name="fileTransferType">The file transfer type.</param>
+        /// <returns>FileTransferJob.</returns>
+        protected abstract FileTransferJob OnRequestNewJob(
+                string jobName,
+                FileTransferType fileTransferType
+        );
+
+        /// <summary>
+        /// Enum FileTransferType
+        /// </summary>
+        public enum FileTransferType
+        {
+            /// <summary>
+            /// Unknown type
+            /// </summary>
+            Unknown,
+            /// <summary>
+            /// Download
+            /// </summary>
+            Download,
+            /// <summary>
+            /// Upload
+            /// </summary>
+            Upload,
+            /// <summary>
+            /// Upload and reply
+            /// </summary>
+            UploadAndReply
+        }
     }
 }

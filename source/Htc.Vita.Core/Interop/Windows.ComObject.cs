@@ -9,6 +9,7 @@ namespace Htc.Vita.Core.Interop
     {
         internal const string ComInterfaceClsidBackgroundCopyManager = "4991d34b-80a1-4291-83b6-3328366b9097";
         internal const string ComInterfaceClsidPortableDeviceManager = "0af10cec-2ecd-4b92-9581-34f6ae0637f3";
+        internal const string ComInterfaceIBackgroundCopyError = "19c613a0-fcb8-4f28-81ae-897c3d078f81";
         internal const string ComInterfaceIBackgroundCopyJob = "37668d37-507e-4160-9316-26306d150b12";
         internal const string ComInterfaceIBackgroundCopyManager = "5ce34c0d-0dc9-4c1f-897c-daa1b78cee7c";
         internal const string ComInterfaceIDxgiAdapter = "2411e7e1-12ac-4ccf-bd14-9798e8534dc0";
@@ -28,6 +29,13 @@ namespace Htc.Vita.Core.Interop
         [ComImport]
         [Guid(ComInterfaceClsidPortableDeviceManager)]
         internal class ClsidPortableDeviceManager
+        {
+        }
+
+        [ComImport]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [Guid(ComInterfaceIBackgroundCopyError)]
+        internal interface IBackgroundCopyError
         {
         }
 
@@ -76,6 +84,54 @@ namespace Htc.Vita.Core.Interop
             [PreserveSig]
             BitsResult GetId(
                     /* __RPC__out GUID* */ [Out] out Guid pVal
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-gettype")]
+            [PreserveSig]
+            BitsResult GetType(
+                    /* __RPC__out BG_JOB_TYPE* */ [Out] out BitsJobType pVal
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getprogress")]
+            [PreserveSig]
+            BitsResult GetProgress(
+                    /* __RPC__out BG_JOB_PROGRESS* */ [Out] out BitsJobProgress pVal
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-gettimes")]
+            [PreserveSig]
+            BitsResult GetTimes(
+                    /* __RPC__out BG_JOB_TIMES* */ [Out] out BitsJobTimes pVal
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getstate")]
+            [PreserveSig]
+            BitsResult GetState(
+                    /* __RPC__out BG_JOB_STATE* */ [Out] out BitsJobState pVal
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-geterror")]
+            [PreserveSig]
+            BitsResult GetError(
+                    /* __RPC__deref_out_opt IBackgroundCopyError** */ [Out] out IBackgroundCopyError ppError
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getowner")]
+            [PreserveSig]
+            BitsResult GetOwner(
+                    /* __RPC__deref_out_opt LPWSTR* */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string pVal
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setdisplayname")]
+            [PreserveSig]
+            BitsResult SetDisplayName(
+                    /* __RPC__in LPCWSTR */ [In] string val
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getdisplayname")]
+            [PreserveSig]
+            BitsResult GetDisplayName(
+                    /* __RPC__deref_out_opt LPWSTR* */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string pVal
             );
         }
 

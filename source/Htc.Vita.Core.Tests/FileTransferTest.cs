@@ -34,5 +34,25 @@ namespace Htc.Vita.Core.Tests
                 index++;
             }
         }
+
+        [Fact]
+        public static void Default_2_RequestNewDownloadJob()
+        {
+            var fileTransfer = FileTransfer.GetInstance();
+            Assert.NotNull(fileTransfer);
+            string jobId;
+            const string jobName = "NewDownloadTest-0";
+            using (var job = fileTransfer.RequestNewDownloadJob(jobName))
+            {
+                Assert.NotNull(job);
+                jobId = job.GetId();
+                Assert.False(string.IsNullOrWhiteSpace(jobId));
+                Assert.Equal(jobName, job.GetDisplayName());
+                Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
+                Assert.Contains(jobId, fileTransfer.GetJobIdList());
+                Assert.True(job.Cancel());
+            }
+            Assert.DoesNotContain(jobId, fileTransfer.GetJobIdList());
+        }
     }
 }

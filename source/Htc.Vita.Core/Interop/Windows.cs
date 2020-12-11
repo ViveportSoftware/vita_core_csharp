@@ -27,6 +27,21 @@ namespace Htc.Vita.Core.Interop
             /* BG_JOB_ENUM_ALL_USERS */ AllUsers    = 1
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_state",
+                Description = "BG_JOB_STATE enumeration")]
+        internal enum BitsJobState
+        {
+            /* BG_JOB_STATE_QUEUED          */ Queued,
+            /* BG_JOB_STATE_CONNECTING      */ Connecting,
+            /* BG_JOB_STATE_TRANSFERRING    */ Transferring,
+            /* BG_JOB_STATE_SUSPENDED       */ Suspended,
+            /* BG_JOB_STATE_ERROR           */ Error,
+            /* BG_JOB_STATE_TRANSIENT_ERROR */ TransientError,
+            /* BG_JOB_STATE_TRANSFERRED     */ Transferred,
+            /* BG_JOB_STATE_ACKNOWLEDGED    */ Acknowledged,
+            /* BG_JOB_STATE_CANCELLED       */ Cancelled
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_type",
                 Description = "BG_JOB_TYPE enumeration")]
         internal enum BitsJobType
@@ -1307,6 +1322,27 @@ namespace Htc.Vita.Core.Interop
             internal /* LPWSTR */ string LocalName;
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_job_progress",
+                Description = "BG_JOB_PROGRESS structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct BitsJobProgress
+        {
+            internal /* UINT64 */ ulong BytesTotal;
+            internal /* UINT64 */ ulong BytesTransferred;
+            internal /* ULONG  */ uint FilesTotal;
+            internal /* ULONG  */ uint FilesTransferred;
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_job_times",
+                Description = "BG_JOB_TIMES structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct BitsJobTimes
+        {
+            internal /* FILETIME */ FileTime CreationTime;
+            internal /* FILETIME */ FileTime ModificationTime;
+            internal /* FILETIME */ FileTime TransferCompletionTime;
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-_display_devicew",
                 Description = "DISPLAY_DEVICEW structure")]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
@@ -1477,6 +1513,15 @@ namespace Htc.Vita.Core.Interop
                     return hashCode;
                 }
             }
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-filetime",
+                Description = "FILETIME structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct FileTime
+        {
+            internal /* DWORD */ uint dwLowDateTime;
+            internal /* DWORD */ uint dwHighDateTime;
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidpi/ns-hidpi-_hidp_caps")]

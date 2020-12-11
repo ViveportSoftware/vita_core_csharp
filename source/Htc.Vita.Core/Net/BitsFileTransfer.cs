@@ -8,7 +8,7 @@ namespace Htc.Vita.Core.Net
     /// Implements the <see cref="FileTransfer" />
     /// </summary>
     /// <seealso cref="FileTransfer" />
-    public class BitsFileTransfer : FileTransfer
+    public partial class BitsFileTransfer : FileTransfer
     {
         private readonly Windows.BitsManager _bitsManager;
 
@@ -20,10 +20,66 @@ namespace Htc.Vita.Core.Net
             _bitsManager = Windows.BitsManager.GetInstance();
         }
 
+        internal static Windows.BitsJobType ConvertFrom(FileTransferType data)
+        {
+            if (data == FileTransferType.Download)
+            {
+                return Windows.BitsJobType.Download;
+            }
+
+            if (data == FileTransferType.Upload)
+            {
+                return Windows.BitsJobType.Upload;
+            }
+
+            if (data == FileTransferType.UploadAndReply)
+            {
+                return Windows.BitsJobType.UploadReply;
+            }
+
+            return Windows.BitsJobType.Download;
+        }
+
+        internal static FileTransferType ConvertFrom(Windows.BitsJobType data)
+        {
+            if (data == Windows.BitsJobType.Download)
+            {
+                return FileTransferType.Download;
+            }
+
+            if (data == Windows.BitsJobType.Upload)
+            {
+                return FileTransferType.Upload;
+            }
+
+            if (data == Windows.BitsJobType.UploadReply)
+            {
+                return FileTransferType.UploadAndReply;
+            }
+
+            return FileTransferType.Unknown;
+        }
+
         /// <inheritdoc />
         protected override List<string> OnGetJobIdList()
         {
             return _bitsManager?.GetJobIdList();
+        }
+
+        /// <inheritdoc />
+        protected override FileTransferJob OnRequestNewJob(
+                string jobName,
+                FileTransferType fileTransferType)
+        {
+            var bitsJob = _bitsManager?.CreateJob(
+                    jobName,
+                    ConvertFrom(fileTransferType)
+            );
+            if (bitsJob == null)
+            {
+                return null;
+            }
+            return new BitsFileTransferJob(bitsJob);
         }
     }
 }
