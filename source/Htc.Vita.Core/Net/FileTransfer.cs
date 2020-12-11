@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Util;
 
@@ -10,6 +11,15 @@ namespace Htc.Vita.Core.Net
     /// </summary>
     public abstract partial class FileTransfer
     {
+        /// <summary>
+        /// Occurs when on job error.
+        /// </summary>
+        public event Action<string> OnJobError;
+        /// <summary>
+        /// Occurs when on job transferred.
+        /// </summary>
+        public event Action<string> OnJobTransferred;
+
         static FileTransfer()
         {
             TypeRegistry.RegisterDefault<FileTransfer, BitsFileTransfer>();
@@ -88,6 +98,70 @@ namespace Htc.Vita.Core.Net
         }
 
         /// <summary>
+        /// Listens the job.
+        /// </summary>
+        /// <param name="job">The job.</param>
+        /// <returns><c>true</c> if the job is able to be listened, <c>false</c> otherwise.</returns>
+        public bool ListenJob(FileTransferJob job)
+        {
+            if (job == null)
+            {
+                return false;
+            }
+
+            var result = false;
+            try
+            {
+                result = OnListenJob(job);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(FileTransfer)).Error(e.ToString());
+            }
+            return result;
+        }
+
+        internal void NotifyJobError(string jobId)
+        {
+            if (string.IsNullOrWhiteSpace(jobId))
+            {
+                return;
+            }
+
+            Task.Run(() =>
+            {
+                    try
+                    {
+                        OnJobError?.Invoke(jobId);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.GetInstance(typeof(FileTransfer)).Error(e.ToString());
+                    }
+            });
+        }
+
+        internal void NotifyJobTransferred(string jobId)
+        {
+            if (string.IsNullOrWhiteSpace(jobId))
+            {
+                return;
+            }
+
+            Task.Run(() =>
+            {
+                    try
+                    {
+                        OnJobTransferred?.Invoke(jobId);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.GetInstance(typeof(FileTransfer)).Error(e.ToString());
+                    }
+            });
+        }
+
+        /// <summary>
         /// Requests the new download job.
         /// </summary>
         /// <param name="jobName">The job name.</param>
@@ -141,6 +215,12 @@ namespace Htc.Vita.Core.Net
         /// </summary>
         /// <returns>List&lt;System.String&gt;.</returns>
         protected abstract List<string> OnGetJobIdList();
+        /// <summary>
+        /// Called when listening job.
+        /// </summary>
+        /// <param name="job">The job.</param>
+        /// <returns><c>true</c> if the job is able to be listened, <c>false</c> otherwise.</returns>
+        protected abstract bool OnListenJob(FileTransferJob job);
         /// <summary>
         /// Called when requesting new job.
         /// </summary>

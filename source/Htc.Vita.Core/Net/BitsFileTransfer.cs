@@ -21,6 +21,11 @@ namespace Htc.Vita.Core.Net
         public BitsFileTransfer()
         {
             _bitsManager = Windows.BitsManager.GetInstance();
+            if (_bitsManager != null)
+            {
+                _bitsManager.OnJobError += OnBitsManagerJobError;
+                _bitsManager.OnJobTransferred += OnBitsManagerJobTransferred;
+            }
         }
 
         internal static Windows.BitsFileInfo ConvertFrom(FileTransferItem data)
@@ -207,6 +212,16 @@ namespace Htc.Vita.Core.Net
             return FileTransferType.Unknown;
         }
 
+        private void OnBitsManagerJobError(string jobId)
+        {
+            NotifyJobError(jobId);
+        }
+
+        private void OnBitsManagerJobTransferred(string jobId)
+        {
+            NotifyJobTransferred(jobId);
+        }
+
         /// <inheritdoc />
         protected override FileTransferJob OnGetJob(string jobId)
         {
@@ -222,6 +237,13 @@ namespace Htc.Vita.Core.Net
         protected override List<string> OnGetJobIdList()
         {
             return _bitsManager?.GetJobIdList();
+        }
+
+        /// <inheritdoc />
+        protected override bool OnListenJob(FileTransferJob job)
+        {
+            var bitsJob = job as BitsFileTransferJob;
+            return _bitsManager?.ListenJob(bitsJob?.GetInnerInstance()) ?? false;
         }
 
         /// <inheritdoc />

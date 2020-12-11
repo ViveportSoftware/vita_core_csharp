@@ -232,6 +232,11 @@ namespace Htc.Vita.Core.Tests
             var fileTransfer = FileTransfer.GetInstance();
             Assert.NotNull(fileTransfer);
 
+            fileTransfer.OnJobError -= OnFileTransferOnJobError;
+            fileTransfer.OnJobError += OnFileTransferOnJobError;
+            fileTransfer.OnJobTransferred -= OnFileTransferJobTransferred;
+            fileTransfer.OnJobTransferred += OnFileTransferJobTransferred;
+
             var localPathSet = new HashSet<FileInfo>();
             var timestamp = Convert.ToTimestampInMilli(DateTime.UtcNow);
             string jobId;
@@ -242,6 +247,7 @@ namespace Htc.Vita.Core.Tests
                 jobId = job.GetId();
                 Assert.False(string.IsNullOrWhiteSpace(jobId));
                 Assert.Equal(jobName, job.GetDisplayName());
+                Assert.True(fileTransfer.ListenJob(job));
                 Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
                 Assert.Contains(jobId, fileTransfer.GetJobIdList());
                 Assert.True(job.AddItem(new FileTransfer.FileTransferItem
@@ -289,6 +295,16 @@ namespace Htc.Vita.Core.Tests
                 Logger.GetInstance(typeof(FileTransferTest)).Info("local path: " + localPath);
                 Assert.True(localPath.Exists);
             }
+        }
+
+        private static void OnFileTransferJobTransferred(string jobId)
+        {
+            Logger.GetInstance(typeof(FileTransferTest)).Info($"job[{jobId}] is transferred");
+        }
+
+        private static void OnFileTransferOnJobError(string jobId)
+        {
+            Logger.GetInstance(typeof(FileTransferTest)).Info($"job[{jobId}] is error");
         }
     }
 }

@@ -61,6 +61,19 @@ namespace Htc.Vita.Core.Interop
             /* BG_JOB_TYPE_UPLOAD_REPLY */ UploadReply = 2
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnotifyflags")]
+        [Flags]
+        internal enum BitsNotifyFlag: uint
+        {
+            /*                                   */ None                  =      0,
+            /* BG_NOTIFY_JOB_TRANSFERRED         */ JobTransferred        = 0x0001,
+            /* BG_NOTIFY_JOB_ERROR               */ JobError              = 0x0002,
+            /* BG_NOTIFY_DISABLE                 */ Disable               = 0x0004,
+            /* BG_NOTIFY_JOB_MODIFICATION        */ JobModification       = 0x0008,
+            /* BG_NOTIFY_FILE_TRANSFERRED        */ FileTransferred       = 0x0010,
+            /* BG_NOTIFY_FILE_RANGES_TRANSFERRED */ FileRangesTransferred = 0x0020
+        }
+
         internal enum BitsResult : uint
         {
             /* S_OK                                              */ SOk                                   = HResult.SOk,

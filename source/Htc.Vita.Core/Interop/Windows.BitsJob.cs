@@ -209,6 +209,22 @@ namespace Htc.Vita.Core.Interop
                 return false;
             }
 
+            internal bool SetNotifyInterface(BitsCallback callback)
+            {
+                if (_backgroundCopyJob == null)
+                {
+                    throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
+                }
+
+                var bitsResult = _backgroundCopyJob.SetNotifyInterface(callback);
+                if (bitsResult == BitsResult.SOk)
+                {
+                    return true;
+                }
+                Logger.GetInstance(typeof(BitsJob)).Error($"Cannot set job notify interface. error: {bitsResult}");
+                return false;
+            }
+
             internal bool SetPriority(BitsJobPriority priority)
             {
                 if (_backgroundCopyJob == null)

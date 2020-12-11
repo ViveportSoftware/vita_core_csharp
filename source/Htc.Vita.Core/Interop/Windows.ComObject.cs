@@ -9,6 +9,7 @@ namespace Htc.Vita.Core.Interop
     {
         internal const string ComInterfaceClsidBackgroundCopyManager = "4991d34b-80a1-4291-83b6-3328366b9097";
         internal const string ComInterfaceClsidPortableDeviceManager = "0af10cec-2ecd-4b92-9581-34f6ae0637f3";
+        internal const string ComInterfaceIBackgroundCopyCallback = "97ea99c7-0186-4ad4-8df9-c5b4e0ed6b22";
         internal const string ComInterfaceIBackgroundCopyError = "19c613a0-fcb8-4f28-81ae-897c3d078f81";
         internal const string ComInterfaceIBackgroundCopyFile = "01b7bd23-fb88-4a77-8490-5891d3e4653a";
         internal const string ComInterfaceIBackgroundCopyJob = "37668d37-507e-4160-9316-26306d150b12";
@@ -31,6 +32,32 @@ namespace Htc.Vita.Core.Interop
         [Guid(ComInterfaceClsidPortableDeviceManager)]
         internal class ClsidPortableDeviceManager
         {
+        }
+
+        [ComImport]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [Guid(ComInterfaceIBackgroundCopyCallback)]
+        internal interface IBackgroundCopyCallback
+        {
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopycallback-jobtransferred")]
+            [PreserveSig]
+            BitsResult JobTransferred(
+                    /* __RPC__in_opt IBackgroundCopyJob* */ [In][MarshalAs(UnmanagedType.Interface)] IBackgroundCopyJob pJob
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopycallback-joberror")]
+            [PreserveSig]
+            BitsResult JobError(
+                    /* __RPC__in_opt IBackgroundCopyJob*   */ [In][MarshalAs(UnmanagedType.Interface)] IBackgroundCopyJob pJob,
+                    /* __RPC__in_opt IBackgroundCopyError* */ [In][MarshalAs(UnmanagedType.Interface)] IBackgroundCopyError pError
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopycallback-jobmodification")]
+            [PreserveSig]
+            BitsResult JobModification(
+                    /* __RPC__in_opt IBackgroundCopyJob* */ [In][MarshalAs(UnmanagedType.Interface)] IBackgroundCopyJob pJob,
+                    /*               DWORD               */ [In] uint dwReserved
+            );
         }
 
         [ComImport]
@@ -175,6 +202,30 @@ namespace Htc.Vita.Core.Interop
             [PreserveSig]
             BitsResult GetPriority(
                     /* __RPC__out BG_JOB_PRIORITY* */ [Out] out BitsJobPriority pVal
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnotifyflags")]
+            [PreserveSig]
+            BitsResult SetNotifyFlags(
+                    /* ULONG */ [In] BitsNotifyFlag val
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getnotifyflags")]
+            [PreserveSig]
+            BitsResult GetNotifyFlags(
+                    /* __RPC__out ULONG* */ [Out] out BitsNotifyFlag pVal
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnotifyinterface")]
+            [PreserveSig]
+            BitsResult SetNotifyInterface(
+                    /* __RPC__in_opt IUnknown* */ [In][MarshalAs(UnmanagedType.IUnknown)] object val
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getnotifyinterface")]
+            [PreserveSig]
+            BitsResult GetNotifyInterface(
+                    /* __RPC__deref_out_opt IUnknown** */ [Out][MarshalAs(UnmanagedType.IUnknown)] out object pVal
             );
         }
 

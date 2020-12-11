@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Htc.Vita.Core.Log;
 using Convert = Htc.Vita.Core.Util.Convert;
 
@@ -10,11 +11,17 @@ namespace Htc.Vita.Core.Interop
     {
         internal class BitsManager : IDisposable
         {
+            internal event Action<string> OnJobError;
+            internal event Action<string> OnJobModification;
+            internal event Action<string> OnJobTransferred;
+
             private readonly IBackgroundCopyManager _backgroundCopyManager;
+            private readonly BitsCallback _bitsCallback;
 
             internal BitsManager(IBackgroundCopyManager backgroundCopyManager)
             {
                 _backgroundCopyManager = backgroundCopyManager;
+                _bitsCallback = new BitsCallback(this);
             }
 
             internal BitsJob CreateJob(
@@ -218,6 +225,71 @@ namespace Htc.Vita.Core.Interop
                 }
 
                 return result;
+            }
+
+            internal bool ListenJob(BitsJob job)
+            {
+                return job?.SetNotifyInterface(_bitsCallback) ?? false;
+            }
+
+            internal void NotifyJobError(string jobId)
+            {
+                if (string.IsNullOrWhiteSpace(jobId))
+                {
+                    return;
+                }
+
+                Task.Run(() =>
+                {
+                        try
+                        {
+                            OnJobError?.Invoke(jobId);
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.GetInstance(typeof(BitsManager)).Error(e.ToString());
+                        }
+                });
+            }
+
+            internal void NotifyJobModification(string jobId)
+            {
+                if (string.IsNullOrWhiteSpace(jobId))
+                {
+                    return;
+                }
+
+                Task.Run(() =>
+                {
+                        try
+                        {
+                            OnJobModification?.Invoke(jobId);
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.GetInstance(typeof(BitsManager)).Error(e.ToString());
+                        }
+                });
+            }
+
+            internal void NotifyJobTransferred(string jobId)
+            {
+                if (string.IsNullOrWhiteSpace(jobId))
+                {
+                    return;
+                }
+
+                Task.Run(() =>
+                {
+                        try
+                        {
+                            OnJobTransferred?.Invoke(jobId);
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.GetInstance(typeof(BitsManager)).Error(e.ToString());
+                        }
+                });
             }
         }
     }
