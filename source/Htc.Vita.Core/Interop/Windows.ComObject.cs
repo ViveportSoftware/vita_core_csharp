@@ -7,7 +7,9 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
+        internal const string ComInterfaceClsidBackgroundCopyManager = "4991d34b-80a1-4291-83b6-3328366b9097";
         internal const string ComInterfaceClsidPortableDeviceManager = "0af10cec-2ecd-4b92-9581-34f6ae0637f3";
+        internal const string ComInterfaceIBackgroundCopyManager = "5ce34c0d-0dc9-4c1f-897c-daa1b78cee7c";
         internal const string ComInterfaceIDxgiAdapter = "2411e7e1-12ac-4ccf-bd14-9798e8534dc0";
         internal const string ComInterfaceIDxgiFactory = "7b7166ec-21c7-44ae-b21a-c9ae321ae369";
         internal const string ComInterfaceIDxgiObject = "aec22fb8-76f3-4639-9be0-28eb43a67a2e";
@@ -15,8 +17,21 @@ namespace Htc.Vita.Core.Interop
         internal const string ComInterfaceIPortableDeviceManager = "a1567595-4c2f-4574-a6fa-ecef917b9a40";
 
         [ComImport]
+        [Guid(ComInterfaceClsidBackgroundCopyManager)]
+        internal class ClsidBackgroundCopyManager
+        {
+        }
+
+        [ComImport]
         [Guid(ComInterfaceClsidPortableDeviceManager)]
         internal class ClsidPortableDeviceManager
+        {
+        }
+
+        [ComImport]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [Guid(ComInterfaceIBackgroundCopyManager)]
+        internal interface IBackgroundCopyManager
         {
         }
 
