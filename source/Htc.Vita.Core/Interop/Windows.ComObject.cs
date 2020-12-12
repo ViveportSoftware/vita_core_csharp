@@ -13,6 +13,7 @@ namespace Htc.Vita.Core.Interop
         internal const string ComInterfaceIBackgroundCopyError = "19c613a0-fcb8-4f28-81ae-897c3d078f81";
         internal const string ComInterfaceIBackgroundCopyFile = "01b7bd23-fb88-4a77-8490-5891d3e4653a";
         internal const string ComInterfaceIBackgroundCopyJob = "37668d37-507e-4160-9316-26306d150b12";
+        internal const string ComInterfaceIBackgroundCopyJob2 = "54b50739-686f-45eb-9dff-d6a9a0faa9af";
         internal const string ComInterfaceIBackgroundCopyManager = "5ce34c0d-0dc9-4c1f-897c-daa1b78cee7c";
         internal const string ComInterfaceIDxgiAdapter = "2411e7e1-12ac-4ccf-bd14-9798e8534dc0";
         internal const string ComInterfaceIDxgiFactory = "7b7166ec-21c7-44ae-b21a-c9ae321ae369";
@@ -125,7 +126,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceIBackgroundCopyJob)]
+        [Guid(ComInterfaceIBackgroundCopyJob2)]
         internal interface IBackgroundCopyJob
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-addfileset")]
@@ -315,6 +316,66 @@ namespace Htc.Vita.Core.Interop
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-takeownership")]
             [PreserveSig]
             BitsResult TakeOwnership();
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-setnotifycmdline",
+                    Description = "From IBackgroundCopyJob2")]
+            [PreserveSig]
+            BitsResult SetNotifyCmdLine(
+                    /* __RPC__in_opt LPCWSTR */ [In] string program,
+                    /* __RPC__in_opt LPCWSTR */ [In] string parameters
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-getnotifycmdline",
+                    Description = "From IBackgroundCopyJob2")]
+            [PreserveSig]
+            BitsResult GetNotifyCmdLine(
+                    /* __RPC__deref_out_opt LPWSTR* */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string pProgram,
+                    /* __RPC__deref_out_opt LPWSTR* */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string pParameters
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-getreplyprogress",
+                    Description = "From IBackgroundCopyJob2")]
+            [PreserveSig]
+            BitsResult GetReplyProgress(
+                    /* __RPC__inout BG_JOB_REPLY_PROGRESS* */ [Out] out BitsJobReplyProgress pProgress
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-getreplydata",
+                    Description = "From IBackgroundCopyJob2")]
+            [PreserveSig]
+            BitsResult GetReplyData(
+                    /* __RPC__deref_out_ecount_full_opt byte**  */ [In][Out] ref IntPtr ppBuffer,
+                    /* __RPC__inout_opt                 UINT64* */ [Out] out ulong pLength
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-setreplyfilename",
+                    Description = "From IBackgroundCopyJob2")]
+            [PreserveSig]
+            BitsResult SetReplyFileName(
+                    /* __RPC__in_opt LPCWSTR */ [In] string replyFileName
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-getreplyfilename",
+                    Description = "From IBackgroundCopyJob2")]
+            [PreserveSig]
+            BitsResult GetReplyFileName(
+                    /* __RPC__deref_out_opt LPWSTR* */ [Out][MarshalAs(UnmanagedType.LPWStr)] out string pReplyFileName
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-setcredentials",
+                    Description = "From IBackgroundCopyJob2")]
+            [PreserveSig]
+            BitsResult SetCredentials(
+                    /* __RPC__in BG_AUTH_CREDENTIALS* */ [In] ref BitsAuthCredentials credentials
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-removecredentials",
+                    Description = "From IBackgroundCopyJob2")]
+            [PreserveSig]
+            BitsResult RemoveCredentials(
+                    /* BG_AUTH_TARGET */ [In] BitsAuthTarget target,
+                    /* BG_AUTH_SCHEME */ [In] BitsAuthScheme scheme
+            );
         }
 
         [ComImport]

@@ -20,6 +20,25 @@ namespace Htc.Vita.Core.Interop
         internal static readonly IntPtr /* INVALID_HANDLE_VALUE      */ InvalidHandleValue = new IntPtr(-1);
         internal static readonly IntPtr /* WTS_CURRENT_SERVER_HANDLE */ WindowsTerminalServiceCurrentServerHandle = IntPtr.Zero;
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ne-bits1_5-bg_auth_scheme",
+                Description = "BG_AUTH_SCHEME enumeration")]
+        internal enum BitsAuthScheme
+        {
+            /* BG_AUTH_SCHEME_BASIC     */ Basic     = 1,
+            /* BG_AUTH_SCHEME_DIGEST    */ Digest    = 2,
+            /* BG_AUTH_SCHEME_NTLM      */ Ntlm      = 3,
+            /* BG_AUTH_SCHEME_NEGOTIATE */ Negotiate = 4,
+            /* BG_AUTH_SCHEME_PASSPORT  */ Passport  = 5
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ne-bits1_5-bg_auth_target",
+                Description = "BG_AUTH_TARGET enumeration")]
+        internal enum BitsAuthTarget
+        {
+            /* BG_AUTH_TARGET_SERVER */ Server = 1,
+            /* BG_AUTH_TARGET_PROXY  */ Proxy  = 2
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_error_context",
                 Description = "BG_ERROR_CONTEXT enumeration")]
         internal enum BitsErrorContext
@@ -1361,6 +1380,33 @@ namespace Htc.Vita.Core.Interop
             /* WTD_UICONTEXT_INSTALL */ Install
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_auth_credentials",
+                Description = "BG_AUTH_CREDENTIALS structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct BitsAuthCredentials
+        {
+            internal /* BG_AUTH_TARGET            */ BitsAuthTarget Target;
+            internal /* BG_AUTH_SCHEME            */ BitsAuthScheme Scheme;
+            internal /* BG_AUTH_CREDENTIALS_UNION */ BitsAuthCredentialsUnion Credentials;
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_auth_credentials_union",
+                Description = "BG_AUTH_CREDENTIALS_UNION structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct BitsAuthCredentialsUnion
+        {
+            internal /* BG_BASIC_CREDENTIALS */ BitsBasicCredentials Basic;
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_basic_credentials",
+                Description = "BG_BASIC_CREDENTIALS structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct BitsBasicCredentials
+        {
+            internal /* LPWSTR */ string UserName;
+            internal /* LPWSTR */ string Password;
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_file_info",
                 Description = "BG_FILE_INFO structure")]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
@@ -1389,6 +1435,15 @@ namespace Htc.Vita.Core.Interop
             internal /* UINT64 */ ulong BytesTransferred;
             internal /* ULONG  */ uint FilesTotal;
             internal /* ULONG  */ uint FilesTransferred;
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_job_reply_progress",
+                Description = "BG_JOB_REPLY_PROGRESS structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct BitsJobReplyProgress
+        {
+            internal /* UINT64 */ ulong BytesTotal;
+            internal /* UINT64 */ ulong BytesTransferred;
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_job_times",
