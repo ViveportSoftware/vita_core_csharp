@@ -107,7 +107,7 @@ namespace Htc.Vita.Core.Interop
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnotifyflags")]
         [Flags]
-        internal enum BitsNotifyFlag: uint
+        internal enum BitsNotifyFlag : uint
         {
             /*                                   */ None                  =      0,
             /* BG_NOTIFY_JOB_TRANSFERRED         */ JobTransferred        = 0x0001,
@@ -921,7 +921,7 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/shlobj_core/nf-shlobj_core-shchangenotify",
                 Description = "SHCNE enumeration")]
         [Flags]
-        internal enum ShellChangeNotifyEventId :uint
+        internal enum ShellChangeNotifyEventId : uint
         {
             /* SHCNE_RENAMEITEM       */ RenameItem         = 0x00000001,
             /* SHCNE_CREATE           */ Create             = 0x00000002,
@@ -1401,49 +1401,223 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_basic_credentials",
                 Description = "BG_BASIC_CREDENTIALS structure")]
         [StructLayout(LayoutKind.Sequential)]
-        internal struct BitsBasicCredentials
+        internal struct BitsBasicCredentials : IEquatable<BitsBasicCredentials>
         {
             internal /* LPWSTR */ string UserName;
             internal /* LPWSTR */ string Password;
+
+            public static bool operator ==(BitsBasicCredentials left, BitsBasicCredentials right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(BitsBasicCredentials left, BitsBasicCredentials right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(BitsBasicCredentials other)
+            {
+                return UserName == other.UserName && Password == other.Password;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is BitsBasicCredentials && Equals((BitsBasicCredentials) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return ((UserName != null ? UserName.GetHashCode() : 0) * 397) ^ (Password != null ? Password.GetHashCode() : 0);
+                }
+            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_file_info",
                 Description = "BG_FILE_INFO structure")]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        internal struct BitsFileInfo
+        internal struct BitsFileInfo : IEquatable<BitsFileInfo>
         {
             internal /* LPWSTR */ string RemoteName;
             internal /* LPWSTR */ string LocalName;
+
+            public static bool operator ==(BitsFileInfo left, BitsFileInfo right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(BitsFileInfo left, BitsFileInfo right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(BitsFileInfo other)
+            {
+                return RemoteName == other.RemoteName
+                        && LocalName == other.LocalName;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is BitsFileInfo && Equals((BitsFileInfo) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return ((RemoteName != null ? RemoteName.GetHashCode() : 0) * 397) ^ (LocalName != null ? LocalName.GetHashCode() : 0);
+                }
+            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_file_progress",
                 Description = "BG_FILE_PROGRESS structure")]
         [StructLayout(LayoutKind.Sequential)]
-        internal struct BitsFileProgress
+        internal struct BitsFileProgress : IEquatable<BitsFileProgress>
         {
-            internal /* UINT64 */ ulong BytesTotal;
-            internal /* UINT64 */ ulong BytesTransferred;
-            internal /* BOOL   */ bool Completed;
+            internal readonly /* UINT64 */ ulong BytesTotal;
+            internal readonly /* UINT64 */ ulong BytesTransferred;
+            internal readonly /* BOOL   */ bool Completed;
+
+            public static bool operator ==(BitsFileProgress left, BitsFileProgress right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(BitsFileProgress left, BitsFileProgress right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(BitsFileProgress other)
+            {
+                return BytesTotal == other.BytesTotal
+                        && BytesTransferred == other.BytesTransferred
+                        && Completed == other.Completed;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is BitsFileProgress && Equals((BitsFileProgress) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    var hashCode = BytesTotal.GetHashCode();
+                    hashCode = (hashCode * 397) ^ BytesTransferred.GetHashCode();
+                    hashCode = (hashCode * 397) ^ Completed.GetHashCode();
+                    return hashCode;
+                }
+            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_job_progress",
                 Description = "BG_JOB_PROGRESS structure")]
         [StructLayout(LayoutKind.Sequential)]
-        internal struct BitsJobProgress
+        internal struct BitsJobProgress : IEquatable<BitsJobProgress>
         {
-            internal /* UINT64 */ ulong BytesTotal;
-            internal /* UINT64 */ ulong BytesTransferred;
-            internal /* ULONG  */ uint FilesTotal;
-            internal /* ULONG  */ uint FilesTransferred;
+            internal readonly /* UINT64 */ ulong BytesTotal;
+            internal readonly /* UINT64 */ ulong BytesTransferred;
+            internal readonly /* ULONG  */ uint FilesTotal;
+            internal readonly /* ULONG  */ uint FilesTransferred;
+
+            public static bool operator ==(BitsJobProgress left, BitsJobProgress right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(BitsJobProgress left, BitsJobProgress right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(BitsJobProgress other)
+            {
+                return BytesTotal == other.BytesTotal
+                        && BytesTransferred == other.BytesTransferred
+                        && FilesTotal == other.FilesTotal
+                        && FilesTransferred == other.FilesTransferred;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is BitsJobProgress && Equals((BitsJobProgress) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    var hashCode = BytesTotal.GetHashCode();
+                    hashCode = (hashCode * 397) ^ BytesTransferred.GetHashCode();
+                    hashCode = (hashCode * 397) ^ (int) FilesTotal;
+                    hashCode = (hashCode * 397) ^ (int) FilesTransferred;
+                    return hashCode;
+                }
+            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_job_reply_progress",
                 Description = "BG_JOB_REPLY_PROGRESS structure")]
         [StructLayout(LayoutKind.Sequential)]
-        internal struct BitsJobReplyProgress
+        internal struct BitsJobReplyProgress : IEquatable<BitsJobReplyProgress>
         {
-            internal /* UINT64 */ ulong BytesTotal;
-            internal /* UINT64 */ ulong BytesTransferred;
+            internal readonly /* UINT64 */ ulong BytesTotal;
+            internal readonly /* UINT64 */ ulong BytesTransferred;
+
+            public static bool operator ==(BitsJobReplyProgress left, BitsJobReplyProgress right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(BitsJobReplyProgress left, BitsJobReplyProgress right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(BitsJobReplyProgress other)
+            {
+                return BytesTotal == other.BytesTotal
+                        && BytesTransferred == other.BytesTransferred;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is BitsJobReplyProgress && Equals((BitsJobReplyProgress) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return (BytesTotal.GetHashCode() * 397) ^ BytesTransferred.GetHashCode();
+                }
+            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_job_times",
@@ -1631,10 +1805,43 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-filetime",
                 Description = "FILETIME structure")]
         [StructLayout(LayoutKind.Sequential)]
-        internal struct FileTime
+        internal struct FileTime : IEquatable<FileTime>
         {
-            internal /* DWORD */ uint dwLowDateTime;
-            internal /* DWORD */ uint dwHighDateTime;
+            internal readonly /* DWORD */ uint dwLowDateTime;
+            internal readonly /* DWORD */ uint dwHighDateTime;
+
+            public static bool operator ==(FileTime left, FileTime right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(FileTime left, FileTime right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(FileTime other)
+            {
+                return dwLowDateTime == other.dwLowDateTime
+                        && dwHighDateTime == other.dwHighDateTime;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is FileTime && Equals((FileTime) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return ((int) dwLowDateTime * 397) ^ (int) dwHighDateTime;
+                }
+            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidpi/ns-hidpi-_hidp_caps")]
