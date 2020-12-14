@@ -9,24 +9,48 @@ namespace Htc.Vita.Core.Interop
     {
         internal class DxgiFactory : IDisposable
         {
-            private readonly IDxgiFactory _dxgiFactory;
+            private IDxgiFactory _dxgiFactory;
+            private bool _disposed;
 
             internal DxgiFactory(IDxgiFactory dxgiFactory)
             {
                 _dxgiFactory = dxgiFactory;
             }
 
+            ~DxgiFactory()
+            {
+                Dispose(false);
+            }
+
             public void Dispose()
             {
-                if (_dxgiFactory == null)
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if (_disposed)
                 {
                     return;
                 }
 
+                if (disposing)
+                {
+                    // Disposing managed resource
+                }
+
+                if (_dxgiFactory == null)
+                {
+                    return;
+                }
                 if (Marshal.IsComObject(_dxgiFactory))
                 {
                     Marshal.ReleaseComObject(_dxgiFactory);
                 }
+                _dxgiFactory = null;
+
+                _disposed = true;
             }
 
             internal List<DxgiAdapter> EnumerateAdapters()

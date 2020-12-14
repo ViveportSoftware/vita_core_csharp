@@ -8,24 +8,48 @@ namespace Htc.Vita.Core.Interop
     {
         internal class DxgiOutput : IDisposable
         {
-            private readonly IDxgiOutput _dxgiOutput;
+            private IDxgiOutput _dxgiOutput;
+            private bool _disposed;
 
             internal DxgiOutput(IDxgiOutput dxgiOutput)
             {
                 _dxgiOutput = dxgiOutput;
             }
 
+            ~DxgiOutput()
+            {
+                Dispose(false);
+            }
+
             public void Dispose()
             {
-                if (_dxgiOutput == null)
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if (_disposed)
                 {
                     return;
                 }
 
+                if (disposing)
+                {
+                    // Disposing managed resource
+                }
+
+                if (_dxgiOutput == null)
+                {
+                    return;
+                }
                 if (Marshal.IsComObject(_dxgiOutput))
                 {
                     Marshal.ReleaseComObject(_dxgiOutput);
                 }
+                _dxgiOutput = null;
+
+                _disposed = true;
             }
 
             internal DxgiOutputDescription GetDescription()
