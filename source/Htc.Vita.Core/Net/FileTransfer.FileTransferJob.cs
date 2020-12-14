@@ -8,10 +8,8 @@ namespace Htc.Vita.Core.Net
     {
         /// <summary>
         /// Class FileTransferJob.
-        /// Implements the <see cref="System.IDisposable" />
         /// </summary>
-        /// <seealso cref="System.IDisposable" />
-        public abstract class FileTransferJob : IDisposable
+        public abstract class FileTransferJob
         {
             /// <summary>
             /// Adds the item.
@@ -71,12 +69,6 @@ namespace Htc.Vita.Core.Net
                     Logger.GetInstance(typeof(FileTransferJob)).Error(e.ToString());
                 }
                 return result;
-            }
-
-            /// <inheritdoc />
-            public void Dispose()
-            {
-                OnDispose();
             }
 
             /// <summary>
@@ -299,10 +291,6 @@ namespace Htc.Vita.Core.Net
             /// </summary>
             /// <returns><c>true</c> if completing this job successfully, <c>false</c> otherwise.</returns>
             protected abstract bool OnComplete();
-            /// <summary>
-            /// Called when disposing.
-            /// </summary>
-            protected abstract void OnDispose();
             /// <summary>
             /// Called when getting the display name.
             /// </summary>

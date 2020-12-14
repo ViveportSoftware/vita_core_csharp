@@ -13,10 +13,10 @@ namespace Htc.Vita.Core.Net
     /// <seealso cref="FileTransfer" />
     public partial class BitsFileTransfer : FileTransfer
     {
-        private readonly Windows.BitsManager _bitsManager;
+        private Windows.BitsManager _bitsManager;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BitsFileTransfer"/> class.
+        /// Initializes a new instance of the <see cref="BitsFileTransfer" /> class.
         /// </summary>
         public BitsFileTransfer()
         {
@@ -28,6 +28,20 @@ namespace Htc.Vita.Core.Net
             }
         }
 
+        /// <summary>
+        /// Finalizes an instance of the <see cref="BitsFileTransfer" /> class.
+        /// </summary>
+        ~BitsFileTransfer()
+        {
+            _bitsManager?.Dispose();
+            _bitsManager = null;
+        }
+
+        /// <summary>
+        /// Converts from.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns>Windows.BitsFileInfo.</returns>
         internal static Windows.BitsFileInfo ConvertFrom(FileTransferItem data)
         {
             return new Windows.BitsFileInfo
@@ -37,6 +51,11 @@ namespace Htc.Vita.Core.Net
             };
         }
 
+        /// <summary>
+        /// Converts from.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns>Windows.BitsJobPriority.</returns>
         internal static Windows.BitsJobPriority ConvertFrom(FileTransferPriority data)
         {
             if (data == FileTransferPriority.Foreground)
@@ -62,6 +81,11 @@ namespace Htc.Vita.Core.Net
             return Windows.BitsJobPriority.Foreground;
         }
 
+        /// <summary>
+        /// Converts from.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns>Windows.BitsJobType.</returns>
         internal static Windows.BitsJobType ConvertFrom(FileTransferType data)
         {
             if (data == FileTransferType.Download)
@@ -82,6 +106,11 @@ namespace Htc.Vita.Core.Net
             return Windows.BitsJobType.Download;
         }
 
+        /// <summary>
+        /// Converts from.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns>FileTransferItem.</returns>
         internal static FileTransferItem ConvertFrom(Windows.BitsFile data)
         {
             if (data == null)
@@ -117,6 +146,11 @@ namespace Htc.Vita.Core.Net
             return null;
         }
 
+        /// <summary>
+        /// Converts from.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns>FileTransferPriority.</returns>
         internal static FileTransferPriority ConvertFrom(Windows.BitsJobPriority data)
         {
             if (data == Windows.BitsJobPriority.Foreground)
@@ -142,6 +176,11 @@ namespace Htc.Vita.Core.Net
             return FileTransferPriority.Unknown;
         }
 
+        /// <summary>
+        /// Converts from.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns>FileTransferProgress.</returns>
         internal static FileTransferProgress ConvertFrom(Windows.BitsJobProgress data)
         {
             return new FileTransferProgress
@@ -153,6 +192,11 @@ namespace Htc.Vita.Core.Net
             };
         }
 
+        /// <summary>
+        /// Converts from.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns>FileTransferState.</returns>
         internal static FileTransferState ConvertFrom(Windows.BitsJobState data)
         {
             if (data == Windows.BitsJobState.Acknowledged)
@@ -203,6 +247,11 @@ namespace Htc.Vita.Core.Net
             return FileTransferState.Unknown;
         }
 
+        /// <summary>
+        /// Converts from.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns>FileTransferType.</returns>
         internal static FileTransferType ConvertFrom(Windows.BitsJobType data)
         {
             if (data == Windows.BitsJobType.Download)

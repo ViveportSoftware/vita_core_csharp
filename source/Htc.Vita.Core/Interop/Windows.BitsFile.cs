@@ -8,24 +8,48 @@ namespace Htc.Vita.Core.Interop
     {
         internal class BitsFile : IDisposable
         {
-            private readonly IBackgroundCopyFile _backgroundCopyFile;
+            private IBackgroundCopyFile _backgroundCopyFile;
+            private bool _disposed;
 
             internal BitsFile(IBackgroundCopyFile backgroundCopyFile)
             {
                 _backgroundCopyFile = backgroundCopyFile;
             }
 
+            ~BitsFile()
+            {
+                Dispose(false);
+            }
+
             public void Dispose()
             {
-                if (_backgroundCopyFile == null)
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if (_disposed)
                 {
                     return;
                 }
 
+                if (disposing)
+                {
+                    // Disposing managed resource
+                }
+
+                if (_backgroundCopyFile == null)
+                {
+                    return;
+                }
                 if (Marshal.IsComObject(_backgroundCopyFile))
                 {
                     Marshal.ReleaseComObject(_backgroundCopyFile);
                 }
+                _backgroundCopyFile = null;
+
+                _disposed = true;
             }
 
             internal string GetLocalName()

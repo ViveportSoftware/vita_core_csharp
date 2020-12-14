@@ -14,7 +14,7 @@ namespace Htc.Vita.Core.Net
         /// <seealso cref="FileTransfer.FileTransferJob" />
         public class BitsFileTransferJob : FileTransferJob
         {
-            private readonly Windows.BitsJob _bitsJob;
+            private Windows.BitsJob _bitsJob;
             private Uri _lastRemotePath;
 
             /// <summary>
@@ -24,6 +24,16 @@ namespace Htc.Vita.Core.Net
             public BitsFileTransferJob(object bitsJob)
             {
                 _bitsJob = bitsJob as Windows.BitsJob;
+            }
+
+            /// <summary>
+            /// Finalizes an instance of the <see cref="BitsFileTransferJob" /> class.
+            /// </summary>
+            ~BitsFileTransferJob()
+            {
+                _bitsJob?.Dispose();
+                _bitsJob = null;
+                _lastRemotePath = null;
             }
 
             /// <summary>
@@ -80,12 +90,6 @@ namespace Htc.Vita.Core.Net
             protected override bool OnComplete()
             {
                 return _bitsJob?.Complete() ?? false;
-            }
-
-            /// <inheritdoc />
-            protected override void OnDispose()
-            {
-                _bitsJob?.Dispose();
             }
 
             /// <inheritdoc />

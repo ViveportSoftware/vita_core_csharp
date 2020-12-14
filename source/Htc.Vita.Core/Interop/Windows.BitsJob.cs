@@ -8,11 +8,17 @@ namespace Htc.Vita.Core.Interop
     {
         internal class BitsJob : IDisposable
         {
-            private readonly IBackgroundCopyJob _backgroundCopyJob;
+            private IBackgroundCopyJob _backgroundCopyJob;
+            private bool _disposed;
 
             internal BitsJob(IBackgroundCopyJob backgroundCopyJob)
             {
                 _backgroundCopyJob = backgroundCopyJob;
+            }
+
+            ~BitsJob()
+            {
+                Dispose(false);
             }
 
             internal bool AddFile(BitsFileInfo file)
@@ -80,15 +86,33 @@ namespace Htc.Vita.Core.Interop
 
             public void Dispose()
             {
-                if (_backgroundCopyJob == null)
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if (_disposed)
                 {
                     return;
                 }
 
+                if (disposing)
+                {
+                    // Disposing managed resource
+                }
+
+                if (_backgroundCopyJob == null)
+                {
+                    return;
+                }
                 if (Marshal.IsComObject(_backgroundCopyJob))
                 {
                     Marshal.ReleaseComObject(_backgroundCopyJob);
                 }
+                _backgroundCopyJob = null;
+
+                _disposed = true;
             }
 
             internal string GetDescription()

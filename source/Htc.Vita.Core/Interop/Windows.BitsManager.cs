@@ -15,13 +15,19 @@ namespace Htc.Vita.Core.Interop
             internal event Action<string> OnJobModification;
             internal event Action<string> OnJobTransferred;
 
-            private readonly IBackgroundCopyManager _backgroundCopyManager;
-            private readonly BitsCallback _bitsCallback;
+            private IBackgroundCopyManager _backgroundCopyManager;
+            private BitsCallback _bitsCallback;
+            private bool _disposed;
 
             internal BitsManager(IBackgroundCopyManager backgroundCopyManager)
             {
                 _backgroundCopyManager = backgroundCopyManager;
                 _bitsCallback = new BitsCallback(this);
+            }
+
+            ~BitsManager()
+            {
+                Dispose(false);
             }
 
             internal BitsJob CreateJob(
@@ -57,15 +63,36 @@ namespace Htc.Vita.Core.Interop
 
             public void Dispose()
             {
-                if (_backgroundCopyManager == null)
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if (_disposed)
                 {
                     return;
                 }
 
+                if (disposing)
+                {
+                    _bitsCallback = null;
+                    OnJobError = null;
+                    OnJobModification = null;
+                    OnJobTransferred = null;
+                }
+
+                if (_backgroundCopyManager == null)
+                {
+                    return;
+                }
                 if (Marshal.IsComObject(_backgroundCopyManager))
                 {
                     Marshal.ReleaseComObject(_backgroundCopyManager);
                 }
+                _backgroundCopyManager = null;
+
+                _disposed = true;
             }
 
             internal static BitsManager GetInstance()

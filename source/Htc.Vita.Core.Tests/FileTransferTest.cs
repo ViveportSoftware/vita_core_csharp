@@ -46,18 +46,15 @@ namespace Htc.Vita.Core.Tests
         {
             var fileTransfer = FileTransfer.GetInstance();
             Assert.NotNull(fileTransfer);
-            string jobId;
             const string jobName = "NewDownloadTest-0";
-            using (var job = fileTransfer.RequestNewDownloadJob(jobName))
-            {
-                Assert.NotNull(job);
-                jobId = job.GetId();
-                Assert.False(string.IsNullOrWhiteSpace(jobId));
-                Assert.Equal(jobName, job.GetDisplayName());
-                Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
-                Assert.Contains(jobId, fileTransfer.GetJobIdList());
-                Assert.True(job.Cancel());
-            }
+            var job = fileTransfer.RequestNewDownloadJob(jobName);
+            Assert.NotNull(job);
+            var jobId = job.GetId();
+            Assert.False(string.IsNullOrWhiteSpace(jobId));
+            Assert.Equal(jobName, job.GetDisplayName());
+            Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
+            Assert.Contains(jobId, fileTransfer.GetJobIdList());
+            Assert.True(job.Cancel());
             Assert.DoesNotContain(jobId, fileTransfer.GetJobIdList());
         }
 
@@ -67,22 +64,18 @@ namespace Htc.Vita.Core.Tests
             var fileTransfer = FileTransfer.GetInstance();
             Assert.NotNull(fileTransfer);
             const string jobName = "NewDownloadTest-1";
-            using (var job = fileTransfer.RequestNewDownloadJob(jobName))
-            {
-                Assert.NotNull(job);
-                var jobId = job.GetId();
-                Assert.False(string.IsNullOrWhiteSpace(jobId));
-                Assert.Equal(jobName, job.GetDisplayName());
-                Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
-                using (var job2 = fileTransfer.GetJob(jobId))
-                {
-                    Assert.NotNull(job2);
-                    var jobId2 = job2.GetId();
-                    Assert.False(string.IsNullOrWhiteSpace(jobId2));
-                    Assert.Equal(jobId, jobId2);
-                }
-                Assert.True(job.Cancel());
-            }
+            var job = fileTransfer.RequestNewDownloadJob(jobName);
+            Assert.NotNull(job);
+            var jobId = job.GetId();
+            Assert.False(string.IsNullOrWhiteSpace(jobId));
+            Assert.Equal(jobName, job.GetDisplayName());
+            Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
+            var job2 = fileTransfer.GetJob(jobId);
+            Assert.NotNull(job2);
+            var jobId2 = job2.GetId();
+            Assert.False(string.IsNullOrWhiteSpace(jobId2));
+            Assert.Equal(jobId, jobId2);
+            Assert.True(job.Cancel());
         }
 
         [Fact]
@@ -91,24 +84,21 @@ namespace Htc.Vita.Core.Tests
             var fileTransfer = FileTransfer.GetInstance();
             Assert.NotNull(fileTransfer);
             var timestamp = Convert.ToTimestampInMilli(DateTime.UtcNow);
-            string jobId;
             const string jobName = "NewDownloadTest-2";
-            using (var job = fileTransfer.RequestNewDownloadJob(jobName))
+            var job = fileTransfer.RequestNewDownloadJob(jobName);
+            Assert.NotNull(job);
+            var jobId = job.GetId();
+            Assert.False(string.IsNullOrWhiteSpace(jobId));
+            Assert.Equal(jobName, job.GetDisplayName());
+            Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
+            Assert.Contains(jobId, fileTransfer.GetJobIdList());
+            Assert.False(job.AddItem(new FileTransfer.FileTransferItem()));
+            Assert.True(job.AddItem(new FileTransfer.FileTransferItem
             {
-                Assert.NotNull(job);
-                jobId = job.GetId();
-                Assert.False(string.IsNullOrWhiteSpace(jobId));
-                Assert.Equal(jobName, job.GetDisplayName());
-                Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
-                Assert.Contains(jobId, fileTransfer.GetJobIdList());
-                Assert.False(job.AddItem(new FileTransfer.FileTransferItem()));
-                Assert.True(job.AddItem(new FileTransfer.FileTransferItem
-                {
-                        LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
-                        RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
-                }));
-                Assert.True(job.Cancel());
-            }
+                    LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
+                    RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
+            }));
+            Assert.True(job.Cancel());
             Assert.DoesNotContain(jobId, fileTransfer.GetJobIdList());
         }
 
@@ -118,31 +108,28 @@ namespace Htc.Vita.Core.Tests
             var fileTransfer = FileTransfer.GetInstance();
             Assert.NotNull(fileTransfer);
             var timestamp = Convert.ToTimestampInMilli(DateTime.UtcNow);
-            string jobId;
             const string jobName = "NewDownloadTest-3";
-            using (var job = fileTransfer.RequestNewDownloadJob(jobName))
+            var job = fileTransfer.RequestNewDownloadJob(jobName);
+            Assert.NotNull(job);
+            var jobId = job.GetId();
+            Assert.False(string.IsNullOrWhiteSpace(jobId));
+            Assert.Equal(jobName, job.GetDisplayName());
+            Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
+            Assert.Contains(jobId, fileTransfer.GetJobIdList());
+            Assert.True(job.AddItem(new FileTransfer.FileTransferItem
             {
-                Assert.NotNull(job);
-                jobId = job.GetId();
-                Assert.False(string.IsNullOrWhiteSpace(jobId));
-                Assert.Equal(jobName, job.GetDisplayName());
-                Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
-                Assert.Contains(jobId, fileTransfer.GetJobIdList());
-                Assert.True(job.AddItem(new FileTransfer.FileTransferItem
-                {
-                        LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
-                        RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
-                }));
-                var priority = job.GetPriority();
-                Assert.NotEqual(FileTransfer.FileTransferPriority.Unknown, priority);
-                if (priority != FileTransfer.FileTransferPriority.Foreground)
-                {
-                    Assert.True(job.SetPriority(FileTransfer.FileTransferPriority.Foreground));
-                }
-                priority = job.GetPriority();
-                Assert.Equal(FileTransfer.FileTransferPriority.Foreground, priority);
-                Assert.True(job.Cancel());
+                    LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
+                    RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
+            }));
+            var priority = job.GetPriority();
+            Assert.NotEqual(FileTransfer.FileTransferPriority.Unknown, priority);
+            if (priority != FileTransfer.FileTransferPriority.Foreground)
+            {
+                Assert.True(job.SetPriority(FileTransfer.FileTransferPriority.Foreground));
             }
+            priority = job.GetPriority();
+            Assert.Equal(FileTransfer.FileTransferPriority.Foreground, priority);
+            Assert.True(job.Cancel());
             Assert.DoesNotContain(jobId, fileTransfer.GetJobIdList());
         }
 
@@ -152,33 +139,30 @@ namespace Htc.Vita.Core.Tests
             var fileTransfer = FileTransfer.GetInstance();
             Assert.NotNull(fileTransfer);
             var timestamp = Convert.ToTimestampInMilli(DateTime.UtcNow);
-            string jobId;
             const string jobName = "NewDownloadTest-4";
-            using (var job = fileTransfer.RequestNewDownloadJob(jobName))
+            var job = fileTransfer.RequestNewDownloadJob(jobName);
+            Assert.NotNull(job);
+            var jobId = job.GetId();
+            Assert.False(string.IsNullOrWhiteSpace(jobId));
+            Assert.Equal(jobName, job.GetDisplayName());
+            Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
+            Assert.Contains(jobId, fileTransfer.GetJobIdList());
+            Assert.True(job.AddItem(new FileTransfer.FileTransferItem
             {
-                Assert.NotNull(job);
-                jobId = job.GetId();
-                Assert.False(string.IsNullOrWhiteSpace(jobId));
-                Assert.Equal(jobName, job.GetDisplayName());
-                Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
-                Assert.Contains(jobId, fileTransfer.GetJobIdList());
-                Assert.True(job.AddItem(new FileTransfer.FileTransferItem
-                {
-                        LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
-                        RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
-                }));
-                var priority = job.GetPriority();
-                Assert.NotEqual(FileTransfer.FileTransferPriority.Unknown, priority);
-                if (priority != FileTransfer.FileTransferPriority.Foreground)
-                {
-                    Assert.True(job.SetPriority(FileTransfer.FileTransferPriority.Foreground));
-                }
-                priority = job.GetPriority();
-                Assert.Equal(FileTransfer.FileTransferPriority.Foreground, priority);
-                var state = job.GetState();
-                Assert.Equal(FileTransfer.FileTransferState.Suspended, state);
-                Assert.True(job.Cancel());
+                    LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
+                    RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
+            }));
+            var priority = job.GetPriority();
+            Assert.NotEqual(FileTransfer.FileTransferPriority.Unknown, priority);
+            if (priority != FileTransfer.FileTransferPriority.Foreground)
+            {
+                Assert.True(job.SetPriority(FileTransfer.FileTransferPriority.Foreground));
             }
+            priority = job.GetPriority();
+            Assert.Equal(FileTransfer.FileTransferPriority.Foreground, priority);
+            var state = job.GetState();
+            Assert.Equal(FileTransfer.FileTransferState.Suspended, state);
+            Assert.True(job.Cancel());
             Assert.DoesNotContain(jobId, fileTransfer.GetJobIdList());
         }
 
@@ -188,41 +172,38 @@ namespace Htc.Vita.Core.Tests
             var fileTransfer = FileTransfer.GetInstance();
             Assert.NotNull(fileTransfer);
             var timestamp = Convert.ToTimestampInMilli(DateTime.UtcNow);
-            string jobId;
             const string jobName = "NewDownloadTest-5";
-            using (var job = fileTransfer.RequestNewDownloadJob(jobName))
+            var job = fileTransfer.RequestNewDownloadJob(jobName);
+            Assert.NotNull(job);
+            var jobId = job.GetId();
+            Assert.False(string.IsNullOrWhiteSpace(jobId));
+            Assert.Equal(jobName, job.GetDisplayName());
+            Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
+            Assert.Contains(jobId, fileTransfer.GetJobIdList());
+            Assert.True(job.AddItem(new FileTransfer.FileTransferItem
             {
-                Assert.NotNull(job);
-                jobId = job.GetId();
-                Assert.False(string.IsNullOrWhiteSpace(jobId));
-                Assert.Equal(jobName, job.GetDisplayName());
-                Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
-                Assert.Contains(jobId, fileTransfer.GetJobIdList());
-                Assert.True(job.AddItem(new FileTransfer.FileTransferItem
-                {
-                        LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
-                        RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
-                }));
-                var priority = job.GetPriority();
-                Assert.NotEqual(FileTransfer.FileTransferPriority.Unknown, priority);
-                if (priority != FileTransfer.FileTransferPriority.Foreground)
-                {
-                    Assert.True(job.SetPriority(FileTransfer.FileTransferPriority.Foreground));
-                }
-                priority = job.GetPriority();
-                Assert.Equal(FileTransfer.FileTransferPriority.Foreground, priority);
-                var state = job.GetState();
-                Assert.Equal(FileTransfer.FileTransferState.Suspended, state);
-                Assert.True(job.Resume());
-                SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(1));
-                state = job.GetState();
-                Assert.NotEqual(FileTransfer.FileTransferState.Suspended, state);
-                Assert.True(job.Suspend());
-                SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(1));
-                state = job.GetState();
-                Assert.Equal(FileTransfer.FileTransferState.Suspended, state);
-                Assert.True(job.Cancel());
+                    LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
+                    RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
+            }));
+            var priority = job.GetPriority();
+            Assert.NotEqual(FileTransfer.FileTransferPriority.Unknown, priority);
+            if (priority != FileTransfer.FileTransferPriority.Foreground)
+            {
+                Assert.True(job.SetPriority(FileTransfer.FileTransferPriority.Foreground));
             }
+            priority = job.GetPriority();
+            Assert.Equal(FileTransfer.FileTransferPriority.Foreground, priority);
+            var state = job.GetState();
+            Assert.Equal(FileTransfer.FileTransferState.Suspended, state);
+            Assert.True(job.Resume());
+            SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(1));
+            state = job.GetState();
+            Assert.NotEqual(FileTransfer.FileTransferState.Suspended, state);
+            Assert.True(job.Suspend());
+            SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(1));
+            state = job.GetState();
+            Assert.Equal(FileTransfer.FileTransferState.Suspended, state);
+            Assert.True(job.Cancel());
             Assert.DoesNotContain(jobId, fileTransfer.GetJobIdList());
         }
 
@@ -239,62 +220,59 @@ namespace Htc.Vita.Core.Tests
 
             var localPathSet = new HashSet<FileInfo>();
             var timestamp = Convert.ToTimestampInMilli(DateTime.UtcNow);
-            string jobId;
             const string jobName = "NewDownloadTest-6";
-            using (var job = fileTransfer.RequestNewDownloadJob(jobName))
+            var job = fileTransfer.RequestNewDownloadJob(jobName);
+            Assert.NotNull(job);
+            var jobId = job.GetId();
+            Assert.False(string.IsNullOrWhiteSpace(jobId));
+            Assert.Equal(jobName, job.GetDisplayName());
+            Assert.True(fileTransfer.ListenJob(job));
+            Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
+            Assert.Contains(jobId, fileTransfer.GetJobIdList());
+            Assert.True(job.AddItem(new FileTransfer.FileTransferItem
             {
-                Assert.NotNull(job);
-                jobId = job.GetId();
-                Assert.False(string.IsNullOrWhiteSpace(jobId));
-                Assert.Equal(jobName, job.GetDisplayName());
-                Assert.True(fileTransfer.ListenJob(job));
-                Assert.Equal(FileTransfer.FileTransferType.Download, job.GetTransferType());
-                Assert.Contains(jobId, fileTransfer.GetJobIdList());
-                Assert.True(job.AddItem(new FileTransfer.FileTransferItem
-                {
-                        LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
-                        RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
-                }));
-                var priority = job.GetPriority();
-                Assert.NotEqual(FileTransfer.FileTransferPriority.Unknown, priority);
-                if (priority != FileTransfer.FileTransferPriority.Foreground)
-                {
-                    Assert.True(job.SetPriority(FileTransfer.FileTransferPriority.Foreground));
-                }
-                priority = job.GetPriority();
-                Assert.Equal(FileTransfer.FileTransferPriority.Foreground, priority);
-                var state = job.GetState();
-                Assert.Equal(FileTransfer.FileTransferState.Suspended, state);
-                Assert.True(job.Resume());
-                while (true)
-                {
-                    state = job.GetState();
-                    Logger.GetInstance(typeof(FileTransferTest)).Info("transfer state: " + state);
-                    Assert.NotEqual(FileTransfer.FileTransferState.Error, state);
-                    if (state == FileTransfer.FileTransferState.Transferred)
-                    {
-                        var itemList = job.GetItemList();
-                        Assert.NotEmpty(itemList);
-                        foreach (var item in itemList)
-                        {
-                            var localPath = item.LocalPath;
-                            Assert.NotNull(localPath);
-                            localPathSet.Add(localPath);
-                        }
-                        break;
-                    }
-                    if (state == FileTransfer.FileTransferState.Transferring)
-                    {
-                        var progress = job.GetProgress();
-                        Assert.NotNull(progress);
-                        Logger.GetInstance(typeof(FileTransferTest)).Info($"transferred in bytes: {progress.TransferredBytes}/{progress.TotalBytes}");
-                    }
-                    SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(3));
-                }
-                Assert.True(job.Complete());
-                state = job.GetState();
-                Assert.Equal(FileTransfer.FileTransferState.Acknowledged, state);
+                    LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
+                    RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
+            }));
+            var priority = job.GetPriority();
+            Assert.NotEqual(FileTransfer.FileTransferPriority.Unknown, priority);
+            if (priority != FileTransfer.FileTransferPriority.Foreground)
+            {
+                Assert.True(job.SetPriority(FileTransfer.FileTransferPriority.Foreground));
             }
+            priority = job.GetPriority();
+            Assert.Equal(FileTransfer.FileTransferPriority.Foreground, priority);
+            var state = job.GetState();
+            Assert.Equal(FileTransfer.FileTransferState.Suspended, state);
+            Assert.True(job.Resume());
+            while (true)
+            {
+                state = job.GetState();
+                Logger.GetInstance(typeof(FileTransferTest)).Info("transfer state: " + state);
+                Assert.NotEqual(FileTransfer.FileTransferState.Error, state);
+                if (state == FileTransfer.FileTransferState.Transferred)
+                {
+                    var itemList = job.GetItemList();
+                    Assert.NotEmpty(itemList);
+                    foreach (var item in itemList)
+                    {
+                        var localPath = item.LocalPath;
+                        Assert.NotNull(localPath);
+                        localPathSet.Add(localPath);
+                    }
+                    break;
+                }
+                if (state == FileTransfer.FileTransferState.Transferring)
+                {
+                    var progress = job.GetProgress();
+                    Assert.NotNull(progress);
+                    Logger.GetInstance(typeof(FileTransferTest)).Info($"transferred in bytes: {progress.TransferredBytes}/{progress.TotalBytes}");
+                }
+                SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(3));
+            }
+            Assert.True(job.Complete());
+            state = job.GetState();
+            Assert.Equal(FileTransfer.FileTransferState.Acknowledged, state);
             Assert.DoesNotContain(jobId, fileTransfer.GetJobIdList());
             foreach (var localPath in localPathSet)
             {
@@ -310,16 +288,14 @@ namespace Htc.Vita.Core.Tests
 
         private static void OnFileTransferOnJobError(string jobId)
         {
-            using (var errorJob = FileTransfer.GetInstance().GetJob(jobId))
+            var errorJob = FileTransfer.GetInstance().GetJob(jobId);
+            if (errorJob == null)
             {
-                if (errorJob == null)
-                {
-                    Logger.GetInstance(typeof(FileTransferTest)).Warn($"Can not find error for job[{jobId}]");
-                    return;
-                }
-
-                Logger.GetInstance(typeof(FileTransferTest)).Error($"job[{jobId}] error: {errorJob.GetError()?.ErrorDescription}");
+                Logger.GetInstance(typeof(FileTransferTest)).Warn($"Can not find error for job[{jobId}]");
+                return;
             }
+
+            Logger.GetInstance(typeof(FileTransferTest)).Error($"job[{jobId}] error: {errorJob.GetError()?.ErrorDescription}");
         }
     }
 }

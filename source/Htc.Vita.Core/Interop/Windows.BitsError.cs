@@ -8,24 +8,48 @@ namespace Htc.Vita.Core.Interop
     {
         internal class BitsError : IDisposable
         {
-            private readonly IBackgroundCopyError _backgroundCopyError;
+            private IBackgroundCopyError _backgroundCopyError;
+            private bool _disposed;
 
             internal BitsError(IBackgroundCopyError backgroundCopyError)
             {
                 _backgroundCopyError = backgroundCopyError;
             }
 
+            ~BitsError()
+            {
+                Dispose(false);
+            }
+
             public void Dispose()
             {
-                if (_backgroundCopyError == null)
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if (_disposed)
                 {
                     return;
                 }
 
+                if (disposing)
+                {
+                    // Disposing managed resource
+                }
+
+                if (_backgroundCopyError == null)
+                {
+                    return;
+                }
                 if (Marshal.IsComObject(_backgroundCopyError))
                 {
                     Marshal.ReleaseComObject(_backgroundCopyError);
                 }
+                _backgroundCopyError = null;
+
+                _disposed = true;
             }
 
             internal BitsErrorContext GetErrorContext()

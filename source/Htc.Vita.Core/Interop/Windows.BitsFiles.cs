@@ -8,24 +8,48 @@ namespace Htc.Vita.Core.Interop
     {
         internal class BitsFiles : IDisposable
         {
-            private readonly IEnumBackgroundCopyFiles _enumBackgroundCopyFiles;
+            private IEnumBackgroundCopyFiles _enumBackgroundCopyFiles;
+            private bool _disposed;
 
             internal BitsFiles(IEnumBackgroundCopyFiles enumBackgroundCopyFiles)
             {
                 _enumBackgroundCopyFiles = enumBackgroundCopyFiles;
             }
 
+            ~BitsFiles()
+            {
+                Dispose(false);
+            }
+
             public void Dispose()
             {
-                if (_enumBackgroundCopyFiles == null)
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if (_disposed)
                 {
                     return;
                 }
 
+                if (disposing)
+                {
+                    // Disposing managed resource
+                }
+
+                if (_enumBackgroundCopyFiles == null)
+                {
+                    return;
+                }
                 if (Marshal.IsComObject(_enumBackgroundCopyFiles))
                 {
                     Marshal.ReleaseComObject(_enumBackgroundCopyFiles);
                 }
+                _enumBackgroundCopyFiles = null;
+
+                _disposed = true;
             }
 
             internal uint GetCount()

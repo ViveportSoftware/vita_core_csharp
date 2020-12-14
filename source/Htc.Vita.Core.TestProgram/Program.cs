@@ -20,10 +20,8 @@ namespace Htc.Vita.Core.TestProgram
             {
                 foreach (var jobId in jobIdList)
                 {
-                    using (var job = FileTransfer.GetInstance().GetJob(jobId))
-                    {
-                        Console.WriteLine($"job[{jobId}] name: {job.GetDisplayName()}, state: {job.GetState()}");
-                    }
+                    var job = FileTransfer.GetInstance().GetJob(jobId);
+                    Console.WriteLine($"job[{jobId}] name: {job.GetDisplayName()}, state: {job.GetState()}");
                 }
             }
             else
