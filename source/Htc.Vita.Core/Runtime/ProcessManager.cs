@@ -3,8 +3,15 @@ using System.Diagnostics;
 
 namespace Htc.Vita.Core.Runtime
 {
+    /// <summary>
+    /// Class ProcessManager.
+    /// </summary>
     public static partial class ProcessManager
     {
+        /// <summary>
+        /// Gets the processes by first active user.
+        /// </summary>
+        /// <returns>List&lt;ProcessInfo&gt;.</returns>
         public static List<ProcessInfo> GetProcessesByFirstActiveUser()
         {
             var username = UserManager.GetFirstActiveUser();
@@ -15,6 +22,11 @@ namespace Htc.Vita.Core.Runtime
             return GetProcessesByUser(username);
         }
 
+        /// <summary>
+        /// Gets the processes by user.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <returns>List&lt;ProcessInfo&gt;.</returns>
         public static List<ProcessInfo> GetProcessesByUser(string username)
         {
             if (string.IsNullOrWhiteSpace(username))
@@ -24,17 +36,34 @@ namespace Htc.Vita.Core.Runtime
             return GetProcesses(username);
         }
 
+        /// <summary>
+        /// Gets the processes.
+        /// </summary>
+        /// <returns>List&lt;ProcessInfo&gt;.</returns>
         public static List<ProcessInfo> GetProcesses()
         {
             return GetProcesses(null);
         }
 
+        /// <summary>
+        /// Gets the processes.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <returns>List&lt;ProcessInfo&gt;.</returns>
         public static List<ProcessInfo> GetProcesses(string username)
         {
             return GetProcesses(username, null);
         }
 
-        public static List<ProcessInfo> GetProcesses(string username, string serverName)
+        /// <summary>
+        /// Gets the processes.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="serverName">Name of the server.</param>
+        /// <returns>List&lt;ProcessInfo&gt;.</returns>
+        public static List<ProcessInfo> GetProcesses(
+                string username,
+                string serverName)
         {
             var result = new List<ProcessInfo>();
 
@@ -60,11 +89,21 @@ namespace Htc.Vita.Core.Runtime
             return result;
         }
 
+        /// <summary>
+        /// Gets the process path by identifier.
+        /// </summary>
+        /// <param name="processId">The process identifier.</param>
+        /// <returns>System.String.</returns>
         public static string GetProcessPathById(int processId)
         {
             return Windows.GetPlatformProcessPathById(processId);
         }
 
+        /// <summary>
+        /// Determines whether the specified process is a current user process.
+        /// </summary>
+        /// <param name="process">The process.</param>
+        /// <returns><c>true</c> if the specified process is a current user process; otherwise, <c>false</c>.</returns>
         public static bool IsCurrentUserProcess(Process process)
         {
             if (process == null)
@@ -74,6 +113,11 @@ namespace Htc.Vita.Core.Runtime
             return Windows.IsCurrentUserProcessInPlatform(process);
         }
 
+        /// <summary>
+        /// Determines whether the specified process is an elevated process.
+        /// </summary>
+        /// <param name="process">The process.</param>
+        /// <returns><c>true</c> if the specified process is an elevated process; otherwise, <c>false</c>.</returns>
         public static bool IsElevatedProcess(Process process)
         {
             if (process == null)
@@ -83,14 +127,30 @@ namespace Htc.Vita.Core.Runtime
             return Windows.IsElevatedProcessInPlatform(process);
         }
 
+        /// <summary>
+        /// Kills the process by identifier.
+        /// </summary>
+        /// <param name="processId">The process identifier.</param>
+        /// <returns><c>true</c> if killing the process successfully, <c>false</c> otherwise.</returns>
         public static bool KillProcessById(int processId)
         {
             return Windows.KillPlatformProcessById(processId);
         }
 
-        public static ProcessInfo LaunchProcessAsUser(string fileName, string arguments)
+        /// <summary>
+        /// Launches the process as user.
+        /// </summary>
+        /// <param name="fileName">The file name.</param>
+        /// <param name="arguments">The arguments.</param>
+        /// <returns>ProcessInfo.</returns>
+        public static ProcessInfo LaunchProcessAsUser(
+                string fileName,
+                string arguments)
         {
-            return Windows.LaunchProcessAsUserInPlatform(fileName, arguments);
+            return Windows.LaunchProcessAsUserInPlatform(
+                    fileName,
+                    arguments
+            );
         }
     }
 }

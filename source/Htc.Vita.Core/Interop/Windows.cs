@@ -20,6 +20,141 @@ namespace Htc.Vita.Core.Interop
         internal static readonly IntPtr /* INVALID_HANDLE_VALUE      */ InvalidHandleValue = new IntPtr(-1);
         internal static readonly IntPtr /* WTS_CURRENT_SERVER_HANDLE */ WindowsTerminalServiceCurrentServerHandle = IntPtr.Zero;
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ne-bits1_5-bg_auth_scheme",
+                Description = "BG_AUTH_SCHEME enumeration")]
+        internal enum BitsAuthScheme
+        {
+            /* BG_AUTH_SCHEME_BASIC     */ Basic     = 1,
+            /* BG_AUTH_SCHEME_DIGEST    */ Digest    = 2,
+            /* BG_AUTH_SCHEME_NTLM      */ Ntlm      = 3,
+            /* BG_AUTH_SCHEME_NEGOTIATE */ Negotiate = 4,
+            /* BG_AUTH_SCHEME_PASSPORT  */ Passport  = 5
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ne-bits1_5-bg_auth_target",
+                Description = "BG_AUTH_TARGET enumeration")]
+        internal enum BitsAuthTarget
+        {
+            /* BG_AUTH_TARGET_SERVER */ Server = 1,
+            /* BG_AUTH_TARGET_PROXY  */ Proxy  = 2
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_error_context",
+                Description = "BG_ERROR_CONTEXT enumeration")]
+        internal enum BitsErrorContext
+        {
+            /* BG_ERROR_CONTEXT_NONE                        */ None                      = 0,
+            /* BG_ERROR_CONTEXT_UNKNOWN                     */ Unknown                   = 1,
+            /* BG_ERROR_CONTEXT_GENERAL_QUEUE_MANAGER       */ GeneralQueueManager       = 2,
+            /* BG_ERROR_CONTEXT_QUEUE_MANAGER_NOTIFICATION  */ QueueManagerNotification  = 3,
+            /* BG_ERROR_CONTEXT_LOCAL_FILE                  */ LocalFile                 = 4,
+            /* BG_ERROR_CONTEXT_REMOTE_FILE                 */ RemoteFile                = 5,
+            /* BG_ERROR_CONTEXT_GENERAL_TRANSPORT           */ GeneralTransport          = 6,
+            /* BG_ERROR_CONTEXT_REMOTE_APPLICATION          */ RemoteApplication         = 7,
+            /* BG_ERROR_CONTEXT_SERVER_CERTIFICATE_CALLBACK */ ServerCertificateCallback = 8
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopymanager-enumjobs")]
+        internal enum BitsJobEnumOwnerScope
+        {
+            /*                       */ CurrentUser = 0,
+            /* BG_JOB_ENUM_ALL_USERS */ AllUsers    = 1
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_priority",
+                Description = "BG_JOB_PRIORITY enumeration")]
+        internal enum BitsJobPriority
+        {
+            /* BG_JOB_PRIORITY_FOREGROUND */ Foreground = 0,
+            /* BG_JOB_PRIORITY_HIGH       */ High       = 1,
+            /* BG_JOB_PRIORITY_NORMAL     */ Normal     = 2,
+            /* BG_JOB_PRIORITY_LOW        */ Low        = 3
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_proxy_usage",
+                Description = "BG_JOB_PROXY_USAGE enumeration")]
+        internal enum BitsJobProxyUsage
+        {
+            /* BG_JOB_PROXY_USAGE_PRECONFIG  */ Preconfig,
+            /* BG_JOB_PROXY_USAGE_NO_PROXY   */ NoProxy,
+            /* BG_JOB_PROXY_USAGE_OVERRIDE   */ Override,
+            /* BG_JOB_PROXY_USAGE_AUTODETECT */ Autodetect
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_state",
+                Description = "BG_JOB_STATE enumeration")]
+        internal enum BitsJobState
+        {
+            /* BG_JOB_STATE_QUEUED          */ Queued,
+            /* BG_JOB_STATE_CONNECTING      */ Connecting,
+            /* BG_JOB_STATE_TRANSFERRING    */ Transferring,
+            /* BG_JOB_STATE_SUSPENDED       */ Suspended,
+            /* BG_JOB_STATE_ERROR           */ Error,
+            /* BG_JOB_STATE_TRANSIENT_ERROR */ TransientError,
+            /* BG_JOB_STATE_TRANSFERRED     */ Transferred,
+            /* BG_JOB_STATE_ACKNOWLEDGED    */ Acknowledged,
+            /* BG_JOB_STATE_CANCELLED       */ Cancelled
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_type",
+                Description = "BG_JOB_TYPE enumeration")]
+        internal enum BitsJobType
+        {
+            /* BG_JOB_TYPE_DOWNLOAD     */ Download    = 0,
+            /* BG_JOB_TYPE_UPLOAD       */ Upload      = 1,
+            /* BG_JOB_TYPE_UPLOAD_REPLY */ UploadReply = 2
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnotifyflags")]
+        [Flags]
+        internal enum BitsNotifyFlag : uint
+        {
+            /*                                   */ None                  =      0,
+            /* BG_NOTIFY_JOB_TRANSFERRED         */ JobTransferred        = 0x0001,
+            /* BG_NOTIFY_JOB_ERROR               */ JobError              = 0x0002,
+            /* BG_NOTIFY_DISABLE                 */ Disable               = 0x0004,
+            /* BG_NOTIFY_JOB_MODIFICATION        */ JobModification       = 0x0008,
+            /* BG_NOTIFY_FILE_TRANSFERRED        */ FileTransferred       = 0x0010,
+            /* BG_NOTIFY_FILE_RANGES_TRANSFERRED */ FileRangesTransferred = 0x0020
+        }
+
+        internal enum BitsResult : uint
+        {
+            /* S_OK                                              */ SOk                                   = HResult.SOk,
+            /* S_FALSE                                           */ SFalse                                = HResult.SFalse,
+            /* BG_S_ERROR_CONTEXT_NONE                           */ SErrorContextNone                     = 0x00200006,
+            /* BG_S_PARTIAL_COMPLETE                             */ SPartialComplete                      = 0x00200017,
+            /* BG_S_UNABLE_TO_DELETE_FILES                       */ SUnableToDeleteFiles                  = 0x0020001a,
+            /* E_NOTIMPL                                         */ ENotImpl                              = HResult.ENotImpl,
+            /* E_ACCESSDENIED                                    */ EAccessDenied                         = HResult.EAccessDenied,
+            /* E_OUTOFMEMORY                                     */ EOutOfMemory                          = HResult.EOutOfMemory,
+            /* E_INVALIDARG                                      */ EInvalidArg                           = HResult.EInvalidArg,
+            /* HRESULT_FROM_WIN32(ERROR_RESOURCE_LANG_NOT_FOUND) */ EWin32ResourceLangNotFound            = HResult.EWin32ResourceLangNotFound,
+            /* BG_E_NOT_FOUND                                    */ ENotFound                             = 0x80200001,
+            /* BG_E_INVALID_STATE                                */ EInvalidState                         = 0x80200002,
+            /* BG_E_EMPTY                                        */ EEmpty                                = 0x80200003,
+            /* BG_E_FILE_NOT_AVAILABLE                           */ EFileNotAvailable                     = 0x80200004,
+            /* BG_E_PROTOCOL_NOT_AVAILABLE                       */ EProtocolNotAvailable                 = 0x80200005,
+            /* BG_E_ERROR_CONTEXT_UNKNOWN                        */ EErrorContextUnknown                  = 0x80200007,
+            /* BG_E_ERROR_CONTEXT_GENERAL_QUEUE_MANAGER          */ EErrorContextGeneralQueueManager      = 0x80200008,
+            /* BG_E_ERROR_CONTEXT_LOCAL_FILE                     */ EErrorContextLocalFile                = 0x80200009,
+            /* BG_E_ERROR_CONTEXT_REMOTE_FILE                    */ EErrorContextRemoteFile               = 0x8020000a,
+            /* BG_E_ERROR_CONTEXT_GENERAL_TRANSPORT              */ EErrorContextGeneralTransport         = 0x8020000b,
+            /* BG_E_ERROR_CONTEXT_QUEUE_MANAGER_NOTIFICATION     */ EErrorContextQueueManagerNotification = 0x8020000c,
+            /* BG_E_DESTINATION_LOCKED                           */ EDestinationLocked                    = 0x8020000d,
+            /* BG_E_VOLUME_CHANGED                               */ EVolumeChanged                        = 0x8020000e,
+            /* BG_E_ERROR_INFORMATION_UNAVAILABLE                */ EErrorInformationUnavailable          = 0x8020000f,
+            /* BG_E_NEW_OWNER_DIFF_MAPPING                       */ ENewOwnerDiffMapping                  = 0x80200015,
+            /* BG_E_NEW_OWNER_NO_FILE_ACCESS                     */ ENewOwnerNoFileAccess                 = 0x80200016,
+            /* BG_E_PROXY_LIST_TOO_LARGE                         */ EProxyListTooLarge                    = 0x80200018,
+            /* BG_E_PROXY_BYPASS_LIST_TOO_LARGE                  */ EProxyBypassListTooLarge              = 0x80200019,
+            /* BG_E_TOO_MANY_FILES                               */ ETooManyFiles                         = 0x8020001c,
+            /* BG_E_STRING_TOO_LONG                              */ EStringTooLong                        = 0x80200021,
+            /* BG_E_TOO_MANY_JOBS_PER_USER                       */ ETooManyJobsPerUser                   = 0x80200049,
+            /* BG_E_TOO_MANY_JOBS_PER_MACHINE                    */ ETooManyJobsPerMachine                = 0x80200050,
+            /* BG_E_TOO_MANY_FILES_IN_JOB                        */ ETooManyFilesInJob                    = 0x80200051
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-certclosestore")]
         internal enum CertCloseStoreFlag
         {
@@ -273,7 +408,8 @@ namespace Htc.Vita.Core.Interop
             /* ERROR_DEVICE_NOT_CONNECTED    (1167, 0x48f) */ DeviceNotConnected    = 0x48f,
             /* ERROR_NOT_FOUND               (1168, 0x490) */ NotFound              = 0x490,
             /* ERROR_NO_SUCH_LOGON_SESSION   (1312, 0x520) */ NoSuchLogonSession    = 0x520,
-            /* ERROR_BAD_IMPERSONATION_LEVEL (1346, 0x542) */ BadImpersonationLevel = 0x542
+            /* ERROR_BAD_IMPERSONATION_LEVEL (1346, 0x542) */ BadImpersonationLevel = 0x542,
+            /* ERROR_RESOURCE_LANG_NOT_FOUND (1815, 0x717) */ ResourceLangNotFound  = 0x717
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-exitwindowsex")]
@@ -366,25 +502,28 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/seccrypto/common-hresult-values")]
         internal enum HResult : uint
         {
-            /* S_OK                                          */ SOk                      =        0x0,
-            /* S_FALSE                                       */ SFalse                   =        0x1,
-            /* E_POINTER                                     */ EPointer                 = 0x80004003,
-            /* E_FAIL                                        */ EFail                    = 0x80004005,
-            /* E_UNEXPECTED                                  */ EUnexpected              = 0x8000ffff,
-            /* E_ACCESSDENIED                                */ EAccessDenied            = 0x80070000
-                                                                                         | Error.AccessDenied,
-            /* E_HANDLE                                      */ EHandle                  = 0x80070000
-                                                                                         | Error.InvalidHandle,
-            /* HRESULT_FROM_WIN32(ERROR_INVALID_DATA)        */ EWin32InvalidData        = 0x80070000
-                                                                                         | Error.InvalidData,
-            /* E_OUTOFMEMORY                                 */ EOutOfMemory             = 0x80070000
-                                                                                         | Error.OutOfMemory,
-            /* E_INVALIDARG                                  */ EInvalidArg              = 0x80070000
-                                                                                         | Error.InvalidParameter,
-            /* HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER) */ EWin32InsufficientBuffer = 0x80070000
-                                                                                         | Error.InsufficientBuffer,
-            /* HRESULT_FROM_WIN32(ERROR_NOT_FOUND)           */ EWin32NotFound           = 0x80070000
-                                                                                         | Error.NotFound
+            /* S_OK                                              */ SOk                        =        0x0,
+            /* S_FALSE                                           */ SFalse                     =        0x1,
+            /* E_NOTIMPL                                         */ ENotImpl                   = 0x80004001,
+            /* E_POINTER                                         */ EPointer                   = 0x80004003,
+            /* E_FAIL                                            */ EFail                      = 0x80004005,
+            /* E_UNEXPECTED                                      */ EUnexpected                = 0x8000ffff,
+            /* E_ACCESSDENIED                                    */ EAccessDenied              = 0x80070000
+                                                                                               | Error.AccessDenied,
+            /* E_HANDLE                                          */ EHandle                    = 0x80070000
+                                                                                               | Error.InvalidHandle,
+            /* HRESULT_FROM_WIN32(ERROR_INVALID_DATA)            */ EWin32InvalidData          = 0x80070000
+                                                                                               | Error.InvalidData,
+            /* E_OUTOFMEMORY                                     */ EOutOfMemory               = 0x80070000
+                                                                                               | Error.OutOfMemory,
+            /* E_INVALIDARG                                      */ EInvalidArg                = 0x80070000
+                                                                                               | Error.InvalidParameter,
+            /* HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER)     */ EWin32InsufficientBuffer   = 0x80070000
+                                                                                               | Error.InsufficientBuffer,
+            /* HRESULT_FROM_WIN32(ERROR_NOT_FOUND)               */ EWin32NotFound             = 0x80070000
+                                                                                               | Error.NotFound,
+            /* HRESULT_FROM_WIN32(ERROR_RESOURCE_LANG_NOT_FOUND) */ EWin32ResourceLangNotFound = 0x80070000
+                                                                                               | Error.ResourceLangNotFound
         }
 
         [ExternalReference("https://docs.microsoft.com/zh-tw/windows/desktop/SysInfo/image-file-machine-constants")]
@@ -782,7 +921,7 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/shlobj_core/nf-shlobj_core-shchangenotify",
                 Description = "SHCNE enumeration")]
         [Flags]
-        internal enum ShellChangeNotifyEventId :uint
+        internal enum ShellChangeNotifyEventId : uint
         {
             /* SHCNE_RENAMEITEM       */ RenameItem         = 0x00000001,
             /* SHCNE_CREATE           */ Create             = 0x00000002,
@@ -1241,6 +1380,191 @@ namespace Htc.Vita.Core.Interop
             /* WTD_UICONTEXT_INSTALL */ Install
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_auth_credentials",
+                Description = "BG_AUTH_CREDENTIALS structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct BitsAuthCredentials
+        {
+            internal /* BG_AUTH_TARGET            */ BitsAuthTarget Target;
+            internal /* BG_AUTH_SCHEME            */ BitsAuthScheme Scheme;
+            internal /* BG_AUTH_CREDENTIALS_UNION */ BitsAuthCredentialsUnion Credentials;
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_auth_credentials_union",
+                Description = "BG_AUTH_CREDENTIALS_UNION structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct BitsAuthCredentialsUnion
+        {
+            internal /* BG_BASIC_CREDENTIALS */ BitsBasicCredentials Basic;
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_basic_credentials",
+                Description = "BG_BASIC_CREDENTIALS structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct BitsBasicCredentials
+        {
+            internal /* LPWSTR */ string UserName;
+            internal /* LPWSTR */ string Password;
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_file_info",
+                Description = "BG_FILE_INFO structure")]
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        internal struct BitsFileInfo
+        {
+            internal /* LPWSTR */ string RemoteName;
+            internal /* LPWSTR */ string LocalName;
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_file_progress",
+                Description = "BG_FILE_PROGRESS structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct BitsFileProgress : IEquatable<BitsFileProgress>
+        {
+            internal readonly /* UINT64 */ ulong BytesTotal;
+            internal readonly /* UINT64 */ ulong BytesTransferred;
+            internal readonly /* BOOL   */ bool Completed;
+
+            public static bool operator ==(BitsFileProgress left, BitsFileProgress right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(BitsFileProgress left, BitsFileProgress right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(BitsFileProgress other)
+            {
+                return BytesTotal == other.BytesTotal
+                        && BytesTransferred == other.BytesTransferred
+                        && Completed == other.Completed;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is BitsFileProgress && Equals((BitsFileProgress) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    var hashCode = BytesTotal.GetHashCode();
+                    hashCode = (hashCode * 397) ^ BytesTransferred.GetHashCode();
+                    hashCode = (hashCode * 397) ^ Completed.GetHashCode();
+                    return hashCode;
+                }
+            }
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_job_progress",
+                Description = "BG_JOB_PROGRESS structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct BitsJobProgress : IEquatable<BitsJobProgress>
+        {
+            internal readonly /* UINT64 */ ulong BytesTotal;
+            internal readonly /* UINT64 */ ulong BytesTransferred;
+            internal readonly /* ULONG  */ uint FilesTotal;
+            internal readonly /* ULONG  */ uint FilesTransferred;
+
+            public static bool operator ==(BitsJobProgress left, BitsJobProgress right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(BitsJobProgress left, BitsJobProgress right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(BitsJobProgress other)
+            {
+                return BytesTotal == other.BytesTotal
+                        && BytesTransferred == other.BytesTransferred
+                        && FilesTotal == other.FilesTotal
+                        && FilesTransferred == other.FilesTransferred;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is BitsJobProgress && Equals((BitsJobProgress) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    var hashCode = BytesTotal.GetHashCode();
+                    hashCode = (hashCode * 397) ^ BytesTransferred.GetHashCode();
+                    hashCode = (hashCode * 397) ^ (int) FilesTotal;
+                    hashCode = (hashCode * 397) ^ (int) FilesTransferred;
+                    return hashCode;
+                }
+            }
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_job_reply_progress",
+                Description = "BG_JOB_REPLY_PROGRESS structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct BitsJobReplyProgress : IEquatable<BitsJobReplyProgress>
+        {
+            internal readonly /* UINT64 */ ulong BytesTotal;
+            internal readonly /* UINT64 */ ulong BytesTransferred;
+
+            public static bool operator ==(BitsJobReplyProgress left, BitsJobReplyProgress right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(BitsJobReplyProgress left, BitsJobReplyProgress right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(BitsJobReplyProgress other)
+            {
+                return BytesTotal == other.BytesTotal
+                        && BytesTransferred == other.BytesTransferred;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is BitsJobReplyProgress && Equals((BitsJobReplyProgress) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return (BytesTotal.GetHashCode() * 397) ^ BytesTransferred.GetHashCode();
+                }
+            }
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_job_times",
+                Description = "BG_JOB_TIMES structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct BitsJobTimes
+        {
+            internal /* FILETIME */ FileTime CreationTime;
+            internal /* FILETIME */ FileTime ModificationTime;
+            internal /* FILETIME */ FileTime TransferCompletionTime;
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-_display_devicew",
                 Description = "DISPLAY_DEVICEW structure")]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
@@ -1409,6 +1733,48 @@ namespace Htc.Vita.Core.Interop
                     hashCode = (hashCode * 397) ^ (int) rotation;
                     hashCode = (hashCode * 397) ^ monitor.GetHashCode();
                     return hashCode;
+                }
+            }
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-filetime",
+                Description = "FILETIME structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct FileTime : IEquatable<FileTime>
+        {
+            internal readonly /* DWORD */ uint dwLowDateTime;
+            internal readonly /* DWORD */ uint dwHighDateTime;
+
+            public static bool operator ==(FileTime left, FileTime right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(FileTime left, FileTime right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(FileTime other)
+            {
+                return dwLowDateTime == other.dwLowDateTime
+                        && dwHighDateTime == other.dwHighDateTime;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is FileTime && Equals((FileTime) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return ((int) dwLowDateTime * 397) ^ (int) dwHighDateTime;
                 }
             }
         }

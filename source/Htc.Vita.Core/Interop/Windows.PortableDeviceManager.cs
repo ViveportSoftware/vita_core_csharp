@@ -10,24 +10,48 @@ namespace Htc.Vita.Core.Interop
     {
         internal class PortableDeviceManager : IDisposable
         {
-            private readonly IPortableDeviceManager _portableDeviceManager;
+            private IPortableDeviceManager _portableDeviceManager;
+            private bool _disposed;
 
             internal PortableDeviceManager(IPortableDeviceManager portableDeviceManager)
             {
                 _portableDeviceManager = portableDeviceManager;
             }
 
+            ~PortableDeviceManager()
+            {
+                Dispose(false);
+            }
+
             public void Dispose()
             {
-                if (_portableDeviceManager == null)
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if (_disposed)
                 {
                     return;
                 }
 
+                if (disposing)
+                {
+                    // Disposing managed resource
+                }
+
+                if (_portableDeviceManager == null)
+                {
+                    return;
+                }
                 if (Marshal.IsComObject(_portableDeviceManager))
                 {
                     Marshal.ReleaseComObject(_portableDeviceManager);
                 }
+                _portableDeviceManager = null;
+
+                _disposed = true;
             }
 
             internal string GetDeviceDescription(string deviceId)
