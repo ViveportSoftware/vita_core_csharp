@@ -173,6 +173,17 @@ namespace Htc.Vita.Core.Net
             }
 
             /// <inheritdoc />
+            protected override FileTransferProgress OnGetProgress()
+            {
+                if (_bitsJob == null)
+                {
+                    return null;
+                }
+
+                return ConvertFrom(_bitsJob.GetProgress());
+            }
+
+            /// <inheritdoc />
             protected override FileTransferState OnGetState()
             {
                 if (_bitsJob == null)

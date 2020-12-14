@@ -283,6 +283,12 @@ namespace Htc.Vita.Core.Tests
                         }
                         break;
                     }
+                    if (state == FileTransfer.FileTransferState.Transferring)
+                    {
+                        var progress = job.GetProgress();
+                        Assert.NotNull(progress);
+                        Logger.GetInstance(typeof(FileTransferTest)).Info($"transferred in bytes: {progress.TransferredBytes}/{progress.TotalBytes}");
+                    }
                     SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(3));
                 }
                 Assert.True(job.Complete());

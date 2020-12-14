@@ -142,6 +142,17 @@ namespace Htc.Vita.Core.Net
             return FileTransferPriority.Unknown;
         }
 
+        internal static FileTransferProgress ConvertFrom(Windows.BitsJobProgress data)
+        {
+            return new FileTransferProgress
+            {
+                    TotalBytes = data.BytesTotal,
+                    TotalFiles = data.FilesTotal,
+                    TransferredBytes = data.BytesTransferred,
+                    TransferredFiles = data.FilesTransferred
+            };
+        }
+
         internal static FileTransferState ConvertFrom(Windows.BitsJobState data)
         {
             if (data == Windows.BitsJobState.Acknowledged)

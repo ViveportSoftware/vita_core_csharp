@@ -170,6 +170,24 @@ namespace Htc.Vita.Core.Net
             }
 
             /// <summary>
+            /// Gets the progress.
+            /// </summary>
+            /// <returns>FileTransferProgress.</returns>
+            public FileTransferProgress GetProgress()
+            {
+                FileTransferProgress result = null;
+                try
+                {
+                    result = OnGetProgress();
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(FileTransferJob)).Error(e.ToString());
+                }
+                return result;
+            }
+
+            /// <summary>
             /// Gets the state.
             /// </summary>
             /// <returns>FileTransferState.</returns>
@@ -310,6 +328,11 @@ namespace Htc.Vita.Core.Net
             /// </summary>
             /// <returns>FileTransferPriority.</returns>
             protected abstract FileTransferPriority OnGetPriority();
+            /// <summary>
+            /// Called when getting the progress.
+            /// </summary>
+            /// <returns>FileTransferProgress.</returns>
+            protected abstract FileTransferProgress OnGetProgress();
             /// <summary>
             /// Called when getting the state.
             /// </summary>
