@@ -1401,84 +1401,19 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_basic_credentials",
                 Description = "BG_BASIC_CREDENTIALS structure")]
         [StructLayout(LayoutKind.Sequential)]
-        internal struct BitsBasicCredentials : IEquatable<BitsBasicCredentials>
+        internal struct BitsBasicCredentials
         {
             internal /* LPWSTR */ string UserName;
             internal /* LPWSTR */ string Password;
-
-            public static bool operator ==(BitsBasicCredentials left, BitsBasicCredentials right)
-            {
-                return Equals(left, right);
-            }
-
-            public static bool operator !=(BitsBasicCredentials left, BitsBasicCredentials right)
-            {
-                return !Equals(left, right);
-            }
-
-            public bool Equals(BitsBasicCredentials other)
-            {
-                return UserName == other.UserName && Password == other.Password;
-            }
-
-            public override bool Equals(object obj)
-            {
-                if (ReferenceEquals(null, obj))
-                {
-                    return false;
-                }
-                return obj is BitsBasicCredentials && Equals((BitsBasicCredentials) obj);
-            }
-
-            public override int GetHashCode()
-            {
-                unchecked
-                {
-                    return ((UserName != null ? UserName.GetHashCode() : 0) * 397) ^ (Password != null ? Password.GetHashCode() : 0);
-                }
-            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_file_info",
                 Description = "BG_FILE_INFO structure")]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        internal struct BitsFileInfo : IEquatable<BitsFileInfo>
+        internal struct BitsFileInfo
         {
             internal /* LPWSTR */ string RemoteName;
             internal /* LPWSTR */ string LocalName;
-
-            public static bool operator ==(BitsFileInfo left, BitsFileInfo right)
-            {
-                return Equals(left, right);
-            }
-
-            public static bool operator !=(BitsFileInfo left, BitsFileInfo right)
-            {
-                return !Equals(left, right);
-            }
-
-            public bool Equals(BitsFileInfo other)
-            {
-                return RemoteName == other.RemoteName
-                        && LocalName == other.LocalName;
-            }
-
-            public override bool Equals(object obj)
-            {
-                if (ReferenceEquals(null, obj))
-                {
-                    return false;
-                }
-                return obj is BitsFileInfo && Equals((BitsFileInfo) obj);
-            }
-
-            public override int GetHashCode()
-            {
-                unchecked
-                {
-                    return ((RemoteName != null ? RemoteName.GetHashCode() : 0) * 397) ^ (LocalName != null ? LocalName.GetHashCode() : 0);
-                }
-            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_file_progress",
