@@ -80,11 +80,6 @@ namespace Htc.Vita.Core.Runtime
                 return result;
             }
 
-            internal static List<WindowsUserInfo> GetPlatformUsers()
-            {
-                return GetPlatformUsers(null);
-            }
-
             internal static List<WindowsUserInfo> GetPlatformUsers(string serverName)
             {
                 var machineName = serverName;
