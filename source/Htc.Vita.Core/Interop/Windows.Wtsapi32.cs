@@ -93,6 +93,26 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_ PHANDLE */ [Out] out SafeTokenHandle token
         );
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wtsapi32/nf-wtsapi32-wtssendmessagew")]
+        [DllImport(Libraries.WindowsWtsapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool WTSSendMessageW(
+                /* IN               HANDLE */ [In] SafeWtsServerHandle hServer,
+                /* IN               DWORD  */ [In] uint sessionId,
+                /* _In_reads_bytes_ LPWSTR */ [In] string pTitle,
+                /* IN               DWORD  */ [In] uint titleLength,
+                /* _In_reads_bytes_ LPWSTR */ [In] string pMessage,
+                /* IN               DWORD  */ [In] uint messageLength,
+                /* IN               DWORD  */ [In] MessageBoxStyle style,
+                /* IN               DWORD  */ [In] uint timeout,
+                /* _Out_            DWORD* */ [In][Out] ref DialogBoxResult pResponse,
+                /* IN               BOOL   */ [In] bool bWait
+        );
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/nf-wtsapi32-wtsterminateprocess")]
         [DllImport(Libraries.WindowsWtsapi32,
                 CallingConvention = CallingConvention.Winapi,

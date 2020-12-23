@@ -310,6 +310,25 @@ namespace Htc.Vita.Core.Interop
             /* DIGCF_DEVICEINTERFACE */ DeviceInterface = 0x00000010
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messagebox")]
+        internal enum DialogBoxResult
+        {
+            /*            */ None     =     0,
+            /* IDOK       */ Ok       =     1,
+            /* IDCANCEL   */ Cancel   =     2,
+            /* IDABORT    */ Abort    =     3,
+            /* IDRETRY    */ Retry    =     4,
+            /* IDIGNORE   */ Ignore   =     5,
+            /* IDYES      */ Yes      =     6,
+            /* IDNO       */ No       =     7,
+            /* IDCLOSE    */ Close    =     8,
+            /* IDHELP     */ Help     =     9,
+            /* IDTRYAGAIN */ TryAgain =    10,
+            /* IDCONTINUE */ Continue =    11,
+            /* IDTIMEOUT  */ Timeout  = 32000,
+            /* IDASYNC    */ Async    = 32001
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-_display_devicew")]
         [Flags]
         internal enum DisplayDeviceStateFlags : uint
@@ -561,6 +580,42 @@ namespace Htc.Vita.Core.Interop
             /* IMAGE_FILE_MACHINE_M32R        */ M32R       = 0x9041,
             /* IMAGE_FILE_MACHINE_ARM64       */ Arm64      = 0xaa64,
             /* IMAGE_FILE_MACHINE_CEE         */ Cee        = 0xc0ee
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messagebox")]
+        internal enum MessageBoxStyle : uint
+        {
+            /* MB_OK                   */ Ok                  = 0x00000000,
+            /* MB_OKCANCEL             */ OkCancel            = 0x00000001,
+            /* MB_ABORTRETRYIGNORE     */ AbortRetryIgnore    = 0x00000002,
+            /* MB_YESNOCANCEL          */ YesNoCancel         = 0x00000003,
+            /* MB_YESNO                */ YesNo               = 0x00000004,
+            /* MB_RETRYCANCEL          */ RetryCancel         = 0x00000005,
+            /* MB_CANCELTRYCONTINUE    */ CancelTryContinue   = 0x00000006,
+            /* MB_ICONHAND             */ IconHand            = 0x00000010,
+            /* MB_ICONERROR            */ IconError           = IconHand,
+            /* MB_ICONSTOP             */ IconStop            = IconHand,
+            /* MB_ICONQUESTION         */ IconQuestion        = 0x00000020,
+            /* MB_ICONEXCLAMATION      */ IconExclamation     = 0x00000030,
+            /* MB_ICONWARNING          */ IconWarning         = IconExclamation,
+            /* MB_ICONASTERISK         */ IconAsterisk        = 0x00000040,
+            /* MB_ICONINFORMATION      */ IconInformation     = IconAsterisk,
+            /* MB_USERICON             */ UserIcon            = 0x00000080,
+            /* MB_DEFBUTTON1           */ DefButton1          = 0x00000000,
+            /* MB_DEFBUTTON2           */ DefButton2          = 0x00000100,
+            /* MB_DEFBUTTON3           */ DefButton3          = 0x00000200,
+            /* MB_DEFBUTTON4           */ DefButton4          = 0x00000300,
+            /* MB_APPLMODAL            */ ApplModal           = 0x00000000,
+            /* MB_SYSTEMMODAL          */ SystemModal         = 0x00001000,
+            /* MB_TASKMODAL            */ TaskModal           = 0x00002000,
+            /* MB_HELP                 */ Help                = 0x00004000,
+            /* MB_NOFOCUS              */ NoFocus             = 0x00008000,
+            /* MB_SETFOREGROUND        */ SetForeground       = 0x00010000,
+            /* MB_DEFAULT_DESKTOP_ONLY */ DefaultDesktopOnly  = 0x00020000,
+            /* MB_TOPMOST              */ TopMost             = 0x00040000,
+            /* MB_RIGHT                */ Right               = 0x00080000,
+            /* MB_RTLREADING           */ RtlReading          = 0x00100000,
+            /* MB_SERVICE_NOTIFICATION */ ServiceNotification = 0x00200000,
         }
 
         internal enum NtStatus : uint

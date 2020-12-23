@@ -119,7 +119,7 @@ namespace Htc.Vita.Core.Runtime
                         {
                             if (sessionCount <= 0U)
                             {
-                                Logger.GetInstance(typeof(UserManager)).Error("Can not find available WTS session");
+                                Logger.GetInstance(typeof(Windows)).Error("Can not find available WTS session");
                             }
 
                             for (var sessionIndex = 0U; sessionIndex < sessionCount; sessionIndex++)
@@ -175,7 +175,7 @@ namespace Htc.Vita.Core.Runtime
                         }
                         else
                         {
-                            Logger.GetInstance(typeof(UserManager)).Error($"Can not enumerate WTS session, error code: {Marshal.GetLastWin32Error()}");
+                            Logger.GetInstance(typeof(Windows)).Error($"Can not enumerate WTS session, error code: {Marshal.GetLastWin32Error()}");
                         }
                     }
                     catch (Exception e)
@@ -185,6 +185,105 @@ namespace Htc.Vita.Core.Runtime
 
                     return results;
                 }
+            }
+
+            internal static bool SendMessageToFirstActiveUser(
+                    string title,
+                    string message,
+                    uint timeout,
+                    string serverName)
+            {
+                if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(message))
+                {
+                    return false;
+                }
+
+                var machineName = serverName;
+                if (string.IsNullOrWhiteSpace(machineName))
+                {
+                    machineName = Environment.MachineName;
+                }
+
+                using (var serverHandle = Interop.Windows.WTSOpenServerW(machineName))
+                {
+                    if (serverHandle == null || serverHandle.IsInvalid)
+                    {
+                        return false;
+                    }
+
+                    try
+                    {
+                        var sessionInfoPtr = IntPtr.Zero;
+                        var sessionCount = 0U;
+                        var success = Interop.Windows.WTSEnumerateSessionsW(
+                                serverHandle,
+                                0,
+                                1,
+                                ref sessionInfoPtr,
+                                ref sessionCount
+                        );
+                        var dataSize = Marshal.SizeOf(typeof(Interop.Windows.WindowsTerminalServiceSessionInfo));
+                        var currentSessionInfoPtr = sessionInfoPtr;
+
+                        if (success)
+                        {
+                            if (sessionCount <= 0U)
+                            {
+                                Logger.GetInstance(typeof(Windows)).Error("Can not find available WTS session");
+                                return false;
+                            }
+
+                            for (var sessionIndex = 0U; sessionIndex < sessionCount; sessionIndex++)
+                            {
+                                var sessionInfo = (Interop.Windows.WindowsTerminalServiceSessionInfo)Marshal.PtrToStructure(
+                                        currentSessionInfoPtr,
+                                        typeof(Interop.Windows.WindowsTerminalServiceSessionInfo)
+                                );
+                                currentSessionInfoPtr += dataSize;
+
+                                if (sessionInfo.state != Interop.Windows.WindowsTerminalServiceConnectState.Active)
+                                {
+                                    continue;
+                                }
+
+                                var dialogBoxResult = Interop.Windows.DialogBoxResult.None;
+                                success = Interop.Windows.WTSSendMessageW(
+                                        serverHandle,
+                                        sessionInfo.sessionId,
+                                        title,
+                                        (uint) title.Length * 2,
+                                        message,
+                                        (uint) message.Length * 2,
+                                        Interop.Windows.MessageBoxStyle.Ok,
+                                        timeout,
+                                        ref dialogBoxResult,
+                                        true
+                                );
+                                if (!success)
+                                {
+                                    return false;
+                                }
+
+                                if (dialogBoxResult == Interop.Windows.DialogBoxResult.Ok)
+                                {
+                                    return true;
+                                }
+                            }
+                            Interop.Windows.WTSFreeMemory(sessionInfoPtr);
+                        }
+                        else
+                        {
+                            Logger.GetInstance(typeof(Windows)).Error($"Can not enumerate WTS session, error code: {Marshal.GetLastWin32Error()}");
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.GetInstance(typeof(Windows)).Error($"Can not send message to active user: {e.Message}");
+                    }
+
+                    return false;
+                }
+
             }
         }
     }

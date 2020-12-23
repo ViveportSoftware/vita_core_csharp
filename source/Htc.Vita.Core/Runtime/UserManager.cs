@@ -46,5 +46,25 @@ namespace Htc.Vita.Core.Runtime
             }
             return result;
         }
+
+        /// <summary>
+        /// Sends the message to first active user.
+        /// </summary>
+        /// <param name="title">The title.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="timeout">The timeout.</param>
+        /// <returns><c>true</c> if sending message to the first active user successfully, <c>false</c> otherwise.</returns>
+        public static bool SendMessageToFirstActiveUser(
+                string title,
+                string message,
+                uint timeout)
+        {
+            return Windows.SendMessageToFirstActiveUser(
+                    title,
+                    message,
+                    timeout,
+                    null
+            );
+        }
     }
 }
