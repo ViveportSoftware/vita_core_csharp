@@ -2054,10 +2054,10 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct WindowsTerminalServiceProcessInfo
         {
-            internal /* DWORD  */ uint sessionId;
-            internal /* DWORD  */ uint processId;
-            internal /* LPTSTR */ string pProcessName;
-            internal /* PSID   */ IntPtr pUserSid;
+                                              internal /* DWORD  */ uint sessionId;
+                                              internal /* DWORD  */ uint processId;
+            [MarshalAs(UnmanagedType.LPWStr)] internal /* LPTSTR */ string pProcessName;
+                                              internal /* PSID   */ IntPtr pUserSid;
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/ns-wtsapi32-wts_session_infow",
@@ -2065,9 +2065,9 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct WindowsTerminalServiceSessionInfo
         {
-            internal /* DWORD                  */ uint sessionId;
-            internal /* LPTSTR                 */ string pWinStationName;
-            internal /* WTS_CONNECTSTATE_CLASS */ WindowsTerminalServiceConnectState state;
+                                              internal /* DWORD                  */ uint sessionId;
+            [MarshalAs(UnmanagedType.LPWStr)] internal /* LPTSTR                 */ string pWinStationName;
+                                              internal /* WTS_CONNECTSTATE_CLASS */ WindowsTerminalServiceConnectState state;
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
