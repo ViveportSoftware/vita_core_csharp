@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class Win32IniTest
+    public static class Win32IniTest
     {
         [Fact]
         public static void Default_0_LoadFrom()
@@ -24,6 +24,7 @@ namespace Htc.Vita.Core.Tests
             var win32Ini = Win32Ini.LoadFrom(fileInfo);
             Assert.NotNull(win32Ini);
             var data = win32Ini.ReadString("drivers", "timer");
+            Assert.False(string.IsNullOrWhiteSpace(data));
             Logger.GetInstance(typeof(Win32IniTest)).Info("[driver] timer: " + data);
         }
     }
