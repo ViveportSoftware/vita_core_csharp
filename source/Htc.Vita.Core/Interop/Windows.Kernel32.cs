@@ -92,6 +92,21 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_ PULONG */ [In][Out] ref uint serverProcessId
         );
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getprivateprofilestringw")]
+        [DllImport(Libraries.WindowsKernel32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern uint GetPrivateProfileStringW(
+                /* _In_opt_            LPCWSTR */ [In] string lpAppName,
+                /* _In_opt_            LPCWSTR */ [In] string lpKeyName,
+                /* _In_opt_            LPCWSTR */ [In] string lpDefault,
+                /* _Out_writes_to_opt_ LPWSTR  */ [Out] StringBuilder lpReturnedString,
+                /* _In_                DWORD   */ [In] int nSize,
+                /* _In_opt_            LPCWSTR */ [In] string lpFileName
+        );
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wow64apiset/nf-wow64apiset-iswow64process")]
         [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
