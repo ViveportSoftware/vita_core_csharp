@@ -389,6 +389,7 @@ Task("Sign-Assemblies")
     var targetPlatforms = new[]
     {
             "net45",
+            "net5.0",
             "netstandard2.0"
     };
     foreach (var targetPlatform in targetPlatforms)
