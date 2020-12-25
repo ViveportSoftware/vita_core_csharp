@@ -12,6 +12,7 @@ Package-time dependencies: none
 
 Run-time dependencies:
 
+* .NET 5.0
 * .NET Framework 4.5
 * .NET Standard 2.0
 
@@ -22,12 +23,13 @@ Test-time dependencies:
 
 Build-time dependencies:
 
+* .NET 5.0
 * .NET Framework 4.6.1
 
 Build-time Prerequisite (macOS):
 
-* Microsoft Visual Studio 2017 for Mac
+* Microsoft Visual Studio 2019 for Mac
 
 Build-time Prerequisite (Windows):
 
-* Microsoft Visual Studio 2017
+* Microsoft Visual Studio 2019
