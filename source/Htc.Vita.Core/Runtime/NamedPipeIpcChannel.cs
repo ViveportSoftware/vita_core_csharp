@@ -410,29 +410,6 @@ namespace Htc.Vita.Core.Runtime
                 {
                     try
                     {
-#if NET45
-                        using (var serverStream = new NamedPipeServerStream(
-                                OnOverrideTranslateName(_pipeName),
-                                PipeDirection.InOut,
-                                PipeThreadNumber,
-                                PipeTransmissionMode.Message,
-                                PipeOptions.None,
-                                /* default */ 0,
-                                /* default */ 0,
-                                pipeSecurity
-                        ))
-#elif NET5_0
-                        using (var serverStream = NamedPipeServerStreamAcl.Create(
-                                OnOverrideTranslateName(_pipeName),
-                                PipeDirection.InOut,
-                                PipeThreadNumber,
-                                PipeTransmissionMode.Message,
-                                PipeOptions.None,
-                                /* default */ 0,
-                                /* default */ 0,
-                                pipeSecurity
-                        ))
-#else
                         using (var serverStream = NewNamedPipeServerStreamInstance(
                                 OnOverrideTranslateName(_pipeName),
                                 PipeDirection.InOut,
@@ -443,7 +420,6 @@ namespace Htc.Vita.Core.Runtime
                                 /* default */ 0,
                                 pipeSecurity
                         ))
-#endif
                         {
                             if (serverStream == null)
                             {
