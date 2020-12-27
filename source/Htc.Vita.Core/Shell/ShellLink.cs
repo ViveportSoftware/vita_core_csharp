@@ -73,8 +73,7 @@ namespace Htc.Vita.Core.Shell
                 return false;
             }
 
-            object wshShortcut = null;
-            var success = false;
+            object wshShortcut;
             try
             {
                 wshShortcut = type.InvokeMember(
@@ -84,22 +83,17 @@ namespace Htc.Vita.Core.Shell
                         wshShell,
                         new object[] {targetPath.FullName + ".lnk"}
                 );
-                success = true;
             }
             catch (Exception e)
             {
                 Logger.GetInstance(typeof(ShellLink)).Error($"Can not create wshShortcut class from wshShell: {e.Message}");
+                return false;
             }
             finally
             {
                 Marshal.FinalReleaseComObject(wshShell);
             }
-            if (!success)
-            {
-                return false;
-            }
 
-            success = false;
             try
             {
                 type.InvokeMember(
@@ -123,7 +117,7 @@ namespace Htc.Vita.Core.Shell
                         wshShortcut,
                         null
                 );
-                success = true;
+                return true;
             }
             catch (Exception e)
             {
@@ -133,7 +127,7 @@ namespace Htc.Vita.Core.Shell
             {
                 Marshal.FinalReleaseComObject(wshShortcut);
             }
-            return success;
+            return false;
         }
     }
 }
