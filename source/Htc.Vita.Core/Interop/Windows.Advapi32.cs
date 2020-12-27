@@ -89,8 +89,8 @@ namespace Htc.Vita.Core.Interop
                 /* _In_opt_    HANDLE                */ [In] SafeTokenHandle hToken,
                 /* _In_opt_    LPCWSTR               */ [In] string lpApplicationName,
                 /* _Inout_opt_ LPWSTR                */ [In] string lpCommandLine,
-                /* _In_opt_    LPSECURITY_ATTRIBUTES */ [In] ref SecurityAttributes lpProcessAttributes,
-                /* _In_opt_    LPSECURITY_ATTRIBUTES */ [In] ref SecurityAttributes lpThreadAttributes,
+                /* _In_opt_    LPSECURITY_ATTRIBUTES */ [In] SecurityAttributes lpProcessAttributes,
+                /* _In_opt_    LPSECURITY_ATTRIBUTES */ [In] SecurityAttributes lpThreadAttributes,
                 /* _In_        BOOL                  */ [In] bool bInheritHandle,
                 /* _In_        DWORD                 */ [In] ProcessCreationFlag dwCreationFlags,
                 /* _In_opt_    LPVOID                */ [In] IntPtr lpEnvironment,
@@ -109,7 +109,7 @@ namespace Htc.Vita.Core.Interop
         internal static extern bool DuplicateTokenEx(
                 /* _In_     HANDLE                       */ [In] SafeTokenHandle existingToken,
                 /* _In_     DWORD                        */ [In] TokenAccessRight desiredAccess,
-                /* _In_opt_ LPSECURITY_ATTRIBUTES        */ [In][Out] ref SecurityAttributes threadAttributes,
+                /* _In_opt_ LPSECURITY_ATTRIBUTES        */ [In] SecurityAttributes threadAttributes,
                 /* _In_     SECURITY_IMPERSONATION_LEVEL */ [In] SecurityImpersonationLevel impersonationLevel,
                 /* _In_     TOKEN_TYPE                   */ [In] TokenType tokenType,
                 /* _Outptr_ PHANDLE                      */ [Out] out SafeTokenHandle newToken
@@ -243,7 +243,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_opt_   LPWSTR                */ [In] string lpClass,
                 /* _In_       DWORD                 */ [In] int dwOptions,
                 /* _In_       REGSAM                */ [In] RegistryKeyAccessRight samDesired,
-                /* _In_opt_   LPSECURITY_ATTRIBUTES */ [In][Out] ref SecurityAttributes lpSecurityAttributes,
+                /* _In_opt_   LPSECURITY_ATTRIBUTES */ [In] SecurityAttributes lpSecurityAttributes,
                 /* _Out_      PHKEY                 */ [Out] out SafeRegistryHandle phkResult,
                 /* _Out_opt_  LPDWORD               */ [Out] out int lpdwDisposition
         );

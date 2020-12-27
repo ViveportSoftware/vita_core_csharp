@@ -164,6 +164,155 @@ namespace Htc.Vita.Core.Runtime
                 _pipeName = "";
             }
 
+            private static Windows.PipeMode ConvertPipeModeFrom(PipeTransmissionMode transmissionMode)
+            {
+                if (transmissionMode == PipeTransmissionMode.Message)
+                {
+                    return Windows.PipeMode.TypeMessage | Windows.PipeMode.ReadModeMessage;
+                }
+                return Windows.PipeMode.TypeByte | Windows.PipeMode.ReadModeByte;
+            }
+
+            private static Windows.PipeOpenMode ConvertPipeOpenModeFrom(
+                    PipeDirection pipeDirection,
+                    PipeOptions pipeOptions,
+                    int maxNumberOfServerInstances)
+            {
+                var result = Windows.PipeOpenMode.None;
+                if (pipeDirection == PipeDirection.In)
+                {
+                    result = Windows.PipeOpenMode.AccessInbound;
+                }
+                else if (pipeDirection == PipeDirection.Out)
+                {
+                    result = Windows.PipeOpenMode.AccessOutbound;
+                }
+                else if (pipeDirection == PipeDirection.InOut)
+                {
+                    result = Windows.PipeOpenMode.AccessDuplex;
+                }
+
+                if (pipeOptions == PipeOptions.Asynchronous)
+                {
+                    result |= Windows.PipeOpenMode.FlagOverlapped;
+                }
+                else if (pipeOptions == PipeOptions.WriteThrough)
+                {
+                    result |= Windows.PipeOpenMode.FlagWriteThrough;
+                }
+                else if (pipeOptions == (PipeOptions)0x20000000 /* PipeOptions.CurrentUserOnly */)
+                {
+                    result |= Windows.PipeOpenMode.CurrentUserOnly;
+                }
+
+                if (maxNumberOfServerInstances == 1)
+                {
+                    result |= Windows.PipeOpenMode.FlagFirstPipeInstance;
+                }
+
+                return result;
+            }
+
+            private static NamedPipeServerStream NewNamedPipeServerStreamInstance(
+                    string pipeName,
+                    PipeDirection direction,
+                    int maxNumberOfServerInstances,
+                    PipeTransmissionMode transmissionMode,
+                    PipeOptions options,
+                    int inBufferSize,
+                    int outBufferSize,
+                    PipeSecurity pipeSecurity)
+            {
+                if (pipeSecurity == null)
+                {
+                    return new NamedPipeServerStream(
+                            pipeName,
+                            direction,
+                            maxNumberOfServerInstances,
+                            transmissionMode,
+                            options,
+                            inBufferSize,
+                            outBufferSize
+                    );
+                }
+
+                if (string.IsNullOrWhiteSpace(pipeName))
+                {
+                    throw new ArgumentNullException(nameof(pipeName));
+                }
+                if ("anonymous".Equals(pipeName))
+                {
+                    throw new ArgumentException("pipeName \"anonymous\" is reserved");
+                }
+                if (inBufferSize < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(inBufferSize), "buffer size should be non-negative");
+                }
+                if ((maxNumberOfServerInstances < 1 || maxNumberOfServerInstances > 254)
+                        && maxNumberOfServerInstances != -1)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(maxNumberOfServerInstances), "requested server instance should between 1 to 254");
+                }
+
+                var fullPath = Path.GetFullPath("\\\\.\\pipe\\" + pipeName);
+                var pipeOpenMode = ConvertPipeOpenModeFrom(
+                        direction,
+                        options,
+                        maxNumberOfServerInstances
+                );
+                var pipeMode = ConvertPipeModeFrom(transmissionMode);
+                if (maxNumberOfServerInstances == -1)
+                {
+                    maxNumberOfServerInstances = byte.MaxValue;
+                }
+
+                var securityDescriptorInBytes = pipeSecurity.GetSecurityDescriptorBinaryForm();
+                var securityDescriptorHandle = Marshal.AllocHGlobal(securityDescriptorInBytes.Length);
+                Marshal.Copy(
+                        securityDescriptorInBytes,
+                        0,
+                        securityDescriptorHandle,
+                        securityDescriptorInBytes.Length
+                );
+                var securityAttributes = new Windows.SecurityAttributes
+                {
+                        lpSecurityDescriptor = securityDescriptorHandle
+                };
+                securityAttributes.nLength = Marshal.SizeOf(securityAttributes);
+
+                try
+                {
+                    var safePipeHandle = Windows.CreateNamedPipeW(
+                            fullPath,
+                            pipeOpenMode,
+                            pipeMode,
+                            (uint) maxNumberOfServerInstances,
+                            (uint) outBufferSize,
+                            (uint) inBufferSize,
+                            0,
+                            securityAttributes
+                    );
+                    if (safePipeHandle.IsInvalid)
+                    {
+                        return null;
+                    }
+
+                    return new NamedPipeServerStream(
+                            direction,
+                            options.HasFlag(PipeOptions.Asynchronous),
+                            false,
+                            safePipeHandle
+                    )
+                    {
+                            ReadMode = transmissionMode
+                    };
+                }
+                finally
+                {
+                    Marshal.FreeHGlobal(securityDescriptorHandle);
+                }
+            }
+
             /// <inheritdoc />
             protected override bool OnIsRunning()
             {
@@ -284,15 +433,24 @@ namespace Htc.Vita.Core.Runtime
                                 pipeSecurity
                         ))
 #else
-                        using (var serverStream = new NamedPipeServerStream(
+                        using (var serverStream = NewNamedPipeServerStreamInstance(
                                 OnOverrideTranslateName(_pipeName),
                                 PipeDirection.InOut,
                                 PipeThreadNumber,
                                 PipeTransmissionMode.Message,
-                                PipeOptions.None
+                                PipeOptions.None,
+                                /* default */ 0,
+                                /* default */ 0,
+                                pipeSecurity
                         ))
 #endif
                         {
+                            if (serverStream == null)
+                            {
+                                Logger.GetInstance(typeof(Provider)).Error("Can not create named pipe server stream");
+                                return;
+                            }
+
                             while (!_shouldStopWorkers)
                             {
                                 if (serverStream.IsConnected)

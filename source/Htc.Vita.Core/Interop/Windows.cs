@@ -642,6 +642,37 @@ namespace Htc.Vita.Core.Interop
             /* HIDP_STATUS_NOT_IMPLEMENTED         */ HidpStatusNotImplemented       = 0xc0110020
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createnamedpipea")]
+        [Flags]
+        internal enum PipeMode : uint
+        {
+            /* PIPE_WAIT                  */ Wait                = 0x00000000,
+            /* PIPE_READMODE_BYTE         */ ReadModeByte        = Wait,
+            /* PIPE_TYPE_BYTE             */ TypeByte            = ReadModeByte,
+            /* PIPE_ACCEPT_REMOTE_CLIENTS */ AcceptRemoteClients = TypeByte,
+            /* PIPE_NOWAIT                */ NoWait              = 0x00000001,
+            /* PIPE_READMODE_MESSAGE      */ ReadModeMessage     = 0x00000002,
+            /* PIPE_TYPE_MESSAGE          */ TypeMessage         = 0x00000004,
+            /* PIPE_REJECT_REMOTE_CLIENTS */ RejectRemoteClients = 0x00000008
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createnamedpipea")]
+        [Flags]
+        internal enum PipeOpenMode : uint
+        {
+            /*                               */ None                  =          0,
+            /* PIPE_ACCESS_INBOUND           */ AccessInbound         = 0x00000001,
+            /* PIPE_ACCESS_OUTBOUND          */ AccessOutbound        = 0x00000002,
+            /* PIPE_ACCESS_DUPLEX            */ AccessDuplex          = 0x00000003,
+            /* FILE_FLAG_FIRST_PIPE_INSTANCE */ FlagFirstPipeInstance = FileAttributeFlag.FlagFirstPipeInstance,
+            /* FILE_FLAG_OVERLAPPED          */ FlagOverlapped        = FileAttributeFlag.FlagOverlapped,
+            /* FILE_FLAG_WRITE_THROUGH       */ FlagWriteThrough      = FileAttributeFlag.FlagWriteThrough,
+            /* WRITE_DAC                     */ WriteDac              = StandardAccessRight.WriteDac,
+            /* WRITE_OWNER                   */ WriteOwner            = StandardAccessRight.WriteOwner,
+            /* ACCESS_SYSTEM_SECURITY        */ AccessSystemSecurity  = 0x01000000,
+            /*                               */ CurrentUserOnly       = 0x20000000
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights",
                 Description = "Process access right enumeration")]
         [Flags]
@@ -1948,7 +1979,7 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://msdn.microsoft.com/en-us/library/windows/desktop/aa379560.aspx",
                 Description = "SECURITY_ATTRIBUTES")]
         [StructLayout(LayoutKind.Sequential)]
-        internal struct SecurityAttributes
+        internal class SecurityAttributes
         {
             internal /* DWORD  */ int nLength;
             internal /* LPVOID */ IntPtr lpSecurityDescriptor;

@@ -237,7 +237,7 @@ namespace Htc.Vita.Core.Util
                         null,
                         0,
                         ToRegistryKeyAccessRight(keyPermissionCheck != KeyPermissionCheck.ReadSubTree) | ToRegistryKeyAccessRight(_view),
-                        ref securityAttributes,
+                        securityAttributes,
                         out handle,
                         out disposition
                 );

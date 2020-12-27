@@ -35,6 +35,23 @@ namespace Htc.Vita.Core.Interop
                 /* _In_opt_ HANDLE                */ [In] IntPtr hTemplateFile
         );
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createnamedpipea")]
+        [DllImport(Libraries.WindowsKernel32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern SafePipeHandle CreateNamedPipeW(
+                /* _In_     LPCTSTR               */ [In] string lpName,
+                /* _In_     DWORD                 */ [In] PipeOpenMode dwOpenMode,
+                /* _In_     DWORD                 */ [In] PipeMode dwPipeMode,
+                /* _In_     DWORD                 */ [In] uint nMaxInstances,
+                /* _In_     DWORD                 */ [In] uint nOutBufferSize,
+                /* _In_     DWORD                 */ [In] uint nInBufferSize,
+                /* _In_     DWORD                 */ [In] uint nDefaultTimeOut,
+                /* _In_opt_ LPSECURITY_ATTRIBUTES */ [In] SecurityAttributes lpSecurityAttributes
+        );
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/libloaderapi/nf-libloaderapi-freelibrary")]
         [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,

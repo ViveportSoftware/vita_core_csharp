@@ -457,7 +457,7 @@ namespace Htc.Vita.Core.Runtime
                             success = Interop.Windows.DuplicateTokenEx(
                                     tokenHandle,
                                     Interop.Windows.TokenAccessRight.AllAccess,
-                                    ref securityAttributes,
+                                    securityAttributes,
                                     Interop.Windows.SecurityImpersonationLevel.SecurityImpersonation,
                                     Interop.Windows.TokenType.TokenPrimary,
                                     out newTokenHandle
@@ -523,8 +523,8 @@ namespace Htc.Vita.Core.Runtime
                                     newTokenHandle,
                                     null,
                                     commandLine,
-                                    ref securityAttributes,
-                                    ref securityAttributes,
+                                    securityAttributes,
+                                    securityAttributes,
                                     false,
                                     Interop.Windows.ProcessCreationFlag.CreateUnicodeEnvironment | Interop.Windows.ProcessCreationFlag.CreateNoWindow,
                                     environmentPtr,
