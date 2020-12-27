@@ -5,6 +5,9 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Util
 {
+    /// <summary>
+    /// Class Win32Ini.
+    /// </summary>
     public class Win32Ini
     {
         private const int ReadBufferSize = 1024;
@@ -16,6 +19,12 @@ namespace Htc.Vita.Core.Util
             _fullPath = fullPath;
         }
 
+        /// <summary>
+        /// Reads the string.
+        /// </summary>
+        /// <param name="section">The section.</param>
+        /// <param name="key">The key.</param>
+        /// <returns>System.String.</returns>
         public string ReadString(
                 string section,
                 string key)
@@ -26,7 +35,14 @@ namespace Htc.Vita.Core.Util
                     null
             );
         }
-        
+
+        /// <summary>
+        /// Reads the string.
+        /// </summary>
+        /// <param name="section">The section.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>System.String.</returns>
         public string ReadString(
                 string section,
                 string key,
@@ -45,6 +61,12 @@ namespace Htc.Vita.Core.Util
             return builder.ToString(0, (int)length);
         }
 
+        /// <summary>
+        /// Loads Win32Ini instance.
+        /// </summary>
+        /// <param name="fileInfo">The file information.</param>
+        /// <returns>Win32Ini.</returns>
+        /// <exception cref="DirectoryNotFoundException"></exception>
         public static Win32Ini LoadFrom(FileInfo fileInfo)
         {
             if (fileInfo == null)
