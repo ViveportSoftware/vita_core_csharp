@@ -75,25 +75,25 @@ namespace Htc.Vita.Core.Interop
                 Description = "BG_JOB_PROXY_USAGE enumeration")]
         internal enum BitsJobProxyUsage
         {
-            /* BG_JOB_PROXY_USAGE_PRECONFIG  */ Preconfig,
-            /* BG_JOB_PROXY_USAGE_NO_PROXY   */ NoProxy,
-            /* BG_JOB_PROXY_USAGE_OVERRIDE   */ Override,
-            /* BG_JOB_PROXY_USAGE_AUTODETECT */ Autodetect
+            /* BG_JOB_PROXY_USAGE_PRECONFIG  */ Preconfig  = 0,
+            /* BG_JOB_PROXY_USAGE_NO_PROXY   */ NoProxy    = 1,
+            /* BG_JOB_PROXY_USAGE_OVERRIDE   */ Override   = 2,
+            /* BG_JOB_PROXY_USAGE_AUTODETECT */ Autodetect = 3
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_state",
                 Description = "BG_JOB_STATE enumeration")]
         internal enum BitsJobState
         {
-            /* BG_JOB_STATE_QUEUED          */ Queued,
-            /* BG_JOB_STATE_CONNECTING      */ Connecting,
-            /* BG_JOB_STATE_TRANSFERRING    */ Transferring,
-            /* BG_JOB_STATE_SUSPENDED       */ Suspended,
-            /* BG_JOB_STATE_ERROR           */ Error,
-            /* BG_JOB_STATE_TRANSIENT_ERROR */ TransientError,
-            /* BG_JOB_STATE_TRANSFERRED     */ Transferred,
-            /* BG_JOB_STATE_ACKNOWLEDGED    */ Acknowledged,
-            /* BG_JOB_STATE_CANCELLED       */ Cancelled
+            /* BG_JOB_STATE_QUEUED          */ Queued         = 0,
+            /* BG_JOB_STATE_CONNECTING      */ Connecting     = 1,
+            /* BG_JOB_STATE_TRANSFERRING    */ Transferring   = 2,
+            /* BG_JOB_STATE_SUSPENDED       */ Suspended      = 3,
+            /* BG_JOB_STATE_ERROR           */ Error          = 4,
+            /* BG_JOB_STATE_TRANSIENT_ERROR */ TransientError = 5,
+            /* BG_JOB_STATE_TRANSFERRED     */ Transferred    = 6,
+            /* BG_JOB_STATE_ACKNOWLEDGED    */ Acknowledged   = 7,
+            /* BG_JOB_STATE_CANCELLED       */ Cancelled      = 8
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_type",
@@ -594,18 +594,18 @@ namespace Htc.Vita.Core.Interop
             /* MB_CANCELTRYCONTINUE    */ CancelTryContinue   = 0x00000006,
             /* MB_ICONHAND             */ IconHand            = 0x00000010,
             /* MB_ICONERROR            */ IconError           = IconHand,
-            /* MB_ICONSTOP             */ IconStop            = IconHand,
+            /* MB_ICONSTOP             */ IconStop            = IconError,
             /* MB_ICONQUESTION         */ IconQuestion        = 0x00000020,
             /* MB_ICONEXCLAMATION      */ IconExclamation     = 0x00000030,
             /* MB_ICONWARNING          */ IconWarning         = IconExclamation,
             /* MB_ICONASTERISK         */ IconAsterisk        = 0x00000040,
             /* MB_ICONINFORMATION      */ IconInformation     = IconAsterisk,
             /* MB_USERICON             */ UserIcon            = 0x00000080,
-            /* MB_DEFBUTTON1           */ DefButton1          = 0x00000000,
+            /* MB_DEFBUTTON1           */ DefButton1          = Ok,
             /* MB_DEFBUTTON2           */ DefButton2          = 0x00000100,
             /* MB_DEFBUTTON3           */ DefButton3          = 0x00000200,
             /* MB_DEFBUTTON4           */ DefButton4          = 0x00000300,
-            /* MB_APPLMODAL            */ ApplModal           = 0x00000000,
+            /* MB_APPLMODAL            */ ApplModal           = DefButton1,
             /* MB_SYSTEMMODAL          */ SystemModal         = 0x00001000,
             /* MB_TASKMODAL            */ TaskModal           = 0x00002000,
             /* MB_HELP                 */ Help                = 0x00004000,
@@ -807,10 +807,10 @@ namespace Htc.Vita.Core.Interop
                 Description = "SECURITY_IMPERSONATION_LEVEL enumeration")]
         internal enum SecurityImpersonationLevel : uint
         {
-                /* SecurityAnonymous      */ SecurityAnonymous,
-                /* SecurityIdentification */ SecurityIdentification,
-                /* SecurityImpersonation  */ SecurityImpersonation,
-                /* SecurityDelegation     */ SecurityDelegation
+                /* SecurityAnonymous      */ SecurityAnonymous      = 0,
+                /* SecurityIdentification */ SecurityIdentification = 1,
+                /* SecurityImpersonation  */ SecurityImpersonation  = 2,
+                /* SecurityDelegation     */ SecurityDelegation     = 3
         }
 
         [Flags]
@@ -1349,52 +1349,52 @@ namespace Htc.Vita.Core.Interop
                 Description = "WTS_CONNECTSTATE_CLASS enumeration")]
         internal enum WindowsTerminalServiceConnectState
         {
-            /* WTSActive       */ Active,
-            /* WTSConnected    */ Connected,
-            /* WTSConnectQuery */ ConnectQuery,
-            /* WTSShadow       */ Shadow,
-            /* WTSDisconnected */ Disconnected,
-            /* WTSIdle         */ Idle,
-            /* WTSListen       */ Listen,
-            /* WTSReset        */ Reset,
-            /* WTSDown         */ Down,
-            /* WTSInit         */ Init
+            /* WTSActive       */ Active       = 0,
+            /* WTSConnected    */ Connected    = 1,
+            /* WTSConnectQuery */ ConnectQuery = 2,
+            /* WTSShadow       */ Shadow       = 3,
+            /* WTSDisconnected */ Disconnected = 4,
+            /* WTSIdle         */ Idle         = 5,
+            /* WTSListen       */ Listen       = 6,
+            /* WTSReset        */ Reset        = 7,
+            /* WTSDown         */ Down         = 8,
+            /* WTSInit         */ Init         = 9
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/ne-wtsapi32-_wts_info_class",
                 Description = "WTS_INFO_CLASS enumeration")]
         internal enum WindowsTerminalServiceInfo
         {
-            /* WTSInitialProgram     */ InitialProgram,
-            /* WTSApplicationName    */ ApplicationName,
-            /* WTSWorkingDirectory   */ WorkingDirectory,
-            /* WTSOEMId              */ OemId,
-            /* WTSSessionId          */ SessionId,
-            /* WTSUserName           */ UserName,
-            /* WTSWinStationName     */ WinStationName,
-            /* WTSDomainName         */ DomainName,
-            /* WTSConnectState       */ ConnectState,
-            /* WTSClientBuildNumber  */ ClientBuildNumber,
-            /* WTSClientName         */ ClientName,
-            /* WTSClientDirectory    */ ClientDirectory,
-            /* WTSClientProductId    */ ClientProductId,
-            /* WTSClientHardwareId   */ ClientHardwareId,
-            /* WTSClientAddress      */ ClientAddress,
-            /* WTSClientDisplay      */ ClientDisplay,
-            /* WTSClientProtocolType */ ClientProtocolType,
-            /* WTSIdleTime           */ IdleTime,
-            /* WTSLogonTime          */ LogonTime,
-            /* WTSIncomingBytes      */ IncomingBytes,
-            /* WTSOutgoingBytes      */ OutgoingBytes,
-            /* WTSIncomingFrames     */ IncomingFrames,
-            /* WTSOutgoingFrames     */ OutgoingFrames,
-            /* WTSClientInfo         */ ClientInfo,
-            /* WTSSessionInfo        */ SessionInfo,
-            /* WTSSessionInfoEx      */ SessionInfoEx,
-            /* WTSConfigInfo         */ ConfigInfo,
-            /* WTSValidationInfo     */ ValidationInfo,
-            /* WTSSessionAddressV4   */ SessionAddressV4,
-            /* WTSIsRemoteSession    */ IsRemoteSession
+            /* WTSInitialProgram     */ InitialProgram     =  0,
+            /* WTSApplicationName    */ ApplicationName    =  1,
+            /* WTSWorkingDirectory   */ WorkingDirectory   =  2,
+            /* WTSOEMId              */ OemId              =  3,
+            /* WTSSessionId          */ SessionId          =  4,
+            /* WTSUserName           */ UserName           =  5,
+            /* WTSWinStationName     */ WinStationName     =  6,
+            /* WTSDomainName         */ DomainName         =  7,
+            /* WTSConnectState       */ ConnectState       =  8,
+            /* WTSClientBuildNumber  */ ClientBuildNumber  =  9,
+            /* WTSClientName         */ ClientName         = 10,
+            /* WTSClientDirectory    */ ClientDirectory    = 11,
+            /* WTSClientProductId    */ ClientProductId    = 12,
+            /* WTSClientHardwareId   */ ClientHardwareId   = 13,
+            /* WTSClientAddress      */ ClientAddress      = 14,
+            /* WTSClientDisplay      */ ClientDisplay      = 15,
+            /* WTSClientProtocolType */ ClientProtocolType = 16,
+            /* WTSIdleTime           */ IdleTime           = 17,
+            /* WTSLogonTime          */ LogonTime          = 18,
+            /* WTSIncomingBytes      */ IncomingBytes      = 19,
+            /* WTSOutgoingBytes      */ OutgoingBytes      = 20,
+            /* WTSIncomingFrames     */ IncomingFrames     = 21,
+            /* WTSOutgoingFrames     */ OutgoingFrames     = 22,
+            /* WTSClientInfo         */ ClientInfo         = 23,
+            /* WTSSessionInfo        */ SessionInfo        = 24,
+            /* WTSSessionInfoEx      */ SessionInfoEx      = 25,
+            /* WTSConfigInfo         */ ConfigInfo         = 26,
+            /* WTSValidationInfo     */ ValidationInfo     = 27,
+            /* WTSSessionAddressV4   */ SessionAddressV4   = 28,
+            /* WTSIsRemoteSession    */ IsRemoteSession    = 29
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
@@ -1433,19 +1433,19 @@ namespace Htc.Vita.Core.Interop
                 Description = "WTD_REVOKE enumeration")]
         internal enum WinTrustDataRevoke : uint
         {
-            /* WTD_REVOKE_NONE       */ None,
-            /* WTD_REVOKE_WHOLECHAIN */ WholeChain
+            /* WTD_REVOKE_NONE       */ None       = 0,
+            /* WTD_REVOKE_WHOLECHAIN */ WholeChain = 1
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
                 Description = "WTD_STATEACTION enumeration")]
         internal enum WinTrustDataStateAction : uint
         {
-            /* WTD_STATEACTION_IGNORE           */ Ignore,
-            /* WTD_STATEACTION_VERIFY           */ Verify,
-            /* WTD_STATEACTION_CLOSE            */ Close,
-            /* WTD_STATEACTION_AUTO_CACHE       */ AutoCache,
-            /* WTD_STATEACTION_AUTO_CACHE_FLUSH */ AutoCacheFlush
+            /* WTD_STATEACTION_IGNORE           */ Ignore         = 0,
+            /* WTD_STATEACTION_VERIFY           */ Verify         = 1,
+            /* WTD_STATEACTION_CLOSE            */ Close          = 2,
+            /* WTD_STATEACTION_AUTO_CACHE       */ AutoCache      = 3,
+            /* WTD_STATEACTION_AUTO_CACHE_FLUSH */ AutoCacheFlush = 4
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
@@ -1462,8 +1462,8 @@ namespace Htc.Vita.Core.Interop
                 Description = "WTD_UICONTEXT enumeration")]
         internal enum WinTrustDataUIContext : uint
         {
-            /* WTD_UICONTEXT_EXECUTE */ Execute,
-            /* WTD_UICONTEXT_INSTALL */ Install
+            /* WTD_UICONTEXT_EXECUTE */ Execute = 0,
+            /* WTD_UICONTEXT_INSTALL */ Install = 1
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_auth_credentials",
