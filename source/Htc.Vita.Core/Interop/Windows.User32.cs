@@ -41,5 +41,24 @@ namespace Htc.Vita.Core.Interop
                 /* _In_    HMONITOR      */ [In] IntPtr hMonitor,
                 /* _Inout_ LPMONITORINFO */ [In][Out] ref MonitorInfoExW monitorInfo
         );
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getshellwindow")]
+        [DllImport(Libraries.WindowsUser32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern IntPtr GetShellWindow();
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowthreadprocessid")]
+        [DllImport(Libraries.WindowsUser32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern uint GetWindowThreadProcessId(
+                /* _In_      HWND    */ [In] IntPtr hWnd,
+                /* _Out_opt_ LPDWORD */ [In][Out] ref uint lpdwProcessId
+        );
     }
 }

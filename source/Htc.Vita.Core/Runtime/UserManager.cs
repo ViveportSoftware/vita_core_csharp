@@ -48,6 +48,24 @@ namespace Htc.Vita.Core.Runtime
         }
 
         /// <summary>
+        /// Determines whether shell user is elevated.
+        /// </summary>
+        /// <returns><c>true</c> if shell user is elevated; otherwise, <c>false</c>.</returns>
+        public static bool IsShellUserElevated()
+        {
+            var result = false;
+            try
+            {
+                result = Windows.IsShellUserElevatedInPlatform();
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(UserManager)).Error(e.ToString());
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Sends the message to first active user.
         /// </summary>
         /// <param name="title">The title.</param>

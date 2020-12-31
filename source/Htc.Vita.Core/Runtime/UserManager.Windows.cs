@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -182,6 +183,49 @@ namespace Htc.Vita.Core.Runtime
                 }
             }
 
+            internal static bool IsShellUserElevatedInPlatform()
+            {
+                var shellWindowHandle = Interop.Windows.GetShellWindow();
+                if (shellWindowHandle == IntPtr.Zero)
+                {
+                    Logger.GetInstance(typeof(Windows)).Error($"Can not get shell window handle, error code: {Marshal.GetLastWin32Error()}");
+                    return false;
+                }
+
+                try
+                {
+                    var shellWindowProcessId = 0U;
+                    Interop.Windows.GetWindowThreadProcessId(
+                            shellWindowHandle,
+                            ref shellWindowProcessId
+                    );
+                    if (shellWindowProcessId == 0)
+                    {
+                        Logger.GetInstance(typeof(Windows)).Error($"Can not get shell window process id, error code: {Marshal.GetLastWin32Error()}");
+                        return false;
+                    }
+
+                    using (var shellWindowProcess = Process.GetProcessById((int) shellWindowProcessId))
+                    {
+                        Logger.GetInstance(typeof(Windows)).Debug($"Current shell process: {shellWindowProcess.ProcessName} ({shellWindowProcessId})");
+                        return ProcessManager.IsElevatedProcess(shellWindowProcess);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(Windows)).Error($"Can not check if shell user is elevated. {e.Message}");
+                }
+                finally
+                {
+                    if (shellWindowHandle != IntPtr.Zero)
+                    {
+                        Interop.Windows.CloseHandle(shellWindowHandle);
+                    }
+                }
+
+                return false;
+            }
+
             internal static bool SendMessageToFirstActiveUser(
                     string title,
                     string message,
@@ -278,7 +322,6 @@ namespace Htc.Vita.Core.Runtime
 
                     return false;
                 }
-
             }
         }
     }

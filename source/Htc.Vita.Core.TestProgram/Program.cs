@@ -30,14 +30,17 @@ namespace Htc.Vita.Core.TestProgram
             }
             Console.ReadKey();
 
-            Console.WriteLine("NetworkInterface.IsNetworkAvailable(): " + NetworkInterface.IsNetworkAvailable());
-            Console.WriteLine("NetworkInterface.IsInternetAvailable(): " + NetworkInterface.IsInternetAvailable());
+            Console.WriteLine($"NetworkInterface.IsNetworkAvailable(): {NetworkInterface.IsNetworkAvailable()}");
+            Console.WriteLine($"NetworkInterface.IsInternetAvailable(): {NetworkInterface.IsInternetAvailable()}");
             Console.ReadKey();
 
-            Console.WriteLine("Platform.DetectProcessArch(): " + Platform.DetectProcessArch());
+            Console.WriteLine($"Platform.DetectProcessArch(): {Platform.DetectProcessArch()}");
             Console.ReadKey();
 
-            Console.WriteLine("ProcessManager.IsElevatedProcess(Process.GetCurrentProcess()): " + ProcessManager.IsElevatedProcess(Process.GetCurrentProcess()));
+            Console.WriteLine($"ProcessManager.IsElevatedProcess(Process.GetCurrentProcess()): {ProcessManager.IsElevatedProcess(Process.GetCurrentProcess())}");
+            Console.ReadKey();
+
+            Console.WriteLine($"UserManager.IsShellUserElevated(): {UserManager.IsShellUserElevated()}");
             Console.ReadKey();
 
             var wpdDeviceInfos = WpdManager.GetDevices();
@@ -133,8 +136,8 @@ namespace Htc.Vita.Core.TestProgram
             var specificPortStatus = LocalPortManager.GetPortStatus(specificPort);
             var randomUnusedPortVerifyStatus = LocalPortManager.VerifyPortStatus(randomUnusedPort);
             var specificPortVerifyStatus = LocalPortManager.VerifyPortStatus(specificPort);
-            Console.WriteLine("Random unused port [" + randomUnusedPort + "] status: " + randomUnusedPortStatus + ", verify: " + randomUnusedPortVerifyStatus);
-            Console.WriteLine("Specific port [" + specificPort + "] status: " + specificPortStatus + ", verify: " + specificPortVerifyStatus);
+            Console.WriteLine($"Random unused port [{randomUnusedPort}] status: {randomUnusedPortStatus}, verify: {randomUnusedPortVerifyStatus}");
+            Console.WriteLine($"Specific port [{specificPort}] status: {specificPortStatus}, verify: {specificPortVerifyStatus}");
             Console.ReadKey();
 
             var processWatcherFactory = ProcessWatcherFactory.GetInstance();
@@ -161,7 +164,7 @@ namespace Htc.Vita.Core.TestProgram
             Console.ReadKey();
 
             var serviceName = "Winmgmt";
-            Console.WriteLine("service[" + serviceName + "].CurrentState: " + ServiceManager.QueryStartType(serviceName).CurrentState);
+            Console.WriteLine($"service[{serviceName}].CurrentState: {ServiceManager.QueryStartType(serviceName).CurrentState}");
             Console.ReadKey();
 
             Console.WriteLine("WARNING!! This program will reboot system");
@@ -174,13 +177,13 @@ namespace Htc.Vita.Core.TestProgram
         private static void OnProcessCreated(ProcessWatcher.ProcessInfo processInfo)
         {
             var path = processInfo.Path ?? "<empty path>";
-            Console.WriteLine("" + path + " (" + processInfo.Id + ") is created");
+            Console.WriteLine($"{path} ({processInfo.Id}) is created");
         }
 
         private static void OnProcessDeleted(ProcessWatcher.ProcessInfo processInfo)
         {
             var path = processInfo.Path ?? "<empty path>";
-            Console.WriteLine("" + path + " (" + processInfo.Id + ") is deleted");
+            Console.WriteLine($"{path} ({processInfo.Id}) is deleted");
         }
 
         private static void OnUsbDeviceConnected()
