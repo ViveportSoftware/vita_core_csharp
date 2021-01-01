@@ -25,7 +25,7 @@ namespace Htc.Vita.Core.Runtime
                 using (var managerHandle = Interop.Windows.OpenSCManagerW(
                         null,
                         null,
-                        Interop.Windows.ServiceControlManagerAccessRight.Connect
+                        Interop.Windows.ServiceControlManagerAccessRights.Connect
                 ))
                 {
                     if (managerHandle == null || managerHandle.IsInvalid)
@@ -47,9 +47,9 @@ namespace Htc.Vita.Core.Runtime
                     using (var serviceHandle = Interop.Windows.OpenServiceW(
                             managerHandle,
                             serviceName,
-                            Interop.Windows.ServiceAccessRight.ChangeConfig |
-                                    Interop.Windows.ServiceAccessRight.QueryConfig |
-                                    Interop.Windows.ServiceAccessRight.QueryStatus
+                            Interop.Windows.ServiceAccessRights.ChangeConfig |
+                                    Interop.Windows.ServiceAccessRights.QueryConfig |
+                                    Interop.Windows.ServiceAccessRights.QueryStatus
                     ))
                     {
                         if (serviceHandle == null || serviceHandle.IsInvalid)
@@ -62,7 +62,7 @@ namespace Htc.Vita.Core.Runtime
                         {
                             var success = Interop.Windows.ChangeServiceConfigW(
                                     serviceHandle,
-                                    Interop.Windows.ServiceType.NoChange,
+                                    Interop.Windows.ServiceTypes.NoChange,
                                     ConvertToPlatform(startType),
                                     Interop.Windows.ServiceErrorControl.NoChange,
                                     null,
@@ -98,7 +98,7 @@ namespace Htc.Vita.Core.Runtime
                 using (var managerHandle = Interop.Windows.OpenSCManagerW(
                         null,
                         null,
-                        Interop.Windows.ServiceControlManagerAccessRight.Connect
+                        Interop.Windows.ServiceControlManagerAccessRights.Connect
                 ))
                 {
                     if (managerHandle == null || managerHandle.IsInvalid)
@@ -111,7 +111,7 @@ namespace Htc.Vita.Core.Runtime
                     using (var serviceHandle = Interop.Windows.OpenServiceW(
                             managerHandle,
                             serviceName,
-                            Interop.Windows.ServiceAccessRight.QueryConfig
+                            Interop.Windows.ServiceAccessRights.QueryConfig
                     ))
                     {
                         if (serviceHandle != null && !serviceHandle.IsInvalid)
@@ -214,7 +214,7 @@ namespace Htc.Vita.Core.Runtime
                 using (var managerHandle = Interop.Windows.OpenSCManagerW(
                         null,
                         null,
-                        Interop.Windows.ServiceControlManagerAccessRight.Connect
+                        Interop.Windows.ServiceControlManagerAccessRights.Connect
                 ))
                 {
                     if (managerHandle.IsInvalid)
@@ -235,7 +235,7 @@ namespace Htc.Vita.Core.Runtime
                     using (var serviceHandle = Interop.Windows.OpenServiceW(
                             managerHandle,
                             serviceName,
-                            Interop.Windows.ServiceAccessRight.QueryConfig | Interop.Windows.ServiceAccessRight.QueryStatus
+                            Interop.Windows.ServiceAccessRights.QueryConfig | Interop.Windows.ServiceAccessRights.QueryStatus
                     ))
                     {
                         if (serviceHandle == null || serviceHandle.IsInvalid)
@@ -304,7 +304,7 @@ namespace Htc.Vita.Core.Runtime
                 using (var managerHandle = Interop.Windows.OpenSCManagerW(
                         null,
                         null,
-                        Interop.Windows.ServiceControlManagerAccessRight.Connect
+                        Interop.Windows.ServiceControlManagerAccessRights.Connect
                 ))
                 {
                     if (managerHandle == null || managerHandle.IsInvalid)
@@ -325,7 +325,7 @@ namespace Htc.Vita.Core.Runtime
                     using (var serviceHandle = Interop.Windows.OpenServiceW(
                             managerHandle,
                             serviceName,
-                            Interop.Windows.ServiceAccessRight.Start | Interop.Windows.ServiceAccessRight.QueryStatus
+                            Interop.Windows.ServiceAccessRights.Start | Interop.Windows.ServiceAccessRights.QueryStatus
                     ))
                     {
                         if (serviceHandle == null || serviceHandle.IsInvalid)

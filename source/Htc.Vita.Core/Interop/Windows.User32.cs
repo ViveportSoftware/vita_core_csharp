@@ -16,7 +16,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_    LPCWSTR          */ [In] string lpDevice,
                 /* _In_    DWORD            */ [In] uint iDevNum,
                 /* _Inout_ PDISPLAY_DEVICEW */ [In][Out] ref DisplayDeviceW lpDisplayDevice,
-                /* _In_    DWORD            */ [In] EnumDisplayDeviceFlag dwFlags
+                /* _In_    DWORD            */ [In] EnumDisplayDeviceFlags dwFlags
         );
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-exitwindowsex")]
@@ -26,7 +26,7 @@ namespace Htc.Vita.Core.Interop
                 ExactSpelling = true,
                 SetLastError = true)]
         internal static extern bool ExitWindowsEx(
-                /* _In_ UINT  */ [In] ExitType uFlags,
+                /* _In_ UINT  */ [In] ExitTypes uFlags,
                 /* _In_ DWORD */ [In] uint dwReason
         );
 

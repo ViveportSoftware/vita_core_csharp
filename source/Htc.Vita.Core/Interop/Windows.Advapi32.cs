@@ -31,7 +31,7 @@ namespace Htc.Vita.Core.Interop
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool ChangeServiceConfigW(
                 /* _In_      SC_HANDLE */ [In] SafeServiceHandle hService,
-                /* _In_      DWORD     */ [In] ServiceType dwServiceType,
+                /* _In_      DWORD     */ [In] ServiceTypes dwServiceType,
                 /* _In_      DWORD     */ [In] ServiceStartType dwStartType,
                 /* _In_      DWORD     */ [In] ServiceErrorControl dwErrorControl,
                 /* _In_opt_  LPCTSTR   */ [In] string lpBinaryPathName,
@@ -92,7 +92,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_opt_    LPSECURITY_ATTRIBUTES */ [In] SecurityAttributes lpProcessAttributes,
                 /* _In_opt_    LPSECURITY_ATTRIBUTES */ [In] SecurityAttributes lpThreadAttributes,
                 /* _In_        BOOL                  */ [In] bool bInheritHandle,
-                /* _In_        DWORD                 */ [In] ProcessCreationFlag dwCreationFlags,
+                /* _In_        DWORD                 */ [In] ProcessCreationFlags dwCreationFlags,
                 /* _In_opt_    LPVOID                */ [In] IntPtr lpEnvironment,
                 /* _In_opt_    LPCWSTR               */ [In] string lpCurrentDirectory,
                 /* _In_        LPSTARTUPINFOW        */ [In] ref StartupInfo lpStartupInfo,
@@ -111,7 +111,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_        DWORD                 */ [In] LogonFlag dwLogonFlags,
                 /* _In_opt_    LPCWSTR               */ [In] string lpApplicationName,
                 /* _Inout_opt_ LPWSTR                */ [In] string lpCommandLine,
-                /* _In_        DWORD                 */ [In] ProcessCreationFlag dwCreationFlags,
+                /* _In_        DWORD                 */ [In] ProcessCreationFlags dwCreationFlags,
                 /* _In_opt_    LPVOID                */ [In] IntPtr lpEnvironment,
                 /* _In_opt_    LPCWSTR               */ [In] string lpCurrentDirectory,
                 /* _In_        LPSTARTUPINFOW        */ [In] ref StartupInfo lpStartupInfo,
@@ -127,7 +127,7 @@ namespace Htc.Vita.Core.Interop
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool DuplicateTokenEx(
                 /* _In_     HANDLE                       */ [In] SafeTokenHandle existingToken,
-                /* _In_     DWORD                        */ [In] TokenAccessRight desiredAccess,
+                /* _In_     DWORD                        */ [In] TokenAccessRights desiredAccess,
                 /* _In_opt_ LPSECURITY_ATTRIBUTES        */ [In] SecurityAttributes threadAttributes,
                 /* _In_     SECURITY_IMPERSONATION_LEVEL */ [In] SecurityImpersonationLevel impersonationLevel,
                 /* _In_     TOKEN_TYPE                   */ [In] TokenType tokenType,
@@ -185,7 +185,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         internal static extern bool OpenProcessToken(
                 /* _In_  HANDLE  */ [In] SafeProcessHandle processHandle,
-                /* _In_  DWORD   */ [In] TokenAccessRight desiredAccess,
+                /* _In_  DWORD   */ [In] TokenAccessRights desiredAccess,
                 /* _Out_ PHANDLE */ [Out] out SafeTokenHandle tokenHandle
         );
 
@@ -198,7 +198,7 @@ namespace Htc.Vita.Core.Interop
         internal static extern SafeServiceHandle OpenSCManagerW(
                 /* _In_opt_ LPCTSTR */ [In] string lpMachineName,
                 /* _In_opt_ LPCTSTR */ [In] string lpDatabaseName,
-                /* _In_     DWORD   */ [In] ServiceControlManagerAccessRight dwDesiredAccess
+                /* _In_     DWORD   */ [In] ServiceControlManagerAccessRights dwDesiredAccess
         );
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-openservicew")]
@@ -210,7 +210,7 @@ namespace Htc.Vita.Core.Interop
         internal static extern SafeServiceHandle OpenServiceW(
                 /* _In_ SC_HANDLE */ [In] SafeServiceHandle hScManager,
                 /* _In_ LPCTSTR   */ [In] string lpServiceName,
-                /* _In_ DWORD     */ [In] ServiceAccessRight dwDesiredAccess
+                /* _In_ DWORD     */ [In] ServiceAccessRights dwDesiredAccess
         );
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-queryserviceconfigw")]
@@ -261,7 +261,7 @@ namespace Htc.Vita.Core.Interop
                 /* _Reserved_ DWORD                 */ [In] IntPtr reserved,
                 /* _In_opt_   LPWSTR                */ [In] string lpClass,
                 /* _In_       DWORD                 */ [In] int dwOptions,
-                /* _In_       REGSAM                */ [In] RegistryKeyAccessRight samDesired,
+                /* _In_       REGSAM                */ [In] RegistryKeyAccessRights samDesired,
                 /* _In_opt_   LPSECURITY_ATTRIBUTES */ [In] SecurityAttributes lpSecurityAttributes,
                 /* _Out_      PHKEY                 */ [Out] out SafeRegistryHandle phkResult,
                 /* _Out_opt_  LPDWORD               */ [Out] out int lpdwDisposition
@@ -276,7 +276,7 @@ namespace Htc.Vita.Core.Interop
         internal static extern Error RegDeleteKeyExW(
                 /* _In_       HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_       LPCWSTR */ [In] string lpSubKey,
-                /* _In_       REGSAM  */ [In] RegistryKeyAccessRight samDesired,
+                /* _In_       REGSAM  */ [In] RegistryKeyAccessRights samDesired,
                 /* _Reserved_ DWORD   */ [In] IntPtr reserved
         );
 
@@ -335,7 +335,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_     HKEY    */ [In] SafeRegistryHandle hKey,
                 /* _In_opt_ LPCWSTR */ [In] string subKey,
                 /* _In_opt_ DWORD   */ [In] int ulOptions,
-                /* _In_     REGSAM  */ [In] RegistryKeyAccessRight samDesired,
+                /* _In_     REGSAM  */ [In] RegistryKeyAccessRights samDesired,
                 /* _Out_    PHKEY   */ [Out] out SafeRegistryHandle hkResult
         );
 

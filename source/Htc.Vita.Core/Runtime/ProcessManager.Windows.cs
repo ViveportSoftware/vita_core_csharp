@@ -138,7 +138,7 @@ namespace Htc.Vita.Core.Runtime
                 }
                 catch (Win32Exception)
                 {
-                    using (var processHandle = Interop.Windows.OpenProcess(Interop.Windows.ProcessAccessRight.QueryLimitedInformation, false, (uint) processId))
+                    using (var processHandle = Interop.Windows.OpenProcess(Interop.Windows.ProcessAccessRights.QueryLimitedInformation, false, (uint) processId))
                     {
                         var bufferSize = 256;
                         while (true)
@@ -205,7 +205,7 @@ namespace Htc.Vita.Core.Runtime
                         Interop.Windows.SafeTokenHandle tokenHandle;
                         var success = Interop.Windows.OpenProcessToken(
                                 processHandle,
-                                Interop.Windows.TokenAccessRight.Query | Interop.Windows.TokenAccessRight.Duplicate,
+                                Interop.Windows.TokenAccessRights.Query | Interop.Windows.TokenAccessRights.Duplicate,
                                 out tokenHandle
                         );
                         if (!success)
@@ -291,7 +291,7 @@ namespace Htc.Vita.Core.Runtime
                         Interop.Windows.SafeTokenHandle tokenHandle;
                         var success = Interop.Windows.OpenProcessToken(
                                 processHandle,
-                                Interop.Windows.TokenAccessRight.Query,
+                                Interop.Windows.TokenAccessRights.Query,
                                 out tokenHandle
                         );
                         if (!success)
@@ -430,7 +430,7 @@ namespace Htc.Vita.Core.Runtime
                             Interop.Windows.SafeTokenHandle tokenHandle;
                             var success = Interop.Windows.OpenProcessToken(
                                     processHandle,
-                                    Interop.Windows.TokenAccessRight.Duplicate,
+                                    Interop.Windows.TokenAccessRights.Duplicate,
                                     out tokenHandle
                             );
                             if (!success)
@@ -442,11 +442,11 @@ namespace Htc.Vita.Core.Runtime
                             Interop.Windows.SafeTokenHandle newTokenHandle;
                             var securityAttributes = new Interop.Windows.SecurityAttributes();
                             securityAttributes.nLength = Marshal.SizeOf(securityAttributes);
-                            var tokenAccess = Interop.Windows.TokenAccessRight.AdjustDefault
-                                            | Interop.Windows.TokenAccessRight.AssignPrimary
-                                            | Interop.Windows.TokenAccessRight.AdjustSessionId
-                                            | Interop.Windows.TokenAccessRight.Duplicate
-                                            | Interop.Windows.TokenAccessRight.Query;
+                            var tokenAccess = Interop.Windows.TokenAccessRights.AdjustDefault
+                                            | Interop.Windows.TokenAccessRights.AssignPrimary
+                                            | Interop.Windows.TokenAccessRights.AdjustSessionId
+                                            | Interop.Windows.TokenAccessRights.Duplicate
+                                            | Interop.Windows.TokenAccessRights.Query;
                             success = Interop.Windows.DuplicateTokenEx(
                                     tokenHandle,
                                     tokenAccess,
@@ -471,7 +471,7 @@ namespace Htc.Vita.Core.Runtime
                                     Interop.Windows.LogonFlag.None,
                                     fileName,
                                     commandLine,
-                                    Interop.Windows.ProcessCreationFlag.CreateUnicodeEnvironment,
+                                    Interop.Windows.ProcessCreationFlags.CreateUnicodeEnvironment,
                                     IntPtr.Zero,
                                     Path.GetDirectoryName(fileName),
                                     ref startupInfo,
@@ -582,7 +582,7 @@ namespace Htc.Vita.Core.Runtime
                             securityAttributes.nLength = Marshal.SizeOf(securityAttributes);
                             success = Interop.Windows.DuplicateTokenEx(
                                     tokenHandle,
-                                    Interop.Windows.TokenAccessRight.AllAccess,
+                                    Interop.Windows.TokenAccessRights.AllAccess,
                                     securityAttributes,
                                     Interop.Windows.SecurityImpersonationLevel.SecurityImpersonation,
                                     Interop.Windows.TokenType.TokenPrimary,
@@ -652,7 +652,7 @@ namespace Htc.Vita.Core.Runtime
                                     securityAttributes,
                                     securityAttributes,
                                     false,
-                                    Interop.Windows.ProcessCreationFlag.CreateUnicodeEnvironment | Interop.Windows.ProcessCreationFlag.CreateNoWindow,
+                                    Interop.Windows.ProcessCreationFlags.CreateUnicodeEnvironment | Interop.Windows.ProcessCreationFlags.CreateNoWindow,
                                     environmentPtr,
                                     null,
                                     ref startupInfo,

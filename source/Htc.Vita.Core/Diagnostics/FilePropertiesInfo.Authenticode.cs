@@ -35,7 +35,7 @@ namespace Htc.Vita.Core.Diagnostics
                     var success = Windows.CryptQueryObject(
                             Windows.CertQueryObject.File,
                             Marshal.StringToHGlobalUni(fileInfo.FullName),
-                            Windows.CertQueryContentFlag.All,
+                            Windows.CertQueryContentFlags.All,
                             Windows.CertQueryFormatFlag.All,
                             0,
                             out certEncoding,
@@ -191,7 +191,7 @@ namespace Htc.Vita.Core.Diagnostics
                         dwStateAction = Windows.WinTrustDataStateAction.Ignore,
                         hWVTStateData = IntPtr.Zero,
                         pwszURLReference = IntPtr.Zero,
-                        dwProvFlags = Windows.WinTrustDataProviderFlag.SaferFlag,
+                        dwProvFlags = Windows.WinTrustDataProviderFlags.SaferFlag,
                         dwUIContext = Windows.WinTrustDataUIContext.Execute,
                         pSignatureSettings = IntPtr.Zero
                 };

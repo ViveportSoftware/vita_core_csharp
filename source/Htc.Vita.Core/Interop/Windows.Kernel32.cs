@@ -27,11 +27,11 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         internal static extern SafeFileHandle CreateFileW(
                 /* _In_     LPCTSTR               */ [In] string lpFileName,
-                /* _In_     DWORD                 */ [In] GenericAccessRight dwDesiredAccess,
-                /* _In_     DWORD                 */ [In] FileShare dwShareMode,
+                /* _In_     DWORD                 */ [In] GenericAccessRights dwDesiredAccess,
+                /* _In_     DWORD                 */ [In] FileShareModes dwShareMode,
                 /* _In_opt_ LPSECURITY_ATTRIBUTES */ [In] IntPtr lpSecurityAttributes,
                 /* _In_     DWORD                 */ [In] FileCreationDisposition dwCreationDisposition,
-                /* _In_     DWORD                 */ [In] FileAttributeFlag dwFlagsAndAttributes,
+                /* _In_     DWORD                 */ [In] FileAttributeFlags dwFlagsAndAttributes,
                 /* _In_opt_ HANDLE                */ [In] IntPtr hTemplateFile
         );
 
@@ -43,8 +43,8 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         internal static extern SafePipeHandle CreateNamedPipeW(
                 /* _In_     LPCTSTR               */ [In] string lpName,
-                /* _In_     DWORD                 */ [In] PipeOpenMode dwOpenMode,
-                /* _In_     DWORD                 */ [In] PipeMode dwPipeMode,
+                /* _In_     DWORD                 */ [In] PipeOpenModes dwOpenMode,
+                /* _In_     DWORD                 */ [In] PipeModes dwPipeMode,
                 /* _In_     DWORD                 */ [In] uint nMaxInstances,
                 /* _In_     DWORD                 */ [In] uint nOutBufferSize,
                 /* _In_     DWORD                 */ [In] uint nInBufferSize,
@@ -166,7 +166,7 @@ namespace Htc.Vita.Core.Interop
                 ExactSpelling = true,
                 SetLastError = true)]
         internal static extern SafeProcessHandle OpenProcess(
-                /* _In_ DWORD */ [In] ProcessAccessRight dwDesiredAccess,
+                /* _In_ DWORD */ [In] ProcessAccessRights dwDesiredAccess,
                 /* _In_ BOOL  */ [In] bool bInheritHandle,
                 /* _In_ DWORD */ [In] uint dwProcessId
         );

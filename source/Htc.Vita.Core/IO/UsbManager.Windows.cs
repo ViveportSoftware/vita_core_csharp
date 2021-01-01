@@ -35,7 +35,7 @@ namespace Htc.Vita.Core.IO
                         ref classGuid,
                         null,
                         IntPtr.Zero,
-                        Interop.Windows.DeviceInfoGetClassFlag.Present | Interop.Windows.DeviceInfoGetClassFlag.DeviceInterface
+                        Interop.Windows.DeviceInfoGetClassFlags.Present | Interop.Windows.DeviceInfoGetClassFlags.DeviceInterface
                 ))
                 {
                     if (deviceInfoSetHandle == null || deviceInfoSetHandle.IsInvalid)
@@ -214,11 +214,11 @@ namespace Htc.Vita.Core.IO
                 var result = string.Empty;
                 using (var deviceHandle = Interop.Windows.CreateFileW(
                         devicePath,
-                        Interop.Windows.GenericAccessRight.Read | Interop.Windows.GenericAccessRight.Write,
-                        Interop.Windows.FileShare.Read | Interop.Windows.FileShare.Write,
+                        Interop.Windows.GenericAccessRights.Read | Interop.Windows.GenericAccessRights.Write,
+                        Interop.Windows.FileShareModes.Read | Interop.Windows.FileShareModes.Write,
                         IntPtr.Zero,
                         Interop.Windows.FileCreationDisposition.OpenExisting,
-                        Interop.Windows.FileAttributeFlag.FlagOverlapped,
+                        Interop.Windows.FileAttributeFlags.FlagOverlapped,
                         IntPtr.Zero
                 ))
                 {
@@ -282,11 +282,11 @@ namespace Htc.Vita.Core.IO
                 var result = string.Empty;
                 using (var deviceHandle = Interop.Windows.CreateFileW(
                         devicePath,
-                        Interop.Windows.GenericAccessRight.Read | Interop.Windows.GenericAccessRight.Write,
-                        Interop.Windows.FileShare.Read | Interop.Windows.FileShare.Write,
+                        Interop.Windows.GenericAccessRights.Read | Interop.Windows.GenericAccessRights.Write,
+                        Interop.Windows.FileShareModes.Read | Interop.Windows.FileShareModes.Write,
                         IntPtr.Zero,
                         Interop.Windows.FileCreationDisposition.OpenExisting,
-                        Interop.Windows.FileAttributeFlag.FlagOverlapped,
+                        Interop.Windows.FileAttributeFlags.FlagOverlapped,
                         IntPtr.Zero
                 ))
                 {
@@ -349,11 +349,11 @@ namespace Htc.Vita.Core.IO
                 var result = string.Empty;
                 using (var deviceHandle = Interop.Windows.CreateFileW(
                         devicePath,
-                        Interop.Windows.GenericAccessRight.Read | Interop.Windows.GenericAccessRight.Write,
-                        Interop.Windows.FileShare.Read | Interop.Windows.FileShare.Write,
+                        Interop.Windows.GenericAccessRights.Read | Interop.Windows.GenericAccessRights.Write,
+                        Interop.Windows.FileShareModes.Read | Interop.Windows.FileShareModes.Write,
                         IntPtr.Zero,
                         Interop.Windows.FileCreationDisposition.OpenExisting,
-                        Interop.Windows.FileAttributeFlag.FlagOverlapped,
+                        Interop.Windows.FileAttributeFlags.FlagOverlapped,
                         IntPtr.Zero
                 ))
                 {
@@ -416,11 +416,11 @@ namespace Htc.Vita.Core.IO
                 var result = string.Empty;
                 using (var deviceHandle = Interop.Windows.CreateFileW(
                         devicePath,
-                        Interop.Windows.GenericAccessRight.Read | Interop.Windows.GenericAccessRight.Write,
-                        Interop.Windows.FileShare.Read | Interop.Windows.FileShare.Write,
+                        Interop.Windows.GenericAccessRights.Read | Interop.Windows.GenericAccessRights.Write,
+                        Interop.Windows.FileShareModes.Read | Interop.Windows.FileShareModes.Write,
                         IntPtr.Zero,
                         Interop.Windows.FileCreationDisposition.OpenExisting,
-                        Interop.Windows.FileAttributeFlag.FlagOverlapped,
+                        Interop.Windows.FileAttributeFlags.FlagOverlapped,
                         IntPtr.Zero
                 ))
                 {
@@ -482,11 +482,11 @@ namespace Htc.Vita.Core.IO
 
                 using (var deviceHandle = Interop.Windows.CreateFileW(
                         devicePath,
-                        Interop.Windows.GenericAccessRight.Read | Interop.Windows.GenericAccessRight.Write,
-                        Interop.Windows.FileShare.Read | Interop.Windows.FileShare.Write,
+                        Interop.Windows.GenericAccessRights.Read | Interop.Windows.GenericAccessRights.Write,
+                        Interop.Windows.FileShareModes.Read | Interop.Windows.FileShareModes.Write,
                         IntPtr.Zero,
                         Interop.Windows.FileCreationDisposition.OpenExisting,
-                        Interop.Windows.FileAttributeFlag.FlagOverlapped,
+                        Interop.Windows.FileAttributeFlags.FlagOverlapped,
                         IntPtr.Zero
                 ))
                 {
@@ -570,7 +570,7 @@ namespace Htc.Vita.Core.IO
                         ref classGuid,
                         null,
                         IntPtr.Zero,
-                        Interop.Windows.DeviceInfoGetClassFlag.Present | Interop.Windows.DeviceInfoGetClassFlag.DeviceInterface
+                        Interop.Windows.DeviceInfoGetClassFlags.Present | Interop.Windows.DeviceInfoGetClassFlags.DeviceInterface
                 ))
                 {
                     if (deviceInfoSetHandle == null || deviceInfoSetHandle.IsInvalid)
@@ -724,7 +724,7 @@ namespace Htc.Vita.Core.IO
                         ref classGuid,
                         null,
                         IntPtr.Zero,
-                        Interop.Windows.DeviceInfoGetClassFlag.Present | Interop.Windows.DeviceInfoGetClassFlag.DeviceInterface
+                        Interop.Windows.DeviceInfoGetClassFlags.Present | Interop.Windows.DeviceInfoGetClassFlags.DeviceInterface
                 ))
                 {
                     if (deviceInfoSetHandle == null || deviceInfoSetHandle.IsInvalid)

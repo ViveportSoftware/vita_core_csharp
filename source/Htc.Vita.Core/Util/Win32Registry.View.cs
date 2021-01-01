@@ -14,11 +14,11 @@ namespace Htc.Vita.Core.Util
             /// <summary>
             /// The 64-bit view
             /// </summary>
-            Registry64 = Interop.Windows.RegistryKeyAccessRight.Wow6464Key,
+            Registry64 = Interop.Windows.RegistryKeyAccessRights.Wow6464Key,
             /// <summary>
             /// The 32-bit view
             /// </summary>
-            Registry32 = Interop.Windows.RegistryKeyAccessRight.Wow6432Key
+            Registry32 = Interop.Windows.RegistryKeyAccessRights.Wow6432Key
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Htc.Vita.Core.Shell
             try
             {
                 Windows.SHChangeNotify(
-                        Windows.ShellChangeNotifyEventId.AssociationChanged,
+                        Windows.ShellChangeNotifyEventIds.AssociationChanged,
                         Windows.ShellChangeNotifyFlags.IdList,
                         IntPtr.Zero,
                         IntPtr.Zero

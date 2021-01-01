@@ -11,21 +11,21 @@ namespace Htc.Vita.Core.Runtime
     {
         internal static class Windows
         {
-            private static Interop.Windows.ExitType ConvertWindowsExitTypeFrom(ExitType exitType)
+            private static Interop.Windows.ExitTypes ConvertWindowsExitTypeFrom(ExitType exitType)
             {
                 if (exitType == ExitType.Logoff)
                 {
-                    return Interop.Windows.ExitType.Force | Interop.Windows.ExitType.Logoff;
+                    return Interop.Windows.ExitTypes.Force | Interop.Windows.ExitTypes.Logoff;
                 }
                 if (exitType == ExitType.Shutdown)
                 {
-                    return Interop.Windows.ExitType.Force | Interop.Windows.ExitType.Poweroff;
+                    return Interop.Windows.ExitTypes.Force | Interop.Windows.ExitTypes.Poweroff;
                 }
                 if (exitType == ExitType.Reboot)
                 {
-                    return Interop.Windows.ExitType.Force | Interop.Windows.ExitType.Reboot;
+                    return Interop.Windows.ExitTypes.Force | Interop.Windows.ExitTypes.Reboot;
                 }
-                return Interop.Windows.ExitType.Force | Interop.Windows.ExitType.Reboot;
+                return Interop.Windows.ExitTypes.Force | Interop.Windows.ExitTypes.Reboot;
             }
 
             internal static void ExitInPlatform(ExitType exitType)
@@ -37,7 +37,7 @@ namespace Htc.Vita.Core.Runtime
                     Interop.Windows.SafeTokenHandle tokenHandle;
                     var success = Interop.Windows.OpenProcessToken(
                             processHandle,
-                            Interop.Windows.TokenAccessRight.AdjustPrivileges | Interop.Windows.TokenAccessRight.Query,
+                            Interop.Windows.TokenAccessRights.AdjustPrivileges | Interop.Windows.TokenAccessRights.Query,
                             out tokenHandle
                     );
                     if (!success)
@@ -49,7 +49,7 @@ namespace Htc.Vita.Core.Runtime
                     Interop.Windows.TokenPrivileges tokenPrivileges;
                     tokenPrivileges.Count = 1;
                     tokenPrivileges.Luid = 0;
-                    tokenPrivileges.Attr = Interop.Windows.SePrivilege.Enabled;
+                    tokenPrivileges.Attr = Interop.Windows.SePrivileges.Enabled;
                     success = Interop.Windows.LookupPrivilegeValueW(
                             null,
                             Interop.Windows.SeShutdownName,

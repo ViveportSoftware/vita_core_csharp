@@ -164,50 +164,50 @@ namespace Htc.Vita.Core.Runtime
                 _pipeName = "";
             }
 
-            private static Windows.PipeMode ConvertPipeModeFrom(PipeTransmissionMode transmissionMode)
+            private static Windows.PipeModes ConvertPipeModeFrom(PipeTransmissionMode transmissionMode)
             {
                 if (transmissionMode == PipeTransmissionMode.Message)
                 {
-                    return Windows.PipeMode.TypeMessage | Windows.PipeMode.ReadModeMessage;
+                    return Windows.PipeModes.TypeMessage | Windows.PipeModes.ReadModeMessage;
                 }
-                return Windows.PipeMode.TypeByte | Windows.PipeMode.ReadModeByte;
+                return Windows.PipeModes.TypeByte | Windows.PipeModes.ReadModeByte;
             }
 
-            private static Windows.PipeOpenMode ConvertPipeOpenModeFrom(
+            private static Windows.PipeOpenModes ConvertPipeOpenModeFrom(
                     PipeDirection pipeDirection,
                     PipeOptions pipeOptions,
                     int maxNumberOfServerInstances)
             {
-                var result = Windows.PipeOpenMode.None;
+                var result = Windows.PipeOpenModes.None;
                 if (pipeDirection == PipeDirection.In)
                 {
-                    result = Windows.PipeOpenMode.AccessInbound;
+                    result = Windows.PipeOpenModes.AccessInbound;
                 }
                 else if (pipeDirection == PipeDirection.Out)
                 {
-                    result = Windows.PipeOpenMode.AccessOutbound;
+                    result = Windows.PipeOpenModes.AccessOutbound;
                 }
                 else if (pipeDirection == PipeDirection.InOut)
                 {
-                    result = Windows.PipeOpenMode.AccessDuplex;
+                    result = Windows.PipeOpenModes.AccessDuplex;
                 }
 
                 if (pipeOptions == PipeOptions.Asynchronous)
                 {
-                    result |= Windows.PipeOpenMode.FlagOverlapped;
+                    result |= Windows.PipeOpenModes.FlagOverlapped;
                 }
                 else if (pipeOptions == PipeOptions.WriteThrough)
                 {
-                    result |= Windows.PipeOpenMode.FlagWriteThrough;
+                    result |= Windows.PipeOpenModes.FlagWriteThrough;
                 }
                 else if (pipeOptions == (PipeOptions)0x20000000 /* PipeOptions.CurrentUserOnly */)
                 {
-                    result |= Windows.PipeOpenMode.CurrentUserOnly;
+                    result |= Windows.PipeOpenModes.CurrentUserOnly;
                 }
 
                 if (maxNumberOfServerInstances == 1)
                 {
-                    result |= Windows.PipeOpenMode.FlagFirstPipeInstance;
+                    result |= Windows.PipeOpenModes.FlagFirstPipeInstance;
                 }
 
                 return result;

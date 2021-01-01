@@ -246,13 +246,13 @@ namespace Htc.Vita.Core.Interop
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnotifyflags")]
             [PreserveSig]
             BitsResult SetNotifyFlags(
-                    /* ULONG */ [In] BitsNotifyFlag val
+                    /* ULONG */ [In] BitsNotifyFlags val
             );
 
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getnotifyflags")]
             [PreserveSig]
             BitsResult GetNotifyFlags(
-                    /* __RPC__out ULONG* */ [Out] out BitsNotifyFlag pVal
+                    /* __RPC__out ULONG* */ [Out] out BitsNotifyFlags pVal
             );
 
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnotifyinterface")]

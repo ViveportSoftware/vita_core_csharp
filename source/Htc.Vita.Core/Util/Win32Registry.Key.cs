@@ -1119,19 +1119,19 @@ namespace Htc.Vita.Core.Util
                 throw new IOException("Unexpected error: " + errorCode, (int)errorCode);
             }
 
-            private static Windows.RegistryKeyAccessRight ToRegistryKeyAccessRight(bool isWritable)
+            private static Windows.RegistryKeyAccessRights ToRegistryKeyAccessRight(bool isWritable)
             {
                 if (!isWritable)
                 {
-                    return Windows.RegistryKeyAccessRight.Read;
+                    return Windows.RegistryKeyAccessRights.Read;
                 }
 
-                return Windows.RegistryKeyAccessRight.Read | Windows.RegistryKeyAccessRight.Write;
+                return Windows.RegistryKeyAccessRights.Read | Windows.RegistryKeyAccessRights.Write;
             }
 
-            private static Windows.RegistryKeyAccessRight ToRegistryKeyAccessRight(View view)
+            private static Windows.RegistryKeyAccessRights ToRegistryKeyAccessRight(View view)
             {
-                return (Windows.RegistryKeyAccessRight)view;
+                return (Windows.RegistryKeyAccessRights)view;
             }
 
             private static Windows.RegistryValueType ToRegistryValueType(ValueKind valueKind)
