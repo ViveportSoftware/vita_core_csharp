@@ -12,7 +12,7 @@ namespace Htc.Vita.Core.Runtime
     {
         internal static class Windows
         {
-            internal static string GetFirstActiveUser(string serverName)
+            internal static string GetFirstActiveUserInPlatform(string serverName)
             {
                 var windowsUsers = GetPlatformUsers(serverName);
                 return (from windowsUser
@@ -226,7 +226,7 @@ namespace Htc.Vita.Core.Runtime
                 return false;
             }
 
-            internal static bool SendMessageToFirstActiveUser(
+            internal static bool SendMessageToFirstActiveUserInPlatform(
                     string title,
                     string message,
                     uint timeout,

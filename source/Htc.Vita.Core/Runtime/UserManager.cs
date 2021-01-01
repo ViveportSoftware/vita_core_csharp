@@ -15,7 +15,7 @@ namespace Htc.Vita.Core.Runtime
         /// <returns>System.String.</returns>
         public static string GetFirstActiveUser()
         {
-            var result = Windows.GetFirstActiveUser(null);
+            var result = Windows.GetFirstActiveUserInPlatform(null);
             if (string.IsNullOrWhiteSpace(result))
             {
                 result = GetCurrentUser();
@@ -77,7 +77,7 @@ namespace Htc.Vita.Core.Runtime
                 string message,
                 uint timeout)
         {
-            return Windows.SendMessageToFirstActiveUser(
+            return Windows.SendMessageToFirstActiveUserInPlatform(
                     title,
                     message,
                     timeout,
