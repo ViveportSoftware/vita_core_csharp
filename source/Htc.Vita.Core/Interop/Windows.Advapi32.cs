@@ -99,6 +99,25 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_       LPPROCESS_INFORMATION */ [Out] out ProcessInformation lpProcessInformation
         );
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createprocesswithtokenw")]
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool CreateProcessWithTokenW(
+                /* _In_        HANDLE                */ [In] SafeTokenHandle hToken,
+                /* _In_        DWORD                 */ [In] LogonFlag dwLogonFlags,
+                /* _In_opt_    LPCWSTR               */ [In] string lpApplicationName,
+                /* _Inout_opt_ LPWSTR                */ [In] string lpCommandLine,
+                /* _In_        DWORD                 */ [In] ProcessCreationFlag dwCreationFlags,
+                /* _In_opt_    LPVOID                */ [In] IntPtr lpEnvironment,
+                /* _In_opt_    LPCWSTR               */ [In] string lpCurrentDirectory,
+                /* _In_        LPSTARTUPINFOW        */ [In] ref StartupInfo lpStartupInfo,
+                /* _Out_       LPPROCESS_INFORMATION */ [Out] out ProcessInformation lpProcessInformation
+        );
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/securitybaseapi/nf-securitybaseapi-duplicatetokenex")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,

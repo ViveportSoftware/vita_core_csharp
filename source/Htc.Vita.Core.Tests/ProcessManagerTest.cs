@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.IO;
+using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Runtime;
 using Xunit;
 using Xunit.Abstractions;
@@ -63,9 +64,9 @@ namespace Htc.Vita.Core.Tests
             {
                 Assert.NotNull(process);
                 Assert.True(process.Id > 4);
-                _output.WriteLine("Start " + fileInfo.FullName + " successfully on PID: " + process.Id);
+                _output.WriteLine($"Start {fileInfo.FullName} successfully on PID: {process.Id}");
                 Assert.True(ProcessManager.KillProcessById(process.Id));
-                _output.WriteLine("Kill " + fileInfo.Name + " successfully on PID: " + process.Id);
+                _output.WriteLine($"Kill {fileInfo.Name} successfully on PID: {process.Id}");
             }
         }
 
@@ -82,10 +83,10 @@ namespace Htc.Vita.Core.Tests
             {
                 Assert.NotNull(process);
                 Assert.True(process.Id > 4);
-                _output.WriteLine("Start " + fileInfo.FullName + " successfully on PID: " + process.Id);
+                _output.WriteLine($"Start {fileInfo.FullName} successfully on PID: {process.Id}");
                 Assert.True(ProcessManager.IsCurrentUserProcess(process));
                 Assert.True(ProcessManager.KillProcessById(process.Id));
-                _output.WriteLine("Kill " + fileInfo.Name + " successfully on PID: " + process.Id);
+                _output.WriteLine($"Kill {fileInfo.Name} successfully on PID: {process.Id}");
             }
         }
 
@@ -102,10 +103,34 @@ namespace Htc.Vita.Core.Tests
             {
                 Assert.NotNull(process);
                 Assert.True(process.Id > 4);
-                _output.WriteLine("Start " + fileInfo.FullName + " successfully on PID: " + process.Id);
-                _output.WriteLine("ProcessManager.IsElevatedProcess(process): " + ProcessManager.IsElevatedProcess(process));
+                _output.WriteLine($"Start {fileInfo.FullName} successfully on PID: {process.Id}");
+                Logger.GetInstance(typeof(ProcessManagerTest)).Info($"ProcessManager.IsElevatedProcess(process): {ProcessManager.IsElevatedProcess(process)}");
                 Assert.True(ProcessManager.KillProcessById(process.Id));
-                _output.WriteLine("Kill " + fileInfo.Name + " successfully on PID: " + process.Id);
+                _output.WriteLine($"Kill {fileInfo.Name} successfully on PID: {process.Id}");
+            }
+        }
+
+        [Fact]
+        public void Default_5_LaunchProcessAsShellUser()
+        {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+            var fileInfo = new FileInfo("C:\\Windows\\System32\\notepad.exe");
+            Assert.True(fileInfo.Exists);
+            if (!ProcessManager.IsElevatedProcess(Process.GetCurrentProcess()))
+            {
+                Logger.GetInstance(typeof(ProcessManagerTest)).Warn("This API should be invoked by elevated user process");
+            }
+            else
+            {
+                var processInfo = ProcessManager.LaunchProcessAsShellUser(fileInfo.FullName, "");
+                Assert.NotNull(processInfo);
+                Assert.True(processInfo.Id > 4);
+                _output.WriteLine($"Start {fileInfo.FullName} successfully on PID: {processInfo.Id}");
+                Assert.True(ProcessManager.KillProcessById(processInfo.Id));
+                _output.WriteLine($"Kill {fileInfo.Name} successfully on PID: {processInfo.Id}");
             }
         }
     }

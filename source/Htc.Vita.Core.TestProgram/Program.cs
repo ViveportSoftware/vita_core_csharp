@@ -43,6 +43,19 @@ namespace Htc.Vita.Core.TestProgram
             Console.WriteLine($"UserManager.IsShellUserElevated(): {UserManager.IsShellUserElevated()}");
             Console.ReadKey();
 
+            var processInfoAsShellUser = ProcessManager.LaunchProcessAsShellUser("C:\\Windows\\System32\\notepad.exe", "");
+            if (processInfoAsShellUser == null)
+            {
+                Console.WriteLine("processInfoAsShellUser == null");
+            }
+            else
+            {
+                Console.WriteLine($"processInfoAsShellUser.Id: {processInfoAsShellUser.Id}");
+                Console.WriteLine($"processInfoAsShellUser.Name: {processInfoAsShellUser.Name}");
+                Console.WriteLine($"processInfoAsShellUser.Path: {processInfoAsShellUser.Path}");
+            }
+            Console.ReadKey();
+
             var wpdDeviceInfos = WpdManager.GetDevices();
             var index = 0;
             foreach (var wpdDeviceInfo in wpdDeviceInfos)

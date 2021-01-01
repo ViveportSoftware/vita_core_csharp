@@ -582,6 +582,15 @@ namespace Htc.Vita.Core.Interop
             /* IMAGE_FILE_MACHINE_CEE         */ Cee        = 0xc0ee
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createprocesswithtokenw")]
+        internal enum LogonFlag : uint
+        {
+            /*                            */ None               =          0,
+            /* LOGON_WITH_PROFILE         */ WithProfile        = 0x00000001,
+            /* LOGON_NETCREDENTIALS_ONLY  */ NetCredentialsOnly = 0x00000002,
+            /* LOGON_ZERO_PASSWORD_BUFFER */ ZeroPasswordBuffer = 0x80000000
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messagebox")]
         internal enum MessageBoxStyle : uint
         {
@@ -702,6 +711,7 @@ namespace Htc.Vita.Core.Interop
         [Flags]
         internal enum ProcessCreationFlag : uint
         {
+            /*                                  */ None                         =          0,
             /* DEBUG_PROCESS                    */ DebugProcess                 = 0x00000001,
             /* DEBUG_ONLY_THIS_PROCESS          */ DebugOnlyThisProcess         = 0x00000002,
             /* CREATE_SUSPENDED                 */ CreateSuspended              = 0x00000004,

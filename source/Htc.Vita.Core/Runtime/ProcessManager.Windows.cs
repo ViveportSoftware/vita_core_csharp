@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
@@ -392,7 +393,132 @@ namespace Htc.Vita.Core.Runtime
                 }
             }
 
-            internal static ProcessInfo LaunchProcessAsUserInPlatform(string fileName, string arguments)
+            internal static ProcessInfo LaunchProcessAsShellUserInPlatform(
+                    string fileName,
+                    string arguments)
+            {
+                if (!IsElevatedProcess(Process.GetCurrentProcess()))
+                {
+                    Logger.GetInstance(typeof(Windows)).Error("This API should be invoked by elevated user process");
+                    return null;
+                }
+
+                var shellWindowHandle = Interop.Windows.GetShellWindow();
+                if (shellWindowHandle == IntPtr.Zero)
+                {
+                    Logger.GetInstance(typeof(Windows)).Error($"Can not get shell window handle, error code: {Marshal.GetLastWin32Error()}");
+                    return null;
+                }
+
+                try
+                {
+                    var shellWindowProcessId = 0U;
+                    Interop.Windows.GetWindowThreadProcessId(
+                            shellWindowHandle,
+                            ref shellWindowProcessId
+                    );
+                    if (shellWindowProcessId == 0)
+                    {
+                        Logger.GetInstance(typeof(Windows)).Error($"Can not get shell window process id, error code: {Marshal.GetLastWin32Error()}");
+                        return null;
+                    }
+
+                    using (var shellWindowProcess = Process.GetProcessById((int) shellWindowProcessId))
+                    {
+                        using (var processHandle = new Interop.Windows.SafeProcessHandle(shellWindowProcess, false))
+                        {
+                            Interop.Windows.SafeTokenHandle tokenHandle;
+                            var success = Interop.Windows.OpenProcessToken(
+                                    processHandle,
+                                    Interop.Windows.TokenAccessRight.Duplicate,
+                                    out tokenHandle
+                            );
+                            if (!success)
+                            {
+                                Logger.GetInstance(typeof(Windows)).Error($"Can not open process token. error code: {Marshal.GetLastWin32Error()}");
+                                return null;
+                            }
+
+                            Interop.Windows.SafeTokenHandle newTokenHandle;
+                            var securityAttributes = new Interop.Windows.SecurityAttributes();
+                            securityAttributes.nLength = Marshal.SizeOf(securityAttributes);
+                            var tokenAccess = Interop.Windows.TokenAccessRight.AdjustDefault
+                                            | Interop.Windows.TokenAccessRight.AssignPrimary
+                                            | Interop.Windows.TokenAccessRight.AdjustSessionId
+                                            | Interop.Windows.TokenAccessRight.Duplicate
+                                            | Interop.Windows.TokenAccessRight.Query;
+                            success = Interop.Windows.DuplicateTokenEx(
+                                    tokenHandle,
+                                    tokenAccess,
+                                    securityAttributes,
+                                    Interop.Windows.SecurityImpersonationLevel.SecurityImpersonation,
+                                    Interop.Windows.TokenType.TokenPrimary,
+                                    out newTokenHandle
+                            );
+                            if (!success)
+                            {
+                                Logger.GetInstance(typeof(Windows)).Error($"Can not duplicate token, error code: {Marshal.GetLastWin32Error()}");
+                                return null;
+                            }
+
+                            var commandLine = $"\"{fileName}\" {arguments}";
+                            var startupInfo = new Interop.Windows.StartupInfo();
+                            startupInfo.cb = Marshal.SizeOf(startupInfo);
+
+                            Interop.Windows.ProcessInformation processInformation;
+                            success = Interop.Windows.CreateProcessWithTokenW(
+                                    newTokenHandle,
+                                    Interop.Windows.LogonFlag.None,
+                                    fileName,
+                                    commandLine,
+                                    Interop.Windows.ProcessCreationFlag.CreateUnicodeEnvironment,
+                                    IntPtr.Zero,
+                                    Path.GetDirectoryName(fileName),
+                                    ref startupInfo,
+                                    out processInformation
+                            );
+
+                            if (!success)
+                            {
+                                Logger.GetInstance(typeof(Windows)).Error($"Can not create process as shell user, error code: {Marshal.GetLastWin32Error()}");
+                                return null;
+                            }
+
+                            var processId = processInformation.dwProcessID;
+                            var processPath = GetPlatformProcessPathById(processId);
+                            string processName;
+                            using (var process = Process.GetProcessById(processId))
+                            {
+                                processName = process.ProcessName;
+                            }
+
+                            return new ProcessInfo
+                            {
+                                    Id = processId,
+                                    Name = processName,
+                                    Path = processPath
+                            };
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(Windows)).Error($"Can not launch process as user: {e}");
+                }
+                finally
+                {
+                    if (shellWindowHandle != IntPtr.Zero)
+                    {
+                        Interop.Windows.CloseHandle(shellWindowHandle);
+                    }
+                }
+
+                return null;
+            }
+
+            internal static ProcessInfo LaunchProcessAsUserInPlatform(
+                    string fileName,
+                    string arguments)
             {
                 var machineName = Environment.MachineName;
                 using (var serverHandle = Interop.Windows.WTSOpenServerW(machineName))
