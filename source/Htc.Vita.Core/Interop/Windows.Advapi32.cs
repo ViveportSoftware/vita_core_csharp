@@ -22,6 +22,19 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_opt_ PDWORD            */ [In][Out] IntPtr returnLength
         );
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winsvc/nf-winsvc-changeserviceconfig2w")]
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool ChangeServiceConfig2W(
+                /* _In_     SC_HANDLE */ [In] SafeServiceHandle hService,
+                /* _In_     DWORD     */ [In] ServiceConfig dwInfoLevel,
+                /* _In_opt_ LPVOID    */ [In] IntPtr lpInfo
+        );
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-changeserviceconfigw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -213,6 +226,21 @@ namespace Htc.Vita.Core.Interop
                 /* _In_ DWORD     */ [In] ServiceAccessRights dwDesiredAccess
         );
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winsvc/nf-winsvc-queryserviceconfig2w")]
+        [DllImport(Libraries.WindowsAdvapi32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool QueryServiceConfig2W(
+                /* _In_                   SC_HANDLE */ [In] SafeServiceHandle hService,
+                /* _In_                   DWORD     */ [In] ServiceConfig dwInfoLevel,
+                /* _Out_writes_bytes_opt_ LPBYTE    */ [In][Out] IntPtr lpBuffer,
+                /* _In_                   DWORD     */ [In] uint cbBufSize,
+                /* _Out_                  LPDWORD   */ [Out] out uint pcbBytesNeeded
+        );
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-queryserviceconfigw")]
         [DllImport(Libraries.WindowsAdvapi32,
                 CallingConvention = CallingConvention.Winapi,
@@ -224,7 +252,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_      SC_HANDLE              */ [In] SafeServiceHandle hService,
                 /* _Out_opt_ LPQUERY_SERVICE_CONFIG */ [In][Out] IntPtr lpServiceConfig,
                 /* _In_      DWORD                  */ [In] uint cbBufSize,
-                /* _Out_     LPDWORD                */ [In][Out] ref uint pcbBytesNeeded
+                /* _Out_     LPDWORD                */ [Out] out uint pcbBytesNeeded
         );
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-queryservicestatus")]

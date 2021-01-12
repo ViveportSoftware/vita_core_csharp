@@ -10,6 +10,51 @@ namespace Htc.Vita.Core.TestProgram
     {
         private static void Main()
         {
+            /*
+            var testServiceName = "HtcVitaCoreTestService";
+            var exists = ServiceManager.CheckIfExists(testServiceName);
+            if (!exists)
+            {
+                Console.WriteLine($"service[{testServiceName}] does NOT exist");
+            }
+            else
+            {
+                var testServiceInfo = ServiceManager.QueryStartType(testServiceName);
+                var testServiceCurrentState = testServiceInfo.CurrentState;
+                var testServiceStartType = testServiceInfo.StartType;
+                Console.WriteLine($"service[{testServiceName}].CurrentState: {testServiceCurrentState}");
+                Console.WriteLine($"service[{testServiceName}].StartType: {testServiceStartType}");
+                Console.ReadKey();
+                if (testServiceCurrentState == ServiceManager.CurrentState.Running)
+                {
+                    Console.WriteLine($"service[{testServiceName}] is running. skipped");
+                }
+                else
+                {
+                    var newStartType = ServiceManager.StartType.DelayedAutomatic;
+                    Console.WriteLine($"Change start type to: {newStartType}");
+                    var testServiceInfo2 = ServiceManager.ChangeStartType(testServiceName, newStartType);
+                    var testServiceStartType2 = testServiceInfo2.StartType;
+                    Console.WriteLine($"service[{testServiceName}].StartType: {testServiceStartType2}");
+                    Console.ReadKey();
+
+                    newStartType = ServiceManager.StartType.Manual;
+                    Console.WriteLine($"Change start type to: {newStartType}");
+                    var testServiceInfo3 = ServiceManager.ChangeStartType(testServiceName, newStartType);
+                    var testServiceStartType3 = testServiceInfo3.StartType;
+                    Console.WriteLine($"service[{testServiceName}].StartType: {testServiceStartType3}");
+                    Console.ReadKey();
+
+                    newStartType = ServiceManager.StartType.Automatic;
+                    Console.WriteLine($"Change start type to: {newStartType}");
+                    var testServiceInfo4 = ServiceManager.ChangeStartType(testServiceName, newStartType);
+                    var testServiceStartType4 = testServiceInfo4.StartType;
+                    Console.WriteLine($"service[{testServiceName}].StartType: {testServiceStartType4}");
+                    Console.ReadKey();
+                }
+            }
+            */
+
             SecurityProtocolManager.ApplyAvailableProtocol();
 
             Console.WriteLine($"SecurityProtocolManager.GetAvailableProtocol(): {SecurityProtocolManager.GetAvailableProtocol()}");
@@ -177,7 +222,13 @@ namespace Htc.Vita.Core.TestProgram
             Console.ReadKey();
 
             var serviceName = "Winmgmt";
-            Console.WriteLine($"service[{serviceName}].CurrentState: {ServiceManager.QueryStartType(serviceName).CurrentState}");
+            var serviceInfo = ServiceManager.QueryStartType(serviceName);
+            Console.WriteLine($"service[{serviceName}].CurrentState: {serviceInfo.CurrentState}");
+            Console.WriteLine($"service[{serviceName}].StartType: {serviceInfo.StartType}");
+            serviceName = "BITS";
+            serviceInfo = ServiceManager.QueryStartType(serviceName);
+            Console.WriteLine($"service[{serviceName}].CurrentState: {serviceInfo.CurrentState}");
+            Console.WriteLine($"service[{serviceName}].StartType: {serviceInfo.StartType}");
             Console.ReadKey();
 
             Console.WriteLine("WARNING!! This program will reboot system");

@@ -880,6 +880,22 @@ namespace Htc.Vita.Core.Interop
                                                                       | UserDefinedControl
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winsvc/nf-winsvc-queryserviceconfig2w",
+                Description = "SERVICE_CONFIG enumeration")]
+        internal enum ServiceConfig
+        {
+            /* SERVICE_CONFIG_DESCRIPTION              */ Description            =  1,
+            /* SERVICE_CONFIG_FAILURE_ACTIONS          */ FailureActions         =  2,
+            /* SERVICE_CONFIG_DELAYED_AUTO_START_INFO  */ DelayedAutoStartInfo   =  3,
+            /* SERVICE_CONFIG_FAILURE_ACTIONS_FLAG     */ FailureActionsFlag     =  4,
+            /* SERVICE_CONFIG_SERVICE_SID_INFO         */ ServiceSidInfo         =  5,
+            /* SERVICE_CONFIG_REQUIRED_PRIVILEGES_INFO */ RequiredPrivilegesInfo =  6,
+            /* SERVICE_CONFIG_PRESHUTDOWN_INFO         */ PreshutdownInfo        =  7,
+            /* SERVICE_CONFIG_TRIGGER_INFO             */ TriggerInfo            =  8,
+            /* SERVICE_CONFIG_PREFERRED_NODE           */ PreferredNode          =  9,
+            /* SERVICE_CONFIG_LAUNCH_PROTECTED         */ LaunchProtected        = 12
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/Services/service-security-and-access-rights",
                 Description = "SC_MANAGER_ACCESS_RIGHT enumeration")]
         [Flags]
@@ -1995,6 +2011,14 @@ namespace Htc.Vita.Core.Interop
             internal /* DWORD  */ int nLength;
             internal /* LPVOID */ IntPtr lpSecurityDescriptor;
             internal /* BOOL   */ bool bInheritHandle;
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winsvc/ns-winsvc-service_delayed_auto_start_info",
+                Description = "SERVICE_DELAYED_AUTO_START_INFO structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct ServiceDelayedAutoStartInfo
+        {
+            internal /* BOOL */ bool fDelayedAutostart;
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-_service_status",
