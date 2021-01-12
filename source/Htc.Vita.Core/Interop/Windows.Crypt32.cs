@@ -64,7 +64,7 @@ namespace Htc.Vita.Core.Interop
         internal static extern bool CryptQueryObject(
                 /* _In_                          DWORD        */ [In] CertQueryObject dwObjectType,
                 /* _In_                          const void*  */ [In] IntPtr pvObject,
-                /* _In_                          DWORD        */ [In] CertQueryContentFlag dwExpectedContentTypeFlags,
+                /* _In_                          DWORD        */ [In] CertQueryContentFlags dwExpectedContentTypeFlags,
                 /* _In_                          DWORD        */ [In] CertQueryFormatFlag dwExpectedFormatTypeFlags,
                 /* _In_                          DWORD        */ [In] int dwFlags,
                 /* _Out_opt_                     DWORD*       */ [Out] out CertEncoding pdwMsgAndCertEncodingType,

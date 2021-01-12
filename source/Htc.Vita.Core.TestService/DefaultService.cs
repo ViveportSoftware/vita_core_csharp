@@ -42,6 +42,12 @@ namespace Htc.Vita.Core.TestService
                     Logger.GetInstance(typeof(DefaultService)).Info("processAsUser.User: " + processAsUser.User);
                 }
 
+                var success = UserManager.SendMessageToFirstActiveUser("unicode", "測試", 0);
+                if (!success)
+                {
+                    Logger.GetInstance(typeof(DefaultService)).Info("Can not send message to active user");
+                }
+
                 _runningStatus = RunningStatus.Started;
 
                 var isElevatedProcess = ProcessManager.IsElevatedProcess(Process.GetCurrentProcess());

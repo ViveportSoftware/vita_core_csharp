@@ -15,7 +15,7 @@ namespace Htc.Vita.Core.Runtime
         /// <returns>System.String.</returns>
         public static string GetFirstActiveUser()
         {
-            var result = Windows.GetFirstActiveUser(null);
+            var result = Windows.GetFirstActiveUserInPlatform(null);
             if (string.IsNullOrWhiteSpace(result))
             {
                 result = GetCurrentUser();
@@ -45,6 +45,44 @@ namespace Htc.Vita.Core.Runtime
                 Logger.GetInstance(typeof(UserManager)).Error("Can not get current Windows username: " + e.Message);
             }
             return result;
+        }
+
+        /// <summary>
+        /// Determines whether shell user is elevated.
+        /// </summary>
+        /// <returns><c>true</c> if shell user is elevated; otherwise, <c>false</c>.</returns>
+        public static bool IsShellUserElevated()
+        {
+            var result = false;
+            try
+            {
+                result = Windows.IsShellUserElevatedInPlatform();
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(UserManager)).Error(e.ToString());
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Sends the message to first active user.
+        /// </summary>
+        /// <param name="title">The title.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="timeout">The timeout.</param>
+        /// <returns><c>true</c> if sending message to the first active user successfully, <c>false</c> otherwise.</returns>
+        public static bool SendMessageToFirstActiveUser(
+                string title,
+                string message,
+                uint timeout)
+        {
+            return Windows.SendMessageToFirstActiveUserInPlatform(
+                    title,
+                    message,
+                    timeout,
+                    null
+            );
         }
     }
 }

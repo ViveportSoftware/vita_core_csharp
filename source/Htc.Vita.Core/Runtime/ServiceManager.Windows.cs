@@ -8,6 +8,52 @@ namespace Htc.Vita.Core.Runtime
     {
         internal static class Windows
         {
+            internal static bool ChangeDelayedAutoStartStatus(
+                    Interop.Windows.SafeServiceHandle serviceHandle,
+                    StartType startType)
+            {
+                var delayedAutoStartInfo = new Interop.Windows.ServiceDelayedAutoStartInfo
+                {
+                        fDelayedAutostart = startType == StartType.DelayedAutomatic
+                };
+
+                var delayedAutoStartPtr = Marshal.AllocHGlobal(Marshal.SizeOf(delayedAutoStartInfo));
+                if (delayedAutoStartPtr == IntPtr.Zero)
+                {
+                    return false;
+                }
+
+                Marshal.StructureToPtr(delayedAutoStartInfo, delayedAutoStartPtr, false);
+                try
+                {
+                    var success = Interop.Windows.ChangeServiceConfig2W(
+                            serviceHandle,
+                            Interop.Windows.ServiceConfig.DelayedAutoStartInfo,
+                            delayedAutoStartPtr
+                    );
+                    if (success)
+                    {
+                        return true;
+                    }
+                    var errorCode = Marshal.GetLastWin32Error();
+                    Logger.GetInstance(typeof(Windows)).Error($"Can not change Windows service delayed automatic start status. error code: {errorCode}");
+                    return false;
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(Windows)).Error($"Can not change Windows service delayed automatic start status: {e}");
+                }
+                finally
+                {
+                    if (delayedAutoStartPtr != IntPtr.Zero)
+                    {
+                        Marshal.FreeHGlobal(delayedAutoStartPtr);
+                    }
+                }
+
+                return false;
+            }
+
             internal static ServiceInfo ChangeStartTypeInPlatform(
                     string serviceName,
                     StartType startType)
@@ -25,7 +71,7 @@ namespace Htc.Vita.Core.Runtime
                 using (var managerHandle = Interop.Windows.OpenSCManagerW(
                         null,
                         null,
-                        Interop.Windows.ServiceControlManagerAccessRight.Connect
+                        Interop.Windows.ServiceControlManagerAccessRights.Connect
                 ))
                 {
                     if (managerHandle == null || managerHandle.IsInvalid)
@@ -47,9 +93,9 @@ namespace Htc.Vita.Core.Runtime
                     using (var serviceHandle = Interop.Windows.OpenServiceW(
                             managerHandle,
                             serviceName,
-                            Interop.Windows.ServiceAccessRight.ChangeConfig |
-                                    Interop.Windows.ServiceAccessRight.QueryConfig |
-                                    Interop.Windows.ServiceAccessRight.QueryStatus
+                            Interop.Windows.ServiceAccessRights.ChangeConfig |
+                                    Interop.Windows.ServiceAccessRights.QueryConfig |
+                                    Interop.Windows.ServiceAccessRights.QueryStatus
                     ))
                     {
                         if (serviceHandle == null || serviceHandle.IsInvalid)
@@ -62,7 +108,7 @@ namespace Htc.Vita.Core.Runtime
                         {
                             var success = Interop.Windows.ChangeServiceConfigW(
                                     serviceHandle,
-                                    Interop.Windows.ServiceType.NoChange,
+                                    Interop.Windows.ServiceTypes.NoChange,
                                     ConvertToPlatform(startType),
                                     Interop.Windows.ServiceErrorControl.NoChange,
                                     null,
@@ -79,7 +125,16 @@ namespace Htc.Vita.Core.Runtime
                                 serviceInfo.ErrorCode = errorCode;
                                 serviceInfo.ErrorMessage = $"Can not change Windows service \"{serviceName}\" config, error code: {errorCode}";
                             }
+                            else
+                            {
+                                if (!ChangeDelayedAutoStartStatus(serviceHandle, startType))
+                                {
+                                    Logger.GetInstance(typeof(Windows)).Error($"Can not change Windows service \"{serviceName}\" delayed automatic start status");
+                                }
+                            }
 
+                            serviceInfo = UpdateStartType(serviceHandle, serviceInfo);
+                            serviceInfo = UpdateDelayedAutoStartStatus(serviceHandle, serviceInfo);
                             serviceInfo = UpdateCurrentState(serviceHandle, serviceInfo);
                         }
 
@@ -98,7 +153,7 @@ namespace Htc.Vita.Core.Runtime
                 using (var managerHandle = Interop.Windows.OpenSCManagerW(
                         null,
                         null,
-                        Interop.Windows.ServiceControlManagerAccessRight.Connect
+                        Interop.Windows.ServiceControlManagerAccessRights.Connect
                 ))
                 {
                     if (managerHandle == null || managerHandle.IsInvalid)
@@ -111,7 +166,7 @@ namespace Htc.Vita.Core.Runtime
                     using (var serviceHandle = Interop.Windows.OpenServiceW(
                             managerHandle,
                             serviceName,
-                            Interop.Windows.ServiceAccessRight.QueryConfig
+                            Interop.Windows.ServiceAccessRights.QueryConfig
                     ))
                     {
                         if (serviceHandle != null && !serviceHandle.IsInvalid)
@@ -191,7 +246,7 @@ namespace Htc.Vita.Core.Runtime
                 {
                     return Interop.Windows.ServiceStartType.DemandStart;
                 }
-                if (startType == StartType.Automatic)
+                if (startType == StartType.Automatic || startType == StartType.DelayedAutomatic)
                 {
                     return Interop.Windows.ServiceStartType.AutoStart;
                 }
@@ -214,7 +269,7 @@ namespace Htc.Vita.Core.Runtime
                 using (var managerHandle = Interop.Windows.OpenSCManagerW(
                         null,
                         null,
-                        Interop.Windows.ServiceControlManagerAccessRight.Connect
+                        Interop.Windows.ServiceControlManagerAccessRights.Connect
                 ))
                 {
                     if (managerHandle.IsInvalid)
@@ -235,7 +290,7 @@ namespace Htc.Vita.Core.Runtime
                     using (var serviceHandle = Interop.Windows.OpenServiceW(
                             managerHandle,
                             serviceName,
-                            Interop.Windows.ServiceAccessRight.QueryConfig | Interop.Windows.ServiceAccessRight.QueryStatus
+                            Interop.Windows.ServiceAccessRights.QueryConfig | Interop.Windows.ServiceAccessRights.QueryStatus
                     ))
                     {
                         if (serviceHandle == null || serviceHandle.IsInvalid)
@@ -246,41 +301,8 @@ namespace Htc.Vita.Core.Runtime
                         }
                         else
                         {
-                            const uint bytesAllocated = 8192;
-                            var serviceConfigPtr = Marshal.AllocHGlobal((int)bytesAllocated);
-                            try
-                            {
-                                uint bytes = 0;
-                                var success = Interop.Windows.QueryServiceConfigW(
-                                        serviceHandle,
-                                        serviceConfigPtr,
-                                        bytesAllocated,
-                                        ref bytes
-                                );
-                                if (success)
-                                {
-                                    var serviceConfig = (Interop.Windows.QueryServiceConfig)Marshal.PtrToStructure(
-                                            serviceConfigPtr,
-                                            typeof(Interop.Windows.QueryServiceConfig)
-                                    );
-                                    serviceInfo.StartType = ConvertFromPlatform(serviceConfig.dwStartType);
-                                }
-                                else
-                                {
-                                    var errorCode = Marshal.GetLastWin32Error();
-                                    serviceInfo.ErrorCode = errorCode;
-                                    serviceInfo.ErrorMessage = $"Can not query Windows service \"{serviceName}\" config, error code: {errorCode}";
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                Logger.GetInstance(typeof(Windows)).Error($"Can not query Windows service \"{serviceName}\" start type: {e.Message}");
-                            }
-                            finally
-                            {
-                                Marshal.FreeHGlobal(serviceConfigPtr);
-                            }
-
+                            serviceInfo = UpdateStartType(serviceHandle, serviceInfo);
+                            serviceInfo = UpdateDelayedAutoStartStatus(serviceHandle, serviceInfo);
                             serviceInfo = UpdateCurrentState(serviceHandle, serviceInfo);
                         }
 
@@ -304,7 +326,7 @@ namespace Htc.Vita.Core.Runtime
                 using (var managerHandle = Interop.Windows.OpenSCManagerW(
                         null,
                         null,
-                        Interop.Windows.ServiceControlManagerAccessRight.Connect
+                        Interop.Windows.ServiceControlManagerAccessRights.Connect
                 ))
                 {
                     if (managerHandle == null || managerHandle.IsInvalid)
@@ -325,7 +347,7 @@ namespace Htc.Vita.Core.Runtime
                     using (var serviceHandle = Interop.Windows.OpenServiceW(
                             managerHandle,
                             serviceName,
-                            Interop.Windows.ServiceAccessRight.Start | Interop.Windows.ServiceAccessRight.QueryStatus
+                            Interop.Windows.ServiceAccessRights.Start | Interop.Windows.ServiceAccessRights.QueryStatus
                     ))
                     {
                         if (serviceHandle == null || serviceHandle.IsInvalid)
@@ -383,6 +405,143 @@ namespace Htc.Vita.Core.Runtime
                     var errorCode = Marshal.GetLastWin32Error();
                     serviceInfo.ErrorCode = errorCode;
                     serviceInfo.ErrorMessage = $"Can not query Windows service \"{serviceInfo.ServiceName}\" status, error code: {errorCode}";
+                }
+
+                return serviceInfo;
+            }
+
+            private static ServiceInfo UpdateDelayedAutoStartStatus(
+                    Interop.Windows.SafeServiceHandle serviceHandle,
+                    ServiceInfo serviceInfo)
+            {
+                if (serviceHandle == null || serviceHandle.IsInvalid || serviceInfo == null)
+                {
+                    return serviceInfo;
+                }
+
+                if (serviceInfo.StartType != StartType.Automatic)
+                {
+                    return serviceInfo;
+                }
+
+                uint bufferSize;
+                var success = Interop.Windows.QueryServiceConfig2W(
+                        serviceHandle,
+                        Interop.Windows.ServiceConfig.DelayedAutoStartInfo,
+                        IntPtr.Zero,
+                        0,
+                        out bufferSize
+                );
+                if (!success)
+                {
+                    var errorCode = Marshal.GetLastWin32Error();
+                    if (errorCode != (int)Interop.Windows.Error.InsufficientBuffer)
+                    {
+                        Logger.GetInstance(typeof(Windows)).Error($"Can not query Windows service \"{serviceInfo.ServiceName}\" delayed automatic start status part 1. error code: {errorCode}");
+                        return serviceInfo;
+                    }
+                }
+
+                var delayedAutoStartPtr = Marshal.AllocHGlobal((int)bufferSize);
+                try
+                {
+                    success = Interop.Windows.QueryServiceConfig2W(
+                            serviceHandle,
+                            Interop.Windows.ServiceConfig.DelayedAutoStartInfo,
+                            delayedAutoStartPtr,
+                            bufferSize,
+                            out bufferSize
+                    );
+                    if (!success)
+                    {
+                        var errorCode = Marshal.GetLastWin32Error();
+                        Logger.GetInstance(typeof(Windows)).Error($"Can not query Windows service \"{serviceInfo.ServiceName}\" delayed automatic start status part 2. error code: {errorCode}");
+                        return serviceInfo;
+                    }
+
+                    var delayedAutoStartInfo = (Interop.Windows.ServiceDelayedAutoStartInfo)Marshal.PtrToStructure(
+                            delayedAutoStartPtr,
+                            typeof(Interop.Windows.ServiceDelayedAutoStartInfo)
+                    );
+                    if (delayedAutoStartInfo.fDelayedAutostart)
+                    {
+                        serviceInfo.StartType = StartType.DelayedAutomatic;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(Windows)).Error($"Can not query Windows service delayed automatic start: {e.Message}");
+                }
+                finally
+                {
+                    if (delayedAutoStartPtr != IntPtr.Zero)
+                    {
+                        Marshal.FreeHGlobal(delayedAutoStartPtr);
+                    }
+                }
+
+                return serviceInfo;
+            }
+
+            private static ServiceInfo UpdateStartType(
+                    Interop.Windows.SafeServiceHandle serviceHandle,
+                    ServiceInfo serviceInfo)
+            {
+                if (serviceHandle == null || serviceHandle.IsInvalid || serviceInfo == null)
+                {
+                    return serviceInfo;
+                }
+
+                uint bufferSize;
+                var success = Interop.Windows.QueryServiceConfigW(
+                        serviceHandle,
+                        IntPtr.Zero,
+                        0,
+                        out bufferSize
+                );
+                if (!success)
+                {
+                    var errorCode = Marshal.GetLastWin32Error();
+                    if (errorCode != (int)Interop.Windows.Error.InsufficientBuffer)
+                    {
+                        Logger.GetInstance(typeof(Windows)).Error($"Can not query Windows service {serviceInfo.ServiceName} start type. error code: {errorCode}");
+                        return serviceInfo;
+                    }
+                }
+
+                var serviceConfigPtr = Marshal.AllocHGlobal((int)bufferSize);
+                try
+                {
+                    success = Interop.Windows.QueryServiceConfigW(
+                            serviceHandle,
+                            serviceConfigPtr,
+                            bufferSize,
+                            out bufferSize
+                    );
+                    if (!success)
+                    {
+                        var errorCode = Marshal.GetLastWin32Error();
+                        serviceInfo.ErrorCode = errorCode;
+                        serviceInfo.ErrorMessage = $"Can not query Windows service \"{serviceInfo.ServiceName}\" config, error code: {errorCode}";
+                        return serviceInfo;
+                    }
+
+                    var serviceConfig = (Interop.Windows.QueryServiceConfig)Marshal.PtrToStructure(
+                            serviceConfigPtr,
+                            typeof(Interop.Windows.QueryServiceConfig)
+                    );
+                    serviceInfo.StartType = ConvertFromPlatform(serviceConfig.dwStartType);
+                }
+                catch (Exception e)
+                {
+                    Logger.GetInstance(typeof(Windows)).Error($"Can not query Windows service \"{serviceInfo.ServiceName}\" start type: {e.Message}");
+                }
+                finally
+                {
+                    if (serviceConfigPtr == IntPtr.Zero)
+                    {
+                        Marshal.FreeHGlobal(serviceConfigPtr);
+                    }
                 }
 
                 return serviceInfo;

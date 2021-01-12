@@ -1,3 +1,4 @@
+using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Runtime;
 using Xunit;
 using Xunit.Abstractions;
@@ -23,6 +24,18 @@ namespace Htc.Vita.Core.Tests
             var username = UserManager.GetFirstActiveUser();
             _output.WriteLine("username: " + username);
             Assert.True(username != null && username.Length >= 3);
+        }
+
+        [Fact]
+        public void Default_1_IsShellUserElevated()
+        {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+
+            var isShellUserElevated = UserManager.IsShellUserElevated();
+            Logger.GetInstance(typeof(UserManagerTest)).Info($"isShellUserElevated: {isShellUserElevated}");
         }
     }
 }

@@ -25,9 +25,21 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            var exists = ServiceManager.CheckIfExists("Winmgmt");
+
+            var serviceName = "Winmgmt";
+            var exists = ServiceManager.CheckIfExists(serviceName);
             Assert.True(exists);
-            var serviceInfo = ServiceManager.QueryStartType("Winmgmt");
+            var serviceInfo = ServiceManager.QueryStartType(serviceName);
+            Assert.False(string.IsNullOrWhiteSpace(serviceInfo.ServiceName));
+            Assert.NotEqual(ServiceManager.CurrentState.Unknown, serviceInfo.CurrentState);
+            Assert.NotEqual(ServiceManager.StartType.Unknown, serviceInfo.StartType);
+            Assert.Equal(0, serviceInfo.ErrorCode);
+            Assert.True(string.IsNullOrWhiteSpace(serviceInfo.ErrorMessage));
+
+            serviceName = "BITS";
+            exists = ServiceManager.CheckIfExists(serviceName);
+            Assert.True(exists);
+            serviceInfo = ServiceManager.QueryStartType(serviceName);
             Assert.False(string.IsNullOrWhiteSpace(serviceInfo.ServiceName));
             Assert.NotEqual(ServiceManager.CurrentState.Unknown, serviceInfo.CurrentState);
             Assert.NotEqual(ServiceManager.StartType.Unknown, serviceInfo.StartType);
@@ -42,16 +54,18 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            var exists = ServiceManager.CheckIfExists("Winmgmt");
+
+            var serviceName = "Winmgmt";
+            var exists = ServiceManager.CheckIfExists(serviceName);
             Assert.True(exists);
-            var serviceInfo = ServiceManager.QueryStartType("Winmgmt");
+            var serviceInfo = ServiceManager.QueryStartType(serviceName);
             Assert.NotNull(serviceInfo);
 
             if (serviceInfo.StartType != ServiceManager.StartType.Disabled)
             {
                 return;
             }
-            serviceInfo = ServiceManager.ChangeStartType("Winmgmt", ServiceManager.StartType.Automatic);
+            serviceInfo = ServiceManager.ChangeStartType(serviceName, ServiceManager.StartType.Automatic);
             Assert.False(string.IsNullOrWhiteSpace(serviceInfo.ServiceName));
             Assert.NotEqual(ServiceManager.CurrentState.Unknown, serviceInfo.CurrentState);
             Assert.Equal(ServiceManager.StartType.Automatic, serviceInfo.StartType);
@@ -66,23 +80,25 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
-            var exists = ServiceManager.CheckIfExists("Winmgmt");
+
+            var serviceName = "Winmgmt";
+            var exists = ServiceManager.CheckIfExists(serviceName);
             Assert.True(exists);
-            var serviceInfo = ServiceManager.QueryStartType("Winmgmt");
+            var serviceInfo = ServiceManager.QueryStartType(serviceName);
             Assert.NotNull(serviceInfo);
 
             if (serviceInfo.StartType != ServiceManager.StartType.Disabled)
             {
                 return;
             }
-            serviceInfo = ServiceManager.ChangeStartType("Winmgmt", ServiceManager.StartType.Automatic);
+            serviceInfo = ServiceManager.ChangeStartType(serviceName, ServiceManager.StartType.Automatic);
             Assert.False(string.IsNullOrWhiteSpace(serviceInfo.ServiceName));
             Assert.NotEqual(ServiceManager.CurrentState.Unknown, serviceInfo.CurrentState);
             Assert.Equal(ServiceManager.StartType.Automatic, serviceInfo.StartType);
             Assert.Equal(0, serviceInfo.ErrorCode);
             Assert.True(string.IsNullOrWhiteSpace(serviceInfo.ErrorMessage));
 
-            serviceInfo = ServiceManager.Start("Winmgmt");
+            serviceInfo = ServiceManager.Start(serviceName);
             Assert.False(string.IsNullOrWhiteSpace(serviceInfo.ServiceName));
             Assert.True(serviceInfo.CurrentState == ServiceManager.CurrentState.Running || serviceInfo.CurrentState == ServiceManager.CurrentState.StartPending);
             Assert.Equal(ServiceManager.StartType.Automatic, serviceInfo.StartType);

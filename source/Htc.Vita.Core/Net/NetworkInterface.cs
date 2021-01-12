@@ -213,8 +213,7 @@ namespace Htc.Vita.Core.Net
                 return false;
             }
 
-            object isConnectedToInternet = null;
-            var success = false;
+            object isConnectedToInternet;
             try
             {
                 isConnectedToInternet = type.InvokeMember(
@@ -224,31 +223,26 @@ namespace Htc.Vita.Core.Net
                         networkListManager,
                         null
                 );
-                success = true;
             }
             catch (Exception e)
             {
                 Logger.GetInstance(typeof(NetworkInterface)).Error("Can not get IsConnectedToInternet property from networkListManager: " + e.Message);
+                return false;
             }
             finally
             {
                 Marshal.FinalReleaseComObject(networkListManager);
             }
-            if (!success)
-            {
-                return false;
-            }
 
-            var result = false;
             try
             {
-                result = (bool) isConnectedToInternet;
+                return (bool) isConnectedToInternet;
             }
             catch (Exception e)
             {
                 Logger.GetInstance(typeof(NetworkInterface)).Error("Can not convert IsConnectedToInternet property: " + e.Message);
             }
-            return result;
+            return false;
         }
     }
 }

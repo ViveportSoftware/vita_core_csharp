@@ -10,6 +10,51 @@ namespace Htc.Vita.Core.TestProgram
     {
         private static void Main()
         {
+            /*
+            var testServiceName = "HtcVitaCoreTestService";
+            var exists = ServiceManager.CheckIfExists(testServiceName);
+            if (!exists)
+            {
+                Console.WriteLine($"service[{testServiceName}] does NOT exist");
+            }
+            else
+            {
+                var testServiceInfo = ServiceManager.QueryStartType(testServiceName);
+                var testServiceCurrentState = testServiceInfo.CurrentState;
+                var testServiceStartType = testServiceInfo.StartType;
+                Console.WriteLine($"service[{testServiceName}].CurrentState: {testServiceCurrentState}");
+                Console.WriteLine($"service[{testServiceName}].StartType: {testServiceStartType}");
+                Console.ReadKey();
+                if (testServiceCurrentState == ServiceManager.CurrentState.Running)
+                {
+                    Console.WriteLine($"service[{testServiceName}] is running. skipped");
+                }
+                else
+                {
+                    var newStartType = ServiceManager.StartType.DelayedAutomatic;
+                    Console.WriteLine($"Change start type to: {newStartType}");
+                    var testServiceInfo2 = ServiceManager.ChangeStartType(testServiceName, newStartType);
+                    var testServiceStartType2 = testServiceInfo2.StartType;
+                    Console.WriteLine($"service[{testServiceName}].StartType: {testServiceStartType2}");
+                    Console.ReadKey();
+
+                    newStartType = ServiceManager.StartType.Manual;
+                    Console.WriteLine($"Change start type to: {newStartType}");
+                    var testServiceInfo3 = ServiceManager.ChangeStartType(testServiceName, newStartType);
+                    var testServiceStartType3 = testServiceInfo3.StartType;
+                    Console.WriteLine($"service[{testServiceName}].StartType: {testServiceStartType3}");
+                    Console.ReadKey();
+
+                    newStartType = ServiceManager.StartType.Automatic;
+                    Console.WriteLine($"Change start type to: {newStartType}");
+                    var testServiceInfo4 = ServiceManager.ChangeStartType(testServiceName, newStartType);
+                    var testServiceStartType4 = testServiceInfo4.StartType;
+                    Console.WriteLine($"service[{testServiceName}].StartType: {testServiceStartType4}");
+                    Console.ReadKey();
+                }
+            }
+            */
+
             SecurityProtocolManager.ApplyAvailableProtocol();
 
             Console.WriteLine($"SecurityProtocolManager.GetAvailableProtocol(): {SecurityProtocolManager.GetAvailableProtocol()}");
@@ -30,14 +75,30 @@ namespace Htc.Vita.Core.TestProgram
             }
             Console.ReadKey();
 
-            Console.WriteLine("NetworkInterface.IsNetworkAvailable(): " + NetworkInterface.IsNetworkAvailable());
-            Console.WriteLine("NetworkInterface.IsInternetAvailable(): " + NetworkInterface.IsInternetAvailable());
+            Console.WriteLine($"NetworkInterface.IsNetworkAvailable(): {NetworkInterface.IsNetworkAvailable()}");
+            Console.WriteLine($"NetworkInterface.IsInternetAvailable(): {NetworkInterface.IsInternetAvailable()}");
             Console.ReadKey();
 
-            Console.WriteLine("Platform.DetectProcessArch(): " + Platform.DetectProcessArch());
+            Console.WriteLine($"Platform.DetectProcessArch(): {Platform.DetectProcessArch()}");
             Console.ReadKey();
 
-            Console.WriteLine("ProcessManager.IsElevatedProcess(Process.GetCurrentProcess()): " + ProcessManager.IsElevatedProcess(Process.GetCurrentProcess()));
+            Console.WriteLine($"ProcessManager.IsElevatedProcess(Process.GetCurrentProcess()): {ProcessManager.IsElevatedProcess(Process.GetCurrentProcess())}");
+            Console.ReadKey();
+
+            Console.WriteLine($"UserManager.IsShellUserElevated(): {UserManager.IsShellUserElevated()}");
+            Console.ReadKey();
+
+            var processInfoAsShellUser = ProcessManager.LaunchProcessAsShellUser("C:\\Windows\\System32\\notepad.exe", "");
+            if (processInfoAsShellUser == null)
+            {
+                Console.WriteLine("processInfoAsShellUser == null");
+            }
+            else
+            {
+                Console.WriteLine($"processInfoAsShellUser.Id: {processInfoAsShellUser.Id}");
+                Console.WriteLine($"processInfoAsShellUser.Name: {processInfoAsShellUser.Name}");
+                Console.WriteLine($"processInfoAsShellUser.Path: {processInfoAsShellUser.Path}");
+            }
             Console.ReadKey();
 
             var wpdDeviceInfos = WpdManager.GetDevices();
@@ -133,8 +194,8 @@ namespace Htc.Vita.Core.TestProgram
             var specificPortStatus = LocalPortManager.GetPortStatus(specificPort);
             var randomUnusedPortVerifyStatus = LocalPortManager.VerifyPortStatus(randomUnusedPort);
             var specificPortVerifyStatus = LocalPortManager.VerifyPortStatus(specificPort);
-            Console.WriteLine("Random unused port [" + randomUnusedPort + "] status: " + randomUnusedPortStatus + ", verify: " + randomUnusedPortVerifyStatus);
-            Console.WriteLine("Specific port [" + specificPort + "] status: " + specificPortStatus + ", verify: " + specificPortVerifyStatus);
+            Console.WriteLine($"Random unused port [{randomUnusedPort}] status: {randomUnusedPortStatus}, verify: {randomUnusedPortVerifyStatus}");
+            Console.WriteLine($"Specific port [{specificPort}] status: {specificPortStatus}, verify: {specificPortVerifyStatus}");
             Console.ReadKey();
 
             var processWatcherFactory = ProcessWatcherFactory.GetInstance();
@@ -161,7 +222,13 @@ namespace Htc.Vita.Core.TestProgram
             Console.ReadKey();
 
             var serviceName = "Winmgmt";
-            Console.WriteLine("service[" + serviceName + "].CurrentState: " + ServiceManager.QueryStartType(serviceName).CurrentState);
+            var serviceInfo = ServiceManager.QueryStartType(serviceName);
+            Console.WriteLine($"service[{serviceName}].CurrentState: {serviceInfo.CurrentState}");
+            Console.WriteLine($"service[{serviceName}].StartType: {serviceInfo.StartType}");
+            serviceName = "BITS";
+            serviceInfo = ServiceManager.QueryStartType(serviceName);
+            Console.WriteLine($"service[{serviceName}].CurrentState: {serviceInfo.CurrentState}");
+            Console.WriteLine($"service[{serviceName}].StartType: {serviceInfo.StartType}");
             Console.ReadKey();
 
             Console.WriteLine("WARNING!! This program will reboot system");
@@ -174,13 +241,13 @@ namespace Htc.Vita.Core.TestProgram
         private static void OnProcessCreated(ProcessWatcher.ProcessInfo processInfo)
         {
             var path = processInfo.Path ?? "<empty path>";
-            Console.WriteLine("" + path + " (" + processInfo.Id + ") is created");
+            Console.WriteLine($"{path} ({processInfo.Id}) is created");
         }
 
         private static void OnProcessDeleted(ProcessWatcher.ProcessInfo processInfo)
         {
             var path = processInfo.Path ?? "<empty path>";
-            Console.WriteLine("" + path + " (" + processInfo.Id + ") is deleted");
+            Console.WriteLine($"{path} ({processInfo.Id}) is deleted");
         }
 
         private static void OnUsbDeviceConnected()

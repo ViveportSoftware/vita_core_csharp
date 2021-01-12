@@ -255,21 +255,21 @@ namespace Htc.Vita.Core.Interop
                 return 0;
             }
 
-            internal BitsNotifyFlag GetNotifyFlags()
+            internal BitsNotifyFlags GetNotifyFlags()
             {
                 if (_backgroundCopyJob == null)
                 {
                     throw new ObjectDisposedException(nameof(BitsJob), $"Cannot access a closed {nameof(IBackgroundCopyJob)}.");
                 }
 
-                BitsNotifyFlag notifyFlag;
-                var bitsResult = _backgroundCopyJob.GetNotifyFlags(out notifyFlag);
+                BitsNotifyFlags notifyFlags;
+                var bitsResult = _backgroundCopyJob.GetNotifyFlags(out notifyFlags);
                 if (bitsResult == BitsResult.SOk)
                 {
-                    return notifyFlag;
+                    return notifyFlags;
                 }
                 Logger.GetInstance(typeof(BitsJob)).Error($"Cannot get job notify flags. error: {bitsResult}");
-                return BitsNotifyFlag.None;
+                return BitsNotifyFlags.None;
             }
 
             internal string GetOwner()
@@ -484,7 +484,7 @@ namespace Htc.Vita.Core.Interop
                 return false;
             }
 
-            internal bool SetNotifyFlags(BitsNotifyFlag notifyFlags)
+            internal bool SetNotifyFlags(BitsNotifyFlags notifyFlags)
             {
                 if (_backgroundCopyJob == null)
                 {

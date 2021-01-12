@@ -138,6 +138,22 @@ namespace Htc.Vita.Core.Runtime
         }
 
         /// <summary>
+        /// Launches the process as shell user by elevated user.
+        /// </summary>
+        /// <param name="fileName">The file name.</param>
+        /// <param name="arguments">The arguments.</param>
+        /// <returns>ProcessInfo.</returns>
+        public static ProcessInfo LaunchProcessAsShellUser(
+                string fileName,
+                string arguments)
+        {
+            return Windows.LaunchProcessAsShellUserInPlatform(
+                    fileName,
+                    arguments
+            );
+        }
+
+        /// <summary>
         /// Launches the process as user.
         /// </summary>
         /// <param name="fileName">The file name.</param>

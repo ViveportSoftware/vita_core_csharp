@@ -42,7 +42,7 @@ namespace Htc.Vita.Core.Interop
                 /* _In_opt_ const GUID   */ [In] ref Guid classGuid,
                 /* _In_opt_       PCTSTR */ [In] string enumerator,
                 /* _In_opt_       HWND   */ [In] IntPtr hwndParent,
-                /* _In_           DWORD  */ [In] DeviceInfoGetClassFlag flags
+                /* _In_           DWORD  */ [In] DeviceInfoGetClassFlags flags
         );
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetdeviceinterfacedetailw")]

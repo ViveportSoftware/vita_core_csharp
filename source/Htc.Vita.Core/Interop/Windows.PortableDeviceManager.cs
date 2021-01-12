@@ -77,7 +77,7 @@ namespace Htc.Vita.Core.Interop
                     }
                     else
                     {
-                        Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device description (1). HResult: " + hResult);
+                        Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device description (1). HResult: {hResult}");
                     }
                     return result;
                 }
@@ -93,7 +93,7 @@ namespace Htc.Vita.Core.Interop
                     return builder.ToString();
                 }
 
-                Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device description (2). HResult: " + hResult);
+                Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device description (2). HResult: {hResult}");
                 return result;
             }
 
@@ -120,7 +120,7 @@ namespace Htc.Vita.Core.Interop
                     }
                     else
                     {
-                        Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device friendly name (1). HResult: " + hResult);
+                        Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device friendly name (1). HResult: {hResult}");
                     }
                     return result;
                 }
@@ -136,7 +136,7 @@ namespace Htc.Vita.Core.Interop
                     return builder.ToString();
                 }
 
-                Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device friendly name (2). HResult: " + hResult);
+                Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device friendly name (2). HResult: {hResult}");
                 return result;
             }
 
@@ -155,7 +155,7 @@ namespace Htc.Vita.Core.Interop
                 );
                 if (hResult != HResult.SOk)
                 {
-                    Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device list. HResult: " + hResult);
+                    Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device list. HResult: {hResult}");
                     return result;
                 }
 
@@ -213,7 +213,8 @@ namespace Htc.Vita.Core.Interop
                 if (hResult != HResult.SOk
                         && hResult != HResult.EWin32InsufficientBuffer)
                 {
-                    Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device manufacturer (1). HResult: " + hResult);
+                    Logger.GetInstance(typeof(PortableDeviceManager)).Error(
+                        $"Can not get device manufacturer (1). HResult: {hResult}");
                     return result;
                 }
 
@@ -228,7 +229,7 @@ namespace Htc.Vita.Core.Interop
                     return builder.ToString();
                 }
 
-                Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device manufacturer (2). HResult: " + hResult);
+                Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not get device manufacturer (2). HResult: {hResult}");
                 return result;
             }
 
@@ -240,7 +241,7 @@ namespace Htc.Vita.Core.Interop
                     return new PortableDeviceManager(iPortableDeviceManager);
                 }
 
-                Logger.GetInstance(typeof(PortableDeviceManager)).Error($"Can not create Portable Device Manager");
+                Logger.GetInstance(typeof(PortableDeviceManager)).Error("Can not create Portable Device Manager");
                 return null;
             }
         }

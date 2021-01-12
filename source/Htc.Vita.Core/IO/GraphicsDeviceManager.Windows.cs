@@ -72,8 +72,8 @@ namespace Htc.Vita.Core.IO
 
                                     try
                                     {
-                                        var enumDisplayDeviceFlag = Interop.Windows.EnumDisplayDeviceFlag.None;
-                                        for (uint adapterId = 0; Interop.Windows.EnumDisplayDevicesW(null, adapterId, ref displayDevice, enumDisplayDeviceFlag); adapterId++)
+                                        var enumDisplayDeviceFlags = Interop.Windows.EnumDisplayDeviceFlags.None;
+                                        for (uint adapterId = 0; Interop.Windows.EnumDisplayDevicesW(null, adapterId, ref displayDevice, enumDisplayDeviceFlags); adapterId++)
                                         {
                                             var adapterDeviceName = displayDevice.deviceName;
                                             if (string.IsNullOrWhiteSpace(adapterDeviceName))
@@ -86,7 +86,7 @@ namespace Htc.Vita.Core.IO
                                                 continue;
                                             }
 
-                                            for (uint monitorId = 0; Interop.Windows.EnumDisplayDevicesW(adapterDeviceName, monitorId, ref displayDevice, enumDisplayDeviceFlag); monitorId++)
+                                            for (uint monitorId = 0; Interop.Windows.EnumDisplayDevicesW(adapterDeviceName, monitorId, ref displayDevice, enumDisplayDeviceFlags); monitorId++)
                                             {
                                                 graphicsDisplayInfo.MonitorList.Add(new GraphicsMonitorInfo
                                                 {

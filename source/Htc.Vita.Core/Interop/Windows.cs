@@ -75,25 +75,25 @@ namespace Htc.Vita.Core.Interop
                 Description = "BG_JOB_PROXY_USAGE enumeration")]
         internal enum BitsJobProxyUsage
         {
-            /* BG_JOB_PROXY_USAGE_PRECONFIG  */ Preconfig,
-            /* BG_JOB_PROXY_USAGE_NO_PROXY   */ NoProxy,
-            /* BG_JOB_PROXY_USAGE_OVERRIDE   */ Override,
-            /* BG_JOB_PROXY_USAGE_AUTODETECT */ Autodetect
+            /* BG_JOB_PROXY_USAGE_PRECONFIG  */ Preconfig  = 0,
+            /* BG_JOB_PROXY_USAGE_NO_PROXY   */ NoProxy    = 1,
+            /* BG_JOB_PROXY_USAGE_OVERRIDE   */ Override   = 2,
+            /* BG_JOB_PROXY_USAGE_AUTODETECT */ Autodetect = 3
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_state",
                 Description = "BG_JOB_STATE enumeration")]
         internal enum BitsJobState
         {
-            /* BG_JOB_STATE_QUEUED          */ Queued,
-            /* BG_JOB_STATE_CONNECTING      */ Connecting,
-            /* BG_JOB_STATE_TRANSFERRING    */ Transferring,
-            /* BG_JOB_STATE_SUSPENDED       */ Suspended,
-            /* BG_JOB_STATE_ERROR           */ Error,
-            /* BG_JOB_STATE_TRANSIENT_ERROR */ TransientError,
-            /* BG_JOB_STATE_TRANSFERRED     */ Transferred,
-            /* BG_JOB_STATE_ACKNOWLEDGED    */ Acknowledged,
-            /* BG_JOB_STATE_CANCELLED       */ Cancelled
+            /* BG_JOB_STATE_QUEUED          */ Queued         = 0,
+            /* BG_JOB_STATE_CONNECTING      */ Connecting     = 1,
+            /* BG_JOB_STATE_TRANSFERRING    */ Transferring   = 2,
+            /* BG_JOB_STATE_SUSPENDED       */ Suspended      = 3,
+            /* BG_JOB_STATE_ERROR           */ Error          = 4,
+            /* BG_JOB_STATE_TRANSIENT_ERROR */ TransientError = 5,
+            /* BG_JOB_STATE_TRANSFERRED     */ Transferred    = 6,
+            /* BG_JOB_STATE_ACKNOWLEDGED    */ Acknowledged   = 7,
+            /* BG_JOB_STATE_CANCELLED       */ Cancelled      = 8
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_type",
@@ -107,7 +107,7 @@ namespace Htc.Vita.Core.Interop
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnotifyflags")]
         [Flags]
-        internal enum BitsNotifyFlag : uint
+        internal enum BitsNotifyFlags : uint
         {
             /*                                   */ None                  =      0,
             /* BG_NOTIFY_JOB_TRANSFERRED         */ JobTransferred        = 0x0001,
@@ -240,7 +240,7 @@ namespace Htc.Vita.Core.Interop
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject")]
         [Flags]
-        internal enum CertQueryContentFlag : uint
+        internal enum CertQueryContentFlags : uint
         {
             /* CERT_QUERY_CONTENT_FLAG_CERT               */ Cert             = 1 << CertQueryContent.Cert,
             /* CERT_QUERY_CONTENT_FLAG_CTL                */ Ctl              = 1 << CertQueryContent.Ctl,
@@ -301,13 +301,32 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetclassdevsw",
                 Description = "DIGCF enumeration")]
         [Flags]
-        internal enum DeviceInfoGetClassFlag : uint
+        internal enum DeviceInfoGetClassFlags : uint
         {
             /* DIGCF_DEFAULT         */ Default         = 0x00000001,
             /* DIGCF_PRESENT         */ Present         = 0x00000002,
             /* DIGCF_ALLCLASSES      */ AllClasses      = 0x00000004,
             /* DIGCF_PROFILE         */ Profile         = 0x00000008,
             /* DIGCF_DEVICEINTERFACE */ DeviceInterface = 0x00000010
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messagebox")]
+        internal enum DialogBoxResult
+        {
+            /*            */ None     =     0,
+            /* IDOK       */ Ok       =     1,
+            /* IDCANCEL   */ Cancel   =     2,
+            /* IDABORT    */ Abort    =     3,
+            /* IDRETRY    */ Retry    =     4,
+            /* IDIGNORE   */ Ignore   =     5,
+            /* IDYES      */ Yes      =     6,
+            /* IDNO       */ No       =     7,
+            /* IDCLOSE    */ Close    =     8,
+            /* IDHELP     */ Help     =     9,
+            /* IDTRYAGAIN */ TryAgain =    10,
+            /* IDCONTINUE */ Continue =    11,
+            /* IDTIMEOUT  */ Timeout  = 32000,
+            /* IDASYNC    */ Async    = 32001
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-_display_devicew")]
@@ -381,7 +400,7 @@ namespace Htc.Vita.Core.Interop
         }
 
         [Flags]
-        internal enum EnumDisplayDeviceFlag : uint
+        internal enum EnumDisplayDeviceFlags : uint
         {
             /* None                          */ None                   =          0,
             /* EDD_GET_DEVICE_INTERFACE_NAME */ GetDeviceInterfaceName = 0x00000001
@@ -414,7 +433,7 @@ namespace Htc.Vita.Core.Interop
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-exitwindowsex")]
         [Flags]
-        internal enum ExitType : uint
+        internal enum ExitTypes : uint
         {
             /* EWX_LOGOFF          */ Logoff         = 0x00000000,
             /* EWX_SHUTDOWN        */ Shutdown       = 0x00000001,
@@ -431,7 +450,7 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/FileIO/file-attribute-constants",
                 Description = "FILE_ATTRIBUTE_FLAG enumeration")]
         [Flags]
-        internal enum FileAttributeFlag : uint
+        internal enum FileAttributeFlags : uint
         {
             /* FILE_ATTRIBUTE_READONLY              */ AttributeReadonly           = 0x00000001,
             /* FILE_ATTRIBUTE_HIDDEN                */ AttributeHidden             = 0x00000002,
@@ -480,7 +499,7 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-createfilew",
                 Description = "FILE_SHARE enumeration")]
         [Flags]
-        internal enum FileShare : uint
+        internal enum FileShareModes : uint
         {
             /* FILE_SHARE_NONE   */ None   = 0x00000000,
             /* FILE_SHARE_READ   */ Read   = 0x00000001,
@@ -491,7 +510,7 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/generic-access-rights",
                 Description = "GENERIC enumeration")]
         [Flags]
-        internal enum GenericAccessRight : uint
+        internal enum GenericAccessRights : uint
         {
             /* GENERIC_ALL     */ All     = 0x10000000,
             /* GENERIC_EXECUTE */ Execute = 0x20000000,
@@ -563,6 +582,51 @@ namespace Htc.Vita.Core.Interop
             /* IMAGE_FILE_MACHINE_CEE         */ Cee        = 0xc0ee
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createprocesswithtokenw")]
+        internal enum LogonFlag : uint
+        {
+            /*                            */ None               =          0,
+            /* LOGON_WITH_PROFILE         */ WithProfile        = 0x00000001,
+            /* LOGON_NETCREDENTIALS_ONLY  */ NetCredentialsOnly = 0x00000002,
+            /* LOGON_ZERO_PASSWORD_BUFFER */ ZeroPasswordBuffer = 0x80000000
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messagebox")]
+        internal enum MessageBoxStyle : uint
+        {
+            /* MB_OK                   */ Ok                  = 0x00000000,
+            /* MB_OKCANCEL             */ OkCancel            = 0x00000001,
+            /* MB_ABORTRETRYIGNORE     */ AbortRetryIgnore    = 0x00000002,
+            /* MB_YESNOCANCEL          */ YesNoCancel         = 0x00000003,
+            /* MB_YESNO                */ YesNo               = 0x00000004,
+            /* MB_RETRYCANCEL          */ RetryCancel         = 0x00000005,
+            /* MB_CANCELTRYCONTINUE    */ CancelTryContinue   = 0x00000006,
+            /* MB_ICONHAND             */ IconHand            = 0x00000010,
+            /* MB_ICONERROR            */ IconError           = IconHand,
+            /* MB_ICONSTOP             */ IconStop            = IconError,
+            /* MB_ICONQUESTION         */ IconQuestion        = 0x00000020,
+            /* MB_ICONEXCLAMATION      */ IconExclamation     = 0x00000030,
+            /* MB_ICONWARNING          */ IconWarning         = IconExclamation,
+            /* MB_ICONASTERISK         */ IconAsterisk        = 0x00000040,
+            /* MB_ICONINFORMATION      */ IconInformation     = IconAsterisk,
+            /* MB_USERICON             */ UserIcon            = 0x00000080,
+            /* MB_DEFBUTTON1           */ DefButton1          = Ok,
+            /* MB_DEFBUTTON2           */ DefButton2          = 0x00000100,
+            /* MB_DEFBUTTON3           */ DefButton3          = 0x00000200,
+            /* MB_DEFBUTTON4           */ DefButton4          = 0x00000300,
+            /* MB_APPLMODAL            */ ApplModal           = DefButton1,
+            /* MB_SYSTEMMODAL          */ SystemModal         = 0x00001000,
+            /* MB_TASKMODAL            */ TaskModal           = 0x00002000,
+            /* MB_HELP                 */ Help                = 0x00004000,
+            /* MB_NOFOCUS              */ NoFocus             = 0x00008000,
+            /* MB_SETFOREGROUND        */ SetForeground       = 0x00010000,
+            /* MB_DEFAULT_DESKTOP_ONLY */ DefaultDesktopOnly  = 0x00020000,
+            /* MB_TOPMOST              */ TopMost             = 0x00040000,
+            /* MB_RIGHT                */ Right               = 0x00080000,
+            /* MB_RTLREADING           */ RtlReading          = 0x00100000,
+            /* MB_SERVICE_NOTIFICATION */ ServiceNotification = 0x00200000,
+        }
+
         internal enum NtStatus : uint
         {
             /* STATUS_WAIT_0                       */ StatusWait0                    =          0,
@@ -587,10 +651,41 @@ namespace Htc.Vita.Core.Interop
             /* HIDP_STATUS_NOT_IMPLEMENTED         */ HidpStatusNotImplemented       = 0xc0110020
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createnamedpipea")]
+        [Flags]
+        internal enum PipeModes : uint
+        {
+            /* PIPE_WAIT                  */ Wait                = 0x00000000,
+            /* PIPE_READMODE_BYTE         */ ReadModeByte        = Wait,
+            /* PIPE_TYPE_BYTE             */ TypeByte            = ReadModeByte,
+            /* PIPE_ACCEPT_REMOTE_CLIENTS */ AcceptRemoteClients = TypeByte,
+            /* PIPE_NOWAIT                */ NoWait              = 0x00000001,
+            /* PIPE_READMODE_MESSAGE      */ ReadModeMessage     = 0x00000002,
+            /* PIPE_TYPE_MESSAGE          */ TypeMessage         = 0x00000004,
+            /* PIPE_REJECT_REMOTE_CLIENTS */ RejectRemoteClients = 0x00000008
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createnamedpipea")]
+        [Flags]
+        internal enum PipeOpenModes : uint
+        {
+            /*                               */ None                  =          0,
+            /* PIPE_ACCESS_INBOUND           */ AccessInbound         = 0x00000001,
+            /* PIPE_ACCESS_OUTBOUND          */ AccessOutbound        = 0x00000002,
+            /* PIPE_ACCESS_DUPLEX            */ AccessDuplex          = 0x00000003,
+            /* FILE_FLAG_FIRST_PIPE_INSTANCE */ FlagFirstPipeInstance = FileAttributeFlags.FlagFirstPipeInstance,
+            /* FILE_FLAG_OVERLAPPED          */ FlagOverlapped        = FileAttributeFlags.FlagOverlapped,
+            /* FILE_FLAG_WRITE_THROUGH       */ FlagWriteThrough      = FileAttributeFlags.FlagWriteThrough,
+            /* WRITE_DAC                     */ WriteDac              = StandardAccessRights.WriteDac,
+            /* WRITE_OWNER                   */ WriteOwner            = StandardAccessRights.WriteOwner,
+            /* ACCESS_SYSTEM_SECURITY        */ AccessSystemSecurity  = 0x01000000,
+            /*                               */ CurrentUserOnly       = 0x20000000
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights",
                 Description = "Process access right enumeration")]
         [Flags]
-        internal enum ProcessAccessRight : uint
+        internal enum ProcessAccessRights : uint
         {
             /* PROCESS_TERMINATE                 */ Terminate                = 0x0001,
             /* PROCESS_CREATE_THREAD             */ CreateThread             = 0x0002,
@@ -606,16 +701,17 @@ namespace Htc.Vita.Core.Interop
             /* PROCESS_SUSPEND_RESUME            */ SuspendResume            = 0x0800,
             /* PROCESS_QUERY_LIMITED_INFORMATION */ QueryLimitedInformation  = 0x1000,
             /* PROCESS_SET_LIMITED_INFORMATION   */ SetLimitedInformation    = 0x2000,
-            /* PROCESS_ALL_ACCESS                */ AllAccess                = StandardAccessRight.StandardRightsRequired
-                                                                             | StandardAccessRight.Synchronize
+            /* PROCESS_ALL_ACCESS                */ AllAccess                = StandardAccessRights.StandardRightsRequired
+                                                                             | StandardAccessRights.Synchronize
                                                                              | 0xFFFF
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/ProcThread/process-creation-flags",
                 Description = "Process Creation enumeration")]
         [Flags]
-        internal enum ProcessCreationFlag : uint
+        internal enum ProcessCreationFlags : uint
         {
+            /*                                  */ None                         =          0,
             /* DEBUG_PROCESS                    */ DebugProcess                 = 0x00000001,
             /* DEBUG_ONLY_THIS_PROCESS          */ DebugOnlyThisProcess         = 0x00000002,
             /* CREATE_SUSPENDED                 */ CreateSuspended              = 0x00000004,
@@ -667,7 +763,7 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-key-security-and-access-rights",
                 Description = "Registry Key Access Right enumeration")]
         [Flags]
-        internal enum RegistryKeyAccessRight : uint
+        internal enum RegistryKeyAccessRights : uint
         {
             /*                        */ None             = 0x0000,
             /* KEY_QUERY_VALUE        */ QueryValue       = 0x0001,
@@ -680,22 +776,22 @@ namespace Htc.Vita.Core.Interop
             /* KEY_WOW64_32KEY        */ Wow6432Key       = 0x0200,
             /* KEY_WOW64_RES          */ Wow64Res         = Wow6464Key
                                                           | Wow6432Key,
-            /* KEY_READ               */ Read             = ( StandardAccessRight.StandardRightsRead | QueryValue
-                                                                                                     | EnumerateSubKeys
-                                                                                                     | Notify )
-                                                          & ~StandardAccessRight.Synchronize,
-            /* KEY_WRITE              */ Write            = ( StandardAccessRight.StandardRightsWrite | SetValue
-                                                                                                      | CreateSubKey )
-                                                          & ~StandardAccessRight.Synchronize,
+            /* KEY_READ               */ Read             = ( StandardAccessRights.StandardRightsRead | QueryValue
+                                                                                                      | EnumerateSubKeys
+                                                                                                      | Notify )
+                                                          & ~StandardAccessRights.Synchronize,
+            /* KEY_WRITE              */ Write            = ( StandardAccessRights.StandardRightsWrite | SetValue
+                                                                                                       | CreateSubKey )
+                                                          & ~StandardAccessRights.Synchronize,
             /* KEY_EXECUTE            */ Execute          = Read
-                                                          & ~StandardAccessRight.Synchronize,
-            /* KEY_ALL_ACCESS         */ AllAccess        = ( StandardAccessRight.StandardRightsAll | QueryValue
-                                                                                                    | SetValue
-                                                                                                    | CreateSubKey
-                                                                                                    | EnumerateSubKeys
-                                                                                                    | Notify
-                                                                                                    | CreateLink )
-                                                          & ~StandardAccessRight.Synchronize
+                                                          & ~StandardAccessRights.Synchronize,
+            /* KEY_ALL_ACCESS         */ AllAccess        = ( StandardAccessRights.StandardRightsAll | QueryValue
+                                                                                                     | SetValue
+                                                                                                     | CreateSubKey
+                                                                                                     | EnumerateSubKeys
+                                                                                                     | Notify
+                                                                                                     | CreateLink )
+                                                          & ~StandardAccessRights.Synchronize
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/sysinfo/registry-value-types")]
@@ -721,14 +817,14 @@ namespace Htc.Vita.Core.Interop
                 Description = "SECURITY_IMPERSONATION_LEVEL enumeration")]
         internal enum SecurityImpersonationLevel : uint
         {
-                /* SecurityAnonymous      */ SecurityAnonymous,
-                /* SecurityIdentification */ SecurityIdentification,
-                /* SecurityImpersonation  */ SecurityImpersonation,
-                /* SecurityDelegation     */ SecurityDelegation
+                /* SecurityAnonymous      */ SecurityAnonymous      = 0,
+                /* SecurityIdentification */ SecurityIdentification = 1,
+                /* SecurityImpersonation  */ SecurityImpersonation  = 2,
+                /* SecurityDelegation     */ SecurityDelegation     = 3
         }
 
         [Flags]
-        internal enum SePrivilege : uint
+        internal enum SePrivileges : uint
         {
             /* SE_PRIVILEGE_ENABLED_BY_DEFAULT */ EnabledByDefault = 0x00000001,
             /* SE_PRIVILEGE_ENABLED            */ Enabled          = 0x00000002,
@@ -739,7 +835,7 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-_service_status",
                 Description = "CONTROL_ACCEPTED enumeration")]
         [Flags]
-        internal enum ServiceAcceptedControl : uint
+        internal enum ServiceAcceptedControls : uint
         {
             /* SERVICE_ACCEPT_STOP                  */ Stop                  = 0x00000001,
             /* SERVICE_ACCEPT_PAUSE_CONTINUE        */ PauseContinue         = 0x00000002,
@@ -760,9 +856,9 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/Services/service-security-and-access-rights",
                 Description = "SERVICE_ACCESS_RIGHT enumeration")]
         [Flags]
-        internal enum ServiceAccessRight : uint
+        internal enum ServiceAccessRights : uint
         {
-            /* STANDARD_RIGHTS_REQUIRED     */ StandardRightsRequired = StandardAccessRight.StandardRightsRequired,
+            /* STANDARD_RIGHTS_REQUIRED     */ StandardRightsRequired = StandardAccessRights.StandardRightsRequired,
             /* SERVICE_QUERY_CONFIG         */ QueryConfig            = 0x0001,
             /* SERVICE_CHANGE_CONFIG        */ ChangeConfig           = 0x0002,
             /* SERVICE_QUERY_STATUS         */ QueryStatus            = 0x0004,
@@ -784,12 +880,28 @@ namespace Htc.Vita.Core.Interop
                                                                       | UserDefinedControl
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winsvc/nf-winsvc-queryserviceconfig2w",
+                Description = "SERVICE_CONFIG enumeration")]
+        internal enum ServiceConfig
+        {
+            /* SERVICE_CONFIG_DESCRIPTION              */ Description            =  1,
+            /* SERVICE_CONFIG_FAILURE_ACTIONS          */ FailureActions         =  2,
+            /* SERVICE_CONFIG_DELAYED_AUTO_START_INFO  */ DelayedAutoStartInfo   =  3,
+            /* SERVICE_CONFIG_FAILURE_ACTIONS_FLAG     */ FailureActionsFlag     =  4,
+            /* SERVICE_CONFIG_SERVICE_SID_INFO         */ ServiceSidInfo         =  5,
+            /* SERVICE_CONFIG_REQUIRED_PRIVILEGES_INFO */ RequiredPrivilegesInfo =  6,
+            /* SERVICE_CONFIG_PRESHUTDOWN_INFO         */ PreshutdownInfo        =  7,
+            /* SERVICE_CONFIG_TRIGGER_INFO             */ TriggerInfo            =  8,
+            /* SERVICE_CONFIG_PREFERRED_NODE           */ PreferredNode          =  9,
+            /* SERVICE_CONFIG_LAUNCH_PROTECTED         */ LaunchProtected        = 12
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/Services/service-security-and-access-rights",
                 Description = "SC_MANAGER_ACCESS_RIGHT enumeration")]
         [Flags]
-        internal enum ServiceControlManagerAccessRight : uint
+        internal enum ServiceControlManagerAccessRights : uint
         {
-            /* STANDARD_RIGHTS_REQUIRED      */ StandardRightsRequired = StandardAccessRight.StandardRightsRequired,
+            /* STANDARD_RIGHTS_REQUIRED      */ StandardRightsRequired = StandardAccessRights.StandardRightsRequired,
             /* SC_MANAGER_CONNECT            */ Connect                = 0x0001,
             /* SC_MANAGER_CREATE_SERVICE     */ CreateService          = 0x0002,
             /* SC_MANAGER_ENUMERATE_SERVICE  */ EnumerateService       = 0x0004,
@@ -844,7 +956,7 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-_service_status",
                 Description = "SERVICE_TYPE enumeration")]
         [Flags]
-        internal enum ServiceType : uint
+        internal enum ServiceTypes : uint
         {
             /* SERVICE_KERNEL_DRIVER        */ KernelDriver        = 0x00000001,
             /* SERVICE_FILE_SYSTEM_DRIVER   */ FileSystemDriver    = 0x00000002,
@@ -921,7 +1033,7 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/shlobj_core/nf-shlobj_core-shchangenotify",
                 Description = "SHCNE enumeration")]
         [Flags]
-        internal enum ShellChangeNotifyEventId : uint
+        internal enum ShellChangeNotifyEventIds : uint
         {
             /* SHCNE_RENAMEITEM       */ RenameItem         = 0x00000001,
             /* SHCNE_CREATE           */ Create             = 0x00000002,
@@ -970,12 +1082,12 @@ namespace Htc.Vita.Core.Interop
         {
             /* SHTDN_REASON_UNKNOWN    */ Unknown   = ShutdownReasonMinor.None,
             /* SHTDN_REASON_LEGACY_API */ LegacyApi = ShutdownReasonMajor.LegacyApi
-                                                    | ShutdownReasonFlag.Planned
+                                                    | ShutdownReasonFlags.Planned
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/Shutdown/system-shutdown-reason-codes")]
         [Flags]
-        internal enum ShutdownReasonFlag : uint
+        internal enum ShutdownReasonFlags : uint
         {
             /* SHTDN_REASON_FLAG_COMMENT_REQUIRED          */ CommentRequired        = 0x01000000,
             /* SHTDN_REASON_FLAG_DIRTY_PROBLEM_ID_REQUIRED */ DirtyProblemIdRequired = 0x02000000,
@@ -1053,7 +1165,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/standard-access-rights")]
-        internal enum StandardAccessRight : uint
+        [Flags]
+        internal enum StandardAccessRights : uint
         {
             /* DELETE                   */ Delete                 = 0x00010000,
             /* READ_CONTROL             */ ReadControl            = 0x00020000,
@@ -1160,7 +1273,7 @@ namespace Htc.Vita.Core.Interop
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/access-rights-for-access-token-objects")]
         [Flags]
-        internal enum TokenAccessRight : uint
+        internal enum TokenAccessRights : uint
         {
             /* TOKEN_ASSIGN_PRIMARY    */ AssignPrimary    =  0x0001,
             /* TOKEN_DUPLICATE         */ Duplicate        =  0x0002,
@@ -1263,52 +1376,52 @@ namespace Htc.Vita.Core.Interop
                 Description = "WTS_CONNECTSTATE_CLASS enumeration")]
         internal enum WindowsTerminalServiceConnectState
         {
-            /* WTSActive       */ Active,
-            /* WTSConnected    */ Connected,
-            /* WTSConnectQuery */ ConnectQuery,
-            /* WTSShadow       */ Shadow,
-            /* WTSDisconnected */ Disconnected,
-            /* WTSIdle         */ Idle,
-            /* WTSListen       */ Listen,
-            /* WTSReset        */ Reset,
-            /* WTSDown         */ Down,
-            /* WTSInit         */ Init
+            /* WTSActive       */ Active       = 0,
+            /* WTSConnected    */ Connected    = 1,
+            /* WTSConnectQuery */ ConnectQuery = 2,
+            /* WTSShadow       */ Shadow       = 3,
+            /* WTSDisconnected */ Disconnected = 4,
+            /* WTSIdle         */ Idle         = 5,
+            /* WTSListen       */ Listen       = 6,
+            /* WTSReset        */ Reset        = 7,
+            /* WTSDown         */ Down         = 8,
+            /* WTSInit         */ Init         = 9
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/ne-wtsapi32-_wts_info_class",
                 Description = "WTS_INFO_CLASS enumeration")]
         internal enum WindowsTerminalServiceInfo
         {
-            /* WTSInitialProgram     */ InitialProgram,
-            /* WTSApplicationName    */ ApplicationName,
-            /* WTSWorkingDirectory   */ WorkingDirectory,
-            /* WTSOEMId              */ OemId,
-            /* WTSSessionId          */ SessionId,
-            /* WTSUserName           */ UserName,
-            /* WTSWinStationName     */ WinStationName,
-            /* WTSDomainName         */ DomainName,
-            /* WTSConnectState       */ ConnectState,
-            /* WTSClientBuildNumber  */ ClientBuildNumber,
-            /* WTSClientName         */ ClientName,
-            /* WTSClientDirectory    */ ClientDirectory,
-            /* WTSClientProductId    */ ClientProductId,
-            /* WTSClientHardwareId   */ ClientHardwareId,
-            /* WTSClientAddress      */ ClientAddress,
-            /* WTSClientDisplay      */ ClientDisplay,
-            /* WTSClientProtocolType */ ClientProtocolType,
-            /* WTSIdleTime           */ IdleTime,
-            /* WTSLogonTime          */ LogonTime,
-            /* WTSIncomingBytes      */ IncomingBytes,
-            /* WTSOutgoingBytes      */ OutgoingBytes,
-            /* WTSIncomingFrames     */ IncomingFrames,
-            /* WTSOutgoingFrames     */ OutgoingFrames,
-            /* WTSClientInfo         */ ClientInfo,
-            /* WTSSessionInfo        */ SessionInfo,
-            /* WTSSessionInfoEx      */ SessionInfoEx,
-            /* WTSConfigInfo         */ ConfigInfo,
-            /* WTSValidationInfo     */ ValidationInfo,
-            /* WTSSessionAddressV4   */ SessionAddressV4,
-            /* WTSIsRemoteSession    */ IsRemoteSession
+            /* WTSInitialProgram     */ InitialProgram     =  0,
+            /* WTSApplicationName    */ ApplicationName    =  1,
+            /* WTSWorkingDirectory   */ WorkingDirectory   =  2,
+            /* WTSOEMId              */ OemId              =  3,
+            /* WTSSessionId          */ SessionId          =  4,
+            /* WTSUserName           */ UserName           =  5,
+            /* WTSWinStationName     */ WinStationName     =  6,
+            /* WTSDomainName         */ DomainName         =  7,
+            /* WTSConnectState       */ ConnectState       =  8,
+            /* WTSClientBuildNumber  */ ClientBuildNumber  =  9,
+            /* WTSClientName         */ ClientName         = 10,
+            /* WTSClientDirectory    */ ClientDirectory    = 11,
+            /* WTSClientProductId    */ ClientProductId    = 12,
+            /* WTSClientHardwareId   */ ClientHardwareId   = 13,
+            /* WTSClientAddress      */ ClientAddress      = 14,
+            /* WTSClientDisplay      */ ClientDisplay      = 15,
+            /* WTSClientProtocolType */ ClientProtocolType = 16,
+            /* WTSIdleTime           */ IdleTime           = 17,
+            /* WTSLogonTime          */ LogonTime          = 18,
+            /* WTSIncomingBytes      */ IncomingBytes      = 19,
+            /* WTSOutgoingBytes      */ OutgoingBytes      = 20,
+            /* WTSIncomingFrames     */ IncomingFrames     = 21,
+            /* WTSOutgoingFrames     */ OutgoingFrames     = 22,
+            /* WTSClientInfo         */ ClientInfo         = 23,
+            /* WTSSessionInfo        */ SessionInfo        = 24,
+            /* WTSSessionInfoEx      */ SessionInfoEx      = 25,
+            /* WTSConfigInfo         */ ConfigInfo         = 26,
+            /* WTSValidationInfo     */ ValidationInfo     = 27,
+            /* WTSSessionAddressV4   */ SessionAddressV4   = 28,
+            /* WTSIsRemoteSession    */ IsRemoteSession    = 29
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
@@ -1325,7 +1438,7 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
                 Description = "WTD_PROVIDERFLAG enumeration")]
         [Flags]
-        internal enum WinTrustDataProviderFlag : uint
+        internal enum WinTrustDataProviderFlags : uint
         {
             /* WTD_USE_IE4_TRUST_FLAG                  */ UseIe4TrustFlag                 =     1,
             /* WTD_NO_IE4_CHAIN_FLAG                   */ NoIe4ChainFlag                  =     2,
@@ -1347,19 +1460,19 @@ namespace Htc.Vita.Core.Interop
                 Description = "WTD_REVOKE enumeration")]
         internal enum WinTrustDataRevoke : uint
         {
-            /* WTD_REVOKE_NONE       */ None,
-            /* WTD_REVOKE_WHOLECHAIN */ WholeChain
+            /* WTD_REVOKE_NONE       */ None       = 0,
+            /* WTD_REVOKE_WHOLECHAIN */ WholeChain = 1
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
                 Description = "WTD_STATEACTION enumeration")]
         internal enum WinTrustDataStateAction : uint
         {
-            /* WTD_STATEACTION_IGNORE           */ Ignore,
-            /* WTD_STATEACTION_VERIFY           */ Verify,
-            /* WTD_STATEACTION_CLOSE            */ Close,
-            /* WTD_STATEACTION_AUTO_CACHE       */ AutoCache,
-            /* WTD_STATEACTION_AUTO_CACHE_FLUSH */ AutoCacheFlush
+            /* WTD_STATEACTION_IGNORE           */ Ignore         = 0,
+            /* WTD_STATEACTION_VERIFY           */ Verify         = 1,
+            /* WTD_STATEACTION_CLOSE            */ Close          = 2,
+            /* WTD_STATEACTION_AUTO_CACHE       */ AutoCache      = 3,
+            /* WTD_STATEACTION_AUTO_CACHE_FLUSH */ AutoCacheFlush = 4
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
@@ -1376,8 +1489,8 @@ namespace Htc.Vita.Core.Interop
                 Description = "WTD_UICONTEXT enumeration")]
         internal enum WinTrustDataUIContext : uint
         {
-            /* WTD_UICONTEXT_EXECUTE */ Execute,
-            /* WTD_UICONTEXT_INSTALL */ Install
+            /* WTD_UICONTEXT_EXECUTE */ Execute = 0,
+            /* WTD_UICONTEXT_INSTALL */ Install = 1
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_auth_credentials",
@@ -1879,7 +1992,7 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct QueryServiceConfig
         {
-            internal /* DWORD  */ ServiceType dwServiceType;
+            internal /* DWORD  */ ServiceTypes dwServiceType;
             internal /* DWORD  */ ServiceStartType dwStartType;
             internal /* DWORD  */ ServiceErrorControl dwErrorControl;
             internal /* LPTSTR */ string lpBinaryPathName;
@@ -1893,11 +2006,19 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://msdn.microsoft.com/en-us/library/windows/desktop/aa379560.aspx",
                 Description = "SECURITY_ATTRIBUTES")]
         [StructLayout(LayoutKind.Sequential)]
-        internal struct SecurityAttributes
+        internal class SecurityAttributes
         {
             internal /* DWORD  */ int nLength;
             internal /* LPVOID */ IntPtr lpSecurityDescriptor;
             internal /* BOOL   */ bool bInheritHandle;
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winsvc/ns-winsvc-service_delayed_auto_start_info",
+                Description = "SERVICE_DELAYED_AUTO_START_INFO structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct ServiceDelayedAutoStartInfo
+        {
+            internal /* BOOL */ bool fDelayedAutostart;
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-_service_status",
@@ -1905,9 +2026,9 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct ServiceStatus
         {
-            internal /* DWORD */ ServiceType dwServiceType;
+            internal /* DWORD */ ServiceTypes dwServiceType;
             internal /* DWORD */ ServiceCurrentState dwCurrentState;
-            internal /* DWORD */ ServiceAcceptedControl dwControlAccepted;
+            internal /* DWORD */ ServiceAcceptedControls dwControlAccepted;
             internal /* DWORD */ uint dwWin32ExitCode;
             internal /* DWORD */ uint dwServiceSpecificExitCode;
             internal /* DWORD */ uint dwCheckPoint;
@@ -1983,7 +2104,7 @@ namespace Htc.Vita.Core.Interop
         {
             internal /* DWORD */ int Count;
             internal /* LUID  */ long Luid;
-            internal /* DWORD */ SePrivilege Attr;
+            internal /* DWORD */ SePrivileges Attr;
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-_token_user",
@@ -1999,10 +2120,10 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct WindowsTerminalServiceProcessInfo
         {
-            internal /* DWORD  */ uint sessionId;
-            internal /* DWORD  */ uint processId;
-            internal /* LPTSTR */ string pProcessName;
-            internal /* PSID   */ IntPtr pUserSid;
+                                              internal /* DWORD  */ uint sessionId;
+                                              internal /* DWORD  */ uint processId;
+            [MarshalAs(UnmanagedType.LPWStr)] internal /* LPTSTR */ string pProcessName;
+                                              internal /* PSID   */ IntPtr pUserSid;
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/ns-wtsapi32-wts_session_infow",
@@ -2010,9 +2131,9 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct WindowsTerminalServiceSessionInfo
         {
-            internal /* DWORD                  */ uint sessionId;
-            internal /* LPTSTR                 */ string pWinStationName;
-            internal /* WTS_CONNECTSTATE_CLASS */ WindowsTerminalServiceConnectState state;
+                                              internal /* DWORD                  */ uint sessionId;
+            [MarshalAs(UnmanagedType.LPWStr)] internal /* LPTSTR                 */ string pWinStationName;
+                                              internal /* WTS_CONNECTSTATE_CLASS */ WindowsTerminalServiceConnectState state;
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
@@ -2030,7 +2151,7 @@ namespace Htc.Vita.Core.Interop
             internal /* DWORD                        */ WinTrustDataStateAction dwStateAction;
             internal /* HANDLE                       */ IntPtr hWVTStateData;
             internal /* WCHAR*                       */ IntPtr pwszURLReference;
-            internal /* DWORD                        */ WinTrustDataProviderFlag dwProvFlags;
+            internal /* DWORD                        */ WinTrustDataProviderFlags dwProvFlags;
             internal /* DWORD                        */ WinTrustDataUIContext dwUIContext;
             internal /* WINTRUST_SIGNATURE_SETTINGS* */ IntPtr pSignatureSettings;
         }

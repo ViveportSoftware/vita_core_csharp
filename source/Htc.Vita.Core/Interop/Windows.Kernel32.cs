@@ -27,12 +27,29 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         internal static extern SafeFileHandle CreateFileW(
                 /* _In_     LPCTSTR               */ [In] string lpFileName,
-                /* _In_     DWORD                 */ [In] GenericAccessRight dwDesiredAccess,
-                /* _In_     DWORD                 */ [In] FileShare dwShareMode,
+                /* _In_     DWORD                 */ [In] GenericAccessRights dwDesiredAccess,
+                /* _In_     DWORD                 */ [In] FileShareModes dwShareMode,
                 /* _In_opt_ LPSECURITY_ATTRIBUTES */ [In] IntPtr lpSecurityAttributes,
                 /* _In_     DWORD                 */ [In] FileCreationDisposition dwCreationDisposition,
-                /* _In_     DWORD                 */ [In] FileAttributeFlag dwFlagsAndAttributes,
+                /* _In_     DWORD                 */ [In] FileAttributeFlags dwFlagsAndAttributes,
                 /* _In_opt_ HANDLE                */ [In] IntPtr hTemplateFile
+        );
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createnamedpipea")]
+        [DllImport(Libraries.WindowsKernel32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern SafePipeHandle CreateNamedPipeW(
+                /* _In_     LPCTSTR               */ [In] string lpName,
+                /* _In_     DWORD                 */ [In] PipeOpenModes dwOpenMode,
+                /* _In_     DWORD                 */ [In] PipeModes dwPipeMode,
+                /* _In_     DWORD                 */ [In] uint nMaxInstances,
+                /* _In_     DWORD                 */ [In] uint nOutBufferSize,
+                /* _In_     DWORD                 */ [In] uint nInBufferSize,
+                /* _In_     DWORD                 */ [In] uint nDefaultTimeOut,
+                /* _In_opt_ LPSECURITY_ATTRIBUTES */ [In] SecurityAttributes lpSecurityAttributes
         );
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/libloaderapi/nf-libloaderapi-freelibrary")]
@@ -92,6 +109,21 @@ namespace Htc.Vita.Core.Interop
                 /* _Out_ PULONG */ [In][Out] ref uint serverProcessId
         );
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getprivateprofilestringw")]
+        [DllImport(Libraries.WindowsKernel32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern uint GetPrivateProfileStringW(
+                /* _In_opt_            LPCWSTR */ [In] string lpAppName,
+                /* _In_opt_            LPCWSTR */ [In] string lpKeyName,
+                /* _In_opt_            LPCWSTR */ [In] string lpDefault,
+                /* _Out_writes_to_opt_ LPWSTR  */ [Out] StringBuilder lpReturnedString,
+                /* _In_                DWORD   */ [In] int nSize,
+                /* _In_opt_            LPCWSTR */ [In] string lpFileName
+        );
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wow64apiset/nf-wow64apiset-iswow64process")]
         [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
@@ -134,7 +166,7 @@ namespace Htc.Vita.Core.Interop
                 ExactSpelling = true,
                 SetLastError = true)]
         internal static extern SafeProcessHandle OpenProcess(
-                /* _In_ DWORD */ [In] ProcessAccessRight dwDesiredAccess,
+                /* _In_ DWORD */ [In] ProcessAccessRights dwDesiredAccess,
                 /* _In_ BOOL  */ [In] bool bInheritHandle,
                 /* _In_ DWORD */ [In] uint dwProcessId
         );
