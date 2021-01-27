@@ -1987,17 +1987,6 @@ namespace Htc.Vita.Core.Interop
             }
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect",
-                Description = "RECT structure")]
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct Rectangle
-        {
-            internal /* LONG */ int left;
-            internal /* LONG */ int top;
-            internal /* LONG */ int right;
-            internal /* LONG */ int bottom;
-        }
-
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/ns-processthreadsapi-process_information",
                 Description = "PROCESS_INFORMATION structure")]
         [StructLayout(LayoutKind.Sequential)]
@@ -2012,10 +2001,10 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wtypes/ns-wtypes-propertykey",
                 Description = "PROPERTYKEY structure")]
         [StructLayout(LayoutKind.Sequential)]
-        internal struct PropertyKey
+        internal struct PropertyKey : IEquatable<PropertyKey>
         {
-            internal /* GUID  */ Guid fmtid;
-            internal /* DWORD */ uint pid;
+            internal readonly /* GUID  */ Guid fmtid;
+            internal readonly /* DWORD */ uint pid;
 
             internal PropertyKey(
                     Guid fmtid,
@@ -2024,15 +2013,50 @@ namespace Htc.Vita.Core.Interop
                 this.fmtid = fmtid;
                 this.pid = pid;
             }
+
+            public static bool operator ==(PropertyKey left, PropertyKey right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(PropertyKey left, PropertyKey right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(PropertyKey other)
+            {
+                return fmtid.Equals(other.fmtid)
+                        && pid == other.pid;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is PropertyKey && Equals((PropertyKey) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return (fmtid.GetHashCode() * 397) ^ (int) pid;
+                }
+            }
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/propidlbase/ns-propidlbase-propvariant",
+                Description = "PROPVARIANT structure")]
         [StructLayout(LayoutKind.Explicit)]
-        internal struct PropVariant
+        internal struct PropVariant : IEquatable<PropVariant>
         {
             [FieldOffset(0)]
-            internal ushort vt;
+            internal readonly /* VARTYPE */ ushort vt;
             [FieldOffset(8)]
-            internal IntPtr unionMember;
+            internal readonly /* union   */ IntPtr unionMember;
 
             internal PropVariant(Guid data)
             {
@@ -2046,6 +2070,39 @@ namespace Htc.Vita.Core.Interop
             {
                 vt = (ushort) VarEnum.VT_LPWSTR;
                 unionMember = Marshal.StringToCoTaskMemUni(data);
+            }
+
+            public static bool operator ==(PropVariant left, PropVariant right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(PropVariant left, PropVariant right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(PropVariant other)
+            {
+                return vt == other.vt
+                        && unionMember.Equals(other.unionMember);
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is PropVariant && Equals((PropVariant) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return (vt.GetHashCode() * 397) ^ unionMember.GetHashCode();
+                }
             }
         }
 
@@ -2063,6 +2120,17 @@ namespace Htc.Vita.Core.Interop
             internal /* LPTSTR */ string lpDependencies;
             internal /* LPTSTR */ string lpServiceStartName;
             internal /* LPTSTR */ string lpDisplayName;
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect",
+                Description = "RECT structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Rectangle
+        {
+            internal /* LONG */ int left;
+            internal /* LONG */ int top;
+            internal /* LONG */ int right;
+            internal /* LONG */ int bottom;
         }
 
         [ExternalReference("https://msdn.microsoft.com/en-us/library/windows/desktop/aa379560.aspx",
@@ -2233,7 +2301,7 @@ namespace Htc.Vita.Core.Interop
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-win32_find_dataw",
                 Description = "WIN32_FIND_DATAW structure")]
         [StructLayout(LayoutKind.Sequential)]
-        internal struct Win32FindDataW
+        internal struct Win32FindDataW : IEquatable<Win32FindDataW>
         {
                                                                       internal /* DWORD           */ FileAttributeFlags dwFileAttributes;
                                                                       internal /* FILETIME        */ FileTime ftCreationTime;
@@ -2245,6 +2313,53 @@ namespace Htc.Vita.Core.Interop
                                                                       internal /* DWORD           */ uint dwReserved1;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)] internal /* WCHAR[MAX_PATH] */ string cFileName;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]      internal /* WCHAR[14]       */ string cAlternateFileName;
+
+            public static bool operator ==(Win32FindDataW left, Win32FindDataW right)
+            {
+                return Equals(left, right);
+            }
+
+            public static bool operator !=(Win32FindDataW left, Win32FindDataW right)
+            {
+                return !Equals(left, right);
+            }
+
+            public bool Equals(Win32FindDataW other)
+            {
+                return dwFileAttributes == other.dwFileAttributes
+                        && ftCreationTime.Equals(other.ftCreationTime)
+                        && ftLastAccessTime.Equals(other.ftLastAccessTime)
+                        && ftLastWriteTime.Equals(other.ftLastWriteTime)
+                        && nFileSizeHigh == other.nFileSizeHigh
+                        && nFileSizeLow == other.nFileSizeLow
+                        && cFileName == other.cFileName
+                        && cAlternateFileName == other.cAlternateFileName;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                return obj is Win32FindDataW && Equals((Win32FindDataW) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    var hashCode = (int) dwFileAttributes;
+                    hashCode = (hashCode * 397) ^ ftCreationTime.GetHashCode();
+                    hashCode = (hashCode * 397) ^ ftLastAccessTime.GetHashCode();
+                    hashCode = (hashCode * 397) ^ ftLastWriteTime.GetHashCode();
+                    hashCode = (hashCode * 397) ^ (int) nFileSizeHigh;
+                    hashCode = (hashCode * 397) ^ (int) nFileSizeLow;
+                    hashCode = (hashCode * 397) ^ (cFileName != null ? cFileName.GetHashCode() : 0);
+                    hashCode = (hashCode * 397) ^ (cAlternateFileName != null ? cAlternateFileName.GetHashCode() : 0);
+                    return hashCode;
+                }
+            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-wintrust_file_info_",
