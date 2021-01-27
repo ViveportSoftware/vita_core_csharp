@@ -6,6 +6,8 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
+        internal const int /* MAX_PATH */ MaxPath = 260;
+
         internal static readonly Guid /* GUID_DEVCLASS_USB                    */ DeviceClassUsb = new Guid("{36FC9E60-C465-11CF-8056-444553540000}");
         internal static readonly Guid /* GUID_DEVINTERFACE_HID                */ DeviceInterfaceHid = new Guid("{4D1E55B2-F16F-11CF-88CB-001111000030}");
         internal static readonly Guid /* GUID_DEVINTERFACE_USB_DEVICE         */ DeviceInterfaceUsbDevice = new Guid("{A5DCBF10-6530-11D2-901F-00C04FB951ED}");
@@ -1077,6 +1079,26 @@ namespace Htc.Vita.Core.Interop
             /* SHCNF_FLUSHNOWAIT */ FlushNoWait = 0x3000
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-showwindow")]
+        internal enum ShowWindowCommand
+        {
+            /* SW_HIDE            */ Hide            =  0,
+            /* SW_SHOWNORMAL      */ ShowNormal      =  1,
+            /* SW_NORMAL          */ Normal          = ShowNormal,
+            /* SW_SHOWMINIMIZED   */ ShowMinimized   =  2,
+            /* SW_SHOWMAXIMIZED   */ ShowMaximized   =  3,
+            /* SW_MAXIMIZE        */ Maximize        = ShowMaximized,
+            /* SW_SHOWNOACTIVATE  */ ShowNoActivate  =  4,
+            /* SW_SHOW            */ Show            =  5,
+            /* SW_MINIMIZE        */ Minimize        =  6,
+            /* SW_SHOWMINNOACTIVE */ ShowMinNoActive =  7,
+            /* SW_SHOWNA          */ ShowNA          =  8,
+            /* SW_RESTORE         */ Restore         =  9,
+            /* SW_SHOWDEFAULT     */ ShowDefault     = 10,
+            /* SW_FORCEMINIMIZE   */ ForceMinimize   = 11,
+            /* SW_MAX             */ Max             = ForceMinimize
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/Shutdown/system-shutdown-reason-codes")]
         internal enum ShutdownReason : uint
         {
@@ -1987,6 +2009,46 @@ namespace Htc.Vita.Core.Interop
             internal /* DWORD  */ int dwThreadID;
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wtypes/ns-wtypes-propertykey",
+                Description = "PROPERTYKEY structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct PropertyKey
+        {
+            internal /* GUID  */ Guid fmtid;
+            internal /* DWORD */ uint pid;
+
+            internal PropertyKey(
+                    Guid fmtid,
+                    uint pid)
+            {
+                this.fmtid = fmtid;
+                this.pid = pid;
+            }
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        internal struct PropVariant
+        {
+            [FieldOffset(0)]
+            internal ushort vt;
+            [FieldOffset(8)]
+            internal IntPtr unionMember;
+
+            internal PropVariant(Guid data)
+            {
+                vt = (ushort) VarEnum.VT_CLSID;
+                var dataInBytes = data.ToByteArray();
+                unionMember = Marshal.AllocCoTaskMem(dataInBytes.Length);
+                Marshal.Copy(dataInBytes, 0, unionMember, dataInBytes.Length);
+            }
+
+            internal PropVariant(string data)
+            {
+                vt = (ushort) VarEnum.VT_LPWSTR;
+                unionMember = Marshal.StringToCoTaskMemUni(data);
+            }
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-query_service_configw",
                 Description = "QUERY_SERVICE_CONFIG structure")]
         [StructLayout(LayoutKind.Sequential)]
@@ -2166,6 +2228,23 @@ namespace Htc.Vita.Core.Interop
             [FieldOffset(0)] internal /* struct WINTRUST_BLOB_INFO_    */ IntPtr pBlob;
             [FieldOffset(0)] internal /* struct WINTRUST_SGNR_INFO_    */ IntPtr pSgnr;
             [FieldOffset(0)] internal /* struct WINTRUST_CERT_INFO_    */ IntPtr pCert;
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-win32_find_dataw",
+                Description = "WIN32_FIND_DATAW structure")]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Win32FindDataW
+        {
+                                                                      internal /* DWORD           */ FileAttributeFlags dwFileAttributes;
+                                                                      internal /* FILETIME        */ FileTime ftCreationTime;
+                                                                      internal /* FILETIME        */ FileTime ftLastAccessTime;
+                                                                      internal /* FILETIME        */ FileTime ftLastWriteTime;
+                                                                      internal /* DWORD           */ uint nFileSizeHigh;
+                                                                      internal /* DWORD           */ uint nFileSizeLow;
+                                                                      internal /* DWORD           */ uint dwReserved0;
+                                                                      internal /* DWORD           */ uint dwReserved1;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)] internal /* WCHAR[MAX_PATH] */ string cFileName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]      internal /* WCHAR[14]       */ string cAlternateFileName;
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-wintrust_file_info_",

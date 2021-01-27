@@ -20,7 +20,7 @@ namespace Htc.Vita.Core.Tests
             var target = Environment.GetEnvironmentVariable("Temp");
             Assert.NotNull(target);
             var intermediatePathName = "Icon-" + Util.Convert.ToTimestampInMilli(DateTime.UtcNow);
-            target = Path.Combine(target, intermediatePathName, intermediatePathName, "shell32.ico");
+            target = Path.Combine(target, intermediatePathName, "shell32.ico");
             var targetFileInfo = new FileInfo(target);
             Assert.True(Extract.FromFileToIcon(sourceFileInfo, targetFileInfo));
             Assert.True(targetFileInfo.Exists);

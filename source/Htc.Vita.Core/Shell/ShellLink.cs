@@ -1,6 +1,8 @@
 using System;
+using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using Htc.Vita.Core.Interop;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Runtime;
 
@@ -11,6 +13,21 @@ namespace Htc.Vita.Core.Shell
     /// </summary>
     public static partial class ShellLink
     {
+        private static Windows.ShowWindowCommand ConvertFrom(ShellLinkWindowState windowState)
+        {
+            if (windowState == ShellLinkWindowState.Maximized)
+            {
+                return Windows.ShowWindowCommand.ShowMaximized;
+            }
+
+            if (windowState == ShellLinkWindowState.Minimized)
+            {
+                return Windows.ShowWindowCommand.ShowMinNoActive;
+            }
+
+            return Windows.ShowWindowCommand.ShowNormal;
+        }
+
         /// <summary>
         /// Creates the specified file link.
         /// </summary>
@@ -23,6 +40,20 @@ namespace Htc.Vita.Core.Shell
                 return false;
             }
             return CreateInWindows(fileLinkInfo);
+        }
+
+        /// <summary>
+        /// Creates the specified shell link.
+        /// </summary>
+        /// <param name="shellLinkInfo">The shell link information.</param>
+        /// <returns><c>true</c> if creating the shell link successfully, <c>false</c> otherwise.</returns>
+        public static bool Create(ShellLinkInfo shellLinkInfo)
+        {
+            if (!Platform.IsWindows)
+            {
+                return false;
+            }
+            return CreateInWindows(shellLinkInfo);
         }
 
         private static bool CreateInWindows(FileLinkInfo fileLinkInfo)
@@ -128,6 +159,137 @@ namespace Htc.Vita.Core.Shell
                 Marshal.FinalReleaseComObject(wshShortcut);
             }
             return false;
+        }
+
+        private static bool CreateInWindows(ShellLinkInfo shellLinkInfo)
+        {
+            if (shellLinkInfo == null)
+            {
+                return false;
+            }
+
+            var sourcePath = shellLinkInfo.SourcePath;
+            var targetPath = shellLinkInfo.TargetPath;
+            var targetIconPath = shellLinkInfo.TargetIconPath;
+            var targetIconIndex = shellLinkInfo.TargetIconIndex;
+            if (sourcePath == null || !sourcePath.Exists || targetPath == null)
+            {
+                return false;
+            }
+
+            var sourceWorkingPath = shellLinkInfo.SourceWorkingPath ?? sourcePath.Directory;
+            if (sourceWorkingPath == null)
+            {
+                return false;
+            }
+
+            var targetParent = targetPath.Directory;
+            if (targetParent != null && !targetParent.Exists)
+            {
+                Directory.CreateDirectory(targetParent.FullName);
+            }
+
+            var description = shellLinkInfo.Description;
+            var sourceActivatorId = shellLinkInfo.SourceActivatorId;
+            var sourceAppId = shellLinkInfo.SourceAppId;
+            var sourceArguments = shellLinkInfo.SourceArguments;
+            var sourceShowWindowCommand = ConvertFrom(shellLinkInfo.SourceWindowState);
+
+            using (var windowShellLink = Windows.ShellLink.GetInstance())
+            {
+                var success = windowShellLink.SetSourcePath(sourcePath);
+                if (!success)
+                {
+                    return false;
+                }
+
+                success = windowShellLink.SetSourceShowWindowCommand(sourceShowWindowCommand);
+                if (!success)
+                {
+                    return false;
+                }
+
+                success = windowShellLink.SetSourceWorkingPath(sourceWorkingPath);
+                if (!success)
+                {
+                    return false;
+                }
+
+                if (targetIconPath != null && File.Exists(targetIconPath.FullName))
+                {
+                    success = windowShellLink.SetTargetIcon(
+                            targetIconPath,
+                            targetIconIndex
+                    );
+                    if (!success)
+                    {
+                        return false;
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(description))
+                {
+                    success = windowShellLink.SetDescription(description);
+                    if (!success)
+                    {
+                        return false;
+                    }
+                }
+
+                if (sourceActivatorId != Guid.Empty)
+                {
+                    success = windowShellLink.SetSourceActivatorId(sourceActivatorId);
+                    if (!success)
+                    {
+                        return false;
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(sourceAppId))
+                {
+                    success = windowShellLink.SetSourceAppId(sourceAppId);
+                    if (!success)
+                    {
+                        return false;
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(sourceArguments))
+                {
+                    success = windowShellLink.SetSourceArguments(sourceArguments);
+                    if (!success)
+                    {
+                        return false;
+                    }
+                }
+
+                success = windowShellLink.Save(targetPath);
+                if (!success)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Enum ShellLinkWindowState
+        /// </summary>
+        public enum ShellLinkWindowState
+        {
+            /// <summary>
+            /// Normal Window state
+            /// </summary>
+            Normal = 0,
+            /// <summary>
+            /// Window maximized
+            /// </summary>
+            Maximized = 1,
+            /// <summary>
+            /// Window minimized 
+            /// </summary>
+            Minimized = 2
         }
     }
 }
