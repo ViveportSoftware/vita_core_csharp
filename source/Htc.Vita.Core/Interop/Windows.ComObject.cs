@@ -9,6 +9,7 @@ namespace Htc.Vita.Core.Interop
     {
         internal const string ComInterfaceClsidBackgroundCopyManager = "4991d34b-80a1-4291-83b6-3328366b9097";
         internal const string ComInterfaceClsidPortableDeviceManager = "0af10cec-2ecd-4b92-9581-34f6ae0637f3";
+        internal const string ComInterfaceClsidShellLink = "00021401-0000-0000-c000-000000000046";
         internal const string ComInterfaceIBackgroundCopyCallback = "97ea99c7-0186-4ad4-8df9-c5b4e0ed6b22";
         internal const string ComInterfaceIBackgroundCopyError = "19c613a0-fcb8-4f28-81ae-897c3d078f81";
         internal const string ComInterfaceIBackgroundCopyFile = "01b7bd23-fb88-4a77-8490-5891d3e4653a";
@@ -22,6 +23,8 @@ namespace Htc.Vita.Core.Interop
         internal const string ComInterfaceIEnumBackgroundCopyFiles = "ca51e165-c365-424c-8d41-24aaa4ff3c40";
         internal const string ComInterfaceIEnumBackgroundCopyJobs = "1af4f612-3b71-466f-8f58-7b6f73ac57ad";
         internal const string ComInterfaceIPortableDeviceManager = "a1567595-4c2f-4574-a6fa-ecef917b9a40";
+        internal const string ComInterfaceIPropertyStore = "886d8eeb-8cf2-4446-8d02-cdba1dbdcf99";
+        internal const string ComInterfaceIShellLinkW = "000214f9-0000-0000-c000-000000000046";
 
         [ComImport]
         [Guid(ComInterfaceClsidBackgroundCopyManager)]
@@ -32,6 +35,12 @@ namespace Htc.Vita.Core.Interop
         [ComImport]
         [Guid(ComInterfaceClsidPortableDeviceManager)]
         internal class ClsidPortableDeviceManager
+        {
+        }
+
+        [ComImport]
+        [Guid(ComInterfaceClsidShellLink)]
+        internal class ClsidShellLink
         {
         }
 
@@ -146,7 +155,7 @@ namespace Htc.Vita.Core.Interop
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-enumfiles")]
             [PreserveSig]
             BitsResult EnumFiles(
-                    /* __RPC__deref_out_opt IEnumBackgroundCopyFiles ** */ [Out] out IEnumBackgroundCopyFiles pEnum
+                    /* __RPC__deref_out_opt IEnumBackgroundCopyFiles** */ [Out] out IEnumBackgroundCopyFiles pEnum
             );
 
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-suspend")]
@@ -707,6 +716,168 @@ namespace Htc.Vita.Core.Interop
                     /* __RPC__in        LPCWSTR */ [In] string pszPnPDeviceId,
                     /* __RPC__inout_opt WCHAR*  */ [In][Out] StringBuilder pDeviceManufacturer,
                     /* __RPC__inout     DWORD*  */ [In][Out] ref uint pcchDeviceManufacturer
+            );
+        }
+
+        [ComImport]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [Guid(ComInterfaceIPropertyStore)]
+        internal interface IPropertyStore
+        {
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/propsys/nf-propsys-ipropertystore-getcount")]
+            [PreserveSig]
+            HResult GetCount(
+                    /* __RPC__out DWORD* */ [Out] out uint cProps
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/propsys/nf-propsys-ipropertystore-getat")]
+            [PreserveSig]
+            HResult GetAt(
+                    /*            DWORD        */ [In] uint iProp,
+                    /* __RPC__out PROPERTYKEY* */ [Out] out PropertyKey pKey
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/propsys/nf-propsys-ipropertystore-getvalue")]
+            [PreserveSig]
+            HResult GetValue(
+                    /* __RPC__in  REFPROPERTYKEY */ [In] ref PropertyKey key,
+                    /* __RPC__out PROPVARIANT*   */ [Out] out PropVariant pv
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/propsys/nf-propsys-ipropertystore-setvalue")]
+            [PreserveSig]
+            HResult SetValue(
+                    /* __RPC__in REFPROPERTYKEY */ [In] ref PropertyKey key,
+                    /* __RPC__in REFPROPVARIANT */ [In] ref PropVariant propVar
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/propsys/nf-propsys-ipropertystore-commit")]
+            [PreserveSig]
+            HResult Commit();
+        }
+
+        [ComImport]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [Guid(ComInterfaceIShellLinkW)]
+        internal interface IShellLinkW
+        {
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-getpath")]
+            [PreserveSig]
+            HResult GetPath(
+                    /* __RPC__out_ecount_full_string LPWSTR            */ [Out][MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszFile,
+                    /*                               int               */ [In] int cch,
+                    /* __RPC__inout_opt              WIN32_FIND_DATAW* */ [Out] Win32FindDataW pfd,
+                    /*                               DWORD             */ [In] uint fFlags
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-getidlist")]
+            [PreserveSig]
+            HResult GetIDList(
+                    /* __RPC__deref_out_opt PIDLIST_ABSOLUTE* */ [Out] out IntPtr ppidl
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-setidlist")]
+            [PreserveSig]
+            HResult SetIDList(
+                    /* __RPC__in PCIDLIST_ABSOLUTE */ [In] IntPtr pidl
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-getdescription")]
+            [PreserveSig]
+            HResult GetDescription(
+                    /* __RPC__out_ecount_full_string LPSTR */ [Out][MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszName,
+                    /*                               int   */ [In] int cch
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-setdescription")]
+            [PreserveSig]
+            HResult SetDescription(
+                    /* __RPC__in_string LPCSTR */ [In] string pszName
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-getworkingdirectory")]
+            [PreserveSig]
+            HResult GetWorkingDirectory(
+                    /* __RPC__out_ecount_full_string LPSTR */ [Out][MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszDir,
+                    /*                               int   */ [In] int cch
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-setworkingdirectory")]
+            [PreserveSig]
+            HResult SetWorkingDirectory(
+                    /* __RPC__in_string LPCSTR */ [In] string pszDir
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-getarguments")]
+            [PreserveSig]
+            HResult GetArguments(
+                    /* __RPC__out_ecount_full_string LPSTR */ [Out][MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszArgs,
+                    /*                               int   */ [In] int cch
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-setarguments")]
+            [PreserveSig]
+            HResult SetArguments(
+                    /* __RPC__in_string LPCSTR */ [In] string pszArgs
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-gethotkey")]
+            [PreserveSig]
+            HResult GetHotkey(
+                    /* __RPC__out WORD* */ [Out] out ushort pwHotkey
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-sethotkey")]
+            [PreserveSig]
+            HResult SetHotkey(
+                    /* WORD */ [In] ushort wHotkey
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-getshowcmd")]
+            [PreserveSig]
+            HResult GetShowCmd(
+                    /* __RPC__out int* */ [Out] out ShowWindowCommand piShowCmd
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-setshowcmd")]
+            [PreserveSig]
+            HResult SetShowCmd(
+                    /* int */ [In] ShowWindowCommand iShowCmd
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-geticonlocation")]
+            [PreserveSig]
+            HResult GetIconLocation(
+                    /* __RPC__out_ecount_full_string LPWSTR */ [Out][MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszIconPath,
+                    /*                               int    */ [In] int cch,
+                    /* __RPC__out                    int*   */ [Out] int piIcon
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-seticonlocation")]
+            [PreserveSig]
+            HResult SetIconLocation(
+                    /* __RPC__in_string LPCWSTR */ [In] string pszIconPath,
+                    /*                  int     */ [In] int iIcon
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-setrelativepath")]
+            [PreserveSig]
+            HResult SetRelativePath(
+                    /* __RPC__in_string LPCWSTR */ [In] string pszPathRel,
+                    /*                  DWORD   */ [In] uint dwReserved
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-resolve")]
+            [PreserveSig]
+            HResult Resolve(
+                    /* __RPC__in_opt HWND  */ [In] IntPtr hwnd,
+                    /*               DWORD */ [In] uint fFlags
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-setpath")]
+            [PreserveSig]
+            HResult SetPath(
+                    /* __RPC__in_string LPCWSTR */ [In] string pszFile
             );
         }
     }
