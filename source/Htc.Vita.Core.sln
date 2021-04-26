@@ -16,6 +16,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Htc.Vita.Core.TestService.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Htc.Vita.Core.TestService.x86", "Htc.Vita.Core.TestService\Htc.Vita.Core.TestService.x86.csproj", "{7F36BF80-1F06-4129-A322-E20ADCD9B1FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Htc.Vita.Core.TestSingleInstance.AnyCPU", "Htc.Vita.Core.TestSingleInstance\Htc.Vita.Core.TestSingleInstance.AnyCPU.csproj", "{91C516B3-98E8-4E85-B4F8-C31009D29F65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AnyCPU = Debug|AnyCPU
@@ -80,6 +82,14 @@ Global
 		{7F36BF80-1F06-4129-A322-E20ADCD9B1FE}.Release|AnyCPU.Build.0 = Release|Any CPU
 		{7F36BF80-1F06-4129-A322-E20ADCD9B1FE}.Release|x86.ActiveCfg = Release|Any CPU
 		{7F36BF80-1F06-4129-A322-E20ADCD9B1FE}.Release|x86.Build.0 = Release|Any CPU
+		{91C516B3-98E8-4E85-B4F8-C31009D29F65}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{91C516B3-98E8-4E85-B4F8-C31009D29F65}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{91C516B3-98E8-4E85-B4F8-C31009D29F65}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{91C516B3-98E8-4E85-B4F8-C31009D29F65}.Debug|x86.Build.0 = Debug|Any CPU
+		{91C516B3-98E8-4E85-B4F8-C31009D29F65}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{91C516B3-98E8-4E85-B4F8-C31009D29F65}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{91C516B3-98E8-4E85-B4F8-C31009D29F65}.Release|x86.ActiveCfg = Release|Any CPU
+		{91C516B3-98E8-4E85-B4F8-C31009D29F65}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

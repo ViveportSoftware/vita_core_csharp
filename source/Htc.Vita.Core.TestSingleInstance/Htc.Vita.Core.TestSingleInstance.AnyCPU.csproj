@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Htc.Vita.Core.TestSingleInstance</RootNamespace>
+    <AssemblyName>Htc.Vita.Core.TestSingleInstance</AssemblyName>
+    <TargetFramework>net45</TargetFramework>
+    <DebugType>portable</DebugType>
+    <IntermediateOutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\obj\AnyCPU</IntermediateOutputPath>
+    <OutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\bin\AnyCPU</OutputPath>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <LangVersion>6</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\generated\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Htc.Vita.Core\Htc.Vita.Core.csproj" />
+  </ItemGroup>
+</Project>
