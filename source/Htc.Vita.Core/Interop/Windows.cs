@@ -2303,16 +2303,16 @@ namespace Htc.Vita.Core.Interop
         [StructLayout(LayoutKind.Sequential)]
         internal struct Win32FindDataW : IEquatable<Win32FindDataW>
         {
-                                                                      internal /* DWORD           */ FileAttributeFlags dwFileAttributes;
-                                                                      internal /* FILETIME        */ FileTime ftCreationTime;
-                                                                      internal /* FILETIME        */ FileTime ftLastAccessTime;
-                                                                      internal /* FILETIME        */ FileTime ftLastWriteTime;
-                                                                      internal /* DWORD           */ uint nFileSizeHigh;
-                                                                      internal /* DWORD           */ uint nFileSizeLow;
-                                                                      internal /* DWORD           */ uint dwReserved0;
-                                                                      internal /* DWORD           */ uint dwReserved1;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)] internal /* WCHAR[MAX_PATH] */ string cFileName;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]      internal /* WCHAR[14]       */ string cAlternateFileName;
+                                                                      internal readonly /* DWORD           */ FileAttributeFlags dwFileAttributes;
+                                                                      internal readonly /* FILETIME        */ FileTime ftCreationTime;
+                                                                      internal readonly /* FILETIME        */ FileTime ftLastAccessTime;
+                                                                      internal readonly /* FILETIME        */ FileTime ftLastWriteTime;
+                                                                      internal readonly /* DWORD           */ uint nFileSizeHigh;
+                                                                      internal readonly /* DWORD           */ uint nFileSizeLow;
+                                                                      internal readonly /* DWORD           */ uint dwReserved0;
+                                                                      internal readonly /* DWORD           */ uint dwReserved1;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)] internal readonly /* WCHAR[MAX_PATH] */ string cFileName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]      internal readonly /* WCHAR[14]       */ string cAlternateFileName;
 
             public static bool operator ==(Win32FindDataW left, Win32FindDataW right)
             {
