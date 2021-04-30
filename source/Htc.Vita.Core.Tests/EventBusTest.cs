@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Runtime;

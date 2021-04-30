@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Security;
 using Htc.Vita.Core.Runtime;
 using Htc.Vita.Core.Util;
