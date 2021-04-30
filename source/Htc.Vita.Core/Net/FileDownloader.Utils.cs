@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Htc.Vita.Core.Interop;
 using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
@@ -15,13 +16,13 @@ namespace Htc.Vita.Core.Net
         {
             try
             {
-                const int HR_ERROR_HANDLE_DISK_FULL = unchecked((int)0x80070027);
-                const int HR_ERROR_DISK_FULL = unchecked((int)0x80070070);
-
-                return ex.HResult == HR_ERROR_HANDLE_DISK_FULL
-                       || ex.HResult == HR_ERROR_DISK_FULL;
+                return ex.HResult == unchecked((int)Windows.HResult.EWin32HandleDiskFull)
+                       || ex.HResult == unchecked((int) Windows.HResult.EWin32DiskFull);
             }
-            catch (Exception) { }
+            catch (Exception)
+            {
+                // ignored
+            }
 
             return false;
         }

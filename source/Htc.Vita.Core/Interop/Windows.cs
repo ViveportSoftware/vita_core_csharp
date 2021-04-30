@@ -418,8 +418,10 @@ namespace Htc.Vita.Core.Interop
             /* ERROR_OUTOFMEMORY               (14,   0xe) */ OutOfMemory           =   0xe,
             /* ERROR_BAD_LENGTH                (24,  0x18) */ BadLength             =  0x18,
             /* ERROR_GEN_FAILURE               (31,  0x1f) */ GenFailure            =  0x1f,
+            /* ERROR_HANDLE_DISK_FULL          (39,  0x27) */ HandleDiskFull        =  0x27,
             /* ERROR_NOT_SUPPORTED             (50,  0x32) */ NotSupported          =  0x32,
             /* ERROR_INVALID_PARAMETER         (87,  0x57) */ InvalidParameter      =  0x57,
+            /* ERROR_DISK_FULL                (112,  0x70) */ DiskFull              =  0x70,
             /* ERROR_INSUFFICIENT_BUFFER      (122,  0x7a) */ InsufficientBuffer    =  0x7a,
             /* ERROR_INVALID_NAME             (123,  0x7b) */ InvalidName           =  0x7b,
             /* ERROR_FILENAME_EXCED_RANGE     (206,  0xce) */ FilenameExceedRange   =  0xce,
@@ -537,8 +539,12 @@ namespace Htc.Vita.Core.Interop
                                                                                                | Error.InvalidData,
             /* E_OUTOFMEMORY                                     */ EOutOfMemory               = 0x80070000
                                                                                                | Error.OutOfMemory,
+            /* HRESULT_FROM_WIN32(ERROR_HANDLE_DISK_FULL)        */ EWin32HandleDiskFull       = 0x80070000
+                                                                                               | Error.HandleDiskFull,
             /* E_INVALIDARG                                      */ EInvalidArg                = 0x80070000
                                                                                                | Error.InvalidParameter,
+            /* HRESULT_FROM_WIN32(ERROR_DISK_FULL)               */ EWin32DiskFull             = 0x80070000
+                                                                                               | Error.DiskFull,
             /* HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER)     */ EWin32InsufficientBuffer   = 0x80070000
                                                                                                | Error.InsufficientBuffer,
             /* HRESULT_FROM_WIN32(ERROR_NOT_FOUND)               */ EWin32NotFound             = 0x80070000
