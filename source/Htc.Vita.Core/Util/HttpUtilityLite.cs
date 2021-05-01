@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 
@@ -15,7 +16,7 @@ namespace Htc.Vita.Core.Util
         /// <returns>NameValueCollection.</returns>
         public static NameValueCollection ParseQueryString(string data)
         {
-            var result = new NameValueCollection();
+            var result = new HttpValueCollection();
             var normalizedData = data;
             if (normalizedData.Contains("?"))
             {
@@ -37,6 +38,20 @@ namespace Htc.Vita.Core.Util
                 result.Add(pair[0], string.Empty);
             }
             return result;
+        }
+
+        internal class HttpValueCollection : NameValueCollection
+        {
+            public override string ToString()
+            {
+                var list = new List<string>();
+                var keys = AllKeys;
+                foreach (var key in keys)
+                {
+                    list.Add($"{key}={this[key]}");
+                }
+                return string.Join("&", list);
+            }
         }
     }
 }
