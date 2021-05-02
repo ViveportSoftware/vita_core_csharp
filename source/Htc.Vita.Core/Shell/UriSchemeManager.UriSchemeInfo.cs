@@ -1,3 +1,5 @@
+using System;
+
 namespace Htc.Vita.Core.Shell
 {
     public abstract partial class UriSchemeManager
@@ -5,6 +7,7 @@ namespace Htc.Vita.Core.Shell
         /// <summary>
         /// Class UriSchemeInfo.
         /// </summary>
+        [Obsolete("This class is obsoleted.")]
         public class UriSchemeInfo
         {
             /// <summary>
