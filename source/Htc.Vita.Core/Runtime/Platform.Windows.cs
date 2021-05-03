@@ -142,6 +142,7 @@ namespace Htc.Vita.Core.Runtime
             {
                 try
                 {
+#pragma warning disable CA1416
                     using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_OperatingSystem"))
                     {
                         using (var managementObjectCollection = searcher.Get())
@@ -168,6 +169,7 @@ namespace Htc.Vita.Core.Runtime
                             }
                         }
                     }
+#pragma warning restore CA1416
                 }
                 catch (Exception e)
                 {

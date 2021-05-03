@@ -23,6 +23,7 @@ namespace Htc.Vita.Core.IO
             /// </summary>
             public WmiUsbWatcher()
             {
+#pragma warning disable CA1416
                 _connectEventQuery = new WqlEventQuery
                 {
                         EventClassName = "__InstanceCreationEvent",
@@ -35,6 +36,7 @@ namespace Htc.Vita.Core.IO
                         WithinInterval = new TimeSpan(0, 0, 3),
                         Condition = "TargetInstance ISA 'Win32_USBControllerDevice'"
                 };
+#pragma warning restore CA1416
             }
 
             /// <inheritdoc />
@@ -60,6 +62,7 @@ namespace Htc.Vita.Core.IO
                     OnStop();
                 }
 
+#pragma warning disable CA1416
                 _connectEventWatcher = new ManagementEventWatcher(_connectEventQuery);
                 _connectEventWatcher.EventArrived += OnDeviceConnectedEventArrived;
                 _connectEventWatcher.Start();
@@ -67,6 +70,7 @@ namespace Htc.Vita.Core.IO
                 _disconnectEventWatcher = new ManagementEventWatcher(_disconnectEventQuery);
                 _disconnectEventWatcher.EventArrived += OnDeviceDisconnectedEventArrived;
                 _disconnectEventWatcher.Start();
+#pragma warning restore CA1416
 
                 return OnIsRunning();
             }
@@ -74,6 +78,7 @@ namespace Htc.Vita.Core.IO
             /// <inheritdoc />
             protected override bool OnStop()
             {
+#pragma warning disable CA1416
                 if (_connectEventWatcher != null)
                 {
                     _connectEventWatcher.Stop();
@@ -89,6 +94,7 @@ namespace Htc.Vita.Core.IO
                     _disconnectEventWatcher.Dispose();
                     _disconnectEventWatcher = null;
                 }
+#pragma warning restore CA1416
 
                 return !OnIsRunning();
             }

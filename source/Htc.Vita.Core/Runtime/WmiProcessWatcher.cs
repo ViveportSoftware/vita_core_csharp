@@ -68,6 +68,7 @@ namespace Htc.Vita.Core.Runtime
 
         private void OnManagementEventArrived(object sender, EventArrivedEventArgs e)
         {
+#pragma warning disable CA1416
             var managementBaseObject = e.NewEvent;
             if (managementBaseObject == null)
             {
@@ -116,7 +117,6 @@ namespace Htc.Vita.Core.Runtime
                             Name = name,
                             Path = path
                     };
-
                 }
                 catch (Exception exception)
                 {
@@ -146,6 +146,7 @@ namespace Htc.Vita.Core.Runtime
                  */
                 managementBaseObject.Dispose();
             }
+#pragma warning restore CA1416
         }
 
         /// <inheritdoc />
@@ -167,18 +168,20 @@ namespace Htc.Vita.Core.Runtime
 
                 var wmiQuery = OnGetWmiQuery((EventType) eventTypeValue);
                 Logger.GetInstance(typeof(WmiProcessWatcher)).Info($"WMI query: {wmiQuery}");
-                var eventWatcher = new ManagementEventWatcher(wmiQuery);
-                eventWatcher.EventArrived += OnManagementEventArrived;
                 try
                 {
+#pragma warning disable CA1416
+                    var eventWatcher = new ManagementEventWatcher(wmiQuery);
+                    eventWatcher.EventArrived += OnManagementEventArrived;
                     eventWatcher.Start();
+                    _eventWatchers.Add(eventWatcher);
+#pragma warning restore CA1416
                 }
                 catch (Exception e)
                 {
                     Logger.GetInstance(typeof(WmiProcessWatcher)).Error("Can not start management event watcher: " + e.Message);
                     return false;
                 }
-                _eventWatchers.Add(eventWatcher);
             }
 
             return true;
@@ -191,7 +194,9 @@ namespace Htc.Vita.Core.Runtime
             {
                 try
                 {
+#pragma warning disable CA1416
                     eventWatcher.Stop();
+#pragma warning restore CA1416
                 }
                 catch (Exception e)
                 {

@@ -108,7 +108,9 @@ namespace Htc.Vita.Core.Interop
                 }
                 if (Marshal.IsComObject(_backgroundCopyJob))
                 {
+#pragma warning disable CA1416
                     Marshal.ReleaseComObject(_backgroundCopyJob);
+#pragma warning restore CA1416
                 }
                 _backgroundCopyJob = null;
 
