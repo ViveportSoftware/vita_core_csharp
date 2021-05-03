@@ -45,7 +45,9 @@ namespace Htc.Vita.Core.Interop
                 }
                 if (Marshal.IsComObject(_dxgiOutput))
                 {
+#pragma warning disable CA1416
                     Marshal.ReleaseComObject(_dxgiOutput);
+#pragma warning restore CA1416
                 }
                 _dxgiOutput = null;
 

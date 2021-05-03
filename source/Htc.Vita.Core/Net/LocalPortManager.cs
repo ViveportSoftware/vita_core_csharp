@@ -10,15 +10,19 @@ namespace Htc.Vita.Core.Net
     /// </summary>
     public class LocalPortManager
     {
-        /// <summary>
-        /// Gets the random unused port.
-        /// </summary>
-        /// <returns>System.Int32.</returns>
-        public static int GetRandomUnusedPort()
+        private static int _lastLocalPort;
+
+        private static int DoGetUnusedPort(int preferredPort)
         {
+            var realPreferredPort = preferredPort;
+            if (realPreferredPort < 0 || realPreferredPort > 65535)
+            {
+                Logger.GetInstance(typeof(LocalPortManager)).Warn($"Preferred port number {preferredPort} is invalid.");
+                realPreferredPort = 0;
+            }
             var listener = new TcpListener(
                     IPAddress.Loopback,
-                    0
+                    realPreferredPort
             );
             try
             {
@@ -33,7 +37,21 @@ namespace Htc.Vita.Core.Net
             {
                 listener.Stop();
             }
-            return -1;
+            return 0;
+        }
+
+        /// <summary>
+        /// Gets the random unused port.
+        /// </summary>
+        /// <returns>System.Int32.</returns>
+        public static int GetRandomUnusedPort()
+        {
+            _lastLocalPort = DoGetUnusedPort(_lastLocalPort);
+            if (_lastLocalPort == 0)
+            {
+                _lastLocalPort = DoGetUnusedPort(_lastLocalPort);
+            }
+            return _lastLocalPort;
         }
 
         /// <summary>

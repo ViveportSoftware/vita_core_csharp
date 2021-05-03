@@ -45,7 +45,9 @@ namespace Htc.Vita.Core.Interop
                 }
                 if (Marshal.IsComObject(_enumBackgroundCopyFiles))
                 {
+#pragma warning disable CA1416
                     Marshal.ReleaseComObject(_enumBackgroundCopyFiles);
+#pragma warning restore CA1416
                 }
                 _enumBackgroundCopyFiles = null;
 

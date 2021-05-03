@@ -15,9 +15,20 @@ namespace Htc.Vita.Core.Util
         /// <param name="keyPath">The key path.</param>
         /// <param name="keyName">Name of the key.</param>
         /// <returns><c>true</c> if success, <c>false</c> otherwise.</returns>
-        public static bool DeleteKey(Hive root, string keyPath, string keyName)
+        public static bool DeleteKey(
+                Hive root,
+                string keyPath,
+                string keyName)
         {
-            return DeleteKey32(root, keyPath, keyName) && DeleteKey64(root, keyPath, keyName);
+            return DeleteKey32(
+                    root,
+                    keyPath,
+                    keyName
+            ) && DeleteKey64(
+                    root,
+                    keyPath,
+                    keyName
+            );
         }
 
         /// <summary>
@@ -27,7 +38,10 @@ namespace Htc.Vita.Core.Util
         /// <param name="keyPath">The key path.</param>
         /// <param name="keyName">Name of the key.</param>
         /// <returns><c>true</c> if success, <c>false</c> otherwise.</returns>
-        public static bool DeleteKey32(Hive root, string keyPath, string keyName)
+        public static bool DeleteKey32(
+                Hive root,
+                string keyPath,
+                string keyName)
         {
             if (string.IsNullOrWhiteSpace(keyPath) || string.IsNullOrEmpty(keyName))
             {
@@ -39,7 +53,10 @@ namespace Htc.Vita.Core.Util
                 {
                     using (var subKey = baseKey.OpenSubKey(keyPath, KeyPermissionCheck.ReadWriteSubTree))
                     {
-                        subKey?.DeleteSubKeyTree(keyName, false);
+                        subKey?.DeleteSubKeyTree(
+                                keyName,
+                                false
+                        );
                         return true;
                     }
                 }
@@ -58,7 +75,10 @@ namespace Htc.Vita.Core.Util
         /// <param name="keyPath">The key path.</param>
         /// <param name="keyName">Name of the key.</param>
         /// <returns><c>true</c> if success, <c>false</c> otherwise.</returns>
-        public static bool DeleteKey64(Hive root, string keyPath, string keyName)
+        public static bool DeleteKey64(
+                Hive root,
+                string keyPath,
+                string keyName)
         {
             if (string.IsNullOrWhiteSpace(keyPath) || string.IsNullOrEmpty(keyName))
             {
@@ -70,7 +90,10 @@ namespace Htc.Vita.Core.Util
                 {
                     using (var subKey = baseKey.OpenSubKey(keyPath, KeyPermissionCheck.ReadWriteSubTree))
                     {
-                        subKey?.DeleteSubKeyTree(keyName, false);
+                        subKey?.DeleteSubKeyTree(
+                                keyName,
+                                false
+                        );
                         return true;
                     }
                 }
@@ -89,9 +112,20 @@ namespace Htc.Vita.Core.Util
         /// <param name="keyPath">The key path.</param>
         /// <param name="valueName">Name of the value.</param>
         /// <returns><c>true</c> if success, <c>false</c> otherwise.</returns>
-        public static bool DeleteValue(Hive root, string keyPath, string valueName)
+        public static bool DeleteValue(
+                Hive root,
+                string keyPath,
+                string valueName)
         {
-            return DeleteValue32(root, keyPath, valueName) && DeleteValue64(root, keyPath, valueName);
+            return DeleteValue32(
+                    root,
+                    keyPath,
+                    valueName
+            ) && DeleteValue64(
+                    root,
+                    keyPath,
+                    valueName
+            );
         }
 
         /// <summary>
@@ -101,7 +135,10 @@ namespace Htc.Vita.Core.Util
         /// <param name="keyPath">The key path.</param>
         /// <param name="valueName">Name of the value.</param>
         /// <returns><c>true</c> if success, <c>false</c> otherwise.</returns>
-        public static bool DeleteValue32(Hive root, string keyPath, string valueName)
+        public static bool DeleteValue32(
+                Hive root,
+                string keyPath,
+                string valueName)
         {
             try
             {
@@ -109,7 +146,10 @@ namespace Htc.Vita.Core.Util
                 {
                     using (var subKey = baseKey.OpenSubKey(keyPath, KeyPermissionCheck.ReadWriteSubTree))
                     {
-                        subKey?.DeleteValue(valueName, false);
+                        subKey?.DeleteValue(
+                                valueName,
+                                false
+                        );
                         return true;
                     }
                 }
@@ -128,7 +168,10 @@ namespace Htc.Vita.Core.Util
         /// <param name="keyPath">The key path.</param>
         /// <param name="valueName">Name of the value.</param>
         /// <returns><c>true</c> if success, <c>false</c> otherwise.</returns>
-        public static bool DeleteValue64(Hive root, string keyPath, string valueName)
+        public static bool DeleteValue64(
+                Hive root,
+                string keyPath,
+                string valueName)
         {
             try
             {
@@ -136,7 +179,10 @@ namespace Htc.Vita.Core.Util
                 {
                     using (var subKey = baseKey.OpenSubKey(keyPath, KeyPermissionCheck.ReadWriteSubTree))
                     {
-                        subKey?.DeleteValue(valueName, false);
+                        subKey?.DeleteValue(
+                                valueName,
+                                false
+                        );
                         return true;
                     }
                 }
@@ -155,9 +201,17 @@ namespace Htc.Vita.Core.Util
         /// <param name="keyPath">The key path.</param>
         /// <param name="valueName">Name of the value.</param>
         /// <returns>System.Int32.</returns>
-        public static int GetDwordValue32(Hive root, string keyPath, string valueName)
+        public static int GetDwordValue32(
+                Hive root,
+                string keyPath,
+                string valueName)
         {
-            return GetDwordValue32(root, keyPath, valueName, 0);
+            return GetDwordValue32(
+                    root,
+                    keyPath,
+                    valueName,
+                    0
+            );
         }
 
         /// <summary>
@@ -168,7 +222,11 @@ namespace Htc.Vita.Core.Util
         /// <param name="valueName">Name of the value.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int32.</returns>
-        public static int GetDwordValue32(Hive root, string keyPath, string valueName, int defaultValue)
+        public static int GetDwordValue32(
+                Hive root,
+                string keyPath,
+                string valueName,
+                int defaultValue)
         {
             if (string.IsNullOrWhiteSpace(keyPath))
             {
@@ -213,9 +271,17 @@ namespace Htc.Vita.Core.Util
         /// <param name="keyPath">The key path.</param>
         /// <param name="valueName">Name of the value.</param>
         /// <returns>System.Int32.</returns>
-        public static int GetDwordValue64(Hive root, string keyPath, string valueName)
+        public static int GetDwordValue64(
+                Hive root,
+                string keyPath,
+                string valueName)
         {
-            return GetDwordValue64(root, keyPath, valueName, 0);
+            return GetDwordValue64(
+                    root,
+                    keyPath,
+                    valueName,
+                    0
+            );
         }
 
         /// <summary>
@@ -226,7 +292,11 @@ namespace Htc.Vita.Core.Util
         /// <param name="valueName">Name of the value.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int32.</returns>
-        public static int GetDwordValue64(Hive root, string keyPath, string valueName, int defaultValue)
+        public static int GetDwordValue64(
+                Hive root,
+                string keyPath,
+                string valueName,
+                int defaultValue)
         {
             if (string.IsNullOrWhiteSpace(keyPath))
             {
@@ -271,9 +341,17 @@ namespace Htc.Vita.Core.Util
         /// <param name="keyPath">The key path.</param>
         /// <param name="valueName">Name of the value.</param>
         /// <returns>System.Int32.</returns>
-        public static int GetIntValue(Hive root, string keyPath, string valueName)
+        public static int GetIntValue(
+                Hive root,
+                string keyPath,
+                string valueName)
         {
-            return GetIntValue(root, keyPath, valueName, 0);
+            return GetIntValue(
+                    root,
+                    keyPath,
+                    valueName,
+                    0
+            );
         }
 
         /// <summary>
@@ -284,19 +362,40 @@ namespace Htc.Vita.Core.Util
         /// <param name="valueName">Name of the value.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.Int32.</returns>
-        public static int GetIntValue(Hive root, string keyPath, string valueName, int defaultValue)
+        public static int GetIntValue(
+                Hive root,
+                string keyPath,
+                string valueName,
+                int defaultValue)
         {
-            var result = Convert.ToInt32(GetStringValue(root, keyPath, valueName), defaultValue);
+            var result = Convert.ToInt32(
+                    GetStringValue(
+                            root,
+                            keyPath,
+                            valueName
+                    ),
+                    defaultValue
+            );
             if (result != defaultValue)
             {
                 return result;
             }
-            result = GetDwordValue64(root, keyPath, valueName, result);
+            result = GetDwordValue64(
+                    root,
+                    keyPath,
+                    valueName,
+                    result
+            );
             if (result != defaultValue)
             {
                 return result;
             }
-            return GetDwordValue32(root, keyPath, valueName, result);
+            return GetDwordValue32(
+                    root,
+                    keyPath,
+                    valueName,
+                    result
+            );
         }
 
         /// <summary>
@@ -306,9 +405,17 @@ namespace Htc.Vita.Core.Util
         /// <param name="keyPath">The key path.</param>
         /// <param name="valueName">Name of the value.</param>
         /// <returns>System.String.</returns>
-        public static string GetStringValue(Hive root, string keyPath, string valueName)
+        public static string GetStringValue(
+                Hive root,
+                string keyPath,
+                string valueName)
         {
-            return GetStringValue(root, keyPath, valueName, null);
+            return GetStringValue(
+                    root,
+                    keyPath,
+                    valueName,
+                    null
+            );
         }
 
         /// <summary>
@@ -319,7 +426,11 @@ namespace Htc.Vita.Core.Util
         /// <param name="valueName">Name of the value.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.String.</returns>
-        public static string GetStringValue(Hive root, string keyPath, string valueName, string defaultValue)
+        public static string GetStringValue(
+                Hive root,
+                string keyPath,
+                string valueName,
+                string defaultValue)
         {
             return (GetStringValue64(root, keyPath, valueName) ?? GetStringValue32(root, keyPath, valueName)) ?? defaultValue;
         }
@@ -331,9 +442,17 @@ namespace Htc.Vita.Core.Util
         /// <param name="keyPath">The key path.</param>
         /// <param name="valueName">Name of the value.</param>
         /// <returns>System.String.</returns>
-        public static string GetStringValue32(Hive root, string keyPath, string valueName)
+        public static string GetStringValue32(
+                Hive root,
+                string keyPath,
+                string valueName)
         {
-            return GetStringValue32(root, keyPath, valueName, null);
+            return GetStringValue32(
+                    root,
+                    keyPath,
+                    valueName,
+                    null
+            );
         }
 
         /// <summary>
@@ -344,7 +463,11 @@ namespace Htc.Vita.Core.Util
         /// <param name="valueName">Name of the value.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.String.</returns>
-        public static string GetStringValue32(Hive root, string keyPath, string valueName, string defaultValue)
+        public static string GetStringValue32(
+                Hive root,
+                string keyPath,
+                string valueName,
+                string defaultValue)
         {
             if (string.IsNullOrWhiteSpace(keyPath))
             {
@@ -388,9 +511,17 @@ namespace Htc.Vita.Core.Util
         /// <param name="keyPath">The key path.</param>
         /// <param name="valueName">Name of the value.</param>
         /// <returns>System.String.</returns>
-        public static string GetStringValue64(Hive root, string keyPath, string valueName)
+        public static string GetStringValue64(
+                Hive root,
+                string keyPath,
+                string valueName)
         {
-            return GetStringValue64(root, keyPath, valueName, null);
+            return GetStringValue64(
+                    root,
+                    keyPath,
+                    valueName,
+                    null
+            );
         }
 
         /// <summary>
@@ -401,7 +532,11 @@ namespace Htc.Vita.Core.Util
         /// <param name="valueName">Name of the value.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>System.String.</returns>
-        public static string GetStringValue64(Hive root, string keyPath, string valueName, string defaultValue)
+        public static string GetStringValue64(
+                Hive root,
+                string keyPath,
+                string valueName,
+                string defaultValue)
         {
             if (string.IsNullOrWhiteSpace(keyPath))
             {
@@ -446,7 +581,11 @@ namespace Htc.Vita.Core.Util
         /// <param name="valueName">Name of the value.</param>
         /// <param name="valueData">The value data.</param>
         /// <returns><c>true</c> if success, <c>false</c> otherwise.</returns>
-        public static bool SetStringValue(Hive root, string keyPath, string valueName, string valueData)
+        public static bool SetStringValue(
+                Hive root,
+                string keyPath,
+                string valueName,
+                string valueData)
         {
             var result = false;
             try
@@ -478,7 +617,11 @@ namespace Htc.Vita.Core.Util
         /// <param name="valueName">Name of the value.</param>
         /// <param name="valueData">The value data.</param>
         /// <returns><c>true</c> if success, <c>false</c> otherwise.</returns>
-        public static bool SetDwordValue(Hive root, string keyPath, string valueName, int valueData)
+        public static bool SetDwordValue(
+                Hive root,
+                string keyPath,
+                string valueName,
+                int valueData)
         {
             var result = false;
             try
@@ -489,7 +632,11 @@ namespace Htc.Vita.Core.Util
                     {
                         if (key != null)
                         {
-                            key.SetValue(valueName, valueData, ValueKind.DWord);
+                            key.SetValue(
+                                    valueName,
+                                    valueData,
+                                    ValueKind.DWord
+                            );
                             result = true;
                         }
                     }

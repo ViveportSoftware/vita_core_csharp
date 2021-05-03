@@ -47,7 +47,9 @@ namespace Htc.Vita.Core.Interop
                 }
                 if (Marshal.IsComObject(_portableDeviceManager))
                 {
+#pragma warning disable CA1416
                     Marshal.ReleaseComObject(_portableDeviceManager);
+#pragma warning restore CA1416
                 }
                 _portableDeviceManager = null;
 

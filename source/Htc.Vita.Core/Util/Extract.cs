@@ -3,7 +3,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Reflection;
 using Htc.Vita.Core.Log;
-using Htc.Vita.Core.Runtime;
 
 namespace Htc.Vita.Core.Util
 {
@@ -12,23 +11,6 @@ namespace Htc.Vita.Core.Util
     /// </summary>
     public static partial class Extract
     {
-        /// <summary>
-        /// Extract resource from the file to icon.
-        /// </summary>
-        /// <param name="fromFile">The file.</param>
-        /// <param name="toIcon">The icon.</param>
-        /// <returns><c>true</c> if success, <c>false</c> otherwise.</returns>
-        public static bool FromFileToIcon(
-                FileInfo fromFile,
-                FileInfo toIcon)
-        {
-            if (!Platform.IsWindows)
-            {
-                return false;
-            }
-            return Windows.FromFileToIconInPlatform(fromFile, toIcon);
-        }
-
         /// <summary>
         /// Extract resource from the assembly to file by resource name.
         /// </summary>

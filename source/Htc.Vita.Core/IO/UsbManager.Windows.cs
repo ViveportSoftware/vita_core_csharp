@@ -112,7 +112,15 @@ namespace Htc.Vita.Core.IO
                             deviceIndex++;
                             continue;
                         }
-                        if (!devicePath.Contains("VID_") && !devicePath.Contains("vid_"))
+
+                        if (devicePath.ToLower().Contains("00001812-0000-1000-8000-00805f9b34fb"))
+                        {
+                            // HID over GATT
+                            deviceIndex++;
+                            continue;
+                        }
+
+                        if (!devicePath.ToLower().Contains("vid_"))
                         {
                             Logger.GetInstance(typeof(Windows)).Error($"Can not get valid HID device path: {devicePath}");
                             deviceIndex++;

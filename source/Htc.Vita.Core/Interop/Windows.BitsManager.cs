@@ -88,7 +88,9 @@ namespace Htc.Vita.Core.Interop
                 }
                 if (Marshal.IsComObject(_backgroundCopyManager))
                 {
+#pragma warning disable CA1416
                     Marshal.ReleaseComObject(_backgroundCopyManager);
+#pragma warning restore CA1416
                 }
                 _backgroundCopyManager = null;
 
@@ -216,7 +218,9 @@ namespace Htc.Vita.Core.Interop
                                 {
                                     if (Marshal.IsComObject(iBackgroundCopyJob))
                                     {
+#pragma warning disable CA1416
                                         Marshal.ReleaseComObject(iBackgroundCopyJob);
+#pragma warning restore CA1416
                                     }
                                 }
                             }
@@ -246,7 +250,9 @@ namespace Htc.Vita.Core.Interop
                     {
                         if (Marshal.IsComObject(iEnumBackgroundCopyJobs))
                         {
+#pragma warning disable CA1416
                             Marshal.ReleaseComObject(iEnumBackgroundCopyJobs);
+#pragma warning restore CA1416
                         }
                     }
                 }

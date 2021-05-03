@@ -12,6 +12,7 @@ namespace Htc.Vita.Core.Shell
     /// Implements the <see cref="UriSchemeManager" />
     /// </summary>
     /// <seealso cref="UriSchemeManager" />
+    [Obsolete("This class is obsoleted.")]
     public class RegistryUriSchemeManager : UriSchemeManager
     {
         private static readonly HashSet<string> ProtocolCommandPathWhitelist = new HashSet<string>();
