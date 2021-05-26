@@ -83,10 +83,19 @@ namespace Htc.Vita.Core.Diagnostics
 
             Instance = fileInfo;
 
-            X509Certificate certificate = null;
             try
             {
-                certificate = X509Certificate.CreateFromSignedFile(fileInfo.FullName);
+                var certificate = X509Certificate.CreateFromSignedFile(fileInfo.FullName);
+                IssuerDistinguishedName = certificate.Issuer;
+                IssuerName = DistinguishedName.Parse(IssuerDistinguishedName).O;
+                SubjectDistinguishedName = certificate.Subject;
+                SubjectName = DistinguishedName.Parse(SubjectDistinguishedName).O;
+                PublicKey = certificate.GetPublicKeyString();
+                Verified = Authenticode.IsVerified(fileInfo);
+            }
+            catch (FileLoadException e)
+            {
+                Logger.GetInstance(typeof(FilePropertiesInfo)).Error($"Can not load module to find certificate from file {fileInfo.FullName}. exception: {e}");
             }
             catch (Exception)
             {
@@ -100,15 +109,6 @@ namespace Htc.Vita.Core.Diagnostics
                     Logger.GetInstance(typeof(FilePropertiesInfo)).Warn($"Can not find certificate from file {fileInfo.FullName}");
                     CachedErrorPaths.Add(key);
                 }
-            }
-            if (certificate != null)
-            {
-                IssuerDistinguishedName = certificate.Issuer;
-                IssuerName = DistinguishedName.Parse(IssuerDistinguishedName).O;
-                SubjectDistinguishedName = certificate.Subject;
-                SubjectName = DistinguishedName.Parse(SubjectDistinguishedName).O;
-                PublicKey = certificate.GetPublicKeyString();
-                Verified = Authenticode.IsVerified(fileInfo);
             }
 
             var versionInfo = FileVersionInfo.GetVersionInfo(fileInfo.FullName);
