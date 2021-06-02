@@ -106,11 +106,16 @@ namespace Htc.Vita.Core.Tests
             Assert.Equal(valueData, Win32Registry.GetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test", valueName));
         }
 
-        [Fact(Skip = "AdministratorPermissionNeeded")]
+        [Fact]
         public static void Default_1_SetStringValue_UnderHKLM()
         {
             if (!Platform.IsWindows)
             {
+                return;
+            }
+            if (!ProcessManager.IsElevatedProcess(Process.GetCurrentProcess()))
+            {
+                Logger.GetInstance(typeof(Win32RegistryTest)).Warn("This API should be invoked by elevated user process");
                 return;
             }
 
