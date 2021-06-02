@@ -20,6 +20,7 @@ namespace Htc.Vita.Core.Runtime
     /// </summary>
     public class NamedPipeIpcChannel
     {
+#pragma warning disable CA1416
         /// <summary>
         /// Class Client.
         /// Implements the <see cref="IpcChannel.Client" />
@@ -611,5 +612,6 @@ namespace Htc.Vita.Core.Runtime
 
             return FilePropertiesInfo.GetPropertiesInfo(new FileInfo(processPath));
         }
+#pragma warning restore CA1416
     }
 }

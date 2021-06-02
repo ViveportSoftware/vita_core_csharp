@@ -10,6 +10,7 @@
     <OutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\bin\x86</OutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>6</LangVersion>
+    <ApplicationManifest>App.manifest</ApplicationManifest>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>

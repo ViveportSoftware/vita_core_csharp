@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using Htc.Vita.Core.Diagnostics;
 using Htc.Vita.Core.IO;
 using Htc.Vita.Core.Net;
 using Htc.Vita.Core.Runtime;
@@ -59,6 +60,12 @@ namespace Htc.Vita.Core.TestProgram
 
             Console.WriteLine($"SecurityProtocolManager.GetAvailableProtocol(): {SecurityProtocolManager.GetAvailableProtocol()}");
             Console.ReadKey();
+
+            var windowsSystemManager = WindowsSystemManager.GetInstance();
+            var checkResult = windowsSystemManager.Check();
+            Console.WriteLine($"checkResult.ProductName: {checkResult.ProductName}");
+            Console.WriteLine($"checkResult.ProductType: {checkResult.ProductType}");
+            Console.WriteLine($"checkResult.ProductVersion: {checkResult.ProductVersion}");
 
             var jobIdList = FileTransfer.GetInstance().GetJobIdList();
             if (jobIdList.Count > 0)
