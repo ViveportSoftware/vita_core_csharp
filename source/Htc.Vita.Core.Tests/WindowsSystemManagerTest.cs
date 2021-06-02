@@ -1,5 +1,6 @@
 using Htc.Vita.Core.Diagnostics;
 using Htc.Vita.Core.Log;
+using Htc.Vita.Core.Runtime;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
@@ -9,6 +10,11 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_0_GetInstance()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+
             var windowsSystemManager = WindowsSystemManager.GetInstance();
             Assert.NotNull(windowsSystemManager);
         }
@@ -16,6 +22,11 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_1_Check()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+
             var windowsSystemManager = WindowsSystemManager.GetInstance();
             var checkResult = windowsSystemManager.Check();
             var productName = checkResult.ProductName;
@@ -38,6 +49,11 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_2_GetInstalledUpdateList()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+
             var windowsSystemManager = WindowsSystemManager.GetInstance();
             var getInstalledUpdateListResult = windowsSystemManager.GetInstalledUpdateList();
             var getInstalledUpdateListStatus = getInstalledUpdateListResult.Status;
