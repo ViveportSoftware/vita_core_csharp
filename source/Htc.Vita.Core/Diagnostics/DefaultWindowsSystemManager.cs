@@ -19,8 +19,42 @@ namespace Htc.Vita.Core.Diagnostics
         private const string FipsPolicyValueName = "Enabled";
         private const string ProductNameRegistryKey = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion";
         private const string ProductNameValueName = "ProductName";
+        private const string SecureBootRegistryKey = @"SYSTEM\CurrentControlSet\Control\SecureBoot\State";
+        private const string SecureBootValueName = "UEFISecureBootEnabled";
         private const string Windows10ProductRevisionRegistryKey = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion";
         private const string Windows10ProductRevisionValueName = "UBR";
+
+        private static WindowsFipsStatus GetFipsStatusFromRegistry()
+        {
+            const int defaultValue = 13579;
+            var enabled = Win32Registry.GetIntValue(
+                    Win32Registry.Hive.LocalMachine,
+                    FipsPolicyRegistryKey,
+                    FipsPolicyValueName,
+                    defaultValue
+            );
+
+            if (enabled == defaultValue)
+            {
+                return WindowsFipsStatus.Refused;
+            }
+
+            if (enabled == 0)
+            {
+                return IsSystemMd5Available()
+                        ? WindowsFipsStatus.Disabled
+                        : WindowsFipsStatus.RebootRequired;
+            }
+
+            if (enabled == 1)
+            {
+                return !IsSystemMd5Available()
+                        ? WindowsFipsStatus.Enabled
+                        : WindowsFipsStatus.RebootRequired;
+            }
+
+            return WindowsFipsStatus.Unknown;
+        }
 
         private static bool GetNativeVersion(ref Windows.OsVersionInfoExW osVersionInfoExW)
         {
@@ -77,6 +111,34 @@ namespace Htc.Vita.Core.Diagnostics
             return result;
         }
 
+        private static WindowsSecureBootStatus GetSecureBootStatusFromRegistry()
+        {
+            const int defaultValue = 13579;
+            var enabled = Win32Registry.GetIntValue(
+                    Win32Registry.Hive.LocalMachine,
+                    SecureBootRegistryKey,
+                    SecureBootValueName,
+                    defaultValue
+            );
+
+            if (enabled == defaultValue)
+            {
+                return WindowsSecureBootStatus.Refused;
+            }
+
+            if (enabled == 0)
+            {
+                return WindowsSecureBootStatus.Disabled;
+            }
+
+            if (enabled == 1)
+            {
+                return WindowsSecureBootStatus.Enabled;
+            }
+
+            return WindowsSecureBootStatus.Unknown;
+        }
+
         private static int GetWindows10ProductRevisionFromRegistry()
         {
             return Win32Registry.GetIntValue(
@@ -114,7 +176,8 @@ namespace Htc.Vita.Core.Diagnostics
             var result = new CheckResult
             {
                     FipsStatus = GetFipsStatusFromRegistry(),
-                    ProductName = GetProductNameFromRegistry()
+                    ProductName = GetProductNameFromRegistry(),
+                    SecureBootStatus = GetSecureBootStatusFromRegistry()
             };
 
             var osVersionInfoExW = new Windows.OsVersionInfoExW
@@ -128,38 +191,6 @@ namespace Htc.Vita.Core.Diagnostics
             }
 
             return result;
-        }
-
-        private static WindowsFipsStatus GetFipsStatusFromRegistry()
-        {
-            const int defaultValue = 13579;
-            var enabled = Win32Registry.GetIntValue(
-                    Win32Registry.Hive.LocalMachine,
-                    FipsPolicyRegistryKey,
-                    FipsPolicyValueName,
-                    defaultValue
-            );
-
-            if (enabled == defaultValue)
-            {
-                return WindowsFipsStatus.Refused;
-            }
-
-            if (enabled == 0)
-            {
-                return IsSystemMd5Available()
-                        ? WindowsFipsStatus.Disabled
-                        : WindowsFipsStatus.RebootRequired;
-            }
-
-            if (enabled == 1)
-            {
-                return !IsSystemMd5Available()
-                        ? WindowsFipsStatus.Enabled
-                        : WindowsFipsStatus.RebootRequired;
-            }
-
-            return WindowsFipsStatus.Unknown;
         }
     }
 }

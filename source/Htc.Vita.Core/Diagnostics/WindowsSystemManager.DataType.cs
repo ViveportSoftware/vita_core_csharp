@@ -34,6 +34,29 @@ namespace Htc.Vita.Core.Diagnostics
         }
 
         /// <summary>
+        /// Enum WindowsSecureBootStatus
+        /// </summary>
+        public enum WindowsSecureBootStatus
+        {
+            /// <summary>
+            /// The status is unknown
+            /// </summary>
+            Unknown,
+            /// <summary>
+            /// The status is disabled
+            /// </summary>
+            Disabled,
+            /// <summary>
+            /// The status is enabled
+            /// </summary>
+            Enabled,
+            /// <summary>
+            /// The operation is refused
+            /// </summary>
+            Refused
+        }
+
+        /// <summary>
         /// Enum WindowsProductType
         /// </summary>
         public enum WindowsProductType

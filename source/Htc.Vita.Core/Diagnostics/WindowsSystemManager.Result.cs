@@ -29,6 +29,11 @@ namespace Htc.Vita.Core.Diagnostics
             /// </summary>
             /// <value>The product version.</value>
             public Version ProductVersion { get; set; }
+            /// <summary>
+            /// Gets or sets the secure boot status.
+            /// </summary>
+            /// <value>The secure boot status.</value>
+            public WindowsSecureBootStatus SecureBootStatus { get; set; }
         }
     }
 }
