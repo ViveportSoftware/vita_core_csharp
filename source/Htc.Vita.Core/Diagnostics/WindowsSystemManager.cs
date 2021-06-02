@@ -63,9 +63,32 @@ namespace Htc.Vita.Core.Diagnostics
         }
 
         /// <summary>
+        /// Gets the installed update list.
+        /// </summary>
+        /// <returns>GetInstalledUpdateListResult.</returns>
+        public GetInstalledUpdateListResult GetInstalledUpdateList()
+        {
+            GetInstalledUpdateListResult result = null;
+            try
+            {
+                result = OnGetInstalledUpdateList();
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(WindowsSystemManager)).Error(e.ToString());
+            }
+            return result ?? new GetInstalledUpdateListResult();
+        }
+
+        /// <summary>
         /// Called when checking basic Windows system information.
         /// </summary>
         /// <returns>CheckResult.</returns>
         protected abstract CheckResult OnCheck();
+        /// <summary>
+        /// Called when getting installed update list.
+        /// </summary>
+        /// <returns>GetInstalledUpdateListResult.</returns>
+        protected abstract GetInstalledUpdateListResult OnGetInstalledUpdateList();
     }
 }

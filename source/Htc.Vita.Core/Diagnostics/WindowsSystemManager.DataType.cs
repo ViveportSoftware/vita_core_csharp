@@ -1,7 +1,41 @@
+using System;
+
 namespace Htc.Vita.Core.Diagnostics
 {
     public partial class WindowsSystemManager
     {
+        /// <summary>
+        /// Class WindowsUpdateInfo.
+        /// </summary>
+        public class WindowsUpdateInfo
+        {
+            /// <summary>
+            /// Gets or sets the identifier.
+            /// </summary>
+            /// <value>The identifier.</value>
+            public string Id { get; set; }
+            /// <summary>
+            /// Gets or sets the time installed on.
+            /// </summary>
+            /// <value>The time installed on.</value>
+            public DateTime InstalledOn { get; set; }
+        }
+
+        /// <summary>
+        /// Enum GetInstalledUpdateListStatus
+        /// </summary>
+        public enum GetInstalledUpdateListStatus
+        {
+            /// <summary>
+            /// Unknown
+            /// </summary>
+            Unknown,
+            /// <summary>
+            /// Ok
+            /// </summary>
+            Ok
+        }
+
         /// <summary>
         /// Enum WindowsFipsStatus
         /// </summary>

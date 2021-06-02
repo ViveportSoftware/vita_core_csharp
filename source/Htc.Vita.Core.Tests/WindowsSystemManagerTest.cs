@@ -34,5 +34,28 @@ namespace Htc.Vita.Core.Tests
             Assert.NotEqual(WindowsSystemManager.WindowsSecureBootStatus.Unknown, secureBootStatus);
             Logger.GetInstance(typeof(WindowsSystemManagerTest)).Info($"SecureBootStatus: {secureBootStatus}");
         }
+
+        [Fact]
+        public static void Default_2_GetInstalledUpdateList()
+        {
+            var windowsSystemManager = WindowsSystemManager.GetInstance();
+            var getInstalledUpdateListResult = windowsSystemManager.GetInstalledUpdateList();
+            var getInstalledUpdateListStatus = getInstalledUpdateListResult.Status;
+            Assert.Equal(WindowsSystemManager.GetInstalledUpdateListStatus.Ok, getInstalledUpdateListStatus);
+            var installedUpdateList = getInstalledUpdateListResult.InstalledUpdateList;
+            if (installedUpdateList.Count <= 0)
+            {
+                Logger.GetInstance(typeof(WindowsSystemManagerTest)).Info("Do not find any installed WindowsUpdate");
+                return;
+            }
+
+            var index = 0;
+            foreach (var windowsUpdateInfo in installedUpdateList)
+            {
+                Logger.GetInstance(typeof(WindowsSystemManagerTest)).Info($"installedUpdateList[{index}].Id: {windowsUpdateInfo.Id}");
+                Logger.GetInstance(typeof(WindowsSystemManagerTest)).Info($"installedUpdateList[{index}].InstalledOn: {windowsUpdateInfo.InstalledOn}");
+                index++;
+            }
+        }
     }
 }

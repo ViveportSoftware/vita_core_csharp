@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Management;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
@@ -191,6 +193,68 @@ namespace Htc.Vita.Core.Diagnostics
             }
 
             return result;
+        }
+
+        /// <inheritdoc />
+        protected override GetInstalledUpdateListResult OnGetInstalledUpdateList()
+        {
+            var installedUpdateList = new List<WindowsUpdateInfo>();
+
+#pragma warning disable CA1416
+            using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_QuickFixEngineering"))
+            {
+                using (var managementObjectCollection = searcher.Get())
+                {
+                    foreach (var o in managementObjectCollection)
+                    {
+                        var managementObject = o as ManagementObject;
+                        if (managementObject == null)
+                        {
+                            continue;
+                        }
+
+                        try
+                        {
+                            var hotfixId = (string) managementObject.GetPropertyValue("HotFixID");
+                            if (string.IsNullOrWhiteSpace(hotfixId))
+                            {
+                                continue;
+                            }
+                            var installedOnString = (string) managementObject.GetPropertyValue("InstalledOn");
+                            if (string.IsNullOrWhiteSpace(installedOnString))
+                            {
+                                continue;
+                            }
+                            DateTime installedOn;
+                            if (!DateTime.TryParse(installedOnString, out installedOn))
+                            {
+                                Logger.GetInstance(typeof(DefaultWindowsSystemManager)).Error($"Can not parse \"{installedOnString}\" to DateTime");
+                                continue;
+                            }
+
+                            installedUpdateList.Add(new WindowsUpdateInfo
+                            {
+                                    Id = hotfixId,
+                                    InstalledOn = installedOn
+                            });
+                        }
+                        finally
+                        {
+                            /*
+                             * https://stackoverflow.com/questions/11896282/using-clause-fails-to-call-dispose
+                             */
+                            managementObject.Dispose();
+                        }
+                    }
+                }
+            }
+#pragma warning restore CA1416
+
+            return new GetInstalledUpdateListResult
+            {
+                    InstalledUpdateList = installedUpdateList,
+                    Status = GetInstalledUpdateListStatus.Ok
+            };
         }
     }
 }

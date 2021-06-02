@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Htc.Vita.Core.Diagnostics
 {
@@ -34,6 +35,23 @@ namespace Htc.Vita.Core.Diagnostics
             /// </summary>
             /// <value>The secure boot status.</value>
             public WindowsSecureBootStatus SecureBootStatus { get; set; }
+        }
+
+        /// <summary>
+        /// Class GetInstalledUpdateListResult.
+        /// </summary>
+        public class GetInstalledUpdateListResult
+        {
+            /// <summary>
+            /// Gets or sets the installed update list.
+            /// </summary>
+            /// <value>The installed update list.</value>
+            public List<WindowsUpdateInfo> InstalledUpdateList { get; set; } = new List<WindowsUpdateInfo>();
+            /// <summary>
+            /// Gets or sets the status.
+            /// </summary>
+            /// <value>The status.</value>
+            public GetInstalledUpdateListStatus Status { get; set; }
         }
     }
 }
