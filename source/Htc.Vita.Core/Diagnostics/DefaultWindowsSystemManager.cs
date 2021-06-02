@@ -1,5 +1,7 @@
 using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using Htc.Vita.Core.Interop;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Util;
@@ -13,6 +15,13 @@ namespace Htc.Vita.Core.Diagnostics
     /// <seealso cref="WindowsSystemManager" />
     public class DefaultWindowsSystemManager : WindowsSystemManager
     {
+        private const string FipsPolicyRegistryKey = "SYSTEM\\CurrentControlSet\\Control\\Lsa\\FipsAlgorithmPolicy";
+        private const string FipsPolicyValueName = "Enabled";
+        private const string ProductNameRegistryKey = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion";
+        private const string ProductNameValueName = "ProductName";
+        private const string Windows10ProductRevisionRegistryKey = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion";
+        private const string Windows10ProductRevisionValueName = "UBR";
+
         private static bool GetNativeVersion(ref Windows.OsVersionInfoExW osVersionInfoExW)
         {
             if (Windows.GetVersionExW(ref osVersionInfoExW))
@@ -27,8 +36,8 @@ namespace Htc.Vita.Core.Diagnostics
         {
             return Win32Registry.GetStringValue(
                     Win32Registry.Hive.LocalMachine,
-                    "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion",
-                    "ProductName"
+                    ProductNameRegistryKey,
+                    ProductNameValueName
             );
         }
 
@@ -72,9 +81,31 @@ namespace Htc.Vita.Core.Diagnostics
         {
             return Win32Registry.GetIntValue(
                     Win32Registry.Hive.LocalMachine,
-                    "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion",
-                    "UBR"
+                    Windows10ProductRevisionRegistryKey,
+                    Windows10ProductRevisionValueName
             );
+        }
+
+        private static bool IsSystemMd5Available()
+        {
+            try
+            {
+                using (MD5.Create())
+                {
+                    // Skip
+                }
+            }
+            catch (TargetInvocationException)
+            {
+                return false;
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(DefaultWindowsSystemManager)).Error("Unexpected exception when use system MD5", e);
+                return false;
+            }
+
+            return true;
         }
 
         /// <inheritdoc />
@@ -82,6 +113,7 @@ namespace Htc.Vita.Core.Diagnostics
         {
             var result = new CheckResult
             {
+                    FipsStatus = GetFipsStatusFromRegistry(),
                     ProductName = GetProductNameFromRegistry()
             };
 
@@ -94,7 +126,40 @@ namespace Htc.Vita.Core.Diagnostics
                 result.ProductType = GetProductTypeFromNativeVersion(osVersionInfoExW);
                 result.ProductVersion = GetProductVersionFromNativeVersion(osVersionInfoExW);
             }
+
             return result;
+        }
+
+        private static WindowsFipsStatus GetFipsStatusFromRegistry()
+        {
+            const int defaultValue = 13579;
+            var enabled = Win32Registry.GetIntValue(
+                    Win32Registry.Hive.LocalMachine,
+                    FipsPolicyRegistryKey,
+                    FipsPolicyValueName,
+                    defaultValue
+            );
+
+            if (enabled == defaultValue)
+            {
+                return WindowsFipsStatus.Refused;
+            }
+
+            if (enabled == 0)
+            {
+                return IsSystemMd5Available()
+                        ? WindowsFipsStatus.Disabled
+                        : WindowsFipsStatus.RebootRequired;
+            }
+
+            if (enabled == 1)
+            {
+                return !IsSystemMd5Available()
+                        ? WindowsFipsStatus.Enabled
+                        : WindowsFipsStatus.RebootRequired;
+            }
+
+            return WindowsFipsStatus.Unknown;
         }
     }
 }

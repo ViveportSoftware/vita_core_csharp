@@ -27,6 +27,9 @@ namespace Htc.Vita.Core.Tests
             var productVersion = checkResult.ProductVersion;
             Assert.NotNull(productVersion);
             Logger.GetInstance(typeof(WindowsSystemManagerTest)).Info($"ProductVersion: {productVersion}");
+            var fipsStatus = checkResult.FipsStatus;
+            Assert.NotEqual(WindowsSystemManager.WindowsFipsStatus.Unknown, fipsStatus);
+            Logger.GetInstance(typeof(WindowsSystemManagerTest)).Info($"FipsStatus: {fipsStatus}");
         }
     }
 }

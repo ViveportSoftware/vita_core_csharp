@@ -10,6 +10,11 @@ namespace Htc.Vita.Core.Diagnostics
         public class CheckResult
         {
             /// <summary>
+            /// Gets or sets the FIPS status.
+            /// </summary>
+            /// <value>The FIPS status.</value>
+            public WindowsFipsStatus FipsStatus { get; set; }
+            /// <summary>
             /// Gets or sets the product name.
             /// </summary>
             /// <value>The product name.</value>

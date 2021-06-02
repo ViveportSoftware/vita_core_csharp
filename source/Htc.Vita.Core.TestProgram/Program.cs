@@ -66,6 +66,7 @@ namespace Htc.Vita.Core.TestProgram
             Console.WriteLine($"checkResult.ProductName: {checkResult.ProductName}");
             Console.WriteLine($"checkResult.ProductType: {checkResult.ProductType}");
             Console.WriteLine($"checkResult.ProductVersion: {checkResult.ProductVersion}");
+            Console.WriteLine($"checkResult.FipsStatus: {checkResult.FipsStatus}");
 
             var jobIdList = FileTransfer.GetInstance().GetJobIdList();
             if (jobIdList.Count > 0)
