@@ -753,6 +753,15 @@ namespace Htc.Vita.Core.Interop
             /* CREATE_IGNORE_SYSTEM_DEFAULT     */ CreateIgnoreSystemDefault    = 0x80000000
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-osversioninfoexw")]
+        internal enum ProductType : byte
+        {
+            /*                          */ Unknown          = 0,
+            /* VER_NT_WORKSTATION       */ Workstation      = 1,
+            /* VER_NT_DOMAIN_CONTROLLER */ DomainController = 2,
+            /* VER_NT_SERVER            */ Server           = 3
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/sysinfo/predefined-keys")]
         internal enum RegistryKey
         {
@@ -1991,6 +2000,24 @@ namespace Htc.Vita.Core.Interop
                     return hashCode;
                 }
             }
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-osversioninfoexw",
+                Description = "OSVERSIONINFOEXW structure")]
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        internal struct OsVersionInfoExW
+        {
+                                                                  internal /* DWORD      */ int dwOSVersionInfoSize;
+                                                                  internal /* DWORD      */ int dwMajorVersion;
+                                                                  internal /* DWORD      */ int dwMinorVersion;
+                                                                  internal /* DWORD      */ int dwBuildNumber;
+                                                                  internal /* DWORD      */ int dwPlatformId;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string szCSDVersion;
+                                                                  internal /* WORD       */ short wServicePackMajor;
+                                                                  internal /* WORD       */ short wServicePackMinor;
+                                                                  internal /* WORD       */ short wSuiteMask;
+                                                                  internal /* BYTE       */ ProductType wProductType;
+                                                                  internal /* BYTE       */ byte wReserved;
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/ns-processthreadsapi-process_information",

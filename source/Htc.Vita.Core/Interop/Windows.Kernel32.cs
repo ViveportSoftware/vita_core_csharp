@@ -124,6 +124,17 @@ namespace Htc.Vita.Core.Interop
                 /* _In_opt_            LPCWSTR */ [In] string lpFileName
         );
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getversionexw")]
+        [DllImport(Libraries.WindowsKernel32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetVersionExW(
+                /* _Inout_ LPOSVERSIONINFO */ [In][Out] ref OsVersionInfoExW lpVersionInfo
+        );
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wow64apiset/nf-wow64apiset-iswow64process")]
         [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
