@@ -272,6 +272,7 @@ namespace Htc.Vita.Core.Util
         /// <param name="keyPath">The key path.</param>
         /// <param name="valueName">Name of the value.</param>
         /// <returns>System.Int32.</returns>
+        [Obsolete("This method is obsoleted. Use Win32Registry.GetIntValue() instead.")]
         public static int GetIntValue(Hive root, string keyPath, string valueName)
         {
             return GetIntValue(root, keyPath, valueName, 0);
