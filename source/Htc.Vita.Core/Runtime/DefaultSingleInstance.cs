@@ -165,6 +165,7 @@ namespace Htc.Vita.Core.Runtime
                 {
                     if (Platform.IsWindows)
                     {
+#pragma warning disable CA1416
                         var mutexSecurity = new MutexSecurity();
                         mutexSecurity.AddAccessRule(new MutexAccessRule(
                                 new SecurityIdentifier(WellKnownSidType.AuthenticatedUserSid, null),
@@ -172,6 +173,7 @@ namespace Htc.Vita.Core.Runtime
                                 AccessControlType.Allow
                         ));
                         mutex.SetAccessControl(mutexSecurity);
+#pragma warning restore CA1416
                     }
                     _mutex = mutex;
                     return true;

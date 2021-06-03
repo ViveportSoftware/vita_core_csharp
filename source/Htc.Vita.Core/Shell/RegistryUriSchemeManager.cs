@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using Htc.Vita.Core.Log;
-using Microsoft.Win32;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Shell
 {
@@ -65,9 +65,9 @@ namespace Htc.Vita.Core.Shell
                 realSchemeName = schemeName;
             }
 
-            using (var baseKey = RegistryKey.OpenBaseKey(
-                    RegistryHive.ClassesRoot,
-                    RegistryView.Default))
+            using (var baseKey = Win32Registry.Key.OpenBaseKey(
+                    Win32Registry.Hive.ClassesRoot,
+                    Win32Registry.View.Default))
             {
                 var commandPair = GetCommandPair(
                         baseKey,
@@ -88,14 +88,14 @@ namespace Htc.Vita.Core.Shell
 
         private static string GetRealSchemeNameFromHkcu(string schemeName)
         {
-            using (var baseKey = RegistryKey.OpenBaseKey(
-                    RegistryHive.CurrentUser,
-                    RegistryView.Default))
+            using (var baseKey = Win32Registry.Key.OpenBaseKey(
+                    Win32Registry.Hive.CurrentUser,
+                    Win32Registry.View.Default))
             {
                 var relativeKeyPath = $"Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\{schemeName}\\UserChoice";
                 using (var subKey = baseKey.OpenSubKey(
                         relativeKeyPath,
-                        RegistryKeyPermissionCheck.ReadSubTree))
+                        Win32Registry.KeyPermissionCheck.ReadSubTree))
                 {
                     const string valueName = "ProgId";
                     var value = subKey?.GetValue(valueName);
@@ -104,7 +104,7 @@ namespace Htc.Vita.Core.Shell
                         return null;
                     }
 
-                    if (subKey.GetValueKind(valueName) == RegistryValueKind.String)
+                    if (subKey.GetValueKind(valueName) == Win32Registry.ValueKind.String)
                     {
                         return (string)value;
                     }
@@ -115,7 +115,7 @@ namespace Htc.Vita.Core.Shell
         }
 
         private static string GetDefaultIconPath(
-                RegistryKey baseKey,
+                Win32Registry.Key baseKey,
                 string schemeName)
         {
             if (baseKey == null || string.IsNullOrWhiteSpace(schemeName))
@@ -126,7 +126,7 @@ namespace Htc.Vita.Core.Shell
             var relativeKeyPath = $"{schemeName}\\DefaultIcon";
             using (var subKey = baseKey.OpenSubKey(
                     relativeKeyPath,
-                    RegistryKeyPermissionCheck.ReadSubTree))
+                    Win32Registry.KeyPermissionCheck.ReadSubTree))
             {
                 var value = subKey?.GetValue(null);
                 if (value == null)
@@ -134,7 +134,7 @@ namespace Htc.Vita.Core.Shell
                     return null;
                 }
 
-                if (subKey.GetValueKind(null) == RegistryValueKind.String)
+                if (subKey.GetValueKind(null) == Win32Registry.ValueKind.String)
                 {
                     return (string)value;
                 }
@@ -144,7 +144,7 @@ namespace Htc.Vita.Core.Shell
         }
 
         private static KeyValuePair<string, string> GetCommandPair(
-                RegistryKey baseKey,
+                Win32Registry.Key baseKey,
                 string schemeName,
                 string realSchemeName,
                 bool whitelistOnly)
@@ -158,7 +158,7 @@ namespace Htc.Vita.Core.Shell
             var relativeKeyPath = $"{realSchemeName}\\Shell\\open\\command";
             using (var subKey = baseKey.OpenSubKey(
                     relativeKeyPath,
-                    RegistryKeyPermissionCheck.ReadSubTree))
+                    Win32Registry.KeyPermissionCheck.ReadSubTree))
             {
                 if (subKey == null)
                 {
@@ -170,7 +170,7 @@ namespace Htc.Vita.Core.Shell
                     return empty;
                 }
                 var data = string.Empty;
-                if (subKey.GetValueKind(null) == RegistryValueKind.String)
+                if (subKey.GetValueKind(null) == Win32Registry.ValueKind.String)
                 {
                     data = (string)value;
                 }

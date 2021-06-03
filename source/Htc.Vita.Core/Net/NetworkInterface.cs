@@ -195,7 +195,7 @@ namespace Htc.Vita.Core.Net
             var type = Type.GetTypeFromCLSID(guid);
             if (type == null)
             {
-                Logger.GetInstance(typeof(NetworkInterface)).Error("Can not find type class from system with CLSID: " + guid);
+                Logger.GetInstance(typeof(NetworkInterface)).Error($"Can not find type class from system with CLSID: {guid}");
                 return false;
             }
 
@@ -206,7 +206,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(NetworkInterface)).Error("Can not create networkListManager class from system with CLSID: " + guid + ", " + e.Message);
+                Logger.GetInstance(typeof(NetworkInterface)).Error($"Can not create networkListManager class from system with CLSID: {guid}, {e.Message}");
             }
             if (networkListManager == null)
             {
@@ -226,12 +226,21 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(NetworkInterface)).Error("Can not get IsConnectedToInternet property from networkListManager: " + e.Message);
+                Logger.GetInstance(typeof(NetworkInterface)).Error($"Can not get IsConnectedToInternet property from networkListManager: {e.Message}");
                 return false;
             }
             finally
             {
-                Marshal.FinalReleaseComObject(networkListManager);
+                try
+                {
+#pragma warning disable CA1416
+                    Marshal.FinalReleaseComObject(networkListManager);
+#pragma warning restore CA1416
+                }
+                catch (Exception)
+                {
+                    // Skip
+                }
             }
 
             try
@@ -240,7 +249,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(NetworkInterface)).Error("Can not convert IsConnectedToInternet property: " + e.Message);
+                Logger.GetInstance(typeof(NetworkInterface)).Error($"Can not convert IsConnectedToInternet property: {e.Message}");
             }
             return false;
         }
