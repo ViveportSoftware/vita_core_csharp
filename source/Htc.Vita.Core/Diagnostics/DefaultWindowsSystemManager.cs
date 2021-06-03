@@ -17,6 +17,9 @@ namespace Htc.Vita.Core.Diagnostics
     /// <seealso cref="WindowsSystemManager" />
     public class DefaultWindowsSystemManager : WindowsSystemManager
     {
+        private const string ApplicationListRegistryKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
+        private const string ApplicationDisplayNameValueName = "DisplayName";
+        private const string ApplicationDisplayVersionValueName = "DisplayVersion";
         private const string FipsPolicyRegistryKey = "SYSTEM\\CurrentControlSet\\Control\\Lsa\\FipsAlgorithmPolicy";
         private const string FipsPolicyValueName = "Enabled";
         private const string ProductNameRegistryKey = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion";
@@ -56,6 +59,69 @@ namespace Htc.Vita.Core.Diagnostics
             }
 
             return WindowsFipsStatus.Unknown;
+        }
+
+        private static List<WindowsApplicationInfo> GetInstalledApplicationListFromRegistry(
+                Win32Registry.Hive registryHive,
+                List<Win32Registry.View> registryViewList)
+        {
+            var result = new List<WindowsApplicationInfo>();
+
+            foreach (var registryView in registryViewList)
+            {
+                using (var baseKey = Win32Registry.Key.OpenBaseKey(registryHive, registryView))
+                {
+                    using (var subKey = baseKey.OpenSubKey(ApplicationListRegistryKey, Win32Registry.KeyPermissionCheck.ReadSubTree))
+                    {
+                        if (subKey == null)
+                        {
+                            return result;
+                        }
+
+                        foreach (var subKeyName in subKey.GetSubKeyNames())
+                        {
+                            if (string.IsNullOrWhiteSpace(subKeyName))
+                            {
+                                continue;
+                            }
+
+                            using (var subKey2 = subKey.OpenSubKey(subKeyName))
+                            {
+                                var displayName = subKey2.GetValue(ApplicationDisplayNameValueName) as string;
+                                if (string.IsNullOrWhiteSpace(displayName))
+                                {
+                                    continue;
+                                }
+
+                                var windowsApplicationInfo = new WindowsApplicationInfo
+                                {
+                                    DisplayName = displayName
+                                };
+                                if (registryHive == Win32Registry.Hive.LocalMachine)
+                                {
+                                    windowsApplicationInfo.InstallScope = WindowsApplicationInstallScope.PerMachine;
+                                }
+                                else if (registryHive == Win32Registry.Hive.CurrentUser)
+                                {
+                                    windowsApplicationInfo.InstallScope = WindowsApplicationInstallScope.PerUser;
+                                }
+
+                                var displayVersionString = subKey2.GetValue(ApplicationDisplayVersionValueName) as string;
+                                Version displayVersion;
+                                if (!string.IsNullOrWhiteSpace(displayVersionString)
+                                        && Version.TryParse(displayVersionString, out displayVersion))
+                                {
+                                    windowsApplicationInfo.DisplayVersion = displayVersion;
+                                }
+
+                                result.Add(windowsApplicationInfo);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result;
         }
 
         private static bool GetNativeVersion(ref Windows.OsVersionInfoExW osVersionInfoExW)
@@ -193,6 +259,32 @@ namespace Htc.Vita.Core.Diagnostics
             }
 
             return result;
+        }
+
+        /// <inheritdoc />
+        protected override GetInstalledApplicationListResult OnGetInstalledApplicationList()
+        {
+            var installedApplicationList = GetInstalledApplicationListFromRegistry(
+                    Win32Registry.Hive.LocalMachine,
+                    new List<Win32Registry.View>
+                    {
+                            Win32Registry.View.Registry32,
+                            Win32Registry.View.Registry64
+                    }
+            );
+            installedApplicationList.AddRange(GetInstalledApplicationListFromRegistry(
+                    Win32Registry.Hive.CurrentUser,
+                    new List<Win32Registry.View>
+                    {
+                            Win32Registry.View.Default
+                    }
+            ));
+
+            return new GetInstalledApplicationListResult
+            {
+                    InstalledApplicationList = installedApplicationList,
+                    Status = GetInstalledApplicationListStatus.Ok
+            };
         }
 
         /// <inheritdoc />

@@ -63,6 +63,24 @@ namespace Htc.Vita.Core.Diagnostics
         }
 
         /// <summary>
+        /// Gets the installed application list.
+        /// </summary>
+        /// <returns>GetInstalledApplicationListResult.</returns>
+        public GetInstalledApplicationListResult GetInstalledApplicationList()
+        {
+            GetInstalledApplicationListResult result = null;
+            try
+            {
+                result = OnGetInstalledApplicationList();
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(WindowsSystemManager)).Error(e.ToString());
+            }
+            return result ?? new GetInstalledApplicationListResult();
+        }
+
+        /// <summary>
         /// Gets the installed update list.
         /// </summary>
         /// <returns>GetInstalledUpdateListResult.</returns>
@@ -85,6 +103,11 @@ namespace Htc.Vita.Core.Diagnostics
         /// </summary>
         /// <returns>CheckResult.</returns>
         protected abstract CheckResult OnCheck();
+        /// <summary>
+        /// Called when getting installed application list.
+        /// </summary>
+        /// <returns>GetInstalledApplicationListResult.</returns>
+        protected abstract GetInstalledApplicationListResult OnGetInstalledApplicationList();
         /// <summary>
         /// Called when getting installed update list.
         /// </summary>

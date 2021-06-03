@@ -5,6 +5,28 @@ namespace Htc.Vita.Core.Diagnostics
     public partial class WindowsSystemManager
     {
         /// <summary>
+        /// Class WindowsApplicationInfo.
+        /// </summary>
+        public class WindowsApplicationInfo
+        {
+            /// <summary>
+            /// Gets or sets the display name.
+            /// </summary>
+            /// <value>The display name.</value>
+            public string DisplayName { get; set; }
+            /// <summary>
+            /// Gets or sets the display version.
+            /// </summary>
+            /// <value>The display version.</value>
+            public Version DisplayVersion { get; set; }
+            /// <summary>
+            /// Gets or sets the install scope.
+            /// </summary>
+            /// <value>The install scope.</value>
+            public WindowsApplicationInstallScope InstallScope { get; set; }
+        }
+
+        /// <summary>
         /// Class WindowsUpdateInfo.
         /// </summary>
         public class WindowsUpdateInfo
@@ -22,6 +44,21 @@ namespace Htc.Vita.Core.Diagnostics
         }
 
         /// <summary>
+        /// Enum GetInstalledApplicationListStatus
+        /// </summary>
+        public enum GetInstalledApplicationListStatus
+        {
+            /// <summary>
+            /// Unknown
+            /// </summary>
+            Unknown,
+            /// <summary>
+            /// Ok
+            /// </summary>
+            Ok
+        }
+
+        /// <summary>
         /// Enum GetInstalledUpdateListStatus
         /// </summary>
         public enum GetInstalledUpdateListStatus
@@ -34,6 +71,25 @@ namespace Htc.Vita.Core.Diagnostics
             /// Ok
             /// </summary>
             Ok
+        }
+
+        /// <summary>
+        /// Enum WindowsApplicationInstallScope
+        /// </summary>
+        public enum WindowsApplicationInstallScope
+        {
+            /// <summary>
+            /// Unknown
+            /// </summary>
+            Unknown,
+            /// <summary>
+            /// The application is installed per user
+            /// </summary>
+            PerUser,
+            /// <summary>
+            /// The application is installed per machine
+            /// </summary>
+            PerMachine
         }
 
         /// <summary>

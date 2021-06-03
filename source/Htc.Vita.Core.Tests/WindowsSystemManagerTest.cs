@@ -68,8 +68,51 @@ namespace Htc.Vita.Core.Tests
             var index = 0;
             foreach (var windowsUpdateInfo in installedUpdateList)
             {
-                Logger.GetInstance(typeof(WindowsSystemManagerTest)).Info($"installedUpdateList[{index}].Id: {windowsUpdateInfo.Id}");
-                Logger.GetInstance(typeof(WindowsSystemManagerTest)).Info($"installedUpdateList[{index}].InstalledOn: {windowsUpdateInfo.InstalledOn}");
+                if (index == 0
+                        || index == installedUpdateList.Count - 1)
+                {
+                    Logger.GetInstance(typeof(WindowsSystemManagerTest)).Info($"installedUpdateList[{index}].Id: {windowsUpdateInfo.Id}");
+                    Logger.GetInstance(typeof(WindowsSystemManagerTest)).Info($"installedUpdateList[{index}].InstalledOn: {windowsUpdateInfo.InstalledOn}");
+                }
+                index++;
+            }
+        }
+
+        [Fact]
+        public static void Default_3_GetInstalledApplicationList()
+        {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+
+            var windowsSystemManager = WindowsSystemManager.GetInstance();
+            var getInstalledApplicationListResult = windowsSystemManager.GetInstalledApplicationList();
+            var getInstalledApplicationListStatus = getInstalledApplicationListResult.Status;
+            Assert.Equal(WindowsSystemManager.GetInstalledApplicationListStatus.Ok, getInstalledApplicationListStatus);
+            var installedApplicationList = getInstalledApplicationListResult.InstalledApplicationList;
+            if (installedApplicationList.Count <= 0)
+            {
+                Logger.GetInstance(typeof(WindowsSystemManagerTest)).Info("Do not find any installed Application");
+                return;
+            }
+
+            var index = 0;
+            foreach (var windowsApplicationInfo in installedApplicationList)
+            {
+                var displayName = windowsApplicationInfo.DisplayName;
+                var displayVersion = windowsApplicationInfo.DisplayVersion;
+                var installScope = windowsApplicationInfo.InstallScope;
+                if (index == 0
+                        || index == installedApplicationList.Count - 1
+                        || string.IsNullOrWhiteSpace(displayName)
+                        || displayVersion == null
+                        || installScope == WindowsSystemManager.WindowsApplicationInstallScope.Unknown)
+                {
+                    Logger.GetInstance(typeof(WindowsSystemManagerTest)).Info($"installedApplicationList[{index}].DisplayName: {displayName}");
+                    Logger.GetInstance(typeof(WindowsSystemManagerTest)).Info($"installedApplicationList[{index}].DisplayVersion: {displayVersion}");
+                    Logger.GetInstance(typeof(WindowsSystemManagerTest)).Info($"installedApplicationList[{index}].InstallScope: {installScope}");
+                }
                 index++;
             }
         }

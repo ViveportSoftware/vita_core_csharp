@@ -38,6 +38,23 @@ namespace Htc.Vita.Core.Diagnostics
         }
 
         /// <summary>
+        /// Class GetInstalledApplicationListResult.
+        /// </summary>
+        public class GetInstalledApplicationListResult
+        {
+            /// <summary>
+            /// Gets or sets the installed application list.
+            /// </summary>
+            /// <value>The installed application list.</value>
+            public List<WindowsApplicationInfo> InstalledApplicationList { get; set; } = new List<WindowsApplicationInfo>();
+            /// <summary>
+            /// Gets or sets the status.
+            /// </summary>
+            /// <value>The status.</value>
+            public GetInstalledApplicationListStatus Status { get; set; }
+        }
+
+        /// <summary>
         /// Class GetInstalledUpdateListResult.
         /// </summary>
         public class GetInstalledUpdateListResult
