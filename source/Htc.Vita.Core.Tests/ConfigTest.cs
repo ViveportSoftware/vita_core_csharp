@@ -6,7 +6,7 @@ namespace Htc.Vita.Core.Tests
 {
     public static class ConfigTest
     {
-        private static bool IsPredefinedGlobalDataReady { get; set; } = false;
+        private static bool IsPredefinedGlobalDataReady => false;
 
         [Fact]
         public static void Default_0_GetInstance()
