@@ -44,36 +44,6 @@ namespace Htc.Vita.Core.Diagnostics
         }
 
         /// <summary>
-        /// Enum GetInstalledApplicationListStatus
-        /// </summary>
-        public enum GetInstalledApplicationListStatus
-        {
-            /// <summary>
-            /// Unknown
-            /// </summary>
-            Unknown,
-            /// <summary>
-            /// Ok
-            /// </summary>
-            Ok
-        }
-
-        /// <summary>
-        /// Enum GetInstalledUpdateListStatus
-        /// </summary>
-        public enum GetInstalledUpdateListStatus
-        {
-            /// <summary>
-            /// Unknown
-            /// </summary>
-            Unknown,
-            /// <summary>
-            /// Ok
-            /// </summary>
-            Ok
-        }
-
-        /// <summary>
         /// Enum WindowsApplicationInstallScope
         /// </summary>
         public enum WindowsApplicationInstallScope

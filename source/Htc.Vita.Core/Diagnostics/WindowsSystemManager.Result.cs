@@ -70,5 +70,35 @@ namespace Htc.Vita.Core.Diagnostics
             /// <value>The status.</value>
             public GetInstalledUpdateListStatus Status { get; set; }
         }
+
+        /// <summary>
+        /// Enum GetInstalledApplicationListStatus
+        /// </summary>
+        public enum GetInstalledApplicationListStatus
+        {
+            /// <summary>
+            /// Unknown
+            /// </summary>
+            Unknown,
+            /// <summary>
+            /// Ok
+            /// </summary>
+            Ok
+        }
+
+        /// <summary>
+        /// Enum GetInstalledUpdateListStatus
+        /// </summary>
+        public enum GetInstalledUpdateListStatus
+        {
+            /// <summary>
+            /// Unknown
+            /// </summary>
+            Unknown,
+            /// <summary>
+            /// Ok
+            /// </summary>
+            Ok
+        }
     }
 }
