@@ -2255,7 +2255,9 @@ namespace Htc.Vita.Core.Interop
                 Description = "TOKEN_ELEVATION structure")]
         internal struct TokenElevation
         {
+#pragma warning disable CS0649
             internal /* DWORD */ uint TokenIsElevated;
+#pragma warning restore CS0649
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ns-winnt-_token_privileges",
