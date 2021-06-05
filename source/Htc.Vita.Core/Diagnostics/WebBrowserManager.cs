@@ -78,7 +78,7 @@ namespace Htc.Vita.Core.Diagnostics
             var getInstalledWebBrowserListStatus = getInstalledWebBrowserListResult.Status;
             if (getInstalledWebBrowserListStatus != GetInstalledWebBrowserListStatus.Ok)
             {
-                Logger.GetInstance(typeof(WebBrowserManager)).Error("Can not find available web browser to launch uri");
+                Logger.GetInstance(typeof(WebBrowserManager)).Error($"Can not find available web browser to launch uri. Status: {getInstalledWebBrowserListStatus}");
                 return false;
             }
 

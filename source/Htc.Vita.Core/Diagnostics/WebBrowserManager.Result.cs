@@ -33,7 +33,11 @@ namespace Htc.Vita.Core.Diagnostics
             /// <summary>
             /// Ok
             /// </summary>
-            Ok
+            Ok,
+            /// <summary>
+            /// Unsupported platform
+            /// </summary>
+            UnsupportedPlatform
         }
     }
 }

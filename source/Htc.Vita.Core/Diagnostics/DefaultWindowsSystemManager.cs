@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using Htc.Vita.Core.Interop;
 using Htc.Vita.Core.Log;
+using Htc.Vita.Core.Runtime;
 using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Diagnostics
@@ -264,6 +265,14 @@ namespace Htc.Vita.Core.Diagnostics
         /// <inheritdoc />
         protected override GetInstalledApplicationListResult OnGetInstalledApplicationList()
         {
+            if (!Platform.IsWindows)
+            {
+                return new GetInstalledApplicationListResult
+                {
+                        Status = GetInstalledApplicationListStatus.UnsupportedPlatform
+                };
+            }
+
             var installedApplicationList = GetInstalledApplicationListFromRegistry(
                     Win32Registry.Hive.LocalMachine,
                     new List<Win32Registry.View>
@@ -290,8 +299,15 @@ namespace Htc.Vita.Core.Diagnostics
         /// <inheritdoc />
         protected override GetInstalledUpdateListResult OnGetInstalledUpdateList()
         {
-            var installedUpdateList = new List<WindowsUpdateInfo>();
+            if (!Platform.IsWindows)
+            {
+                return new GetInstalledUpdateListResult
+                {
+                        Status = GetInstalledUpdateListStatus.UnsupportedPlatform
+                };
+            }
 
+            var installedUpdateList = new List<WindowsUpdateInfo>();
 #pragma warning disable CA1416
             using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_QuickFixEngineering"))
             {

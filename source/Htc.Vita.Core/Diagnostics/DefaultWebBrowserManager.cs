@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Htc.Vita.Core.Log;
+using Htc.Vita.Core.Runtime;
 using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Diagnostics
@@ -494,6 +495,14 @@ namespace Htc.Vita.Core.Diagnostics
         /// <inheritdoc />
         protected override GetInstalledWebBrowserListResult OnGetInstalledWebBrowserList()
         {
+            if (!Platform.IsWindows)
+            {
+                return new GetInstalledWebBrowserListResult
+                {
+                        Status = GetInstalledWebBrowserListStatus.UnsupportedPlatform
+                };
+            }
+
             var unorderedWebBrowserList = GetInstalledWebBrowserListFromRegistryStartMenuInternet();
             unorderedWebBrowserList.AddRange(GetInstalledWebBrowserListFromRegistryMicrosoftEdge());
             unorderedWebBrowserList.AddRange(GetInstalledWebBrowserListFromRegistryMicrosoftInternetExplorer());
