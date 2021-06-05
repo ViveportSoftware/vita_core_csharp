@@ -61,6 +61,28 @@ namespace Htc.Vita.Core.TestProgram
             Console.WriteLine($"SecurityProtocolManager.GetAvailableProtocol(): {SecurityProtocolManager.GetAvailableProtocol()}");
             Console.ReadKey();
 
+            var webBrowserManager = WebBrowserManager.GetInstance();
+            var getInstalledWebBrowserListResult = webBrowserManager.GetInstalledWebBrowserList();
+            var getInstalledWebBrowserListStatus = getInstalledWebBrowserListResult.Status;
+            if (getInstalledWebBrowserListStatus != WebBrowserManager.GetInstalledWebBrowserListStatus.Ok)
+            {
+                Console.WriteLine($"Can not get installed web browser list. Status: {getInstalledWebBrowserListStatus}");
+            }
+            else
+            {
+                var webBrowserList = getInstalledWebBrowserListResult.WebBrowserList;
+                var webBrowserIndex = 0;
+                foreach (var webBrowserInfo in webBrowserList)
+                {
+                    Console.WriteLine($"webBrowserInfo[{webBrowserIndex}].Type: {webBrowserInfo.Type}");
+                    Console.WriteLine($"webBrowserInfo[{webBrowserIndex}].DisplayName: {webBrowserInfo.DisplayName}");
+                    Console.WriteLine($"webBrowserInfo[{webBrowserIndex}].LaunchPath: {webBrowserInfo.LaunchPath}");
+                    Console.WriteLine($"webBrowserInfo[{webBrowserIndex}].SupportedScheme: {webBrowserInfo.SupportedScheme}");
+                    webBrowserIndex++;
+                }
+            }
+            Console.ReadKey();
+
             var windowsSystemManager = WindowsSystemManager.GetInstance();
             var checkResult = windowsSystemManager.Check();
             Console.WriteLine($"checkResult.ProductName: {checkResult.ProductName}");

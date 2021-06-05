@@ -59,10 +59,6 @@ namespace Htc.Vita.Core.Diagnostics
             /// </summary>
             MicrosoftEdge,
             /// <summary>
-            /// Microsoft Edge (Chromium-based)
-            /// </summary>
-            MicrosoftEdgeChromium,
-            /// <summary>
             /// Microsoft Internet Explorer
             /// </summary>
             MicrosoftInternetExplorer,

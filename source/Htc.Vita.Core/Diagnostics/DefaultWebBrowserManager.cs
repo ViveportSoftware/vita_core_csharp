@@ -51,7 +51,7 @@ namespace Htc.Vita.Core.Diagnostics
             ).FirstOrDefault();
         }
 
-        private static List<WebBrowserInfo> GetInstalledWebBrowserListFromRegistryMicrosoftEdge()
+        private static List<WebBrowserInfo> GetInstalledWebBrowserListFromRegistryMicrosoftEdgeLegacy()
         {
             var result = new List<WebBrowserInfo>();
             using (var baseKey = Win32Registry.Key.OpenBaseKey(Win32Registry.Hive.ClassesRoot, Win32Registry.View.Default))
@@ -469,14 +469,12 @@ namespace Htc.Vita.Core.Diagnostics
             WebBrowserTypeOrder.Add(WebBrowserType.Opera);
             WebBrowserTypeOrder.Add(WebBrowserType.Qihoo360ExtremeBrowser);
             WebBrowserTypeOrder.Add(WebBrowserType.Qihoo360SafeBrowser);
-            WebBrowserTypeOrder.Add(WebBrowserType.MicrosoftEdgeChromium);
             WebBrowserTypeOrder.Add(WebBrowserType.MicrosoftEdge);
             WebBrowserTypeOrder.Add(WebBrowserType.MicrosoftInternetExplorer);
 
             WebBrowserTypeWithDisplayName.Add(WebBrowserType.GoogleChrome, "Google Chrome");
             WebBrowserTypeWithDisplayName.Add(WebBrowserType.MozillaFirefox, "Mozilla Firefox");
             WebBrowserTypeWithDisplayName.Add(WebBrowserType.MicrosoftEdge, "Microsoft Edge");
-            WebBrowserTypeWithDisplayName.Add(WebBrowserType.MicrosoftEdgeChromium, "Microsoft Edge (Chromium-based)");
             WebBrowserTypeWithDisplayName.Add(WebBrowserType.MicrosoftInternetExplorer, "Microsoft Internet Explorer");
             WebBrowserTypeWithDisplayName.Add(WebBrowserType.Opera, "Opera");
             WebBrowserTypeWithDisplayName.Add(WebBrowserType.Qihoo360ExtremeBrowser, "Qihoo 360 Extreme Browser");
@@ -486,7 +484,7 @@ namespace Htc.Vita.Core.Diagnostics
             SchemeDisplayNameWithWebBrowserType.Add("360 se HTML Document", WebBrowserType.Qihoo360SafeBrowser);
             SchemeDisplayNameWithWebBrowserType.Add("Chrome HTML Document", WebBrowserType.GoogleChrome);
             SchemeDisplayNameWithWebBrowserType.Add("Firefox URL", WebBrowserType.MozillaFirefox);
-            SchemeDisplayNameWithWebBrowserType.Add("Microsoft Edge HTML Document", WebBrowserType.MicrosoftEdgeChromium);
+            SchemeDisplayNameWithWebBrowserType.Add("Microsoft Edge HTML Document", WebBrowserType.MicrosoftEdge);
             SchemeDisplayNameWithWebBrowserType.Add("Opera Web Document", WebBrowserType.Opera);
             SchemeDisplayNameWithWebBrowserType.Add("URL:HyperText Transfer Protocol", WebBrowserType.MicrosoftInternetExplorer);
             SchemeDisplayNameWithWebBrowserType.Add("URL:HyperText Transfer Protocol with Privacy", WebBrowserType.MicrosoftInternetExplorer);
@@ -504,7 +502,10 @@ namespace Htc.Vita.Core.Diagnostics
             }
 
             var unorderedWebBrowserList = GetInstalledWebBrowserListFromRegistryStartMenuInternet();
-            unorderedWebBrowserList.AddRange(GetInstalledWebBrowserListFromRegistryMicrosoftEdge());
+            if (unorderedWebBrowserList.All(webBrowserInfo => webBrowserInfo.Type != WebBrowserType.MicrosoftEdge))
+            {
+                unorderedWebBrowserList.AddRange(GetInstalledWebBrowserListFromRegistryMicrosoftEdgeLegacy());
+            }
             unorderedWebBrowserList.AddRange(GetInstalledWebBrowserListFromRegistryMicrosoftInternetExplorer());
 
             var countedWebBrowserSet = new HashSet<WebBrowserInfo>();
