@@ -91,7 +91,7 @@ namespace Htc.Vita.Core.IO
                 DirectoryInfo basePath,
                 int depth)
         {
-            if (basePath == null || depth < 2)
+            if (basePath == null || depth <= 0)
             {
                 return new VerifyPathDepthResult
                 {

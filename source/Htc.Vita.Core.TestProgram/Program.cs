@@ -10,6 +10,8 @@ namespace Htc.Vita.Core.TestProgram
 {
     internal static class Program
     {
+        private const int MaxPath = 260 - 1;
+
         private static void Main()
         {
             /*
@@ -64,32 +66,31 @@ namespace Htc.Vita.Core.TestProgram
 
             var fileSystemManagerV2 = FileSystemManagerV2.GetInstance();
             var path = new DirectoryInfo("C:\\");
-            var depth = 260;
+            var depth = MaxPath;
             var verifyPathDepthResult = fileSystemManagerV2.VerifyPathDepth(path, depth);
             var verifyPathDepthStatus = verifyPathDepthResult.Status;
             Console.WriteLine($"Path: {path}, depth: [{depth}/{path.ToString().Length + depth}], verifyPathDepthStatus: {verifyPathDepthStatus}");
 
-            depth = 250;
+            depth = MaxPath - 10;
             verifyPathDepthResult = fileSystemManagerV2.VerifyPathDepth(path, depth);
             verifyPathDepthStatus = verifyPathDepthResult.Status;
             Console.WriteLine($"Path: {path}, depth: [{depth}/{path.ToString().Length + depth}], verifyPathDepthStatus: {verifyPathDepthStatus}");
 
             var tempPathString = Environment.GetEnvironmentVariable("Temp") ?? string.Empty;
             path = new DirectoryInfo(tempPathString);
-            depth = 3000;
+            depth = MaxPath + 3000;
             verifyPathDepthResult = fileSystemManagerV2.VerifyPathDepth(path, depth);
             verifyPathDepthStatus = verifyPathDepthResult.Status;
-            Console.WriteLine($"Path: {path}, depth: [{depth}/{path.ToString().Length + depth}], verifyPathDepthStatus: {verifyPathDepthStatus}");
+            Console.WriteLine($"Path: {path}, depth: [{depth}/{path.ToString().Length + 1 + depth}], verifyPathDepthStatus: {verifyPathDepthStatus}");
 
-            path = new DirectoryInfo(tempPathString);
-            depth = 250 - tempPathString.Length;
+            depth = MaxPath - tempPathString.Length - 1;
             while (true)
             {
                 verifyPathDepthResult = fileSystemManagerV2.VerifyPathDepth(path, depth);
                 verifyPathDepthStatus = verifyPathDepthResult.Status;
                 if (verifyPathDepthStatus == FileSystemManagerV2.VerifyPathDepthStatus.Ok || depth < 2)
                 {
-                    Console.WriteLine($"Path: {path}, depth: [{depth}/{path.ToString().Length + depth}], verifyPathDepthStatus: {verifyPathDepthStatus}");
+                    Console.WriteLine($"Path: {path}, depth: [{depth}/{path.ToString().Length + 1 + depth}], verifyPathDepthStatus: {verifyPathDepthStatus}");
                     break;
                 }
                 depth--;

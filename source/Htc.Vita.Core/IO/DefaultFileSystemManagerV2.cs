@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Runtime;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.IO
 {
@@ -13,22 +14,23 @@ namespace Htc.Vita.Core.IO
     /// <seealso cref="FileSystemManagerV2" />
     public class DefaultFileSystemManagerV2 : FileSystemManagerV2
     {
-        private const int MaxWindowsFolderNameLength = 254;
+        private const int BasicWindowsFileNameLength = 8 + 1 + 3; // 8.3
+        private const int MaxNtfsFolderNameLength = 255 - 1;      // removing null-terminated
 
         private static string[] GetSubPathArrayFrom(int depth)
         {
-            var subPathArraySize = depth / (MaxWindowsFolderNameLength + 1) + 1;
+            var subPathArraySize = depth / (MaxNtfsFolderNameLength + 1) + 1;
 
             var pathArray = new string[subPathArraySize];
             for (var k = 0; k < subPathArraySize - 1; k++)
             {
-                pathArray[k] = new string('a', MaxWindowsFolderNameLength);
+                pathArray[k] = new string('a', MaxNtfsFolderNameLength);
             }
             pathArray[subPathArraySize - 1] = new string(
                     'a',
                     Math.Min(
-                            depth % (MaxWindowsFolderNameLength + 1),
-                            MaxWindowsFolderNameLength
+                            depth % (MaxNtfsFolderNameLength + 1),
+                            MaxNtfsFolderNameLength
                     )
             );
             return pathArray;
@@ -85,6 +87,7 @@ namespace Htc.Vita.Core.IO
         }
 
         /// <inheritdoc />
+        [ExternalReference("https://docs.microsoft.com/en-us/archive/blogs/jeremykuhne/net-4-6-2-and-long-paths-on-windows-10")]
         protected override VerifyPathDepthResult OnVerifyPathDepth(
                 DirectoryInfo basePath,
                 int depth)
@@ -148,12 +151,18 @@ namespace Htc.Vita.Core.IO
                 };
             }
 
-            subPathArray = GetSubPathArrayFrom(depth - 2);
+            var leafNameLength = 1;
+            if (depth > BasicWindowsFileNameLength + 1)
+            {
+                depth -= BasicWindowsFileNameLength + 1;
+                leafNameLength = BasicWindowsFileNameLength;
+            }
+            subPathArray = GetSubPathArrayFrom(depth);
             subPath = Path.Combine(subPathArray);
             fullFilePathString = Path.Combine(
                     basePath.ToString(),
                     subPath,
-                    "a"
+                    new string('a', leafNameLength)
             );
             try
             {

@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Htc.Vita.Core.IO;
 using Htc.Vita.Core.Runtime;
@@ -8,6 +9,8 @@ namespace Htc.Vita.Core.Tests
 {
     public class FileSystemManagerV2Test
     {
+        private const int MaxPath = 260 - 1;
+
         private readonly ITestOutputHelper _output;
 
         public FileSystemManagerV2Test(ITestOutputHelper output)
@@ -66,6 +69,27 @@ namespace Htc.Vita.Core.Tests
             var getDiskSpaceResult = fileSystemManager.GetDiskSpace(directoryInfo);
             var getDiskSpaceStatus = getDiskSpaceResult.Status;
             Assert.Equal(FileSystemManagerV2.GetDiskSpaceStatus.InvalidData, getDiskSpaceStatus);
+        }
+
+        [Fact]
+        public void Default_2_VerifyPathDepth()
+        {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+
+            var tempPathString = Environment.GetEnvironmentVariable("Temp") ?? string.Empty;
+            var path = new DirectoryInfo(tempPathString);
+            var depth = MaxPath - tempPathString.Length - 1;
+            var fileSystemManagerV2 = FileSystemManagerV2.GetInstance();
+            var verifyPathDepthResult = fileSystemManagerV2.VerifyPathDepth(path, depth);
+            var verifyPathDepthStatus = verifyPathDepthResult.Status;
+            Assert.Equal(FileSystemManagerV2.VerifyPathDepthStatus.Ok, verifyPathDepthStatus);
+            depth++;
+            verifyPathDepthResult = fileSystemManagerV2.VerifyPathDepth(path, depth);
+            verifyPathDepthStatus = verifyPathDepthResult.Status;
+            Assert.Equal(FileSystemManagerV2.VerifyPathDepthStatus.Unsupported, verifyPathDepthStatus);
         }
     }
 }
