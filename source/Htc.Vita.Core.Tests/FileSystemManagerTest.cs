@@ -5,6 +5,7 @@ using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
+#pragma warning disable CS0618
     public class FileSystemManagerTest
     {
         private readonly ITestOutputHelper _output;
@@ -52,4 +53,5 @@ namespace Htc.Vita.Core.Tests
             Assert.True(diskSpaceInfo.TotalFreeOfBytes == -1);
         }
     }
+#pragma warning restore CS0618
 }

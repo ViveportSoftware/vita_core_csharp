@@ -1,3 +1,5 @@
+using System;
+
 namespace Htc.Vita.Core.IO
 {
     public static partial class FileSystemManager
@@ -5,6 +7,7 @@ namespace Htc.Vita.Core.IO
         /// <summary>
         /// Class DiskSpaceInfo.
         /// </summary>
+        [Obsolete("This class is obsoleted.")]
         public class DiskSpaceInfo
         {
             /// <summary>

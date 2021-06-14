@@ -7,6 +7,7 @@ namespace Htc.Vita.Core.IO
     /// <summary>
     /// Class FileSystemManager.
     /// </summary>
+    [Obsolete("This class is obsoleted.")]
     public static partial class FileSystemManager
     {
         /// <summary>
