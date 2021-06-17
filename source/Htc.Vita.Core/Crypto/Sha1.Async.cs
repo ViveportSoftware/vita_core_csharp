@@ -136,7 +136,7 @@ namespace Htc.Vita.Core.Crypto
                 return false;
             }
 
-            if (checksum.Length == Base64Length)
+            if (checksum.Length == Base64FormLength)
             {
                 return await ValidateInBase64Async(
                         file,
@@ -144,7 +144,7 @@ namespace Htc.Vita.Core.Crypto
                         cancellationToken
                 ).ConfigureAwait(false);
             }
-            if (checksum.Length == HexLength)
+            if (checksum.Length == HexFormLength)
             {
                 return await ValidateInHexAsync(
                         file,

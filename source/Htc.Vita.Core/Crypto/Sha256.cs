@@ -11,8 +11,16 @@ namespace Htc.Vita.Core.Crypto
     /// </summary>
     public abstract partial class Sha256
     {
-        private const int Base64Length = 44; // "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
-        private const int HexLength = 64;    // "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        /// <summary>
+        /// Gets the Base64 form length.
+        /// </summary>
+        /// <value>The Base64 form length.</value>
+        public static int Base64FormLength => 44; // "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        /// <summary>
+        /// Gets the hexadecimal form length.
+        /// </summary>
+        /// <value>The hexadecimal form length.</value>
+        public static int HexFormLength => 64;    // "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 
         static Sha256()
         {
@@ -225,7 +233,7 @@ namespace Htc.Vita.Core.Crypto
                 return false;
             }
 
-            if (checksum.Length == Base64Length)
+            if (checksum.Length == Base64FormLength)
             {
                 return ValidateInBase64(
                         file,
@@ -233,7 +241,7 @@ namespace Htc.Vita.Core.Crypto
                         cancellationToken
                 );
             }
-            if (checksum.Length == HexLength)
+            if (checksum.Length == HexFormLength)
             {
                 return ValidateInHex(
                         file,
@@ -259,7 +267,7 @@ namespace Htc.Vita.Core.Crypto
                 return false;
             }
 
-            if (checksum.Length == HexLength)
+            if (checksum.Length == HexFormLength)
             {
                 return ValidateInHex(
                         content,
