@@ -36,17 +36,5 @@ namespace Htc.Vita.Core.Net
             /// <value>The maximum retry count per host.</value>
             public int MaxRetryCountPerHost { get; set; } = 2;
         }
-
-        public class SynchronousProgress<T> : IProgress<T>
-        {
-            private readonly Action<T> _callback;
-
-            public SynchronousProgress(Action<T> callback)
-            {
-                _callback = callback;
-            }
-
-            void IProgress<T>.Report(T data) => _callback(data);
-        }
     }
 }
