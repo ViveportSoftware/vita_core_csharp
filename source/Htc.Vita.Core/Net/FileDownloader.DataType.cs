@@ -1,8 +1,9 @@
+using System;
 using System.Reflection;
 
 namespace Htc.Vita.Core.Net
 {
-    partial class FileDownloader
+    public partial class FileDownloader
     {
         public class Config
         {
@@ -11,6 +12,18 @@ namespace Htc.Vita.Core.Net
             public int StreamBufferSize { get; set; } = 786432;
             public int SleepPerBufferDownloadedInMilli { get; set; } = 10;
             public int MaxRetryCountPerHost { get; set; } = 2;
+        }
+
+        public class SynchronousProgress<T> : IProgress<T>
+        {
+            private readonly Action<T> _callback;
+
+            public SynchronousProgress(Action<T> callback)
+            {
+                _callback = callback;
+            }
+
+            void IProgress<T>.Report(T data) => _callback(data);
         }
     }
 }

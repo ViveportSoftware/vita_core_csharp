@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Htc.Vita.Core.Net
 {
-    partial class FileDownloader
+    public partial class FileDownloader
     {
         public Task<DownloadOperationResult> DownloadFileAsync(
                 string url,

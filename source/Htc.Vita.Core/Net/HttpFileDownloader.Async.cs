@@ -8,10 +8,16 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
 {
-    partial class HttpFileDownloader
+    internal partial class HttpFileDownloader
     {
-        protected override async Task<DownloadOperationResult> OnDownloadFileAsync(string url, FileInfo fileInfo, long size, Action<long> progressReporter,
-            CancellationToken cancellationToken, List<string> hostList = null)
+        /// <inheritdoc />
+        protected override async Task<DownloadOperationResult> OnDownloadFileAsync(
+                string url,
+                FileInfo fileInfo,
+                long size,
+                Action<long> progressReporter,
+                CancellationToken cancellationToken,
+                List<string> hostList = null)
         {
             var destPath = fileInfo.FullName;
 
@@ -32,7 +38,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception exc)
             {
-                Logger.GetInstance(typeof(FileDownloader)).Error($"Unable to create directory: {destPath} ex: {exc}");
+                Logger.GetInstance(typeof(HttpFileDownloader)).Error($"Unable to create directory: {destPath} ex: {exc}");
                 return DownloadErrorToOperationResult(exc, cancellationToken);
             }
 
@@ -45,7 +51,7 @@ namespace Htc.Vita.Core.Net
                 }
                 catch (Exception exc)
                 {
-                    Logger.GetInstance(typeof(FileDownloader)).Error($"Url is incorrect. url: {url} Exception: {exc}");
+                    Logger.GetInstance(typeof(HttpFileDownloader)).Error($"Url is incorrect. url: {url} Exception: {exc}");
                     return DownloadStatus.InternalError;
                 }
             }
@@ -70,7 +76,7 @@ namespace Htc.Vita.Core.Net
                          !NetworkInterface.IsInternetAvailable()))
                     {
                         var errorMsg = retStatus?.Status == DownloadStatus.OutOfFreeSpaceError ? "Disk full error." : "No internet error.";
-                        Logger.GetInstance(typeof(FileDownloader)).Error($"{errorMsg} File: {destPath} Trial: {trial}");
+                        Logger.GetInstance(typeof(HttpFileDownloader)).Error($"{errorMsg} File: {destPath} Trial: {trial}");
 
                         return retStatus;
                     }
@@ -79,8 +85,7 @@ namespace Htc.Vita.Core.Net
 
                     if (string.IsNullOrEmpty(fileUrl))
                     {
-                        Logger.GetInstance(typeof(FileDownloader)).Error(
-                            $"No more host to try. File: {destPath} Trial: {trial} Last error: {retStatus.Status} Last exception: {retStatus.Exception}");
+                        Logger.GetInstance(typeof(HttpFileDownloader)).Error($"No more host to try. File: {destPath} Trial: {trial} Last error: {retStatus.Status} Last exception: {retStatus.Exception}");
 
                         return retStatus.Success ? DownloadStatus.InternalError : retStatus;
                     }
@@ -88,20 +93,24 @@ namespace Htc.Vita.Core.Net
                     progressSize = 0;
                     trial++;
 
-                    Logger.GetInstance(typeof(FileDownloader)).Info($"Trial #{trial} started. File: {destPath} Size: {size} FileUrl: {fileUrl}");
+                    Logger.GetInstance(typeof(HttpFileDownloader)).Info($"Trial #{trial} started. File: {destPath} Size: {size} FileUrl: {fileUrl}");
 
                     using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, fileUrl))
                     {
-                        using (var responseMessage = await HttpClientInstance.SendAsync(
-                            httpRequestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false))
+                        using (var responseMessage = await HttpClientInstance.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false))
                         {
                             if (cancellationToken.IsCancellationRequested)
                             {
                                 return DownloadStatus.Cancelled;
                             }
 
-                            if (!responseMessage.IsSuccessStatusCode) throw new HttpStatusErrorException(responseMessage.StatusCode,
-                                $"Server response error. HttpStatusCode: {responseMessage.StatusCode} Url: {fileUrl}");
+                            if (!responseMessage.IsSuccessStatusCode)
+                            {
+                                throw new HttpStatusErrorException(
+                                        responseMessage.StatusCode,
+                                        $"Server response error. HttpStatusCode: {responseMessage.StatusCode} Url: {fileUrl}"
+                                );
+                            }
 
                             using (var urlStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false))
                             {
@@ -109,11 +118,17 @@ namespace Htc.Vita.Core.Net
                                 {
                                     IProgress<long> progress = new SynchronousProgress<long>(value =>
                                     {
-                                        progressSize += value;
-                                        progressReporter(value);
+                                            progressSize += value;
+                                            progressReporter(value);
                                     });
-                                    StreamCopyTo(urlStream, fileStream, progress, cancellationToken,
-                                        DownloadConfig.SleepPerBufferDownloadedInMilli, DownloadConfig.StreamBufferSize);
+                                    StreamCopyTo(
+                                            urlStream,
+                                            fileStream,
+                                            progress,
+                                            cancellationToken,
+                                            DownloadConfig.SleepPerBufferDownloadedInMilli,
+                                            DownloadConfig.StreamBufferSize
+                                    );
                                 }
                             }
                         }
@@ -129,7 +144,7 @@ namespace Htc.Vita.Core.Net
                         return DownloadStatus.Cancelled;
                     }
 
-                    Logger.GetInstance(typeof(FileDownloader)).Info($"File downloaded. File: {destPath} Size: {size} Trial: {trial}");
+                    Logger.GetInstance(typeof(HttpFileDownloader)).Info($"File downloaded. File: {destPath} Size: {size} Trial: {trial}");
                     return DownloadStatus.Success;
                 }
                 catch (Exception exc)
@@ -142,8 +157,7 @@ namespace Htc.Vita.Core.Net
                     retStatus = DownloadErrorToOperationResult(exc, cancellationToken);
                     progressReporter(progressSize * -1);
 
-                    Logger.GetInstance(typeof(FileDownloader)).Error(
-                        $"Exception. FileName: {destPath} Size: {size} FileUrl: {fileUrl} Trial: {trial} Error: {retStatus.Status} Exception: {exc}.");
+                    Logger.GetInstance(typeof(HttpFileDownloader)).Error($"Exception. FileName: {destPath} Size: {size} FileUrl: {fileUrl} Trial: {trial} Error: {retStatus.Status} Exception: {exc}.");
                 }
             }
         }
