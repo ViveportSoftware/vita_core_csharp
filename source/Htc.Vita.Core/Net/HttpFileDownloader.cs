@@ -18,9 +18,9 @@ namespace Htc.Vita.Core.Net
 
         internal static DownloadOperationResult DownloadErrorToOperationResult(
                 Exception exc,
-                CancellationToken? cancellationToken)
+                CancellationToken cancellationToken)
         {
-            if (cancellationToken != null && ((CancellationToken)cancellationToken).IsCancellationRequested)
+            if (cancellationToken.IsCancellationRequested)
             {
                 return DownloadStatus.Cancelled;
             }
