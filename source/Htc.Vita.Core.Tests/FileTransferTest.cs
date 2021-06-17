@@ -248,7 +248,7 @@ namespace Htc.Vita.Core.Tests
             while (true)
             {
                 state = job.GetState();
-                Logger.GetInstance(typeof(FileTransferTest)).Info("transfer state: " + state);
+                Logger.GetInstance(typeof(FileTransferTest)).Info($"transfer state: {state}");
                 Assert.NotEqual(FileTransfer.FileTransferState.Error, state);
                 if (state == FileTransfer.FileTransferState.Transferred)
                 {
@@ -276,7 +276,7 @@ namespace Htc.Vita.Core.Tests
             Assert.DoesNotContain(jobId, fileTransfer.GetJobIdList());
             foreach (var localPath in localPathSet)
             {
-                Logger.GetInstance(typeof(FileTransferTest)).Info("local path: " + localPath);
+                Logger.GetInstance(typeof(FileTransferTest)).Info($"local path: {localPath}");
                 Assert.True(localPath.Exists);
             }
         }

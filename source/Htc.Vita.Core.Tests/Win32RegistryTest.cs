@@ -181,8 +181,8 @@ namespace Htc.Vita.Core.Tests
             var keyName = "0a9d53eb-36bb-4859-80d0-0816d47580af";
             var valueName = "valueName";
             var valueData = "valueData";
-            Win32Registry.SetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test\\" + keyName, valueName, valueData);
-            Assert.Equal(valueData, Win32Registry.GetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test\\" + keyName, valueName));
+            Win32Registry.SetStringValue(Win32Registry.Hive.CurrentUser, $"SOFTWARE\\HTC\\Test\\{keyName}", valueName, valueData);
+            Assert.Equal(valueData, Win32Registry.GetStringValue(Win32Registry.Hive.CurrentUser, $"SOFTWARE\\HTC\\Test\\{keyName}", valueName));
             Assert.True(Win32Registry.DeleteKey32(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test", keyName));
         }
 
@@ -197,8 +197,8 @@ namespace Htc.Vita.Core.Tests
             var keyName = "20a3c3e3-9feb-4bd8-b451-1e357a6f9d98";
             var valueName = "valueName";
             var valueData = "valueData";
-            Win32Registry.SetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test\\" + keyName, valueName, valueData);
-            Assert.Equal(valueData, Win32Registry.GetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test\\" + keyName, valueName));
+            Win32Registry.SetStringValue(Win32Registry.Hive.CurrentUser, $"SOFTWARE\\HTC\\Test\\{keyName}", valueName, valueData);
+            Assert.Equal(valueData, Win32Registry.GetStringValue(Win32Registry.Hive.CurrentUser, $"SOFTWARE\\HTC\\Test\\{keyName}", valueName));
             Assert.True(Win32Registry.DeleteKey64(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test", keyName));
         }
 
@@ -213,8 +213,8 @@ namespace Htc.Vita.Core.Tests
             var keyName = "7a8dd5f9-9347-40b6-8511-3220af3cd429";
             var valueName = "valueName";
             var valueData = "valueData";
-            Win32Registry.SetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test\\" + keyName, valueName, valueData);
-            Assert.Equal(valueData, Win32Registry.GetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test\\" + keyName, valueName));
+            Win32Registry.SetStringValue(Win32Registry.Hive.CurrentUser, $"SOFTWARE\\HTC\\Test\\{keyName}", valueName, valueData);
+            Assert.Equal(valueData, Win32Registry.GetStringValue(Win32Registry.Hive.CurrentUser, $"SOFTWARE\\HTC\\Test\\{keyName}", valueName));
             Assert.True(Win32Registry.DeleteKey(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test", keyName));
         }
 

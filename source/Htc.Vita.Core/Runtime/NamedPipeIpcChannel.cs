@@ -255,7 +255,7 @@ namespace Htc.Vita.Core.Runtime
                     throw new ArgumentOutOfRangeException(nameof(maxNumberOfServerInstances), "requested server instance should between 1 to 254");
                 }
 
-                var fullPath = Path.GetFullPath("\\\\.\\pipe\\" + pipeName);
+                var fullPath = Path.GetFullPath($"\\\\.\\pipe\\{pipeName}");
                 var pipeOpenMode = ConvertPipeOpenModeFrom(
                         direction,
                         options,
