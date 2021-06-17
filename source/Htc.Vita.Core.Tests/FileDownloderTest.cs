@@ -17,7 +17,7 @@ namespace Htc.Vita.Core.Tests
         private static readonly long TestFileSize = 14611496;
         private static readonly string TestFileHash = "eb5f74215e4308d8f2b1d458e78f33050a779b9be19baaa2174de1be9be1b830";
         private static readonly string TestFileDestPath = Path.Combine(Path.GetTempPath(), "VC_redist.x86.exe");
-        private static readonly FileVerifier.ChecksumType TestFileChecksumType = FileVerifier.ChecksumType.Sha256;
+        private static readonly FileVerifierV2.ChecksumType TestFileChecksumType = FileVerifierV2.ChecksumType.Sha256;
 
         public FileDownloaderTest(ITestOutputHelper output)
         {
@@ -53,8 +53,7 @@ namespace Htc.Vita.Core.Tests
 
                 if (downloadResult.Success)
                 {
-                    if (!FileVerifier.VerifyAsync(new FileInfo(TestFileDestPath), TestFileSize, TestFileHash, TestFileChecksumType,
-                        CancellationToken.None).Result)
+                    if (!FileVerifierV2.GetInstance().VerifyIntegrityAsync(new FileInfo(TestFileDestPath), TestFileHash, TestFileChecksumType).Result)
                     {
                         downloadResult = FileDownloader.DownloadStatus.InternalError;
                         continue;
@@ -97,8 +96,7 @@ namespace Htc.Vita.Core.Tests
 
                 if (downloadResult.Success)
                 {
-                    if (!FileVerifier.VerifyAsync(new FileInfo(TestFileDestPath), TestFileSize, TestFileHash, TestFileChecksumType,
-                        CancellationToken.None).Result)
+                    if (!FileVerifierV2.GetInstance().VerifyIntegrityAsync(new FileInfo(TestFileDestPath), TestFileHash, TestFileChecksumType).Result)
                     {
                         downloadResult = FileDownloader.DownloadStatus.InternalError;
                         continue;
