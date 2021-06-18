@@ -104,7 +104,7 @@ namespace Htc.Vita.Core.Net
         {
             if (_mandatorySection.Length > 0)
             {
-                _mandatorySection.Append(" ");
+                _mandatorySection.Append(' ');
             }
             var moduleName = GetModuleName();
             if (!string.IsNullOrWhiteSpace(moduleName))

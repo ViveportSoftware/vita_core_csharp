@@ -549,7 +549,7 @@ namespace Htc.Vita.Core.Diagnostics
             var arguments = new StringBuilder();
             foreach (var param in webBrowserInfo.LaunchParams)
             {
-                arguments.Append(" ").Append(param.Replace("%1", uri.AbsoluteUri));
+                arguments.Append(' ').Append(param.Replace("%1", uri.AbsoluteUri));
             }
 
             var processStartInfo = new ProcessStartInfo
