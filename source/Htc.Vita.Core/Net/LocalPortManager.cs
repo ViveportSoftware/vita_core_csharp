@@ -10,6 +10,8 @@ namespace Htc.Vita.Core.Net
     /// </summary>
     public class LocalPortManager
     {
+        private static readonly object PortLock = new object();
+
         private static int _lastLocalPort;
 
         private static int DoGetUnusedPort(int preferredPort)
@@ -46,12 +48,15 @@ namespace Htc.Vita.Core.Net
         /// <returns>System.Int32.</returns>
         public static int GetRandomUnusedPort()
         {
-            _lastLocalPort = DoGetUnusedPort(_lastLocalPort);
-            if (_lastLocalPort == 0)
+            lock (PortLock)
             {
                 _lastLocalPort = DoGetUnusedPort(_lastLocalPort);
+                if (_lastLocalPort == 0)
+                {
+                    _lastLocalPort = DoGetUnusedPort(_lastLocalPort);
+                }
+                return _lastLocalPort;
             }
-            return _lastLocalPort;
         }
 
         /// <summary>
