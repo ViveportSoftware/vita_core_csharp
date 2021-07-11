@@ -63,6 +63,28 @@ namespace Htc.Vita.Core.Interop
                 /* _In_ HMODULE */ [In] IntPtr hModule
         );
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/appmodel/nf-appmodel-getcurrentpackagefamilyname")]
+        [DllImport(Libraries.WindowsKernel32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error GetCurrentPackageFamilyName(
+                /* _Inout_          UINT32* */ [In][Out] ref int packageFamilyNameLength,
+                /* _Out_writes_opt_ PWSTR   */ [In][Out] StringBuilder packageFamilyName
+        );
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/appmodel/nf-appmodel-getcurrentpackagefullname")]
+        [DllImport(Libraries.WindowsKernel32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error GetCurrentPackageFullName(
+                /* _Inout_          UINT32* */ [In][Out] ref int packageFullNameLength,
+                /* _Out_writes_opt_ PWSTR   */ [In][Out] StringBuilder packageFullName
+        );
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/nf-processthreadsapi-getcurrentprocess")]
         [DllImport(Libraries.WindowsKernel32,
                 CallingConvention = CallingConvention.Winapi,
@@ -107,6 +129,20 @@ namespace Htc.Vita.Core.Interop
         internal static extern bool GetNamedPipeServerProcessId(
                 /* _In_  HANDLE */ [In] SafePipeHandle pipe,
                 /* _Out_ PULONG */ [In][Out] ref uint serverProcessId
+        );
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/appmodel/nf-appmodel-getpackagesbypackagefamily")]
+        [DllImport(Libraries.WindowsKernel32,
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
+        internal static extern Error GetPackagesByPackageFamily(
+                /* _In_             PCWSTR  */ [In] string packageFamilyName,
+                /* _Inout_          UINT32* */ [In][Out] ref int count,
+                /* _Out_writes_opt_ PWSTR*  */ [In][MarshalAs(UnmanagedType.LPArray)] IntPtr[] packageFullNames,
+                /* _Inout_          UINT32* */ [In][Out] ref int bufferLength,
+                /* _Out_writes_opt_ WCHAR*  */ [In][Out] StringBuilder buffer
         );
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getprivateprofilestringw")]
