@@ -64,6 +64,23 @@ namespace Htc.Vita.Core.TestProgram
             Console.WriteLine($"SecurityProtocolManager.GetAvailableProtocol(): {SecurityProtocolManager.GetAvailableProtocol()}");
             Console.ReadKey();
 
+            var windowsStoreAppManager = WindowsStoreAppManager.GetInstance();
+            Console.WriteLine($"windowsStoreAppManager.IsIdentityAvailableWithCurrentProcess(): {windowsStoreAppManager.IsIdentityAvailableWithCurrentProcess()}");
+            const string packageFamilyName = "Microsoft.SkypeApp_kzf8qxf38zg5c";
+            var getAppPackageResult = windowsStoreAppManager.GetAppPackageByFamilyName(packageFamilyName);
+            var getAppPackageStatus = getAppPackageResult.Status;
+            if (getAppPackageStatus != WindowsStoreAppManager.GetAppPackageStatus.Ok)
+            {
+                Console.WriteLine($"Can not get app package. status: {getAppPackageStatus}");
+            }
+            else
+            {
+                var appPackageInfo = getAppPackageResult.AppPackage;
+                Console.WriteLine($"appPackageInfo.FamilyName: {appPackageInfo.FamilyName}");
+                Console.WriteLine($"appPackageInfo.FullName: {appPackageInfo.FullName}");
+            }
+            Console.ReadKey();
+
             var fileSystemManagerV2 = FileSystemManagerV2.GetInstance();
             var path = new DirectoryInfo("C:\\");
             var depth = MaxPath;
