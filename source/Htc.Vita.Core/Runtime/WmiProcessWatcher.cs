@@ -5,6 +5,7 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Runtime
 {
+#pragma warning disable CA1416
     /// <summary>
     /// Class WmiProcessWatcher.
     /// Implements the <see cref="ProcessWatcher" />
@@ -68,7 +69,6 @@ namespace Htc.Vita.Core.Runtime
 
         private void OnManagementEventArrived(object sender, EventArrivedEventArgs e)
         {
-#pragma warning disable CA1416
             var managementBaseObject = e.NewEvent;
             if (managementBaseObject == null)
             {
@@ -146,7 +146,6 @@ namespace Htc.Vita.Core.Runtime
                  */
                 managementBaseObject.Dispose();
             }
-#pragma warning restore CA1416
         }
 
         /// <inheritdoc />
@@ -170,12 +169,10 @@ namespace Htc.Vita.Core.Runtime
                 Logger.GetInstance(typeof(WmiProcessWatcher)).Info($"WMI query: {wmiQuery}");
                 try
                 {
-#pragma warning disable CA1416
                     var eventWatcher = new ManagementEventWatcher(wmiQuery);
                     eventWatcher.EventArrived += OnManagementEventArrived;
                     eventWatcher.Start();
                     _eventWatchers.Add(eventWatcher);
-#pragma warning restore CA1416
                 }
                 catch (Exception e)
                 {
@@ -194,9 +191,7 @@ namespace Htc.Vita.Core.Runtime
             {
                 try
                 {
-#pragma warning disable CA1416
                     eventWatcher.Stop();
-#pragma warning restore CA1416
                 }
                 catch (Exception e)
                 {
@@ -220,4 +215,5 @@ namespace Htc.Vita.Core.Runtime
             return this;
         }
     }
+#pragma warning restore CA1416
 }
