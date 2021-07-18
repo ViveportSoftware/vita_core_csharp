@@ -55,7 +55,13 @@ namespace Htc.Vita.Core.Tests
                 var appPackageInfo = getAppPackageResult.AppPackage;
                 Assert.NotNull(appPackageInfo);
                 Logger.GetInstance(typeof(WindowsStoreAppManagerTest)).Info($"appPackageInfo.FamilyName: {appPackageInfo.FamilyName}");
-                Logger.GetInstance(typeof(WindowsStoreAppManagerTest)).Info($"appPackageInfo.FullName: {appPackageInfo.FullName}");
+                var fullNameIndex = 0;
+                var fullNameList = appPackageInfo.FullNameList;
+                foreach (var fullName in fullNameList)
+                {
+                    Logger.GetInstance(typeof(WindowsStoreAppManagerTest)).Info($"appPackageInfo.FullNameList[{fullNameIndex}]: {fullName}");
+                    fullNameIndex++;
+                }
             }
         }
     }

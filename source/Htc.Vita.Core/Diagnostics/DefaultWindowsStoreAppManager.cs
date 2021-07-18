@@ -164,13 +164,15 @@ namespace Htc.Vita.Core.Diagnostics
                 };
             }
 
+            var appPackage = new WindowsStoreAppPackageInfo
+            {
+                    FamilyName = familyName
+            };
+            appPackage.FullNameList.Add(appPackageFullName);
+
             return new GetAppPackageResult
             {
-                    AppPackage = new WindowsStoreAppPackageInfo
-                    {
-                            FamilyName = familyName,
-                            FullName = appPackageFullName
-                    },
+                    AppPackage = appPackage,
                     Status = GetAppPackageStatus.Ok
             };
         }
@@ -214,13 +216,15 @@ namespace Htc.Vita.Core.Diagnostics
                 };
             }
 
+            var appPackage = new WindowsStoreAppPackageInfo
+            {
+                    FamilyName = currentAppPackageFamilyName
+            };
+            appPackage.FullNameList.Add(currentAppPackageFullName);
+
             return new GetAppPackageResult
             {
-                    AppPackage = new WindowsStoreAppPackageInfo
-                    {
-                            FamilyName = currentAppPackageFamilyName,
-                            FullName = currentAppPackageFullName
-                    },
+                    AppPackage = appPackage,
                     Status = GetAppPackageStatus.Ok
             };
         }
