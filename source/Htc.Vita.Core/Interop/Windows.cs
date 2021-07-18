@@ -1812,10 +1812,10 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-display_devicew",
-                Description = "DISPLAY_DEVICEW structure",
+                Description = "DISPLAY_DEVICE structure",
                 File = Headers.WindowsWingdi)]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        internal struct DisplayDeviceW : IEquatable<DisplayDeviceW>
+        internal struct DisplayDevice : IEquatable<DisplayDevice>
         {
                                                                   internal          /* DWORD      */ int cb;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]  internal readonly /* WCHAR[32]  */ string deviceName;
@@ -1824,17 +1824,17 @@ namespace Htc.Vita.Core.Interop
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal readonly /* WCHAR[128] */ string deviceId;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal readonly /* WCHAR[128] */ string deviceKey;
 
-            public static bool operator ==(DisplayDeviceW left, DisplayDeviceW right)
+            public static bool operator ==(DisplayDevice left, DisplayDevice right)
             {
                 return Equals(left, right);
             }
 
-            public static bool operator !=(DisplayDeviceW left, DisplayDeviceW right)
+            public static bool operator !=(DisplayDevice left, DisplayDevice right)
             {
                 return !Equals(left, right);
             }
 
-            public bool Equals(DisplayDeviceW other)
+            public bool Equals(DisplayDevice other)
             {
                 return deviceName == other.deviceName
                         && deviceString == other.deviceString
@@ -1849,7 +1849,7 @@ namespace Htc.Vita.Core.Interop
                 {
                     return false;
                 }
-                return obj is DisplayDeviceW && Equals((DisplayDeviceW) obj);
+                return obj is DisplayDevice && Equals((DisplayDevice) obj);
             }
 
             public override int GetHashCode()
@@ -2053,10 +2053,10 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-monitorinfoexw",
-                Description = "MONITORINFOEXW structure",
+                Description = "MONITORINFOEX structure",
                 File = Headers.WindowsWinuser)]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        internal struct MonitorInfoExW : IEquatable<MonitorInfoExW>
+        internal struct MonitorInfoEx : IEquatable<MonitorInfoEx>
         {
                                                                  internal          /* DWORD     */ int size;
                                                                  internal readonly /* RECT      */ Rectangle rcMonitor;
@@ -2064,17 +2064,17 @@ namespace Htc.Vita.Core.Interop
                                                                  internal readonly /* DWORD     */ uint flags;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal readonly /* WCHAR[32] */ string DeviceName;
 
-            public static bool operator ==(MonitorInfoExW left, MonitorInfoExW right)
+            public static bool operator ==(MonitorInfoEx left, MonitorInfoEx right)
             {
                 return Equals(left, right);
             }
 
-            public static bool operator !=(MonitorInfoExW left, MonitorInfoExW right)
+            public static bool operator !=(MonitorInfoEx left, MonitorInfoEx right)
             {
                 return !Equals(left, right);
             }
 
-            public bool Equals(MonitorInfoExW other)
+            public bool Equals(MonitorInfoEx other)
             {
                 return rcMonitor.Equals(other.rcMonitor)
                         && rcWork.Equals(other.rcWork)
@@ -2088,7 +2088,7 @@ namespace Htc.Vita.Core.Interop
                 {
                     return false;
                 }
-                return obj is MonitorInfoExW && Equals((MonitorInfoExW) obj);
+                return obj is MonitorInfoEx && Equals((MonitorInfoEx) obj);
             }
 
             public override int GetHashCode()
@@ -2105,10 +2105,10 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-osversioninfoexw",
-                Description = "OSVERSIONINFOEXW structure",
+                Description = "OSVERSIONINFOEX structure",
                 File = Headers.WindowsWinnt)]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        internal struct OsVersionInfoExW
+        internal struct OsVersionInfoEx
         {
                                                                   internal /* DWORD      */ int dwOSVersionInfoSize;
                                                                   internal /* DWORD      */ int dwMajorVersion;
@@ -2454,10 +2454,10 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-win32_find_dataw",
-                Description = "WIN32_FIND_DATAW structure",
+                Description = "WIN32_FIND_DATA structure",
                 File = Headers.WindowsMinwinbase)]
         [StructLayout(LayoutKind.Sequential)]
-        internal struct Win32FindDataW : IEquatable<Win32FindDataW>
+        internal struct Win32FindData : IEquatable<Win32FindData>
         {
                                                                       internal readonly /* DWORD           */ FileAttributeFlags dwFileAttributes;
                                                                       internal readonly /* FILETIME        */ FileTime ftCreationTime;
@@ -2470,17 +2470,17 @@ namespace Htc.Vita.Core.Interop
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)] internal readonly /* WCHAR[MAX_PATH] */ string cFileName;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]      internal readonly /* WCHAR[14]       */ string cAlternateFileName;
 
-            public static bool operator ==(Win32FindDataW left, Win32FindDataW right)
+            public static bool operator ==(Win32FindData left, Win32FindData right)
             {
                 return Equals(left, right);
             }
 
-            public static bool operator !=(Win32FindDataW left, Win32FindDataW right)
+            public static bool operator !=(Win32FindData left, Win32FindData right)
             {
                 return !Equals(left, right);
             }
 
-            public bool Equals(Win32FindDataW other)
+            public bool Equals(Win32FindData other)
             {
                 return dwFileAttributes == other.dwFileAttributes
                         && ftCreationTime.Equals(other.ftCreationTime)
@@ -2498,7 +2498,7 @@ namespace Htc.Vita.Core.Interop
                 {
                     return false;
                 }
-                return obj is Win32FindDataW && Equals((Win32FindDataW) obj);
+                return obj is Win32FindData && Equals((Win32FindData) obj);
             }
 
             public override int GetHashCode()

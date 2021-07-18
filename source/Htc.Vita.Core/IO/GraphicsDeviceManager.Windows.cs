@@ -55,7 +55,7 @@ namespace Htc.Vita.Core.IO
                                             Name = dxgiOutputDescription.deviceName
                                     };
 
-                                    var monitorInfo = new Interop.Windows.MonitorInfoExW();
+                                    var monitorInfo = new Interop.Windows.MonitorInfoEx();
                                     monitorInfo.size = Marshal.SizeOf(monitorInfo);
                                     var success = Interop.Windows.GetMonitorInfoW(
                                             dxgiOutputDescription.monitor,
@@ -67,7 +67,7 @@ namespace Htc.Vita.Core.IO
                                         continue;
                                     }
 
-                                    var displayDevice = new Interop.Windows.DisplayDeviceW();
+                                    var displayDevice = new Interop.Windows.DisplayDevice();
                                     displayDevice.cb = Marshal.SizeOf(displayDevice);
 
                                     try

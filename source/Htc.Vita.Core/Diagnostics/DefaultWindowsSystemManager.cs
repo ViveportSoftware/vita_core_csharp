@@ -125,9 +125,9 @@ namespace Htc.Vita.Core.Diagnostics
             return result;
         }
 
-        private static bool GetNativeVersion(ref Windows.OsVersionInfoExW osVersionInfoExW)
+        private static bool GetNativeVersion(ref Windows.OsVersionInfoEx osVersionInfoEx)
         {
-            if (Windows.GetVersionExW(ref osVersionInfoExW))
+            if (Windows.GetVersionExW(ref osVersionInfoEx))
             {
                 return true;
             }
@@ -144,19 +144,19 @@ namespace Htc.Vita.Core.Diagnostics
             );
         }
 
-        private static WindowsProductType GetProductTypeFromNativeVersion(Windows.OsVersionInfoExW osVersionInfoExW)
+        private static WindowsProductType GetProductTypeFromNativeVersion(Windows.OsVersionInfoEx osVersionInfoEx)
         {
-            return osVersionInfoExW.wProductType == Windows.ProductType.Workstation
+            return osVersionInfoEx.wProductType == Windows.ProductType.Workstation
                     ? WindowsProductType.Client
                     : WindowsProductType.Server;
         }
 
-        private static Version GetProductVersionFromNativeVersion(Windows.OsVersionInfoExW osVersionInfoExW)
+        private static Version GetProductVersionFromNativeVersion(Windows.OsVersionInfoEx osVersionInfoEx)
         {
             var result = new Version(
-                    osVersionInfoExW.dwMajorVersion,
-                    osVersionInfoExW.dwMinorVersion,
-                    osVersionInfoExW.dwBuildNumber
+                    osVersionInfoEx.dwMajorVersion,
+                    osVersionInfoEx.dwMinorVersion,
+                    osVersionInfoEx.dwBuildNumber
             );
 
             if (result.Major == 6
@@ -249,9 +249,9 @@ namespace Htc.Vita.Core.Diagnostics
                     SecureBootStatus = GetSecureBootStatusFromRegistry()
             };
 
-            var osVersionInfoExW = new Windows.OsVersionInfoExW
+            var osVersionInfoExW = new Windows.OsVersionInfoEx
             {
-                    dwOSVersionInfoSize = Marshal.SizeOf(typeof(Windows.OsVersionInfoExW))
+                    dwOSVersionInfoSize = Marshal.SizeOf(typeof(Windows.OsVersionInfoEx))
             };
             if (GetNativeVersion(ref osVersionInfoExW))
             {

@@ -168,7 +168,7 @@ namespace Htc.Vita.Core.Interop
                 SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetVersionExW(
-                /* _Inout_ LPOSVERSIONINFO */ [In][Out] ref OsVersionInfoExW lpVersionInfo
+                /* _Inout_ LPOSVERSIONINFO */ [In][Out] ref OsVersionInfoEx lpVersionInfo
         );
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wow64apiset/nf-wow64apiset-iswow64process")]

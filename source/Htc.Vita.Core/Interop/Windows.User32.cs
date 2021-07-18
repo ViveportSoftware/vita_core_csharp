@@ -15,7 +15,7 @@ namespace Htc.Vita.Core.Interop
         internal static extern bool EnumDisplayDevicesW(
                 /* _In_    LPCWSTR          */ [In] string lpDevice,
                 /* _In_    DWORD            */ [In] uint iDevNum,
-                /* _Inout_ PDISPLAY_DEVICEW */ [In][Out] ref DisplayDeviceW lpDisplayDevice,
+                /* _Inout_ PDISPLAY_DEVICEW */ [In][Out] ref DisplayDevice lpDisplayDevice,
                 /* _In_    DWORD            */ [In] EnumDisplayDeviceFlags dwFlags
         );
 
@@ -39,7 +39,7 @@ namespace Htc.Vita.Core.Interop
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetMonitorInfoW(
                 /* _In_    HMONITOR      */ [In] IntPtr hMonitor,
-                /* _Inout_ LPMONITORINFO */ [In][Out] ref MonitorInfoExW monitorInfo
+                /* _Inout_ LPMONITORINFO */ [In][Out] ref MonitorInfoEx monitorInfo
         );
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getshellwindow")]
