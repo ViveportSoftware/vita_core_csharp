@@ -9,7 +9,7 @@ namespace Htc.Vita.Core.Tests
 {
     public static class RegistryTest
     {
-#pragma warning disable 0618
+#pragma warning disable CS0618
         [Fact]
         public static void Default_0_GetStringValue32_UnderHKCR()
         {
@@ -267,6 +267,6 @@ namespace Htc.Vita.Core.Tests
             Registry.SetDwordValue(Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test", valueName, valueData);
             Assert.Equal(valueData, Registry.GetIntValue(Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test", valueName));
         }
-#pragma warning restore 0618
+#pragma warning restore CS0618
     }
 }
