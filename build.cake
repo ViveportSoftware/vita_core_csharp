@@ -73,6 +73,9 @@ var nugetSource = EnvironmentVariable("NUGET_PUSH_PATH") ?? EnvironmentVariable(
 
 // Define sonarcloud key
 var sonarcloudApiKey = EnvironmentVariable("SONARCLOUD_APIKEY") ?? "NOTSET";
+var sonarcloudProjectKey = EnvironmentVariable("SONARCLOUD_PROJECTKEY") ?? "NOTSET";
+var sonarcloudProjectOrg = EnvironmentVariable("SONARCLOUD_PROJECTORG") ?? "NOTSET";
+var sonarcloudUrl = "https://sonarcloud.io";
 
 
 //////////////////////////////////////////////////////////////////////
@@ -135,18 +138,18 @@ Task("Generate-AssemblyInfo")
 });
 
 Task("Run-Sonar-Begin")
-    .WithCriteria(() => !"NOTSET".Equals(sonarcloudApiKey))
+    .WithCriteria(() => !"NOTSET".Equals(sonarcloudApiKey) && !"NOTSET".Equals(sonarcloudProjectKey) && !"NOTSET".Equals(sonarcloudProjectOrg))
     .IsDependentOn("Generate-AssemblyInfo")
     .Does(() =>
 {
     SonarBegin(
             new SonarBeginSettings
             {
-                    Key = "ViveportSoftware_vita_core_csharp",
+                    Key = sonarcloudProjectKey,
                     Login = sonarcloudApiKey,
                     OpenCoverReportsPath = "**/*.OpenCover.xml",
-                    Organization = "viveportsoftware",
-                    Url = "https://sonarcloud.io"
+                    Organization = sonarcloudProjectOrg,
+                    Url = sonarcloudUrl
             }
     );
 });

@@ -35,14 +35,16 @@ namespace Htc.Vita.Core.Runtime
             string result = null;
             try
             {
+#pragma warning disable CA1416
                 using (var identity = WindowsIdentity.GetCurrent())
                 {
                     result = identity.Name;
                 }
+#pragma warning restore CA1416
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(UserManager)).Error("Can not get current Windows username: " + e.Message);
+                Logger.GetInstance(typeof(UserManager)).Error($"Can not get current Windows username: {e.Message}");
             }
             return result;
         }

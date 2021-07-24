@@ -1,12 +1,30 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Net
 {
-    partial class FileDownloader
+    internal partial class HttpFileDownloader
     {
+        internal class HttpStatusErrorException : Exception
+        {
+            public HttpStatusCode HttpStatusCode { get; set; }
+
+            public HttpStatusErrorException() : base() { }
+
+            public HttpStatusErrorException(HttpStatusCode httpStatusCode) : base()
+            {
+                HttpStatusCode = httpStatusCode;
+            }
+
+            public HttpStatusErrorException(HttpStatusCode httpStatusCode, string message) : base(message)
+            {
+                HttpStatusCode = httpStatusCode;
+            }
+        }
+
         internal class MultipleHostHelper
         {
             private List<string> _hostList;
@@ -14,7 +32,9 @@ namespace Htc.Vita.Core.Net
             private int _retryCount;
             private int _maxRetryCount;
 
-            public MultipleHostHelper(List<string> hostList, int maxRetryCount)
+            public MultipleHostHelper(
+                    List<string> hostList,
+                    int maxRetryCount)
             {
                 _hostList = hostList;
                 _maxRetryCount = maxRetryCount;
@@ -62,6 +82,18 @@ namespace Htc.Vita.Core.Net
                     return GetNextUrl(originalUrl);
                 }
             }
+        }
+
+        internal class SynchronousProgress<T> : IProgress<T>
+        {
+            private readonly Action<T> _callback;
+
+            public SynchronousProgress(Action<T> callback)
+            {
+                _callback = callback;
+            }
+
+            void IProgress<T>.Report(T data) => _callback(data);
         }
     }
 }

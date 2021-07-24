@@ -122,16 +122,15 @@ namespace Htc.Vita.Core.Tests
             if (!ProcessManager.IsElevatedProcess(Process.GetCurrentProcess()))
             {
                 Logger.GetInstance(typeof(ProcessManagerTest)).Warn("This API should be invoked by elevated user process");
+                return;
             }
-            else
-            {
-                var processInfo = ProcessManager.LaunchProcessAsShellUser(fileInfo.FullName, "");
-                Assert.NotNull(processInfo);
-                Assert.True(processInfo.Id > 4);
-                _output.WriteLine($"Start {fileInfo.FullName} successfully on PID: {processInfo.Id}");
-                Assert.True(ProcessManager.KillProcessById(processInfo.Id));
-                _output.WriteLine($"Kill {fileInfo.Name} successfully on PID: {processInfo.Id}");
-            }
+
+            var processInfo = ProcessManager.LaunchProcessAsShellUser(fileInfo.FullName, "");
+            Assert.NotNull(processInfo);
+            Assert.True(processInfo.Id > 4);
+            _output.WriteLine($"Start {fileInfo.FullName} successfully on PID: {processInfo.Id}");
+            Assert.True(ProcessManager.KillProcessById(processInfo.Id));
+            _output.WriteLine($"Kill {fileInfo.Name} successfully on PID: {processInfo.Id}");
         }
     }
 }

@@ -190,10 +190,12 @@ namespace Htc.Vita.Core.Runtime
                 try
                 {
                     string currentUserSid;
+#pragma warning disable CA1416
                     using (var windowsIdentity = WindowsIdentity.GetCurrent())
                     {
                         currentUserSid = windowsIdentity.User?.ToString() ?? string.Empty;
                     }
+#pragma warning restore CA1416
                     if (string.IsNullOrWhiteSpace(currentUserSid))
                     {
                         Logger.GetInstance(typeof(Windows)).Error("Can not get current user sid");

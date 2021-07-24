@@ -11,8 +11,16 @@ namespace Htc.Vita.Core.Crypto
     /// </summary>
     public abstract partial class Md5
     {
-        private const int Base64Length = 24; // "pq/Xu7jVnluxLJ28xOws/w=="
-        private const int HexLength = 32;    // "202cb962ac59075b964b07152d234b70"
+        /// <summary>
+        /// Gets the Base64 form length.
+        /// </summary>
+        /// <value>The Base64 form length.</value>
+        public static int Base64FormLength => 24; // "pq/Xu7jVnluxLJ28xOws/w=="
+        /// <summary>
+        /// Gets the hexadecimal form length.
+        /// </summary>
+        /// <value>The hexadecimal form length.</value>
+        public static int HexFormLength => 32;    // "202cb962ac59075b964b07152d234b70"
 
         static Md5()
         {
@@ -225,7 +233,7 @@ namespace Htc.Vita.Core.Crypto
                 return false;
             }
 
-            if (checksum.Length == Base64Length)
+            if (checksum.Length == Base64FormLength)
             {
                 return ValidateInBase64(
                         file,
@@ -233,7 +241,7 @@ namespace Htc.Vita.Core.Crypto
                         cancellationToken
                 );
             }
-            if (checksum.Length == HexLength)
+            if (checksum.Length == HexFormLength)
             {
                 return ValidateInHex(
                         file,
@@ -259,7 +267,7 @@ namespace Htc.Vita.Core.Crypto
                 return false;
             }
 
-            if (checksum.Length == HexLength)
+            if (checksum.Length == HexFormLength)
             {
                 return ValidateInHex(
                         content,

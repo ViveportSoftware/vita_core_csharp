@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
-#pragma warning disable 618
+#pragma warning disable CS0618
     public class UriSchemeManagerTest
     {
         private readonly ITestOutputHelper _output;
@@ -97,5 +97,5 @@ namespace Htc.Vita.Core.Tests
             Assert.False(uriSchemeManager.IsSystemUriSchemeValid(systemUriScheme));
         }
     }
-#pragma warning restore 618
+#pragma warning restore CS0618
 }

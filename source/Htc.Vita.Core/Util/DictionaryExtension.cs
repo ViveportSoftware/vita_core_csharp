@@ -60,11 +60,11 @@ namespace Htc.Vita.Core.Util
 
                 if (!isFirst)
                 {
-                    stringBuilder.Append("&");
+                    stringBuilder.Append('&');
                 }
 
                 stringBuilder.Append(WebUtility.UrlEncode(key))
-                        .Append("=")
+                        .Append('=')
                         .Append(WebUtility.UrlEncode(param));
                 isFirst = false;
             }

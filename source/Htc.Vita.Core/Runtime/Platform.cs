@@ -371,8 +371,8 @@ namespace Htc.Vita.Core.Runtime
 
         private static string GetMachineGuidFromRegistry()
         {
-            return Registry.GetStringValue(
-                    Registry.Hive.LocalMachine,
+            return Win32Registry.GetStringValue(
+                    Win32Registry.Hive.LocalMachine,
                     "SOFTWARE\\Microsoft\\Cryptography",
                     "MachineGuid",
                     ""

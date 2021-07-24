@@ -18,6 +18,12 @@ namespace Htc.Vita.Core.Util
         public string Description { get; set; }
 
         /// <summary>
+        /// Gets or sets the file.
+        /// </summary>
+        /// <value>The file.</value>
+        public string File { get; set; }
+
+        /// <summary>
         /// Gets the link.
         /// </summary>
         /// <value>The link.</value>

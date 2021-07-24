@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics;
+using System.IO;
+using Htc.Vita.Core.Diagnostics;
 using Htc.Vita.Core.IO;
 using Htc.Vita.Core.Net;
 using Htc.Vita.Core.Runtime;
@@ -8,6 +10,8 @@ namespace Htc.Vita.Core.TestProgram
 {
     internal static class Program
     {
+        private const int MaxPath = 260 - 1;
+
         private static void Main()
         {
             /*
@@ -59,6 +63,91 @@ namespace Htc.Vita.Core.TestProgram
 
             Console.WriteLine($"SecurityProtocolManager.GetAvailableProtocol(): {SecurityProtocolManager.GetAvailableProtocol()}");
             Console.ReadKey();
+
+            var windowsStoreAppManager = WindowsStoreAppManager.GetInstance();
+            Console.WriteLine($"windowsStoreAppManager.IsIdentityAvailableWithCurrentProcess(): {windowsStoreAppManager.IsIdentityAvailableWithCurrentProcess()}");
+            const string packageFamilyName = "Microsoft.SkypeApp_kzf8qxf38zg5c";
+            var getAppPackageResult = windowsStoreAppManager.GetAppPackageByFamilyName(packageFamilyName);
+            var getAppPackageStatus = getAppPackageResult.Status;
+            if (getAppPackageStatus != WindowsStoreAppManager.GetAppPackageStatus.Ok)
+            {
+                Console.WriteLine($"Can not get app package. status: {getAppPackageStatus}");
+            }
+            else
+            {
+                var appPackageInfo = getAppPackageResult.AppPackage;
+                Console.WriteLine($"appPackageInfo.FamilyName: {appPackageInfo.FamilyName}");
+                var fullNameIndex = 0;
+                var fullNameList = appPackageInfo.FullNameList;
+                foreach (var fullName in fullNameList)
+                {
+                    Console.WriteLine($"appPackageInfo.FullNameList[{fullNameIndex}]: {fullName}");
+                    fullNameIndex++;
+                }
+            }
+            Console.ReadKey();
+
+            var fileSystemManagerV2 = FileSystemManagerV2.GetInstance();
+            var path = new DirectoryInfo("C:\\");
+            var depth = MaxPath;
+            var verifyPathDepthResult = fileSystemManagerV2.VerifyPathDepth(path, depth);
+            var verifyPathDepthStatus = verifyPathDepthResult.Status;
+            Console.WriteLine($"Path: {path}, depth: [{depth}/{path.ToString().Length + depth}], verifyPathDepthStatus: {verifyPathDepthStatus}");
+
+            depth = MaxPath - 10;
+            verifyPathDepthResult = fileSystemManagerV2.VerifyPathDepth(path, depth);
+            verifyPathDepthStatus = verifyPathDepthResult.Status;
+            Console.WriteLine($"Path: {path}, depth: [{depth}/{path.ToString().Length + depth}], verifyPathDepthStatus: {verifyPathDepthStatus}");
+
+            var tempPathString = Environment.GetEnvironmentVariable("Temp") ?? string.Empty;
+            path = new DirectoryInfo(tempPathString);
+            depth = MaxPath + 3000;
+            verifyPathDepthResult = fileSystemManagerV2.VerifyPathDepth(path, depth);
+            verifyPathDepthStatus = verifyPathDepthResult.Status;
+            Console.WriteLine($"Path: {path}, depth: [{depth}/{path.ToString().Length + 1 + depth}], verifyPathDepthStatus: {verifyPathDepthStatus}");
+
+            depth = MaxPath - tempPathString.Length - 1;
+            while (true)
+            {
+                verifyPathDepthResult = fileSystemManagerV2.VerifyPathDepth(path, depth);
+                verifyPathDepthStatus = verifyPathDepthResult.Status;
+                if (verifyPathDepthStatus == FileSystemManagerV2.VerifyPathDepthStatus.Ok || depth < 2)
+                {
+                    Console.WriteLine($"Path: {path}, depth: [{depth}/{path.ToString().Length + 1 + depth}], verifyPathDepthStatus: {verifyPathDepthStatus}");
+                    break;
+                }
+                depth--;
+            }
+
+            var webBrowserManager = WebBrowserManager.GetInstance();
+            var getInstalledWebBrowserListResult = webBrowserManager.GetInstalledWebBrowserList();
+            var getInstalledWebBrowserListStatus = getInstalledWebBrowserListResult.Status;
+            if (getInstalledWebBrowserListStatus != WebBrowserManager.GetInstalledWebBrowserListStatus.Ok)
+            {
+                Console.WriteLine($"Can not get installed web browser list. Status: {getInstalledWebBrowserListStatus}");
+            }
+            else
+            {
+                var webBrowserList = getInstalledWebBrowserListResult.WebBrowserList;
+                var webBrowserIndex = 0;
+                foreach (var webBrowserInfo in webBrowserList)
+                {
+                    Console.WriteLine($"webBrowserInfo[{webBrowserIndex}].Type: {webBrowserInfo.Type}");
+                    Console.WriteLine($"webBrowserInfo[{webBrowserIndex}].DisplayName: {webBrowserInfo.DisplayName}");
+                    Console.WriteLine($"webBrowserInfo[{webBrowserIndex}].LaunchPath: {webBrowserInfo.LaunchPath}");
+                    Console.WriteLine($"webBrowserInfo[{webBrowserIndex}].SupportedScheme: {webBrowserInfo.SupportedScheme}");
+                    webBrowserIndex++;
+                }
+            }
+            Console.ReadKey();
+
+            var windowsSystemManager = WindowsSystemManager.GetInstance();
+            var checkResult = windowsSystemManager.Check();
+            Console.WriteLine($"checkResult.ProductName: {checkResult.ProductName}");
+            Console.WriteLine($"checkResult.ProductType: {checkResult.ProductType}");
+            Console.WriteLine($"checkResult.ProductVersion: {checkResult.ProductVersion}");
+            Console.WriteLine($"checkResult.FipsStatus: {checkResult.FipsStatus}");
+            Console.WriteLine($"checkResult.SecureBootStatus: {checkResult.SecureBootStatus}");
 
             var jobIdList = FileTransfer.GetInstance().GetJobIdList();
             if (jobIdList.Count > 0)

@@ -20,6 +20,7 @@ namespace Htc.Vita.Core.Runtime
     /// </summary>
     public class NamedPipeIpcChannel
     {
+#pragma warning disable CA1416
         /// <summary>
         /// Class Client.
         /// Implements the <see cref="IpcChannel.Client" />
@@ -254,7 +255,7 @@ namespace Htc.Vita.Core.Runtime
                     throw new ArgumentOutOfRangeException(nameof(maxNumberOfServerInstances), "requested server instance should between 1 to 254");
                 }
 
-                var fullPath = Path.GetFullPath("\\\\.\\pipe\\" + pipeName);
+                var fullPath = Path.GetFullPath($"\\\\.\\pipe\\{pipeName}");
                 var pipeOpenMode = ConvertPipeOpenModeFrom(
                         direction,
                         options,
@@ -611,5 +612,6 @@ namespace Htc.Vita.Core.Runtime
 
             return FilePropertiesInfo.GetPropertiesInfo(new FileInfo(processPath));
         }
+#pragma warning restore CA1416
     }
 }

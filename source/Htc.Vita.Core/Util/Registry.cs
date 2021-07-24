@@ -1,6 +1,5 @@
 using System;
 using Htc.Vita.Core.Log;
-using Microsoft.Win32;
 
 namespace Htc.Vita.Core.Util
 {
@@ -36,9 +35,9 @@ namespace Htc.Vita.Core.Util
             }
             try
             {
-                using (var baseKey = RegistryKey.OpenBaseKey((RegistryHive)root, RegistryView.Registry32))
+                using (var baseKey = Win32Registry.Key.OpenBaseKey((Win32Registry.Hive)root, Win32Registry.View.Registry32))
                 {
-                    using (var subKey = baseKey.OpenSubKey(keyPath, RegistryKeyPermissionCheck.ReadWriteSubTree))
+                    using (var subKey = baseKey.OpenSubKey(keyPath, Win32Registry.KeyPermissionCheck.ReadWriteSubTree))
                     {
                         subKey?.DeleteSubKeyTree(keyName, false);
                         return true;
@@ -67,9 +66,9 @@ namespace Htc.Vita.Core.Util
             }
             try
             {
-                using (var baseKey = RegistryKey.OpenBaseKey((RegistryHive)root, RegistryView.Registry64))
+                using (var baseKey = Win32Registry.Key.OpenBaseKey((Win32Registry.Hive)root, Win32Registry.View.Registry64))
                 {
-                    using (var subKey = baseKey.OpenSubKey(keyPath, RegistryKeyPermissionCheck.ReadWriteSubTree))
+                    using (var subKey = baseKey.OpenSubKey(keyPath, Win32Registry.KeyPermissionCheck.ReadWriteSubTree))
                     {
                         subKey?.DeleteSubKeyTree(keyName, false);
                         return true;
@@ -106,9 +105,9 @@ namespace Htc.Vita.Core.Util
         {
             try
             {
-                using (var baseKey = RegistryKey.OpenBaseKey((RegistryHive)root, RegistryView.Registry32))
+                using (var baseKey = Win32Registry.Key.OpenBaseKey((Win32Registry.Hive)root, Win32Registry.View.Registry32))
                 {
-                    using (var subKey = baseKey.OpenSubKey(keyPath, RegistryKeyPermissionCheck.ReadWriteSubTree))
+                    using (var subKey = baseKey.OpenSubKey(keyPath, Win32Registry.KeyPermissionCheck.ReadWriteSubTree))
                     {
                         subKey?.DeleteValue(valueName, false);
                         return true;
@@ -133,9 +132,9 @@ namespace Htc.Vita.Core.Util
         {
             try
             {
-                using (var baseKey = RegistryKey.OpenBaseKey((RegistryHive)root, RegistryView.Registry64))
+                using (var baseKey = Win32Registry.Key.OpenBaseKey((Win32Registry.Hive)root, Win32Registry.View.Registry64))
                 {
-                    using (var subKey = baseKey.OpenSubKey(keyPath, RegistryKeyPermissionCheck.ReadWriteSubTree))
+                    using (var subKey = baseKey.OpenSubKey(keyPath, Win32Registry.KeyPermissionCheck.ReadWriteSubTree))
                     {
                         subKey?.DeleteValue(valueName, false);
                         return true;
@@ -179,9 +178,9 @@ namespace Htc.Vita.Core.Util
             var result = defaultValue;
             try
             {
-                using (var baseKey = RegistryKey.OpenBaseKey((RegistryHive)root, RegistryView.Registry32))
+                using (var baseKey = Win32Registry.Key.OpenBaseKey((Win32Registry.Hive)root, Win32Registry.View.Registry32))
                 {
-                    using (var subKey = baseKey.OpenSubKey(keyPath, RegistryKeyPermissionCheck.ReadSubTree))
+                    using (var subKey = baseKey.OpenSubKey(keyPath, Win32Registry.KeyPermissionCheck.ReadSubTree))
                     {
                         if (subKey == null)
                         {
@@ -192,7 +191,7 @@ namespace Htc.Vita.Core.Util
                         {
                             return defaultValue;
                         }
-                        if (subKey.GetValueKind(valueName) == RegistryValueKind.DWord)
+                        if (subKey.GetValueKind(valueName) == Win32Registry.ValueKind.DWord)
                         {
                             result = (int)value;
                         }
@@ -237,9 +236,9 @@ namespace Htc.Vita.Core.Util
             var result = defaultValue;
             try
             {
-                using (var baseKey = RegistryKey.OpenBaseKey((RegistryHive)root, RegistryView.Registry64))
+                using (var baseKey = Win32Registry.Key.OpenBaseKey((Win32Registry.Hive)root, Win32Registry.View.Registry64))
                 {
-                    using (var subKey = baseKey.OpenSubKey(keyPath, RegistryKeyPermissionCheck.ReadSubTree))
+                    using (var subKey = baseKey.OpenSubKey(keyPath, Win32Registry.KeyPermissionCheck.ReadSubTree))
                     {
                         if (subKey == null)
                         {
@@ -250,7 +249,7 @@ namespace Htc.Vita.Core.Util
                         {
                             return defaultValue;
                         }
-                        if (subKey.GetValueKind(valueName) == RegistryValueKind.DWord)
+                        if (subKey.GetValueKind(valueName) == Win32Registry.ValueKind.DWord)
                         {
                             result = (int)value;
                         }
@@ -272,6 +271,7 @@ namespace Htc.Vita.Core.Util
         /// <param name="keyPath">The key path.</param>
         /// <param name="valueName">Name of the value.</param>
         /// <returns>System.Int32.</returns>
+        [Obsolete("This method is obsoleted. Use Win32Registry.GetIntValue() instead.")]
         public static int GetIntValue(Hive root, string keyPath, string valueName)
         {
             return GetIntValue(root, keyPath, valueName, 0);
@@ -355,9 +355,9 @@ namespace Htc.Vita.Core.Util
             var result = defaultValue;
             try
             {
-                using (var baseKey = RegistryKey.OpenBaseKey((RegistryHive)root, RegistryView.Registry32))
+                using (var baseKey = Win32Registry.Key.OpenBaseKey((Win32Registry.Hive)root, Win32Registry.View.Registry32))
                 {
-                    using (var subKey = baseKey.OpenSubKey(keyPath, RegistryKeyPermissionCheck.ReadSubTree))
+                    using (var subKey = baseKey.OpenSubKey(keyPath, Win32Registry.KeyPermissionCheck.ReadSubTree))
                     {
                         if (subKey == null)
                         {
@@ -368,7 +368,7 @@ namespace Htc.Vita.Core.Util
                         {
                             return defaultValue;
                         }
-                        if (subKey.GetValueKind(valueName) == RegistryValueKind.String)
+                        if (subKey.GetValueKind(valueName) == Win32Registry.ValueKind.String)
                         {
                             result = (string) value;
                         }
@@ -412,9 +412,9 @@ namespace Htc.Vita.Core.Util
             var result = defaultValue;
             try
             {
-                using (var baseKey = RegistryKey.OpenBaseKey((RegistryHive)root, RegistryView.Registry64))
+                using (var baseKey = Win32Registry.Key.OpenBaseKey((Win32Registry.Hive)root, Win32Registry.View.Registry64))
                 {
-                    using (var subKey = baseKey.OpenSubKey(keyPath, RegistryKeyPermissionCheck.ReadSubTree))
+                    using (var subKey = baseKey.OpenSubKey(keyPath, Win32Registry.KeyPermissionCheck.ReadSubTree))
                     {
                         if (subKey == null)
                         {
@@ -425,7 +425,7 @@ namespace Htc.Vita.Core.Util
                         {
                             return defaultValue;
                         }
-                        if (subKey.GetValueKind(valueName) == RegistryValueKind.String)
+                        if (subKey.GetValueKind(valueName) == Win32Registry.ValueKind.String)
                         {
                             result = (string)value;
                         }
@@ -452,13 +452,13 @@ namespace Htc.Vita.Core.Util
             var result = false;
             try
             {
-                using (var baseKey = RegistryKey.OpenBaseKey((RegistryHive)root, RegistryView.Default))
+                using (var baseKey = Win32Registry.Key.OpenBaseKey((Win32Registry.Hive)root, Win32Registry.View.Default))
                 {
                     using (var key = baseKey.CreateSubKey(keyPath))
                     {
                         if (key != null)
                         {
-                            key.SetValue(valueName, valueData, RegistryValueKind.String);
+                            key.SetValue(valueName, valueData, Win32Registry.ValueKind.String);
                             result = true;
                         }
                     }
@@ -484,13 +484,13 @@ namespace Htc.Vita.Core.Util
             var result = false;
             try
             {
-                using (var baseKey = RegistryKey.OpenBaseKey((RegistryHive)root, RegistryView.Default))
+                using (var baseKey = Win32Registry.Key.OpenBaseKey((Win32Registry.Hive)root, Win32Registry.View.Default))
                 {
                     using (var key = baseKey.CreateSubKey(keyPath))
                     {
                         if (key != null)
                         {
-                            key.SetValue(valueName, valueData, RegistryValueKind.DWord);
+                            key.SetValue(valueName, valueData, Win32Registry.ValueKind.DWord);
                             result = true;
                         }
                     }
@@ -511,31 +511,31 @@ namespace Htc.Vita.Core.Util
             /// <summary>
             /// HKEY_CLASSES_ROOT
             /// </summary>
-            ClassesRoot = RegistryHive.ClassesRoot,
+            ClassesRoot = Win32Registry.Hive.ClassesRoot,
             /// <summary>
             /// HKEY_CURRENT_USER
             /// </summary>
-            CurrentUser = RegistryHive.CurrentUser,
+            CurrentUser = Win32Registry.Hive.CurrentUser,
             /// <summary>
             /// HKEY_LOCAL_MACHINE
             /// </summary>
-            LocalMachine = RegistryHive.LocalMachine,
+            LocalMachine = Win32Registry.Hive.LocalMachine,
             /// <summary>
             /// HKEY_USERS
             /// </summary>
-            Users = RegistryHive.Users,
+            Users = Win32Registry.Hive.Users,
             /// <summary>
             /// HKEY_PERFORMANCE_DATA
             /// </summary>
-            PerformanceData = RegistryHive.PerformanceData,
+            PerformanceData = Win32Registry.Hive.PerformanceData,
             /// <summary>
             /// HKEY_CURRENT_CONFIG
             /// </summary>
-            CurrentConfig = RegistryHive.CurrentConfig,
+            CurrentConfig = Win32Registry.Hive.CurrentConfig,
             /// <summary>
             /// HKEY_DYN_DATA
             /// </summary>
-            DynData = -2147483642 /* RegistryHive.DynData */
+            DynData = -2147483642 /* Win32Registry.Hive.DynData */
         }
     }
 }

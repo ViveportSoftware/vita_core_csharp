@@ -1,10 +1,13 @@
 using Htc.Vita.Core.Config;
+using Htc.Vita.Core.Log;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
     public static class ConfigTest
     {
+        private static bool IsPredefinedGlobalDataReady => false;
+
         [Fact]
         public static void Default_0_GetInstance()
         {
@@ -254,9 +257,15 @@ namespace Htc.Vita.Core.Tests
             Assert.NotNull(config);
         }
 
-        [Fact(Skip = "PredefinedGlobalDataNeeded")]
+        [Fact]
         public static void Registry_1_Get()
         {
+            if (!IsPredefinedGlobalDataReady)
+            {
+                Logger.GetInstance(typeof(ConfigTest)).Warn("This API should be invoked with predefined global data");
+                return;
+            }
+
             var config = Core.Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
             var value = config.Get("intKey");
@@ -272,9 +281,15 @@ namespace Htc.Vita.Core.Tests
             Assert.Equal("2", value);
         }
 
-        [Fact(Skip = "PredefinedGlobalDataNeeded")]
+        [Fact]
         public static void Registry_2_GetBool()
         {
+            if (!IsPredefinedGlobalDataReady)
+            {
+                Logger.GetInstance(typeof(ConfigTest)).Warn("This API should be invoked with predefined global data");
+                return;
+            }
+
             var config = Core.Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
             var value = config.Get("boolKey");
@@ -296,9 +311,15 @@ namespace Htc.Vita.Core.Tests
             Assert.True(value3);
         }
 
-        [Fact(Skip = "PredefinedGlobalDataNeeded")]
+        [Fact]
         public static void Registry_3_GetDouble()
         {
+            if (!IsPredefinedGlobalDataReady)
+            {
+                Logger.GetInstance(typeof(ConfigTest)).Warn("This API should be invoked with predefined global data");
+                return;
+            }
+
             var config = Core.Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
             var value = config.Get("doubleKey");
@@ -320,9 +341,15 @@ namespace Htc.Vita.Core.Tests
             Assert.Equal(13.3D, value3);
         }
 
-        [Fact(Skip = "PredefinedGlobalDataNeeded")]
+        [Fact]
         public static void Registry_4_GetInt()
         {
+            if (!IsPredefinedGlobalDataReady)
+            {
+                Logger.GetInstance(typeof(ConfigTest)).Warn("This API should be invoked with predefined global data");
+                return;
+            }
+
             var config = Core.Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
             var value = config.Get("intKey");
@@ -344,9 +371,15 @@ namespace Htc.Vita.Core.Tests
             Assert.Equal(10, value3);
         }
 
-        [Fact(Skip = "PredefinedGlobalDataNeeded")]
+        [Fact]
         public static void Registry_5_GetLong()
         {
+            if (!IsPredefinedGlobalDataReady)
+            {
+                Logger.GetInstance(typeof(ConfigTest)).Warn("This API should be invoked with predefined global data");
+                return;
+            }
+
             var config = Core.Config.Config.GetInstance<RegistryConfig>();
             Assert.NotNull(config);
             var value = config.Get("longKey");

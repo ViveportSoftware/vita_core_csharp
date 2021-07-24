@@ -766,7 +766,7 @@ namespace Htc.Vita.Core.Interop
             HResult GetPath(
                     /* __RPC__out_ecount_full_string LPWSTR            */ [Out][MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszFile,
                     /*                               int               */ [In] int cch,
-                    /* __RPC__inout_opt              WIN32_FIND_DATAW* */ [Out] Win32FindDataW pfd,
+                    /* __RPC__inout_opt              WIN32_FIND_DATAW* */ [Out] Win32FindData pfd,
                     /*                               DWORD             */ [In] uint fFlags
             );
 

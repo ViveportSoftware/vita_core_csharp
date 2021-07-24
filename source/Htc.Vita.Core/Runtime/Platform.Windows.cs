@@ -90,8 +90,8 @@ namespace Htc.Vita.Core.Runtime
             internal static string GetFrameworkNameInPlatform()
             {
                 const string path = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\";
-                var release = Registry.GetIntValue(
-                        Registry.Hive.LocalMachine,
+                var release = Win32Registry.GetIntValue(
+                        Win32Registry.Hive.LocalMachine,
                         path,
                         "Release"
                 );

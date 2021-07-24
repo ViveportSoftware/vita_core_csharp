@@ -2,12 +2,21 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Htc.Vita.Core.Crypto;
 
 namespace Htc.Vita.Core.IO
 {
     public static partial class FileVerifier
     {
+        /// <summary>
+        /// Verifies the specified file information asynchronously.
+        /// </summary>
+        /// <param name="fileInfo">The file information.</param>
+        /// <param name="size">The size.</param>
+        /// <param name="checksum">The checksum.</param>
+        /// <param name="checksumType">The checksum type.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>A Task&lt;System.Boolean&gt; representing the asynchronous operation.</returns>
+        /// <exception cref="NotSupportedException">Not supported! path: {fileInfo.FullName} size: {size} checksum: {checksum} checksumType: {checksumType}</exception>
         public static async Task<bool> VerifyAsync(
                 FileInfo fileInfo,
                 long size,
@@ -21,46 +30,25 @@ namespace Htc.Vita.Core.IO
             {
                 case ChecksumType.Md5:
 
-                    if (checksum.Length == 32)
+                    if (checksum.Length == 32 || checksum.Length == 24)
                     {
-                        return checksum == await Md5.GetInstance()
-                                   .GenerateInHexAsync(fileInfo, cancellationToken).ConfigureAwait(false);
-                    }
-
-                    if (checksum.Length == 24)
-                    {
-                        return checksum == await Md5.GetInstance()
-                                   .GenerateInBase64Async(fileInfo, cancellationToken).ConfigureAwait(false);
+                        return await FileVerifierV2.GetInstance().VerifyIntegrityAsync(fileInfo, checksum, FileVerifierV2.ChecksumType.Md5, cancellationToken);
                     }
 
                     break;
                 case ChecksumType.Sha1:
 
-                    if (checksum.Length == 40)
+                    if (checksum.Length == 40 || checksum.Length == 28)
                     {
-                        return checksum == await Sha1.GetInstance()
-                                   .GenerateInHexAsync(fileInfo, cancellationToken).ConfigureAwait(false);
-                    }
-
-                    if (checksum.Length == 28)
-                    {
-                        return checksum == await Sha1.GetInstance()
-                                   .GenerateInBase64Async(fileInfo, cancellationToken).ConfigureAwait(false);
+                        return await FileVerifierV2.GetInstance().VerifyIntegrityAsync(fileInfo, checksum, FileVerifierV2.ChecksumType.Sha1, cancellationToken);
                     }
 
                     break;
                 case ChecksumType.Sha256:
 
-                    if (checksum.Length == 64)
+                    if (checksum.Length == 64 || checksum.Length == 44)
                     {
-                        return checksum == await Sha256.GetInstance()
-                                   .GenerateInHexAsync(fileInfo, cancellationToken).ConfigureAwait(false);
-                    }
-
-                    if (checksum.Length == 44)
-                    {
-                        return checksum == await Sha256.GetInstance()
-                                   .GenerateInBase64Async(fileInfo, cancellationToken).ConfigureAwait(false);
+                        return await FileVerifierV2.GetInstance().VerifyIntegrityAsync(fileInfo, checksum, FileVerifierV2.ChecksumType.Sha256, cancellationToken);
                     }
 
                     break;

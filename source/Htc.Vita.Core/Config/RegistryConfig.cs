@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Htc.Vita.Core.Log;
-using Microsoft.Win32;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Config
 {
@@ -24,23 +24,23 @@ namespace Htc.Vita.Core.Config
             _map = new Dictionary<string, string>();
             _map = AppendByStringValue(
                     _map,
-                    RegistryHive.LocalMachine,
+                    Win32Registry.Hive.LocalMachine,
                     KeyPath,
-                    RegistryView.Registry32
+                    Win32Registry.View.Registry32
             );
             _map = AppendByStringValue(
                     _map,
-                    RegistryHive.LocalMachine,
+                    Win32Registry.Hive.LocalMachine,
                     KeyPath,
-                    RegistryView.Registry64
+                    Win32Registry.View.Registry64
             );
         }
 
         private static Dictionary<string, string> AppendByStringValue(
                 Dictionary<string, string> properties,
-                RegistryHive root,
+                Win32Registry.Hive root,
                 string keyPath,
-                RegistryView view)
+                Win32Registry.View view)
         {
             if (properties == null || string.IsNullOrEmpty(keyPath))
             {
@@ -48,19 +48,19 @@ namespace Htc.Vita.Core.Config
             }
             try
             {
-                using (var baseKey = RegistryKey.OpenBaseKey(
+                using (var baseKey = Win32Registry.Key.OpenBaseKey(
                         root,
                         view))
                 {
                     using (var subKey = baseKey.OpenSubKey(
                             keyPath,
-                            RegistryKeyPermissionCheck.ReadSubTree))
+                            Win32Registry.KeyPermissionCheck.ReadSubTree))
                     {
                         if (subKey != null)
                         {
                             foreach (var valueName in subKey.GetValueNames())
                             {
-                                if (subKey.GetValueKind(valueName) == RegistryValueKind.String)
+                                if (subKey.GetValueKind(valueName) == Win32Registry.ValueKind.String)
                                 {
                                     properties.Add(
                                             valueName,

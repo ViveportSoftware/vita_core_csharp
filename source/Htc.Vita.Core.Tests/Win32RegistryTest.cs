@@ -1,5 +1,7 @@
 using System;
+using System.Diagnostics;
 using System.Security;
+using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Runtime;
 using Htc.Vita.Core.Util;
 using Xunit;
@@ -15,6 +17,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
+
             Assert.NotNull(Win32Registry.GetStringValue32(Win32Registry.Hive.ClassesRoot, ".bat", null));
             Assert.NotNull(Win32Registry.GetStringValue32(Win32Registry.Hive.ClassesRoot, "CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
             Assert.Null(Win32Registry.GetStringValue32(Win32Registry.Hive.ClassesRoot, "textfile\\shell\\open", null));
@@ -28,6 +31,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
+
             Assert.NotNull(Win32Registry.GetStringValue32(Win32Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}", null));
             Assert.NotNull(Win32Registry.GetStringValue32(Win32Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
             Assert.Null(Win32Registry.GetStringValue32(Win32Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
@@ -40,6 +44,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
+
             Assert.NotNull(Win32Registry.GetStringValue64(Win32Registry.Hive.ClassesRoot, ".bat", null));
             Assert.NotNull(Win32Registry.GetStringValue64(Win32Registry.Hive.ClassesRoot, "CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
             Assert.Null(Win32Registry.GetStringValue64(Win32Registry.Hive.ClassesRoot, "textfile\\shell\\open", null));
@@ -53,6 +58,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
+
             Assert.NotNull(Win32Registry.GetStringValue64(Win32Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}", null));
             Assert.NotNull(Win32Registry.GetStringValue64(Win32Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
             Assert.Null(Win32Registry.GetStringValue64(Win32Registry.Hive.LocalMachine, "SOFTWARE\\Classes", null));
@@ -66,6 +72,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
+
             Assert.NotNull(Win32Registry.GetStringValue(Win32Registry.Hive.ClassesRoot, ".bat", null));
             Assert.NotNull(Win32Registry.GetStringValue(Win32Registry.Hive.ClassesRoot, "CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
             Assert.Null(Win32Registry.GetStringValue(Win32Registry.Hive.ClassesRoot, "textfile\\shell\\open", null));
@@ -79,6 +86,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
+
             Assert.NotNull(Win32Registry.GetStringValue(Win32Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}", null));
             Assert.NotNull(Win32Registry.GetStringValue(Win32Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel"));
             Assert.Null(Win32Registry.GetStringValue(Win32Registry.Hive.LocalMachine, "SOFTWARE\\Classes\\CLSID\\{0000002F-0000-0000-C000-000000000046}\\InprocServer32", "ThreadingModel2"));
@@ -87,15 +95,30 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_1_SetStringValue_UnderHKCU()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+
             var valueName = Guid.NewGuid().ToString();
             var valueData = valueName;
             Win32Registry.SetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test", valueName, valueData);
             Assert.Equal(valueData, Win32Registry.GetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test", valueName));
         }
 
-        [Fact(Skip = "AdministratorPermissionNeeded")]
+        [Fact]
         public static void Default_1_SetStringValue_UnderHKLM()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+            if (!ProcessManager.IsElevatedProcess(Process.GetCurrentProcess()))
+            {
+                Logger.GetInstance(typeof(Win32RegistryTest)).Warn("This API should be invoked by elevated user process");
+                return;
+            }
+
             var valueName = Guid.NewGuid().ToString();
             var valueData = valueName;
             Win32Registry.SetStringValue(Win32Registry.Hive.LocalMachine, "SOFTWARE\\HTC\\Test", valueName, valueData);
@@ -105,6 +128,11 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_2_DeleteValue32_UnderHKCU()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+
             var valueName = "ffcc27a9-c3bb-463a-8716-3e2e5f2b85a1";
             var valueData = valueName;
             Win32Registry.SetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test", valueName, valueData);
@@ -115,6 +143,11 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_2_DeleteValue64_UnderHKCU()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+
             var valueName = "083c3747-6834-4ee7-b9af-e66eb9925c2a";
             var valueData = valueName;
             Win32Registry.SetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test", valueName, valueData);
@@ -125,6 +158,11 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_2_DeleteValue_UnderHKCU()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+
             var valueName = "2f937f96-aecd-477d-a204-d9ff67bdd8ba";
             var valueData = valueName;
             Win32Registry.SetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test", valueName, valueData);
@@ -135,33 +173,48 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_3_DeleteKey32_UnderHKCU()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+
             var keyName = "0a9d53eb-36bb-4859-80d0-0816d47580af";
             var valueName = "valueName";
             var valueData = "valueData";
-            Win32Registry.SetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test\\" + keyName, valueName, valueData);
-            Assert.Equal(valueData, Win32Registry.GetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test\\" + keyName, valueName));
+            Win32Registry.SetStringValue(Win32Registry.Hive.CurrentUser, $"SOFTWARE\\HTC\\Test\\{keyName}", valueName, valueData);
+            Assert.Equal(valueData, Win32Registry.GetStringValue(Win32Registry.Hive.CurrentUser, $"SOFTWARE\\HTC\\Test\\{keyName}", valueName));
             Assert.True(Win32Registry.DeleteKey32(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test", keyName));
         }
 
         [Fact]
         public static void Default_3_DeleteKey64_UnderHKCU()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+
             var keyName = "20a3c3e3-9feb-4bd8-b451-1e357a6f9d98";
             var valueName = "valueName";
             var valueData = "valueData";
-            Win32Registry.SetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test\\" + keyName, valueName, valueData);
-            Assert.Equal(valueData, Win32Registry.GetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test\\" + keyName, valueName));
+            Win32Registry.SetStringValue(Win32Registry.Hive.CurrentUser, $"SOFTWARE\\HTC\\Test\\{keyName}", valueName, valueData);
+            Assert.Equal(valueData, Win32Registry.GetStringValue(Win32Registry.Hive.CurrentUser, $"SOFTWARE\\HTC\\Test\\{keyName}", valueName));
             Assert.True(Win32Registry.DeleteKey64(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test", keyName));
         }
 
         [Fact]
         public static void Default_3_DeleteKey_UnderHKCU()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+
             var keyName = "7a8dd5f9-9347-40b6-8511-3220af3cd429";
             var valueName = "valueName";
             var valueData = "valueData";
-            Win32Registry.SetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test\\" + keyName, valueName, valueData);
-            Assert.Equal(valueData, Win32Registry.GetStringValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test\\" + keyName, valueName));
+            Win32Registry.SetStringValue(Win32Registry.Hive.CurrentUser, $"SOFTWARE\\HTC\\Test\\{keyName}", valueName, valueData);
+            Assert.Equal(valueData, Win32Registry.GetStringValue(Win32Registry.Hive.CurrentUser, $"SOFTWARE\\HTC\\Test\\{keyName}", valueName));
             Assert.True(Win32Registry.DeleteKey(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test", keyName));
         }
 
@@ -172,6 +225,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
+
             Assert.True(Win32Registry.GetDwordValue32(Win32Registry.Hive.ClassesRoot, "telnet", "EditFlags") != 0);
             Assert.True(Win32Registry.GetDwordValue32(Win32Registry.Hive.ClassesRoot, "telnet", "EditFlags1") == 0);
         }
@@ -183,6 +237,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
+
             Assert.True(Win32Registry.GetDwordValue64(Win32Registry.Hive.ClassesRoot, "telnet", "EditFlags") != 0);
             Assert.True(Win32Registry.GetDwordValue64(Win32Registry.Hive.ClassesRoot, "telnet", "EditFlags1") == 0);
         }
@@ -194,6 +249,7 @@ namespace Htc.Vita.Core.Tests
             {
                 return;
             }
+
             Assert.True(Win32Registry.GetIntValue(Win32Registry.Hive.ClassesRoot, "telnet", "EditFlags") != 0);
             Assert.True(Win32Registry.GetIntValue(Win32Registry.Hive.ClassesRoot, "telnet", "EditFlags1") == 0);
         }
@@ -201,6 +257,11 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_5_SetDwordValue_UnderHKCU()
         {
+            if (!Platform.IsWindows)
+            {
+                return;
+            }
+
             var valueData = Guid.NewGuid().GetHashCode();
             var valueName = "" + valueData;
             Win32Registry.SetDwordValue(Win32Registry.Hive.CurrentUser, "SOFTWARE\\HTC\\Test", valueName, valueData);
@@ -390,11 +451,16 @@ namespace Htc.Vita.Core.Tests
             }
         }
 
-        [Fact(Skip = "Only run as non-admin")]
+        [Fact]
         public static void Key_1_OpenSubKey_WithWritePermission_Hkcr()
         {
             if (!Platform.IsWindows)
             {
+                return;
+            }
+            if (ProcessManager.IsElevatedProcess(Process.GetCurrentProcess()))
+            {
+                Logger.GetInstance(typeof(Win32RegistryTest)).Warn("This API should be invoked by non-elevated user process");
                 return;
             }
 
@@ -431,11 +497,16 @@ namespace Htc.Vita.Core.Tests
             }
         }
 
-        [Fact(Skip = "Only run as non-admin")]
+        [Fact]
         public static void Key_1_OpenSubKey_WithWritePermission_Hkcu()
         {
             if (!Platform.IsWindows)
             {
+                return;
+            }
+            if (ProcessManager.IsElevatedProcess(Process.GetCurrentProcess()))
+            {
+                Logger.GetInstance(typeof(Win32RegistryTest)).Warn("This API should be invoked by non-elevated user process");
                 return;
             }
 
@@ -478,11 +549,16 @@ namespace Htc.Vita.Core.Tests
             }
         }
 
-        [Fact(Skip = "Only run as non-admin")]
+        [Fact]
         public static void Key_1_OpenSubKey_WithWritePermission_Hklm()
         {
             if (!Platform.IsWindows)
             {
+                return;
+            }
+            if (ProcessManager.IsElevatedProcess(Process.GetCurrentProcess()))
+            {
+                Logger.GetInstance(typeof(Win32RegistryTest)).Warn("This API should be invoked by non-elevated user process");
                 return;
             }
 

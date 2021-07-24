@@ -6,7 +6,13 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation",
+                File = Headers.WindowsMinwindef)]
         internal const int /* MAX_PATH */ MaxPath = 260;
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/privilege-constants",
+                File = Headers.WindowsWinnt)]
+        internal const string /* SE_SHUTDOWN_NAME */ SeShutdownName = "SeShutdownPrivilege";
 
         internal static readonly Guid /* GUID_DEVCLASS_USB                    */ DeviceClassUsb = new Guid("{36FC9E60-C465-11CF-8056-444553540000}");
         internal static readonly Guid /* GUID_DEVINTERFACE_HID                */ DeviceInterfaceHid = new Guid("{4D1E55B2-F16F-11CF-88CB-001111000030}");
@@ -23,7 +29,8 @@ namespace Htc.Vita.Core.Interop
         internal static readonly IntPtr /* WTS_CURRENT_SERVER_HANDLE */ WindowsTerminalServiceCurrentServerHandle = IntPtr.Zero;
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ne-bits1_5-bg_auth_scheme",
-                Description = "BG_AUTH_SCHEME enumeration")]
+                Description = "BG_AUTH_SCHEME enumeration",
+                File = Headers.WindowsBits1_5)]
         internal enum BitsAuthScheme
         {
             /* BG_AUTH_SCHEME_BASIC     */ Basic     = 1,
@@ -34,7 +41,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ne-bits1_5-bg_auth_target",
-                Description = "BG_AUTH_TARGET enumeration")]
+                Description = "BG_AUTH_TARGET enumeration",
+                File = Headers.WindowsBits1_5)]
         internal enum BitsAuthTarget
         {
             /* BG_AUTH_TARGET_SERVER */ Server = 1,
@@ -42,7 +50,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_error_context",
-                Description = "BG_ERROR_CONTEXT enumeration")]
+                Description = "BG_ERROR_CONTEXT enumeration",
+                File = Headers.WindowsBits)]
         internal enum BitsErrorContext
         {
             /* BG_ERROR_CONTEXT_NONE                        */ None                      = 0,
@@ -56,7 +65,8 @@ namespace Htc.Vita.Core.Interop
             /* BG_ERROR_CONTEXT_SERVER_CERTIFICATE_CALLBACK */ ServerCertificateCallback = 8
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopymanager-enumjobs")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopymanager-enumjobs",
+                File = Headers.WindowsBits)]
         internal enum BitsJobEnumOwnerScope
         {
             /*                       */ CurrentUser = 0,
@@ -64,7 +74,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_priority",
-                Description = "BG_JOB_PRIORITY enumeration")]
+                Description = "BG_JOB_PRIORITY enumeration",
+                File = Headers.WindowsBits)]
         internal enum BitsJobPriority
         {
             /* BG_JOB_PRIORITY_FOREGROUND */ Foreground = 0,
@@ -74,7 +85,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_proxy_usage",
-                Description = "BG_JOB_PROXY_USAGE enumeration")]
+                Description = "BG_JOB_PROXY_USAGE enumeration",
+                File = Headers.WindowsBits)]
         internal enum BitsJobProxyUsage
         {
             /* BG_JOB_PROXY_USAGE_PRECONFIG  */ Preconfig  = 0,
@@ -84,7 +96,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_state",
-                Description = "BG_JOB_STATE enumeration")]
+                Description = "BG_JOB_STATE enumeration",
+                File = Headers.WindowsBits)]
         internal enum BitsJobState
         {
             /* BG_JOB_STATE_QUEUED          */ Queued         = 0,
@@ -99,7 +112,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ne-bits-bg_job_type",
-                Description = "BG_JOB_TYPE enumeration")]
+                Description = "BG_JOB_TYPE enumeration",
+                File = Headers.WindowsBits)]
         internal enum BitsJobType
         {
             /* BG_JOB_TYPE_DOWNLOAD     */ Download    = 0,
@@ -107,7 +121,8 @@ namespace Htc.Vita.Core.Interop
             /* BG_JOB_TYPE_UPLOAD_REPLY */ UploadReply = 2
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnotifyflags")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnotifyflags",
+                File = Headers.WindowsBits)]
         [Flags]
         internal enum BitsNotifyFlags : uint
         {
@@ -120,6 +135,8 @@ namespace Htc.Vita.Core.Interop
             /* BG_NOTIFY_FILE_RANGES_TRANSFERRED */ FileRangesTransferred = 0x0020
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopymanager-getjob",
+                File = Headers.WindowsBitsmsg)]
         internal enum BitsResult : uint
         {
             /* S_OK                                              */ SOk                                   = HResult.SOk,
@@ -157,7 +174,8 @@ namespace Htc.Vita.Core.Interop
             /* BG_E_TOO_MANY_FILES_IN_JOB                        */ ETooManyFilesInJob                    = 0x80200051
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-certclosestore")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-certclosestore",
+                File = Headers.WindowsWincrypt)]
         internal enum CertCloseStoreFlag
         {
             /*                             */ Default =          0,
@@ -165,10 +183,8 @@ namespace Htc.Vita.Core.Interop
             /* CERT_CLOSE_STORE_CHECK_FLAG */ Check   = 0x00000002
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/privilege-constants")]
-        internal const string SeShutdownName = "SeShutdownPrivilege";
-
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject",
+                File = Headers.WindowsWincrypt)]
         internal enum CertEncoding
         {
             /*                     */ None           =          0,
@@ -180,7 +196,8 @@ namespace Htc.Vita.Core.Interop
                                                      | X509Asn
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptmsggetparam")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptmsggetparam",
+                File = Headers.WindowsWincrypt)]
         internal enum CertMessageParameterType
         {
             /*                                              */ None                          =  0,
@@ -221,7 +238,8 @@ namespace Htc.Vita.Core.Interop
             /* CMSG_CMS_SIGNER_INFO_PARAM                   */ CmsSignerInfo                 = 39
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject",
+                File = Headers.WindowsWincrypt)]
         internal enum CertQueryContent
         {
             /*                                       */ None             =  0,
@@ -240,7 +258,8 @@ namespace Htc.Vita.Core.Interop
             /* CERT_QUERY_CONTENT_CERT_PAIR          */ CertPair         = 13
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject",
+                File = Headers.WindowsWincrypt)]
         [Flags]
         internal enum CertQueryContentFlags : uint
         {
@@ -272,7 +291,8 @@ namespace Htc.Vita.Core.Interop
                                                                               | CertPair
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject",
+                File = Headers.WindowsWincrypt)]
         internal enum CertQueryFormat
         {
             /*                                         */ None               = 0,
@@ -281,7 +301,8 @@ namespace Htc.Vita.Core.Interop
             /* CERT_QUERY_FORMAT_ASN_ASCII_HEX_ENCODED */ AsnAsciiHexEncoded = 3
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject",
+                File = Headers.WindowsWincrypt)]
         internal enum CertQueryFormatFlag : uint
         {
             /* CERT_QUERY_FORMAT_FLAG_BINARY                */ Binary             = 1 << CertQueryFormat.Binary,
@@ -292,7 +313,8 @@ namespace Htc.Vita.Core.Interop
                                                                                   | AsnAsciiHexEncoded
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptqueryobject",
+                File = Headers.WindowsWincrypt)]
         internal enum CertQueryObject
         {
             /*                        */ None = 0,
@@ -300,8 +322,9 @@ namespace Htc.Vita.Core.Interop
             /* CERT_QUERY_OBJECT_BLOB */ Blob = 2
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetclassdevsw",
-                Description = "DIGCF enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/setupapi/nf-setupapi-setupdigetclassdevsw",
+                Description = "DIGCF enumeration",
+                File = Headers.WindowsSetupapi)]
         [Flags]
         internal enum DeviceInfoGetClassFlags : uint
         {
@@ -312,7 +335,8 @@ namespace Htc.Vita.Core.Interop
             /* DIGCF_DEVICEINTERFACE */ DeviceInterface = 0x00000010
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messagebox")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messagebox",
+                File = Headers.WindowsWinuser)]
         internal enum DialogBoxResult
         {
             /*            */ None     =     0,
@@ -331,7 +355,8 @@ namespace Htc.Vita.Core.Interop
             /* IDASYNC    */ Async    = 32001
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-_display_devicew")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-display_devicew",
+                File = Headers.WindowsWingdi)]
         [Flags]
         internal enum DisplayDeviceStateFlags : uint
         {
@@ -352,7 +377,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/direct3ddxgi/dxgi-error",
-                Description = "DXGI_ERROR enumeration")]
+                Description = "DXGI_ERROR enumeration",
+                File = Headers.WindowsWinerror)]
         internal enum DxgiError : uint
         {
             /* S_OK                                     */ SOk                        = HResult.SOk,
@@ -391,7 +417,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/bb173065(v=vs.85)",
-                Description = "DXGI_MODE_ROTATION enumeration")]
+                Description = "DXGI_MODE_ROTATION enumeration",
+                File = Headers.WindowsDxgitype)]
         internal enum DxgiModeRotation
         {
             /* DXGI_MODE_ROTATION_UNSPECIFIED */ Unspecified = 0,
@@ -401,6 +428,8 @@ namespace Htc.Vita.Core.Interop
             /* DXGI_MODE_ROTATION_ROTATE270   */ Rotate270   = 4
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-enumdisplaydevicesw",
+                File = Headers.WindowsWinuser)]
         [Flags]
         internal enum EnumDisplayDeviceFlags : uint
         {
@@ -408,34 +437,38 @@ namespace Htc.Vita.Core.Interop
             /* EDD_GET_DEVICE_INTERFACE_NAME */ GetDeviceInterfaceName = 0x00000001
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499-",
+                File = Headers.WindowsWinerror)]
         internal enum Error
         {
-            /* ERROR_SUCCESS                    (0,   0x0) */ Success               =   0x0,
-            /* ERROR_FILE_NOT_FOUND             (2,   0x2) */ FileNotFound          =   0x2,
-            /* ERROR_ACCESS_DENIED              (5,   0x5) */ AccessDenied          =   0x5,
-            /* ERROR_INVALID_HANDLE             (6,   0x6) */ InvalidHandle         =   0x6,
-            /* ERROR_INVALID_DATA              (13,   0xd) */ InvalidData           =   0xd,
-            /* ERROR_OUTOFMEMORY               (14,   0xe) */ OutOfMemory           =   0xe,
-            /* ERROR_BAD_LENGTH                (24,  0x18) */ BadLength             =  0x18,
-            /* ERROR_GEN_FAILURE               (31,  0x1f) */ GenFailure            =  0x1f,
-            /* ERROR_HANDLE_DISK_FULL          (39,  0x27) */ HandleDiskFull        =  0x27,
-            /* ERROR_NOT_SUPPORTED             (50,  0x32) */ NotSupported          =  0x32,
-            /* ERROR_INVALID_PARAMETER         (87,  0x57) */ InvalidParameter      =  0x57,
-            /* ERROR_DISK_FULL                (112,  0x70) */ DiskFull              =  0x70,
-            /* ERROR_INSUFFICIENT_BUFFER      (122,  0x7a) */ InsufficientBuffer    =  0x7a,
-            /* ERROR_INVALID_NAME             (123,  0x7b) */ InvalidName           =  0x7b,
-            /* ERROR_FILENAME_EXCED_RANGE     (206,  0xce) */ FilenameExceedRange   =  0xce,
-            /* ERROR_MORE_DATA                (234,  0xea) */ MoreData              =  0xea,
-            /* ERROR_NO_MORE_ITEMS            (259, 0x103) */ NoMoreItems           = 0x103,
-            /* ERROR_SERVICE_DOES_NOT_EXIST  (1060, 0x424) */ ServiceDoesNotExist   = 0x424,
-            /* ERROR_DEVICE_NOT_CONNECTED    (1167, 0x48f) */ DeviceNotConnected    = 0x48f,
-            /* ERROR_NOT_FOUND               (1168, 0x490) */ NotFound              = 0x490,
-            /* ERROR_NO_SUCH_LOGON_SESSION   (1312, 0x520) */ NoSuchLogonSession    = 0x520,
-            /* ERROR_BAD_IMPERSONATION_LEVEL (1346, 0x542) */ BadImpersonationLevel = 0x542,
-            /* ERROR_RESOURCE_LANG_NOT_FOUND (1815, 0x717) */ ResourceLangNotFound  = 0x717
+            /* ERROR_SUCCESS                     (0,    0x0) */ Success               =    0x0,
+            /* ERROR_FILE_NOT_FOUND              (2,    0x2) */ FileNotFound          =    0x2,
+            /* ERROR_ACCESS_DENIED               (5,    0x5) */ AccessDenied          =    0x5,
+            /* ERROR_INVALID_HANDLE              (6,    0x6) */ InvalidHandle         =    0x6,
+            /* ERROR_INVALID_DATA               (13,    0xd) */ InvalidData           =    0xd,
+            /* ERROR_OUTOFMEMORY                (14,    0xe) */ OutOfMemory           =    0xe,
+            /* ERROR_BAD_LENGTH                 (24,   0x18) */ BadLength             =   0x18,
+            /* ERROR_GEN_FAILURE                (31,   0x1f) */ GenFailure            =   0x1f,
+            /* ERROR_HANDLE_DISK_FULL           (39,   0x27) */ HandleDiskFull        =   0x27,
+            /* ERROR_NOT_SUPPORTED              (50,   0x32) */ NotSupported          =   0x32,
+            /* ERROR_INVALID_PARAMETER          (87,   0x57) */ InvalidParameter      =   0x57,
+            /* ERROR_DISK_FULL                 (112,   0x70) */ DiskFull              =   0x70,
+            /* ERROR_INSUFFICIENT_BUFFER       (122,   0x7a) */ InsufficientBuffer    =   0x7a,
+            /* ERROR_INVALID_NAME              (123,   0x7b) */ InvalidName           =   0x7b,
+            /* ERROR_FILENAME_EXCED_RANGE      (206,   0xce) */ FilenameExceedRange   =   0xce,
+            /* ERROR_MORE_DATA                 (234,   0xea) */ MoreData              =   0xea,
+            /* ERROR_NO_MORE_ITEMS             (259,  0x103) */ NoMoreItems           =  0x103,
+            /* ERROR_SERVICE_DOES_NOT_EXIST   (1060,  0x424) */ ServiceDoesNotExist   =  0x424,
+            /* ERROR_DEVICE_NOT_CONNECTED     (1167,  0x48f) */ DeviceNotConnected    =  0x48f,
+            /* ERROR_NOT_FOUND                (1168,  0x490) */ NotFound              =  0x490,
+            /* ERROR_NO_SUCH_LOGON_SESSION    (1312,  0x520) */ NoSuchLogonSession    =  0x520,
+            /* ERROR_BAD_IMPERSONATION_LEVEL  (1346,  0x542) */ BadImpersonationLevel =  0x542,
+            /* ERROR_RESOURCE_LANG_NOT_FOUND  (1815,  0x717) */ ResourceLangNotFound  =  0x717,
+            /* APPMODEL_ERROR_NO_PACKAGE     (15700, 0x3d54) */ AppModelNoPackage     = 0x3d54
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-exitwindowsex")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-exitwindowsex",
+                File = Headers.WindowsWinuser)]
         [Flags]
         internal enum ExitTypes : uint
         {
@@ -451,8 +484,9 @@ namespace Htc.Vita.Core.Interop
             /* EWX_BOOTOPTIONS     */ BootOptions    = 0x01000000
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/FileIO/file-attribute-constants",
-                Description = "FILE_ATTRIBUTE_FLAG enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/fileio/file-attribute-constants",
+                Description = "FILE_ATTRIBUTE_FLAG enumeration",
+                File = Headers.WindowsWinnt)]
         [Flags]
         internal enum FileAttributeFlags : uint
         {
@@ -489,8 +523,9 @@ namespace Htc.Vita.Core.Interop
             /* FILE_FLAG_WRITE_THROUGH              */ FlagWriteThrough            = 0x80000000
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-createfilew",
-                Description = "CREATION_DISPOSITION enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew",
+                Description = "CREATION_DISPOSITION enumeration",
+                File = Headers.WindowsFileapi)]
         internal enum FileCreationDisposition : uint
         {
             /* CREATE_NEW        */ CreateNew        = 1,
@@ -500,8 +535,9 @@ namespace Htc.Vita.Core.Interop
             /* TRUNCATE_EXISTING */ TruncateExisting = 5
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-createfilew",
-                Description = "FILE_SHARE enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew",
+                Description = "FILE_SHARE enumeration",
+                File = Headers.WindowsWinnt)]
         [Flags]
         internal enum FileShareModes : uint
         {
@@ -511,8 +547,9 @@ namespace Htc.Vita.Core.Interop
             /* FILE_SHARE_DELETE */ Delete = 0x00000004
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/generic-access-rights",
-                Description = "GENERIC enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/secauthz/generic-access-rights",
+                Description = "GENERIC enumeration",
+                File = Headers.WindowsWinnt)]
         [Flags]
         internal enum GenericAccessRights : uint
         {
@@ -522,7 +559,8 @@ namespace Htc.Vita.Core.Interop
             /* GENERIC_READ    */ Read    = 0x80000000
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/seccrypto/common-hresult-values")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/seccrypto/common-hresult-values",
+                File = Headers.WindowsWinerror)]
         internal enum HResult : uint
         {
             /* S_OK                                              */ SOk                        =        0x0,
@@ -553,7 +591,8 @@ namespace Htc.Vita.Core.Interop
                                                                                                | Error.ResourceLangNotFound
         }
 
-        [ExternalReference("https://docs.microsoft.com/zh-tw/windows/desktop/SysInfo/image-file-machine-constants")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/sysinfo/image-file-machine-constants",
+                File = Headers.WindowsWinnt)]
         internal enum ImageFileMachine : ushort
         {
             /* IMAGE_FILE_MACHINE_UNKNOWN     */ Unknown    =      0,
@@ -590,7 +629,8 @@ namespace Htc.Vita.Core.Interop
             /* IMAGE_FILE_MACHINE_CEE         */ Cee        = 0xc0ee
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createprocesswithtokenw")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createprocesswithtokenw",
+                File = Headers.WindowsWinbase)]
         internal enum LogonFlag : uint
         {
             /*                            */ None               =          0,
@@ -599,7 +639,8 @@ namespace Htc.Vita.Core.Interop
             /* LOGON_ZERO_PASSWORD_BUFFER */ ZeroPasswordBuffer = 0x80000000
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messagebox")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messagebox",
+                File = Headers.WindowsWinuser)]
         internal enum MessageBoxStyle : uint
         {
             /* MB_OK                   */ Ok                  = 0x00000000,
@@ -635,6 +676,10 @@ namespace Htc.Vita.Core.Interop
             /* MB_SERVICE_NOTIFICATION */ ServiceNotification = 0x00200000,
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-erref/596a1078-e883-4972-9bbc-49e60bebca55",
+                File = Headers.WindowsWinnt)]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/hidpi/nf-hidpi-hidp_getvaluecaps",
+                File = Headers.WindowsHidpi)]
         internal enum NtStatus : uint
         {
             /* STATUS_WAIT_0                       */ StatusWait0                    =          0,
@@ -659,7 +704,8 @@ namespace Htc.Vita.Core.Interop
             /* HIDP_STATUS_NOT_IMPLEMENTED         */ HidpStatusNotImplemented       = 0xc0110020
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createnamedpipea")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createnamedpipea",
+                File = Headers.WindowsWinbase)]
         [Flags]
         internal enum PipeModes : uint
         {
@@ -673,7 +719,8 @@ namespace Htc.Vita.Core.Interop
             /* PIPE_REJECT_REMOTE_CLIENTS */ RejectRemoteClients = 0x00000008
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createnamedpipea")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createnamedpipea",
+                File = Headers.WindowsWinbase)]
         [Flags]
         internal enum PipeOpenModes : uint
         {
@@ -691,7 +738,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights",
-                Description = "Process access right enumeration")]
+                Description = "Process access right enumeration",
+                File = Headers.WindowsWinnt)]
         [Flags]
         internal enum ProcessAccessRights : uint
         {
@@ -714,8 +762,9 @@ namespace Htc.Vita.Core.Interop
                                                                              | 0xFFFF
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/ProcThread/process-creation-flags",
-                Description = "Process Creation enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/procthread/process-creation-flags",
+                Description = "Process Creation enumeration",
+                File = Headers.WindowsWinbase)]
         [Flags]
         internal enum ProcessCreationFlags : uint
         {
@@ -753,7 +802,18 @@ namespace Htc.Vita.Core.Interop
             /* CREATE_IGNORE_SYSTEM_DEFAULT     */ CreateIgnoreSystemDefault    = 0x80000000
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/sysinfo/predefined-keys")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-osversioninfoexw",
+                File = Headers.WindowsWinnt)]
+        internal enum ProductType : byte
+        {
+            /*                          */ Unknown          = 0,
+            /* VER_NT_WORKSTATION       */ Workstation      = 1,
+            /* VER_NT_DOMAIN_CONTROLLER */ DomainController = 2,
+            /* VER_NT_SERVER            */ Server           = 3
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/sysinfo/predefined-keys",
+                File = Headers.WindowsWinreg)]
         internal enum RegistryKey
         {
             /* HKEY_CLASSES_ROOT                */ ClassesRoot              = unchecked((int)0x80000000),
@@ -769,7 +829,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-key-security-and-access-rights",
-                Description = "Registry Key Access Right enumeration")]
+                Description = "Registry Key Access Right enumeration",
+                File = Headers.WindowsWinnt)]
         [Flags]
         internal enum RegistryKeyAccessRights : uint
         {
@@ -802,7 +863,8 @@ namespace Htc.Vita.Core.Interop
                                                           & ~StandardAccessRights.Synchronize
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/sysinfo/registry-value-types")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types",
+                File = Headers.WindowsWinnt)]
         internal enum RegistryValueType : uint
         {
             /* REG_NONE                       */ None                     =  0,
@@ -821,8 +883,9 @@ namespace Htc.Vita.Core.Interop
             /* REG_QWORD_LITTLE_ENDIAN        */ QWordLittleEndian        = QWord
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ne-winnt-_security_impersonation_level",
-                Description = "SECURITY_IMPERSONATION_LEVEL enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ne-winnt-security_impersonation_level",
+                Description = "SECURITY_IMPERSONATION_LEVEL enumeration",
+                File = Headers.WindowsWinnt)]
         internal enum SecurityImpersonationLevel : uint
         {
                 /* SecurityAnonymous      */ SecurityAnonymous      = 0,
@@ -831,6 +894,8 @@ namespace Htc.Vita.Core.Interop
                 /* SecurityDelegation     */ SecurityDelegation     = 3
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-token_privileges",
+                File = Headers.WindowsWinnt)]
         [Flags]
         internal enum SePrivileges : uint
         {
@@ -840,8 +905,9 @@ namespace Htc.Vita.Core.Interop
             /* SE_PRIVILEGE_USED_FOR_ACCESS    */ UsedForAccess    = 0x80000000
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-_service_status",
-                Description = "CONTROL_ACCEPTED enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winsvc/ns-winsvc-service_status",
+                Description = "CONTROL_ACCEPTED enumeration",
+                File = Headers.WindowsWinsvc)]
         [Flags]
         internal enum ServiceAcceptedControls : uint
         {
@@ -861,8 +927,9 @@ namespace Htc.Vita.Core.Interop
             /* SERVICE_ACCEPT_SYSTEMLOWRESOURCES    */ SystemLowResources    = 0x00004000
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/Services/service-security-and-access-rights",
-                Description = "SERVICE_ACCESS_RIGHT enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/services/service-security-and-access-rights",
+                Description = "SERVICE_ACCESS_RIGHT enumeration",
+                File = Headers.WindowsWinsvc)]
         [Flags]
         internal enum ServiceAccessRights : uint
         {
@@ -889,7 +956,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winsvc/nf-winsvc-queryserviceconfig2w",
-                Description = "SERVICE_CONFIG enumeration")]
+                Description = "SERVICE_CONFIG enumeration",
+                File = Headers.WindowsWinsvc)]
         internal enum ServiceConfig
         {
             /* SERVICE_CONFIG_DESCRIPTION              */ Description            =  1,
@@ -904,8 +972,9 @@ namespace Htc.Vita.Core.Interop
             /* SERVICE_CONFIG_LAUNCH_PROTECTED         */ LaunchProtected        = 12
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/Services/service-security-and-access-rights",
-                Description = "SC_MANAGER_ACCESS_RIGHT enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/services/service-security-and-access-rights",
+                Description = "SC_MANAGER_ACCESS_RIGHT enumeration",
+                File = Headers.WindowsWinsvc)]
         [Flags]
         internal enum ServiceControlManagerAccessRights : uint
         {
@@ -925,8 +994,9 @@ namespace Htc.Vita.Core.Interop
                                                                        | ModifyBootConfig
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-_service_status",
-                Description = "CURRENT_STATE enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winsvc/ns-winsvc-service_status",
+                Description = "CURRENT_STATE enumeration",
+                File = Headers.WindowsWinsvc)]
         internal enum ServiceCurrentState : uint
         {
             /* SERVICE_STOPPED          */ Stopped         = 0x00000001,
@@ -938,8 +1008,9 @@ namespace Htc.Vita.Core.Interop
             /* SERVICE_PAUSED           */ Paused          = 0x00000007
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-changeserviceconfigw",
-                Description = "ERROR_CONTROL_TYPE enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winsvc/nf-winsvc-changeserviceconfigw",
+                Description = "ERROR_CONTROL_TYPE enumeration",
+                File = Headers.WindowsWinnt)]
         internal enum ServiceErrorControl : uint
         {
             /* SERVICE_ERROR_IGNORE   */ Ignore   = 0x00000000,
@@ -949,8 +1020,9 @@ namespace Htc.Vita.Core.Interop
             /* SERVICE_NO_CHANGE      */ NoChange = 0xffffffff
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-changeserviceconfigw",
-                Description = "START_TYPE enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winsvc/nf-winsvc-changeserviceconfigw",
+                Description = "START_TYPE enumeration",
+                File = Headers.WindowsWinnt)]
         internal enum ServiceStartType : uint
         {
             /* SERVICE_BOOT_START   */ BootStart   = 0x00000000,
@@ -961,8 +1033,9 @@ namespace Htc.Vita.Core.Interop
             /* SERVICE_NO_CHANGE    */ NoChange    = 0xffffffff
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-_service_status",
-                Description = "SERVICE_TYPE enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winsvc/ns-winsvc-service_status",
+                Description = "SERVICE_TYPE enumeration",
+                File = Headers.WindowsWinnt)]
         [Flags]
         internal enum ServiceTypes : uint
         {
@@ -995,8 +1068,9 @@ namespace Htc.Vita.Core.Interop
             /* SERVICE_NO_CHANGE            */ NoChange            = 0xffffffff
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/nf-setupapi-setupdigetdeviceregistrypropertyw",
-                Description = "SPDRP enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/setupapi/nf-setupapi-setupdigetdeviceregistrypropertyw",
+                Description = "SPDRP enumeration",
+                File = Headers.WindowsSetupapi)]
         internal enum SetupDeviceRegistryProperty : uint
         {
             /* SPDRP_DEVICEDESC                  */ DeviceDesc               =  0,
@@ -1038,8 +1112,9 @@ namespace Htc.Vita.Core.Interop
             /* SPDRP_BASE_CONTAINERID            */ BaseContainerId          = 36
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/shlobj_core/nf-shlobj_core-shchangenotify",
-                Description = "SHCNE enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shlobj_core/nf-shlobj_core-shchangenotify",
+                Description = "SHCNE enumeration",
+                File = Headers.WindowsShlobj_core)]
         [Flags]
         internal enum ShellChangeNotifyEventIds : uint
         {
@@ -1070,8 +1145,9 @@ namespace Htc.Vita.Core.Interop
             /* SHCNE_INTERRUPT        */ Interrupt          = 0x80000000
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/shlobj_core/nf-shlobj_core-shchangenotify",
-                Description = "SHCNE enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shlobj_core/nf-shlobj_core-shchangenotify",
+                Description = "SHCNE enumeration",
+                File = Headers.WindowsShlobj_core)]
         internal enum ShellChangeNotifyFlags : uint
         {
             /* SHCNF_IDLIST      */ IdList      = 0x0000,
@@ -1085,7 +1161,8 @@ namespace Htc.Vita.Core.Interop
             /* SHCNF_FLUSHNOWAIT */ FlushNoWait = 0x3000
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-showwindow")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-showwindow",
+                File = Headers.WindowsWinuser)]
         internal enum ShowWindowCommand
         {
             /* SW_HIDE            */ Hide            =  0,
@@ -1105,7 +1182,8 @@ namespace Htc.Vita.Core.Interop
             /* SW_MAX             */ Max             = ForceMinimize
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/Shutdown/system-shutdown-reason-codes")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/shutdown/system-shutdown-reason-codes",
+                File = Headers.WindowsReason)]
         internal enum ShutdownReason : uint
         {
             /* SHTDN_REASON_UNKNOWN    */ Unknown   = ShutdownReasonMinor.None,
@@ -1113,7 +1191,8 @@ namespace Htc.Vita.Core.Interop
                                                     | ShutdownReasonFlags.Planned
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/Shutdown/system-shutdown-reason-codes")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/shutdown/system-shutdown-reason-codes",
+                File = Headers.WindowsReason)]
         [Flags]
         internal enum ShutdownReasonFlags : uint
         {
@@ -1126,7 +1205,8 @@ namespace Htc.Vita.Core.Interop
             /* SHTDN_REASON_FLAG_PLANNED                   */ Planned                = 0x80000000
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/Shutdown/system-shutdown-reason-codes")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/shutdown/system-shutdown-reason-codes",
+                File = Headers.WindowsReason)]
         internal enum ShutdownReasonMajor : uint
         {
             /* SHTDN_REASON_MAJOR_OTHER           */ Other           = 0x00000000,
@@ -1140,7 +1220,8 @@ namespace Htc.Vita.Core.Interop
             /* SHTDN_REASON_MAJOR_POWER           */ LegacyApi       = 0x00070000
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/Shutdown/system-shutdown-reason-codes")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/shutdown/system-shutdown-reason-codes",
+                File = Headers.WindowsReason)]
         internal enum ShutdownReasonMinor : uint
         {
             /* SHTDN_REASON_MINOR_OTHER                 */ Oth                  = 0x00000000,
@@ -1176,8 +1257,9 @@ namespace Htc.Vita.Core.Interop
             /* SHTDN_REASON_MINOR_NONE                  */ None                 = 0x000000ff
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ne-winnt-_sid_name_use",
-                Description = "SID_NAME_USE enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ne-winnt-sid_name_use",
+                Description = "SID_NAME_USE enumeration",
+                File = Headers.WindowsWinnt)]
         internal enum SidType
         {
             /* SidTypeUser           */ User           =  1,
@@ -1192,7 +1274,8 @@ namespace Htc.Vita.Core.Interop
             /* SidTypeLabel          */ Label          = 10
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/standard-access-rights")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/secauthz/standard-access-rights",
+                File = Headers.WindowsWinnt)]
         [Flags]
         internal enum StandardAccessRights : uint
         {
@@ -1212,6 +1295,8 @@ namespace Htc.Vita.Core.Interop
                                                                   | Synchronize
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winternl/nf-winternl-ntquerysysteminformation",
+                File = Headers.WindowsWinternl)]
         internal enum SystemInformationClass : uint
         {
             /* SystemBasicInformation                        */ SystemBasicInformation,
@@ -1299,7 +1384,8 @@ namespace Htc.Vita.Core.Interop
             /* MaxSystemInfoClass                            */ MaxSystemInfoClass
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/access-rights-for-access-token-objects")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/secauthz/access-rights-for-access-token-objects",
+                File = Headers.WindowsWinnt)]
         [Flags]
         internal enum TokenAccessRights : uint
         {
@@ -1330,8 +1416,9 @@ namespace Htc.Vita.Core.Interop
                                                            | AdjustDefault
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ne-winnt-_token_information_class",
-                Description = "TOKEN_INFORMATION_CLASS enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ne-winnt-token_information_class",
+                Description = "TOKEN_INFORMATION_CLASS enumeration",
+                File = Headers.WindowsWinnt)]
         internal enum TokenInformationClass : uint
         {
             /* TokenUser                            */ User = 1,
@@ -1383,15 +1470,17 @@ namespace Htc.Vita.Core.Interop
             /* MaxTokenInfoClass                    */ MaxTokenInfoClass
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ne-winnt-_token_type",
-                Description = "TOKEN_TYPE enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ne-winnt-token_type",
+                Description = "TOKEN_TYPE enumeration",
+                File = Headers.WindowsWinnt)]
         internal enum TokenType : uint
         {
             /* TokenPrimary       */ TokenPrimary       = 1,
             /* TokenImpersonation */ TokenImpersonation = 2
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wintrust/nf-wintrust-winverifytrust")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wintrust/nf-wintrust-winverifytrust",
+                File = Headers.WindowsWinerror)]
         internal enum TrustError : uint
         {
             /* TRUST_E_PROVIDER_UNKNOWN     */ ProviderUnknown    = 0x800B0001,
@@ -1400,8 +1489,9 @@ namespace Htc.Vita.Core.Interop
             /* TRUST_E_SUBJECT_NOT_TRUSTED  */ SubjectNotTrusted  = 0x800B0004
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/ne-wtsapi32-_wts_connectstate_class",
-                Description = "WTS_CONNECTSTATE_CLASS enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wtsapi32/ne-wtsapi32-wts_connectstate_class",
+                Description = "WTS_CONNECTSTATE_CLASS enumeration",
+                File = Headers.WindowsWtsapi32)]
         internal enum WindowsTerminalServiceConnectState
         {
             /* WTSActive       */ Active       = 0,
@@ -1416,8 +1506,9 @@ namespace Htc.Vita.Core.Interop
             /* WTSInit         */ Init         = 9
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/ne-wtsapi32-_wts_info_class",
-                Description = "WTS_INFO_CLASS enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wtsapi32/ne-wtsapi32-wts_info_class",
+                Description = "WTS_INFO_CLASS enumeration",
+                File = Headers.WindowsWtsapi32)]
         internal enum WindowsTerminalServiceInfo
         {
             /* WTSInitialProgram     */ InitialProgram     =  0,
@@ -1452,8 +1543,9 @@ namespace Htc.Vita.Core.Interop
             /* WTSIsRemoteSession    */ IsRemoteSession    = 29
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
-                Description = "WTD_CHOICE enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wintrust/ns-wintrust-wintrust_data",
+                Description = "WTD_CHOICE enumeration",
+                File = Headers.WindowsWintrust)]
         internal enum WinTrustDataChoice : uint
         {
             /* WTD_CHOICE_FILE    */ File    = 1,
@@ -1463,8 +1555,9 @@ namespace Htc.Vita.Core.Interop
             /* WTD_CHOICE_CERT    */ Cert    = 5
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
-                Description = "WTD_PROVIDERFLAG enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wintrust/ns-wintrust-wintrust_data",
+                Description = "WTD_PROVIDERFLAG enumeration",
+                File = Headers.WindowsWintrust)]
         [Flags]
         internal enum WinTrustDataProviderFlags : uint
         {
@@ -1484,16 +1577,18 @@ namespace Htc.Vita.Core.Interop
             /* WTD_MOTW                                */ MarkOfTheWeb                    = 16384
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
-                Description = "WTD_REVOKE enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wintrust/ns-wintrust-wintrust_data",
+                Description = "WTD_REVOKE enumeration",
+                File = Headers.WindowsWintrust)]
         internal enum WinTrustDataRevoke : uint
         {
             /* WTD_REVOKE_NONE       */ None       = 0,
             /* WTD_REVOKE_WHOLECHAIN */ WholeChain = 1
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
-                Description = "WTD_STATEACTION enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wintrust/ns-wintrust-wintrust_data",
+                Description = "WTD_STATEACTION enumeration",
+                File = Headers.WindowsWintrust)]
         internal enum WinTrustDataStateAction : uint
         {
             /* WTD_STATEACTION_IGNORE           */ Ignore         = 0,
@@ -1503,8 +1598,9 @@ namespace Htc.Vita.Core.Interop
             /* WTD_STATEACTION_AUTO_CACHE_FLUSH */ AutoCacheFlush = 4
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
-                Description = "WTD_UI enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wintrust/ns-wintrust-wintrust_data",
+                Description = "WTD_UI enumeration",
+                File = Headers.WindowsWintrust)]
         internal enum WinTrustDataUI : uint
         {
             /* WTD_UI_ALL    */ All    = 1,
@@ -1513,8 +1609,9 @@ namespace Htc.Vita.Core.Interop
             /* WTD_UI_NOGOOD */ NoGood = 4
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
-                Description = "WTD_UICONTEXT enumeration")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wintrust/ns-wintrust-wintrust_data",
+                Description = "WTD_UICONTEXT enumeration",
+                File = Headers.WindowsWintrust)]
         internal enum WinTrustDataUIContext : uint
         {
             /* WTD_UICONTEXT_EXECUTE */ Execute = 0,
@@ -1522,7 +1619,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_auth_credentials",
-                Description = "BG_AUTH_CREDENTIALS structure")]
+                Description = "BG_AUTH_CREDENTIALS structure",
+                File = Headers.WindowsBits1_5)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct BitsAuthCredentials
         {
@@ -1532,7 +1630,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_auth_credentials_union",
-                Description = "BG_AUTH_CREDENTIALS_UNION structure")]
+                Description = "BG_AUTH_CREDENTIALS_UNION structure",
+                File = Headers.WindowsBits1_5)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct BitsAuthCredentialsUnion
         {
@@ -1540,7 +1639,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_basic_credentials",
-                Description = "BG_BASIC_CREDENTIALS structure")]
+                Description = "BG_BASIC_CREDENTIALS structure",
+                File = Headers.WindowsBits1_5)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct BitsBasicCredentials
         {
@@ -1549,7 +1649,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_file_info",
-                Description = "BG_FILE_INFO structure")]
+                Description = "BG_FILE_INFO structure",
+                File = Headers.WindowsBits)]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         internal struct BitsFileInfo
         {
@@ -1558,7 +1659,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_file_progress",
-                Description = "BG_FILE_PROGRESS structure")]
+                Description = "BG_FILE_PROGRESS structure",
+                File = Headers.WindowsBits)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct BitsFileProgress : IEquatable<BitsFileProgress>
         {
@@ -1605,7 +1707,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_job_progress",
-                Description = "BG_JOB_PROGRESS structure")]
+                Description = "BG_JOB_PROGRESS structure",
+                File = Headers.WindowsBits)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct BitsJobProgress : IEquatable<BitsJobProgress>
         {
@@ -1655,7 +1758,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits1_5/ns-bits1_5-bg_job_reply_progress",
-                Description = "BG_JOB_REPLY_PROGRESS structure")]
+                Description = "BG_JOB_REPLY_PROGRESS structure",
+                File = Headers.WindowsBits1_5)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct BitsJobReplyProgress : IEquatable<BitsJobReplyProgress>
         {
@@ -1697,7 +1801,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/ns-bits-bg_job_times",
-                Description = "BG_JOB_TIMES structure")]
+                Description = "BG_JOB_TIMES structure",
+                File = Headers.WindowsBits)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct BitsJobTimes
         {
@@ -1706,10 +1811,11 @@ namespace Htc.Vita.Core.Interop
             internal /* FILETIME */ FileTime TransferCompletionTime;
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-_display_devicew",
-                Description = "DISPLAY_DEVICEW structure")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-display_devicew",
+                Description = "DISPLAY_DEVICE structure",
+                File = Headers.WindowsWingdi)]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        internal struct DisplayDeviceW : IEquatable<DisplayDeviceW>
+        internal struct DisplayDevice : IEquatable<DisplayDevice>
         {
                                                                   internal          /* DWORD      */ int cb;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]  internal readonly /* WCHAR[32]  */ string deviceName;
@@ -1718,17 +1824,17 @@ namespace Htc.Vita.Core.Interop
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal readonly /* WCHAR[128] */ string deviceId;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal readonly /* WCHAR[128] */ string deviceKey;
 
-            public static bool operator ==(DisplayDeviceW left, DisplayDeviceW right)
+            public static bool operator ==(DisplayDevice left, DisplayDevice right)
             {
                 return Equals(left, right);
             }
 
-            public static bool operator !=(DisplayDeviceW left, DisplayDeviceW right)
+            public static bool operator !=(DisplayDevice left, DisplayDevice right)
             {
                 return !Equals(left, right);
             }
 
-            public bool Equals(DisplayDeviceW other)
+            public bool Equals(DisplayDevice other)
             {
                 return deviceName == other.deviceName
                         && deviceString == other.deviceString
@@ -1743,7 +1849,7 @@ namespace Htc.Vita.Core.Interop
                 {
                     return false;
                 }
-                return obj is DisplayDeviceW && Equals((DisplayDeviceW) obj);
+                return obj is DisplayDevice && Equals((DisplayDevice) obj);
             }
 
             public override int GetHashCode()
@@ -1761,7 +1867,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/dxgi/ns-dxgi-dxgi_adapter_desc",
-                Description = "DXGI_ADAPTER_DESC structure")]
+                Description = "DXGI_ADAPTER_DESC structure",
+                File = Headers.WindowsDxgi)]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         internal struct DxgiAdapterDescription : IEquatable<DxgiAdapterDescription>
         {
@@ -1826,7 +1933,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/dxgi/ns-dxgi-dxgi_output_desc",
-                Description = "DXGI_OUTPUT_DESC structure")]
+                Description = "DXGI_OUTPUT_DESC structure",
+                File = Headers.WindowsDxgi)]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         internal struct DxgiOutputDescription : IEquatable<DxgiOutputDescription>
         {
@@ -1879,7 +1987,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-filetime",
-                Description = "FILETIME structure")]
+                Description = "FILETIME structure",
+                File = Headers.WindowsMinwinbase)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct FileTime : IEquatable<FileTime>
         {
@@ -1920,7 +2029,8 @@ namespace Htc.Vita.Core.Interop
             }
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidpi/ns-hidpi-_hidp_caps")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidpi/ns-hidpi-_hidp_caps",
+                File = Headers.WindowsHidpi)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct HidDeviceCapability
         {
@@ -1943,9 +2053,10 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-monitorinfoexw",
-                Description = "MONITORINFOEXW structure")]
+                Description = "MONITORINFOEX structure",
+                File = Headers.WindowsWinuser)]
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        internal struct MonitorInfoExW : IEquatable<MonitorInfoExW>
+        internal struct MonitorInfoEx : IEquatable<MonitorInfoEx>
         {
                                                                  internal          /* DWORD     */ int size;
                                                                  internal readonly /* RECT      */ Rectangle rcMonitor;
@@ -1953,17 +2064,17 @@ namespace Htc.Vita.Core.Interop
                                                                  internal readonly /* DWORD     */ uint flags;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] internal readonly /* WCHAR[32] */ string DeviceName;
 
-            public static bool operator ==(MonitorInfoExW left, MonitorInfoExW right)
+            public static bool operator ==(MonitorInfoEx left, MonitorInfoEx right)
             {
                 return Equals(left, right);
             }
 
-            public static bool operator !=(MonitorInfoExW left, MonitorInfoExW right)
+            public static bool operator !=(MonitorInfoEx left, MonitorInfoEx right)
             {
                 return !Equals(left, right);
             }
 
-            public bool Equals(MonitorInfoExW other)
+            public bool Equals(MonitorInfoEx other)
             {
                 return rcMonitor.Equals(other.rcMonitor)
                         && rcWork.Equals(other.rcWork)
@@ -1977,7 +2088,7 @@ namespace Htc.Vita.Core.Interop
                 {
                     return false;
                 }
-                return obj is MonitorInfoExW && Equals((MonitorInfoExW) obj);
+                return obj is MonitorInfoEx && Equals((MonitorInfoEx) obj);
             }
 
             public override int GetHashCode()
@@ -1993,8 +2104,28 @@ namespace Htc.Vita.Core.Interop
             }
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/ns-processthreadsapi-process_information",
-                Description = "PROCESS_INFORMATION structure")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-osversioninfoexw",
+                Description = "OSVERSIONINFOEX structure",
+                File = Headers.WindowsWinnt)]
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        internal struct OsVersionInfoEx
+        {
+                                                                  internal /* DWORD      */ int dwOSVersionInfoSize;
+                                                                  internal /* DWORD      */ int dwMajorVersion;
+                                                                  internal /* DWORD      */ int dwMinorVersion;
+                                                                  internal /* DWORD      */ int dwBuildNumber;
+                                                                  internal /* DWORD      */ int dwPlatformId;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] internal /* WCHAR[128] */ string szCSDVersion;
+                                                                  internal /* WORD       */ short wServicePackMajor;
+                                                                  internal /* WORD       */ short wServicePackMinor;
+                                                                  internal /* WORD       */ short wSuiteMask;
+                                                                  internal /* BYTE       */ ProductType wProductType;
+                                                                  internal /* BYTE       */ byte wReserved;
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/ns-processthreadsapi-process_information",
+                Description = "PROCESS_INFORMATION structure",
+                File = Headers.WindowsProcessthreadsapi)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct ProcessInformation
         {
@@ -2005,7 +2136,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wtypes/ns-wtypes-propertykey",
-                Description = "PROPERTYKEY structure")]
+                Description = "PROPERTYKEY structure",
+                File = Headers.WindowsWtypes)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct PropertyKey : IEquatable<PropertyKey>
         {
@@ -2055,7 +2187,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/propidlbase/ns-propidlbase-propvariant",
-                Description = "PROPVARIANT structure")]
+                Description = "PROPVARIANT structure",
+                File = Headers.WindowsPropidlbase)]
         [StructLayout(LayoutKind.Explicit)]
         internal struct PropVariant : IEquatable<PropVariant>
         {
@@ -2110,8 +2243,9 @@ namespace Htc.Vita.Core.Interop
             }
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-query_service_configw",
-                Description = "QUERY_SERVICE_CONFIG structure")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winsvc/ns-winsvc-query_service_configw",
+                Description = "QUERY_SERVICE_CONFIG structure",
+                File = Headers.WindowsWinsvc)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct QueryServiceConfig
         {
@@ -2127,7 +2261,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect",
-                Description = "RECT structure")]
+                Description = "RECT structure",
+                File = Headers.WindowsWindef)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct Rectangle
         {
@@ -2137,8 +2272,9 @@ namespace Htc.Vita.Core.Interop
             internal /* LONG */ int bottom;
         }
 
-        [ExternalReference("https://msdn.microsoft.com/en-us/library/windows/desktop/aa379560.aspx",
-                Description = "SECURITY_ATTRIBUTES")]
+        [ExternalReference("https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/aa379560(v=vs.85)",
+                Description = "SECURITY_ATTRIBUTES",
+                File = Headers.WindowsMinwinbase)]
         [StructLayout(LayoutKind.Sequential)]
         internal class SecurityAttributes
         {
@@ -2148,15 +2284,17 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winsvc/ns-winsvc-service_delayed_auto_start_info",
-                Description = "SERVICE_DELAYED_AUTO_START_INFO structure")]
+                Description = "SERVICE_DELAYED_AUTO_START_INFO structure",
+                File = Headers.WindowsWinsvc)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct ServiceDelayedAutoStartInfo
         {
             internal /* BOOL */ bool fDelayedAutostart;
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winsvc/ns-winsvc-_service_status",
-                Description = "SERVICE_STATUS structure")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winsvc/ns-winsvc-service_status",
+                Description = "SERVICE_STATUS structure",
+                File = Headers.WindowsWinsvc)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct ServiceStatus
         {
@@ -2169,8 +2307,9 @@ namespace Htc.Vita.Core.Interop
             internal /* DWORD */ uint dwWaitHint;
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/ns-setupapi-_sp_devinfo_data",
-                Description = "SP_DEVINFO_DATA structure")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_data",
+                Description = "SP_DEVINFO_DATA structure",
+                File = Headers.WindowsSetupapi)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct SetupDeviceInfoData
         {
@@ -2180,8 +2319,9 @@ namespace Htc.Vita.Core.Interop
             internal /* ULONG_PTR */ IntPtr reserved;
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/setupapi/ns-setupapi-_sp_device_interface_data",
-                Description = "SP_DEVICE_INTERFACE_DATA structure")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_data",
+                Description = "SP_DEVICE_INTERFACE_DATA structure",
+                File = Headers.WindowsSetupapi)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct SetupDeviceInterfaceData
         {
@@ -2192,7 +2332,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-sid_and_attributes",
-                Description = "SID_AND_ATTRIBUTES structure")]
+                Description = "SID_AND_ATTRIBUTES structure",
+                File = Headers.WindowsWinnt)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct SidAndAttributes
         {
@@ -2200,8 +2341,9 @@ namespace Htc.Vita.Core.Interop
             internal /* DWORD */ uint Attributes;
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/ns-processthreadsapi-_startupinfow",
-                Description = "STARTUPINFO structure")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/ns-processthreadsapi-startupinfow",
+                Description = "STARTUPINFO structure",
+                File = Headers.WindowsProcessthreadsapi)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct StartupInfo
         {
@@ -2225,14 +2367,18 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-token_elevation",
-                Description = "TOKEN_ELEVATION structure")]
+                Description = "TOKEN_ELEVATION structure",
+                File = Headers.WindowsWinnt)]
         internal struct TokenElevation
         {
+#pragma warning disable CS0649
             internal /* DWORD */ uint TokenIsElevated;
+#pragma warning restore CS0649
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ns-winnt-_token_privileges",
-                Description = "TOKEN_PRIVILEGES structure")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-token_privileges",
+                Description = "TOKEN_PRIVILEGES structure",
+                File = Headers.WindowsWinnt)]
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         internal struct TokenPrivileges
         {
@@ -2241,16 +2387,18 @@ namespace Htc.Vita.Core.Interop
             internal /* DWORD */ SePrivileges Attr;
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-_token_user",
-                Description = "TOKEN_USER structure")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-token_user",
+                Description = "TOKEN_USER structure",
+                File = Headers.WindowsWinnt)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct TokenUser
         {
             internal /* SID_AND_ATTRIBUTES */ SidAndAttributes User;
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/ns-wtsapi32-wts_process_infow",
-                Description = "WTS_PROCESS_INFO structure")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wtsapi32/ns-wtsapi32-wts_process_infow",
+                Description = "WTS_PROCESS_INFO structure",
+                File = Headers.WindowsWtsapi32)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct WindowsTerminalServiceProcessInfo
         {
@@ -2261,7 +2409,8 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wtsapi32/ns-wtsapi32-wts_session_infow",
-                Description = "WTS_SESSION_INFO structure")]
+                Description = "WTS_SESSION_INFO structure",
+                File = Headers.WindowsWtsapi32)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct WindowsTerminalServiceSessionInfo
         {
@@ -2270,8 +2419,9 @@ namespace Htc.Vita.Core.Interop
                                               internal /* WTS_CONNECTSTATE_CLASS */ WindowsTerminalServiceConnectState state;
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
-                Description = "WINTRUST_DATA structure")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wintrust/ns-wintrust-wintrust_data",
+                Description = "WINTRUST_DATA structure",
+                File = Headers.WindowsWintrust)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct WinTrustData
         {
@@ -2290,8 +2440,9 @@ namespace Htc.Vita.Core.Interop
             internal /* WINTRUST_SIGNATURE_SETTINGS* */ IntPtr pSignatureSettings;
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-_wintrust_data",
-                Description = "WTD_UNION_CHOICE union")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wintrust/ns-wintrust-wintrust_data",
+                Description = "WTD_UNION_CHOICE union",
+                File = Headers.WindowsWintrust)]
         [StructLayout(LayoutKind.Explicit)]
         internal struct WinTrustDataUnionChoice
         {
@@ -2303,9 +2454,10 @@ namespace Htc.Vita.Core.Interop
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-win32_find_dataw",
-                Description = "WIN32_FIND_DATAW structure")]
+                Description = "WIN32_FIND_DATA structure",
+                File = Headers.WindowsMinwinbase)]
         [StructLayout(LayoutKind.Sequential)]
-        internal struct Win32FindDataW : IEquatable<Win32FindDataW>
+        internal struct Win32FindData : IEquatable<Win32FindData>
         {
                                                                       internal readonly /* DWORD           */ FileAttributeFlags dwFileAttributes;
                                                                       internal readonly /* FILETIME        */ FileTime ftCreationTime;
@@ -2318,17 +2470,17 @@ namespace Htc.Vita.Core.Interop
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)] internal readonly /* WCHAR[MAX_PATH] */ string cFileName;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]      internal readonly /* WCHAR[14]       */ string cAlternateFileName;
 
-            public static bool operator ==(Win32FindDataW left, Win32FindDataW right)
+            public static bool operator ==(Win32FindData left, Win32FindData right)
             {
                 return Equals(left, right);
             }
 
-            public static bool operator !=(Win32FindDataW left, Win32FindDataW right)
+            public static bool operator !=(Win32FindData left, Win32FindData right)
             {
                 return !Equals(left, right);
             }
 
-            public bool Equals(Win32FindDataW other)
+            public bool Equals(Win32FindData other)
             {
                 return dwFileAttributes == other.dwFileAttributes
                         && ftCreationTime.Equals(other.ftCreationTime)
@@ -2346,7 +2498,7 @@ namespace Htc.Vita.Core.Interop
                 {
                     return false;
                 }
-                return obj is Win32FindDataW && Equals((Win32FindDataW) obj);
+                return obj is Win32FindData && Equals((Win32FindData) obj);
             }
 
             public override int GetHashCode()
@@ -2366,8 +2518,9 @@ namespace Htc.Vita.Core.Interop
             }
         }
 
-        [ExternalReference("https://docs.microsoft.com/en-us/windows/desktop/api/wintrust/ns-wintrust-wintrust_file_info_",
-                Description = "WINTRUST_FILE_INFO structure")]
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/wintrust/ns-wintrust-wintrust_file_info",
+                Description = "WINTRUST_FILE_INFO structure",
+                File = Headers.WindowsWintrust)]
         [StructLayout(LayoutKind.Sequential)]
         internal struct WinTrustFileInfo
         {

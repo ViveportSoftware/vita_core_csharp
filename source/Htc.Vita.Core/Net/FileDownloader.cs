@@ -2,103 +2,143 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using Htc.Vita.Core.Log;
+using Htc.Vita.Core.Util;
 
 namespace Htc.Vita.Core.Net
 {
+    /// <summary>
+    /// Class FileDownloader.
+    /// </summary>
     public abstract partial class FileDownloader
     {
-        private static Dictionary<string, FileDownloader> Instances { get; } = new Dictionary<string, FileDownloader>();
-        private static Type _defaultType = typeof(HttpFileDownloader);
-        private static readonly object InstanceLock = new object();
-
+        /// <summary>
+        /// Gets or sets the download configuration.
+        /// </summary>
+        /// <value>The download configuration.</value>
         public static Config DownloadConfig { get; set; } = new Config();
 
-        public static void Register<T>() where T : FileDownloader
+        static FileDownloader()
         {
-            var type = typeof(T);
-            if (_defaultType == type)
-            {
-                return;
-            }
-
-            _defaultType = type;
-            Logger.GetInstance(typeof(FileDownloader)).Info("Registered default file downloader type to " + _defaultType);
+            TypeRegistry.RegisterDefault<FileDownloader, HttpFileDownloader>();
         }
 
+        /// <summary>
+        /// Registers this instance type.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public static void Register<T>()
+                where T : FileDownloader, new()
+        {
+            TypeRegistry.Register<FileDownloader, T>();
+        }
+
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <returns>FileDownloader.</returns>
         public static FileDownloader GetInstance()
         {
-            FileDownloader instance;
-            try
-            {
-                instance = DoGetInstance(_defaultType);
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(FileDownloader)).Fatal("Instance initialization error: " + e);
-                Logger.GetInstance(typeof(FileDownloader)).Info("Initializing " + typeof(FileDownloader).FullName + "...");
-                instance = new HttpFileDownloader();
-            }
-            return instance;
+            return TypeRegistry.GetInstance<FileDownloader>();
         }
 
-        public DownloadOperationResult DownloadFile(string url, FileInfo fileInfo, long size, Action<long> progressReporter,
-            CancellationToken cancellationToken, List<string> hostList = null)
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>FileDownloader.</returns>
+        public static FileDownloader GetInstance<T>()
+                where T : FileDownloader, new()
         {
-            return OnDownloadFile(url, fileInfo, size, progressReporter, cancellationToken, hostList);
+            return TypeRegistry.GetInstance<FileDownloader, T>();
         }
 
-        private static FileDownloader DoGetInstance(Type type)
+        /// <summary>
+        /// Downloads the file.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="fileInfo">The file information.</param>
+        /// <param name="size">The file size.</param>
+        /// <param name="progressReporter">The progress reporter.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <param name="hostList">The host list.</param>
+        /// <returns>DownloadOperationResult.</returns>
+        public DownloadOperationResult DownloadFile(
+                string url,
+                FileInfo fileInfo,
+                long size,
+                Action<long> progressReporter,
+                CancellationToken cancellationToken,
+                List<string> hostList = null)
         {
-            if (type == null)
-            {
-                throw new ArgumentException("Invalid arguments to get file downloader instance");
-            }
-
-            var key = type.FullName + "_";
-            FileDownloader instance = null;
-            lock (InstanceLock)
-            {
-                if (Instances.ContainsKey(key))
-                {
-                    instance = Instances[key];
-                }
-                if (instance == null)
-                {
-                    Logger.GetInstance(typeof(FileDownloader)).Info("Initializing " + key + "...");
-                    var constructor = type.GetConstructor(new Type[] { });
-                    if (constructor != null)
-                    {
-                        instance = (FileDownloader)constructor.Invoke(new object[] { });
-                    }
-                }
-                if (instance == null)
-                {
-                    Logger.GetInstance(typeof(FileDownloader)).Info("Initializing " + typeof(HttpFileDownloader).FullName + "...");
-                    instance = new HttpFileDownloader();
-                }
-                if (!Instances.ContainsKey(key))
-                {
-                    Instances.Add(key, instance);
-                }
-            }
-
-            return instance;
+            return OnDownloadFile(
+                    url,
+                    fileInfo,
+                    size,
+                    progressReporter,
+                    cancellationToken,
+                    hostList
+            );
         }
-        
-        protected abstract DownloadOperationResult OnDownloadFile(string url, FileInfo fileInfo, long size, Action<long> progressReporter,
-            CancellationToken cancellationToken, List<string> hostList = null);
 
+        /// <summary>
+        /// Called when downloading file.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="fileInfo">The file information.</param>
+        /// <param name="size">The file size.</param>
+        /// <param name="progressReporter">The progress reporter.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <param name="hostList">The host list.</param>
+        /// <returns>DownloadOperationResult.</returns>
+        protected abstract DownloadOperationResult OnDownloadFile(
+                string url,
+                FileInfo fileInfo,
+                long size,
+                Action<long> progressReporter,
+                CancellationToken cancellationToken,
+                List<string> hostList = null
+        );
+
+        /// <summary>
+        /// Enum DownloadStatus
+        /// </summary>
         public enum DownloadStatus
         {
+            /// <summary>
+            /// The unknown
+            /// </summary>
             Unknown = 0,
+            /// <summary>
+            /// Success
+            /// </summary>
             Success = 1,
+            /// <summary>
+            /// Cancelled
+            /// </summary>
             Cancelled = 2,
+            /// <summary>
+            /// Internal error
+            /// </summary>
             InternalError = 3,
+            /// <summary>
+            /// Out of free space error
+            /// </summary>
             OutOfFreeSpaceError = 4,
+            /// <summary>
+            /// Server response error
+            /// </summary>
             ServerResponseError = 5,
+            /// <summary>
+            /// Server connection error
+            /// </summary>
             ServerConnectionError = 6,
+            /// <summary>
+            /// Timeout error
+            /// </summary>
             TimeoutError = 7,
+            /// <summary>
+            /// Disk IO exception
+            /// </summary>
             DiskIOException = 8,
         }
     }
