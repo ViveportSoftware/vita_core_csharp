@@ -19,6 +19,7 @@ Run-time dependencies:
 Test-time dependencies:
 
 * .NET Framework 4.5.2
+* .NET Framework 4.6.2
 * [xUnit.net](https://xunit.net/)
 
 Build-time dependencies:
