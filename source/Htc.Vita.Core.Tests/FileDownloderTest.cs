@@ -13,9 +13,9 @@ namespace Htc.Vita.Core.Tests
         private readonly ITestOutputHelper _output;
 
         private static readonly string TestFileUrl =
-            "https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe";
-        private static readonly long TestFileSize = 14611496;
-        private static readonly string TestFileHash = "eb5f74215e4308d8f2b1d458e78f33050a779b9be19baaa2174de1be9be1b830";
+            "https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe";
+        private static readonly long TestFileSize = 8993744;
+        private static readonly string TestFileHash = "99dce3c841cc6028560830f7866c9ce2928c98cf3256892ef8e6cf755147b0d8";
         private static readonly string TestFileDestPath = Path.Combine(Path.GetTempPath(), "VC_redist.x86.exe");
         private static readonly FileVerifierV2.ChecksumType TestFileChecksumType = FileVerifierV2.ChecksumType.Sha256;
 

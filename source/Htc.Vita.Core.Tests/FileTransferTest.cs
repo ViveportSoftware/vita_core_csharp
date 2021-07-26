@@ -95,8 +95,8 @@ namespace Htc.Vita.Core.Tests
             Assert.False(job.AddItem(new FileTransfer.FileTransferItem()));
             Assert.True(job.AddItem(new FileTransfer.FileTransferItem
             {
-                    LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
-                    RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
+                    LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"vcredist.x64-{timestamp}.exe")),
+                    RemotePath = new Uri("https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x64.exe")
             }));
             Assert.True(job.Cancel());
             Assert.DoesNotContain(jobId, fileTransfer.GetJobIdList());
@@ -118,8 +118,8 @@ namespace Htc.Vita.Core.Tests
             Assert.Contains(jobId, fileTransfer.GetJobIdList());
             Assert.True(job.AddItem(new FileTransfer.FileTransferItem
             {
-                    LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
-                    RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
+                    LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"vcredist.x64-{timestamp}.exe")),
+                    RemotePath = new Uri("https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x64.exe")
             }));
             var priority = job.GetPriority();
             Assert.NotEqual(FileTransfer.FileTransferPriority.Unknown, priority);
@@ -149,8 +149,8 @@ namespace Htc.Vita.Core.Tests
             Assert.Contains(jobId, fileTransfer.GetJobIdList());
             Assert.True(job.AddItem(new FileTransfer.FileTransferItem
             {
-                    LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
-                    RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
+                    LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"vcredist.x64-{timestamp}.exe")),
+                    RemotePath = new Uri("https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x64.exe")
             }));
             var priority = job.GetPriority();
             Assert.NotEqual(FileTransfer.FileTransferPriority.Unknown, priority);
@@ -182,8 +182,8 @@ namespace Htc.Vita.Core.Tests
             Assert.Contains(jobId, fileTransfer.GetJobIdList());
             Assert.True(job.AddItem(new FileTransfer.FileTransferItem
             {
-                    LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
-                    RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
+                    LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"vcredist.x64-{timestamp}.exe")),
+                    RemotePath = new Uri("https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x64.exe")
             }));
             var priority = job.GetPriority();
             Assert.NotEqual(FileTransfer.FileTransferPriority.Unknown, priority);
@@ -231,8 +231,8 @@ namespace Htc.Vita.Core.Tests
             Assert.Contains(jobId, fileTransfer.GetJobIdList());
             Assert.True(job.AddItem(new FileTransfer.FileTransferItem
             {
-                    LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"VC_redist.x86-{timestamp}.exe")),
-                    RemotePath = new Uri("https://download.visualstudio.microsoft.com/download/pr/12319034/ccd261eb0e095411af3b306273231b68/VC_redist.x86.exe")
+                    LocalPath = new FileInfo(Path.Combine(Path.GetTempPath(), $"vcredist.x64-{timestamp}.exe")),
+                    RemotePath = new Uri("https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x64.exe")
             }));
             var priority = job.GetPriority();
             Assert.NotEqual(FileTransfer.FileTransferPriority.Unknown, priority);
