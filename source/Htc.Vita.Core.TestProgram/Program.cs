@@ -278,6 +278,8 @@ namespace Htc.Vita.Core.TestProgram
             Console.ReadKey();
 
             var randomUnusedPort = LocalPortManager.GetRandomUnusedPort();
+            var randomUnusedPort1 = LocalPortManager.GetRandomUnusedPort();
+            var randomUnusedPort2 = LocalPortManager.GetRandomUnusedPort(true);
             var specificPort = 35447;
             var randomUnusedPortStatus = LocalPortManager.GetPortStatus(randomUnusedPort);
             var specificPortStatus = LocalPortManager.GetPortStatus(specificPort);
@@ -285,6 +287,7 @@ namespace Htc.Vita.Core.TestProgram
             var specificPortVerifyStatus = LocalPortManager.VerifyPortStatus(specificPort);
             Console.WriteLine($"Random unused port [{randomUnusedPort}] status: {randomUnusedPortStatus}, verify: {randomUnusedPortVerifyStatus}");
             Console.WriteLine($"Specific port [{specificPort}] status: {specificPortStatus}, verify: {specificPortVerifyStatus}");
+            Console.WriteLine($"Random unused port 1 [{randomUnusedPort1}], random unused port 2 : {randomUnusedPort2}");
             Console.ReadKey();
 
             var processWatcherFactory = ProcessWatcherFactory.GetInstance();

@@ -48,12 +48,29 @@ namespace Htc.Vita.Core.Net
         /// <returns>System.Int32.</returns>
         public static int GetRandomUnusedPort()
         {
+            return GetRandomUnusedPort(false);
+        }
+
+        /// <summary>
+        /// Gets the random unused port.
+        /// </summary>
+        /// <param name="shouldUseLastPortFirst">if set to <c>true</c> it should use last port first.</param>
+        /// <returns>System.Int32.</returns>
+        public static int GetRandomUnusedPort(bool shouldUseLastPortFirst)
+        {
             lock (PortLock)
             {
-                _lastLocalPort = DoGetUnusedPort(_lastLocalPort);
-                if (_lastLocalPort == 0)
+                if (shouldUseLastPortFirst)
                 {
                     _lastLocalPort = DoGetUnusedPort(_lastLocalPort);
+                    if (_lastLocalPort == 0)
+                    {
+                        _lastLocalPort = DoGetUnusedPort(0);
+                    }
+                }
+                else
+                {
+                    _lastLocalPort = DoGetUnusedPort(0);
                 }
                 return _lastLocalPort;
             }

@@ -10,8 +10,14 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void Default_0_GetRandomUnusedPort()
         {
-            var unusedPort = LocalPortManager.GetRandomUnusedPort();
-            Assert.True(unusedPort > 0);
+            var unusedPort0 = LocalPortManager.GetRandomUnusedPort();
+            Assert.True(unusedPort0 > 0);
+            var unusedPort1 = LocalPortManager.GetRandomUnusedPort();
+            Assert.True(unusedPort1 > 0);
+            Assert.NotEqual(unusedPort0, unusedPort1);
+            var unusedPort2 = LocalPortManager.GetRandomUnusedPort(true);
+            Assert.True(unusedPort2 > 0);
+            Assert.Equal(unusedPort1, unusedPort2);
         }
 
         [Fact]
