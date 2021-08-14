@@ -122,22 +122,29 @@ namespace Htc.Vita.Core.Interop
                     return false;
                 }
 
-                var pv = new PropVariant(activatorId);
-                var error = propertyStore.SetValue(
-                        ref _appUserModelActivatorId,
-                        ref pv
-                );
-                if (error == HResult.SOk)
+                var propVariant = new PropVariant(activatorId);
+                try
                 {
-                    error = propertyStore.Commit();
-                }
-                if (error == HResult.SOk)
-                {
-                    return true;
-                }
+                    var error = propertyStore.SetValue(
+                            ref _appUserModelActivatorId,
+                            ref propVariant
+                    );
+                    if (error == HResult.SOk)
+                    {
+                        error = propertyStore.Commit();
+                    }
+                    if (error == HResult.SOk)
+                    {
+                        return true;
+                    }
 
-                Logger.GetInstance(typeof(ShellLink)).Error($"Cannot set source activator id. error: {error}");
-                return false;
+                    Logger.GetInstance(typeof(ShellLink)).Error($"Cannot set source activator id. error: {error}");
+                    return false;
+                }
+                finally
+                {
+                    propVariant?.Dispose();
+                }
             }
 
             internal bool SetSourceAppId(string sourceAppId)
@@ -154,22 +161,30 @@ namespace Htc.Vita.Core.Interop
                     return false;
                 }
 
-                var pv = new PropVariant(sourceAppId);
-                var error = propertyStore.SetValue(
-                        ref _appUserModelId,
-                        ref pv
-                );
-                if (error == HResult.SOk)
+                var propVariant = new PropVariant(sourceAppId);
+                try
                 {
-                    error = propertyStore.Commit();
-                }
-                if (error == HResult.SOk)
-                {
-                    return true;
-                }
+                    var error = propertyStore.SetValue(
+                            ref _appUserModelId,
+                            ref propVariant
+                    );
+                    if (error == HResult.SOk)
+                    {
+                        error = propertyStore.Commit();
+                    }
 
-                Logger.GetInstance(typeof(ShellLink)).Error($"Cannot set source app id. error: {error}");
-                return false;
+                    if (error == HResult.SOk)
+                    {
+                        return true;
+                    }
+
+                    Logger.GetInstance(typeof(ShellLink)).Error($"Cannot set source app id. error: {error}");
+                    return false;
+                }
+                finally
+                {
+                    propVariant?.Dispose();
+                }
             }
 
             internal bool SetSourceArguments(string sourceArguments)
