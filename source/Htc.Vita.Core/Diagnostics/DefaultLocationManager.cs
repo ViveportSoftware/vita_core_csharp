@@ -16,52 +16,56 @@ namespace Htc.Vita.Core.Diagnostics
         /// <returns>GetLocationResult.</returns>
         protected GetLocationResult GetLocationViaWindows7Api()
         {
-            var location = Windows.Location.GetInstance();
             var reportType = Windows.LocationReportType.ICivicAddressReport;
-            var success = location.RequestPermission(reportType);
-            if (!success)
+            using (var location = Windows.Location.GetInstance())
             {
-                return new GetLocationResult
+                var success = location.RequestPermission(reportType);
+                if (!success)
                 {
-                        Status = GetLocationStatus.InsufficientPermission
-                };
-            }
-
-            var locationReport = location.GetReport(reportType);
-            if (locationReport == null)
-            {
-                return new GetLocationResult
-                {
-                        Status = GetLocationStatus.NotAvailable
-                };
-            }
-
-            var countryRegion = locationReport.GetCountryRegion();
-            if (string.IsNullOrWhiteSpace(countryRegion))
-            {
-                return new GetLocationResult
-                {
-                        Status = GetLocationStatus.NotAvailable
-                };
-            }
-
-            if (countryRegion.Length != 2)
-            {
-                Logger.GetInstance(typeof(DefaultLocationManager)).Error($"Can not parse country code: {countryRegion}");
-                return new GetLocationResult
-                {
-                        Status = GetLocationStatus.NotAvailable
-                };
-            }
-
-            return new GetLocationResult
-            {
-                    Location = new LocationInfo
+                    return new GetLocationResult
                     {
-                            CountryCodeAlpha2 = countryRegion
-                    },
-                    Status = GetLocationStatus.Ok
-            };
+                            Status = GetLocationStatus.InsufficientPermission
+                    };
+                }
+
+                using (var locationReport = location.GetReport(reportType))
+                {
+                    if (locationReport == null)
+                    {
+                        return new GetLocationResult
+                        {
+                                Status = GetLocationStatus.NotAvailable
+                        };
+                    }
+
+                    var countryRegion = locationReport.GetCountryRegion();
+                    if (string.IsNullOrWhiteSpace(countryRegion))
+                    {
+                        return new GetLocationResult
+                        {
+                                Status = GetLocationStatus.NotAvailable
+                        };
+                    }
+
+                    if (countryRegion.Length != 2)
+                    {
+                        Logger.GetInstance(typeof(DefaultLocationManager)).Error($"Can not parse country code: {countryRegion}");
+                        return new GetLocationResult
+                        {
+                                Status = GetLocationStatus.NotAvailable
+                        };
+                    }
+
+                    return new GetLocationResult
+                    {
+                            Location = new LocationInfo
+                            {
+                                    CountryCodeAlpha2 = countryRegion
+                            },
+                            Status = GetLocationStatus.Ok
+                    };
+                }
+            }
         }
 
         /// <inheritdoc />
