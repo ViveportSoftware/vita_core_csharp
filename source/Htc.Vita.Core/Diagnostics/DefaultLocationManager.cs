@@ -3,8 +3,17 @@ using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Diagnostics
 {
+    /// <summary>
+    /// Class DefaultLocationManager.
+    /// Implements the <see cref="LocationManager" />
+    /// </summary>
+    /// <seealso cref="LocationManager" />
     public class DefaultLocationManager : LocationManager
     {
+        /// <summary>
+        /// Gets the location via Windows 7 API.
+        /// </summary>
+        /// <returns>GetLocationResult.</returns>
         protected GetLocationResult GetLocationViaWindows7Api()
         {
             var location = Windows.Location.GetInstance();
