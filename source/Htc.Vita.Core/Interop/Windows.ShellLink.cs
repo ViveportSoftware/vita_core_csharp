@@ -60,7 +60,7 @@ namespace Htc.Vita.Core.Interop
 
             internal static ShellLink GetInstance()
             {
-                var iShellLinkW = Activator.CreateInstance(typeof(ClsidShellLink)) as IShellLinkW;
+                var iShellLinkW = Activator.CreateInstance(typeof(ComShellLink)) as IShellLinkW;
                 if (iShellLinkW != null)
                 {
                     return new ShellLink(iShellLinkW);

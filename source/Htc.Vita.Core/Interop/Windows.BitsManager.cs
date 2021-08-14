@@ -99,7 +99,7 @@ namespace Htc.Vita.Core.Interop
 
             internal static BitsManager GetInstance()
             {
-                var iBackgroundCopyManager = Activator.CreateInstance(typeof(ClsidBackgroundCopyManager)) as IBackgroundCopyManager;
+                var iBackgroundCopyManager = Activator.CreateInstance(typeof(ComBackgroundCopyManager)) as IBackgroundCopyManager;
                 if (iBackgroundCopyManager != null)
                 {
                     return new BitsManager(iBackgroundCopyManager);

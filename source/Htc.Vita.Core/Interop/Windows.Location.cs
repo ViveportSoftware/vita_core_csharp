@@ -8,8 +8,8 @@ namespace Htc.Vita.Core.Interop
     {
         internal class Location : IDisposable
         {
-            private static readonly Guid ReportTypeICivicAddressReport = new Guid(ComInterfaceICivicAddressReport);
-            private static readonly Guid ReportTypeILatLongReport = new Guid(ComInterfaceILatLongReport);
+            private static readonly Guid ReportTypeICivicAddressReport = new Guid(ComInterfaceId.ICivicAddressReport);
+            private static readonly Guid ReportTypeILatLongReport = new Guid(ComInterfaceId.ILatLongReport);
 
             private ILocation _location;
             private bool _disposed;
@@ -59,7 +59,7 @@ namespace Htc.Vita.Core.Interop
 
             internal static Location GetInstance()
             {
-                var iLocation = Activator.CreateInstance(typeof(ClsidLocation)) as ILocation;
+                var iLocation = Activator.CreateInstance(typeof(ComLocation)) as ILocation;
                 if (iLocation != null)
                 {
                     return new Location(iLocation);

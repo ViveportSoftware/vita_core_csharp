@@ -237,7 +237,7 @@ namespace Htc.Vita.Core.Interop
 
             internal static PortableDeviceManager GetInstance()
             {
-                var iPortableDeviceManager = Activator.CreateInstance(typeof(ClsidPortableDeviceManager)) as IPortableDeviceManager;
+                var iPortableDeviceManager = Activator.CreateInstance(typeof(ComPortableDeviceManager)) as IPortableDeviceManager;
                 if (iPortableDeviceManager != null)
                 {
                     return new PortableDeviceManager(iPortableDeviceManager);
