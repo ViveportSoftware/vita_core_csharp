@@ -98,5 +98,22 @@ namespace Htc.Vita.Core.Interop
                 return CloseHandle(handle);
             }
         }
+
+        internal class SafeRegistryHandle : SafeHandleZeroOrMinusOneIsInvalid
+        {
+            internal SafeRegistryHandle() : base(true)
+            {
+            }
+
+            internal SafeRegistryHandle(IntPtr existingHandle, bool ownsHandle) : base(ownsHandle)
+            {
+                SetHandle(existingHandle);
+            }
+
+            protected override bool ReleaseHandle()
+            {
+                return RegCloseKey(handle) == Error.Success;
+            }
+        }
     }
 }
