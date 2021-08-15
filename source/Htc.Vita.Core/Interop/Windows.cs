@@ -22,6 +22,7 @@ namespace Htc.Vita.Core.Interop
         internal static readonly Guid /* HTTPSPROV_ACTION                     */ HttpsProvAction = new Guid("{573E31F8-AABA-11d0-8CCB-00C04FC295EE}");
         internal static readonly Guid /* OFFICESIGN_ACTION_VERIFY             */ OfficeSignActionVerify = new Guid("{5555C2CD-17FB-11d1-85C4-00C04FC295EE}");
         internal static readonly Guid /* SENSOR_DATA_TYPE_LOCATION_GUID       */ SensorDataTypeLocationGuid = new Guid("{055C74D8-CA6F-47D6-95C6-1ED3637A0FF4}");
+        internal static readonly Guid /* System.AppUserModel                  */ SystemAppUserModelGuid = new Guid("{9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3}");
         internal static readonly Guid /* WINTRUST_ACTION_GENERIC_CHAIN_VERIFY */ WinTrustActionGenericChainVerify = new Guid("{FC451C16-AC75-11D1-B4B8-00C04FB66EA0}");
         internal static readonly Guid /* WINTRUST_ACTION_GENERIC_VERIFY_V2    */ WinTrustActionGenericVerifyV2 = new Guid("{00AAC56B-CD44-11d0-8CC2-00C04FC295EE}");
         internal static readonly Guid /* WINTRUST_ACTION_TRUSTPROVIDER_TEST   */ WinTrustActionTrustProviderTest = new Guid("{573E31F8-DDBA-11d0-8CCB-00C04FC295EE}");

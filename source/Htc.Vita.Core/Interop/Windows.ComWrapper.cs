@@ -2094,8 +2094,8 @@ namespace Htc.Vita.Core.Interop
 
         internal class ShellLinkW : IDisposable
         {
-            private static PropertyKey _appUserModelActivatorId = new PropertyKey(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 26);
-            private static PropertyKey _appUserModelId = new PropertyKey(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 5);
+            private static PropertyKey _systemAppUserModelActivatorId = new PropertyKey(SystemAppUserModelGuid, 26);
+            private static PropertyKey _systemAppUserModelId = new PropertyKey(SystemAppUserModelGuid, 5);
 
             private bool _disposed;
             private IShellLinkW _shellLink;
@@ -2210,7 +2210,7 @@ namespace Htc.Vita.Core.Interop
                 try
                 {
                     var error = propertyStore.SetValue(
-                            ref _appUserModelActivatorId,
+                            ref _systemAppUserModelActivatorId,
                             ref propVariant
                     );
                     if (error == HResult.SOk)
@@ -2249,7 +2249,7 @@ namespace Htc.Vita.Core.Interop
                 try
                 {
                     var error = propertyStore.SetValue(
-                            ref _appUserModelId,
+                            ref _systemAppUserModelId,
                             ref propVariant
                     );
                     if (error == HResult.SOk)
