@@ -132,5 +132,22 @@ namespace Htc.Vita.Core.Interop
                 return CloseServiceHandle(handle);
             }
         }
+
+        internal class SafeTokenHandle : SafeHandleZeroOrMinusOneIsInvalid
+        {
+            private SafeTokenHandle() : base(true)
+            {
+            }
+
+            internal SafeTokenHandle(IntPtr handle) : base(true)
+            {
+                SetHandle(handle);
+            }
+
+            protected override bool ReleaseHandle()
+            {
+                return CloseHandle(handle);
+            }
+        }
     }
 }
