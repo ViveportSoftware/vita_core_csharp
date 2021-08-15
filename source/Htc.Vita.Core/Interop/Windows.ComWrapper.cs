@@ -1004,5 +1004,12 @@ namespace Htc.Vita.Core.Interop
                 return false;
             }
         }
+
+        internal class BitsJobProxySettings
+        {
+            internal string ProxyBypassList { get; set; }
+            internal string ProxyList { get; set; }
+            internal BitsJobProxyUsage Usage { get; set; }
+        }
     }
 }
