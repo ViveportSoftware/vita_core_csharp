@@ -149,5 +149,26 @@ namespace Htc.Vita.Core.Interop
                 return CloseHandle(handle);
             }
         }
+
+        internal class SafeWtsServerHandle : SafeHandleMinusOneIsInvalid
+        {
+            private SafeWtsServerHandle() : base(true)
+            {
+            }
+
+            internal SafeWtsServerHandle(IntPtr handle) : base(true)
+            {
+                SetHandle(handle);
+            }
+
+            protected override bool ReleaseHandle()
+            {
+                if (handle != WindowsTerminalServiceCurrentServerHandle)
+                {
+                    WTSCloseServer(handle);
+                }
+                return true;
+            }
+        }
     }
 }
