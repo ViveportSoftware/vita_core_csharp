@@ -434,6 +434,53 @@ namespace Htc.Vita.Core.Net
         }
 
         /// <summary>
+        /// Enum FileTransferState
+        /// </summary>
+        public enum FileTransferState
+        {
+            /// <summary>
+            /// Unknown state
+            /// </summary>
+            Unknown,
+            /// <summary>
+            /// Queued
+            /// </summary>
+            Queued,
+            /// <summary>
+            /// Connecting
+            /// </summary>
+            Connecting,
+            /// <summary>
+            /// Transferring
+            /// </summary>
+            Transferring,
+            /// <summary>
+            /// Suspended
+            /// </summary>
+            Suspended,
+            /// <summary>
+            /// Error
+            /// </summary>
+            Error,
+            /// <summary>
+            /// Transient error
+            /// </summary>
+            TransientError,
+            /// <summary>
+            /// Transferred
+            /// </summary>
+            Transferred,
+            /// <summary>
+            /// Acknowledged
+            /// </summary>
+            Acknowledged,
+            /// <summary>
+            /// Cancelled
+            /// </summary>
+            Cancelled
+        }
+
+        /// <summary>
         /// Enum FileTransferType
         /// </summary>
         public enum FileTransferType
