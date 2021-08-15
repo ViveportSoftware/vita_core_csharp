@@ -2092,7 +2092,7 @@ namespace Htc.Vita.Core.Interop
             }
         }
 
-        internal class ShellLink : IDisposable
+        internal class ShellLinkW : IDisposable
         {
             private static PropertyKey _appUserModelActivatorId = new PropertyKey(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 26);
             private static PropertyKey _appUserModelId = new PropertyKey(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 5);
@@ -2100,12 +2100,12 @@ namespace Htc.Vita.Core.Interop
             private bool _disposed;
             private IShellLinkW _shellLink;
 
-            internal ShellLink(IShellLinkW iShellLinkW)
+            internal ShellLinkW(IShellLinkW iShellLinkW)
             {
                 _shellLink = iShellLinkW;
             }
 
-            ~ShellLink()
+            ~ShellLinkW()
             {
                 Dispose(false);
             }
@@ -2142,15 +2142,15 @@ namespace Htc.Vita.Core.Interop
                 _disposed = true;
             }
 
-            internal static ShellLink GetInstance()
+            internal static ShellLinkW GetInstance()
             {
                 var iShellLinkW = Activator.CreateInstance(typeof(ComShellLink)) as IShellLinkW;
                 if (iShellLinkW != null)
                 {
-                    return new ShellLink(iShellLinkW);
+                    return new ShellLinkW(iShellLinkW);
                 }
 
-                Logger.GetInstance(typeof(ShellLink)).Error($"Cannot create new {nameof(IShellLinkW)}");
+                Logger.GetInstance(typeof(ShellLinkW)).Error($"Cannot create new {nameof(IShellLinkW)}");
                 return null;
             }
 
@@ -2158,13 +2158,13 @@ namespace Htc.Vita.Core.Interop
             {
                 if (_shellLink == null)
                 {
-                    throw new ObjectDisposedException(nameof(ShellLink), $"Cannot access a closed {nameof(IShellLinkW)}.");
+                    throw new ObjectDisposedException(nameof(ShellLinkW), $"Cannot access a closed {nameof(IShellLinkW)}.");
                 }
 
                 var persistFile = _shellLink as IPersistFile;
                 if (persistFile == null)
                 {
-                    Logger.GetInstance(typeof(ShellLink)).Error("Cannot get persist file.");
+                    Logger.GetInstance(typeof(ShellLinkW)).Error("Cannot get persist file.");
                     return false;
                 }
 
@@ -2179,7 +2179,7 @@ namespace Htc.Vita.Core.Interop
             {
                 if (_shellLink == null)
                 {
-                    throw new ObjectDisposedException(nameof(ShellLink), $"Cannot access a closed {nameof(IShellLinkW)}.");
+                    throw new ObjectDisposedException(nameof(ShellLinkW), $"Cannot access a closed {nameof(IShellLinkW)}.");
                 }
 
                 var error = _shellLink.SetDescription(description);
@@ -2188,7 +2188,7 @@ namespace Htc.Vita.Core.Interop
                     return true;
                 }
 
-                Logger.GetInstance(typeof(ShellLink)).Error($"Cannot set description. error: {error}");
+                Logger.GetInstance(typeof(ShellLinkW)).Error($"Cannot set description. error: {error}");
                 return false;
             }
 
@@ -2196,13 +2196,13 @@ namespace Htc.Vita.Core.Interop
             {
                 if (_shellLink == null)
                 {
-                    throw new ObjectDisposedException(nameof(ShellLink), $"Cannot access a closed {nameof(IShellLinkW)}.");
+                    throw new ObjectDisposedException(nameof(ShellLinkW), $"Cannot access a closed {nameof(IShellLinkW)}.");
                 }
 
                 var propertyStore = _shellLink as IPropertyStore;
                 if (propertyStore == null)
                 {
-                    Logger.GetInstance(typeof(ShellLink)).Error("Cannot get property store.");
+                    Logger.GetInstance(typeof(ShellLinkW)).Error("Cannot get property store.");
                     return false;
                 }
 
@@ -2222,7 +2222,7 @@ namespace Htc.Vita.Core.Interop
                         return true;
                     }
 
-                    Logger.GetInstance(typeof(ShellLink)).Error($"Cannot set source activator id. error: {error}");
+                    Logger.GetInstance(typeof(ShellLinkW)).Error($"Cannot set source activator id. error: {error}");
                     return false;
                 }
                 finally
@@ -2235,13 +2235,13 @@ namespace Htc.Vita.Core.Interop
             {
                 if (_shellLink == null)
                 {
-                    throw new ObjectDisposedException(nameof(ShellLink), $"Cannot access a closed {nameof(IShellLinkW)}.");
+                    throw new ObjectDisposedException(nameof(ShellLinkW), $"Cannot access a closed {nameof(IShellLinkW)}.");
                 }
 
                 var propertyStore = _shellLink as IPropertyStore;
                 if (propertyStore == null)
                 {
-                    Logger.GetInstance(typeof(ShellLink)).Error("Cannot get property store.");
+                    Logger.GetInstance(typeof(ShellLinkW)).Error("Cannot get property store.");
                     return false;
                 }
 
@@ -2262,7 +2262,7 @@ namespace Htc.Vita.Core.Interop
                         return true;
                     }
 
-                    Logger.GetInstance(typeof(ShellLink)).Error($"Cannot set source app id. error: {error}");
+                    Logger.GetInstance(typeof(ShellLinkW)).Error($"Cannot set source app id. error: {error}");
                     return false;
                 }
                 finally
@@ -2275,7 +2275,7 @@ namespace Htc.Vita.Core.Interop
             {
                 if (_shellLink == null)
                 {
-                    throw new ObjectDisposedException(nameof(ShellLink), $"Cannot access a closed {nameof(IShellLinkW)}.");
+                    throw new ObjectDisposedException(nameof(ShellLinkW), $"Cannot access a closed {nameof(IShellLinkW)}.");
                 }
 
                 var error = _shellLink.SetArguments(sourceArguments);
@@ -2284,7 +2284,7 @@ namespace Htc.Vita.Core.Interop
                     return true;
                 }
 
-                Logger.GetInstance(typeof(ShellLink)).Error($"Cannot set source arguments. error: {error}");
+                Logger.GetInstance(typeof(ShellLinkW)).Error($"Cannot set source arguments. error: {error}");
                 return false;
             }
 
@@ -2292,7 +2292,7 @@ namespace Htc.Vita.Core.Interop
             {
                 if (_shellLink == null)
                 {
-                    throw new ObjectDisposedException(nameof(ShellLink), $"Cannot access a closed {nameof(IShellLinkW)}.");
+                    throw new ObjectDisposedException(nameof(ShellLinkW), $"Cannot access a closed {nameof(IShellLinkW)}.");
                 }
 
                 var error = _shellLink.SetPath(sourcePath.FullName);
@@ -2301,7 +2301,7 @@ namespace Htc.Vita.Core.Interop
                     return true;
                 }
 
-                Logger.GetInstance(typeof(ShellLink)).Error($"Cannot set source path. error: {error}");
+                Logger.GetInstance(typeof(ShellLinkW)).Error($"Cannot set source path. error: {error}");
                 return false;
             }
 
@@ -2309,7 +2309,7 @@ namespace Htc.Vita.Core.Interop
             {
                 if (_shellLink == null)
                 {
-                    throw new ObjectDisposedException(nameof(ShellLink), $"Cannot access a closed {nameof(IShellLinkW)}.");
+                    throw new ObjectDisposedException(nameof(ShellLinkW), $"Cannot access a closed {nameof(IShellLinkW)}.");
                 }
 
                 var error = _shellLink.SetShowCmd(showWindowCommand);
@@ -2318,7 +2318,7 @@ namespace Htc.Vita.Core.Interop
                     return true;
                 }
 
-                Logger.GetInstance(typeof(ShellLink)).Error($"Cannot set source show window command. error: {error}");
+                Logger.GetInstance(typeof(ShellLinkW)).Error($"Cannot set source show window command. error: {error}");
                 return false;
             }
 
@@ -2326,7 +2326,7 @@ namespace Htc.Vita.Core.Interop
             {
                 if (_shellLink == null)
                 {
-                    throw new ObjectDisposedException(nameof(ShellLink), $"Cannot access a closed {nameof(IShellLinkW)}.");
+                    throw new ObjectDisposedException(nameof(ShellLinkW), $"Cannot access a closed {nameof(IShellLinkW)}.");
                 }
 
                 var error = _shellLink.SetWorkingDirectory(workingDirectory.FullName);
@@ -2335,7 +2335,7 @@ namespace Htc.Vita.Core.Interop
                     return true;
                 }
 
-                Logger.GetInstance(typeof(ShellLink)).Error($"Cannot set source working path. error: {error}");
+                Logger.GetInstance(typeof(ShellLinkW)).Error($"Cannot set source working path. error: {error}");
                 return false;
             }
 
@@ -2345,7 +2345,7 @@ namespace Htc.Vita.Core.Interop
             {
                 if (_shellLink == null)
                 {
-                    throw new ObjectDisposedException(nameof(ShellLink), $"Cannot access a closed {nameof(IShellLinkW)}.");
+                    throw new ObjectDisposedException(nameof(ShellLinkW), $"Cannot access a closed {nameof(IShellLinkW)}.");
                 }
 
                 var error = _shellLink.SetIconLocation(
@@ -2357,7 +2357,7 @@ namespace Htc.Vita.Core.Interop
                     return true;
                 }
 
-                Logger.GetInstance(typeof(ShellLink)).Error($"Cannot set target icon. error: {error}");
+                Logger.GetInstance(typeof(ShellLinkW)).Error($"Cannot set target icon. error: {error}");
                 return false;
             }
         }
