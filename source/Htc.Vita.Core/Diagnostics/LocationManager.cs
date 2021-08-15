@@ -57,7 +57,6 @@ namespace Htc.Vita.Core.Diagnostics
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
                 Logger.GetInstance(typeof(LocationManager)).Error(e.ToString());
             }
             return result ?? new GetLocationResult();
