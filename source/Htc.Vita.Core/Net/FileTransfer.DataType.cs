@@ -405,5 +405,32 @@ namespace Htc.Vita.Core.Net
             /// <value>The transferred files.</value>
             public uint TransferredFiles { get; set; }
         }
+
+        /// <summary>
+        /// Enum FileTransferPriority
+        /// </summary>
+        public enum FileTransferPriority
+        {
+            /// <summary>
+            /// Unknown priority
+            /// </summary>
+            Unknown,
+            /// <summary>
+            /// Foreground
+            /// </summary>
+            Foreground,
+            /// <summary>
+            /// High priority
+            /// </summary>
+            High,
+            /// <summary>
+            /// Normal priority
+            /// </summary>
+            Normal,
+            /// <summary>
+            /// Low priority
+            /// </summary>
+            Low
+        }
     }
 }
