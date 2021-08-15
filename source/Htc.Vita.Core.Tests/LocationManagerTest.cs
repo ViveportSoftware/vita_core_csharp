@@ -33,6 +33,8 @@ namespace Htc.Vita.Core.Tests
             Assert.Equal(LocationManager.GetLocationStatus.Ok, getLocationStatus);
             var location = getLocationResult.Location;
             Logger.GetInstance(typeof(LocationManagerTest)).Info($"Location.CountryCodeAlpha2: {location.CountryCodeAlpha2}");
+            Logger.GetInstance(typeof(LocationManagerTest)).Info($"Location.ProviderName: {location.ProviderName}");
+            Logger.GetInstance(typeof(LocationManagerTest)).Info($"Location.ProviderType: {location.ProviderType}");
         }
     }
 }

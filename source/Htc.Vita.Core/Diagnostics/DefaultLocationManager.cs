@@ -10,6 +10,8 @@ namespace Htc.Vita.Core.Diagnostics
     /// <seealso cref="LocationManager" />
     public class DefaultLocationManager : LocationManager
     {
+        private const string ProviderNameWindows7Api = "windows7api";
+
         /// <summary>
         /// Gets the location via Windows 7 API.
         /// </summary>
@@ -60,7 +62,9 @@ namespace Htc.Vita.Core.Diagnostics
                     {
                             Location = new LocationInfo
                             {
-                                    CountryCodeAlpha2 = countryRegion
+                                    CountryCodeAlpha2 = countryRegion,
+                                    ProviderName = ProviderNameWindows7Api,
+                                    ProviderType = LocationProviderType.OperatingSystem
                             },
                             Status = GetLocationStatus.Ok
                     };

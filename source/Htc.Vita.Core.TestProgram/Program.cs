@@ -64,6 +64,22 @@ namespace Htc.Vita.Core.TestProgram
             Console.WriteLine($"SecurityProtocolManager.GetAvailableProtocol(): {SecurityProtocolManager.GetAvailableProtocol()}");
             Console.ReadKey();
 
+            var locationManager = LocationManager.GetInstance();
+            var getLocationResult = locationManager.GetLocation();
+            var getLocationStatus = getLocationResult.Status;
+            if (getLocationStatus != LocationManager.GetLocationStatus.Ok)
+            {
+                Console.WriteLine($"Can not get location. status: {getLocationStatus}");
+            }
+            else
+            {
+                var locationInfo = getLocationResult.Location;
+                Console.WriteLine($"locationInfo.CountryCodeAlpha2: {locationInfo.CountryCodeAlpha2}");
+                Console.WriteLine($"locationInfo.ProviderName: {locationInfo.ProviderName}");
+                Console.WriteLine($"locationInfo.ProviderType: {locationInfo.ProviderType}");
+            }
+            Console.ReadKey();
+
             var windowsStoreAppManager = WindowsStoreAppManager.GetInstance();
             Console.WriteLine($"windowsStoreAppManager.IsIdentityAvailableWithCurrentProcess(): {windowsStoreAppManager.IsIdentityAvailableWithCurrentProcess()}");
             const string packageFamilyName = "Microsoft.SkypeApp_kzf8qxf38zg5c";
