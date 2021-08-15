@@ -44,7 +44,11 @@ namespace Htc.Vita.Core.Diagnostics
             /// <summary>
             /// Provided by user
             /// </summary>
-            User
+            User,
+            /// <summary>
+            /// The external application
+            /// </summary>
+            ExternalApplication
         }
     }
 }
