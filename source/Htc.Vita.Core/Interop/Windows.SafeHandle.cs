@@ -21,5 +21,25 @@ namespace Htc.Vita.Core.Interop
                 return CertFreeCertificateContext(handle);
             }
         }
+
+        internal class SafeCertStoreHandle : SafeHandleZeroOrMinusOneIsInvalid
+        {
+            private SafeCertStoreHandle() : base(true)
+            {
+            }
+
+            internal SafeCertStoreHandle(IntPtr handle) : base(true)
+            {
+                SetHandle(handle);
+            }
+
+            protected override bool ReleaseHandle()
+            {
+                return CertCloseStore(
+                        handle,
+                        CertCloseStoreFlag.Default
+                );
+            }
+        }
     }
 }
