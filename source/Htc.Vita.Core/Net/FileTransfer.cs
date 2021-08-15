@@ -233,29 +233,6 @@ namespace Htc.Vita.Core.Net
         );
 
         /// <summary>
-        /// Enum FileTransferType
-        /// </summary>
-        public enum FileTransferType
-        {
-            /// <summary>
-            /// Unknown type
-            /// </summary>
-            Unknown,
-            /// <summary>
-            /// Download
-            /// </summary>
-            Download,
-            /// <summary>
-            /// Upload
-            /// </summary>
-            Upload,
-            /// <summary>
-            /// Upload and reply
-            /// </summary>
-            UploadAndReply
-        }
-
-        /// <summary>
         /// Enum FileTransferState
         /// </summary>
         public enum FileTransferState
