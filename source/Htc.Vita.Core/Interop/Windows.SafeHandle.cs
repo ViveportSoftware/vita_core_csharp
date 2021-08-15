@@ -58,5 +58,22 @@ namespace Htc.Vita.Core.Interop
                 return CryptMsgClose(handle);
             }
         }
+
+        internal class SafeDevInfoSetHandle : SafeHandleMinusOneIsInvalid
+        {
+            private SafeDevInfoSetHandle() : base(true)
+            {
+            }
+
+            internal SafeDevInfoSetHandle(IntPtr handle) : base(true)
+            {
+                SetHandle(handle);
+            }
+
+            protected override bool ReleaseHandle()
+            {
+                return SetupDiDestroyDeviceInfoList(handle);
+            }
+        }
     }
 }
