@@ -122,7 +122,7 @@ namespace Htc.Vita.Core.IO
 
                         if (!devicePath.ToLower().Contains("vid_"))
                         {
-                            Logger.GetInstance(typeof(Windows)).Error($"Can not get valid HID device path: {devicePath}");
+                            Logger.GetInstance(typeof(Windows)).Debug($"Can not get valid HID device path: {devicePath}");
                             deviceIndex++;
                             continue;
                         }
