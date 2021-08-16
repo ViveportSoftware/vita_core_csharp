@@ -12,6 +12,21 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
+        internal static class ComWrapperMarshal
+        {
+            internal static bool IsComObject(object o)
+            {
+                return Marshal.IsComObject(o);
+            }
+
+            internal static int ReleaseComObject(object o)
+            {
+#pragma warning disable CA1416
+                return Marshal.ReleaseComObject(o);
+#pragma warning restore CA1416
+            }
+        }
+
         internal class BitsCallback : IBackgroundCopyCallback
         {
             private readonly BitsManager _bitsManager;
@@ -129,11 +144,9 @@ namespace Htc.Vita.Core.Interop
                 {
                     return;
                 }
-                if (Marshal.IsComObject(_backgroundCopyError))
+                if (ComWrapperMarshal.IsComObject(_backgroundCopyError))
                 {
-#pragma warning disable CA1416
-                    Marshal.ReleaseComObject(_backgroundCopyError);
-#pragma warning restore CA1416
+                    ComWrapperMarshal.ReleaseComObject(_backgroundCopyError);
                 }
                 _backgroundCopyError = null;
 
@@ -277,11 +290,9 @@ namespace Htc.Vita.Core.Interop
                 {
                     return;
                 }
-                if (Marshal.IsComObject(_backgroundCopyFile))
+                if (ComWrapperMarshal.IsComObject(_backgroundCopyFile))
                 {
-#pragma warning disable CA1416
-                    Marshal.ReleaseComObject(_backgroundCopyFile);
-#pragma warning restore CA1416
+                    ComWrapperMarshal.ReleaseComObject(_backgroundCopyFile);
                 }
                 _backgroundCopyFile = null;
 
@@ -377,11 +388,9 @@ namespace Htc.Vita.Core.Interop
                 {
                     return;
                 }
-                if (Marshal.IsComObject(_enumBackgroundCopyFiles))
+                if (ComWrapperMarshal.IsComObject(_enumBackgroundCopyFiles))
                 {
-#pragma warning disable CA1416
-                    Marshal.ReleaseComObject(_enumBackgroundCopyFiles);
-#pragma warning restore CA1416
+                    ComWrapperMarshal.ReleaseComObject(_enumBackgroundCopyFiles);
                 }
                 _enumBackgroundCopyFiles = null;
 
@@ -546,11 +555,9 @@ namespace Htc.Vita.Core.Interop
                 {
                     return;
                 }
-                if (Marshal.IsComObject(_backgroundCopyJob))
+                if (ComWrapperMarshal.IsComObject(_backgroundCopyJob))
                 {
-#pragma warning disable CA1416
-                    Marshal.ReleaseComObject(_backgroundCopyJob);
-#pragma warning restore CA1416
+                    ComWrapperMarshal.ReleaseComObject(_backgroundCopyJob);
                 }
                 _backgroundCopyJob = null;
 
@@ -1095,11 +1102,9 @@ namespace Htc.Vita.Core.Interop
                 {
                     return;
                 }
-                if (Marshal.IsComObject(_backgroundCopyManager))
+                if (ComWrapperMarshal.IsComObject(_backgroundCopyManager))
                 {
-#pragma warning disable CA1416
-                    Marshal.ReleaseComObject(_backgroundCopyManager);
-#pragma warning restore CA1416
+                    ComWrapperMarshal.ReleaseComObject(_backgroundCopyManager);
                 }
                 _backgroundCopyManager = null;
 
@@ -1225,11 +1230,9 @@ namespace Htc.Vita.Core.Interop
                             {
                                 if (iBackgroundCopyJob != null)
                                 {
-                                    if (Marshal.IsComObject(iBackgroundCopyJob))
+                                    if (ComWrapperMarshal.IsComObject(iBackgroundCopyJob))
                                     {
-#pragma warning disable CA1416
-                                        Marshal.ReleaseComObject(iBackgroundCopyJob);
-#pragma warning restore CA1416
+                                        ComWrapperMarshal.ReleaseComObject(iBackgroundCopyJob);
                                     }
                                 }
                             }
@@ -1257,11 +1260,9 @@ namespace Htc.Vita.Core.Interop
                 {
                     if (iEnumBackgroundCopyJobs != null)
                     {
-                        if (Marshal.IsComObject(iEnumBackgroundCopyJobs))
+                        if (ComWrapperMarshal.IsComObject(iEnumBackgroundCopyJobs))
                         {
-#pragma warning disable CA1416
-                            Marshal.ReleaseComObject(iEnumBackgroundCopyJobs);
-#pragma warning restore CA1416
+                            ComWrapperMarshal.ReleaseComObject(iEnumBackgroundCopyJobs);
                         }
                     }
                 }
@@ -1372,11 +1373,9 @@ namespace Htc.Vita.Core.Interop
                 {
                     return;
                 }
-                if (Marshal.IsComObject(_dxgiAdapter))
+                if (ComWrapperMarshal.IsComObject(_dxgiAdapter))
                 {
-#pragma warning disable CA1416
-                    Marshal.ReleaseComObject(_dxgiAdapter);
-#pragma warning restore CA1416
+                    ComWrapperMarshal.ReleaseComObject(_dxgiAdapter);
                 }
                 _dxgiAdapter = null;
 
@@ -1480,11 +1479,9 @@ namespace Htc.Vita.Core.Interop
                 {
                     return;
                 }
-                if (Marshal.IsComObject(_dxgiFactory))
+                if (ComWrapperMarshal.IsComObject(_dxgiFactory))
                 {
-#pragma warning disable CA1416
-                    Marshal.ReleaseComObject(_dxgiFactory);
-#pragma warning restore CA1416
+                    ComWrapperMarshal.ReleaseComObject(_dxgiFactory);
                 }
                 _dxgiFactory = null;
 
@@ -1583,11 +1580,9 @@ namespace Htc.Vita.Core.Interop
                 {
                     return;
                 }
-                if (Marshal.IsComObject(_dxgiOutput))
+                if (ComWrapperMarshal.IsComObject(_dxgiOutput))
                 {
-#pragma warning disable CA1416
-                    Marshal.ReleaseComObject(_dxgiOutput);
-#pragma warning restore CA1416
+                    ComWrapperMarshal.ReleaseComObject(_dxgiOutput);
                 }
                 _dxgiOutput = null;
 
@@ -1659,11 +1654,9 @@ namespace Htc.Vita.Core.Interop
                 {
                     return;
                 }
-                if (Marshal.IsComObject(_location))
+                if (ComWrapperMarshal.IsComObject(_location))
                 {
-#pragma warning disable CA1416
-                    Marshal.ReleaseComObject(_location);
-#pragma warning restore CA1416
+                    ComWrapperMarshal.ReleaseComObject(_location);
                 }
                 _location = null;
 
@@ -1807,11 +1800,9 @@ namespace Htc.Vita.Core.Interop
                 {
                     return;
                 }
-                if (Marshal.IsComObject(_locationReport))
+                if (ComWrapperMarshal.IsComObject(_locationReport))
                 {
-#pragma warning disable CA1416
-                    Marshal.ReleaseComObject(_locationReport);
-#pragma warning restore CA1416
+                    ComWrapperMarshal.ReleaseComObject(_locationReport);
                 }
                 _locationReport = null;
 
@@ -1889,11 +1880,9 @@ namespace Htc.Vita.Core.Interop
                 {
                     return;
                 }
-                if (Marshal.IsComObject(_portableDeviceManager))
+                if (ComWrapperMarshal.IsComObject(_portableDeviceManager))
                 {
-#pragma warning disable CA1416
-                    Marshal.ReleaseComObject(_portableDeviceManager);
-#pragma warning restore CA1416
+                    ComWrapperMarshal.ReleaseComObject(_portableDeviceManager);
                 }
                 _portableDeviceManager = null;
 
@@ -2131,11 +2120,9 @@ namespace Htc.Vita.Core.Interop
                 {
                     return;
                 }
-                if (Marshal.IsComObject(_shellLink))
+                if (ComWrapperMarshal.IsComObject(_shellLink))
                 {
-#pragma warning disable CA1416
-                    Marshal.ReleaseComObject(_shellLink);
-#pragma warning restore CA1416
+                    ComWrapperMarshal.ReleaseComObject(_shellLink);
                 }
                 _shellLink = null;
 
