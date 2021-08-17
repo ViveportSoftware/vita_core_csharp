@@ -44,10 +44,10 @@ namespace Htc.Vita.Core.Interop
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/hidsdi/nf-hidsdi-hidd_getindexedstring")]
         [DllImport(Libraries.WindowsHid,
-            CallingConvention = CallingConvention.Winapi,
-            CharSet = CharSet.Unicode,
-            ExactSpelling = true,
-            SetLastError = true)]
+                CallingConvention = CallingConvention.Winapi,
+                CharSet = CharSet.Unicode,
+                ExactSpelling = true,
+                SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool HidD_GetIndexedString(
                 /* _In_  HANDLE */ [In] SafeFileHandle hidDeviceObject,

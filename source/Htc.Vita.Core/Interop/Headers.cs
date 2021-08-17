@@ -9,11 +9,13 @@ namespace Htc.Vita.Core.Interop
         internal const string WindowsDxgitype          =          "dxgitype.h";
         internal const string WindowsFileapi           =           "fileapi.h";
         internal const string WindowsHidpi             =             "hidpi.h";
+        internal const string WindowsLocationapi       =       "locationapi.h";
         internal const string WindowsMinwinbase        =        "minwinbase.h";
         internal const string WindowsMinwindef         =         "minwindef.h";
         internal const string WindowsProcessthreadsapi = "processthreadsapi.h";
         internal const string WindowsPropidlbase       =       "propidlbase.h";
         internal const string WindowsReason            =            "reason.h";
+        internal const string WindowsSensorsapi        =        "sensorsapi.h";
         internal const string WindowsSetupapi          =          "setupapi.h";
         internal const string WindowsShlobj_core       =       "shlobj_core.h";
         internal const string WindowsWinbase           =           "winbase.h";

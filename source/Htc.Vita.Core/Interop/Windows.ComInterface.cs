@@ -7,46 +7,33 @@ namespace Htc.Vita.Core.Interop
 {
     internal static partial class Windows
     {
-        internal const string ComInterfaceClsidBackgroundCopyManager = "4991d34b-80a1-4291-83b6-3328366b9097";
-        internal const string ComInterfaceClsidPortableDeviceManager = "0af10cec-2ecd-4b92-9581-34f6ae0637f3";
-        internal const string ComInterfaceClsidShellLink = "00021401-0000-0000-c000-000000000046";
-        internal const string ComInterfaceIBackgroundCopyCallback = "97ea99c7-0186-4ad4-8df9-c5b4e0ed6b22";
-        internal const string ComInterfaceIBackgroundCopyError = "19c613a0-fcb8-4f28-81ae-897c3d078f81";
-        internal const string ComInterfaceIBackgroundCopyFile = "01b7bd23-fb88-4a77-8490-5891d3e4653a";
-        internal const string ComInterfaceIBackgroundCopyJob = "37668d37-507e-4160-9316-26306d150b12";
-        internal const string ComInterfaceIBackgroundCopyJob2 = "54b50739-686f-45eb-9dff-d6a9a0faa9af";
-        internal const string ComInterfaceIBackgroundCopyManager = "5ce34c0d-0dc9-4c1f-897c-daa1b78cee7c";
-        internal const string ComInterfaceIDxgiAdapter = "2411e7e1-12ac-4ccf-bd14-9798e8534dc0";
-        internal const string ComInterfaceIDxgiFactory = "7b7166ec-21c7-44ae-b21a-c9ae321ae369";
-        internal const string ComInterfaceIDxgiObject = "aec22fb8-76f3-4639-9be0-28eb43a67a2e";
-        internal const string ComInterfaceIDxgiOutput = "ae02eedb-c735-4690-8d52-5a8dc20213aa";
-        internal const string ComInterfaceIEnumBackgroundCopyFiles = "ca51e165-c365-424c-8d41-24aaa4ff3c40";
-        internal const string ComInterfaceIEnumBackgroundCopyJobs = "1af4f612-3b71-466f-8f58-7b6f73ac57ad";
-        internal const string ComInterfaceIPortableDeviceManager = "a1567595-4c2f-4574-a6fa-ecef917b9a40";
-        internal const string ComInterfaceIPropertyStore = "886d8eeb-8cf2-4446-8d02-cdba1dbdcf99";
-        internal const string ComInterfaceIShellLinkW = "000214f9-0000-0000-c000-000000000046";
-
-        [ComImport]
-        [Guid(ComInterfaceClsidBackgroundCopyManager)]
-        internal class ClsidBackgroundCopyManager
+        internal static class ComInterfaceId
         {
-        }
-
-        [ComImport]
-        [Guid(ComInterfaceClsidPortableDeviceManager)]
-        internal class ClsidPortableDeviceManager
-        {
-        }
-
-        [ComImport]
-        [Guid(ComInterfaceClsidShellLink)]
-        internal class ClsidShellLink
-        {
+            internal const string IBackgroundCopyCallback  = "97ea99c7-0186-4ad4-8df9-c5b4e0ed6b22";
+            internal const string IBackgroundCopyError     = "19c613a0-fcb8-4f28-81ae-897c3d078f81";
+            internal const string IBackgroundCopyFile      = "01b7bd23-fb88-4a77-8490-5891d3e4653a";
+            internal const string IBackgroundCopyJob       = "37668d37-507e-4160-9316-26306d150b12";
+            internal const string IBackgroundCopyJob2      = "54b50739-686f-45eb-9dff-d6a9a0faa9af";
+            internal const string IBackgroundCopyManager   = "5ce34c0d-0dc9-4c1f-897c-daa1b78cee7c";
+            internal const string ICivicAddressReport      = "c0b19f70-4adf-445d-87f2-cad8fd711792";
+            internal const string IDxgiAdapter             = "2411e7e1-12ac-4ccf-bd14-9798e8534dc0";
+            internal const string IDxgiFactory             = "7b7166ec-21c7-44ae-b21a-c9ae321ae369";
+            internal const string IDxgiObject              = "aec22fb8-76f3-4639-9be0-28eb43a67a2e";
+            internal const string IDxgiOutput              = "ae02eedb-c735-4690-8d52-5a8dc20213aa";
+            internal const string IEnumBackgroundCopyFiles = "ca51e165-c365-424c-8d41-24aaa4ff3c40";
+            internal const string IEnumBackgroundCopyJobs  = "1af4f612-3b71-466f-8f58-7b6f73ac57ad";
+            internal const string ILatLongReport           = "7fed806d-0ef8-4f07-80ac-36a0beae3134";
+            internal const string ILocation                = "ab2ece69-56d9-4f28-b525-de1b0ee44237";
+            internal const string ILocationEvents          = "cae02bbf-798b-4508-a207-35a7906dc73d";
+            internal const string ILocationReport          = "c8b7f7ee-75d0-4dB9-b62d-7a0f369ca456";
+            internal const string IPortableDeviceManager   = "a1567595-4c2f-4574-a6fa-ecef917b9a40";
+            internal const string IPropertyStore           = "886d8eeb-8cf2-4446-8d02-cdba1dbdcf99";
+            internal const string IShellLinkW              = "000214f9-0000-0000-c000-000000000046";
         }
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceIBackgroundCopyCallback)]
+        [Guid(ComInterfaceId.IBackgroundCopyCallback)]
         internal interface IBackgroundCopyCallback
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopycallback-jobtransferred")]
@@ -72,7 +59,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceIBackgroundCopyError)]
+        [Guid(ComInterfaceId.IBackgroundCopyError)]
         internal interface IBackgroundCopyError
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyerror-geterror")]
@@ -111,7 +98,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceIBackgroundCopyFile)]
+        [Guid(ComInterfaceId.IBackgroundCopyFile)]
         internal interface IBackgroundCopyFile
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyfile-getremotename")]
@@ -135,7 +122,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceIBackgroundCopyJob2)]
+        [Guid(ComInterfaceId.IBackgroundCopyJob2)]
         internal interface IBackgroundCopyJob
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-addfileset")]
@@ -389,7 +376,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceIBackgroundCopyManager)]
+        [Guid(ComInterfaceId.IBackgroundCopyManager)]
         internal interface IBackgroundCopyManager
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ibackgroundcopymanager-createjob")]
@@ -426,7 +413,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceIDxgiAdapter)]
+        [Guid(ComInterfaceId.IDxgiAdapter)]
         internal interface IDxgiAdapter
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/dxgi/nf-dxgi-idxgiobject-setprivatedata",
@@ -479,7 +466,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceIDxgiFactory)]
+        [Guid(ComInterfaceId.IDxgiFactory)]
         internal interface IDxgiFactory
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/dxgi/nf-dxgi-idxgiobject-setprivatedata",
@@ -526,7 +513,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceIDxgiObject)]
+        [Guid(ComInterfaceId.IDxgiObject)]
         internal interface IDxgiObject
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/dxgi/nf-dxgi-idxgiobject-setprivatedata")]
@@ -562,7 +549,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceIDxgiOutput)]
+        [Guid(ComInterfaceId.IDxgiOutput)]
         internal interface IDxgiOutput
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/dxgi/nf-dxgi-idxgiobject-setprivatedata",
@@ -608,7 +595,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceIEnumBackgroundCopyFiles)]
+        [Guid(ComInterfaceId.IEnumBackgroundCopyFiles)]
         internal interface IEnumBackgroundCopyFiles
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ienumbackgroundcopyfiles-next")]
@@ -644,7 +631,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceIEnumBackgroundCopyJobs)]
+        [Guid(ComInterfaceId.IEnumBackgroundCopyJobs)]
         internal interface IEnumBackgroundCopyJobs
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/bits/nf-bits-ienumbackgroundcopyjobs-next")]
@@ -680,7 +667,122 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceIPortableDeviceManager)]
+        [Guid(ComInterfaceId.ILocation)]
+        internal interface ILocation
+        {
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/locationapi/nf-locationapi-ilocation-registerforreport",
+                    File = Headers.WindowsLocationapi)]
+            [PreserveSig]
+            HResult RegisterForReport(
+                    /* __RPC__in_opt ILocationEvents* */ [In][MarshalAs(UnmanagedType.Interface)] ILocationEvents pEvents,
+                    /* __RPC__in     REFIID           */ [In] ref Guid reportType,
+                    /*               DWORD            */ [In] uint dwRequestedReportInterval
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/locationapi/nf-locationapi-ilocation-unregisterforreport",
+                    File = Headers.WindowsLocationapi)]
+            [PreserveSig]
+            HResult UnregisterForReport(
+                    /* __RPC__in REFIID */ [In] ref Guid reportType
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/locationapi/nf-locationapi-ilocation-getreport",
+                    File = Headers.WindowsLocationapi)]
+            [PreserveSig]
+            HResult GetReport(
+                    /* __RPC__in            REFIID            */ [In] ref Guid reportType,
+                    /* __RPC__deref_out_opt ILocationReport** */ [Out][MarshalAs(UnmanagedType.Interface)] out ILocationReport ppLocationReport
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/locationapi/nf-locationapi-ilocation-getreportstatus",
+                    File = Headers.WindowsLocationapi)]
+            [PreserveSig]
+            HResult GetReportStatus(
+                    /* __RPC__in  REFIID                       */ [In] ref Guid reportType,
+                    /* __RPC__out enum LOCATION_REPORT_STATUS* */ [Out] out LocationReportStatus pStatus
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/locationapi/nf-locationapi-ilocation-getreportinterval",
+                    File = Headers.WindowsLocationapi)]
+            [PreserveSig]
+            HResult GetReportInterval(
+                    /* __RPC__in  REFIID */ [In] ref Guid reportType,
+                    /* __RPC__out DWORD* */ [Out] out uint pMilliseconds
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/locationapi/nf-locationapi-ilocation-setreportinterval",
+                    File = Headers.WindowsLocationapi)]
+            [PreserveSig]
+            HResult SetReportInterval(
+                    /* __RPC__in REFIID */ [In] ref Guid reportType,
+                    /*           DWORD  */ [In] uint millisecondsRequested
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/locationapi/nf-locationapi-ilocation-getdesiredaccuracy",
+                    File = Headers.WindowsLocationapi)]
+            [PreserveSig]
+            HResult GetDesiredAccuracy(
+                    /* __RPC__in  REFIID                          */ [In] ref Guid reportType,
+                    /* __RPC__out enum LOCATION_DESIRED_ACCURACY* */ [Out] LocationDesiredAccuracy pDesiredAccuracy
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/locationapi/nf-locationapi-ilocation-setdesiredaccuracy",
+                    File = Headers.WindowsLocationapi)]
+            [PreserveSig]
+            HResult SetDesiredAccuracy(
+                    /* __RPC__in REFIID                         */ [In] ref Guid reportType,
+                    /*           enum LOCATION_DESIRED_ACCURACY */ [In] LocationDesiredAccuracy desiredAccuracy
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/locationapi/nf-locationapi-ilocation-requestpermissions",
+                    File = Headers.WindowsLocationapi)]
+            [PreserveSig]
+            HResult RequestPermissions(
+                    /* __RPC__in_opt         HWND  */ [In] IntPtr hParent,
+                    /* __RPC__in_ecount_full IID*  */ [In] ref Guid pReportTypes,
+                    /*                       ULONG */ [In] uint count,
+                    /*                       BOOL  */ [In] bool fModal
+            );
+        }
+
+        [ComImport]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [Guid(ComInterfaceId.ILocationEvents)]
+        internal interface ILocationEvents
+        {
+        }
+
+        [ComImport]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [Guid(ComInterfaceId.ILocationReport)]
+        internal interface ILocationReport
+        {
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/locationapi/nf-locationapi-ilocationreport-getsensorid",
+                    File = Headers.WindowsLocationapi)]
+            [PreserveSig]
+            HResult GetSensorID(
+                    /* __RPC__out SENSOR_ID* */ [Out] out Guid pSensorID
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/locationapi/nf-locationapi-ilocationreport-gettimestamp",
+                    File = Headers.WindowsLocationapi)]
+            [PreserveSig]
+            HResult GetTimestamp(
+                    /* __RPC__out SYSTEMTIME* */ [Out] out SystemTime pCreationTime
+            );
+
+            [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/locationapi/nf-locationapi-ilocationreport-getvalue",
+                    File = Headers.WindowsLocationapi)]
+            [PreserveSig]
+            HResult GetValue(
+                    /* __RPC__in  REFPROPERTYKEY */ [In] ref PropertyKey pKey,
+                    /* __RPC__out PROPVARIANT*   */ [In][Out] PropVariant pValue
+            );
+        }
+
+        [ComImport]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [Guid(ComInterfaceId.IPortableDeviceManager)]
         internal interface IPortableDeviceManager
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getdevices")]
@@ -721,7 +823,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceIPropertyStore)]
+        [Guid(ComInterfaceId.IPropertyStore)]
         internal interface IPropertyStore
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/propsys/nf-propsys-ipropertystore-getcount")]
@@ -758,7 +860,7 @@ namespace Htc.Vita.Core.Interop
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid(ComInterfaceIShellLinkW)]
+        [Guid(ComInterfaceId.IShellLinkW)]
         internal interface IShellLinkW
         {
             [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinkw-getpath")]

@@ -8,6 +8,7 @@ namespace Htc.Vita.Core.Interop
         internal const string WindowsDxgi     =     "dxgi.dll";
         internal const string WindowsHid      =      "hid.dll";
         internal const string WindowsKernel32 = "kernel32.dll";
+        internal const string WindowsOle32    =    "ole32.dll";
         internal const string WindowsPsapi    =    "psapi.dll";
         internal const string WindowsSetupapi = "setupapi.dll";
         internal const string WindowsShell32  =  "shell32.dll";

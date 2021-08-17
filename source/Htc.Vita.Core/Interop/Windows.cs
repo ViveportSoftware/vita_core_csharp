@@ -14,16 +14,18 @@ namespace Htc.Vita.Core.Interop
                 File = Headers.WindowsWinnt)]
         internal const string /* SE_SHUTDOWN_NAME */ SeShutdownName = "SeShutdownPrivilege";
 
-        internal static readonly Guid /* GUID_DEVCLASS_USB                    */ DeviceClassUsb = new Guid("{36FC9E60-C465-11CF-8056-444553540000}");
-        internal static readonly Guid /* GUID_DEVINTERFACE_HID                */ DeviceInterfaceHid = new Guid("{4D1E55B2-F16F-11CF-88CB-001111000030}");
-        internal static readonly Guid /* GUID_DEVINTERFACE_USB_DEVICE         */ DeviceInterfaceUsbDevice = new Guid("{A5DCBF10-6530-11D2-901F-00C04FB951ED}");
-        internal static readonly Guid /* GUID_DEVINTERFACE_USB_HUB            */ DeviceInterfaceUsbHub = new Guid("{F18A0E88-C30C-11D0-8815-00A0C906BED8}");
-        internal static readonly Guid /* DRIVER_ACTION_VERIFY                 */ DriverActionVerify = new Guid("{F750E6C3-38EE-11d1-85E5-00C04FC295EE}");
-        internal static readonly Guid /* HTTPSPROV_ACTION                     */ HttpsProvAction = new Guid("{573E31F8-AABA-11d0-8CCB-00C04FC295EE}");
-        internal static readonly Guid /* OFFICESIGN_ACTION_VERIFY             */ OfficeSignActionVerify = new Guid("{5555C2CD-17FB-11d1-85C4-00C04FC295EE}");
+        internal static readonly Guid /* GUID_DEVCLASS_USB                    */ DeviceClassUsb                   = new Guid("{36FC9E60-C465-11CF-8056-444553540000}");
+        internal static readonly Guid /* GUID_DEVINTERFACE_HID                */ DeviceInterfaceHid               = new Guid("{4D1E55B2-F16F-11CF-88CB-001111000030}");
+        internal static readonly Guid /* GUID_DEVINTERFACE_USB_DEVICE         */ DeviceInterfaceUsbDevice         = new Guid("{A5DCBF10-6530-11D2-901F-00C04FB951ED}");
+        internal static readonly Guid /* GUID_DEVINTERFACE_USB_HUB            */ DeviceInterfaceUsbHub            = new Guid("{F18A0E88-C30C-11D0-8815-00A0C906BED8}");
+        internal static readonly Guid /* DRIVER_ACTION_VERIFY                 */ DriverActionVerify               = new Guid("{F750E6C3-38EE-11d1-85E5-00C04FC295EE}");
+        internal static readonly Guid /* HTTPSPROV_ACTION                     */ HttpsProvAction                  = new Guid("{573E31F8-AABA-11d0-8CCB-00C04FC295EE}");
+        internal static readonly Guid /* OFFICESIGN_ACTION_VERIFY             */ OfficeSignActionVerify           = new Guid("{5555C2CD-17FB-11d1-85C4-00C04FC295EE}");
+        internal static readonly Guid /* SENSOR_DATA_TYPE_LOCATION_GUID       */ SensorDataTypeLocationGuid       = new Guid("{055C74D8-CA6F-47D6-95C6-1ED3637A0FF4}");
+        internal static readonly Guid /* System.AppUserModel                  */ SystemAppUserModelGuid           = new Guid("{9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3}");
         internal static readonly Guid /* WINTRUST_ACTION_GENERIC_CHAIN_VERIFY */ WinTrustActionGenericChainVerify = new Guid("{FC451C16-AC75-11D1-B4B8-00C04FB66EA0}");
-        internal static readonly Guid /* WINTRUST_ACTION_GENERIC_VERIFY_V2    */ WinTrustActionGenericVerifyV2 = new Guid("{00AAC56B-CD44-11d0-8CC2-00C04FC295EE}");
-        internal static readonly Guid /* WINTRUST_ACTION_TRUSTPROVIDER_TEST   */ WinTrustActionTrustProviderTest = new Guid("{573E31F8-DDBA-11d0-8CCB-00C04FC295EE}");
+        internal static readonly Guid /* WINTRUST_ACTION_GENERIC_VERIFY_V2    */ WinTrustActionGenericVerifyV2    = new Guid("{00AAC56B-CD44-11d0-8CC2-00C04FC295EE}");
+        internal static readonly Guid /* WINTRUST_ACTION_TRUSTPROVIDER_TEST   */ WinTrustActionTrustProviderTest  = new Guid("{573E31F8-DDBA-11d0-8CCB-00C04FC295EE}");
 
         internal static readonly IntPtr /* INVALID_HANDLE_VALUE      */ InvalidHandleValue = new IntPtr(-1);
         internal static readonly IntPtr /* WTS_CURRENT_SERVER_HANDLE */ WindowsTerminalServiceCurrentServerHandle = IntPtr.Zero;
@@ -461,6 +463,7 @@ namespace Htc.Vita.Core.Interop
             /* ERROR_SERVICE_DOES_NOT_EXIST   (1060,  0x424) */ ServiceDoesNotExist   =  0x424,
             /* ERROR_DEVICE_NOT_CONNECTED     (1167,  0x48f) */ DeviceNotConnected    =  0x48f,
             /* ERROR_NOT_FOUND                (1168,  0x490) */ NotFound              =  0x490,
+            /* ERROR_CANCELLED                (1223,  0x4c7) */ Cancelled             =  0x4c7,
             /* ERROR_NO_SUCH_LOGON_SESSION    (1312,  0x520) */ NoSuchLogonSession    =  0x520,
             /* ERROR_BAD_IMPERSONATION_LEVEL  (1346,  0x542) */ BadImpersonationLevel =  0x542,
             /* ERROR_RESOURCE_LANG_NOT_FOUND  (1815,  0x717) */ ResourceLangNotFound  =  0x717,
@@ -571,6 +574,8 @@ namespace Htc.Vita.Core.Interop
             /* E_UNEXPECTED                                      */ EUnexpected                = 0x8000ffff,
             /* E_ACCESSDENIED                                    */ EAccessDenied              = 0x80070000
                                                                                                | Error.AccessDenied,
+            /* HRESULT_FROM_WIN32(ERROR_ACCESS_DENIED)           */ EWin32AccessDenied         = 0x80070000
+                                                                                               | Error.AccessDenied,
             /* E_HANDLE                                          */ EHandle                    = 0x80070000
                                                                                                | Error.InvalidHandle,
             /* HRESULT_FROM_WIN32(ERROR_INVALID_DATA)            */ EWin32InvalidData          = 0x80070000
@@ -579,6 +584,8 @@ namespace Htc.Vita.Core.Interop
                                                                                                | Error.OutOfMemory,
             /* HRESULT_FROM_WIN32(ERROR_HANDLE_DISK_FULL)        */ EWin32HandleDiskFull       = 0x80070000
                                                                                                | Error.HandleDiskFull,
+            /* HRESULT_FROM_WIN32(ERROR_NOT_SUPPORTED)           */ EWin32NotSupported         = 0x80070000
+                                                                                               | Error.NotSupported,
             /* E_INVALIDARG                                      */ EInvalidArg                = 0x80070000
                                                                                                | Error.InvalidParameter,
             /* HRESULT_FROM_WIN32(ERROR_DISK_FULL)               */ EWin32DiskFull             = 0x80070000
@@ -587,6 +594,8 @@ namespace Htc.Vita.Core.Interop
                                                                                                | Error.InsufficientBuffer,
             /* HRESULT_FROM_WIN32(ERROR_NOT_FOUND)               */ EWin32NotFound             = 0x80070000
                                                                                                | Error.NotFound,
+            /* HRESULT_FROM_WIN32(ERROR_CANCELLED)               */ EWin32Cancelled            = 0x80070000
+                                                                                               | Error.Cancelled,
             /* HRESULT_FROM_WIN32(ERROR_RESOURCE_LANG_NOT_FOUND) */ EWin32ResourceLangNotFound = 0x80070000
                                                                                                | Error.ResourceLangNotFound
         }
@@ -627,6 +636,34 @@ namespace Htc.Vita.Core.Interop
             /* IMAGE_FILE_MACHINE_M32R        */ M32R       = 0x9041,
             /* IMAGE_FILE_MACHINE_ARM64       */ Arm64      = 0xaa64,
             /* IMAGE_FILE_MACHINE_CEE         */ Cee        = 0xc0ee
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/dd756639(v=vs.85)",
+                Description = "LOCATION_DESIRED_ACCURACY enumeration",
+                File = Headers.WindowsSensorsapi)]
+        internal enum LocationDesiredAccuracy : uint
+        {
+            /* LOCATION_DESIRED_ACCURACY_DEFAULT */ Default = 0,
+            /* LOCATION_DESIRED_ACCURACY_HIGH    */ High    = 1
+        }
+
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/locationapi/ne-locationapi-location_report_status",
+                Description = "LOCATION_REPORT_STATUS enumeration",
+                File = Headers.WindowsLocationapi)]
+        internal enum LocationReportStatus : uint
+        {
+            /* REPORT_NOT_SUPPORTED */ NotSupported = 0,
+            /* REPORT_ERROR         */ Error        = 1,
+            /* REPORT_ACCESS_DENIED */ AccessDenied = 2,
+            /* REPORT_INITIALIZING  */ Initializing = 3,
+            /* REPORT_RUNNING       */ Running      = 4
+        }
+
+        internal enum LocationReportType : uint
+        {
+            /*                         */ Unknown,
+            /* IID_ICivicAddressReport */ ICivicAddressReport,
+            /* IID_ILatLongReport      */ ILatLongReport
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createprocesswithtokenw",
@@ -2184,20 +2221,29 @@ namespace Htc.Vita.Core.Interop
                     return (fmtid.GetHashCode() * 397) ^ (int) pid;
                 }
             }
+
+            public override string ToString()
+            {
+                return $"[{fmtid}_{pid}]";
+            }
         }
 
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/propidlbase/ns-propidlbase-propvariant",
                 Description = "PROPVARIANT structure",
                 File = Headers.WindowsPropidlbase)]
-        [StructLayout(LayoutKind.Explicit)]
-        internal struct PropVariant : IEquatable<PropVariant>
+        [StructLayout(LayoutKind.Explicit, Size = 24)]
+        internal class PropVariant : IDisposable
         {
-            [FieldOffset(0)] internal readonly /* VARTYPE */ ushort vt;
-            [FieldOffset(8)] internal readonly /* union   */ IntPtr unionMember;
+            [FieldOffset(0)] internal /* VARTYPE */ VarEnum vt = VarEnum.VT_EMPTY;
+            [FieldOffset(8)] internal /* union   */ IntPtr unionMember;
+
+            internal PropVariant()
+            {
+            }
 
             internal PropVariant(Guid data)
             {
-                vt = (ushort) VarEnum.VT_CLSID;
+                vt = VarEnum.VT_CLSID;
                 var dataInBytes = data.ToByteArray();
                 unionMember = Marshal.AllocCoTaskMem(dataInBytes.Length);
                 Marshal.Copy(dataInBytes, 0, unionMember, dataInBytes.Length);
@@ -2205,41 +2251,38 @@ namespace Htc.Vita.Core.Interop
 
             internal PropVariant(string data)
             {
-                vt = (ushort) VarEnum.VT_LPWSTR;
+                vt = VarEnum.VT_LPWSTR;
                 unionMember = Marshal.StringToCoTaskMemUni(data);
             }
 
-            public static bool operator ==(PropVariant left, PropVariant right)
+            ~PropVariant()
             {
-                return Equals(left, right);
+                Dispose(false);
             }
 
-            public static bool operator !=(PropVariant left, PropVariant right)
+            public void Dispose()
             {
-                return !Equals(left, right);
+                Dispose(true);
+                GC.SuppressFinalize(this);
             }
 
-            public bool Equals(PropVariant other)
+            protected virtual void Dispose(bool disposing)
             {
-                return vt == other.vt
-                        && unionMember.Equals(other.unionMember);
-            }
-
-            public override bool Equals(object obj)
-            {
-                if (ReferenceEquals(null, obj))
+                if (vt != VarEnum.VT_EMPTY)
                 {
-                    return false;
+                    PropVariantClear(this);
+                    vt = VarEnum.VT_EMPTY;
                 }
-                return obj is PropVariant && Equals((PropVariant) obj);
             }
 
-            public override int GetHashCode()
+            public object GetValue()
             {
-                unchecked
+                if (vt == VarEnum.VT_LPWSTR)
                 {
-                    return (vt.GetHashCode() * 397) ^ unionMember.GetHashCode();
+                    return Marshal.PtrToStringUni(unionMember);
                 }
+
+                return null;
             }
         }
 
@@ -2366,9 +2409,26 @@ namespace Htc.Vita.Core.Interop
             internal /* HANDLE */ IntPtr hStdError;
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-systemtime",
+                Description = "SYSTEMTIME structure",
+                File = Headers.WindowsMinwinbase)]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct SystemTime
+        {
+            internal /* WORD */ ushort wYear;
+            internal /* WORD */ ushort wMonth;
+            internal /* WORD */ ushort wDayOfWeek;
+            internal /* WORD */ ushort wDay;
+            internal /* WORD */ ushort wHour;
+            internal /* WORD */ ushort wMinute;
+            internal /* WORD */ ushort wSecond;
+            internal /* WORD */ ushort wMilliseconds;
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-token_elevation",
                 Description = "TOKEN_ELEVATION structure",
                 File = Headers.WindowsWinnt)]
+        [StructLayout(LayoutKind.Sequential)]
         internal struct TokenElevation
         {
 #pragma warning disable CS0649
