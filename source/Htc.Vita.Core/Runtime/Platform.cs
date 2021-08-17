@@ -282,8 +282,8 @@ namespace Htc.Vita.Core.Runtime
 
                     if (success)
                     {
-                        Logger.GetInstance(typeof(Platform)).Info($"processMachine: {processMachine}");
-                        Logger.GetInstance(typeof(Platform)).Info($"nativeMachine: {nativeMachine}");
+                        Logger.GetInstance(typeof(Platform)).Debug($"processMachine: {processMachine}");
+                        Logger.GetInstance(typeof(Platform)).Debug($"nativeMachine: {nativeMachine}");
                         if (processMachine != Interop.Windows.ImageFileMachine.Unknown)
                         {
                             return ConvertFrom(processMachine);
