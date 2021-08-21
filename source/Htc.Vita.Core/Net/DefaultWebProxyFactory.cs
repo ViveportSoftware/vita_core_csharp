@@ -13,25 +13,46 @@ namespace Htc.Vita.Core.Net
     /// <seealso cref="WebProxyFactory" />
     public class DefaultWebProxyFactory : WebProxyFactory
     {
-        private const string TestUrl = "https://www.microsoft.com/";
         private const long CachePeriodInMilli = 1000L * 5;
+        private const string RegistryKeyPath = "SOFTWARE\\Vita\\Core\\Net";
+        private const string TestUrl = "https://www.microsoft.com/";
 
         private static readonly Dictionary<string, KeyValuePair<WebProxyStatus, long>> WebProxyStatusMap = new Dictionary<string, KeyValuePair<WebProxyStatus, long>>();
+
+        private static bool ShouldTreatProtocolDetectErrorAsProxyError()
+        {
+            const string valueName = "TreatProtocolDetectErrorAsProxyError";
+            var result = Win32Registry.GetIntValue(
+                    Win32Registry.Hive.CurrentUser,
+                    RegistryKeyPath,
+                    valueName
+            ) > 0;
+            if (!result)
+            {
+                result = Win32Registry.GetIntValue(
+                        Win32Registry.Hive.LocalMachine,
+                        RegistryKeyPath,
+                        valueName
+                ) > 0;
+            }
+            return result;
+        }
 
         /// <inheritdoc />
         protected override IWebProxy OnGetWebProxy()
         {
+            const string valueName = "Proxy";
             var webProxyUri = ParseWebProxyUri(
                     Registry.GetStringValue(
                             Registry.Hive.CurrentUser,
-                            "SOFTWARE\\Vita\\Core\\Net",
-                            "Proxy"
+                            RegistryKeyPath,
+                            valueName
                     )
             ) ?? ParseWebProxyUri(
                     Registry.GetStringValue(
                             Registry.Hive.LocalMachine,
-                            "SOFTWARE\\Vita\\Core\\Net",
-                            "Proxy"
+                            RegistryKeyPath,
+                            valueName
                     )
             );
             var result = WebRequest.GetSystemWebProxy();
@@ -43,7 +64,9 @@ namespace Htc.Vita.Core.Net
             var webProxyStatus = WebProxyStatus.Unknown;
             try
             {
-                webProxyStatus = OnGetWebProxyStatus(result);
+                webProxyStatus = GetWebProxyStatus(
+                        result
+                );
             }
             catch (Exception e)
             {
@@ -59,23 +82,24 @@ namespace Htc.Vita.Core.Net
         /// <inheritdoc />
         protected override WebProxyStatus OnGetWebProxyStatus(IWebProxy webProxy)
         {
+            var testTarget = new Uri(TestUrl);
             Uri webProxyUri = null;
             try
             {
-                webProxyUri = webProxy.GetProxy(new Uri(TestUrl));
+                webProxyUri = webProxy.GetProxy(testTarget);
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(DefaultWebProxyFactory)).Error($"Can not get proxy uri. error: {e.Message}");
+                Logger.GetInstance(typeof(DefaultWebProxyFactory)).Error($"Can not get proxy uri for target {testTarget}, error: {e.Message}");
             }
             if (webProxyUri == null)
             {
-                Logger.GetInstance(typeof(DefaultWebProxyFactory)).Error("Can not get proxy uri.");
+                Logger.GetInstance(typeof(DefaultWebProxyFactory)).Error($"Can not get proxy uri for target {testTarget}.");
                 return WebProxyStatus.CannotTest;
             }
 
             var proxyUrl = webProxyUri.ToString();
-            if (proxyUrl.StartsWith(TestUrl))
+            if (proxyUrl.StartsWith(testTarget.ToString()))
             {
                 return WebProxyStatus.NotSet;
             }
@@ -94,7 +118,7 @@ namespace Htc.Vita.Core.Net
             var request = WebRequest.Create(webProxyUri) as HttpWebRequest;
             if (request == null)
             {
-                Logger.GetInstance(typeof(DefaultWebProxyFactory)).Error("Can not get web request to test proxy.");
+                Logger.GetInstance(typeof(DefaultWebProxyFactory)).Error($"Can not get web request to test proxy {webProxyUri}.");
                 return WebProxyStatus.CannotTest;
             }
 
@@ -110,6 +134,25 @@ namespace Htc.Vita.Core.Net
                     );
                     return WebProxyStatus.Working;
                 }
+            }
+            catch (WebException e)
+            {
+                if (e.Status == WebExceptionStatus.ProtocolError)
+                {
+                    using (var errorHttpWebResponse = e.Response as HttpWebResponse)
+                    {
+                        Logger.GetInstance(typeof(DefaultWebProxyFactory)).Warn($"Can not access proxy \"{proxyUrl}\" directly, status code: {errorHttpWebResponse?.StatusCode}");
+                        if (!ShouldTreatProtocolDetectErrorAsProxyError())
+                        {
+                            WebProxyStatusMap[proxyUrl] = new KeyValuePair<WebProxyStatus, long>(
+                                    WebProxyStatus.Working,
+                                    Util.Convert.ToTimestampInMilli(DateTime.Now)
+                            );
+                            return WebProxyStatus.Working;
+                        }
+                    }
+                }
+                Logger.GetInstance(typeof(DefaultWebProxyFactory)).Warn($"Can not process proxy test on uri: \"{proxyUrl}\", {e.Message}");
             }
             catch (Exception e)
             {
