@@ -125,13 +125,13 @@ namespace Htc.Vita.Core.Auth
             /// <summary>
             /// Introspects the token.
             /// </summary>
-            /// <param name="accessToken">The access token.</param>
+            /// <param name="accessTokenString">The access token string.</param>
             /// <returns>IntrospectTokenResult.</returns>
-            public IntrospectTokenResult IntrospectToken(string accessToken)
+            public IntrospectTokenResult IntrospectToken(string accessTokenString)
             {
                 return IntrospectToken(new ClientTokenInfo
                 {
-                        AccessToken = accessToken
+                        AccessToken = accessTokenString
                 });
             }
 
@@ -171,7 +171,7 @@ namespace Htc.Vita.Core.Auth
             {
                 if (token == null || string.IsNullOrWhiteSpace(token.RefreshToken))
                 {
-                    return new RefreshTokenResult()
+                    return new RefreshTokenResult
                     {
                             Status = RefreshTokenStatus.InvalidToken
                     };
@@ -192,13 +192,13 @@ namespace Htc.Vita.Core.Auth
             /// <summary>
             /// Refreshes the token.
             /// </summary>
-            /// <param name="refreshToken">The refresh token.</param>
+            /// <param name="refreshTokenString">The refresh token string.</param>
             /// <returns>RefreshTokenResult.</returns>
-            public RefreshTokenResult RefreshToken(string refreshToken)
+            public RefreshTokenResult RefreshToken(string refreshTokenString)
             {
                 return RefreshToken(new ClientTokenInfo
                 {
-                        RefreshToken = refreshToken
+                        RefreshToken = refreshTokenString
                 });
             }
 
@@ -254,7 +254,7 @@ namespace Htc.Vita.Core.Auth
             /// <summary>
             /// The option redirect URI
             /// </summary>
-            public const string OptionRedirectUri = "redirect_uri";
+            public static string OptionRedirectUri => "redirect_uri";
 
             /// <summary>
             /// Initializes this instance.
@@ -336,7 +336,7 @@ namespace Htc.Vita.Core.Auth
             /// <summary>
             /// The option authorization URL
             /// </summary>
-            public const string OptionAuthorizationUrl = "authorization_uri";
+            public static string OptionAuthorizationUrl => "authorization_uri";
 
             /// <summary>
             /// Initializes this instance.

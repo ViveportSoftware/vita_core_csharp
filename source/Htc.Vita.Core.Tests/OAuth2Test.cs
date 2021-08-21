@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class OAuth2Test
+    public static class OAuth2Test
     {
         [Fact]
         public static void ClientFactory_0_GetInstance()
