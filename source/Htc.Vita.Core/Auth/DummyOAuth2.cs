@@ -82,9 +82,14 @@ namespace Htc.Vita.Core.Auth
         public class DummyAuthorizationCodeReceiver : OAuth2.AuthorizationCodeReceiver
         {
             /// <inheritdoc />
-            public override void Dispose()
+            protected override void Dispose(bool disposing)
             {
-                // Skip
+                if (!Disposed && disposing)
+                {
+                    // Disposing managed resource
+                }
+
+                base.Dispose(disposing);
             }
 
             /// <inheritdoc />
@@ -113,9 +118,14 @@ namespace Htc.Vita.Core.Auth
         public class DummyAuthorizationCodeUserAgent : OAuth2.AuthorizationCodeUserAgent
         {
             /// <inheritdoc />
-            public override void Dispose()
+            protected override void Dispose(bool disposing)
             {
-                // Skip
+                if (!Disposed && disposing)
+                {
+                    // Disposing managed resource
+                }
+
+                base.Dispose(disposing);
             }
 
             /// <inheritdoc />

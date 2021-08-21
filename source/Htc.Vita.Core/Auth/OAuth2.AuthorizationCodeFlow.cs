@@ -254,7 +254,38 @@ namespace Htc.Vita.Core.Auth
             /// <summary>
             /// The option redirect URI
             /// </summary>
+            /// <value>The option redirect URI.</value>
             public static string OptionRedirectUri => "redirect_uri";
+
+            /// <summary>
+            /// Gets a value indicating whether this <see cref="AuthorizationCodeReceiver" /> is disposed.
+            /// </summary>
+            /// <value><c>true</c> if disposed; otherwise, <c>false</c>.</value>
+            protected bool Disposed { get; private set; }
+
+            /// <summary>
+            /// Finalizes an instance of the <see cref="AuthorizationCodeReceiver" /> class
+            /// </summary>
+            ~AuthorizationCodeReceiver()
+            {
+                Dispose(false);
+            }
+
+            /// <inheritdoc />
+            public void Dispose()
+            {
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            /// <summary>
+            /// Releases unmanaged and - optionally - managed resources.
+            /// </summary>
+            /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+            protected virtual void Dispose(bool disposing)
+            {
+                Disposed = true;
+            }
 
             /// <summary>
             /// Initializes this instance.
@@ -307,8 +338,6 @@ namespace Htc.Vita.Core.Auth
                 return result ?? new ReceiveResult();
             }
 
-            /// <inheritdoc />
-            public abstract void Dispose();
             /// <summary>
             /// Called when initializing this instance.
             /// </summary>
@@ -336,7 +365,38 @@ namespace Htc.Vita.Core.Auth
             /// <summary>
             /// The option authorization URL
             /// </summary>
+            /// <value>The option authorization URL.</value>
             public static string OptionAuthorizationUrl => "authorization_uri";
+
+            /// <summary>
+            /// Gets a value indicating whether this <see cref="AuthorizationCodeUserAgent"/> is disposed.
+            /// </summary>
+            /// <value><c>true</c> if disposed; otherwise, <c>false</c>.</value>
+            protected bool Disposed { get; private set; }
+
+            /// <summary>
+            /// Finalizes an instance of the <see cref="AuthorizationCodeUserAgent" /> class
+            /// </summary>
+            ~AuthorizationCodeUserAgent()
+            {
+                Dispose(false);
+            }
+
+            /// <inheritdoc />
+            public void Dispose()
+            {
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            /// <summary>
+            /// Releases unmanaged and - optionally - managed resources.
+            /// </summary>
+            /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+            protected virtual void Dispose(bool disposing)
+            {
+                Disposed = true;
+            }
 
             /// <summary>
             /// Initializes this instance.
@@ -389,8 +449,6 @@ namespace Htc.Vita.Core.Auth
                 return result ?? new LaunchResult();
             }
 
-            /// <inheritdoc />
-            public abstract void Dispose();
             /// <summary>
             /// Called when initializing this instance.
             /// </summary>
