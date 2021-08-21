@@ -574,8 +574,7 @@ namespace Htc.Vita.Core.Interop
             /* E_UNEXPECTED                                      */ EUnexpected                = 0x8000ffff,
             /* E_ACCESSDENIED                                    */ EAccessDenied              = 0x80070000
                                                                                                | Error.AccessDenied,
-            /* HRESULT_FROM_WIN32(ERROR_ACCESS_DENIED)           */ EWin32AccessDenied         = 0x80070000
-                                                                                               | Error.AccessDenied,
+            /* HRESULT_FROM_WIN32(ERROR_ACCESS_DENIED)           */ EWin32AccessDenied         = EAccessDenied,
             /* E_HANDLE                                          */ EHandle                    = 0x80070000
                                                                                                | Error.InvalidHandle,
             /* HRESULT_FROM_WIN32(ERROR_INVALID_DATA)            */ EWin32InvalidData          = 0x80070000
