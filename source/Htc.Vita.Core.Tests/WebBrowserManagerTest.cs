@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class WebBrowserManagerTest
+    public static class WebBrowserManagerTest
     {
         [Fact]
         public static void Default_0_GetInstance()

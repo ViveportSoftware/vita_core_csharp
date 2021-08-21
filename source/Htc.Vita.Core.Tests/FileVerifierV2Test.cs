@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class FileVerifierV2Test
+    public static class FileVerifierV2Test
     {
         [Fact]
         public static void Default_0_GetInstance()
