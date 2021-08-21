@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class HttpUtilityLiteTest
+    public static class HttpUtilityLiteTest
     {
         [Fact]
         public static void Default_0_ParseQueryString()
