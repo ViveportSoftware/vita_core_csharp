@@ -32,5 +32,24 @@ namespace Htc.Vita.Core.Util
             /// </summary>
             CurrentConfig   = Interop.Windows.RegistryKey.CurrentConfig
         }
+
+        /// <summary>
+        /// Enum KeyPermissionCheck
+        /// </summary>
+        public enum KeyPermissionCheck
+        {
+            /// <summary>
+            /// The default permission
+            /// </summary>
+            Default          = 0,
+            /// <summary>
+            /// The permission to read subtree
+            /// </summary>
+            ReadSubTree      = 1,
+            /// <summary>
+            /// The permission to read write subtree
+            /// </summary>
+            ReadWriteSubTree = 2
+        }
     }
 }
