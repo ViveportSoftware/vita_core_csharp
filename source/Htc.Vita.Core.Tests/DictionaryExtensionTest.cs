@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Htc.Vita.Core.Json;
 using Htc.Vita.Core.Util;
@@ -275,6 +276,37 @@ namespace Htc.Vita.Core.Tests
             Assert.Contains("b=2", encodedUriQueryParameters);
             Assert.Contains("c=3", encodedUriQueryParameters);
             Assert.Contains("&", encodedUriQueryParameters);
+        }
+
+        [Fact]
+        public static void Default_3_ParseString()
+        {
+            var map = new Dictionary<string, string>
+            {
+                    ["a"] = "1",
+                    ["b"] = "2",
+                    ["c"] = "3"
+            };
+            Assert.Equal("1", map.ParseString("a"));
+            Assert.Equal("2", map.ParseString("b"));
+            Assert.Equal("3", map.ParseString("c"));
+            Assert.Null(map.ParseString("d"));
+            Assert.Equal("5", map.ParseString("e", "5"));
+        }
+
+        [Fact]
+        public static void Default_3_ParseUri()
+        {
+            var map = new Dictionary<string, string>
+            {
+                    ["a"] = "1",
+                    ["b"] = "https://www.microsoft.com",
+                    ["c"] = "http://www.google.com"
+            };
+            Assert.Null(map.ParseUri("a"));
+            Assert.NotNull(map.ParseUri("b"));
+            Assert.Equal(new Uri("http://www.google.com"), map.ParseUri("c"));
+            Assert.NotNull(map.ParseUri("d", new Uri("https://www.apple.com")));
         }
     }
 }

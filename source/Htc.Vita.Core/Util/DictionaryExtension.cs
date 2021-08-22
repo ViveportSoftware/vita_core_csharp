@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
@@ -34,6 +35,90 @@ namespace Htc.Vita.Core.Util
 
             data[key] = value;
             return data;
+        }
+
+        /// <summary>
+        /// Parses the value to string.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <returns>System.String.</returns>
+        public static string ParseString(
+                this Dictionary<string, string> data,
+                string key)
+        {
+            return ParseString(
+                    data,
+                    key,
+                    null
+            );
+        }
+
+        /// <summary>
+        /// Parses the value to string.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>System.String.</returns>
+        public static string ParseString(
+                this Dictionary<string, string> data,
+                string key,
+                string defaultValue)
+        {
+            if (data == null)
+            {
+                return defaultValue;
+            }
+
+            if (!data.ContainsKey(key))
+            {
+                return defaultValue;
+            }
+
+            return data[key];
+        }
+
+        /// <summary>
+        /// Parses the value to URI.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <returns>Uri.</returns>
+        public static Uri ParseUri(
+                this Dictionary<string, string> data,
+                string key)
+        {
+            return ParseUri(
+                    data,
+                    key,
+                    null
+            );
+        }
+
+        /// <summary>
+        /// Parses the value to URI.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>Uri.</returns>
+        public static Uri ParseUri(
+                this Dictionary<string, string> data,
+                string key,
+                Uri defaultValue)
+        {
+            if (data == null)
+            {
+                return defaultValue;
+            }
+
+            if (!data.ContainsKey(key))
+            {
+                return defaultValue;
+            }
+
+            return data[key].ToUri();
         }
 
         /// <summary>
