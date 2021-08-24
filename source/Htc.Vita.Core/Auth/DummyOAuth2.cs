@@ -35,7 +35,9 @@ namespace Htc.Vita.Core.Auth
             }
 
             /// <inheritdoc />
-            protected override IntrospectTokenResult OnIntrospectToken(OAuth2.ClientTokenInfo token)
+            protected override IntrospectTokenResult OnIntrospectToken(
+                    OAuth2.ClientTokenInfo token,
+                    CancellationToken cancellationToken)
             {
                 return new IntrospectTokenResult
                 {
@@ -56,7 +58,9 @@ namespace Htc.Vita.Core.Auth
             }
 
             /// <inheritdoc />
-            protected override RedeemTokenResult OnRedeemToken(string authorizationCode)
+            protected override RedeemTokenResult OnRedeemToken(
+                    string authorizationCode,
+                    CancellationToken cancellationToken)
             {
                 return new RedeemTokenResult
                 {
@@ -65,7 +69,9 @@ namespace Htc.Vita.Core.Auth
             }
 
             /// <inheritdoc />
-            protected override RefreshTokenResult OnRefreshToken(OAuth2.ClientTokenInfo token)
+            protected override RefreshTokenResult OnRefreshToken(
+                    OAuth2.ClientTokenInfo token,
+                    CancellationToken cancellationToken)
             {
                 return new RefreshTokenResult
                 {

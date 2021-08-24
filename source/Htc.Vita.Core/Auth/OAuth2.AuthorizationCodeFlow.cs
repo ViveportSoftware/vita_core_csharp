@@ -102,6 +102,22 @@ namespace Htc.Vita.Core.Auth
             /// <returns>IntrospectTokenResult.</returns>
             public IntrospectTokenResult IntrospectToken(ClientTokenInfo token)
             {
+                return IntrospectToken(
+                        token,
+                        CancellationToken.None
+                );
+            }
+
+            /// <summary>
+            /// Introspects the token.
+            /// </summary>
+            /// <param name="token">The token.</param>
+            /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+            /// <returns>IntrospectTokenResult.</returns>
+            public IntrospectTokenResult IntrospectToken(
+                    ClientTokenInfo token,
+                    CancellationToken cancellationToken)
+            {
                 if (token == null || string.IsNullOrWhiteSpace(token.AccessToken))
                 {
                     return new IntrospectTokenResult
@@ -113,7 +129,10 @@ namespace Htc.Vita.Core.Auth
                 IntrospectTokenResult result = null;
                 try
                 {
-                    result = OnIntrospectToken(token);
+                    result = OnIntrospectToken(
+                            token,
+                            cancellationToken
+                    );
                 }
                 catch (Exception e)
                 {
@@ -122,6 +141,7 @@ namespace Htc.Vita.Core.Auth
                 return result ?? new IntrospectTokenResult();
             }
 
+
             /// <summary>
             /// Introspects the token.
             /// </summary>
@@ -129,10 +149,29 @@ namespace Htc.Vita.Core.Auth
             /// <returns>IntrospectTokenResult.</returns>
             public IntrospectTokenResult IntrospectToken(string accessTokenString)
             {
-                return IntrospectToken(new ClientTokenInfo
-                {
-                        AccessToken = accessTokenString
-                });
+                return IntrospectToken(
+                        accessTokenString,
+                        CancellationToken.None
+                );
+            }
+
+            /// <summary>
+            /// Introspects the token.
+            /// </summary>
+            /// <param name="accessTokenString">The access token string.</param>
+            /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+            /// <returns>IntrospectTokenResult.</returns>
+            public IntrospectTokenResult IntrospectToken(
+                    string accessTokenString,
+                    CancellationToken cancellationToken)
+            {
+                return IntrospectToken(
+                        new ClientTokenInfo
+                        {
+                                AccessToken = accessTokenString
+                        },
+                        cancellationToken
+                );
             }
 
             /// <summary>
@@ -141,6 +180,22 @@ namespace Htc.Vita.Core.Auth
             /// <param name="authorizationCode">The authorization code.</param>
             /// <returns>RedeemTokenResult.</returns>
             public RedeemTokenResult RedeemToken(string authorizationCode)
+            {
+                return RedeemToken(
+                        authorizationCode,
+                        CancellationToken.None
+                );
+            }
+
+            /// <summary>
+            /// Redeems the token.
+            /// </summary>
+            /// <param name="authorizationCode">The authorization code.</param>
+            /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+            /// <returns>RedeemTokenResult.</returns>
+            public RedeemTokenResult RedeemToken(
+                    string authorizationCode,
+                    CancellationToken cancellationToken)
             {
                 if (string.IsNullOrWhiteSpace(authorizationCode))
                 {
@@ -153,7 +208,10 @@ namespace Htc.Vita.Core.Auth
                 RedeemTokenResult result = null;
                 try
                 {
-                    result = OnRedeemToken(authorizationCode);
+                    result = OnRedeemToken(
+                            authorizationCode,
+                            cancellationToken
+                    );
                 }
                 catch (Exception e)
                 {
@@ -169,6 +227,22 @@ namespace Htc.Vita.Core.Auth
             /// <returns>RefreshTokenResult.</returns>
             public RefreshTokenResult RefreshToken(ClientTokenInfo token)
             {
+                return RefreshToken(
+                        token,
+                        CancellationToken.None
+                );
+            }
+
+            /// <summary>
+            /// Refreshes the token.
+            /// </summary>
+            /// <param name="token">The token.</param>
+            /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+            /// <returns>RefreshTokenResult.</returns>
+            public RefreshTokenResult RefreshToken(
+                    ClientTokenInfo token,
+                    CancellationToken cancellationToken)
+            {
                 if (token == null || string.IsNullOrWhiteSpace(token.RefreshToken))
                 {
                     return new RefreshTokenResult
@@ -180,7 +254,10 @@ namespace Htc.Vita.Core.Auth
                 RefreshTokenResult result = null;
                 try
                 {
-                    result = OnRefreshToken(token);
+                    result = OnRefreshToken(
+                            token,
+                            cancellationToken
+                    );
                 }
                 catch (Exception e)
                 {
@@ -196,10 +273,29 @@ namespace Htc.Vita.Core.Auth
             /// <returns>RefreshTokenResult.</returns>
             public RefreshTokenResult RefreshToken(string refreshTokenString)
             {
-                return RefreshToken(new ClientTokenInfo
-                {
-                        RefreshToken = refreshTokenString
-                });
+                return RefreshToken(
+                        refreshTokenString,
+                        CancellationToken.None
+                );
+            }
+
+            /// <summary>
+            /// Refreshes the token.
+            /// </summary>
+            /// <param name="refreshTokenString">The refresh token string.</param>
+            /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+            /// <returns>RefreshTokenResult.</returns>
+            public RefreshTokenResult RefreshToken(
+                    string refreshTokenString,
+                    CancellationToken cancellationToken)
+            {
+                return RefreshToken(
+                        new ClientTokenInfo
+                        {
+                                RefreshToken = refreshTokenString
+                        },
+                        cancellationToken
+                );
             }
 
             /// <summary>
@@ -228,20 +324,32 @@ namespace Htc.Vita.Core.Auth
             /// Called when introspecting token.
             /// </summary>
             /// <param name="token">The token.</param>
+            /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
             /// <returns>IntrospectTokenResult.</returns>
-            protected abstract IntrospectTokenResult OnIntrospectToken(ClientTokenInfo token);
+            protected abstract IntrospectTokenResult OnIntrospectToken(
+                    ClientTokenInfo token,
+                    CancellationToken cancellationToken
+            );
             /// <summary>
             /// Called when redeeming token.
             /// </summary>
             /// <param name="authorizationCode">The authorization code.</param>
+            /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
             /// <returns>RedeemTokenResult.</returns>
-            protected abstract RedeemTokenResult OnRedeemToken(string authorizationCode);
+            protected abstract RedeemTokenResult OnRedeemToken(
+                    string authorizationCode,
+                    CancellationToken cancellationToken
+            );
             /// <summary>
             /// Called when refreshing token.
             /// </summary>
             /// <param name="token">The token.</param>
+            /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
             /// <returns>RefreshTokenResult.</returns>
-            protected abstract RefreshTokenResult OnRefreshToken(ClientTokenInfo token);
+            protected abstract RefreshTokenResult OnRefreshToken(
+                    ClientTokenInfo token,
+                    CancellationToken cancellationToken
+            );
         }
 
         /// <summary>
