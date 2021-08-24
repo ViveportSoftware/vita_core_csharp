@@ -1,5 +1,4 @@
 using System.IO;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using Htc.Vita.Core.Util;
@@ -72,7 +71,7 @@ namespace Htc.Vita.Core.Crypto
         /// <returns>System.String.</returns>
         public static string DoGenerateInBase64(string content)
         {
-            using (var digest = SHA1.Create())
+            using (var digest = LegacyDigest.CreateSha1())
             {
                 return Convert.ToBase64String(digest.ComputeHash(Encoding.UTF8.GetBytes(content)));
             }
@@ -101,7 +100,7 @@ namespace Htc.Vita.Core.Crypto
         /// <returns>System.String.</returns>
         public static string DoGenerateInHex(string content)
         {
-            using (var digest = SHA1.Create())
+            using (var digest = LegacyDigest.CreateSha1())
             {
                 return Convert.ToHexString(digest.ComputeHash(Encoding.UTF8.GetBytes(content)));
             }
@@ -112,7 +111,7 @@ namespace Htc.Vita.Core.Crypto
                 CancellationToken cancellationToken)
         {
             var buffer = new byte[BufferSizeInByte];
-            using (var digest = SHA1.Create())
+            using (var digest = LegacyDigest.CreateSha1())
             {
                 using (var readStream = file.OpenRead())
                 {

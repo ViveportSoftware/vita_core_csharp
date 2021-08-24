@@ -1,5 +1,4 @@
 using System.IO;
-using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Htc.Vita.Core.Util;
@@ -67,7 +66,7 @@ namespace Htc.Vita.Core.Crypto
                 CancellationToken cancellationToken)
         {
             var buffer = new byte[BufferSizeInByte];
-            using (var digest = SHA1.Create())
+            using (var digest = LegacyDigest.CreateSha1())
             {
                 using (var readStream = file.OpenRead())
                 {
