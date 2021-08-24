@@ -7,14 +7,14 @@ namespace Htc.Vita.Core.Auth
     /// <summary>
     /// Class DummyOAuth2.
     /// </summary>
-    public static class DummyOAuth2
+    public static partial class DummyOAuth2
     {
         /// <summary>
         /// Class DummyAuthorizationCodeClient.
         /// Implements the <see cref="OAuth2.AuthorizationCodeClient" />
         /// </summary>
         /// <seealso cref="OAuth2.AuthorizationCodeClient" />
-        public class DummyAuthorizationCodeClient : OAuth2.AuthorizationCodeClient
+        public partial class DummyAuthorizationCodeClient : OAuth2.AuthorizationCodeClient
         {
             private OAuth2.AuthorizationCodeClientConfig _config;
 

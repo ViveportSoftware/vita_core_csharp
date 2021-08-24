@@ -141,7 +141,6 @@ namespace Htc.Vita.Core.Auth
                 return result ?? new IntrospectTokenResult();
             }
 
-
             /// <summary>
             /// Introspects the token.
             /// </summary>

@@ -36,6 +36,9 @@ namespace Htc.Vita.Core.Tests
             var authorizeResult = client.Authorize();
             var authorizeStatus = authorizeResult.Status;
             Assert.Equal(OAuth2.AuthorizationCodeClient.AuthorizeStatus.NotImplemented, authorizeStatus);
+            authorizeResult = client.AuthorizeAsync().Result;
+            authorizeStatus = authorizeResult.Status;
+            Assert.Equal(OAuth2.AuthorizationCodeClient.AuthorizeStatus.NotImplemented, authorizeStatus);
         }
 
         [Fact]
@@ -71,8 +74,12 @@ namespace Htc.Vita.Core.Tests
             var clientConfig = new OAuth2.AuthorizationCodeClientConfig();
             var client = clientFactory.GetAuthorizationCodeClient(clientConfig);
             Assert.NotNull(client);
-            var redeemTokenResult = client.RedeemToken("testAuthorizationCode");
+            const string authorizationCode = "testAuthorizationCode";
+            var redeemTokenResult = client.RedeemToken(authorizationCode);
             var redeemTokenStatus = redeemTokenResult.Status;
+            Assert.Equal(OAuth2.AuthorizationCodeClient.RedeemTokenStatus.NotImplemented, redeemTokenStatus);
+            redeemTokenResult = client.RedeemTokenAsync(authorizationCode).Result;
+            redeemTokenStatus = redeemTokenResult.Status;
             Assert.Equal(OAuth2.AuthorizationCodeClient.RedeemTokenStatus.NotImplemented, redeemTokenStatus);
         }
 
@@ -87,6 +94,9 @@ namespace Htc.Vita.Core.Tests
             var redeemTokenResult = client.RedeemToken(null);
             var redeemTokenStatus = redeemTokenResult.Status;
             Assert.Equal(OAuth2.AuthorizationCodeClient.RedeemTokenStatus.InvalidAuthorizationCode, redeemTokenStatus);
+            redeemTokenResult = client.RedeemTokenAsync(null).Result;
+            redeemTokenStatus = redeemTokenResult.Status;
+            Assert.Equal(OAuth2.AuthorizationCodeClient.RedeemTokenStatus.InvalidAuthorizationCode, redeemTokenStatus);
         }
 
         [Fact]
@@ -97,8 +107,12 @@ namespace Htc.Vita.Core.Tests
             var clientConfig = new OAuth2.AuthorizationCodeClientConfig();
             var client = clientFactory.GetAuthorizationCodeClient(clientConfig);
             Assert.NotNull(client);
-            var refreshTokenResult = client.RefreshToken("testRefreshTokenString");
+            const string refreshTokenString = "testRefreshTokenString";
+            var refreshTokenResult = client.RefreshToken(refreshTokenString);
             var refreshTokenStatus = refreshTokenResult.Status;
+            Assert.Equal(OAuth2.AuthorizationCodeClient.RefreshTokenStatus.NotImplemented, refreshTokenStatus);
+            refreshTokenResult = client.RefreshTokenAsync(refreshTokenString).Result;
+            refreshTokenStatus = refreshTokenResult.Status;
             Assert.Equal(OAuth2.AuthorizationCodeClient.RefreshTokenStatus.NotImplemented, refreshTokenStatus);
         }
 
@@ -110,8 +124,12 @@ namespace Htc.Vita.Core.Tests
             var clientConfig = new OAuth2.AuthorizationCodeClientConfig();
             var client = clientFactory.GetAuthorizationCodeClient(clientConfig);
             Assert.NotNull(client);
-            var refreshTokenResult = client.RefreshToken("");
+            const string refreshTokenString = "";
+            var refreshTokenResult = client.RefreshToken(refreshTokenString);
             var refreshTokenStatus = refreshTokenResult.Status;
+            Assert.Equal(OAuth2.AuthorizationCodeClient.RefreshTokenStatus.InvalidToken, refreshTokenStatus);
+            refreshTokenResult = client.RefreshTokenAsync(refreshTokenString).Result;
+            refreshTokenStatus = refreshTokenResult.Status;
             Assert.Equal(OAuth2.AuthorizationCodeClient.RefreshTokenStatus.InvalidToken, refreshTokenStatus);
         }
 
@@ -123,8 +141,12 @@ namespace Htc.Vita.Core.Tests
             var clientConfig = new OAuth2.AuthorizationCodeClientConfig();
             var client = clientFactory.GetAuthorizationCodeClient(clientConfig);
             Assert.NotNull(client);
-            var introspectTokenResult = client.IntrospectToken("testAccessTokenString");
+            const string accessTokenString = "testAccessTokenString";
+            var introspectTokenResult = client.IntrospectToken(accessTokenString);
             var introspectTokenStatus = introspectTokenResult.Status;
+            Assert.Equal(OAuth2.AuthorizationCodeClient.IntrospectTokenStatus.NotImplemented, introspectTokenStatus);
+            introspectTokenResult = client.IntrospectTokenAsync(accessTokenString).Result;
+            introspectTokenStatus = introspectTokenResult.Status;
             Assert.Equal(OAuth2.AuthorizationCodeClient.IntrospectTokenStatus.NotImplemented, introspectTokenStatus);
         }
 
@@ -136,8 +158,12 @@ namespace Htc.Vita.Core.Tests
             var clientConfig = new OAuth2.AuthorizationCodeClientConfig();
             var client = clientFactory.GetAuthorizationCodeClient(clientConfig);
             Assert.NotNull(client);
-            var introspectTokenResult = client.IntrospectToken("");
+            const string accessTokenString = "";
+            var introspectTokenResult = client.IntrospectToken(accessTokenString);
             var introspectTokenStatus = introspectTokenResult.Status;
+            Assert.Equal(OAuth2.AuthorizationCodeClient.IntrospectTokenStatus.InvalidToken, introspectTokenStatus);
+            introspectTokenResult = client.IntrospectTokenAsync(accessTokenString).Result;
+            introspectTokenStatus = introspectTokenResult.Status;
             Assert.Equal(OAuth2.AuthorizationCodeClient.IntrospectTokenStatus.InvalidToken, introspectTokenStatus);
         }
 
