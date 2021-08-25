@@ -55,7 +55,7 @@ namespace Htc.Vita.Core.Util
             {
                 if (!isFirst)
                 {
-                    stringBuilder.Append("&");
+                    stringBuilder.Append('&');
                 }
 
                 var param = queryParams[key];
@@ -65,7 +65,7 @@ namespace Htc.Vita.Core.Util
                 }
 
                 stringBuilder.Append(WebUtility.UrlEncode(key))
-                        .Append("=")
+                        .Append('=')
                         .Append(WebUtility.UrlEncode(param));
                 isFirst = false;
             }

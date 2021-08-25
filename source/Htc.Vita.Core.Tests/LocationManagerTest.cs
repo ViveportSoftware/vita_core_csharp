@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class LocationManagerTest
+    public static class LocationManagerTest
     {
         [Fact]
         public static void Default_0_GetInstance()
