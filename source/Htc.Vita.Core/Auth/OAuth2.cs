@@ -21,6 +21,7 @@ namespace Htc.Vita.Core.Auth
             private Uri _introspectTokenUri;
             private Uri _redirectUri;
             private Uri _refreshTokenUri;
+            private ISet<string> _tokenScope = new HashSet<string>();
 
             /// <summary>
             /// Gets or sets the access token URI.
@@ -164,7 +165,21 @@ namespace Htc.Vita.Core.Auth
             /// Gets the token scope.
             /// </summary>
             /// <value>The token scope.</value>
-            public ISet<string> TokenScope { get; } = new HashSet<string>();
+            public ISet<string> TokenScope
+            {
+                get
+                {
+                    return _tokenScope;
+                }
+                set
+                {
+                    if (value == null)
+                    {
+                        return;
+                    }
+                    _tokenScope = value;
+                }
+            }
         }
 
         /// <summary>
@@ -173,6 +188,8 @@ namespace Htc.Vita.Core.Auth
         public class ClientTokenInfo
         {
             private int _expiresInSec;
+            private Dictionary<string, string> _options = new Dictionary<string, string>();
+            private ISet<string> _tokenScope = new HashSet<string>();
 
             /// <summary>
             /// Gets or sets the access token.
@@ -202,7 +219,21 @@ namespace Htc.Vita.Core.Auth
             /// Gets the options.
             /// </summary>
             /// <value>The options.</value>
-            public Dictionary<string, string> Options { get; internal set; } = new Dictionary<string, string>();
+            public Dictionary<string, string> Options
+            {
+                get
+                {
+                    return _options;
+                }
+                set
+                {
+                    if (value == null)
+                    {
+                        return;
+                    }
+                    _options = value;
+                }
+            }
             /// <summary>
             /// Gets or sets the refresh token.
             /// </summary>
@@ -212,7 +243,21 @@ namespace Htc.Vita.Core.Auth
             /// Gets the token scope.
             /// </summary>
             /// <value>The token scope.</value>
-            public ISet<string> TokenScope { get; internal set; } = new HashSet<string>();
+            public ISet<string> TokenScope
+            {
+                get
+                {
+                    return _tokenScope;
+                }
+                set
+                {
+                    if (value == null)
+                    {
+                        return;
+                    }
+                    _tokenScope = value;
+                }
+            }
             /// <summary>
             /// Gets or sets the type.
             /// </summary>

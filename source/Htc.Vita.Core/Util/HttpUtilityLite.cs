@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Htc.Vita.Core.Util
@@ -40,6 +42,41 @@ namespace Htc.Vita.Core.Util
             return result;
         }
 
+        /// <summary>
+        /// Converts to encoded query string.
+        /// </summary>
+        /// <param name="queryParams">The query parameters.</param>
+        /// <returns>System.String.</returns>
+        public static string ToEncodedQueryString(Dictionary<string, string> queryParams)
+        {
+            var stringBuilder = new StringBuilder();
+            var isFirst = true;
+            foreach (var key in queryParams.Keys)
+            {
+                if (!isFirst)
+                {
+                    stringBuilder.Append("&");
+                }
+
+                var param = queryParams[key];
+                if (string.IsNullOrEmpty(param))
+                {
+                    continue;
+                }
+
+                stringBuilder.Append(WebUtility.UrlEncode(key))
+                        .Append("=")
+                        .Append(WebUtility.UrlEncode(param));
+                isFirst = false;
+            }
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Class HttpValueCollection.
+        /// Implements the <see cref="NameValueCollection" />
+        /// </summary>
+        /// <seealso cref="NameValueCollection" />
         internal class HttpValueCollection : NameValueCollection
         {
             public override string ToString()

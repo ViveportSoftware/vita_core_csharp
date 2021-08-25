@@ -102,6 +102,10 @@ namespace Htc.Vita.Core.Auth
                 /// </summary>
                 CancelledOperation,
                 /// <summary>
+                /// The invalid authorization code
+                /// </summary>
+                InvalidAuthorizationCode,
+                /// <summary>
                 /// Invalid authorization URI
                 /// </summary>
                 InvalidAuthorizationUri,
@@ -169,6 +173,10 @@ namespace Htc.Vita.Core.Auth
                 /// </summary>
                 InvalidConfig,
                 /// <summary>
+                /// Invalid response
+                /// </summary>
+                InvalidResponse,
+                /// <summary>
                 /// Invalid token introspection URI
                 /// </summary>
                 InvalidTokenIntrospectionUri,
@@ -216,6 +224,10 @@ namespace Htc.Vita.Core.Auth
                 /// </summary>
                 CancelledOperation,
                 /// <summary>
+                /// Invalid access token URI
+                /// </summary>
+                InvalidAccessTokenUri,
+                /// <summary>
                 /// Invalid authorization code
                 /// </summary>
                 InvalidAuthorizationCode,
@@ -223,6 +235,10 @@ namespace Htc.Vita.Core.Auth
                 /// Invalid configuration
                 /// </summary>
                 InvalidConfig,
+                /// <summary>
+                /// Invalid response
+                /// </summary>
+                InvalidResponse,
                 /// <summary>
                 /// Not implemented
                 /// </summary>
@@ -262,6 +278,10 @@ namespace Htc.Vita.Core.Auth
                 /// Invalid configuration
                 /// </summary>
                 InvalidConfig,
+                /// <summary>
+                /// Invalid response
+                /// </summary>
+                InvalidResponse,
                 /// <summary>
                 /// Invalid token refresh URI
                 /// </summary>
