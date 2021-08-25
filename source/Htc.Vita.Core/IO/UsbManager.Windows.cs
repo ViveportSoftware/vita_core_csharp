@@ -883,7 +883,7 @@ namespace Htc.Vita.Core.IO
                 );
                 if (bytes == null || bytes.Length == 0 || registryValueType != Interop.Windows.RegistryValueType.MultiString)
                 {
-                    return new string[] { };
+                    return Util.Array.Empty<string>();
                 }
                 return Encoding.Unicode.GetString(bytes).Split(
                         new[] { '\0' },

@@ -521,7 +521,7 @@ namespace Htc.Vita.Core.Util
 
                     if (buffer.Length > 0 && buffer[buffer.Length - 1] != (char)0)
                     {
-                        Array.Resize(ref buffer, buffer.Length + 1);
+                        System.Array.Resize(ref buffer, buffer.Length + 1);
                     }
 
                     var stringList = new List<string>();
@@ -861,7 +861,7 @@ namespace Htc.Vita.Core.Util
                 var subKeyCount = SubKeyCount;
                 if (subKeyCount <= 0)
                 {
-                    return new string[0];
+                    return Array.Empty<string>();
                 }
                 return DoGetSubKeyNames(subKeyCount);
             }
@@ -898,7 +898,7 @@ namespace Htc.Vita.Core.Util
                 var values = ValueCount;
                 if (values <= 0)
                 {
-                    return new string[0];
+                    return Array.Empty<string>();
                 }
                 return DoGetValueNames(values);
             }

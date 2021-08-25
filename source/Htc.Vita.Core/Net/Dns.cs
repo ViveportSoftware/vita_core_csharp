@@ -201,7 +201,7 @@ namespace Htc.Vita.Core.Net
         {
             if (string.IsNullOrWhiteSpace(hostNameOrAddress))
             {
-                return new IPAddress[] { };
+                return Util.Array.Empty<IPAddress>();
             }
 
             IPAddress[] result = null;
@@ -214,7 +214,7 @@ namespace Htc.Vita.Core.Net
                 Logger.GetInstance(typeof(Dns)).Error(e.ToString());
             }
 
-            return result ?? new IPAddress[] { };
+            return result ?? Util.Array.Empty<IPAddress>();
         }
 
         /// <summary>
