@@ -401,14 +401,14 @@ namespace Htc.Vita.Core.Auth
             /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
             /// <returns>AuthorizationCodeReceiver.</returns>
             public AuthorizationCodeReceiver Initialize(
-                    Dictionary<string, string> options,
+                    Dictionary<string, object> options,
                     CancellationToken cancellationToken)
             {
                 AuthorizationCodeReceiver result = null;
                 try
                 {
                     result = OnInitialize(
-                            options ?? new Dictionary<string, string>(),
+                            options ?? new Dictionary<string, object>(),
                             cancellationToken
                     );
                 }
@@ -452,7 +452,7 @@ namespace Htc.Vita.Core.Auth
             /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
             /// <returns>AuthorizationCodeReceiver.</returns>
             protected abstract AuthorizationCodeReceiver OnInitialize(
-                    Dictionary<string, string> options,
+                    Dictionary<string, object> options,
                     CancellationToken cancellationToken
             );
             /// <summary>
@@ -470,13 +470,23 @@ namespace Htc.Vita.Core.Auth
         public abstract partial class AuthorizationCodeUserAgent : IDisposable
         {
             /// <summary>
-            /// The option authorization URL
+            /// The option - Android webview instance.
             /// </summary>
-            /// <value>The option authorization URL.</value>
-            public static string OptionAuthorizationUrl => "authorization_uri";
+            /// <value>The option - Android webview instance.</value>
+            public static string ObjectAndroidWebviewInstance => "android_webview_instance";
+            /// <summary>
+            /// The option - Android javascript action map with URL prefix on page finished.
+            /// </summary>
+            /// <value>The option - Android javascript action map with URL prefix on page finished.</value>
+            public static string OptionAndroidJavascriptActionMapWithUrlPrefixOnPageFinished => "android_javascript_action_map_with_url_prefix_on_page_finished";
+            /// <summary>
+            /// The option - authorization URL
+            /// </summary>
+            /// <value>The option - authorization URL.</value>
+            public static string OptionAuthorizationUrl => "authorization_url";
 
             /// <summary>
-            /// Gets a value indicating whether this <see cref="AuthorizationCodeUserAgent"/> is disposed.
+            /// Gets a value indicating whether this <see cref="AuthorizationCodeUserAgent" /> is disposed.
             /// </summary>
             /// <value><c>true</c> if disposed; otherwise, <c>false</c>.</value>
             protected bool Disposed { get; private set; }
@@ -512,14 +522,14 @@ namespace Htc.Vita.Core.Auth
             /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
             /// <returns>AuthorizationCodeUserAgent.</returns>
             public AuthorizationCodeUserAgent Initialize(
-                    Dictionary<string, string> options,
+                    Dictionary<string, object> options,
                     CancellationToken cancellationToken)
             {
                 AuthorizationCodeUserAgent result = null;
                 try
                 {
                     result = OnInitialize(
-                            options ?? new Dictionary<string, string>(),
+                            options ?? new Dictionary<string, object>(),
                             cancellationToken
                     );
                 }
@@ -563,7 +573,7 @@ namespace Htc.Vita.Core.Auth
             /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
             /// <returns>AuthorizationCodeUserAgent.</returns>
             protected abstract AuthorizationCodeUserAgent OnInitialize(
-                    Dictionary<string, string> options,
+                    Dictionary<string, object> options,
                     CancellationToken cancellationToken
             );
             /// <summary>

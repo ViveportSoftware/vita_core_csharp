@@ -100,7 +100,7 @@ namespace Htc.Vita.Core.Auth
 
             /// <inheritdoc />
             protected override OAuth2.AuthorizationCodeReceiver OnInitialize(
-                    Dictionary<string, string> options,
+                    Dictionary<string, object> options,
                     CancellationToken cancellationToken)
             {
                 return this;
@@ -136,7 +136,7 @@ namespace Htc.Vita.Core.Auth
 
             /// <inheritdoc />
             protected override OAuth2.AuthorizationCodeUserAgent OnInitialize(
-                    Dictionary<string, string> options,
+                    Dictionary<string, object> options,
                     CancellationToken cancellationToken)
             {
                 return this;
@@ -169,7 +169,7 @@ namespace Htc.Vita.Core.Auth
 
             /// <inheritdoc />
             protected override OAuth2.AuthorizationCodeReceiver OnGetAuthorizationCodeReceiver(
-                    Dictionary<string, string> options,
+                    Dictionary<string, object> options,
                     CancellationToken cancellationToken)
             {
                 return new DummyAuthorizationCodeReceiver().Initialize(
@@ -180,7 +180,7 @@ namespace Htc.Vita.Core.Auth
 
             /// <inheritdoc />
             protected override OAuth2.AuthorizationCodeUserAgent OnGetAuthorizationCodeUserAgent(
-                    Dictionary<string, string> options,
+                    Dictionary<string, object> options,
                     CancellationToken cancellationToken)
             {
                 return new DummyAuthorizationCodeUserAgent().Initialize(

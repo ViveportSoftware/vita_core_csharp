@@ -219,6 +219,8 @@ namespace Htc.Vita.Core.Tests
         [Fact]
         public static void AuthorizationCodeUserAgent_0_PublicConstants()
         {
+            Assert.False(string.IsNullOrWhiteSpace(OAuth2.AuthorizationCodeUserAgent.ObjectAndroidWebviewInstance));
+            Assert.False(string.IsNullOrWhiteSpace(OAuth2.AuthorizationCodeUserAgent.OptionAndroidJavascriptActionMapWithUrlPrefixOnPageFinished));
             Assert.False(string.IsNullOrWhiteSpace(OAuth2.AuthorizationCodeUserAgent.OptionAuthorizationUrl));
         }
 

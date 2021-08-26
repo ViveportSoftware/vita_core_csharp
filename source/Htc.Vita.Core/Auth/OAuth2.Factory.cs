@@ -67,7 +67,7 @@ namespace Htc.Vita.Core.Auth
             /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
             /// <returns>AuthorizationCodeReceiver.</returns>
             public AuthorizationCodeReceiver GetAuthorizationCodeReceiver(
-                    Dictionary<string, string> options,
+                    Dictionary<string, object> options,
                     CancellationToken cancellationToken)
             {
                 AuthorizationCodeReceiver result = null;
@@ -104,7 +104,7 @@ namespace Htc.Vita.Core.Auth
             /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
             /// <returns>AuthorizationCodeUserAgent.</returns>
             public AuthorizationCodeUserAgent GetAuthorizationCodeUserAgent(
-                    Dictionary<string, string> options,
+                    Dictionary<string, object> options,
                     CancellationToken cancellationToken)
             {
                 AuthorizationCodeUserAgent result = null;
@@ -129,7 +129,7 @@ namespace Htc.Vita.Core.Auth
             /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
             /// <returns>AuthorizationCodeReceiver.</returns>
             protected abstract AuthorizationCodeReceiver OnGetAuthorizationCodeReceiver(
-                    Dictionary<string, string> options,
+                    Dictionary<string, object> options,
                     CancellationToken cancellationToken
             );
 
@@ -140,7 +140,7 @@ namespace Htc.Vita.Core.Auth
             /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
             /// <returns>AuthorizationCodeUserAgent.</returns>
             protected abstract AuthorizationCodeUserAgent OnGetAuthorizationCodeUserAgent(
-                    Dictionary<string, string> options,
+                    Dictionary<string, object> options,
                     CancellationToken cancellationToken
             );
         }
