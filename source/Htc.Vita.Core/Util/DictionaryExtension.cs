@@ -17,6 +17,32 @@ namespace Htc.Vita.Core.Util
         /// <param name="data">The data.</param>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
+        /// <returns>Dictionary&lt;System.String, System.Object&gt;.</returns>
+        public static Dictionary<string, object> ApplyIfNotNullAndNotWhiteSpace(
+                this Dictionary<string, object> data,
+                string key,
+                string value)
+        {
+            if (data == null)
+            {
+                return null;
+            }
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return data;
+            }
+
+            data[key] = value;
+            return data;
+        }
+
+        /// <summary>
+        /// Applies the value if it is not null and not white space.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
         /// <returns>Dictionary&lt;System.String, System.String&gt;.</returns>
         public static Dictionary<string, string> ApplyIfNotNullAndNotWhiteSpace(
                 this Dictionary<string, string> data,
