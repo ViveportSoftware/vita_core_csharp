@@ -1,4 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Htc.Vita.Core.Auth;
+using Htc.Vita.Core.Net;
+using Htc.Vita.Core.Util;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
@@ -212,7 +218,37 @@ namespace Htc.Vita.Core.Tests
                 Assert.NotNull(receiver);
                 var receiveResult = receiver.Receive();
                 var receiveStatus = receiveResult.Status;
-                Assert.Equal(OAuth2.AuthorizationCodeReceiver.ReceiveStatus.NotImplemented, receiveStatus);
+                Assert.Equal(OAuth2.AuthorizationCodeReceiver.ReceiveStatus.UnsupportedReceiver, receiveStatus);
+            }
+        }
+
+        [Fact]
+        public static void AuthorizationCodeReceiver_1_Receive_withRedirectUriAndCode()
+        {
+            var clientAssistantFactory = OAuth2.ClientAssistantFactory.GetInstance();
+            var unusedPort = LocalPortManager.GetRandomUnusedPort();
+            var redirectUriString = $"http://localhost:{unusedPort}/";
+            const string authorizationCode = "testAuthorizationCode";
+            var options = new Dictionary<string, object>
+            {
+                    { OAuth2.AuthorizationCodeReceiver.OptionRedirectUri, redirectUriString }
+            };
+            Task.Run(() =>
+            {
+                    using (WebRequestFactory.GetInstance()
+                            .GetHttpWebRequest(new Uri($"{redirectUriString}?{OAuth2.Key.Code.GetDescription()}={authorizationCode}"))
+                            .GetResponse())
+                    {
+                        // Skip
+                    }
+            });
+            using (var authorizationCodeReceiver = clientAssistantFactory.GetAuthorizationCodeReceiver(options, CancellationToken.None))
+            {
+                Assert.NotNull(authorizationCodeReceiver);
+                var receiveResult = authorizationCodeReceiver.Receive();
+                var receiveStatus = receiveResult.Status;
+                Assert.Equal(OAuth2.AuthorizationCodeReceiver.ReceiveStatus.Ok, receiveStatus);
+                Assert.Equal(authorizationCode, receiveResult.Code);
             }
         }
 
@@ -225,7 +261,7 @@ namespace Htc.Vita.Core.Tests
         }
 
         [Fact]
-        public static void AuthorizationCodeUserAgent_0_Launch()
+        public static void AuthorizationCodeUserAgent_1_Launch()
         {
             var clientAssistantFactory = OAuth2.ClientAssistantFactory.GetInstance();
             Assert.NotNull(clientAssistantFactory);
@@ -234,7 +270,25 @@ namespace Htc.Vita.Core.Tests
                 Assert.NotNull(userAgent);
                 var launchResult = userAgent.Launch();
                 var launchStatus = launchResult.Status;
-                Assert.Equal(OAuth2.AuthorizationCodeUserAgent.LaunchStatus.NotImplemented, launchStatus);
+                Assert.Equal(OAuth2.AuthorizationCodeUserAgent.LaunchStatus.InvalidAuthorizationUri, launchStatus);
+            }
+        }
+
+        [Fact]
+        public static void AuthorizationCodeUserAgent_1_Launch_withAuthorizationUrl()
+        {
+            var clientAssistantFactory = OAuth2.ClientAssistantFactory.GetInstance();
+            const string authorizationUrlString = "https://www.microsoft.com/";
+            var options = new Dictionary<string, object>
+            {
+                    { OAuth2.AuthorizationCodeUserAgent.OptionAuthorizationUrl, authorizationUrlString }
+            };
+            using (var authorizationCodeUserAgent = clientAssistantFactory.GetAuthorizationCodeUserAgent(options, CancellationToken.None))
+            {
+                Assert.NotNull(authorizationCodeUserAgent);
+                var launchResult = authorizationCodeUserAgent.Launch();
+                var launchStatus = launchResult.Status;
+                Assert.Equal(OAuth2.AuthorizationCodeUserAgent.LaunchStatus.Ok, launchStatus);
             }
         }
     }

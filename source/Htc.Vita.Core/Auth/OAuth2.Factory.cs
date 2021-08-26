@@ -15,7 +15,7 @@ namespace Htc.Vita.Core.Auth
         {
             static ClientAssistantFactory()
             {
-                TypeRegistry.RegisterDefault<ClientAssistantFactory, DummyOAuth2.DummyClientAssistantFactory>();
+                TypeRegistry.RegisterDefault<ClientAssistantFactory, DefaultOAuth2.DefaultClientAssistantFactory>();
             }
 
             /// <summary>
