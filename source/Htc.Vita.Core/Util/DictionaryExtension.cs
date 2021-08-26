@@ -12,6 +12,31 @@ namespace Htc.Vita.Core.Util
     public static class DictionaryExtension
     {
         /// <summary>
+        /// Applies the value if it is not null.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>Dictionary&lt;System.String, System.Object&gt;.</returns>
+        public static Dictionary<string, object> ApplyIfNotNull(
+                this Dictionary<string, object> data,
+                string key,
+                object value)
+        {
+            if (data == null)
+            {
+                return null;
+            }
+
+            if (value != null)
+            {
+                data[key] = value;
+            }
+
+            return data;
+        }
+
+        /// <summary>
         /// Applies the value if it is not null and not white space.
         /// </summary>
         /// <param name="data">The data.</param>
@@ -61,6 +86,48 @@ namespace Htc.Vita.Core.Util
 
             data[key] = value;
             return data;
+        }
+
+        /// <summary>
+        /// Parses the data.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <returns>System.Object.</returns>
+        public static object ParseData(
+                this Dictionary<string, object> data,
+                string key)
+        {
+            return ParseData(
+                    data,
+                    key,
+                    null
+            );
+        }
+
+        /// <summary>
+        /// Parses the data.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>System.Object.</returns>
+        public static object ParseData(
+                this Dictionary<string, object> data,
+                string key,
+                object defaultValue)
+        {
+            if (data == null)
+            {
+                return defaultValue;
+            }
+
+            if (!data.ContainsKey(key))
+            {
+                return defaultValue;
+            }
+
+            return data[key];
         }
 
         /// <summary>

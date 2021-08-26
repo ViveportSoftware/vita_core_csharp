@@ -331,5 +331,22 @@ namespace Htc.Vita.Core.Tests
             Assert.Equal(new Uri("http://www.google.com"), map2.ParseUri("d"));
             Assert.NotNull(map2.ParseUri("e", new Uri("https://www.apple.com")));
         }
+
+        [Fact]
+        public static void Default_4_ParseData()
+        {
+            var map = new Dictionary<string, object>
+            {
+                    ["a"] = "1",
+                    ["b"] = JsonFactory.GetInstance().CreateJsonObject(),
+                    ["c"] = new Uri("https://www.microsoft.com"),
+                    ["d"] = null
+            };
+            Assert.NotNull(map.ParseData("a"));
+            Assert.NotNull(map.ParseData("b"));
+            Assert.NotNull(map.ParseData("c"));
+            Assert.Null(map.ParseData("d"));
+            Assert.NotNull(map.ParseData("e", new Uri("https://www.apple.com")));
+        }
     }
 }
