@@ -276,7 +276,7 @@ namespace Htc.Vita.Core.Util
             }
 
             return ((T[])Enum.GetValues(typeof(T)))
-                    .FirstOrDefault(item => item.GetDescription().Equals(data));
+                    .FirstOrDefault(item => item.GetDescription().Equals(data, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace Htc.Vita.Core.Util
             }
 
             return ((T[])Enum.GetValues(typeof(T)))
-                    .FirstOrDefault(item => item.ToString().Equals(data));
+                    .FirstOrDefault(item => item.ToString().Equals(data, StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }
