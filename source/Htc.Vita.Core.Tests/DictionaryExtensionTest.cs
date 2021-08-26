@@ -260,6 +260,16 @@ namespace Htc.Vita.Core.Tests
             Assert.False(map.ContainsKey("key2"));
             Assert.False(map.ContainsKey("key3"));
             Assert.True(map.ContainsKey("key4"));
+
+            var map2 = new Dictionary<string, object>();
+            map2.ApplyIfNotNullAndNotWhiteSpace("key1", null)
+                    .ApplyIfNotNullAndNotWhiteSpace("key2", "")
+                    .ApplyIfNotNullAndNotWhiteSpace("key3", " ")
+                    .ApplyIfNotNullAndNotWhiteSpace("key4", "1");
+            Assert.False(map2.ContainsKey("key1"));
+            Assert.False(map2.ContainsKey("key2"));
+            Assert.False(map2.ContainsKey("key3"));
+            Assert.True(map2.ContainsKey("key4"));
         }
 
         [Fact]
