@@ -3,7 +3,7 @@ namespace Htc.Vita.Core.Util
     /// <summary>
     /// Class Array.
     /// </summary>
-    public class Array
+    public static class Array
     {
         /// <summary>
         /// Get the empty array.
