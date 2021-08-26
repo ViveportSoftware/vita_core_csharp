@@ -321,6 +321,15 @@ namespace Htc.Vita.Core.Auth
                     }
                 }
 
+                if (Type == TokenType.Unknown)
+                {
+                    var anotherType = another.Type;
+                    if (anotherType != TokenType.Unknown)
+                    {
+                        Type = anotherType;
+                    }
+                }
+
                 return this;
             }
         }
