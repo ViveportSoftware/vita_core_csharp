@@ -86,6 +86,55 @@ namespace Htc.Vita.Core.Util
         /// <param name="key">The key.</param>
         /// <returns>Uri.</returns>
         public static Uri ParseUri(
+                this Dictionary<string, object> data,
+                string key)
+        {
+            return ParseUri(
+                    data,
+                    key,
+                    null
+            );
+        }
+
+        /// <summary>
+        /// Parses the value to URI.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>Uri.</returns>
+        public static Uri ParseUri(
+                this Dictionary<string, object> data,
+                string key,
+                Uri defaultValue)
+        {
+            if (data == null)
+            {
+                return defaultValue;
+            }
+
+            if (!data.ContainsKey(key))
+            {
+                return defaultValue;
+            }
+
+            var result = data[key] as Uri;
+            if (result != null)
+            {
+                return result;
+            }
+
+            var item = data[key] as string;
+            return item.ToUri() ?? defaultValue;
+        }
+
+        /// <summary>
+        /// Parses the value to URI.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <returns>Uri.</returns>
+        public static Uri ParseUri(
                 this Dictionary<string, string> data,
                 string key)
         {
