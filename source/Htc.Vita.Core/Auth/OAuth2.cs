@@ -122,7 +122,7 @@ namespace Htc.Vita.Core.Auth
             /// Gets the options.
             /// </summary>
             /// <value>The options.</value>
-            public Dictionary<string, string> Options { get; } = new Dictionary<string, string>();
+            public Dictionary<string, object> Options { get; } = new Dictionary<string, object>();
             /// <summary>
             /// Gets or sets the redirect URI.
             /// </summary>
