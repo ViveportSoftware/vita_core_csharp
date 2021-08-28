@@ -46,7 +46,12 @@ namespace Htc.Vita.Core.Net
             /// image/x-icon
             /// </summary>
             [Description("image/x-icon")]
-            Image_XIcon
+            Image_XIcon,
+            /// <summary>
+            /// text/html
+            /// </summary>
+            [Description("text/html")]
+            Text_Html
         }
     }
 }

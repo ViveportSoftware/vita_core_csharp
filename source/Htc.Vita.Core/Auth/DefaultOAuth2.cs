@@ -61,8 +61,13 @@ namespace Htc.Vita.Core.Auth
             private string _authorizationCode;
             private CancellationToken _cancellationToken;
             private HttpListener _httpListener;
-            private Uri _redirectUri;
             private bool _shouldKeepListening;
+
+            /// <summary>
+            /// Gets or sets the redirect URI.
+            /// </summary>
+            /// <value>The redirect URI.</value>
+            protected Uri RedirectUri { get; set; }
 
             /// <summary>
             /// Gets or sets the message when authorize done.
@@ -119,7 +124,7 @@ namespace Htc.Vita.Core.Auth
 
             private void ConnectSelfToBreakConnectionWaiting()
             {
-                if (_redirectUri == null)
+                if (RedirectUri == null)
                 {
                     return;
                 }
@@ -137,7 +142,7 @@ namespace Htc.Vita.Core.Auth
                         }
 
                         using (WebRequestFactory.GetInstance()
-                                .GetHttpWebRequest(_redirectUri)
+                                .GetHttpWebRequest(RedirectUri)
                                 .GetResponse())
                         {
                             // Skip
@@ -167,7 +172,7 @@ namespace Htc.Vita.Core.Auth
 
                 var data = Encoding.UTF8.GetBytes(MessageAuthorizeDone);
                 var response = context.Response;
-                response.Headers.Add(KeyContentType, Mime.ContentType.Text_Plain.GetDescription());
+                response.Headers.Add(KeyContentType, GetContentType(MessageAuthorizeDone).GetDescription());
                 response.ContentLength64 = data.Length;
                 response.StatusCode = (int)HttpStatusCode.OK;
                 try
@@ -184,6 +189,21 @@ namespace Htc.Vita.Core.Auth
                 }
             }
 
+            private static Mime.ContentType GetContentType(string data)
+            {
+                if (string.IsNullOrWhiteSpace(data))
+                {
+                    return Mime.ContentType.Text_Plain;
+                }
+
+                if (data.StartsWith("<"))
+                {
+                    return Mime.ContentType.Text_Html;
+                }
+
+                return Mime.ContentType.Text_Plain;
+            }
+
             private static void HandleBadRequest(HttpListenerContext context)
             {
                 if (context == null)
@@ -193,7 +213,7 @@ namespace Htc.Vita.Core.Auth
 
                 var data = Encoding.UTF8.GetBytes(MessageAuthorizeFailed);
                 var response = context.Response;
-                response.Headers.Add(KeyContentType, Mime.ContentType.Text_Plain.GetDescription());
+                response.Headers.Add(KeyContentType, GetContentType(MessageAuthorizeFailed).GetDescription());
                 response.ContentLength64 = data.Length;
                 response.StatusCode = (int)HttpStatusCode.BadRequest;
                 try
@@ -293,8 +313,8 @@ namespace Htc.Vita.Core.Auth
                     return this;
                 }
 
-                _redirectUri = options.ParseUri(OptionRedirectUri);
-                if (_redirectUri == null)
+                RedirectUri = options.ParseUri(OptionRedirectUri);
+                if (RedirectUri == null)
                 {
                     Logger.GetInstance(typeof(DefaultAuthorizationCodeReceiver)).Error("Redirect URI is invalid");
                     return this;
@@ -303,7 +323,7 @@ namespace Htc.Vita.Core.Auth
                 try
                 {
                     _httpListener = new HttpListener();
-                    _httpListener.Prefixes.Add(_redirectUri.ToString());
+                    _httpListener.Prefixes.Add(RedirectUri.ToString());
                     _httpListener.Start();
                     Task.Run(() =>
                     {
@@ -356,7 +376,7 @@ namespace Htc.Vita.Core.Auth
                     };
                 }
 
-                if (_redirectUri == null)
+                if (RedirectUri == null)
                 {
                     return new ReceiveResult
                     {
@@ -401,8 +421,13 @@ namespace Htc.Vita.Core.Auth
         {
             private readonly object _lock = new object();
 
-            private Uri _authorizationUrl;
             private CancellationToken _cancellationToken;
+
+            /// <summary>
+            /// Gets or sets the authorization URL.
+            /// </summary>
+            /// <value>The authorization URL.</value>
+            protected Uri AuthorizationUrl { get; set; }
 
             /// <inheritdoc />
             protected override OAuth2.AuthorizationCodeUserAgent OnInitialize(
@@ -412,7 +437,7 @@ namespace Htc.Vita.Core.Auth
                 lock (_lock)
                 {
 
-                    _authorizationUrl = options.ParseUri(OptionAuthorizationUrl);
+                    AuthorizationUrl = options.ParseUri(OptionAuthorizationUrl);
                     _cancellationToken = cancellationToken;
                     try
                     {
@@ -434,7 +459,7 @@ namespace Htc.Vita.Core.Auth
             {
                 lock (_lock)
                 {
-                    if (_authorizationUrl == null)
+                    if (AuthorizationUrl == null)
                     {
                         return new LaunchResult
                         {
@@ -450,7 +475,7 @@ namespace Htc.Vita.Core.Auth
                         };
                     }
 
-                    var scheme = _authorizationUrl.Scheme;
+                    var scheme = AuthorizationUrl.Scheme;
                     if (!"http".Equals(scheme, StringComparison.InvariantCultureIgnoreCase)
                             && !"https".Equals(scheme, StringComparison.InvariantCultureIgnoreCase))
                     {
@@ -508,7 +533,7 @@ namespace Htc.Vita.Core.Auth
 
                 var processStartInfo = new ProcessStartInfo
                 {
-                        Arguments = $"url.dll,FileProtocolHandler \"{_authorizationUrl}\"",
+                        Arguments = $"url.dll,FileProtocolHandler \"{AuthorizationUrl}\"",
                         CreateNoWindow = true,
                         FileName = "C:\\Windows\\System32\\rundll32.exe"
                 };
@@ -522,7 +547,7 @@ namespace Htc.Vita.Core.Auth
                 }
                 catch (Exception e)
                 {
-                    Logger.GetInstance(typeof(DefaultAuthorizationCodeUserAgent)).Error($"Can not launch URL: \"{_authorizationUrl}\", message: {e.Message}");
+                    Logger.GetInstance(typeof(DefaultAuthorizationCodeUserAgent)).Error($"Can not launch URL: \"{AuthorizationUrl}\", message: {e.Message}");
                 }
 
                 return false;
