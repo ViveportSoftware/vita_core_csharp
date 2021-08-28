@@ -510,7 +510,7 @@ namespace Htc.Vita.Core.Auth
                 {
                         Arguments = $"url.dll,FileProtocolHandler \"{_authorizationUrl}\"",
                         CreateNoWindow = true,
-                        FileName = "rundll32.exe"
+                        FileName = "C:\\Windows\\System32\\rundll32.exe"
                 };
                 try
                 {
