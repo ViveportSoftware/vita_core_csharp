@@ -43,14 +43,14 @@ namespace Htc.Vita.Core.Net
         {
             const string valueName = "Proxy";
             var webProxyUri = ParseWebProxyUri(
-                    Registry.GetStringValue(
-                            Registry.Hive.CurrentUser,
+                    Win32Registry.GetStringValue(
+                            Win32Registry.Hive.CurrentUser,
                             RegistryKeyPath,
                             valueName
                     )
             ) ?? ParseWebProxyUri(
-                    Registry.GetStringValue(
-                            Registry.Hive.LocalMachine,
+                    Win32Registry.GetStringValue(
+                            Win32Registry.Hive.LocalMachine,
                             RegistryKeyPath,
                             valueName
                     )

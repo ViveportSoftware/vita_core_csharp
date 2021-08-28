@@ -1110,13 +1110,13 @@ namespace Htc.Vita.Core.Util
                 {
                     _handle.SetHandleAsInvalid();
                     _handle = null;
-                    throw new IOException("Unexpected error: " + errorCode, (int)errorCode);
+                    throw new IOException($"Unexpected error: {errorCode}", (int)errorCode);
                 }
                 if (errorCode == Windows.Error.FileNotFound)
                 {
                     throw new IOException("The specified registry key does not exist.", (int)errorCode);
                 }
-                throw new IOException("Unexpected error: " + errorCode, (int)errorCode);
+                throw new IOException($"Unexpected error: {errorCode}", (int)errorCode);
             }
 
             private static Windows.RegistryKeyAccessRights ToRegistryKeyAccessRight(bool isWritable)

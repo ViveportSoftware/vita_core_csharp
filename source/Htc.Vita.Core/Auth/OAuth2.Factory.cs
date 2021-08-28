@@ -160,7 +160,7 @@ namespace Htc.Vita.Core.Auth
             /// </summary>
             /// <typeparam name="T"></typeparam>
             public static void Register<T>()
-                where T : ClientFactory, new()
+                    where T : ClientFactory, new()
             {
                 TypeRegistry.Register<ClientFactory, T>();
             }
@@ -180,7 +180,7 @@ namespace Htc.Vita.Core.Auth
             /// <typeparam name="T"></typeparam>
             /// <returns>ClientFactory.</returns>
             public static ClientFactory GetInstance<T>()
-                where T : ClientFactory, new()
+                    where T : ClientFactory, new()
             {
                 return TypeRegistry.GetInstance<ClientFactory, T>();
             }
