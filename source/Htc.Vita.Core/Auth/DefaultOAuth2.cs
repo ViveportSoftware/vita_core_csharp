@@ -531,9 +531,10 @@ namespace Htc.Vita.Core.Auth
                     return false;
                 }
 
+                var authorizationUrl = AuthorizationUrl.AbsoluteUri;
                 var processStartInfo = new ProcessStartInfo
                 {
-                        Arguments = $"url.dll,FileProtocolHandler \"{AuthorizationUrl}\"",
+                        Arguments = $"url.dll,FileProtocolHandler \"{authorizationUrl}\"",
                         CreateNoWindow = true,
                         FileName = "C:\\Windows\\System32\\rundll32.exe"
                 };
@@ -547,7 +548,7 @@ namespace Htc.Vita.Core.Auth
                 }
                 catch (Exception e)
                 {
-                    Logger.GetInstance(typeof(DefaultAuthorizationCodeUserAgent)).Error($"Can not launch URL: \"{AuthorizationUrl}\", message: {e.Message}");
+                    Logger.GetInstance(typeof(DefaultAuthorizationCodeUserAgent)).Error($"Can not launch URL: \"{authorizationUrl}\", message: {e.Message}");
                 }
 
                 return false;
