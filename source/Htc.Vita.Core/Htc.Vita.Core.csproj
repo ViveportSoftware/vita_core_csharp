@@ -16,6 +16,7 @@
     <PackageDescription>HTC Vita Core module</PackageDescription>
     <PackageProjectUrl>https://github.com/ViveportSoftware/vita_core_csharp/</PackageProjectUrl>
     <PackageTags>htc;vita;core</PackageTags>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Reference Include="System.Configuration" />
@@ -39,5 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\generated\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
   </ItemGroup>
 </Project>

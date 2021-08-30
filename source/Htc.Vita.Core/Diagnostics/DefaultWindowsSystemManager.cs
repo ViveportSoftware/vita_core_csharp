@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Management;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
+using Htc.Vita.Core.Crypto;
 using Htc.Vita.Core.Interop;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Runtime;
@@ -221,7 +221,7 @@ namespace Htc.Vita.Core.Diagnostics
         {
             try
             {
-                using (MD5.Create())
+                using (LegacyDigest.CreateMd5())
                 {
                     // Skip
                 }

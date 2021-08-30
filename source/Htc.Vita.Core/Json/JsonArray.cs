@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Json
@@ -909,6 +910,66 @@ namespace Htc.Vita.Core.Json
             catch (Exception e)
             {
                 Logger.GetInstance(typeof(JsonArray)).Error(e.ToString());
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Converts to string list.
+        /// </summary>
+        /// <returns>List&lt;System.String&gt;.</returns>
+        public List<string> ToStringList()
+        {
+            return ToStringList(false);
+        }
+
+        /// <summary>
+        /// Converts to string list.
+        /// </summary>
+        /// <param name="shouldKeepEmptyElement">if set to <c>true</c> should keep empty element.</param>
+        /// <returns>List&lt;System.String&gt;.</returns>
+        public List<string> ToStringList(bool shouldKeepEmptyElement)
+        {
+            var result = new List<string>();
+            var jsonArraySize = Size();
+            for (var i = 0; i < jsonArraySize; i++)
+            {
+                var value = ParseString(i);
+                if (string.IsNullOrEmpty(value) && !shouldKeepEmptyElement)
+                {
+                    continue;
+                }
+                result.Add(value);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Converts to string set.
+        /// </summary>
+        /// <returns>ISet&lt;System.String&gt;.</returns>
+        public ISet<string> ToStringSet()
+        {
+            return ToStringSet(false);
+        }
+
+        /// <summary>
+        /// Converts to string set.
+        /// </summary>
+        /// <param name="shouldKeepEmptyElement">if set to <c>true</c> should keep empty element.</param>
+        /// <returns>ISet&lt;System.String&gt;.</returns>
+        public ISet<string> ToStringSet(bool shouldKeepEmptyElement)
+        {
+            var result = new HashSet<string>();
+            var jsonArraySize = Size();
+            for (var i = 0; i < jsonArraySize; i++)
+            {
+                var value = ParseString(i);
+                if (string.IsNullOrEmpty(value) && !shouldKeepEmptyElement)
+                {
+                    continue;
+                }
+                result.Add(value);
             }
             return result;
         }

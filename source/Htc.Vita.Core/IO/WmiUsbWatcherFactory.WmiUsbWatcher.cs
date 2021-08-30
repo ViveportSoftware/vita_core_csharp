@@ -40,12 +40,17 @@ namespace Htc.Vita.Core.IO
             }
 
             /// <inheritdoc />
-            protected override void OnDispose()
+            protected override void Dispose(bool disposing)
             {
-                _connectEventWatcher?.Dispose();
-                _connectEventWatcher = null;
-                _disconnectEventWatcher?.Dispose();
-                _disconnectEventWatcher = null;
+                if (!Disposed && disposing)
+                {
+                    _connectEventWatcher?.Dispose();
+                    _connectEventWatcher = null;
+                    _disconnectEventWatcher?.Dispose();
+                    _disconnectEventWatcher = null;
+                }
+
+                base.Dispose(disposing);
             }
 
             /// <inheritdoc />

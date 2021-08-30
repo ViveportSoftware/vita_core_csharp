@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
@@ -10,6 +11,57 @@ namespace Htc.Vita.Core.Util
     /// </summary>
     public static class DictionaryExtension
     {
+        /// <summary>
+        /// Applies the value if it is not null.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>Dictionary&lt;System.String, System.Object&gt;.</returns>
+        public static Dictionary<string, object> ApplyIfNotNull(
+                this Dictionary<string, object> data,
+                string key,
+                object value)
+        {
+            if (data == null)
+            {
+                return null;
+            }
+
+            if (value != null)
+            {
+                data[key] = value;
+            }
+
+            return data;
+        }
+
+        /// <summary>
+        /// Applies the value if it is not null and not white space.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>Dictionary&lt;System.String, System.Object&gt;.</returns>
+        public static Dictionary<string, object> ApplyIfNotNullAndNotWhiteSpace(
+                this Dictionary<string, object> data,
+                string key,
+                string value)
+        {
+            if (data == null)
+            {
+                return null;
+            }
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return data;
+            }
+
+            data[key] = value;
+            return data;
+        }
+
         /// <summary>
         /// Applies the value if it is not null and not white space.
         /// </summary>
@@ -34,6 +86,181 @@ namespace Htc.Vita.Core.Util
 
             data[key] = value;
             return data;
+        }
+
+        /// <summary>
+        /// Parses the data.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <returns>System.Object.</returns>
+        public static object ParseData(
+                this Dictionary<string, object> data,
+                string key)
+        {
+            return ParseData(
+                    data,
+                    key,
+                    null
+            );
+        }
+
+        /// <summary>
+        /// Parses the data.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>System.Object.</returns>
+        public static object ParseData(
+                this Dictionary<string, object> data,
+                string key,
+                object defaultValue)
+        {
+            if (data == null)
+            {
+                return defaultValue;
+            }
+
+            if (!data.ContainsKey(key))
+            {
+                return defaultValue;
+            }
+
+            return data[key];
+        }
+
+        /// <summary>
+        /// Parses the value to string.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <returns>System.String.</returns>
+        public static string ParseString(
+                this Dictionary<string, string> data,
+                string key)
+        {
+            return ParseString(
+                    data,
+                    key,
+                    null
+            );
+        }
+
+        /// <summary>
+        /// Parses the value to string.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>System.String.</returns>
+        public static string ParseString(
+                this Dictionary<string, string> data,
+                string key,
+                string defaultValue)
+        {
+            if (data == null)
+            {
+                return defaultValue;
+            }
+
+            if (!data.ContainsKey(key))
+            {
+                return defaultValue;
+            }
+
+            return data[key];
+        }
+
+        /// <summary>
+        /// Parses the value to URI.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <returns>Uri.</returns>
+        public static Uri ParseUri(
+                this Dictionary<string, object> data,
+                string key)
+        {
+            return ParseUri(
+                    data,
+                    key,
+                    null
+            );
+        }
+
+        /// <summary>
+        /// Parses the value to URI.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>Uri.</returns>
+        public static Uri ParseUri(
+                this Dictionary<string, object> data,
+                string key,
+                Uri defaultValue)
+        {
+            if (data == null)
+            {
+                return defaultValue;
+            }
+
+            if (!data.ContainsKey(key))
+            {
+                return defaultValue;
+            }
+
+            var result = data[key] as Uri;
+            if (result != null)
+            {
+                return result;
+            }
+
+            var item = data[key] as string;
+            return item.ToUri() ?? defaultValue;
+        }
+
+        /// <summary>
+        /// Parses the value to URI.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <returns>Uri.</returns>
+        public static Uri ParseUri(
+                this Dictionary<string, string> data,
+                string key)
+        {
+            return ParseUri(
+                    data,
+                    key,
+                    null
+            );
+        }
+
+        /// <summary>
+        /// Parses the value to URI.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>Uri.</returns>
+        public static Uri ParseUri(
+                this Dictionary<string, string> data,
+                string key,
+                Uri defaultValue)
+        {
+            if (data == null)
+            {
+                return defaultValue;
+            }
+
+            if (!data.ContainsKey(key))
+            {
+                return defaultValue;
+            }
+
+            return data[key].ToUri();
         }
 
         /// <summary>

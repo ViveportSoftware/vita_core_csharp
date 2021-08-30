@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class WindowsStoreAppManagerTest
+    public static class WindowsStoreAppManagerTest
     {
         [Fact]
         public static void Default_0_GetInstance()

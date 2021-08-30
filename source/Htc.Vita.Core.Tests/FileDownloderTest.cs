@@ -66,7 +66,7 @@ namespace Htc.Vita.Core.Tests
             {
                 File.Delete(TestFileDestPath);
             }
-            catch (Exception) {}
+            catch (Exception) { /* Skip */ }
 
             _output.WriteLine($"Download status: {downloadResult?.Status}");
 
@@ -109,7 +109,7 @@ namespace Htc.Vita.Core.Tests
             {
                 File.Delete(TestFileDestPath);
             }
-            catch (Exception) { }
+            catch (Exception) { /* Skip */ }
 
             _output.WriteLine($"Download status: {downloadResult?.Status}");
 

@@ -2114,6 +2114,7 @@ namespace Htc.Vita.Core.Interop
 
                 if (disposing)
                 {
+                    // Disposing managed resource
                 }
 
                 if (_shellLink == null)

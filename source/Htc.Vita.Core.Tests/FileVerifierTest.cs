@@ -8,7 +8,7 @@ using Xunit;
 namespace Htc.Vita.Core.Tests
 {
 #pragma warning disable CS0618
-    public class FileVerifierTest
+    public static class FileVerifierTest
     {
         [Fact]
         public static void FileVerifierTest_Default_0_Md5_Base64()
@@ -21,7 +21,7 @@ namespace Htc.Vita.Core.Tests
             Assert.True(verified);
             verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, checksum, FileVerifier.ChecksumType.Md5, CancellationToken.None).Result;
             Assert.True(verified);
-            try { fileInfo.Delete(); } catch (Exception) { }
+            try { fileInfo.Delete(); } catch (Exception) { /* Skip */ }
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace Htc.Vita.Core.Tests
             Assert.True(verified);
             verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, checksum, FileVerifier.ChecksumType.Md5, CancellationToken.None).Result;
             Assert.True(verified);
-            try { fileInfo.Delete(); } catch (Exception) { }
+            try { fileInfo.Delete(); } catch (Exception) { /* Skip */ }
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace Htc.Vita.Core.Tests
             Assert.True(verified);
             verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, checksum, FileVerifier.ChecksumType.Sha1, CancellationToken.None).Result;
             Assert.True(verified);
-            try { fileInfo.Delete(); } catch (Exception) { }
+            try { fileInfo.Delete(); } catch (Exception) { /* Skip */ }
         }
 
         [Fact]
@@ -63,7 +63,7 @@ namespace Htc.Vita.Core.Tests
             Assert.True(verified);
             verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, checksum, FileVerifier.ChecksumType.Sha1, CancellationToken.None).Result;
             Assert.True(verified);
-            try { fileInfo.Delete(); } catch (Exception) { }
+            try { fileInfo.Delete(); } catch (Exception) { /* Skip */ }
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace Htc.Vita.Core.Tests
             Assert.True(verified);
             verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, checksum, FileVerifier.ChecksumType.Sha256, CancellationToken.None).Result;
             Assert.True(verified);
-            try { fileInfo.Delete(); } catch (Exception) { }
+            try { fileInfo.Delete(); } catch (Exception) { /* Skip */ }
         }
 
         [Fact]
@@ -91,7 +91,7 @@ namespace Htc.Vita.Core.Tests
             Assert.True(verified);
             verified = FileVerifier.VerifyAsync(fileInfo, fileInfo.Length, checksum, FileVerifier.ChecksumType.Sha256, CancellationToken.None).Result;
             Assert.True(verified);
-            try { fileInfo.Delete(); } catch (Exception) { }
+            try { fileInfo.Delete(); } catch (Exception) { /* Skip */ }
         }
     }
 #pragma warning restore CS0618

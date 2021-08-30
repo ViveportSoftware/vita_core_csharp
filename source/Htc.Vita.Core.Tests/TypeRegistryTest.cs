@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
-    public class TypeRegistryTest
+    public static class TypeRegistryTest
     {
         [Fact]
         public static void Default_0_RegisterDefault()

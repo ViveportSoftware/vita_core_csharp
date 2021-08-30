@@ -34,10 +34,10 @@ namespace Htc.Vita.Core.Util
                 if (instance == null)
                 {
                     Logger.GetInstance(typeof(TypeRegistry)).Info($"Initializing {key}...");
-                    var constructor = concreteClassType.GetConstructor(new Type[] { });
+                    var constructor = concreteClassType.GetConstructor(Array.Empty<Type>());
                     if (constructor != null)
                     {
-                        instance = (TBaseClass)constructor.Invoke(new object[] { });
+                        instance = (TBaseClass)constructor.Invoke(Array.Empty<object>());
                     }
                 }
                 if (!Instances.ContainsKey(key))

@@ -131,7 +131,7 @@ namespace Htc.Vita.Core.Net
         /// <param name="firstAddress">The first address.</param>
         /// <param name="secondAddress">The second address.</param>
         /// <param name="subnetMask">The subnet mask.</param>
-        /// <returns><c>true</c> if [is in same i PV4 subnet] [the specified first address]; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the first address and the second address are in the same IPv4 subnet; otherwise, <c>false</c>.</returns>
         public static bool IsInSameIPv4Subnet(
                 IPAddress firstAddress,
                 IPAddress secondAddress,

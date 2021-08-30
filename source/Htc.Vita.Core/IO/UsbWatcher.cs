@@ -20,10 +20,36 @@ namespace Htc.Vita.Core.IO
         /// </summary>
         public event Action OnDeviceDisconnected;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="UsbWatcher"/> is disposed.
+        /// </summary>
+        /// <value><c>true</c> if disposed; otherwise, <c>false</c>.</value>
+        protected bool Disposed { get; private set; }
+
+        /// <summary>
+        /// Finalizes an instance of the <see cref="UsbWatcher" /> class
+        /// </summary>
+        ~UsbWatcher()
+        {
+            Dispose(false);
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
-            OnDispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            Disposed = true;
         }
 
         /// <summary>
@@ -116,10 +142,6 @@ namespace Htc.Vita.Core.IO
             return result;
         }
 
-        /// <summary>
-        /// Called when disposing.
-        /// </summary>
-        protected abstract void OnDispose();
         /// <summary>
         /// Called when determining whether this instance is running.
         /// </summary>

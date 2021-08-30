@@ -814,10 +814,37 @@ namespace Htc.Vita.Core.Tests
         {
             var jsonFactory = JsonFactory.GetInstance();
             Assert.NotNull(jsonFactory);
-            var jsonObject = jsonFactory.GetJsonArray("[\"http://localhost\"]");
-            Assert.NotNull(jsonObject);
-            var value = jsonObject.ParseUri(0);
+            var jsonArray = jsonFactory.GetJsonArray("[\"http://localhost\"]");
+            Assert.NotNull(jsonArray);
+            var value = jsonArray.ParseUri(0);
             Assert.NotNull(value);
+        }
+
+        [Fact]
+        public static void JsonArray_28_ToStringList()
+        {
+            var jsonFactory = JsonFactory.GetInstance();
+            Assert.NotNull(jsonFactory);
+            var jsonArray = jsonFactory.GetJsonArray("[\"1\",\"1\",\"1\"]");
+            Assert.NotNull(jsonArray);
+            var result = jsonArray.ToStringList();
+            Assert.Equal(3, result.Count);
+            Assert.Equal("1", result[0]);
+            Assert.Equal("1", result[1]);
+            Assert.Equal("1", result[2]);
+        }
+
+        [Fact]
+        public static void JsonArray_29_ToStringSet()
+        {
+            var jsonFactory = JsonFactory.GetInstance();
+            Assert.NotNull(jsonFactory);
+            var jsonArray = jsonFactory.GetJsonArray("[\"1\",\"1\",\"1\"]");
+            Assert.NotNull(jsonArray);
+            var result = jsonArray.ToStringSet();
+            Assert.Equal(1, result.Count);
+            Assert.True(result.Contains("1"));
+            Assert.False(result.Contains("2"));
         }
 
         [Fact]

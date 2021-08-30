@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Text;
+using Htc.Vita.Core.Util;
 using Xunit;
 
 namespace Htc.Vita.Core.Tests
@@ -79,6 +80,8 @@ namespace Htc.Vita.Core.Tests
             const string data = "test_description_5";
             var type = Util.Convert.ToTypeByDescription<TestStatus>(data);
             Assert.Equal(TestStatus.TestStatus0, type);
+            type = data.ToTypeByDescription<TestStatus>();
+            Assert.Equal(TestStatus.TestStatus0, type);
         }
 
         [Fact]
@@ -86,6 +89,8 @@ namespace Htc.Vita.Core.Tests
         {
             const string data = "TestStatus1";
             var type = Util.Convert.ToTypeByName<TestStatus>(data);
+            Assert.Equal(TestStatus.TestStatus1, type);
+            type = data.ToTypeByName<TestStatus>();
             Assert.Equal(TestStatus.TestStatus1, type);
         }
 
