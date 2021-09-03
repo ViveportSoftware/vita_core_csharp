@@ -296,6 +296,10 @@ namespace Htc.Vita.Core.Auth
 
                 _authorizationCode = code;
                 HandleAuthorizationCodeRequest(httpListenerContext);
+
+                // for simultaneous favicon access
+                SpinWait.SpinUntil(() => false, TimeSpan.FromMilliseconds(200));
+
                 _shouldKeepListening = false;
                 _countdownEvent.Signal();
             }
@@ -332,8 +336,8 @@ namespace Htc.Vita.Core.Auth
                                 try
                                 {
                                     ThreadPool.QueueUserWorkItem(
-                                        HandleHttpRequest,
-                                        _httpListener.GetContext()
+                                            HandleHttpRequest,
+                                            _httpListener.GetContext()
                                     );
                                 }
                                 catch (HttpListenerException e)
@@ -342,9 +346,13 @@ namespace Htc.Vita.Core.Auth
                                     {
                                         Logger.GetInstance(typeof(DefaultAuthorizationCodeReceiver)).Debug(e.Message);
                                     }
+                                    else if (e.ErrorCode == 500 && Platform.IsMono)
+                                    {
+                                        Logger.GetInstance(typeof(DefaultAuthorizationCodeReceiver)).Debug(e.Message);
+                                    }
                                     else
                                     {
-                                        Logger.GetInstance(typeof(DefaultAuthorizationCodeReceiver)).Error(e.ToString());
+                                        Logger.GetInstance(typeof(DefaultAuthorizationCodeReceiver)).Error($"{e.Message}, error code: {e.ErrorCode}");
                                     }
                                 }
                                 catch (Exception e)
@@ -481,7 +489,7 @@ namespace Htc.Vita.Core.Auth
                     {
                         return new LaunchResult
                         {
-                            Status = LaunchStatus.InvalidAuthorizationUri
+                                Status = LaunchStatus.InvalidAuthorizationUri
                         };
                     }
 
