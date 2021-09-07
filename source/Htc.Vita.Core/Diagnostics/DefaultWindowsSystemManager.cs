@@ -8,6 +8,7 @@ using Htc.Vita.Core.Interop;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Runtime;
 using Htc.Vita.Core.Util;
+using Convert = Htc.Vita.Core.Util.Convert;
 
 namespace Htc.Vita.Core.Diagnostics
 {
@@ -27,8 +28,16 @@ namespace Htc.Vita.Core.Diagnostics
         private const string ProductNameValueName = "ProductName";
         private const string SecureBootRegistryKey = @"SYSTEM\CurrentControlSet\Control\SecureBoot\State";
         private const string SecureBootValueName = "UEFISecureBootEnabled";
-        private const string Windows10ProductRevisionRegistryKey = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion";
-        private const string Windows10ProductRevisionValueName = "UBR";
+        private const string Windows10ProductVersionRegistryKey = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion";
+        private const string Windows10ProductVersionValueNameBuild = "CurrentBuild";
+        private const string Windows10ProductVersionValueNameMajor = "CurrentMajorVersionNumber";
+        private const string Windows10ProductVersionValueNameMinor = "CurrentMinorVersionNumber";
+        private const string Windows10ProductVersionValueNameRevision = "UBR";
+
+        private static readonly int Windows10ProductVersionBuild = GetWindows10ProductVersionBuildFromRegistry();
+        private static readonly int Windows10ProductVersionMajor = GetWindows10ProductVersionMajorFromRegistry();
+        private static readonly int Windows10ProductVersionMinor = GetWindows10ProductVersionMinorFromRegistry();
+        private static readonly int Windows10ProductVersionRevision = GetWindows10ProductVersionRevisionFromRegistry();
 
         private static WindowsFipsStatus GetFipsStatusFromRegistry()
         {
@@ -164,16 +173,24 @@ namespace Htc.Vita.Core.Diagnostics
                     && result.Build == 9200)
             {
                 Logger.GetInstance(typeof(DefaultWindowsSystemManager)).Warn($"Version {result} detected. You may add app.manifest into your executable to correct Version API for Windows 8.1 or later");
+                if (Windows10ProductVersionBuild > 0)
+                {
+                    return new Version(
+                            Windows10ProductVersionMajor,
+                            Windows10ProductVersionMinor,
+                            Windows10ProductVersionBuild,
+                            Windows10ProductVersionRevision
+                    );
+                }
             }
 
-            if (result.Major == 10
-                    && result.Minor == 0)
+            if (result.Major == 10)
             {
                 result = new Version(
                         result.Major,
                         result.Minor,
                         result.Build,
-                        GetWindows10ProductRevisionFromRegistry()
+                        Windows10ProductVersionRevision
                 );
             }
 
@@ -208,12 +225,39 @@ namespace Htc.Vita.Core.Diagnostics
             return WindowsSecureBootStatus.Unknown;
         }
 
-        private static int GetWindows10ProductRevisionFromRegistry()
+        private static int GetWindows10ProductVersionBuildFromRegistry()
+        {
+            return Convert.ToInt32(Win32Registry.GetStringValue(
+                    Win32Registry.Hive.LocalMachine,
+                    Windows10ProductVersionRegistryKey,
+                    Windows10ProductVersionValueNameBuild
+            ));
+        }
+
+        private static int GetWindows10ProductVersionMajorFromRegistry()
         {
             return Win32Registry.GetIntValue(
                     Win32Registry.Hive.LocalMachine,
-                    Windows10ProductRevisionRegistryKey,
-                    Windows10ProductRevisionValueName
+                    Windows10ProductVersionRegistryKey,
+                    Windows10ProductVersionValueNameMajor
+            );
+        }
+
+        private static int GetWindows10ProductVersionMinorFromRegistry()
+        {
+            return Win32Registry.GetIntValue(
+                    Win32Registry.Hive.LocalMachine,
+                    Windows10ProductVersionRegistryKey,
+                    Windows10ProductVersionValueNameMinor
+            );
+        }
+
+        private static int GetWindows10ProductVersionRevisionFromRegistry()
+        {
+            return Win32Registry.GetIntValue(
+                    Win32Registry.Hive.LocalMachine,
+                    Windows10ProductVersionRegistryKey,
+                    Windows10ProductVersionValueNameRevision
             );
         }
 
