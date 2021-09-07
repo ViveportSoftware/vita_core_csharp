@@ -131,19 +131,26 @@ namespace Htc.Vita.Core.Auth
 
                 Task.Run(() =>
                 {
-                        WaitHandle.WaitAny(new[]
+                        try
                         {
-                                _countdownEvent.WaitHandle,
-                                _cancellationToken.WaitHandle
-                        });
-                        if (!_cancellationToken.IsCancellationRequested)
-                        {
-                            return;
-                        }
+                            WaitHandle.WaitAny(new[]
+                            {
+                                    _countdownEvent.WaitHandle,
+                                    _cancellationToken.WaitHandle
+                            });
+                            if (!_cancellationToken.IsCancellationRequested)
+                            {
+                                return;
+                            }
 
-                        using (WebRequestFactory.GetInstance()
-                                .GetHttpWebRequest(RedirectUri)
-                                .GetResponse())
+                            using (WebRequestFactory.GetInstance()
+                                    .GetHttpWebRequest(RedirectUri)
+                                    .GetResponse())
+                            {
+                                // Skip
+                            }
+                        }
+                        catch (Exception)
                         {
                             // Skip
                         }
