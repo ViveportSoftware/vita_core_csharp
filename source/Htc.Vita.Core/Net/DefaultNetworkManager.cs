@@ -132,7 +132,7 @@ namespace Htc.Vita.Core.Net
             );
             var pingReplyTime = new Stopwatch();
 
-            var hops = new List<Hop>();
+            var hops = new List<RouteHopInfo>();
             try
             {
                 using (var ping = new Ping())
@@ -166,7 +166,7 @@ namespace Htc.Vita.Core.Net
 
                         var address = reply?.Address;
                         var status = reply?.Status ?? IPStatus.Unknown;
-                        hops.Add(new Hop
+                        hops.Add(new RouteHopInfo
                         {
                                 Address = address,
                                 Hostname = Dns.GetInstance().GetHostEntry(address)?.HostName,

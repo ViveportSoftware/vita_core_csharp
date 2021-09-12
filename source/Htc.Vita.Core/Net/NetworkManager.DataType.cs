@@ -7,9 +7,9 @@ namespace Htc.Vita.Core.Net
     public partial class NetworkManager
     {
         /// <summary>
-        /// Class Hop.
+        /// Class RouteHopInfo.
         /// </summary>
-        public class Hop
+        public class RouteHopInfo
         {
             private const string NotAvailable = "N/A";
 
@@ -87,7 +87,7 @@ namespace Htc.Vita.Core.Net
             /// Gets or sets the hops.
             /// </summary>
             /// <value>The hops.</value>
-            public List<Hop> Hops { get; set; }
+            public List<RouteHopInfo> Hops { get; set; }
             /// <summary>
             /// Gets or sets the target.
             /// </summary>
