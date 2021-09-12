@@ -37,6 +37,23 @@ namespace Htc.Vita.Core.Net
         }
 
         /// <summary>
+        /// Class TraceRouteResult.
+        /// </summary>
+        public class TraceRouteResult
+        {
+            /// <summary>
+            /// Gets or sets the route.
+            /// </summary>
+            /// <value>The route.</value>
+            public RouteInfo Route { get; set; }
+            /// <summary>
+            /// Gets or sets the status.
+            /// </summary>
+            /// <value>The status.</value>
+            public TraceRouteStatus Status { get; set; }
+        }
+
+        /// <summary>
         /// Class VerifyLocalPortStatusResult.
         /// </summary>
         public class VerifyLocalPortStatusResult
@@ -93,6 +110,33 @@ namespace Htc.Vita.Core.Net
             /// Network error
             /// </summary>
             NetworkError
+        }
+
+        /// <summary>
+        /// Enum TraceRouteStatus
+        /// </summary>
+        public enum TraceRouteStatus
+        {
+            /// <summary>
+            /// Unknown
+            /// </summary>
+            Unknown,
+            /// <summary>
+            /// Ok
+            /// </summary>
+            Ok,
+            /// <summary>
+            /// Invalid data
+            /// </summary>
+            InvalidData,
+            /// <summary>
+            /// Network error
+            /// </summary>
+            NetworkError,
+            /// <summary>
+            /// Cancelled operation
+            /// </summary>
+            CancelledOperation
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Util;
 
@@ -100,6 +101,84 @@ namespace Htc.Vita.Core.Net
         }
 
         /// <summary>
+        /// Traces the route.
+        /// </summary>
+        /// <param name="hostNameOrIpAddress">The host name or ip address.</param>
+        /// <returns>TraceRouteResult.</returns>
+        public TraceRouteResult TraceRoute(string hostNameOrIpAddress)
+        {
+            return TraceRoute(
+                    hostNameOrIpAddress,
+                    CancellationToken.None
+            );
+        }
+
+        /// <summary>
+        /// Traces the route.
+        /// </summary>
+        /// <param name="hostNameOrIpAddress">The host name or ip address.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>TraceRouteResult.</returns>
+        public TraceRouteResult TraceRoute(
+                string hostNameOrIpAddress,
+                CancellationToken cancellationToken)
+        {
+            return TraceRoute(
+                    hostNameOrIpAddress,
+                    20,
+                    1000 * 5,
+                    cancellationToken
+            );
+        }
+
+        /// <summary>
+        /// Traces the route.
+        /// </summary>
+        /// <param name="hostNameOrIpAddress">The host name or ip address.</param>
+        /// <param name="maxHop">The maximum hop.</param>
+        /// <param name="timeoutInMilli">The timeout in millisecond.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>TraceRouteResult.</returns>
+        public TraceRouteResult TraceRoute(
+                string hostNameOrIpAddress,
+                int maxHop,
+                int timeoutInMilli,
+                CancellationToken cancellationToken)
+        {
+            if (string.IsNullOrWhiteSpace(hostNameOrIpAddress))
+            {
+                return new TraceRouteResult
+                {
+                        Status = TraceRouteStatus.InvalidData
+                };
+            }
+
+            if (maxHop <= 0 || timeoutInMilli <= 0)
+            {
+                return new TraceRouteResult
+                {
+                        Status = TraceRouteStatus.InvalidData
+                };
+            }
+
+            TraceRouteResult result = null;
+            try
+            {
+                result = OnTraceRoute(
+                        hostNameOrIpAddress,
+                        maxHop,
+                        timeoutInMilli,
+                        cancellationToken
+                );
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(NetworkManager)).Error(e.ToString());
+            }
+            return result ?? new TraceRouteResult();
+        }
+
+        /// <summary>
         /// Verifies the local port status.
         /// </summary>
         /// <param name="portNumber">The port number.</param>
@@ -135,9 +214,23 @@ namespace Htc.Vita.Core.Net
         /// <summary>
         /// Called when getting unused local port.
         /// </summary>
-        /// <param name="shouldUseLastPortFirst">if set to <c>true</c> [should use last port first].</param>
+        /// <param name="shouldUseLastPortFirst">if set to <c>true</c> use last port first.</param>
         /// <returns>GetUnusedLocalPortResult.</returns>
         protected abstract GetUnusedLocalPortResult OnGetUnusedLocalPort(bool shouldUseLastPortFirst);
+        /// <summary>
+        /// Called when tracing route.
+        /// </summary>
+        /// <param name="hostNameOrIpAddress">The host name or ip address.</param>
+        /// <param name="maxHop">The maximum hop.</param>
+        /// <param name="timeoutInMilli">The timeout in millisecond.</param>
+        /// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>TraceRouteResult.</returns>
+        protected abstract TraceRouteResult OnTraceRoute(
+                string hostNameOrIpAddress,
+                int maxHop,
+                int timeoutInMilli,
+                CancellationToken cancellationToken
+        );
         /// <summary>
         /// Called when verifying local port status.
         /// </summary>

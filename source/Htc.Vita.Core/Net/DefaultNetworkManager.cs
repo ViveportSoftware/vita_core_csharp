@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Threading;
 using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
@@ -113,6 +117,99 @@ namespace Htc.Vita.Core.Net
                 }
                 return result;
             }
+        }
+
+        /// <inheritdoc />
+        protected override TraceRouteResult OnTraceRoute(
+                string hostNameOrIpAddress,
+                int maxHop,
+                int timeoutInMilli,
+                CancellationToken cancellationToken)
+        {
+            var pingOptions = new PingOptions(
+                    1,
+                    true
+            );
+            var pingReplyTime = new Stopwatch();
+
+            var hops = new List<Hop>();
+            try
+            {
+                using (var ping = new Ping())
+                {
+                    while (true)
+                    {
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            return new TraceRouteResult
+                            {
+                                    Status = TraceRouteStatus.CancelledOperation
+                            };
+                        }
+
+                        pingReplyTime.Start();
+                        var reply = ping.Send(
+                                hostNameOrIpAddress,
+                                timeoutInMilli,
+                                new byte[] { 0 },
+                                pingOptions
+                        );
+                        pingReplyTime.Stop();
+
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            return new TraceRouteResult
+                            {
+                                    Status = TraceRouteStatus.CancelledOperation
+                            };
+                        }
+
+                        var address = reply?.Address;
+                        var status = reply?.Status ?? IPStatus.Unknown;
+                        hops.Add(new Hop
+                        {
+                                Address = address,
+                                Hostname = Dns.GetInstance().GetHostEntry(address)?.HostName,
+                                Node = pingOptions.Ttl,
+                                TimeInMilli = pingReplyTime.ElapsedMilliseconds,
+                                Status = status
+                        });
+
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            return new TraceRouteResult
+                            {
+                                    Status = TraceRouteStatus.CancelledOperation
+                            };
+                        }
+
+                        pingOptions.Ttl++;
+                        pingReplyTime.Reset();
+                        if (pingOptions.Ttl > maxHop || IPStatus.Success == status)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(RouteTracer)).Error($"Can not trace route: {e.Message}");
+                return new TraceRouteResult
+                {
+                        Status = TraceRouteStatus.NetworkError
+                };
+            }
+
+            return new TraceRouteResult
+            {
+                    Route = new RouteInfo
+                    {
+                            Hops = hops,
+                            Target = hostNameOrIpAddress
+                    },
+                    Status = TraceRouteStatus.Ok
+            };
         }
 
         /// <inheritdoc />

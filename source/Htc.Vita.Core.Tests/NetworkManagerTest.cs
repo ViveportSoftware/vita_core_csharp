@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Sockets;
+using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Net;
 using Xunit;
 
@@ -116,6 +117,33 @@ namespace Htc.Vita.Core.Tests
             finally
             {
                 listener.Stop();
+            }
+        }
+
+        [Fact]
+        public static void Default_4_TraceRoute()
+        {
+            var networkManager = NetworkManager.GetInstance();
+            var hostNameOrIpAddress = "www.google.com";
+            var traceRouteResult = networkManager.TraceRoute(hostNameOrIpAddress);
+            var traceRouteStatus = traceRouteResult.Status;
+            Assert.Equal(NetworkManager.TraceRouteStatus.Ok, traceRouteStatus);
+            var route = traceRouteResult.Route;
+            var hops = route.Hops;
+            foreach (var hop in hops)
+            {
+                Logger.GetInstance(typeof(NetworkManagerTest)).Info($"{route.Target}/{hop}");
+            }
+
+            hostNameOrIpAddress = "8.8.8.8";
+            traceRouteResult = networkManager.TraceRoute(hostNameOrIpAddress);
+            traceRouteStatus = traceRouteResult.Status;
+            Assert.Equal(NetworkManager.TraceRouteStatus.Ok, traceRouteStatus);
+            route = traceRouteResult.Route;
+            hops = route.Hops;
+            foreach (var hop in hops)
+            {
+                Logger.GetInstance(typeof(NetworkManagerTest)).Info($"{route.Target}/{hop}");
             }
         }
     }
