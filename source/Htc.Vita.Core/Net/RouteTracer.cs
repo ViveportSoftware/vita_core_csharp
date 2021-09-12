@@ -9,6 +9,7 @@ namespace Htc.Vita.Core.Net
     /// <summary>
     /// Class RouteTracer.
     /// </summary>
+    [Obsolete("This class is obsoleted.")]
     public static partial class RouteTracer
     {
         /// <summary>

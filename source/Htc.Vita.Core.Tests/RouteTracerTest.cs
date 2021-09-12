@@ -4,6 +4,7 @@ using Xunit.Abstractions;
 
 namespace Htc.Vita.Core.Tests
 {
+#pragma warning disable CS0618
     public class RouteTracerTest
     {
         private readonly ITestOutputHelper _output;
@@ -39,4 +40,5 @@ namespace Htc.Vita.Core.Tests
             }
         }
     }
+#pragma warning restore CS0618
 }

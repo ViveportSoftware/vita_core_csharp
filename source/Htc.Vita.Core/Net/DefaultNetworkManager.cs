@@ -194,7 +194,7 @@ namespace Htc.Vita.Core.Net
             }
             catch (Exception e)
             {
-                Logger.GetInstance(typeof(RouteTracer)).Error($"Can not trace route: {e.Message}");
+                Logger.GetInstance(typeof(DefaultNetworkManager)).Error($"Can not trace route: {e.Message}");
                 return new TraceRouteResult
                 {
                         Status = TraceRouteStatus.NetworkError
