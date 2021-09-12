@@ -1,47 +1,13 @@
 using System;
-using System.Net;
-using System.Net.Sockets;
-using Htc.Vita.Core.Log;
 
 namespace Htc.Vita.Core.Net
 {
     /// <summary>
     /// Class LocalPortManager.
     /// </summary>
+    [Obsolete("This class is obsoleted.")]
     public class LocalPortManager
     {
-        private static readonly object PortLock = new object();
-
-        private static int _lastLocalPort;
-
-        private static int DoGetUnusedPort(int preferredPort)
-        {
-            var realPreferredPort = preferredPort;
-            if (realPreferredPort < 0 || realPreferredPort > 65535)
-            {
-                Logger.GetInstance(typeof(LocalPortManager)).Warn($"Preferred port number {preferredPort} is invalid.");
-                realPreferredPort = 0;
-            }
-            var listener = new TcpListener(
-                    IPAddress.Loopback,
-                    realPreferredPort
-            );
-            try
-            {
-                listener.Start();
-                return ((IPEndPoint)listener.LocalEndpoint).Port;
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(LocalPortManager)).Error($"Can not get available port: {e}");
-            }
-            finally
-            {
-                listener.Stop();
-            }
-            return 0;
-        }
-
         /// <summary>
         /// Gets the random unused port.
         /// </summary>
@@ -58,22 +24,14 @@ namespace Htc.Vita.Core.Net
         /// <returns>System.Int32.</returns>
         public static int GetRandomUnusedPort(bool shouldUseLastPortFirst)
         {
-            lock (PortLock)
+            var getUnusedLocalPortResult = NetworkManager.GetInstance().GetUnusedLocalPort(shouldUseLastPortFirst);
+            var getUnusedLocalPortStatus = getUnusedLocalPortResult.Status;
+            if (getUnusedLocalPortStatus != NetworkManager.GetUnusedLocalPortStatus.Ok)
             {
-                if (shouldUseLastPortFirst)
-                {
-                    _lastLocalPort = DoGetUnusedPort(_lastLocalPort);
-                    if (_lastLocalPort == 0)
-                    {
-                        _lastLocalPort = DoGetUnusedPort(0);
-                    }
-                }
-                else
-                {
-                    _lastLocalPort = DoGetUnusedPort(0);
-                }
-                return _lastLocalPort;
+                return 0;
             }
+
+            return getUnusedLocalPortResult.LocalPort;
         }
 
         /// <summary>
@@ -83,29 +41,22 @@ namespace Htc.Vita.Core.Net
         /// <returns>PortStatus.</returns>
         public static PortStatus GetPortStatus(int portNumber)
         {
-            var listener = new TcpListener(
-                    IPAddress.Loopback,
-                    portNumber
-            );
-            try
+            var getLocalPortStatusResult = NetworkManager.GetInstance().GetLocalPortStatus(portNumber);
+            var getLocalPortStatusStatus = getLocalPortStatusResult.Status;
+            if (getLocalPortStatusStatus != NetworkManager.GetLocalPortStatusStatus.Ok)
             {
-                listener.Start();
-                return PortStatus.Available;
-            }
-            catch (SocketException e)
-            {
-                Logger.GetInstance(typeof(LocalPortManager)).Warn($"Can not get available port: {e.Message}");
-                return PortStatus.InUse;
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(LocalPortManager)).Error($"Can not get detect port status: {e}");
-            }
-            finally
-            {
-                listener.Stop();
+                return PortStatus.Unknown;
             }
 
+            var portStatus = getLocalPortStatusResult.LocalPortStatus;
+            if (portStatus == NetworkManager.PortStatus.Available)
+            {
+                return PortStatus.Available;
+            }
+            if (portStatus == NetworkManager.PortStatus.InUse)
+            {
+                return PortStatus.InUse;
+            }
             return PortStatus.Unknown;
         }
 
@@ -116,30 +67,23 @@ namespace Htc.Vita.Core.Net
         /// <returns>PortStatus.</returns>
         public static PortStatus VerifyPortStatus(int portNumber)
         {
-            try
+            var verifyLocalPortStatusResult = NetworkManager.GetInstance().VerifyLocalPortStatus(portNumber);
+            var verifyLocalPortStatusStatus = verifyLocalPortStatusResult.Status;
+            if (verifyLocalPortStatusStatus != NetworkManager.VerifyLocalPortStatusStatus.Ok)
             {
-                using (new TcpClient(
-                        "localhost",
-                        portNumber))
-                {
-                    // do nothing
-                }
-                return PortStatus.InUse;
-            }
-            catch (SocketException e)
-            {
-                var socketErrorCode = e.SocketErrorCode;
-                if (socketErrorCode != SocketError.ConnectionRefused)
-                {
-                    Logger.GetInstance(typeof(LocalPortManager)).Error($"Can not get verify port status: {e.Message}, socketErrorCode: {socketErrorCode}");
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.GetInstance(typeof(LocalPortManager)).Error($"Can not get verify port status: {e}");
+                return PortStatus.Unknown;
             }
 
-            return PortStatus.Available;
+            var portStatus = verifyLocalPortStatusResult.LocalPortStatus;
+            if (portStatus == NetworkManager.PortStatus.Available)
+            {
+                return PortStatus.Available;
+            }
+            if (portStatus == NetworkManager.PortStatus.InUse)
+            {
+                return PortStatus.InUse;
+            }
+            return PortStatus.Unknown;
         }
 
         /// <summary>

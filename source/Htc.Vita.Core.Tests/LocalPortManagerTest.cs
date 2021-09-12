@@ -5,6 +5,7 @@ using Xunit;
 
 namespace Htc.Vita.Core.Tests
 {
+#pragma warning disable CS0618
     public static class LocalPortManagerTest
     {
         [Fact]
@@ -78,4 +79,5 @@ namespace Htc.Vita.Core.Tests
             }
         }
     }
+#pragma warning restore CS0618
 }

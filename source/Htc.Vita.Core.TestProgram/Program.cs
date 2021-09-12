@@ -293,14 +293,15 @@ namespace Htc.Vita.Core.TestProgram
             }
             Console.ReadKey();
 
-            var randomUnusedPort = LocalPortManager.GetRandomUnusedPort();
-            var randomUnusedPort1 = LocalPortManager.GetRandomUnusedPort();
-            var randomUnusedPort2 = LocalPortManager.GetRandomUnusedPort(true);
+            var networkManager = NetworkManager.GetInstance();
+            var randomUnusedPort = networkManager.GetUnusedLocalPort().LocalPort;
+            var randomUnusedPort1 = networkManager.GetUnusedLocalPort().LocalPort;
+            var randomUnusedPort2 = networkManager.GetUnusedLocalPort(true).LocalPort;
             var specificPort = 35447;
-            var randomUnusedPortStatus = LocalPortManager.GetPortStatus(randomUnusedPort);
-            var specificPortStatus = LocalPortManager.GetPortStatus(specificPort);
-            var randomUnusedPortVerifyStatus = LocalPortManager.VerifyPortStatus(randomUnusedPort);
-            var specificPortVerifyStatus = LocalPortManager.VerifyPortStatus(specificPort);
+            var randomUnusedPortStatus = networkManager.GetLocalPortStatus(randomUnusedPort).LocalPortStatus;
+            var specificPortStatus = networkManager.GetLocalPortStatus(specificPort).LocalPortStatus;
+            var randomUnusedPortVerifyStatus = networkManager.VerifyLocalPortStatus(randomUnusedPort).LocalPortStatus;
+            var specificPortVerifyStatus = networkManager.VerifyLocalPortStatus(specificPort).LocalPortStatus;
             Console.WriteLine($"Random unused port [{randomUnusedPort}] status: {randomUnusedPortStatus}, verify: {randomUnusedPortVerifyStatus}");
             Console.WriteLine($"Specific port [{specificPort}] status: {specificPortStatus}, verify: {specificPortVerifyStatus}");
             Console.WriteLine($"Random unused port 1 [{randomUnusedPort1}], random unused port 2 : {randomUnusedPort2}");

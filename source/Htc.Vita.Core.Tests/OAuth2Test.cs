@@ -226,8 +226,9 @@ namespace Htc.Vita.Core.Tests
         public static void AuthorizationCodeReceiver_1_Receive_withRedirectUriAndCode()
         {
             var clientAssistantFactory = OAuth2.ClientAssistantFactory.GetInstance();
-            var unusedPort = LocalPortManager.GetRandomUnusedPort();
-            var redirectUriString = $"http://localhost:{unusedPort}/";
+            var unusedLocalPort = NetworkManager.GetInstance().GetUnusedLocalPort().LocalPort;
+            Assert.True(unusedLocalPort > 0);
+            var redirectUriString = $"http://localhost:{unusedLocalPort}/";
             const string authorizationCode = "testAuthorizationCode";
             var options = new Dictionary<string, object>
             {
