@@ -12,9 +12,9 @@ namespace Htc.Vita.Core.Net
     /// <seealso cref="NetworkManager" />
     public class DefaultNetworkManager : NetworkManager
     {
-        private static readonly object PortLock = new object();
+        private readonly object _portLock = new object();
 
-        private static int _lastLocalPort;
+        private int _lastLocalPort;
 
         private static GetUnusedLocalPortResult DoGetUnusedPort(int preferredPort)
         {
@@ -96,7 +96,7 @@ namespace Htc.Vita.Core.Net
         /// <inheritdoc />
         protected override GetUnusedLocalPortResult OnGetUnusedLocalPort(bool shouldUseLastPortFirst)
         {
-            lock (PortLock)
+            lock (_portLock)
             {
                 var result = new GetUnusedLocalPortResult();
                 if (shouldUseLastPortFirst)
