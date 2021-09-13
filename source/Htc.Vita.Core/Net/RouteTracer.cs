@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Net.NetworkInformation;
-using Htc.Vita.Core.Log;
+using System.Threading;
 
 namespace Htc.Vita.Core.Net
 {
@@ -47,48 +45,34 @@ namespace Htc.Vita.Core.Net
                 currentTimeoutInMilli = 1;
             }
 
-            var pingOptions = new PingOptions(
-                    1,
-                    true
+            var traceRouteResult = NetworkManager.GetInstance().TraceRoute(
+                    hostNameOrIpAddress,
+                    currentMaxHop,
+                    currentTimeoutInMilli,
+                    CancellationToken.None
             );
-            var pingReplyTime = new Stopwatch();
-
-            try
+            var traceRouteStatus = traceRouteResult.Status;
+            if (traceRouteStatus != NetworkManager.TraceRouteStatus.Ok)
             {
-                using (var ping = new Ping())
-                {
-                    while (true)
-                    {
-                        pingReplyTime.Start();
-                        var reply = ping.Send(
-                                hostNameOrIpAddress,
-                                currentTimeoutInMilli,
-                                new byte[] { 0 },
-                                pingOptions
-                        );
-                        pingReplyTime.Stop();
-
-                        result.Add(new Hop
-                        {
-                                Node = pingOptions.Ttl,
-                                IP = reply?.Address?.ToString(),
-                                Hostname = Dns.GetInstance().GetHostEntry(reply?.Address)?.HostName,
-                                Time = pingReplyTime.ElapsedMilliseconds,
-                                Status = reply?.Status.ToString()
-                        });
-
-                        pingOptions.Ttl++;
-                        pingReplyTime.Reset();
-                        if (pingOptions.Ttl > currentMaxHop || IPStatus.Success == reply?.Status)
-                        {
-                            break;
-                        }
-                    }
-                }
+                return result;
             }
-            catch (Exception e)
+
+            var hops = traceRouteResult.Route.Hops;
+            foreach (var routeHopInfo in hops)
             {
-                Logger.GetInstance(typeof(RouteTracer)).Error($"Can not trace route: {e.Message}");
+                if (routeHopInfo == null)
+                {
+                    continue;
+                }
+
+                result.Add(new Hop
+                {
+                        Hostname = routeHopInfo.Hostname,
+                        IP = routeHopInfo.Address?.ToString(),
+                        Node = routeHopInfo.Node,
+                        Status = routeHopInfo.Status.ToString(),
+                        Time = routeHopInfo.TimeInMilli
+                });
             }
 
             return result;
