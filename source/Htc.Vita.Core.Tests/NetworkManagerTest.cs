@@ -150,5 +150,21 @@ namespace Htc.Vita.Core.Tests
                 Logger.GetInstance(typeof(NetworkManagerTest)).Info($"{route.Target}/{hop}");
             }
         }
+
+        [Fact]
+        public static void Default_5_GetNetworkTime()
+        {
+            var networkManager = NetworkManager.GetInstance();
+            var getNetworkTimeResult = networkManager.GetNetworkTime();
+            var getNetworkTimeStatus = getNetworkTimeResult.Status;
+            Assert.Equal(NetworkManager.GetNetworkTimeStatus.Ok, getNetworkTimeStatus);
+            var networkTimeInfo = getNetworkTimeResult.NetworkTime;
+            var networkTimeProvider = networkTimeInfo.ProviderName;
+            Logger.GetInstance(typeof(NetworkManagerTest)).Info($"networkTimeProvider: {networkTimeProvider}");
+            var networkTimeInUtc = networkTimeInfo.TimeInUtc;
+            Logger.GetInstance(typeof(NetworkManagerTest)).Info($"networkTimeInUtc: {networkTimeInUtc}");
+            var networkTimeInLocalTimeZone = networkTimeInUtc.ToLocalTime();
+            Logger.GetInstance(typeof(NetworkManagerTest)).Info($"networkTimeInLocalTimeZone: {networkTimeInLocalTimeZone}");
+        }
     }
 }

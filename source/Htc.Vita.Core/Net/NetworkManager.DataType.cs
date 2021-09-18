@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -6,6 +7,23 @@ namespace Htc.Vita.Core.Net
 {
     public partial class NetworkManager
     {
+        /// <summary>
+        /// Class NetworkTimeInfo.
+        /// </summary>
+        public class NetworkTimeInfo
+        {
+            /// <summary>
+            /// Gets or sets the provider name.
+            /// </summary>
+            /// <value>The provider name.</value>
+            public string ProviderName { get; set; }
+            /// <summary>
+            /// Gets or sets the time in UTC.
+            /// </summary>
+            /// <value>The time in UTC.</value>
+            public DateTime TimeInUtc { get; set; }
+        }
+
         /// <summary>
         /// Class RouteHopInfo.
         /// </summary>

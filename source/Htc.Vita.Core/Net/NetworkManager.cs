@@ -73,6 +73,24 @@ namespace Htc.Vita.Core.Net
         }
 
         /// <summary>
+        /// Gets the network time.
+        /// </summary>
+        /// <returns>GetNetworkTimeResult.</returns>
+        public GetNetworkTimeResult GetNetworkTime()
+        {
+            GetNetworkTimeResult result = null;
+            try
+            {
+                result = OnGetNetworkTime();
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(NetworkManager)).Error(e.ToString());
+            }
+            return result ?? new GetNetworkTimeResult();
+        }
+
+        /// <summary>
         /// Gets the unused local port.
         /// </summary>
         /// <returns>GetUnusedLocalPortResult.</returns>
@@ -211,6 +229,11 @@ namespace Htc.Vita.Core.Net
         /// <param name="portNumber">The port number.</param>
         /// <returns>GetLocalPortStatusResult.</returns>
         protected abstract GetLocalPortStatusResult OnGetLocalPortStatus(int portNumber);
+        /// <summary>
+        /// Called when getting network time.
+        /// </summary>
+        /// <returns>GetNetworkTimeResult.</returns>
+        protected abstract GetNetworkTimeResult OnGetNetworkTime();
         /// <summary>
         /// Called when getting unused local port.
         /// </summary>

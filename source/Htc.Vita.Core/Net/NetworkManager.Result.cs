@@ -20,6 +20,24 @@ namespace Htc.Vita.Core.Net
         }
 
         /// <summary>
+        /// Class GetNetworkTimeResult.
+        /// </summary>
+        public class GetNetworkTimeResult
+        {
+            /// <summary>
+            /// Gets or sets the network time.
+            /// </summary>
+            /// <value>The network time.</value>
+            public NetworkTimeInfo NetworkTime { get; set; }
+
+            /// <summary>
+            /// Gets or sets the status.
+            /// </summary>
+            /// <value>The status.</value>
+            public GetNetworkTimeStatus Status { get; set; }
+        }
+
+        /// <summary>
         /// Class GetUnusedLocalPortResult.
         /// </summary>
         public class GetUnusedLocalPortResult
@@ -87,6 +105,29 @@ namespace Htc.Vita.Core.Net
             /// Invalid data
             /// </summary>
             InvalidData,
+            /// <summary>
+            /// Network error
+            /// </summary>
+            NetworkError
+        }
+
+        /// <summary>
+        /// Enum GetNetworkTimeStatus
+        /// </summary>
+        public enum GetNetworkTimeStatus
+        {
+            /// <summary>
+            /// Unknown
+            /// </summary>
+            Unknown,
+            /// <summary>
+            /// Ok
+            /// </summary>
+            Ok,
+            /// <summary>
+            /// Invalid configuration
+            /// </summary>
+            InvalidConfig,
             /// <summary>
             /// Network error
             /// </summary>
