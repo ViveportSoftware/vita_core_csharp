@@ -78,7 +78,11 @@ namespace Htc.Vita.Core.Net
             }
             catch (SocketException e)
             {
-                Logger.GetInstance(typeof(DefaultNetworkManager)).Debug($"Can not get available port: {e.Message}");
+                var socketErrorCode = e.SocketErrorCode;
+                if (socketErrorCode != SocketError.AddressAlreadyInUse)
+                {
+                    Logger.GetInstance(typeof(DefaultNetworkManager)).Debug($"Can not get available port: {e.Message}, socketErrorCode: {socketErrorCode}");
+                }
                 return new GetLocalPortStatusResult
                 {
                         LocalPortStatus = PortStatus.InUse,

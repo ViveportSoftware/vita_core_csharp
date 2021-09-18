@@ -1,5 +1,7 @@
+using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Net;
 using Xunit;
@@ -85,6 +87,8 @@ namespace Htc.Vita.Core.Tests
             Assert.Equal(NetworkManager.GetLocalPortStatusStatus.Ok, getLocalPortStatusStatus);
             var localPortStatus = getLocalPortStatusResult.LocalPortStatus;
             Assert.Equal(NetworkManager.PortStatus.Available, localPortStatus);
+
+            SpinWait.SpinUntil(() => false, TimeSpan.FromSeconds(30)); // for native time_wait
             var verifyLocalPortStatusResult = networkManager.VerifyLocalPortStatus(unusedLocalPort);
             var verifyLocalPortStatusStatus = verifyLocalPortStatusResult.Status;
             Assert.Equal(NetworkManager.VerifyLocalPortStatusStatus.Ok, verifyLocalPortStatusStatus);
