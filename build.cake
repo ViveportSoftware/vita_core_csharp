@@ -1,7 +1,6 @@
 #addin "nuget:?package=Cake.Coveralls&version=0.10.2"
 #addin "nuget:?package=Cake.Coverlet&version=2.5.1"
 #addin "nuget:?package=Cake.Git&version=0.22.0"
-#addin "nuget:?package=Cake.ReSharperReports&version=0.11.1"
 #addin "nuget:?package=Cake.Sonar&version=1.1.25"
 
 //////////////////////////////////////////////////////////////////////
@@ -11,8 +10,6 @@
 var configuration = Argument("configuration", "Debug");
 var revision = EnvironmentVariable("BUILD_NUMBER") ?? Argument("revision", "9999");
 var target = Argument("target", "Default");
-var buildWithDupFinder = EnvironmentVariable("BUILD_WITH_DUPFINDER") ?? "ON";
-var buildWithInspectCode = EnvironmentVariable("BUILD_WITH_INSPECTCODE") ?? "ON";
 var buildWithUnitTesting = EnvironmentVariable("BUILD_WITH_UNITTESTING") ?? "ON";
 
 
@@ -55,8 +52,6 @@ var reportOpenCoverDirAnyCPU = distDir + Directory(configuration) + Directory("r
 var reportOpenCoverDirX86 = distDir + Directory(configuration) + Directory("report/OpenCover/x86");
 var reportXUnitDirAnyCPU = distDir + Directory(configuration) + Directory("report/xUnit/AnyCPU");
 var reportXUnitDirX86 = distDir + Directory(configuration) + Directory("report/xUnit/x86");
-var reportReSharperDupFinder = distDir + Directory(configuration) + Directory("report/ReSharper/DupFinder");
-var reportReSharperInspectCode = distDir + Directory(configuration) + Directory("report/ReSharper/InspectCode");
 
 // Define signing key, password and timestamp server
 var signKeyEnc = EnvironmentVariable("SIGNKEYENC") ?? "NOTSET";
@@ -317,67 +312,9 @@ Task("Run-Sonar-End")
     );
 });
 
-Task("Run-DupFinder")
-    .WithCriteria(() => "ON".Equals(buildWithDupFinder))
-    .IsDependentOn("Run-Sonar-End")
-    .Does(() =>
-{
-    if(IsRunningOnWindows())
-    {
-        DupFinder(
-                new FilePath($"./source/{product}.sln"),
-                new DupFinderSettings
-                {
-                        OutputFile = new FilePath($"{reportReSharperDupFinder.ToString()}/{product}.xml"),
-                        ShowStats = true,
-                        ShowText = true,
-                        SkipOutputAnalysis = true,
-                        ThrowExceptionOnFindingDuplicates = false
-                }
-        );
-        ReSharperReports(
-                new FilePath($"{reportReSharperDupFinder.ToString()}/{product}.xml"),
-                new FilePath($"{reportReSharperDupFinder.ToString()}/{product}.html")
-        );
-    }
-    else
-    {
-        Warning($"DupFinder is only available on Windows");
-    }
-});
-
-Task("Run-InspectCode")
-    .WithCriteria(() => "ON".Equals(buildWithInspectCode))
-    .IsDependentOn("Run-DupFinder")
-    .Does(() =>
-{
-    if(IsRunningOnWindows())
-    {
-        InspectCode(
-                new FilePath($"./source/{product}.sln"),
-                new InspectCodeSettings
-                {
-                        OutputFile = new FilePath($"{reportReSharperInspectCode.ToString()}/{product}.xml"),
-                        SkipOutputAnalysis = true,
-                        SolutionWideAnalysis = true,
-                        ThrowExceptionOnFindingViolations = false,
-                        Verbosity = InspectCodeVerbosity.Off
-                }
-        );
-        ReSharperReports(
-                new FilePath($"{reportReSharperInspectCode.ToString()}/{product}.xml"),
-                new FilePath($"{reportReSharperInspectCode.ToString()}/{product}.html")
-        );
-    }
-    else
-    {
-        Warning($"InspectCode is only available on Windows");
-    }
-});
-
 Task("Sign-Assemblies")
     .WithCriteria(() => "Release".Equals(configuration) && !"NOTSET".Equals(signPass) && !"NOTSET".Equals(signKeyEnc))
-    .IsDependentOn("Run-InspectCode")
+    .IsDependentOn("Run-Sonar-End")
     .Does(() =>
 {
     var currentSignTimestamp = DateTime.Now;
