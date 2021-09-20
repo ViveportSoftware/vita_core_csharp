@@ -93,13 +93,8 @@ namespace Htc.Vita.Core.TestProgram
             {
                 var appPackageInfo = getAppPackageResult.AppPackage;
                 Console.WriteLine($"appPackageInfo.FamilyName: {appPackageInfo.FamilyName}");
-                var fullNameIndex = 0;
-                var fullNameList = appPackageInfo.FullNameList;
-                foreach (var fullName in fullNameList)
-                {
-                    Console.WriteLine($"appPackageInfo.FullNameList[{fullNameIndex}]: {fullName}");
-                    fullNameIndex++;
-                }
+                Console.WriteLine($"appPackageInfo.FullName: {appPackageInfo.FullName}");
+                Console.WriteLine($"appPackageInfo.Path: {appPackageInfo.Path}");
             }
             Console.ReadKey();
 

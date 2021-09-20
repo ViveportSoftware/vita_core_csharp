@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 
 namespace Htc.Vita.Core.Diagnostics
 {
@@ -19,6 +20,16 @@ namespace Htc.Vita.Core.Diagnostics
             /// </summary>
             /// <value>The full name list.</value>
             public List<string> FullNameList { get; set; } = new List<string>();
+            /// <summary>
+            /// Gets or sets the full name.
+            /// </summary>
+            /// <value>The full name.</value>
+            public string FullName { get; set; }
+            /// <summary>
+            /// Gets or sets the path.
+            /// </summary>
+            /// <value>The path.</value>
+            public DirectoryInfo Path { get; set; }
         }
     }
 }

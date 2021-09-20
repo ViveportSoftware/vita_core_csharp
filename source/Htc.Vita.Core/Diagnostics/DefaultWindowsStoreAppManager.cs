@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Htc.Vita.Core.Interop;
 using Htc.Vita.Core.Log;
@@ -44,6 +45,7 @@ namespace Htc.Vita.Core.Diagnostics
 
             if (buffer == null || error != Windows.Error.Success)
             {
+                Logger.GetInstance(typeof(DefaultWindowsStoreAppManager)).Debug($"Can not get package full name for {familyName}. error code: {error}");
                 return null;
             }
 
@@ -57,6 +59,54 @@ namespace Htc.Vita.Core.Diagnostics
                 Logger.GetInstance(typeof(DefaultWindowsStoreAppManager)).Error($"Multiple packages detected for \"{familyName}\". count: {count}");
             }
 
+            return null;
+        }
+
+        private static DirectoryInfo GetAppPackagePathByFullName(string fullName)
+        {
+            var bufferSize = 0;
+            var buffer = new StringBuilder(bufferSize);
+            var packagePathType = Windows.PackagePathType.Effective;
+            var error = Windows.GetPackagePathByFullName2(
+                    fullName,
+                    packagePathType,
+                    ref bufferSize,
+                    buffer
+            );
+
+            if (error == Windows.Error.InsufficientBuffer)
+            {
+                buffer = new StringBuilder(bufferSize);
+                error = Windows.GetPackagePathByFullName2(
+                        fullName,
+                        packagePathType,
+                        ref bufferSize,
+                        buffer
+                );
+            }
+
+            string result = null;
+            if (error == Windows.Error.Success)
+            {
+                result = buffer.ToString();
+            }
+            else
+            {
+                Logger.GetInstance(typeof(DefaultWindowsStoreAppManager)).Debug($"Can not get package path for {fullName}. error code: {error}");
+            }
+
+            if (string.IsNullOrWhiteSpace(result))
+            {
+                return null;
+            }
+            try
+            {
+                return new DirectoryInfo(result);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(DefaultWindowsStoreAppManager)).Debug($"Can not get package path for {fullName}. error: {e.Message}");
+            }
             return null;
         }
 
@@ -134,6 +184,52 @@ namespace Htc.Vita.Core.Diagnostics
             return result;
         }
 
+        private static DirectoryInfo GetCurrentAppPackagePath()
+        {
+            var bufferSize = 0;
+            var buffer = new StringBuilder(bufferSize);
+            var packagePathType = Windows.PackagePathType.Effective;
+            var error = Windows.GetCurrentPackagePath2(
+                    packagePathType,
+                    ref bufferSize,
+                    buffer
+            );
+
+            if (error == Windows.Error.InsufficientBuffer)
+            {
+                buffer = new StringBuilder(bufferSize);
+                error = Windows.GetCurrentPackagePath2(
+                        packagePathType,
+                        ref bufferSize,
+                        buffer
+                );
+            }
+
+            string result = null;
+            if (error == Windows.Error.Success)
+            {
+                result = buffer.ToString();
+            }
+            else
+            {
+                Logger.GetInstance(typeof(DefaultWindowsStoreAppManager)).Debug($"Can not get current app package path. error code: {error}");
+            }
+
+            if (string.IsNullOrWhiteSpace(result))
+            {
+                return null;
+            }
+            try
+            {
+                return new DirectoryInfo(result);
+            }
+            catch (Exception e)
+            {
+                Logger.GetInstance(typeof(DefaultWindowsStoreAppManager)).Debug($"Can not get current app package path. error: {e.Message}");
+            }
+            return null;
+        }
+
         /// <inheritdoc />
         protected override GetAppPackageResult OnGetAppPackageByFamilyName(string familyName)
         {
@@ -164,11 +260,22 @@ namespace Htc.Vita.Core.Diagnostics
                 };
             }
 
+            var appPackagePath = GetAppPackagePathByFullName(appPackageFullName);
+            if (appPackagePath == null)
+            {
+                return new GetAppPackageResult
+                {
+                        Status = GetAppPackageStatus.PackageNotFound
+                };
+            }
+
             var appPackage = new WindowsStoreAppPackageInfo
             {
-                    FamilyName = familyName
+                    FamilyName = familyName,
+                    FullName = appPackageFullName,
+                    Path = appPackagePath
             };
-            appPackage.FullNameList.Add(appPackageFullName);
+            appPackage.FullNameList.Add(appPackage.FullName);
 
             return new GetAppPackageResult
             {
@@ -216,11 +323,22 @@ namespace Htc.Vita.Core.Diagnostics
                 };
             }
 
+            var currentAppPackagePath = GetCurrentAppPackagePath();
+            if (currentAppPackagePath == null)
+            {
+                return new GetAppPackageResult
+                {
+                        Status = GetAppPackageStatus.PackageNotFound
+                };
+            }
+
             var appPackage = new WindowsStoreAppPackageInfo
             {
-                    FamilyName = currentAppPackageFamilyName
+                    FamilyName = currentAppPackageFamilyName,
+                    FullName = currentAppPackageFullName,
+                    Path = currentAppPackagePath
             };
-            appPackage.FullNameList.Add(currentAppPackageFullName);
+            appPackage.FullNameList.Add(appPackage.FullName);
 
             return new GetAppPackageResult
             {

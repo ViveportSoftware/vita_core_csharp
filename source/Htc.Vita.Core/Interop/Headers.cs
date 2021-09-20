@@ -2,6 +2,7 @@ namespace Htc.Vita.Core.Interop
 {
     internal static class Headers
     {
+        internal const string WindowsAppmodel          =          "appmodel.h";
         internal const string WindowsBits              =              "bits.h";
         internal const string WindowsBitsmsg           =           "bitsmsg.h";
         internal const string WindowsBits1_5           =           "bits1_5.h";

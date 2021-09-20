@@ -740,6 +740,18 @@ namespace Htc.Vita.Core.Interop
             /* HIDP_STATUS_NOT_IMPLEMENTED         */ HidpStatusNotImplemented       = 0xc0110020
         }
 
+        [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/appmodel/ne-appmodel-packagepathtype",
+                File = Headers.WindowsAppmodel)]
+        internal enum PackagePathType
+        {
+            /* PackagePathType_Install           */ Install           = 0,
+            /* PackagePathType_Mutable           */ Mutable           = 1,
+            /* PackagePathType_Effective         */ Effective         = 2,
+            /* PackagePathType_MachineExternal   */ MachineExternal   = 3,
+            /* PackagePathType_UserExternal      */ UserExternal      = 4,
+            /* PackagePathType_EffectiveExternal */ EffectiveExternal = 5
+        }
+
         [ExternalReference("https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createnamedpipea",
                 File = Headers.WindowsWinbase)]
         [Flags]
