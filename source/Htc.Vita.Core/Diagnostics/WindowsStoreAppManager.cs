@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Htc.Vita.Core.Log;
 using Htc.Vita.Core.Util;
 
@@ -9,6 +10,9 @@ namespace Htc.Vita.Core.Diagnostics
     /// </summary>
     public abstract partial class WindowsStoreAppManager
     {
+        private bool? _isCurrentProcessRunningInContainer;
+        private bool? _isIdentityAvailableWithCurrentProcess;
+
         static WindowsStoreAppManager()
         {
             TypeRegistry.RegisterDefault<WindowsStoreAppManager, DefaultWindowsStoreAppManager>();
@@ -45,14 +49,55 @@ namespace Htc.Vita.Core.Diagnostics
         }
 
         /// <summary>
+        /// Determines whether current process is running in container.
+        /// </summary>
+        /// <returns><c>true</c> if current process is running in container; otherwise, <c>false</c>.</returns>
+        public bool IsCurrentProcessRunningInContainer()
+        {
+            if (_isCurrentProcessRunningInContainer != null)
+            {
+                return _isCurrentProcessRunningInContainer.Value;
+            }
+
+            if (!IsIdentityAvailableWithCurrentProcess())
+            {
+                _isCurrentProcessRunningInContainer = false;
+                return _isCurrentProcessRunningInContainer.Value;
+            }
+
+            var appPackagePath = GetCurrentAppPackage().AppPackage?.Path?.ToString();
+            if (string.IsNullOrWhiteSpace(appPackagePath))
+            {
+                _isCurrentProcessRunningInContainer = false;
+                return _isCurrentProcessRunningInContainer.Value;
+            }
+
+            var currentProcessRunningPath = Process.GetCurrentProcess().MainModule?.FileName;
+            if (string.IsNullOrWhiteSpace(currentProcessRunningPath))
+            {
+                _isCurrentProcessRunningInContainer = false;
+                return _isCurrentProcessRunningInContainer.Value;
+            }
+
+            _isCurrentProcessRunningInContainer = currentProcessRunningPath.StartsWith(appPackagePath);
+            return _isCurrentProcessRunningInContainer.Value;
+        }
+
+        /// <summary>
         /// Determines whether identity is available with current process.
         /// </summary>
         /// <returns><c>true</c> if identity is available with current process; otherwise, <c>false</c>.</returns>
         public bool IsIdentityAvailableWithCurrentProcess()
         {
+            if (_isIdentityAvailableWithCurrentProcess != null)
+            {
+                return _isIdentityAvailableWithCurrentProcess.Value;
+            }
+
             var getAppPackageResult = GetCurrentAppPackage();
             var getAppPackageStatus = getAppPackageResult.Status;
-            return getAppPackageStatus == GetAppPackageStatus.Ok;
+            _isIdentityAvailableWithCurrentProcess = getAppPackageStatus == GetAppPackageStatus.Ok;
+            return _isIdentityAvailableWithCurrentProcess.Value;
         }
 
         /// <summary>

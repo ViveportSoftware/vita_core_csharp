@@ -32,6 +32,7 @@ namespace Htc.Vita.Core.Tests
             var getAppPackageStatus = getAppPackageResult.Status;
             Assert.True(getAppPackageStatus == WindowsStoreAppManager.GetAppPackageStatus.PackageNotFound);
             Assert.False(windowsStoreAppManager.IsIdentityAvailableWithCurrentProcess());
+            Assert.False(windowsStoreAppManager.IsCurrentProcessRunningInContainer());
         }
 
         [Fact]
