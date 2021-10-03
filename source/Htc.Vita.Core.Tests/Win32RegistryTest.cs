@@ -630,13 +630,16 @@ namespace Htc.Vita.Core.Tests
 
                 using (var subKey = baseKey.OpenSubKey("txtfile\\shell\\open\\command", Win32Registry.KeyPermissionCheck.ReadSubTree))
                 {
-                    var value = subKey.GetValue(null);
-                    Assert.NotNull(value);
-                    var valueKind = subKey.GetValueKind(null);
-                    Assert.Equal(Win32Registry.ValueKind.ExpandString, valueKind);
-                    var realValue = (string)value;
-                    Assert.NotEmpty(realValue);
-                    Assert.False(realValue.StartsWith("%"));
+                    if (subKey != null)
+                    {
+                        var value = subKey.GetValue(null);
+                        Assert.NotNull(value);
+                        var valueKind = subKey.GetValueKind(null);
+                        Assert.Equal(Win32Registry.ValueKind.ExpandString, valueKind);
+                        var realValue = (string)value;
+                        Assert.NotEmpty(realValue);
+                        Assert.False(realValue.StartsWith("%"));
+                    }
                 }
             }
         }
