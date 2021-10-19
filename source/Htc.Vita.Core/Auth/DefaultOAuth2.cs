@@ -271,10 +271,21 @@ namespace Htc.Vita.Core.Auth
                 {
                     return;
                 }
+                if (Disposed)
+                {
+                    return;
+                }
 
                 if (_cancellationToken.IsCancellationRequested)
                 {
-                    _countdownEvent.Signal();
+                    try
+                    {
+                        _countdownEvent.Signal();
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        Logger.GetInstance(typeof(DefaultAuthorizationCodeReceiver)).Error("Can not access disposed CountdownEvent");
+                    }
                 }
 
                 var request = httpListenerContext.Request;
@@ -308,7 +319,14 @@ namespace Htc.Vita.Core.Auth
                 SpinWait.SpinUntil(() => false, TimeSpan.FromMilliseconds(200));
 
                 _shouldKeepListening = false;
-                _countdownEvent.Signal();
+                try
+                {
+                    _countdownEvent.Signal();
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger.GetInstance(typeof(DefaultAuthorizationCodeReceiver)).Error("Can not access disposed CountdownEvent");
+                }
             }
 
             /// <inheritdoc />
